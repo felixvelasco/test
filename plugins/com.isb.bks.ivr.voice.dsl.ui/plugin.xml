@@ -392,17 +392,5 @@
             extensions="voiceDsl">
     </provider>
   </extension>
-  <extension
-        id="jVoiceProduct"
-        point="org.eclipse.core.runtime.products">
-     <product
-           application="org.eclipse.ui.ide.workbench"
-           name="jVoice">
-        <property
-              name="appName"
-              value="jVoice">
-        </property>
-     </product>
-  </extension>
 
 </plugin>

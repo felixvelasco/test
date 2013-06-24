@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="jVoice" uid="jvoice" id="com.isb.bks.ivr.voice.dsl.ui.jVoiceProduct" application="org.eclipse.ui.ide.workbench" version="0.1.0" useFeatures="true" includeLaunchers="true">
+<product name="jVoice" uid="jvoice" id="com.isb.bks.ivr.voice.dsl.jVoiceProduct" application="com.isb.bks.ivr.voice.dsl.application" version="0.1.0" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -154,6 +154,22 @@
 
    <features>
       <feature id="com.isb.bks.jVoice.feature" version="0.1.0.qualifier"/>
+      <feature id="org.eclipse.platform" version="4.3.0.v20130530-1801"/>
+      <feature id="org.eclipse.jdt" version="3.9.0.v20130530-1629"/>
+      <feature id="org.eclipse.e4.rcp" version="1.2.0.v20130530-1603"/>
+      <feature id="org.eclipse.emf.common" version="2.9.0.v20130528-0742"/>
+      <feature id="org.eclipse.emf.ecore" version="2.9.0.v20130528-0742"/>
+      <feature id="org.eclipse.emf.edit" version="2.9.0.v20130603-0742"/>
+      <feature id="org.eclipse.help" version="2.0.0.v20130530-1430"/>
+      <feature id="org.eclipse.rcp" version="4.3.0.v20130530-1603"/>
+      <feature id="org.eclipse.rcp.configuration" version="1.0.0.v20130521-1847"/>
+      <feature id="org.eclipse.xtext.runtime" version="2.4.2.v201306120542"/>
+      <feature id="org.eclipse.xtext.ui" version="2.4.2.v201306120542"/>
+      <feature id="org.eclipse.xtext.xbase.lib" version="2.4.2.v201306120542"/>
+      <feature id="org.eclipse.equinox.p2.core.feature"/>
+      <feature id="org.eclipse.equinox.p2.rcp.feature"/>
+      <feature id="org.eclipse.equinox.p2.user.ui"/>
+      <feature id="org.eclipse.equinox.p2.extras.feature"/>
    </features>
 
 
