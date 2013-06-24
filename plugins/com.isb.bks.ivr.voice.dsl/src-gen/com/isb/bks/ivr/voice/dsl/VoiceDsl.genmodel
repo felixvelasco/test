@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.isb.bks.ivr.voice.dsl/src-gen" editDirectory="/com.isb.bks.ivr.voice.dsl.edit/src"
+    editorDirectory="/com.isb.bks.ivr.voice.dsl.editor/src" modelPluginID="com.isb.bks.ivr.voice.dsl"
+    forceOverwrite="true" modelName="VoiceDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="com.isb.bks.ivr.voice.dsl.edit"
+    editorPluginID="com.isb.bks.ivr.voice.dsl.editor" runtimeVersion="2.9">
+  <genPackages prefix="VoiceDsl" basePackage="com.isb.bks.ivr.voice.dsl" disposableProviderFactory="true"
+      fileExtensions="voiceDsl" ecorePackage="VoiceDsl.ecore#/">
+    <genClasses ecoreClass="VoiceDsl.ecore#//InputElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//InputElement/configuration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//InputElement/grammatics"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//InputElement/audios"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//Grammar">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Grammar/mode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Grammar/builtin"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Grammar/src"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//Configuration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Configuration/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Configuration/maxNoInput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Configuration/maxNoMAtch"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Configuration/maxAttempts"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//Audios">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Audios/initial"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Audios/noMatch"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Audios/noInput"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Audios/match"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//NoInput">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//NoInput/audio"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//NoMatch">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//NoMatch/audio"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//Match">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Match/audio"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//Initial">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Initial/audio"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//Audio">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Audio/dontBargeIn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Audio/tts"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Audio/src"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Audio/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Audio/audio"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//Condition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Condition/count"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
