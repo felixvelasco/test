@@ -10,16 +10,4 @@
        genModel = "com/isb/bks/ivr/voice/dsl/VoiceDsl.genmodel" /> 
 	
   </extension>
-  <extension
-        id="jVoiceProduct"
-        point="org.eclipse.core.runtime.products">
-     <product
-           application="com.isb.bks.ivr.voice.dsl.application"
-           name="jVoice">
-        <property
-              name="appName"
-              value="jVoice">
-        </property>
-     </product>
-  </extension>
 </plugin>
