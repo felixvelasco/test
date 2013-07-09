@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+ 
+   <extension
+         id="jVProduct"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="jVoice">
+         <property
+               name="appName"
+               value="jVoice">
+         </property>
+      </product>
+   </extension>
+  <extension id="coolProduct" point="org.eclipse.core.runtime.products"> 
+      <product name="jVoice" description="%coolDescription" application="coolApp"> 
+          <property name="appName" value="jVoice"/> 
+          <property name="welcomePage" value="$nl$/welcome.xml"/> 
+          <property name="preferenceCuWstomization" value="plugin_customization.ini"/> 
+      </product> 
+   </extension> 
+</plugin>
