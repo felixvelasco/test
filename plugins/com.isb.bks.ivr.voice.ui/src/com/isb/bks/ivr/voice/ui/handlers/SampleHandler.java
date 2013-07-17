@@ -9,13 +9,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
-
-import com.isb.bks.ivr.voice.dsl.voiceDsl.Grammar;
-import com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement;
 
 public class SampleHandler extends AbstractHandler {
 
@@ -26,29 +21,29 @@ public class SampleHandler extends AbstractHandler {
 	}
 
 	/**
-	 * the command has been executed, so extract extract the needed information from the application context.
+	 * the command has been executed, so extract extract the needed information
+	 * from the application context.
 	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+		IStructuredSelection selection = (IStructuredSelection) HandlerUtil
+				.getCurrentSelection(event);
 		Object o = selection.getFirstElement();
 		if (o instanceof IFile) {
 			IFile file = (IFile) o;
+
 			ResourceSet rSet = new ResourceSetImpl();
-			rSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, new VegaXMLURIHandlerImpl());
-			URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+			VegaXMLURIHandlerImpl vegaURIHandler = new VegaXMLURIHandlerImpl();
+			vegaURIHandler.setFile(file);
+			rSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
+					vegaURIHandler);
+
+			URI uri = URI.createPlatformResourceURI(file.getFullPath()
+					.toString(), true);
 			Resource res = rSet.getResource(uri, true);
-			InputElement iElement = (InputElement) res.getContents().get(0);
-			Grammar grammatics = iElement.getGrammatics();
-			String gramma = "La gramatica " + (grammatics.isBuiltin() ? "es built-in, " : "es ") + "de modo "
-					+ grammatics.getMode() + ", y su fuente es " + grammatics.getSrc();
-			String prompts = "Tiene " + iElement.getAudios().getNoMatch().getAudio().size()
-					+ " configuraciones de nomatch y " + iElement.getAudios().getNoInput().getAudio().size()
-					+ " de noinput";
-			IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-			MessageDialog.openInformation(window.getShell(), "Info", gramma);
-			MessageDialog.openInformation(window.getShell(), "Info", prompts);
+			res.getContents().get(0);
 		}
 		return null;
 	}
+
 }
