@@ -1,54 +1,30 @@
 grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.common.Terminals
 
-generate voiceDsl "http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl"
+import "platform:/resource/com.isb.bks.ivr.voice.dsl/model/VoiceDsl.ecore"
 
 InputElement :
-	configuration = Configuration
+	'inputname' name = ID ('maxNoInput' maxNoInput=INT)? ('maxNoMatch' maxNoMatch=INT)? ('maxAttempts' maxAttempts=INT)?
 	grammatics = Grammar?
-  	audios = Audios?
+	conditions += Condition*
+  	'audios' '{'
+  		'initial' ':' (
+			initialAudios += SimpleAudio+) &
+		('nomatch' ':' (
+		    noMatchAudios += ConditionalAudio+))? &
+		('noinput' ':' (
+		     noInputAudios += ConditionalAudio+))? &
+		'match' ':' (
+		    matchAudios += SimpleAudio+)?
+	 '}'
 ;
-
+ 
 Grammar:
 	'grammar' mode = ('voice'|'dtmf') builtin ?= 'builtin'? src = STRING
 ;
 
-Configuration:
-	'inputname' name = ID ('maxNoInput' maxNoInput=INT)? ('maxNoMatch' maxNoMAtch=INT)? ('maxAttempts' maxAttempts=INT)?
-;
-
-Audios:
-	'audios' '{' 
-		initial = Initial &
-		noMatch = NoMatch? &
-		noInput = NoInput? &
-		match = Match?
-	 '}'
-;
-
-NoInput:
-	'noinput' ':' (
-		audio += ConditionalAudio+
-	)
-;
-
-NoMatch:
-	'nomatch' ':' (
-		audio += ConditionalAudio+
-	)
-;
-
-Match:
-	'match' ':' (
-		audio += SimpleAudio+
-	)
-;
-
-Initial:
-	{Initial}
-	'initial' ':' (
-		audio += SimpleAudio+
-	)
-	
+Condition:
+	{Condition}
+	'count' count = INT name = STRING
 ;
 
 SimpleAudio returns Audio:
@@ -57,13 +33,6 @@ SimpleAudio returns Audio:
 ;	
 
 ConditionalAudio returns Audio:
-	(condition = Condition '=>')? 
-	(
-		audio += SimpleAudio |
-		'{' audio += SimpleAudio+ '}'
-	)
+	{ConditionalAudio}
+	('with' condition = [Condition] ':' )? '{'? ('say' dontBargeIn ?= 'nobarge'?  (tts=STRING)? ('src' src=STRING)?)+ '}'? 
  ;
-
-Condition:
-	'count' count = INT
-;
