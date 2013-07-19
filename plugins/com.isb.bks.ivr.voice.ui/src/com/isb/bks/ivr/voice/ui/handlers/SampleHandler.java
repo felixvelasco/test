@@ -9,8 +9,14 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import Generic_BKS.Flow;
+import Generic_BKS.State;
+import Generic_BKS.SubFlow;
 
 public class SampleHandler extends AbstractHandler {
 
@@ -31,17 +37,30 @@ public class SampleHandler extends AbstractHandler {
 		Object o = selection.getFirstElement();
 		if (o instanceof IFile) {
 			IFile file = (IFile) o;
-
 			ResourceSet rSet = new ResourceSetImpl();
 			VegaXMLURIHandlerImpl vegaURIHandler = new VegaXMLURIHandlerImpl();
 			vegaURIHandler.setFile(file);
+
 			rSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
 					vegaURIHandler);
 
 			URI uri = URI.createPlatformResourceURI(file.getFullPath()
 					.toString(), true);
 			Resource res = rSet.getResource(uri, true);
-			res.getContents().get(0);
+			Flow flow = (Flow)res.getContents().get(0);
+
+			for (State state:flow.getStates())
+			{
+				if (state instanceof SubFlow)
+				{	
+					SubFlow sf = (SubFlow)state;
+					Flow flowCC = sf.getCalledFlow();
+					String gramma = "El estado " + sf.getName() + " apunta a " + flowCC.getName(); 
+					IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+					MessageDialog.openInformation(window.getShell(), "Info", gramma);
+
+				}
+			}
 		}
 		return null;
 	}
