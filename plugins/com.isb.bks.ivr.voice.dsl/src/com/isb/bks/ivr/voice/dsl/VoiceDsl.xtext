@@ -34,5 +34,5 @@ SimpleAudio returns Audio:
 
 ConditionalAudio returns Audio:
 	{ConditionalAudio}
-	('with' condition = [Condition] ':' )? '{'? ('say' dontBargeIn ?= 'nobarge'?  (tts=STRING)? ('src' src=STRING)?)+ '}'? 
+	('with' condition = [Condition] ':' ) '{'? ('say' dontBargeIn ?= 'nobarge'?  (tts=STRING)? ('src' src=STRING)?)+ '}'? 
  ;
