@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.isb.ivr.operation.model/src" modelPluginID="com.isb.ivr.operation.model"
+    modelName="IVR" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>IVR.ecore</foreignModel>
+  <genPackages prefix="IVR" disposableProviderFactory="true" ecorePackage="IVR.ecore#/">
+    <genClasses ecoreClass="IVR.ecore#//Prompt">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IVR.ecore#//Prompt/text"/>
+    </genClasses>
+    <genClasses ecoreClass="IVR.ecore#//Input">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IVR.ecore#//Input/text"/>
+    </genClasses>
+    <genClasses ecoreClass="IVR.ecore#//Menu">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference IVR.ecore#//Menu/texts"/>
+    </genClasses>
+    <genClasses ecoreClass="IVR.ecore#//Literal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute IVR.ecore#//Literal/text"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute IVR.ecore#//Literal/description"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Generic_BKS" disposableProviderFactory="true" ecorePackage="Generic_BKS.ecore#/">
+    <genClasses ecoreClass="Generic_BKS.ecore#//Flow">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Generic_BKS.ecore#//Flow/states"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Generic_BKS.ecore#//Flow/transitions"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Generic_BKS.ecore#//State">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Generic_BKS.ecore#//State/inTransactions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Generic_BKS.ecore#//State/outTransactions"/>
+    </genClasses>
+    <genClasses ecoreClass="Generic_BKS.ecore#//Conditional"/>
+    <genClasses ecoreClass="Generic_BKS.ecore#//CallWS"/>
+    <genClasses ecoreClass="Generic_BKS.ecore#//CallFacade"/>
+    <genClasses ecoreClass="Generic_BKS.ecore#//Initial"/>
+    <genClasses ecoreClass="Generic_BKS.ecore#//End"/>
+    <genClasses ecoreClass="Generic_BKS.ecore#//Transition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Generic_BKS.ecore#//Transition/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Generic_BKS.ecore#//Transition/target"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Generic_BKS.ecore#//Transition/events"/>
+    </genClasses>
+    <genClasses ecoreClass="Generic_BKS.ecore#//Event"/>
+    <genClasses ecoreClass="Generic_BKS.ecore#//SubFlow">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Generic_BKS.ecore#//SubFlow/calledFlow"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Core" disposableProviderFactory="true" ecorePackage="Core.ecore#/">
+    <genClasses ecoreClass="Core.ecore#//Element">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Core.ecore#//Element/id"/>
+    </genClasses>
+    <genClasses ecoreClass="Core.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Core.ecore#//NamedElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Core.ecore#//NamedElement/description"/>
+    </genClasses>
+    <genClasses ecoreClass="Core.ecore#//FlowElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Core.ecore#//FlowElement/flow"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

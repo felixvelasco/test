@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated IVR -->
+      <package
+            uri="http://com.IVR.ecore"
+            class="IVR.IVRPackage"
+            genModel="model/IVR.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated IVR -->
+      <package
+            uri="http://com.Generic_BKS.ecore"
+            class="Generic_BKS.Generic_BKSPackage"
+            genModel="model/IVR.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated IVR -->
+      <package
+            uri="http://com.Core.ecore"
+            class="Core.CorePackage"
+            genModel="model/IVR.genmodel"/>
+   </extension>
+
+</plugin>

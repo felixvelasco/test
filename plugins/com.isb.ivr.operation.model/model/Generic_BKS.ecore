@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Generic_BKS" nsURI="http://com.Generic_BKS.ecore" nsPrefix="Generic_BKS">
+  <eClassifiers xsi:type="ecore:EClass" name="Flow" eSuperTypes="Core.ecore#//Bean">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="states" lowerBound="1"
+        upperBound="-1" eType="#//State" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" lowerBound="1"
+        upperBound="4" eType="#//Transition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="State" abstract="true" eSuperTypes="Core.ecore#//FlowElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inTransactions" lowerBound="1"
+        upperBound="-1" eType="#//Transition" eOpposite="#//Transition/target"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outTransactions" lowerBound="1"
+        upperBound="-1" eType="#//Transition" eOpposite="#//Transition/source"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CallWS" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CallFacade" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Initial" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="End" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="Core.ecore#//FlowElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//State" eOpposite="#//State/outTransactions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//State" eOpposite="#//State/inTransactions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="events" lowerBound="1"
+        upperBound="-1" eType="#//Event"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Event" eSuperTypes="Core.ecore#//FlowElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SubFlow" eSuperTypes="#//State">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calledFlow" eType="#//Flow"/>
+  </eClassifiers>
+</ecore:EPackage>
