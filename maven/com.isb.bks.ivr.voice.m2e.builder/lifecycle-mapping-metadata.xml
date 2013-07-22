@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lifecycleMappingMetadata>
+  <pluginExecutions>
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>com.isb.jVoice</groupId>
+        <artifactId>dsl-builder</artifactId>
+        <versionRange>[0.0.1,)</versionRange>
+        <goals>
+          <goal>voiceDSL</goal>
+        </goals>
+      </pluginExecutionFilter>
+      <action>
+        <configurator>
+          <id>com.isb.bks.ivr.voice.m2e.jVoiceConfigurator</id>
+        </configurator>
+      </action>
+    </pluginExecution>
+  </pluginExecutions>
+</lifecycleMappingMetadata>
