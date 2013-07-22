@@ -44,8 +44,51 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 	@Override
 	public URI deresolve(URI uri) {
 		System.out.print("Deresolve ");
-		System.out.println(uri);
-		return uri.deresolve(baseUri);
+		URI vegaURI=null;
+		String sScheme = uri.scheme();
+		if ("platform".equals(sScheme))
+		{
+			String[] segList= uri.segments();			
+			boolean bProjectName = false;
+			String sProjectName=null;
+			boolean bFlujos = false;
+			String sFlujos=null;
+			for (String segment : segList) 
+			{
+				if (bProjectName)
+				{
+					sProjectName=segment;
+					bProjectName=false;
+				}
+				else if(bFlujos)
+				{
+					if (segment.contains("."))
+					{
+						sFlujos+=segment.substring(0, segment.indexOf("."));
+					}
+					else
+					{
+						sFlujos+=segment+".";
+					}					
+				}
+				if ("resource".equals(segment))
+				{
+					bProjectName=true;
+				}
+				else if ("flujos".equals(segment))
+				{
+					bFlujos=true;
+					sFlujos="flujos/";
+				}
+			}
+			vegaURI = URI.createURI(VEGA_URI +"//"+ sProjectName+ SEPARATOR + sFlujos + FRAGMENT0);
+		}
+		else if ("jar".equals(sScheme))
+		{
+			
+		}
+
+		return vegaURI;
 	}
 
 	@Override
@@ -54,13 +97,14 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		URI vegaURI = null;
 		if (uri.toString().startsWith(VEGA_URI)) {
 			String uriPath = uri.path();
-			String fileNameToSearch = uriPath.substring(uriPath
-					.lastIndexOf(SEPARATOR) + 1);
-
-			IMavenProjectFacade project = MavenPlugin.getMavenProjectRegistry()
+			if (uriPath!=null)
+			{
+				String fileNameToSearch = uriPath.substring(uriPath
+						.lastIndexOf(SEPARATOR) + 1);
+				IMavenProjectFacade project = MavenPlugin.getMavenProjectRegistry()
 					.getProject(file.getProject());
-
-			vegaURI = searchURIs(uri, vegaURI, fileNameToSearch, project);
+				vegaURI = searchURIs(uri, vegaURI, fileNameToSearch, project);
+			}
 		}
 		if (vegaURI != null) {
 			return vegaURI;
@@ -71,7 +115,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 
 	private URI searchURIs(URI uri, URI vegaURI, String fileNameToSearch,
 			IMavenProjectFacade project) {
-		List<Artifact> lArti = getProjectArtifacts(project);
+		List<Artifact> lArti = getProjectArtifacts(project);		
 		String sFullPathSearch = null;
 		for (int i = 0; i < lArti.size() && sFullPathSearch == null; i++) {
 			Artifact artifacti = lArti.get(i);
@@ -135,16 +179,21 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			IResource resource = null;
 			try {
 				IProject[] lProjects = project.getReferencedProjects();
-				for (IProject projectDependency : lProjects) {
-					if (projectName.equals(projectDependency.getName())) {
-						List<IResource> fileList = findAllFilesInProjectWithName(
-								projectDependency, fileNameToSearch);
-						if (fileList.size() > 0) {
-							resource = fileList.get(0);
-							break;
-						}
-					}
+				
+				
+				IProject projectI =project;
+				resource = searchProject(fileNameToSearch, projectName,
+						resource, projectI);
+				int nIndex=0;
+				while(resource==null && nIndex < lProjects.length)
+				{					
+					
+					projectI=lProjects[nIndex];
+					resource = searchProject(fileNameToSearch, projectName,
+							resource, projectI);					
+					nIndex++;					
 				}
+				
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
@@ -154,6 +203,18 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			}
 		}
 		return vegaURI;
+	}
+
+	private IResource searchProject(String fileNameToSearch,
+			String projectName, IResource resource, IProject projectDependency) {
+		if (projectName.equals(projectDependency.getName())) {
+			List<IResource> fileList = findAllFilesInProjectWithName(
+					projectDependency, fileNameToSearch);
+			if (fileList.size() > 0) {
+				resource = fileList.get(0);
+			}
+		}
+		return resource;
 	}
 
 	private List<IResource> findAllFilesInProjectWithName(IProject project,
@@ -217,6 +278,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			IMavenProjectFacade mavenProjectFacade) {
 		Set<Artifact> unorderedArtifacts = mavenProjectFacade.getMavenProject()
 				.getArtifacts();
+		unorderedArtifacts.add(mavenProjectFacade.getMavenProject().getArtifact());
 		List<Artifact> orderedArtifacts = new ArrayList<Artifact>(
 				unorderedArtifacts.size());
 		for (Artifact artifact : unorderedArtifacts) {
