@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated VoiceDsl -->
       <factory
-            uri="http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl"
+            uri="http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl/1.0"
             class="com.isb.bks.ivr.voice.dsl.voiceDsl.provider.VoiceDslItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement#getNoMatchAudios <em>No Match Audios</em>}</li>
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement#getNoInputAudios <em>No Input Audios</em>}</li>
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement#getMatchAudios <em>Match Audios</em>}</li>
+ *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement#getConditions <em>Conditions</em>}</li>
  * </ul>
  * </p>
  *
@@ -224,5 +225,21 @@ public interface InputElement extends EObject {
 	 * @generated
 	 */
 	EList<Audio> getMatchAudios();
+
+	/**
+	 * Returns the value of the '<em><b>Conditions</b></em>' containment reference list.
+	 * The list contents are of type {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Condition}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Conditions</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Conditions</em>' containment reference list.
+	 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.VoiceDslPackage#getInputElement_Conditions()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Condition> getConditions();
 
 } // InputElement

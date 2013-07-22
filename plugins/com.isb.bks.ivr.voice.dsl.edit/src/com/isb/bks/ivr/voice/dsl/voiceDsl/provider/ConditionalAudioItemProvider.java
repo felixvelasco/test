@@ -3,7 +3,7 @@
 package com.isb.bks.ivr.voice.dsl.voiceDsl.provider;
 
 
-import com.isb.bks.ivr.voice.dsl.voiceDsl.Condition;
+import com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio;
 import com.isb.bks.ivr.voice.dsl.voiceDsl.VoiceDslPackage;
 
 import java.util.Collection;
@@ -12,8 +12,6 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -21,18 +19,15 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Condition} object.
+ * This is the item provider adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ConditionItemProvider
-	extends ItemProviderAdapter
+public class ConditionalAudioItemProvider
+	extends AudioItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -45,7 +40,7 @@ public class ConditionItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ConditionItemProvider(AdapterFactory adapterFactory) {
+	public ConditionalAudioItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,65 +55,42 @@ public class ConditionItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addCountPropertyDescriptor(object);
-			addNamePropertyDescriptor(object);
+			addConditionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Count feature.
+	 * This adds a property descriptor for the Condition feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addCountPropertyDescriptor(Object object) {
+	protected void addConditionPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Condition_count_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Condition_count_feature", "_UI_Condition_type"),
-				 VoiceDslPackage.Literals.CONDITION__COUNT,
+				 getString("_UI_ConditionalAudio_condition_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionalAudio_condition_feature", "_UI_ConditionalAudio_type"),
+				 VoiceDslPackage.Literals.CONDITIONAL_AUDIO__CONDITION,
 				 true,
 				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Condition_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Condition_name_feature", "_UI_Condition_type"),
-				 VoiceDslPackage.Literals.CONDITION__NAME,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This returns Condition.gif.
+	 * This returns ConditionalAudio.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Condition"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ConditionalAudio"));
 	}
 
 	/**
@@ -129,10 +101,8 @@ public class ConditionItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Condition)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Condition_type") :
-			getString("_UI_Condition_type") + " " + label;
+		ConditionalAudio conditionalAudio = (ConditionalAudio)object;
+		return getString("_UI_ConditionalAudio_type") + " " + conditionalAudio.isDontBargeIn();
 	}
 
 	/**
@@ -145,13 +115,6 @@ public class ConditionItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
-
-		switch (notification.getFeatureID(Condition.class)) {
-			case VoiceDslPackage.CONDITION__COUNT:
-			case VoiceDslPackage.CONDITION__NAME:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
 		super.notifyChanged(notification);
 	}
 
@@ -165,17 +128,6 @@ public class ConditionItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public ResourceLocator getResourceLocator() {
-		return VoiceDslEditPlugin.INSTANCE;
 	}
 
 }

@@ -84,6 +84,10 @@ public class VoiceDslAdapterFactory extends AdapterFactoryImpl {
 				return createConditionAdapter();
 			}
 			@Override
+			public Adapter caseConditionalAudio(ConditionalAudio object) {
+				return createConditionalAudioAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -156,6 +160,20 @@ public class VoiceDslAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createConditionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio <em>Conditional Audio</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio
+	 * @generated
+	 */
+	public Adapter createConditionalAudioAdapter() {
 		return null;
 	}
 

@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audio#isDontBargeIn <em>Dont Barge In</em>}</li>
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audio#getTts <em>Tts</em>}</li>
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audio#getSrc <em>Src</em>}</li>
- *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audio#getCondition <em>Condition</em>}</li>
  * </ul>
  * </p>
  *
@@ -101,31 +100,5 @@ public interface Audio extends EObject {
 	 * @generated
 	 */
 	void setSrc(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Condition</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Condition</em>' containment reference.
-	 * @see #setCondition(Condition)
-	 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.VoiceDslPackage#getAudio_Condition()
-	 * @model containment="true"
-	 * @generated
-	 */
-	Condition getCondition();
-
-	/**
-	 * Sets the value of the '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audio#getCondition <em>Condition</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Condition</em>' containment reference.
-	 * @see #getCondition()
-	 * @generated
-	 */
-	void setCondition(Condition value);
 
 } // Audio

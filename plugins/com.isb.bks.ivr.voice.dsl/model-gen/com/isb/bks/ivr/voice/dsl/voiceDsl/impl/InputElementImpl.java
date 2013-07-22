@@ -3,6 +3,7 @@
 package com.isb.bks.ivr.voice.dsl.voiceDsl.impl;
 
 import com.isb.bks.ivr.voice.dsl.voiceDsl.Audio;
+import com.isb.bks.ivr.voice.dsl.voiceDsl.Condition;
 import com.isb.bks.ivr.voice.dsl.voiceDsl.Grammar;
 import com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement;
 import com.isb.bks.ivr.voice.dsl.voiceDsl.VoiceDslPackage;
@@ -39,6 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.InputElementImpl#getNoMatchAudios <em>No Match Audios</em>}</li>
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.InputElementImpl#getNoInputAudios <em>No Input Audios</em>}</li>
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.InputElementImpl#getMatchAudios <em>Match Audios</em>}</li>
+ *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.InputElementImpl#getConditions <em>Conditions</em>}</li>
  * </ul>
  * </p>
  *
@@ -174,6 +176,16 @@ public class InputElementImpl extends MinimalEObjectImpl.Container implements In
 	 * @ordered
 	 */
 	protected EList<Audio> matchAudios;
+
+	/**
+	 * The cached value of the '{@link #getConditions() <em>Conditions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConditions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Condition> conditions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -374,6 +386,18 @@ public class InputElementImpl extends MinimalEObjectImpl.Container implements In
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Condition> getConditions() {
+		if (conditions == null) {
+			conditions = new EObjectContainmentEList<Condition>(Condition.class, this, VoiceDslPackage.INPUT_ELEMENT__CONDITIONS);
+		}
+		return conditions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -387,6 +411,8 @@ public class InputElementImpl extends MinimalEObjectImpl.Container implements In
 				return ((InternalEList<?>)getNoInputAudios()).basicRemove(otherEnd, msgs);
 			case VoiceDslPackage.INPUT_ELEMENT__MATCH_AUDIOS:
 				return ((InternalEList<?>)getMatchAudios()).basicRemove(otherEnd, msgs);
+			case VoiceDslPackage.INPUT_ELEMENT__CONDITIONS:
+				return ((InternalEList<?>)getConditions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -417,6 +443,8 @@ public class InputElementImpl extends MinimalEObjectImpl.Container implements In
 				return getNoInputAudios();
 			case VoiceDslPackage.INPUT_ELEMENT__MATCH_AUDIOS:
 				return getMatchAudios();
+			case VoiceDslPackage.INPUT_ELEMENT__CONDITIONS:
+				return getConditions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -461,6 +489,10 @@ public class InputElementImpl extends MinimalEObjectImpl.Container implements In
 				getMatchAudios().clear();
 				getMatchAudios().addAll((Collection<? extends Audio>)newValue);
 				return;
+			case VoiceDslPackage.INPUT_ELEMENT__CONDITIONS:
+				getConditions().clear();
+				getConditions().addAll((Collection<? extends Condition>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -500,6 +532,9 @@ public class InputElementImpl extends MinimalEObjectImpl.Container implements In
 			case VoiceDslPackage.INPUT_ELEMENT__MATCH_AUDIOS:
 				getMatchAudios().clear();
 				return;
+			case VoiceDslPackage.INPUT_ELEMENT__CONDITIONS:
+				getConditions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -530,6 +565,8 @@ public class InputElementImpl extends MinimalEObjectImpl.Container implements In
 				return noInputAudios != null && !noInputAudios.isEmpty();
 			case VoiceDslPackage.INPUT_ELEMENT__MATCH_AUDIOS:
 				return matchAudios != null && !matchAudios.isEmpty();
+			case VoiceDslPackage.INPUT_ELEMENT__CONDITIONS:
+				return conditions != null && !conditions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

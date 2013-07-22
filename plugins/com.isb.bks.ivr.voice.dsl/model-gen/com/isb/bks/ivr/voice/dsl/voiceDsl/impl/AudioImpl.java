@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.AudioImpl#isDontBargeIn <em>Dont Barge In</em>}</li>
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.AudioImpl#getTts <em>Tts</em>}</li>
  *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.AudioImpl#getSrc <em>Src</em>}</li>
- *   <li>{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.AudioImpl#getCondition <em>Condition</em>}</li>
  * </ul>
  * </p>
  *
@@ -91,16 +90,6 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 	 * @ordered
 	 */
 	protected String src = SRC_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCondition()
-	 * @generated
-	 * @ordered
-	 */
-	protected Condition condition;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -189,63 +178,6 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Condition getCondition() {
-		return condition;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetCondition(Condition newCondition, NotificationChain msgs) {
-		Condition oldCondition = condition;
-		condition = newCondition;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, VoiceDslPackage.AUDIO__CONDITION, oldCondition, newCondition);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCondition(Condition newCondition) {
-		if (newCondition != condition) {
-			NotificationChain msgs = null;
-			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.AUDIO__CONDITION, null, msgs);
-			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.AUDIO__CONDITION, null, msgs);
-			msgs = basicSetCondition(newCondition, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.AUDIO__CONDITION, newCondition, newCondition));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case VoiceDslPackage.AUDIO__CONDITION:
-				return basicSetCondition(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -255,8 +187,6 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 				return getTts();
 			case VoiceDslPackage.AUDIO__SRC:
 				return getSrc();
-			case VoiceDslPackage.AUDIO__CONDITION:
-				return getCondition();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -277,9 +207,6 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 				return;
 			case VoiceDslPackage.AUDIO__SRC:
 				setSrc((String)newValue);
-				return;
-			case VoiceDslPackage.AUDIO__CONDITION:
-				setCondition((Condition)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -302,9 +229,6 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 			case VoiceDslPackage.AUDIO__SRC:
 				setSrc(SRC_EDEFAULT);
 				return;
-			case VoiceDslPackage.AUDIO__CONDITION:
-				setCondition((Condition)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -323,8 +247,6 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 				return TTS_EDEFAULT == null ? tts != null : !TTS_EDEFAULT.equals(tts);
 			case VoiceDslPackage.AUDIO__SRC:
 				return SRC_EDEFAULT == null ? src != null : !SRC_EDEFAULT.equals(src);
-			case VoiceDslPackage.AUDIO__CONDITION:
-				return condition != null;
 		}
 		return super.eIsSet(featureID);
 	}

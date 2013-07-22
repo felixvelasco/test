@@ -147,13 +147,22 @@ public interface VoiceDslPackage extends EPackage {
 	int INPUT_ELEMENT__MATCH_AUDIOS = 8;
 
 	/**
+	 * The feature id for the '<em><b>Conditions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_ELEMENT__CONDITIONS = 9;
+
+	/**
 	 * The number of structural features of the '<em>Input Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INPUT_ELEMENT_FEATURE_COUNT = 9;
+	int INPUT_ELEMENT_FEATURE_COUNT = 10;
 
 	/**
 	 * The meta object id for the '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.GrammarImpl <em>Grammar</em>}' class.
@@ -239,22 +248,13 @@ public interface VoiceDslPackage extends EPackage {
 	int AUDIO__SRC = 2;
 
 	/**
-	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUDIO__CONDITION = 3;
-
-	/**
 	 * The number of structural features of the '<em>Audio</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int AUDIO_FEATURE_COUNT = 4;
+	int AUDIO_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.ConditionImpl <em>Condition</em>}' class.
@@ -276,13 +276,78 @@ public interface VoiceDslPackage extends EPackage {
 	int CONDITION__COUNT = 0;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION__NAME = 1;
+
+	/**
 	 * The number of structural features of the '<em>Condition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONDITION_FEATURE_COUNT = 1;
+	int CONDITION_FEATURE_COUNT = 2;
+
+
+	/**
+	 * The meta object id for the '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.ConditionalAudioImpl <em>Conditional Audio</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.impl.ConditionalAudioImpl
+	 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.impl.VoiceDslPackageImpl#getConditionalAudio()
+	 * @generated
+	 */
+	int CONDITIONAL_AUDIO = 4;
+
+	/**
+	 * The feature id for the '<em><b>Dont Barge In</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITIONAL_AUDIO__DONT_BARGE_IN = AUDIO__DONT_BARGE_IN;
+
+	/**
+	 * The feature id for the '<em><b>Tts</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITIONAL_AUDIO__TTS = AUDIO__TTS;
+
+	/**
+	 * The feature id for the '<em><b>Src</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITIONAL_AUDIO__SRC = AUDIO__SRC;
+
+	/**
+	 * The feature id for the '<em><b>Condition</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITIONAL_AUDIO__CONDITION = AUDIO_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Conditional Audio</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITIONAL_AUDIO_FEATURE_COUNT = AUDIO_FEATURE_COUNT + 1;
 
 
 	/**
@@ -395,6 +460,17 @@ public interface VoiceDslPackage extends EPackage {
 	EReference getInputElement_MatchAudios();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement#getConditions <em>Conditions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Conditions</em>'.
+	 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement#getConditions()
+	 * @see #getInputElement()
+	 * @generated
+	 */
+	EReference getInputElement_Conditions();
+
+	/**
 	 * Returns the meta object for class '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.Grammar <em>Grammar</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -481,17 +557,6 @@ public interface VoiceDslPackage extends EPackage {
 	EAttribute getAudio_Src();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audio#getCondition <em>Condition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Condition</em>'.
-	 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.Audio#getCondition()
-	 * @see #getAudio()
-	 * @generated
-	 */
-	EReference getAudio_Condition();
-
-	/**
 	 * Returns the meta object for class '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.Condition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -511,6 +576,38 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getCondition_Count();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.Condition#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.Condition#getName()
+	 * @see #getCondition()
+	 * @generated
+	 */
+	EAttribute getCondition_Name();
+
+	/**
+	 * Returns the meta object for class '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio <em>Conditional Audio</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Conditional Audio</em>'.
+	 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio
+	 * @generated
+	 */
+	EClass getConditionalAudio();
+
+	/**
+	 * Returns the meta object for the reference '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio#getCondition <em>Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Condition</em>'.
+	 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio#getCondition()
+	 * @see #getConditionalAudio()
+	 * @generated
+	 */
+	EReference getConditionalAudio_Condition();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -617,6 +714,14 @@ public interface VoiceDslPackage extends EPackage {
 		EReference INPUT_ELEMENT__MATCH_AUDIOS = eINSTANCE.getInputElement_MatchAudios();
 
 		/**
+		 * The meta object literal for the '<em><b>Conditions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INPUT_ELEMENT__CONDITIONS = eINSTANCE.getInputElement_Conditions();
+
+		/**
 		 * The meta object literal for the '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.GrammarImpl <em>Grammar</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -685,14 +790,6 @@ public interface VoiceDslPackage extends EPackage {
 		EAttribute AUDIO__SRC = eINSTANCE.getAudio_Src();
 
 		/**
-		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference AUDIO__CONDITION = eINSTANCE.getAudio_Condition();
-
-		/**
 		 * The meta object literal for the '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.ConditionImpl <em>Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -709,6 +806,32 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CONDITION__COUNT = eINSTANCE.getCondition_Count();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONDITION__NAME = eINSTANCE.getCondition_Name();
+
+		/**
+		 * The meta object literal for the '{@link com.isb.bks.ivr.voice.dsl.voiceDsl.impl.ConditionalAudioImpl <em>Conditional Audio</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.impl.ConditionalAudioImpl
+		 * @see com.isb.bks.ivr.voice.dsl.voiceDsl.impl.VoiceDslPackageImpl#getConditionalAudio()
+		 * @generated
+		 */
+		EClass CONDITIONAL_AUDIO = eINSTANCE.getConditionalAudio();
+
+		/**
+		 * The meta object literal for the '<em><b>Condition</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONDITIONAL_AUDIO__CONDITION = eINSTANCE.getConditionalAudio_Condition();
 
 	}
 

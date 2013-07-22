@@ -33,383 +33,263 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class VoiceDslItemProviderAdapterFactory extends VoiceDslAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
-        /**
-         * This keeps track of the root adapter factory that delegates to this adapter factory.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected ComposedAdapterFactory parentAdapterFactory;
+	/**
+	 * This keeps track of the root adapter factory that delegates to this adapter factory.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ComposedAdapterFactory parentAdapterFactory;
 
-        /**
-         * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected IChangeNotifier changeNotifier = new ChangeNotifier();
+	/**
+	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
-        /**
-         * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected Collection<Object> supportedTypes = new ArrayList<Object>();
+	/**
+	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
-        /**
-         * This constructs an instance.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        public VoiceDslItemProviderAdapterFactory() {
-                supportedTypes.add(IEditingDomainItemProvider.class);
-                supportedTypes.add(IStructuredItemContentProvider.class);
-                supportedTypes.add(ITreeItemContentProvider.class);
-                supportedTypes.add(IItemLabelProvider.class);
-                supportedTypes.add(IItemPropertySource.class);
-        }
+	/**
+	 * This constructs an instance.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public VoiceDslItemProviderAdapterFactory() {
+		supportedTypes.add(IEditingDomainItemProvider.class);
+		supportedTypes.add(IStructuredItemContentProvider.class);
+		supportedTypes.add(ITreeItemContentProvider.class);
+		supportedTypes.add(IItemLabelProvider.class);
+		supportedTypes.add(IItemPropertySource.class);
+	}
 
-        /**
-         * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement} instances.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected InputElementItemProvider inputElementItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InputElementItemProvider inputElementItemProvider;
 
-        /**
-         * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter createInputElementAdapter() {
-                if (inputElementItemProvider == null) {
-                        inputElementItemProvider = new InputElementItemProvider(this);
-                }
+	/**
+	 * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createInputElementAdapter() {
+		if (inputElementItemProvider == null) {
+			inputElementItemProvider = new InputElementItemProvider(this);
+		}
 
-                return inputElementItemProvider;
-        }
+		return inputElementItemProvider;
+	}
 
-        /**
-         * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Grammar} instances.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected GrammarItemProvider grammarItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Grammar} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected GrammarItemProvider grammarItemProvider;
 
-        /**
-         * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Grammar}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter createGrammarAdapter() {
-                if (grammarItemProvider == null) {
-                        grammarItemProvider = new GrammarItemProvider(this);
-                }
+	/**
+	 * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Grammar}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createGrammarAdapter() {
+		if (grammarItemProvider == null) {
+			grammarItemProvider = new GrammarItemProvider(this);
+		}
 
-                return grammarItemProvider;
-        }
+		return grammarItemProvider;
+	}
 
-        /**
-         * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Configuration} instances.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected ConfigurationItemProvider configurationItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audio} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected AudioItemProvider audioItemProvider;
 
-        /**
-         * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Configuration}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter createConfigurationAdapter() {
-                if (configurationItemProvider == null) {
-                        configurationItemProvider = new ConfigurationItemProvider(this);
-                }
+	/**
+	 * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audio}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createAudioAdapter() {
+		if (audioItemProvider == null) {
+			audioItemProvider = new AudioItemProvider(this);
+		}
 
-                return configurationItemProvider;
-        }
+		return audioItemProvider;
+	}
 
-        /**
-         * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audios} instances.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected AudiosItemProvider audiosItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Condition} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ConditionItemProvider conditionItemProvider;
 
-        /**
-         * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audios}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter createAudiosAdapter() {
-                if (audiosItemProvider == null) {
-                        audiosItemProvider = new AudiosItemProvider(this);
-                }
+	/**
+	 * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Condition}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createConditionAdapter() {
+		if (conditionItemProvider == null) {
+			conditionItemProvider = new ConditionItemProvider(this);
+		}
 
-                return audiosItemProvider;
-        }
+		return conditionItemProvider;
+	}
 
-        /**
-         * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.NoInput} instances.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected NoInputItemProvider noInputItemProvider;
+	/**
+	 * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ConditionalAudioItemProvider conditionalAudioItemProvider;
 
-        /**
-         * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.NoInput}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter createNoInputAdapter() {
-                if (noInputItemProvider == null) {
-                        noInputItemProvider = new NoInputItemProvider(this);
-                }
+	/**
+	 * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createConditionalAudioAdapter() {
+		if (conditionalAudioItemProvider == null) {
+			conditionalAudioItemProvider = new ConditionalAudioItemProvider(this);
+		}
 
-                return noInputItemProvider;
-        }
+		return conditionalAudioItemProvider;
+	}
 
-        /**
-         * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.NoMatch} instances.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected NoMatchItemProvider noMatchItemProvider;
+	/**
+	 * This returns the root adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ComposeableAdapterFactory getRootAdapterFactory() {
+		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+	}
 
-        /**
-         * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.NoMatch}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter createNoMatchAdapter() {
-                if (noMatchItemProvider == null) {
-                        noMatchItemProvider = new NoMatchItemProvider(this);
-                }
+	/**
+	 * This sets the composed adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
+		this.parentAdapterFactory = parentAdapterFactory;
+	}
 
-                return noMatchItemProvider;
-        }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isFactoryForType(Object type) {
+		return supportedTypes.contains(type) || super.isFactoryForType(type);
+	}
 
-        /**
-         * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Match} instances.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected MatchItemProvider matchItemProvider;
+	/**
+	 * This implementation substitutes the factory itself as the key for the adapter.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter adapt(Notifier notifier, Object type) {
+		return super.adapt(notifier, this);
+	}
 
-        /**
-         * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Match}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter createMatchAdapter() {
-                if (matchItemProvider == null) {
-                        matchItemProvider = new MatchItemProvider(this);
-                }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object adapt(Object object, Object type) {
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+				return adapter;
+			}
+		}
 
-                return matchItemProvider;
-        }
+		return null;
+	}
 
-        /**
-         * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Initial} instances.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected InitialItemProvider initialItemProvider;
+	/**
+	 * This adds a listener.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void addListener(INotifyChangedListener notifyChangedListener) {
+		changeNotifier.addListener(notifyChangedListener);
+	}
 
-        /**
-         * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Initial}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter createInitialAdapter() {
-                if (initialItemProvider == null) {
-                        initialItemProvider = new InitialItemProvider(this);
-                }
+	/**
+	 * This removes a listener.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void removeListener(INotifyChangedListener notifyChangedListener) {
+		changeNotifier.removeListener(notifyChangedListener);
+	}
 
-                return initialItemProvider;
-        }
+	/**
+	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void fireNotifyChanged(Notification notification) {
+		changeNotifier.fireNotifyChanged(notification);
 
-        /**
-         * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audio} instances.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected AudioItemProvider audioItemProvider;
+		if (parentAdapterFactory != null) {
+			parentAdapterFactory.fireNotifyChanged(notification);
+		}
+	}
 
-        /**
-         * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Audio}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter createAudioAdapter() {
-                if (audioItemProvider == null) {
-                        audioItemProvider = new AudioItemProvider(this);
-                }
-
-                return audioItemProvider;
-        }
-
-        /**
-         * This keeps track of the one adapter used for all {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Condition} instances.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected ConditionItemProvider conditionItemProvider;
-
-        /**
-         * This creates an adapter for a {@link com.isb.bks.ivr.voice.dsl.voiceDsl.Condition}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter createConditionAdapter() {
-                if (conditionItemProvider == null) {
-                        conditionItemProvider = new ConditionItemProvider(this);
-                }
-
-                return conditionItemProvider;
-        }
-
-        /**
-         * This returns the root adapter factory that contains this factory.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        public ComposeableAdapterFactory getRootAdapterFactory() {
-                return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-        }
-
-        /**
-         * This sets the composed adapter factory that contains this factory.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-                this.parentAdapterFactory = parentAdapterFactory;
-        }
-
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public boolean isFactoryForType(Object type) {
-                return supportedTypes.contains(type) || super.isFactoryForType(type);
-        }
-
-        /**
-         * This implementation substitutes the factory itself as the key for the adapter.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Adapter adapt(Notifier notifier, Object type) {
-                return super.adapt(notifier, this);
-        }
-
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Object adapt(Object object, Object type) {
-                if (isFactoryForType(type)) {
-                        Object adapter = super.adapt(object, type);
-                        if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
-                                return adapter;
-                        }
-                }
-
-                return null;
-        }
-
-        /**
-         * This adds a listener.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        public void addListener(INotifyChangedListener notifyChangedListener) {
-                changeNotifier.addListener(notifyChangedListener);
-        }
-
-        /**
-         * This removes a listener.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        public void removeListener(INotifyChangedListener notifyChangedListener) {
-                changeNotifier.removeListener(notifyChangedListener);
-        }
-
-        /**
-         * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        public void fireNotifyChanged(Notification notification) {
-                changeNotifier.fireNotifyChanged(notification);
-
-                if (parentAdapterFactory != null) {
-                        parentAdapterFactory.fireNotifyChanged(notification);
-                }
-        }
-
-        /**
-         * This disposes all of the item providers created by this factory. 
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        public void dispose() {
-                if (inputElementItemProvider != null) inputElementItemProvider.dispose();
-                if (grammarItemProvider != null) grammarItemProvider.dispose();
-                if (configurationItemProvider != null) configurationItemProvider.dispose();
-                if (audiosItemProvider != null) audiosItemProvider.dispose();
-                if (noInputItemProvider != null) noInputItemProvider.dispose();
-                if (noMatchItemProvider != null) noMatchItemProvider.dispose();
-                if (matchItemProvider != null) matchItemProvider.dispose();
-                if (initialItemProvider != null) initialItemProvider.dispose();
-                if (audioItemProvider != null) audioItemProvider.dispose();
-                if (conditionItemProvider != null) conditionItemProvider.dispose();
-        }
+	/**
+	 * This disposes all of the item providers created by this factory. 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void dispose() {
+		if (inputElementItemProvider != null) inputElementItemProvider.dispose();
+		if (grammarItemProvider != null) grammarItemProvider.dispose();
+		if (audioItemProvider != null) audioItemProvider.dispose();
+		if (conditionItemProvider != null) conditionItemProvider.dispose();
+		if (conditionalAudioItemProvider != null) conditionalAudioItemProvider.dispose();
+	}
 
 }

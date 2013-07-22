@@ -60,6 +60,7 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 			case VoiceDslPackage.GRAMMAR: return createGrammar();
 			case VoiceDslPackage.AUDIO: return createAudio();
 			case VoiceDslPackage.CONDITION: return createCondition();
+			case VoiceDslPackage.CONDITIONAL_AUDIO: return createConditionalAudio();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -103,6 +104,16 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 	public Condition createCondition() {
 		ConditionImpl condition = new ConditionImpl();
 		return condition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ConditionalAudio createConditionalAudio() {
+		ConditionalAudioImpl conditionalAudio = new ConditionalAudioImpl();
+		return conditionalAudio;
 	}
 
 	/**

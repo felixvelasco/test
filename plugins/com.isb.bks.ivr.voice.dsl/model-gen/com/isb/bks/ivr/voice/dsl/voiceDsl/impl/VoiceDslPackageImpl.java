@@ -4,6 +4,7 @@ package com.isb.bks.ivr.voice.dsl.voiceDsl.impl;
 
 import com.isb.bks.ivr.voice.dsl.voiceDsl.Audio;
 import com.isb.bks.ivr.voice.dsl.voiceDsl.Condition;
+import com.isb.bks.ivr.voice.dsl.voiceDsl.ConditionalAudio;
 import com.isb.bks.ivr.voice.dsl.voiceDsl.Grammar;
 import com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement;
 import com.isb.bks.ivr.voice.dsl.voiceDsl.VoiceDslFactory;
@@ -50,6 +51,13 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	private EClass conditionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass conditionalAudioEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -207,6 +215,15 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getInputElement_Conditions() {
+		return (EReference)inputElementEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getGrammar() {
 		return grammarEClass;
 	}
@@ -279,15 +296,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getAudio_Condition() {
-		return (EReference)audioEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getCondition() {
 		return conditionEClass;
 	}
@@ -299,6 +307,33 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 */
 	public EAttribute getCondition_Count() {
 		return (EAttribute)conditionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCondition_Name() {
+		return (EAttribute)conditionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getConditionalAudio() {
+		return conditionalAudioEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConditionalAudio_Condition() {
+		return (EReference)conditionalAudioEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -339,6 +374,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		createEReference(inputElementEClass, INPUT_ELEMENT__NO_MATCH_AUDIOS);
 		createEReference(inputElementEClass, INPUT_ELEMENT__NO_INPUT_AUDIOS);
 		createEReference(inputElementEClass, INPUT_ELEMENT__MATCH_AUDIOS);
+		createEReference(inputElementEClass, INPUT_ELEMENT__CONDITIONS);
 
 		grammarEClass = createEClass(GRAMMAR);
 		createEAttribute(grammarEClass, GRAMMAR__MODE);
@@ -349,10 +385,13 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		createEAttribute(audioEClass, AUDIO__DONT_BARGE_IN);
 		createEAttribute(audioEClass, AUDIO__TTS);
 		createEAttribute(audioEClass, AUDIO__SRC);
-		createEReference(audioEClass, AUDIO__CONDITION);
 
 		conditionEClass = createEClass(CONDITION);
 		createEAttribute(conditionEClass, CONDITION__COUNT);
+		createEAttribute(conditionEClass, CONDITION__NAME);
+
+		conditionalAudioEClass = createEClass(CONDITIONAL_AUDIO);
+		createEReference(conditionalAudioEClass, CONDITIONAL_AUDIO__CONDITION);
 	}
 
 	/**
@@ -383,6 +422,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		conditionalAudioEClass.getESuperTypes().add(this.getAudio());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(inputElementEClass, InputElement.class, "InputElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -395,6 +435,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEReference(getInputElement_NoMatchAudios(), this.getAudio(), null, "noMatchAudios", null, 0, -1, InputElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInputElement_NoInputAudios(), this.getAudio(), null, "noInputAudios", null, 0, -1, InputElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInputElement_MatchAudios(), this.getAudio(), null, "matchAudios", null, 0, -1, InputElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInputElement_Conditions(), this.getCondition(), null, "conditions", null, 0, -1, InputElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(grammarEClass, Grammar.class, "Grammar", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGrammar_Mode(), ecorePackage.getEString(), "mode", null, 0, 1, Grammar.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -405,10 +446,13 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEAttribute(getAudio_DontBargeIn(), ecorePackage.getEBoolean(), "dontBargeIn", null, 0, 1, Audio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAudio_Tts(), ecorePackage.getEString(), "tts", null, 0, 1, Audio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAudio_Src(), ecorePackage.getEString(), "src", null, 0, 1, Audio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAudio_Condition(), this.getCondition(), null, "condition", null, 0, 1, Audio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(conditionEClass, Condition.class, "Condition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCondition_Count(), ecorePackage.getEInt(), "count", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCondition_Name(), ecorePackage.getEString(), "name", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(conditionalAudioEClass, ConditionalAudio.class, "ConditionalAudio", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getConditionalAudio_Condition(), this.getCondition(), null, "condition", null, 0, 1, ConditionalAudio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
