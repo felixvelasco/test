@@ -66,7 +66,7 @@ public class SampleHandler extends AbstractHandler {
 
 				}
 			}
-			
+			// ejemplo para deresolve
 			URI uri2 = URI.createPlatformResourceURI("/padre/src/main/resources/re42.generic_bks", true);
 			
 			ResourceSet rSet2 = new ResourceSetImpl();
