@@ -1,5 +1,8 @@
 package com.isb.bks.ivr.voice.ui.handlers;
 
+import java.io.IOException;
+import java.util.Collections;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -43,10 +46,12 @@ public class SampleHandler extends AbstractHandler {
 
 			rSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
 					vegaURIHandler);
+			
+			
 
-			URI uri = URI.createPlatformResourceURI(file.getFullPath()
-					.toString(), true);
+			URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 			Resource res = rSet.getResource(uri, true);
+
 			Flow flow = (Flow)res.getContents().get(0);
 
 			for (State state:flow.getStates())
@@ -61,6 +66,28 @@ public class SampleHandler extends AbstractHandler {
 
 				}
 			}
+			
+			URI uri2 = URI.createPlatformResourceURI("/padre/src/main/resources/re42.generic_bks", true);
+			
+			ResourceSet rSet2 = new ResourceSetImpl();
+			rSet2.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
+					vegaURIHandler);
+			Resource res2 = rSet2.getResource(uri2, true);
+
+			if(res2 instanceof XMLResource) {
+				
+				
+				((XMLResource)res2).getDefaultSaveOptions().put(
+						XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
+			}
+			
+			try {
+				res2.save(Collections.EMPTY_MAP);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		return null;
 	}
