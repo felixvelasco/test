@@ -25,6 +25,12 @@ import org.eclipse.m2e.core.project.IMavenProjectFacade;
 
 public class VegaXMLURIHandlerImpl implements URIHandler {
 
+	private static final String JAR = "jar";
+	private static final String SEPARATOR2 = "\\";
+	private static final String GUION = "-";
+	private static final String FLUJOS = "flujos";
+	private static final String RESOURCE = "resource";
+	private static final String PLATFORM = "platform";
 	private static final String EMPTY = "";
 	private static final String VEGA_URI = "vega:";
 	private static final String SEPARATOR = "/";
@@ -43,57 +49,23 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 
 	@Override
 	public URI deresolve(URI uri) {
-		System.out.print("Deresolve ");
 		URI vegaURI=null;
 		String sScheme = uri.scheme();
-		if ("platform".equals(sScheme))
+		if (PLATFORM.equals(sScheme))
 		{
-			String[] segList= uri.segments();			
-			boolean bProjectName = false;
-			String sProjectName=null;
-			boolean bFlujos = false;
-			String sFlujos=null;
-			for (String segment : segList) 
-			{
-				if (bProjectName)
-				{
-					sProjectName=segment;
-					bProjectName=false;
-				}
-				else if(bFlujos)
-				{
-					if (segment.contains("."))
-					{
-						sFlujos+=segment.substring(0, segment.indexOf("."));
-					}
-					else
-					{
-						sFlujos+=segment+".";
-					}					
-				}
-				if ("resource".equals(segment))
-				{
-					bProjectName=true;
-				}
-				else if ("flujos".equals(segment))
-				{
-					bFlujos=true;
-					sFlujos="flujos/";
-				}
-			}
-			vegaURI = URI.createURI(VEGA_URI +"//"+ sProjectName+ SEPARATOR + sFlujos + FRAGMENT0);
+			vegaURI = getURIPlatform(uri);
 		}
-		else if ("jar".equals(sScheme))
+		else if (JAR.equals(sScheme))
 		{
-			
+			vegaURI = getURIJar(uri);
 		}
-
+		
 		return vegaURI;
 	}
 
+
 	@Override
 	public URI resolve(URI uri) {
-		System.out.println("Resolve " + uri + " contra " + baseUri);
 		URI vegaURI = null;
 		if (uri.toString().startsWith(VEGA_URI)) {
 			String uriPath = uri.path();
@@ -111,6 +83,10 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		} else {
 			return uri.resolve(baseUri);
 		}
+	}
+
+	public void setFile(IFile file2) {
+		this.file = file2;
 	}
 
 	private URI searchURIs(URI uri, URI vegaURI, String fileNameToSearch,
@@ -286,8 +262,84 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		}
 		return orderedArtifacts;
 	}
-
-	public void setFile(IFile file2) {
-		this.file = file2;
+	private URI getURIJar(URI uri) {
+		String[] segList= uri.segments();	
+		String sAuthority = uri.authority();
+		String sProjectName=sAuthority.substring(sAuthority.lastIndexOf(SEPARATOR2)+1);
+		sProjectName=sProjectName.substring(0, sProjectName.indexOf(GUION));
+		boolean bFlujos = false;
+		String sFlujos=null;
+		for (String segment : segList) 
+		{
+			if(bFlujos)
+			{
+				if (segment.contains(DOT))
+				{
+					sFlujos+=segment.substring(0, segment.indexOf(DOT));
+				}
+				else
+				{
+					sFlujos+=segment+DOT;
+				}					
+			}
+			else if (FLUJOS.equals(segment))
+			{
+				bFlujos=true;
+				sFlujos=FLUJOS+SEPARATOR;
+			}
+		}
+		if (sProjectName!=null && sFlujos!=null)
+		{
+			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR + sProjectName+ SEPARATOR + sFlujos + FRAGMENT0);
+		}
+		else
+		{
+			return null;
+		}
 	}
+
+	private URI getURIPlatform(URI uri) {
+		String[] segList= uri.segments();			
+		boolean bProjectName = false;
+		String sProjectName=null;
+		boolean bFlujos = false;
+		String sFlujos=null;
+		for (String segment : segList) 
+		{
+			if (bProjectName)
+			{
+				sProjectName=segment;
+				bProjectName=false;
+			}
+			else if(bFlujos)
+			{
+				if (segment.contains(DOT))
+				{
+					sFlujos+=segment.substring(0, segment.indexOf(DOT));
+				}
+				else
+				{
+					sFlujos+=segment+DOT;
+				}					
+			}
+			if (RESOURCE.equals(segment))
+			{
+				bProjectName=true;
+			}
+			else if (FLUJOS.equals(segment))
+			{
+				bFlujos=true;
+				sFlujos=FLUJOS+SEPARATOR;
+			}
+		}
+		if (sProjectName!=null && sFlujos!=null)
+		{
+			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR + sProjectName+ SEPARATOR + sFlujos + FRAGMENT0);
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 }
