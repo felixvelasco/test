@@ -3,23 +3,21 @@ grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.common.Termina
 import "platform:/resource/com.isb.bks.ivr.voice.dsl/model/VoiceDsl.ecore"
 
 InputElement :
-	'inputname' name = ID ('maxNoInput' maxNoInput=INT)? ('maxNoMatch' maxNoMatch=INT)? ('maxAttempts' maxAttempts=INT)?
-	grammatics = Grammar?
+	'inputname' name = ID (('maxNoInput' maxNoInput=INT)? & ('maxNoMatch' maxNoMatch=INT)? & ('maxAttempts' maxAttempts=INT)?)
+	grammatics = Grammar*
 	conditions += Condition*
   	'audios' '{'
-  		'initial' ':' (
-			initialAudios += SimpleAudio+) &
+  		('initial' ':' (
+			initialAudios += SimpleAudio+))? &
 		('nomatch' ':' (
 		    noMatchAudios += ConditionalAudio+))? &
 		('noinput' ':' (
-		     noInputAudios += ConditionalAudio+))? &
-		'match' ':' (
-		    matchAudios += SimpleAudio+)?
+		     noInputAudios += ConditionalAudio+))? 
 	 '}'
 ;
  
 Grammar:
-	'grammar' mode = ('voice'|'dtmf') builtin ?= 'builtin'? src = STRING
+	'grammar' mode = ('voice'|'dtmf') builtin ?= 'builtin'? file ?= 'file'? src = STRING
 ;
 
 Condition:
@@ -34,5 +32,5 @@ SimpleAudio returns Audio:
 
 ConditionalAudio returns Audio:
 	{ConditionalAudio}
-	('with' condition = [Condition] ':' ) '{'? ('say' dontBargeIn ?= 'nobarge'?  (tts=STRING)? ('src' src=STRING)?)+ '}'? 
+	('with' condition = [Condition] ':' ) '{' ('say' dontBargeIn ?= 'nobarge'?  (tts=STRING)? ('src' src=STRING)?)+ '}'
  ;
