@@ -1,12 +1,11 @@
 package com.isb.jVoice.dsl.builder
 
 import com.isb.bks.ivr.voice.dsl.voiceDsl.Audio
-import com.isb.bks.ivr.voice.dsl.voiceDsl.Initial
 import com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement
-import com.isb.bks.ivr.voice.dsl.voiceDsl.NoMatch
 import java.io.File
 import java.io.FileWriter
 import org.eclipse.emf.ecore.resource.Resource
+import java.util.List
 
 class JSPGenerator {
 	
@@ -26,10 +25,10 @@ class JSPGenerator {
 	}
 	
 	def doGenerate(String name) '''
-	Â«doGenerateHeader(name)Â»
-		Â«if (element.audios.initial != null) doGenerateInitial(element.audios.initial)Â»
-		Â«doGenerateNoMatch(element.audios.noMatch)Â»
-	Â«doGenerateFooter()Â»
+	«doGenerateHeader(name)»
+		«if (element.initialAudios != null) doGenerateInitial(element.initialAudios)»
+		«doGenerateNoMatch(element.noMatchAudios)»
+	«doGenerateFooter()»
 	'''
 	
 	def doGenerateFooter() '''
@@ -37,22 +36,22 @@ class JSPGenerator {
 	</html>
 	'''
 	
-	def doGenerateInitial(Initial initial) '''
+	def doGenerateInitial(List<Audio> initial) '''
 		<div class='initial'>
 		<h1>Saludo inicial</h1>
-			Â«FOR Audio audio: initial.audioÂ»
-				Â«printAudio(audio)Â»
-			Â«ENDFORÂ»
+			«FOR Audio audio: initial»
+				«printAudio(audio)»
+			«ENDFOR»
 		</div>
 		
 	'''
 	
-	def doGenerateNoMatch(NoMatch match) '''
+	def doGenerateNoMatch(List<Audio> match) '''
 		<div class='nomatch'>
 		<h1>No match</h1>
-			Â«FOR Audio audio: match.audioÂ»
-				Â«printAudio(audio)Â»
-			Â«ENDFORÂ»
+			«FOR Audio audio: match»
+				«printAudio(audio)»
+			«ENDFOR»
 		</div>
 		
 	'''
@@ -60,20 +59,20 @@ class JSPGenerator {
 	def doGenerateHeader(String name) '''
 	<html>
 	<head>
-		<title>Â«element.configuration.nameÂ»</title>
+		<title>«element.name»</title>
 	</head>
 	<body>
 	'''
 	
 	def printAudio(Audio audio) '''
 		<p>
-		Â«IF audio.tts != null Â»
-			<h2>Â«audio.ttsÂ»</h2>
-		Â«ENDIFÂ»
+		«IF audio.tts != null »
+			<h2>«audio.tts»</h2>
+		«ENDIF»
 		&nbsp;
-		Â«IF audio.src != null Â»
-			<h2><b>Â«audio.srcÂ»</b></h2>
-		Â«ENDIFÂ»
+		«IF audio.src != null »
+			<h2><b>«audio.src»</b></h2>
+		«ENDIF»
 		</p>
 	'''
 	

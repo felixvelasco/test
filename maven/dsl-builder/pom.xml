@@ -89,7 +89,7 @@
 			<version>2.4.2-201306120542</version>
 		</dependency>
 		<dependency>
-			<groupId>com.isb.jVoice</groupId>
+			<groupId>com.isb.bks.ivr.voice.dsl</groupId>
 			<artifactId>com.isb.bks.ivr.voice.dsl</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
