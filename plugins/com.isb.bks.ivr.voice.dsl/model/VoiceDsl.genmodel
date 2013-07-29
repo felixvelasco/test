@@ -19,20 +19,24 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//InputElement/noMatchAudios"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//InputElement/noInputAudios"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//InputElement/matchAudios"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//InputElement/conditions"/>
     </genClasses>
     <genClasses ecoreClass="VoiceDsl.ecore#//Grammar">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Grammar/mode"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Grammar/builtin"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Grammar/src"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Grammar/expr"/>
     </genClasses>
     <genClasses ecoreClass="VoiceDsl.ecore#//Audio">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Audio/dontBargeIn"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Audio/tts"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Audio/src"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Audio/condition"/>
     </genClasses>
     <genClasses ecoreClass="VoiceDsl.ecore#//Condition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Condition/count"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Condition/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Condition/name"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//ConditionalAudio">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//ConditionalAudio/condition"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

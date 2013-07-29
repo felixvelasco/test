@@ -4,33 +4,33 @@ import "platform:/resource/com.isb.bks.ivr.voice.dsl/model/VoiceDsl.ecore"
 
 InputElement :
 	'inputname' name = ID (('maxNoInput' maxNoInput=INT)? & ('maxNoMatch' maxNoMatch=INT)? & ('maxAttempts' maxAttempts=INT)?)
-	grammatics = Grammar*
+	grammatics += Grammar*
 	conditions += Condition*
-  	'audios' '{'
+  	'audios' '{' (
   		('initial' ':' (
 			initialAudios += SimpleAudio+))? &
 		('nomatch' ':' (
 		    noMatchAudios += ConditionalAudio+))? &
 		('noinput' ':' (
-		     noInputAudios += ConditionalAudio+))? 
+		     noInputAudios += ConditionalAudio+))? )
 	 '}'
 ;
  
 Grammar:
-	'grammar' mode = ('voice'|'dtmf') builtin ?= 'builtin'? file ?= 'file'? src = STRING
+	'grammar' mode = ('voice'|'dtmf') expr ?= 'expr'? src = STRING
 ;
 
 Condition:
 	{Condition}
-	'count' count = INT name = STRING
+	'condition' condition = INT name = ID
 ;
 
 SimpleAudio returns Audio:
 	{Audio}
-	'say' dontBargeIn ?= 'nobarge'?  (tts=STRING)? ('src' src=STRING)? 
+	'say' dontBargeIn ?= 'nobargein'?  (tts=STRING)? ('src' src=STRING)? 
 ;	
 
 ConditionalAudio returns Audio:
 	{ConditionalAudio}
-	('with' condition = [Condition] ':' ) '{' ('say' dontBargeIn ?= 'nobarge'?  (tts=STRING)? ('src' src=STRING)?)+ '}'
+	('if' condition = [Condition] ) '{' ('say' dontBargeIn ?= 'nobargein'?  (tts=STRING)? ('src' src=STRING)?)+ '}'
  ;
