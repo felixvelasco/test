@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Generic_BKS:Flow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Generic_BKS="http://com.Generic_BKS.ecore" id="sopi1" name="sopi" description="sopi2">
+  <states xsi:type="Generic_BKS:Initial" id="rr" name="ini" description="r" flow="r" outTransactions="//@transitions.0"/>
+  <states xsi:type="Generic_BKS:End" id="y6" name="fin" description="tr" flow="gu" inTransactions="//@transitions.1"/>
+</Generic_BKS:Flow>
