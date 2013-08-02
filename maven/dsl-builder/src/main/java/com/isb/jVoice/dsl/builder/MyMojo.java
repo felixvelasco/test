@@ -33,11 +33,21 @@ import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
+
+import Core.CorePackage;
+import Generic_BKS.Flow;
+import Generic_BKS.Generic_BKSPackage;
+import Generic_BKS.State;
+import Generic_BKS.SubFlow;
+import IVR.IVRPackage;
 
 import com.google.inject.Injector;
 import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
@@ -100,24 +110,31 @@ public class MyMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException {
 
 		File f = outputDirectory;
-
+		getLog().info("ENTRA");
 		if (!f.exists()) {
 			f.mkdirs();
 		}
 
 		try {
 			Injector injector = new VoiceDslStandaloneSetup().createInjectorAndDoEMFRegistration();
+			
+			EPackage.Registry.INSTANCE.put(Generic_BKSPackage.eNS_URI, Generic_BKSPackage.eINSTANCE);
+			EPackage.Registry.INSTANCE.put(IVRPackage.eNS_URI, IVRPackage.eINSTANCE);
+			EPackage.Registry.INSTANCE.put(CorePackage.eNS_URI, CorePackage.eINSTANCE);
+			
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("flow", new XMIResourceFactoryImpl());
 
 			processDSLFiles(injector);
 			processFlowFiles();
 		} catch (Exception e) {
 			throw new MojoExecutionException("", e);
 		}
-
+		project.getArtifacts();
 		if (project != null) {
 			projectHelper.addResource(project, sourceDirectory.getAbsolutePath(),
 					Collections.singletonList("**/**.voiceDsl"), Collections.emptyList());
 			// project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
+
 		}
 	}
 
@@ -154,7 +171,7 @@ public class MyMojo extends AbstractMojo {
 			URI uri = URI.createFileURI(dslFile.getCanonicalPath());
 			Resource resource = resourceSet.getResource(uri, true);
 
-			JSPGenerator.compile(targetFile, resource);
+			//JSPGenerator.compile(targetFile, resource);
 
 			return true;
 		} else {
@@ -236,12 +253,48 @@ public class MyMojo extends AbstractMojo {
 		File targetFile = new File(outputDirectory, getTargetFlowName(flowFile.getName()));
 		if (buildRequired(flowFile, Collections.singletonList(targetFile))) {
 			targetFile.createNewFile();
+			
+			// resolve test
+			ResourceSet rSet = new ResourceSetImpl();			
+			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl();
+			vegaURIHandler.setMavenProject(project);
+			rSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
+					vegaURIHandler);
+			URI uri = URI.createFileURI(flowFile.getCanonicalPath().toString());
+			Resource res = rSet.getResource(uri, true);
 
-			ResourceSet resourceSet = new ResourceSetImpl();
-			URI uri = URI.createFileURI(flowFile.getCanonicalPath());
-			Resource resource = resourceSet.getResource(uri, true);
+			Flow flow = (Flow)res.getContents().get(0);
 
-			JSPGenerator.compile(targetFile, resource);
+			for (State state:flow.getStates())
+			{
+				if (state instanceof SubFlow)
+				{	
+					SubFlow sf = (SubFlow)state;
+					Flow flowCC = sf.getCalledFlow();
+					String gramma = "El estado " + sf.getName() + " apunta a " + flowCC.getName(); 					
+				}
+			}			
+			// deresolve test
+			URI uri2 = URI.createFileURI("D:/workspaces/prueba_xtext/padre/src/main/resources/o.flow");
+			
+			ResourceSet rSet2 = new ResourceSetImpl();
+			rSet2.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
+					vegaURIHandler);
+			Resource res2 = rSet2.getResource(uri2, true);
+
+			if(res2 instanceof XMLResource) {
+				
+				
+				((XMLResource)res2).getDefaultSaveOptions().put(
+						XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
+			}
+			
+			try {
+				res2.save(Collections.EMPTY_MAP);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			return true;
 		} else {
