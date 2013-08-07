@@ -1,0 +1,135 @@
+/**
+ */
+package xbase;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.xtext.common.types.JvmFormalParameter;
+
+import org.eclipse.xtext.xbase.XExpression;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>XClosure</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link org.eclipse.xtext.xbase.XClosure#getDeclaredFormalParameters <em>Declared Formal Parameters</em>}</li>
+ *   <li>{@link org.eclipse.xtext.xbase.XClosure#getExpression <em>Expression</em>}</li>
+ *   <li>{@link org.eclipse.xtext.xbase.XClosure#isExplicitSyntax <em>Explicit Syntax</em>}</li>
+ *   <li>{@link org.eclipse.xtext.xbase.XClosure#getImplicitParameter <em>Implicit Parameter</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @see xbase.XbasePackage#getXClosure()
+ * @model
+ * @generated
+ */
+public interface XClosure extends EObject, XExpression {
+	/**
+	 * Returns the value of the '<em><b>Declared Formal Parameters</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.xtext.common.types.JvmFormalParameter}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Declared Formal Parameters</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Declared Formal Parameters</em>' containment reference list.
+	 * @see xbase.XbasePackage#getXClosure_DeclaredFormalParameters()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<JvmFormalParameter> getDeclaredFormalParameters();
+
+	/**
+	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Expression</em>' containment reference.
+	 * @see #setExpression(XExpression)
+	 * @see xbase.XbasePackage#getXClosure_Expression()
+	 * @model containment="true"
+	 * @generated
+	 */
+	XExpression getExpression();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.xtext.xbase.XClosure#getExpression <em>Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Expression</em>' containment reference.
+	 * @see #getExpression()
+	 * @generated
+	 */
+	void setExpression(XExpression value);
+
+	/**
+	 * Returns the value of the '<em><b>Explicit Syntax</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Explicit Syntax</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Explicit Syntax</em>' attribute.
+	 * @see #setExplicitSyntax(boolean)
+	 * @see xbase.XbasePackage#getXClosure_ExplicitSyntax()
+	 * @model
+	 * @generated
+	 */
+	boolean isExplicitSyntax();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.xtext.xbase.XClosure#isExplicitSyntax <em>Explicit Syntax</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Explicit Syntax</em>' attribute.
+	 * @see #isExplicitSyntax()
+	 * @generated
+	 */
+	void setExplicitSyntax(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Implicit Parameter</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Implicit Parameter</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Implicit Parameter</em>' containment reference.
+	 * @see #setImplicitParameter(JvmFormalParameter)
+	 * @see xbase.XbasePackage#getXClosure_ImplicitParameter()
+	 * @model containment="true" transient="true" derived="true"
+	 * @generated
+	 */
+	JvmFormalParameter getImplicitParameter();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.xtext.xbase.XClosure#getImplicitParameter <em>Implicit Parameter</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Implicit Parameter</em>' containment reference.
+	 * @see #getImplicitParameter()
+	 * @generated
+	 */
+	void setImplicitParameter(JvmFormalParameter value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<JvmFormalParameter> getFormalParameters();
+
+} // XClosure

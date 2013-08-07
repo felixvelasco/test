@@ -1,0 +1,104 @@
+/**
+ */
+package voiceDsl;
+
+import org.eclipse.emf.ecore.EObject;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Audio</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link voiceDsl.Audio#isDontBargeIn <em>Dont Barge In</em>}</li>
+ *   <li>{@link voiceDsl.Audio#getTts <em>Tts</em>}</li>
+ *   <li>{@link voiceDsl.Audio#getSrc <em>Src</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @see voiceDsl.VoiceDslPackage#getAudio()
+ * @model
+ * @generated
+ */
+public interface Audio extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Dont Barge In</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Dont Barge In</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Dont Barge In</em>' attribute.
+	 * @see #setDontBargeIn(boolean)
+	 * @see voiceDsl.VoiceDslPackage#getAudio_DontBargeIn()
+	 * @model
+	 * @generated
+	 */
+	boolean isDontBargeIn();
+
+	/**
+	 * Sets the value of the '{@link voiceDsl.Audio#isDontBargeIn <em>Dont Barge In</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Dont Barge In</em>' attribute.
+	 * @see #isDontBargeIn()
+	 * @generated
+	 */
+	void setDontBargeIn(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Tts</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tts</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tts</em>' attribute.
+	 * @see #setTts(String)
+	 * @see voiceDsl.VoiceDslPackage#getAudio_Tts()
+	 * @model
+	 * @generated
+	 */
+	String getTts();
+
+	/**
+	 * Sets the value of the '{@link voiceDsl.Audio#getTts <em>Tts</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Tts</em>' attribute.
+	 * @see #getTts()
+	 * @generated
+	 */
+	void setTts(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Src</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Src</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Src</em>' attribute.
+	 * @see #setSrc(String)
+	 * @see voiceDsl.VoiceDslPackage#getAudio_Src()
+	 * @model
+	 * @generated
+	 */
+	String getSrc();
+
+	/**
+	 * Sets the value of the '{@link voiceDsl.Audio#getSrc <em>Src</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Src</em>' attribute.
+	 * @see #getSrc()
+	 * @generated
+	 */
+	void setSrc(String value);
+
+} // Audio
