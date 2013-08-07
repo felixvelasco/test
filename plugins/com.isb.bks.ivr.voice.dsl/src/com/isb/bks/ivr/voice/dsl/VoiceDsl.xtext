@@ -1,9 +1,10 @@
-grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.common.Terminals
+grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.xbase.Xbase
 
 import "platform:/resource/com.isb.bks.ivr.voice.dsl/model/VoiceDsl.ecore"
 
 InputElement :
-	'inputname' name = ID (('maxNoInput' maxNoInput=INT)? & ('maxNoMatch' maxNoMatch=INT)? & ('maxAttempts' maxAttempts=INT)?)
+	'inputname' name = ID (('maxNoInput' maxNoInput=INT)? & ('maxNoMatch' maxNoMatch=INT)? & 
+		                   ('maxAttempts' maxAttempts=INT)?) 
 	grammatics += Grammar*
 	conditions += Condition*
   	'audios' '{' (
@@ -16,14 +17,13 @@ InputElement :
 	 '}'
 ;
  
- 
 Grammar:
 	'grammar' mode = ('voice'|'dtmf') expr ?= 'expr'? src = STRING
 ;
 
 Condition:
 	{Condition}
-	'condition' condition = INT name = ID
+	'condition' name = ID expre = XExpression
 ;
 
 SimpleAudio returns Audio:
