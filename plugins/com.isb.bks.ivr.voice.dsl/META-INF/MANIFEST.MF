@@ -1,22 +1,26 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: com.isb.bks.ivr.voice.dsl
-Bundle-Vendor: My Company
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: com.isb.bks.ivr.voice.dsl; singleton:=true
+Bundle-ClassPath: .
+Bundle-SymbolicName: com.isb.bks.ivr.voice.dsl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.xtext.xbase;resolution:=optional;visibility:=reexport,
  org.eclipse.xtext.generator;resolution:=optional,
- org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
+ org.apache.commons.logging;resolution:=optional;bundle-version="1.0.4",
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.xtext.util,
+ org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.eclipse.xtext.common.types
+ org.eclipse.xtext.common.types,
+ org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
@@ -31,4 +35,15 @@ Export-Package: com.isb.bks.ivr.voice.dsl,
  com.isb.bks.ivr.voice.dsl.validation,
  com.isb.bks.ivr.voice.dsl.scoping,
  com.isb.bks.ivr.voice.dsl.generator,
- com.isb.bks.ivr.voice.dsl.formatting
+ com.isb.bks.ivr.voice.dsl.formatting,
+ types,
+ types.impl,
+ types.util,
+ voiceDsl,
+ voiceDsl.impl,
+ voiceDsl.util,
+ xbase,
+ xbase.impl,
+ xbase.util,
+ com.isb.bks.ivr.voice.dsl.jvmmodel
+
