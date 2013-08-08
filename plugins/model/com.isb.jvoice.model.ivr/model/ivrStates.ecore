@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ivrStates" nsURI="http://com.isb.jvoice.model.ivr/ivrStates/1.0"
+    nsPrefix="ivrStates">
+  <eClassifiers xsi:type="ecore:EClass" name="Prompt" eSuperTypes="../../com.isb.ivr.operation.model/model/coreOperations.ecore#//State">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="text" eType="#//Literal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transfer" eSuperTypes="../../com.isb.ivr.operation.model/model/coreOperations.ecore#//State">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="text" eType="#//Literal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Input" eSuperTypes="../../com.isb.ivr.operation.model/model/coreOperations.ecore#//State">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="text" eType="#//Literal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Menu" eSuperTypes="../../com.isb.ivr.operation.model/model/coreOperations.ecore#//State">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="texts" eType="#//Literal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Literal">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

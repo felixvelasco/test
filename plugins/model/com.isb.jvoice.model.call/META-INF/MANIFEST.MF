@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Call
+Bundle-SymbolicName: com.isb.jvoice.model.call
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.isb.jvoice.model.call.Activator
+Bundle-Vendor: ISB
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.isb.ivr.operation.model
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
