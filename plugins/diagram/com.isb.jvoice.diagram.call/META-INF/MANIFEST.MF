@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Call
+Bundle-SymbolicName: com.isb.jvoice.diagram.call
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.isb.jvoice.diagram.call.Activator
+Bundle-Vendor: ISB
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.graphiti,
+ org.eclipse.graphiti.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
