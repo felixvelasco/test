@@ -1,11 +1,11 @@
 package com.isb.jVoice.dsl.builder
 
-import com.isb.bks.ivr.voice.dsl.voiceDsl.Audio
-import com.isb.bks.ivr.voice.dsl.voiceDsl.InputElement
 import java.io.File
 import java.io.FileWriter
 import java.util.List
 import org.eclipse.emf.ecore.resource.Resource
+import voiceDsl.Audio
+import voiceDsl.InputElement
 
 class SpringWebFlowGenerator {
 	
