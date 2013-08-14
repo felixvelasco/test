@@ -2,36 +2,104 @@ grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.xbase.Xbase
 
 import "platform:/resource/com.isb.bks.ivr.voice.dsl/model/VoiceDsl.ecore"
 
-InputElement :
-	'inputname' name = ID (('maxNoInput' maxNoInput=INT)? & ('maxNoMatch' maxNoMatch=INT)? & 
-		                   ('maxAttempts' maxAttempts=INT)?) 
+
+InputElement:
+	('inputname' name = ID (('maxNoInput' maxNoInput=INT)? & ('maxNoMatch' maxNoMatch=INT)? & 
+		                   ('maxAttempts' maxAttempts=INT)? & ('timeout' timeout=INT ('s'|'ms'))? &
+		                   ('interdigittimeout' interdigittimeout=INT ('s'|'ms'))? & ('confidence' confidence=FLOAT)? & 
+		                   ('bargein' ((bargein?="true")|'false') )?) 
+	'grammars' '{'
 	grammatics += Grammar*
+	'}'
+	properties += Property*
 	conditions += Condition*
   	'audios' '{' (
-  		('initial' ':' (
-			initialAudios += SimpleAudio+))? &
+  		('main' ':' (
+			initialAudios += ConditionalAudio+))? &
+		('match' ':' (
+			matchAudios += ConditionalAudio+))? &
 		('nomatch' ':' (
 		    noMatchAudios += ConditionalAudio+))? &
 		('noinput' ':' (
 		     noInputAudios += ConditionalAudio+))? )
-	 '}'
+	 '}') 
+	 
+	 
+| ('promptname' name = ID 
+   properties += Property*
+	conditions += Condition*
+  	'audios' '{' (
+  		('main' ':' (
+			initialAudios += ConditionalAudio+))? &
+		('match' ':' (
+			matchAudios += ConditionalAudio+))? &
+		('nomatch' ':' (
+		    noMatchAudios += ConditionalAudio+))? &
+		('noinput' ':' (
+		     noInputAudios += ConditionalAudio+))? )
+	 '}') 
+
+
+| ('menuname' name = ID (('maxNoInput' maxNoInput=INT)? & ('maxNoMatch' maxNoMatch=INT)? & 
+		                   ('maxAttempts' maxAttempts=INT)? & ('timeout' timeout=INT ('s'|'ms'))? &
+		                   ('interdigittimeout' interdigittimeout=INT ('s'|'ms'))? & ('confidence' confidence=FLOAT)? & 
+		                   ('bargein' ((bargein?="true")|'false') )?) 
+		                   'grammars' '{'
+	grammatics += Grammar*
+	'}'
+	properties += Property*
+	conditions += Condition*
+  	'outputs' '{' 
+  		outputs+=Outputs+
+	 '}') 
+	 
 ;
+
+Outputs:
+	 name = ID ':' output+=Output (',' output+=Output)*
+;
+
+Output:
+	value =STRING | '*'
+;
+
+
  
 Grammar:
-	'grammar' mode = ('voice'|'dtmf') expr ?= 'expr'? src = STRING
+	mode = ('voice'|'dtmf'|'voicedtmf') expr ?= 'expr'? src = STRING
+;
+
+
+Property:
+	'property' name = ID value = STRING
 ;
 
 Condition:
 	{Condition}
-	'condition' name = ID expre = XExpression
+	'condition' name = ID condition = INT 
 ;
 
 SimpleAudio returns Audio:
 	{Audio}
-	'say' dontBargeIn ?= 'nobargein'?  (tts=STRING)? ('src' src=STRING)? 
+	'say' dontBargeIn ?= 'nobargein'? (('src' src=STRING) ('wording' tts=STRING)? |
+		                               (tts=STRING)	)
 ;	
 
 ConditionalAudio returns Audio:
 	{ConditionalAudio}
-	('if' condition = [Condition] ) '{' ('say' dontBargeIn ?= 'nobargein'?  (tts=STRING)? ('src' src=STRING)?)+ '}'
+	(( 'if'  condit=XExpression) '{' 
+		('say' dontBargeIn ?= 'nobargein'?   (('src' src=STRING) ('wording' tts=STRING)? |
+		                               (tts=STRING)	) )+ '}'
+    ('else if' condit=XExpression '{' 
+		('say' dontBargeIn ?= 'nobargein'?   (('src' src=STRING) ('wording' tts=STRING)? |
+		                                      (tts=STRING)	) )+ '}')?
+	('else {' 
+		('say' dontBargeIn ?= 'nobargein'?   (('src' src=STRING) ('wording' tts=STRING)? |
+		                                      (tts=STRING)	) )+ '}')?)
+    |SimpleAudio
  ;
+ 
+ terminal FLOAT :
+   (INT '.' INT)
+;
+
