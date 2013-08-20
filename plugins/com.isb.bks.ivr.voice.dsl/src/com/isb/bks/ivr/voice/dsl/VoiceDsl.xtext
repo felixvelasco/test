@@ -4,47 +4,33 @@ import "platform:/resource/com.isb.bks.ivr.voice.dsl/model/VoiceDsl.ecore"
 
 
 InputElement:
-	('inputname' name = ID (('maxNoInput' maxNoInput=INT)? & ('maxNoMatch' maxNoMatch=INT)? & 
-		                   ('maxAttempts' maxAttempts=INT)? & ('timeout' timeout=INT ('s'|'ms'))? &
-		                   ('interdigittimeout' interdigittimeout=INT ('s'|'ms'))? & ('confidence' confidence=FLOAT)? & 
-		                   ('bargein' ((bargein?="true")|'false') )?) 
+	('inputname' name = ID           
+    'configuration' '{'
+	   configuration = Configuration 
+	'}'
 	'grammars' '{'
-	grammatics += Grammar*
+	   grammatics += Grammar*
 	'}'
 	properties += Property*
 	conditions += Condition*
-  	'audios' '{' (
-  		('main' ':' (
-			initialAudios += ConditionalAudio+))? &
-		('match' ':' (
-			matchAudios += ConditionalAudio+))? &
-		('nomatch' ':' (
-		    noMatchAudios += ConditionalAudio+))? &
-		('noinput' ':' (
-		     noInputAudios += ConditionalAudio+))? )
+  	'audios' '{' 
+  		defAudios=DefAudios	
 	 '}') 
 	 
 	 
-| ('promptname' name = ID 
-   properties += Property*
-	conditions += Condition*
-  	'audios' '{' (
-  		('main' ':' (
-			initialAudios += ConditionalAudio+))? &
-		('match' ':' (
-			matchAudios += ConditionalAudio+))? &
-		('nomatch' ':' (
-		    noMatchAudios += ConditionalAudio+))? &
-		('noinput' ':' (
-		     noInputAudios += ConditionalAudio+))? )
+     | ('promptname' name = ID 
+     properties += Property*
+	 conditions += Condition*
+  	 'audios' '{' 
+  		defAudios=DefAudios	
 	 '}') 
 
 
-| ('menuname' name = ID (('maxNoInput' maxNoInput=INT)? & ('maxNoMatch' maxNoMatch=INT)? & 
-		                   ('maxAttempts' maxAttempts=INT)? & ('timeout' timeout=INT ('s'|'ms'))? &
-		                   ('interdigittimeout' interdigittimeout=INT ('s'|'ms'))? & ('confidence' confidence=FLOAT)? & 
-		                   ('bargein' ((bargein?="true")|'false') )?) 
-		                   'grammars' '{'
+    | ('menuname' name = ID
+	'configuration' '{'
+	   configuration = Configuration 
+	'}'
+    'grammars' '{'
 	grammatics += Grammar*
 	'}'
 	properties += Property*
@@ -55,20 +41,30 @@ InputElement:
 	 
 ;
 
-Outputs:
-	 name = ID ':' output+=Output (',' output+=Output)*
+DefAudios:
+	('main' ':' (
+			mainAudios += ConditionalAudio+))? &
+	('match' ':' (
+			matchAudios += ConditionalAudio+))? &
+	('nomatch' ':' (
+		    noMatchAudios += ConditionalAudio+))? &
+	('noinput' ':' (
+		     noInputAudios += ConditionalAudio+))? 
 ;
 
-Output:
-	value =STRING | '*'
+Configuration:
+	  ('maxNoInput' maxNoInput=INT)? & 
+	  ('maxNoMatch' maxNoMatch=INT)? & 
+	  ('maxAttempts' maxAttempts=INT)? &
+	  ('confidence' confidence=FLOAT)? & 
+	  ('bargein' ((bargein?="true")|'false') )? &
+	  ('timeout' timeout=INT ('s'|'ms'))? &
+	  ('interdigittimeout' interdigittimeout=INT ('s'|'ms'))? 
 ;
 
-
- 
 Grammar:
 	mode = ('voice'|'dtmf'|'voicedtmf') expr ?= 'expr'? src = STRING
 ;
-
 
 Property:
 	'property' name = ID value = STRING
@@ -79,6 +75,14 @@ Condition:
 	'condition' name = ID condition = INT 
 ;
 
+Outputs:
+	 name = ID ':' output+=Output (',' output+=Output)*
+;
+
+Output:
+	value =STRING | '*'
+;
+
 SimpleAudio returns Audio:
 	{Audio}
 	'say' dontBargeIn ?= 'nobargein'? (('src' src=STRING) ('wording' tts=STRING)? |
@@ -87,15 +91,9 @@ SimpleAudio returns Audio:
 
 ConditionalAudio returns Audio:
 	{ConditionalAudio}
-	(( 'if'  condit=XExpression) '{' 
-		('say' dontBargeIn ?= 'nobargein'?   (('src' src=STRING) ('wording' tts=STRING)? |
-		                               (tts=STRING)	) )+ '}'
-    ('else if' condit=XExpression '{' 
-		('say' dontBargeIn ?= 'nobargein'?   (('src' src=STRING) ('wording' tts=STRING)? |
-		                                      (tts=STRING)	) )+ '}')?
-	('else {' 
-		('say' dontBargeIn ?= 'nobargein'?   (('src' src=STRING) ('wording' tts=STRING)? |
-		                                      (tts=STRING)	) )+ '}')?)
+	(( 'when' '('  condit=XExpression) ')' '{' 
+		('say' dontBargeIn ?= 'nobargein'? (('src' src=STRING) ('wording' tts=STRING)? |
+		                                    (tts=STRING)	) )+ '}')		                                      
     |SimpleAudio
  ;
  
