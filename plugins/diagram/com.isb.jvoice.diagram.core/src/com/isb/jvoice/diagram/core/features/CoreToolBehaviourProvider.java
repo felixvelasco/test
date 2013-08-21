@@ -13,34 +13,32 @@ import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
+import org.eclipse.graphiti.tb.ConnectionSelectionInfoImpl;
 import org.eclipse.graphiti.tb.ContextMenuEntry;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
+import org.eclipse.graphiti.tb.IConnectionSelectionInfo;
 import org.eclipse.graphiti.tb.IContextMenuEntry;
 import org.eclipse.graphiti.tb.IDecorator;
-import org.eclipse.graphiti.tb.ISelectionInfo;
-import org.eclipse.graphiti.tb.SelectionInfoImpl;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
-public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider
-{
+public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 	public static final String PAD_CONTEXT_MENU_ENTRY = "padContextMenuEntry"; //$NON-NLS-1$
 	public static final String PAD_CONTEXT_SUB_MENU_ENTRY = "padContextSubMenuEntry"; //$NON-NLS-1$
 	public static final String CONTEXT_MENU_ENTRY = "contextMenuEntry"; //$NON-NLS-1$
-	
+
 	public CoreToolBehaviourProvider(IDiagramTypeProvider diagramTypeProvider) {
 		super(diagramTypeProvider);
 	}
+
 	@Override
 	public boolean isShowGuides() {
 		return true;
 	}
-	
-	
+
 	@Override
-	public IPaletteCompartmentEntry[] getPalette() 
-	{
+	public IPaletteCompartmentEntry[] getPalette() {
 		List<IPaletteCompartmentEntry> ret = new ArrayList<IPaletteCompartmentEntry>();
 
 		IPaletteCompartmentEntry[] superCompartments = super.getPalette();
@@ -50,28 +48,25 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider
 
 		return ret.toArray(new IPaletteCompartmentEntry[ret.size()]);
 	}
-	
+
 	@Override
-	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) 
-	{
+	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
 		PictogramElement pe = context.getInnerPictogramElement();
 		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
 
 		return super.getDoubleClickFeature(context);
 	}
 
-
-
 	@Override
 	public String getToolTip(GraphicsAlgorithm ga) {
 		return ((Text) ga).getValue();
 	}
-	
+
 	@Override
 	public IContextMenuEntry[] getContextMenu(ICustomContext context) {
 		// create a sub-menu for all custom features
 		ContextMenuEntry subMenu = new ContextMenuEntry(null, context);
-		subMenu.setText(null); //$NON-NLS-1$
+		subMenu.setText(null);
 		// display sub-menu hierarchical or flat
 		subMenu.setSubmenu(false);
 
@@ -89,15 +84,19 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider
 		return new IContextMenuEntry[] { subMenu };
 	}
 
+	@Override
 	public IDecorator[] getDecorators(PictogramElement pe) {
 		return super.getDecorators(pe);
 	}
-	
+
 	@Override
-	public ISelectionInfo getSelectionInfoForConnection(Connection connection) {
+	public IConnectionSelectionInfo getSelectionInfoForConnection(Connection connection) {
 		IColorConstant lineColor = new ColorConstant("191c26"); //$NON-NLS-1$
-		ISelectionInfo si = new SelectionInfoImpl(lineColor , lineColor,
-				lineColor, connection.getGraphicsAlgorithm().getLineStyle());
+		IConnectionSelectionInfo si = new ConnectionSelectionInfoImpl();
+		si.setColor(lineColor);
+		si.setHoverColor(lineColor);
+		si.setHoverColorParentSelected(lineColor);
+		si.setLineStyle(connection.getGraphicsAlgorithm().getLineStyle());
 		return si;
 	}
 }
