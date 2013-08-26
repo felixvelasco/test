@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Base -->
+      <package
+            uri="http://base.jvoice.vectorsf.com/"
+            class="com.vectorsf.jvoice.base.BasePackage"
+            genModel="model/Base.genmodel"/>
+   </extension>
+
+</plugin>

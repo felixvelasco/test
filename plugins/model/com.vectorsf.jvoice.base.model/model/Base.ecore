@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="base" nsURI="http://base.jvoice.vectorsf.com/" nsPrefix="base">
+  <eClassifiers xsi:type="ecore:EClass" name="JVElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JVModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projects" upperBound="-1"
+        eType="#//JVProject" containment="true" eOpposite="#//JVProject/model"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JVProject" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="packages" upperBound="-1"
+        eType="#//JVPackage" eOpposite="#//JVPackage/ownerProject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//JVModel"
+        eOpposite="#//JVModel/projects"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" eSuperTypes="#//JVElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JVPackage" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="beans" upperBound="-1"
+        eType="#//JVBean" containment="true" eOpposite="#//JVBean/ownerPackage"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownerProject" eType="#//JVProject"
+        eOpposite="#//JVProject/packages"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JVBean" abstract="true" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownerPackage" eType="#//JVPackage"
+        eOpposite="#//JVPackage/beans"/>
+  </eClassifiers>
+</ecore:EPackage>
