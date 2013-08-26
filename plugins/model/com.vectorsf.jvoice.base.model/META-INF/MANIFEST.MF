@@ -9,7 +9,9 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: com.vectorsf.jvoice.base,
  com.vectorsf.jvoice.base.impl,
+ com.vectorsf.jvoice.base.model.service,
  com.vectorsf.jvoice.base.util
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.core.resources
 Bundle-ActivationPolicy: lazy
