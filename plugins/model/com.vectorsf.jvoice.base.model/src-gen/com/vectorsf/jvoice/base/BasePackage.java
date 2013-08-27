@@ -223,7 +223,7 @@ public interface BasePackage extends EPackage {
 	int JV_PROJECT__DESCRIPTION = NAMED_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Packages</b></em>' reference list.
+	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -305,7 +305,7 @@ public interface BasePackage extends EPackage {
 	int JV_PACKAGE__BEANS = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Owner Project</b></em>' reference.
+	 * The feature id for the '<em><b>Owner Project</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -449,10 +449,10 @@ public interface BasePackage extends EPackage {
 	EClass getJVProject();
 
 	/**
-	 * Returns the meta object for the reference list '{@link com.vectorsf.jvoice.base.JVProject#getPackages <em>Packages</em>}'.
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.base.JVProject#getPackages <em>Packages</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Packages</em>'.
+	 * @return the meta object for the containment reference list '<em>Packages</em>'.
 	 * @see com.vectorsf.jvoice.base.JVProject#getPackages()
 	 * @see #getJVProject()
 	 * @generated
@@ -524,10 +524,10 @@ public interface BasePackage extends EPackage {
 	EReference getJVPackage_Beans();
 
 	/**
-	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.base.JVPackage#getOwnerProject <em>Owner Project</em>}'.
+	 * Returns the meta object for the container reference '{@link com.vectorsf.jvoice.base.JVPackage#getOwnerProject <em>Owner Project</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Owner Project</em>'.
+	 * @return the meta object for the container reference '<em>Owner Project</em>'.
 	 * @see com.vectorsf.jvoice.base.JVPackage#getOwnerProject()
 	 * @see #getJVPackage()
 	 * @generated
@@ -625,7 +625,7 @@ public interface BasePackage extends EPackage {
 		EClass JV_PROJECT = eINSTANCE.getJVProject();
 
 		/**
-		 * The meta object literal for the '<em><b>Packages</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Packages</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -685,7 +685,7 @@ public interface BasePackage extends EPackage {
 		EReference JV_PACKAGE__BEANS = eINSTANCE.getJVPackage_Beans();
 
 		/**
-		 * The meta object literal for the '<em><b>Owner Project</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Owner Project</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

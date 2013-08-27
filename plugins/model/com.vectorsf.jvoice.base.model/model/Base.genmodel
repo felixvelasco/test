@@ -17,7 +17,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Base.ecore#//JVModel/projects"/>
     </genClasses>
     <genClasses ecoreClass="Base.ecore#//JVProject">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Base.ecore#//JVProject/packages"/>
+      <genFeatures property="Readonly" children="true" createChild="true" ecoreFeature="ecore:EReference Base.ecore#//JVProject/packages"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Base.ecore#//JVProject/model"/>
     </genClasses>
     <genClasses ecoreClass="Base.ecore#//NamedElement">

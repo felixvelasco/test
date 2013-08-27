@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -46,16 +47,6 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * @ordered
 	 */
 	protected EList<JVBean> beans;
-
-	/**
-	 * The cached value of the '{@link #getOwnerProject() <em>Owner Project</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwnerProject()
-	 * @generated
-	 * @ordered
-	 */
-	protected JVProject ownerProject;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -94,24 +85,8 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * @generated
 	 */
 	public JVProject getOwnerProject() {
-		if (ownerProject != null && ownerProject.eIsProxy()) {
-			InternalEObject oldOwnerProject = (InternalEObject)ownerProject;
-			ownerProject = (JVProject)eResolveProxy(oldOwnerProject);
-			if (ownerProject != oldOwnerProject) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BasePackage.JV_PACKAGE__OWNER_PROJECT, oldOwnerProject, ownerProject));
-			}
-		}
-		return ownerProject;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public JVProject basicGetOwnerProject() {
-		return ownerProject;
+		if (eContainerFeatureID() != BasePackage.JV_PACKAGE__OWNER_PROJECT) return null;
+		return (JVProject)eInternalContainer();
 	}
 
 	/**
@@ -120,12 +95,7 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * @generated
 	 */
 	public NotificationChain basicSetOwnerProject(JVProject newOwnerProject, NotificationChain msgs) {
-		JVProject oldOwnerProject = ownerProject;
-		ownerProject = newOwnerProject;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BasePackage.JV_PACKAGE__OWNER_PROJECT, oldOwnerProject, newOwnerProject);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+		msgs = eBasicSetContainer((InternalEObject)newOwnerProject, BasePackage.JV_PACKAGE__OWNER_PROJECT, msgs);
 		return msgs;
 	}
 
@@ -135,10 +105,12 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * @generated
 	 */
 	public void setOwnerProject(JVProject newOwnerProject) {
-		if (newOwnerProject != ownerProject) {
+		if (newOwnerProject != eInternalContainer() || (eContainerFeatureID() != BasePackage.JV_PACKAGE__OWNER_PROJECT && newOwnerProject != null)) {
+			if (EcoreUtil.isAncestor(this, newOwnerProject))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (ownerProject != null)
-				msgs = ((InternalEObject)ownerProject).eInverseRemove(this, BasePackage.JV_PROJECT__PACKAGES, JVProject.class, msgs);
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwnerProject != null)
 				msgs = ((InternalEObject)newOwnerProject).eInverseAdd(this, BasePackage.JV_PROJECT__PACKAGES, JVProject.class, msgs);
 			msgs = basicSetOwnerProject(newOwnerProject, msgs);
@@ -160,8 +132,8 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 			case BasePackage.JV_PACKAGE__BEANS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getBeans()).basicAdd(otherEnd, msgs);
 			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				if (ownerProject != null)
-					msgs = ((InternalEObject)ownerProject).eInverseRemove(this, BasePackage.JV_PROJECT__PACKAGES, JVProject.class, msgs);
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwnerProject((JVProject)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -189,13 +161,26 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
+				return eInternalContainer().eInverseRemove(this, BasePackage.JV_PROJECT__PACKAGES, JVProject.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case BasePackage.JV_PACKAGE__BEANS:
 				return getBeans();
 			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				if (resolve) return getOwnerProject();
-				return basicGetOwnerProject();
+				return getOwnerProject();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -249,7 +234,7 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 			case BasePackage.JV_PACKAGE__BEANS:
 				return beans != null && !beans.isEmpty();
 			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				return ownerProject != null;
+				return getOwnerProject() != null;
 		}
 		return super.eIsSet(featureID);
 	}

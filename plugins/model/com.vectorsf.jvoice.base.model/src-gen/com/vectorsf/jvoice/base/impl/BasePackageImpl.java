@@ -354,7 +354,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		initEReference(getJVModel_Projects(), this.getJVProject(), this.getJVProject_Model(), "projects", null, 0, -1, JVModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(jvProjectEClass, JVProject.class, "JVProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getJVProject_Packages(), this.getJVPackage(), this.getJVPackage_OwnerProject(), "packages", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJVProject_Packages(), this.getJVPackage(), this.getJVPackage_OwnerProject(), "packages", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVProject_Model(), this.getJVModel(), this.getJVModel_Projects(), "model", null, 0, 1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(namedElementEClass, NamedElement.class, "NamedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -363,7 +363,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 
 		initEClass(jvPackageEClass, JVPackage.class, "JVPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVPackage_Beans(), this.getJVBean(), this.getJVBean_OwnerPackage(), "beans", null, 0, -1, JVPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJVPackage_OwnerProject(), this.getJVProject(), this.getJVProject_Packages(), "ownerProject", null, 0, 1, JVPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJVPackage_OwnerProject(), this.getJVProject(), this.getJVProject_Packages(), "ownerProject", null, 0, 1, JVPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(jvBeanEClass, JVBean.class, "JVBean", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVBean_OwnerPackage(), this.getJVPackage(), this.getJVPackage_Beans(), "ownerPackage", null, 0, 1, JVBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

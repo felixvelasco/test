@@ -6,20 +6,14 @@ import com.vectorsf.jvoice.base.BasePackage;
 import com.vectorsf.jvoice.base.JVModel;
 import com.vectorsf.jvoice.base.JVPackage;
 import com.vectorsf.jvoice.base.JVProject;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -39,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class JVProjectImpl extends NamedElementImpl implements JVProject {
 	/**
-	 * The cached value of the '{@link #getPackages() <em>Packages</em>}' reference list.
+	 * The cached value of the '{@link #getPackages() <em>Packages</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getPackages()
@@ -74,7 +68,7 @@ public class JVProjectImpl extends NamedElementImpl implements JVProject {
 	 */
 	public EList<JVPackage> getPackages() {
 		if (packages == null) {
-			packages = new EObjectWithInverseResolvingEList<JVPackage>(JVPackage.class, this, BasePackage.JV_PROJECT__PACKAGES, BasePackage.JV_PACKAGE__OWNER_PROJECT);
+			packages = new EObjectContainmentWithInverseEList<JVPackage>(JVPackage.class, this, BasePackage.JV_PROJECT__PACKAGES, BasePackage.JV_PACKAGE__OWNER_PROJECT);
 		}
 		return packages;
 	}

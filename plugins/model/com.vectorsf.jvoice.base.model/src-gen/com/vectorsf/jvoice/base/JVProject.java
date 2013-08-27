@@ -23,7 +23,7 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface JVProject extends NamedElement {
 	/**
-	 * Returns the value of the '<em><b>Packages</b></em>' reference list.
+	 * Returns the value of the '<em><b>Packages</b></em>' containment reference list.
 	 * The list contents are of type {@link com.vectorsf.jvoice.base.JVPackage}.
 	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.base.JVPackage#getOwnerProject <em>Owner Project</em>}'.
 	 * <!-- begin-user-doc -->
@@ -32,10 +32,10 @@ public interface JVProject extends NamedElement {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Packages</em>' reference list.
+	 * @return the value of the '<em>Packages</em>' containment reference list.
 	 * @see com.vectorsf.jvoice.base.BasePackage#getJVProject_Packages()
 	 * @see com.vectorsf.jvoice.base.JVPackage#getOwnerProject
-	 * @model opposite="ownerProject"
+	 * @model opposite="ownerProject" containment="true"
 	 * @generated
 	 */
 	EList<JVPackage> getPackages();

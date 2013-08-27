@@ -41,7 +41,7 @@ public interface JVPackage extends NamedElement {
 	EList<JVBean> getBeans();
 
 	/**
-	 * Returns the value of the '<em><b>Owner Project</b></em>' reference.
+	 * Returns the value of the '<em><b>Owner Project</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.base.JVProject#getPackages <em>Packages</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -49,20 +49,20 @@ public interface JVPackage extends NamedElement {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owner Project</em>' reference.
+	 * @return the value of the '<em>Owner Project</em>' container reference.
 	 * @see #setOwnerProject(JVProject)
 	 * @see com.vectorsf.jvoice.base.BasePackage#getJVPackage_OwnerProject()
 	 * @see com.vectorsf.jvoice.base.JVProject#getPackages
-	 * @model opposite="packages"
+	 * @model opposite="packages" transient="false"
 	 * @generated
 	 */
 	JVProject getOwnerProject();
 
 	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.base.JVPackage#getOwnerProject <em>Owner Project</em>}' reference.
+	 * Sets the value of the '{@link com.vectorsf.jvoice.base.JVPackage#getOwnerProject <em>Owner Project</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owner Project</em>' reference.
+	 * @param value the new value of the '<em>Owner Project</em>' container reference.
 	 * @see #getOwnerProject()
 	 * @generated
 	 */

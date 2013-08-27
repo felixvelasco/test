@@ -11,7 +11,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JVProject" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="packages" upperBound="-1"
-        eType="#//JVPackage" eOpposite="#//JVPackage/ownerProject"/>
+        eType="#//JVPackage" containment="true" eOpposite="#//JVPackage/ownerProject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//JVModel"
         eOpposite="#//JVModel/projects"/>
   </eClassifiers>
