@@ -98,6 +98,7 @@ public class JVProjectItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(BasePackage.Literals.JV_PROJECT__PACKAGES);
+			childrenFeatures.add(BasePackage.Literals.JV_PROJECT__CONFIGURATION);
 		}
 		return childrenFeatures;
 	}
@@ -153,6 +154,7 @@ public class JVProjectItemProvider
 
 		switch (notification.getFeatureID(JVProject.class)) {
 			case BasePackage.JV_PROJECT__PACKAGES:
+			case BasePackage.JV_PROJECT__CONFIGURATION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -174,6 +176,11 @@ public class JVProjectItemProvider
 			(createChildParameter
 				(BasePackage.Literals.JV_PROJECT__PACKAGES,
 				 BaseFactory.eINSTANCE.createJVPackage()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(BasePackage.Literals.JV_PROJECT__CONFIGURATION,
+				 BaseFactory.eINSTANCE.createConfiguration()));
 	}
 
 }

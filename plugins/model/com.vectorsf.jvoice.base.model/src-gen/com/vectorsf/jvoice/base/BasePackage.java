@@ -64,7 +64,7 @@ public interface BasePackage extends EPackage {
 	 * @see com.vectorsf.jvoice.base.impl.BasePackageImpl#getJVElement()
 	 * @generated
 	 */
-	int JV_ELEMENT = 0;
+	int JV_ELEMENT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -101,34 +101,7 @@ public interface BasePackage extends EPackage {
 	 * @see com.vectorsf.jvoice.base.impl.BasePackageImpl#getJVModel()
 	 * @generated
 	 */
-	int JV_MODEL = 1;
-
-	/**
-	 * The feature id for the '<em><b>Projects</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_MODEL__PROJECTS = 0;
-
-	/**
-	 * The number of structural features of the '<em>JV Model</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_MODEL_FEATURE_COUNT = 1;
-
-	/**
-	 * The number of operations of the '<em>JV Model</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_MODEL_OPERATION_COUNT = 0;
+	int JV_MODEL = 3;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.base.impl.NamedElementImpl <em>Named Element</em>}' class.
@@ -138,7 +111,7 @@ public interface BasePackage extends EPackage {
 	 * @see com.vectorsf.jvoice.base.impl.BasePackageImpl#getNamedElement()
 	 * @generated
 	 */
-	int NAMED_ELEMENT = 3;
+	int NAMED_ELEMENT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -193,70 +166,27 @@ public interface BasePackage extends EPackage {
 	 * @see com.vectorsf.jvoice.base.impl.BasePackageImpl#getJVProject()
 	 * @generated
 	 */
-	int JV_PROJECT = 2;
+	int JV_PROJECT = 5;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The meta object id for the '{@link com.vectorsf.jvoice.base.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.base.impl.StringToStringMapImpl
+	 * @see com.vectorsf.jvoice.base.impl.BasePackageImpl#getStringToStringMap()
 	 * @generated
-	 * @ordered
 	 */
-	int JV_PROJECT__ID = NAMED_ELEMENT__ID;
+	int STRING_TO_STRING_MAP = 6;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The meta object id for the '{@link com.vectorsf.jvoice.base.impl.ConfigurationImpl <em>Configuration</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.base.impl.ConfigurationImpl
+	 * @see com.vectorsf.jvoice.base.impl.BasePackageImpl#getConfiguration()
 	 * @generated
-	 * @ordered
 	 */
-	int JV_PROJECT__NAME = NAMED_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_PROJECT__DESCRIPTION = NAMED_ELEMENT__DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_PROJECT__PACKAGES = NAMED_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Model</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_PROJECT__MODEL = NAMED_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>JV Project</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_PROJECT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of operations of the '<em>JV Project</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_PROJECT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
+	int CONFIGURATION = 7;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.base.impl.JVPackageImpl <em>JV Package</em>}' class.
@@ -267,6 +197,97 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 */
 	int JV_PACKAGE = 4;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.base.impl.JVBeanImpl <em>JV Bean</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.base.impl.JVBeanImpl
+	 * @see com.vectorsf.jvoice.base.impl.BasePackageImpl#getJVBean()
+	 * @generated
+	 */
+	int JV_BEAN = 1;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_BEAN__ID = NAMED_ELEMENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_BEAN__NAME = NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_BEAN__DESCRIPTION = NAMED_ELEMENT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owner Package</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_BEAN__OWNER_PACKAGE = NAMED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>JV Bean</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_BEAN_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>JV Bean</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_BEAN_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Projects</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODEL__PROJECTS = 0;
+
+	/**
+	 * The number of structural features of the '<em>JV Model</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODEL_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>JV Model</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODEL_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -332,23 +353,13 @@ public interface BasePackage extends EPackage {
 	int JV_PACKAGE_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link com.vectorsf.jvoice.base.impl.JVBeanImpl <em>JV Bean</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see com.vectorsf.jvoice.base.impl.JVBeanImpl
-	 * @see com.vectorsf.jvoice.base.impl.BasePackageImpl#getJVBean()
-	 * @generated
-	 */
-	int JV_BEAN = 5;
-
-	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_BEAN__ID = NAMED_ELEMENT__ID;
+	int JV_PROJECT__ID = NAMED_ELEMENT__ID;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -357,7 +368,7 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int JV_BEAN__NAME = NAMED_ELEMENT__NAME;
+	int JV_PROJECT__NAME = NAMED_ELEMENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -366,34 +377,142 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int JV_BEAN__DESCRIPTION = NAMED_ELEMENT__DESCRIPTION;
+	int JV_PROJECT__DESCRIPTION = NAMED_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Owner Package</b></em>' container reference.
+	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_BEAN__OWNER_PACKAGE = NAMED_ELEMENT_FEATURE_COUNT + 0;
+	int JV_PROJECT__PACKAGES = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>JV Bean</em>' class.
+	 * The feature id for the '<em><b>Model</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_BEAN_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
+	int JV_PROJECT__MODEL = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of operations of the '<em>JV Bean</em>' class.
+	 * The feature id for the '<em><b>Configuration</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_BEAN_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
+	int JV_PROJECT__CONFIGURATION = NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>JV Project</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_PROJECT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>JV Project</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_PROJECT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To String Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>String To String Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP_OPERATION_COUNT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONFIGURATION__ID = NAMED_ELEMENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONFIGURATION__NAME = NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONFIGURATION__DESCRIPTION = NAMED_ELEMENT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONFIGURATION__PARAMETERS = NAMED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Configuration</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONFIGURATION_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Configuration</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONFIGURATION_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 
 	/**
@@ -469,6 +588,72 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getJVProject_Model();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.base.JVProject#getConfiguration <em>Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Configuration</em>'.
+	 * @see com.vectorsf.jvoice.base.JVProject#getConfiguration()
+	 * @see #getJVProject()
+	 * @generated
+	 */
+	EReference getJVProject_Configuration();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To String Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueDataType="org.eclipse.emf.ecore.EString"
+	 * @generated
+	 */
+	EClass getStringToStringMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToStringMap()
+	 * @generated
+	 */
+	EAttribute getStringToStringMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToStringMap()
+	 * @generated
+	 */
+	EAttribute getStringToStringMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.base.Configuration <em>Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Configuration</em>'.
+	 * @see com.vectorsf.jvoice.base.Configuration
+	 * @generated
+	 */
+	EClass getConfiguration();
+
+	/**
+	 * Returns the meta object for the map '{@link com.vectorsf.jvoice.base.Configuration#getParameters <em>Parameters</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Parameters</em>'.
+	 * @see com.vectorsf.jvoice.base.Configuration#getParameters()
+	 * @see #getConfiguration()
+	 * @generated
+	 */
+	EReference getConfiguration_Parameters();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.base.NamedElement <em>Named Element</em>}'.
@@ -639,6 +824,58 @@ public interface BasePackage extends EPackage {
 		 * @generated
 		 */
 		EReference JV_PROJECT__MODEL = eINSTANCE.getJVProject_Model();
+
+		/**
+		 * The meta object literal for the '<em><b>Configuration</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference JV_PROJECT__CONFIGURATION = eINSTANCE.getJVProject_Configuration();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.base.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.base.impl.StringToStringMapImpl
+		 * @see com.vectorsf.jvoice.base.impl.BasePackageImpl#getStringToStringMap()
+		 * @generated
+		 */
+		EClass STRING_TO_STRING_MAP = eINSTANCE.getStringToStringMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_STRING_MAP__KEY = eINSTANCE.getStringToStringMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_STRING_MAP__VALUE = eINSTANCE.getStringToStringMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.base.impl.ConfigurationImpl <em>Configuration</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.base.impl.ConfigurationImpl
+		 * @see com.vectorsf.jvoice.base.impl.BasePackageImpl#getConfiguration()
+		 * @generated
+		 */
+		EClass CONFIGURATION = eINSTANCE.getConfiguration();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameters</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONFIGURATION__PARAMETERS = eINSTANCE.getConfiguration_Parameters();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.base.impl.NamedElementImpl <em>Named Element</em>}' class.

@@ -4,6 +4,7 @@ package com.vectorsf.jvoice.base.impl;
 
 import com.vectorsf.jvoice.base.*;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -56,11 +57,13 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case BasePackage.NAMED_ELEMENT: return createNamedElement();
 			case BasePackage.JV_ELEMENT: return createJVElement();
 			case BasePackage.JV_MODEL: return createJVModel();
-			case BasePackage.JV_PROJECT: return createJVProject();
-			case BasePackage.NAMED_ELEMENT: return createNamedElement();
 			case BasePackage.JV_PACKAGE: return createJVPackage();
+			case BasePackage.JV_PROJECT: return createJVProject();
+			case BasePackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
+			case BasePackage.CONFIGURATION: return createConfiguration();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -94,6 +97,26 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory {
 	public JVProject createJVProject() {
 		JVProjectImpl jvProject = new JVProjectImpl();
 		return jvProject;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, String> createStringToStringMap() {
+		StringToStringMapImpl stringToStringMap = new StringToStringMapImpl();
+		return stringToStringMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Configuration createConfiguration() {
+		ConfigurationImpl configuration = new ConfigurationImpl();
+		return configuration;
 	}
 
 	/**

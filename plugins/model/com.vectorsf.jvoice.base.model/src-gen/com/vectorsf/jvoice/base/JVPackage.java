@@ -2,7 +2,7 @@
  */
 package com.vectorsf.jvoice.base;
 
-import org.eclipse.emf.common.util.EList;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,7 +38,7 @@ public interface JVPackage extends NamedElement {
 	 * @model opposite="ownerPackage" containment="true"
 	 * @generated
 	 */
-	EList<JVBean> getBeans();
+	List<JVBean> getBeans();
 
 	/**
 	 * Returns the value of the '<em><b>Owner Project</b></em>' container reference.

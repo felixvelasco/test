@@ -8,6 +8,7 @@ import com.vectorsf.jvoice.base.JVProject;
 
 import java.util.Collection;
 
+import java.util.List;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -68,7 +69,7 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<JVProject> getProjects() {
+	public List<JVProject> getProjects() {
 		if (projects == null) {
 			projects = new EObjectContainmentWithInverseEList<JVProject>(JVProject.class, this, BasePackage.JV_MODEL__PROJECTS, BasePackage.JV_PROJECT__MODEL);
 		}

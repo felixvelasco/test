@@ -4,6 +4,7 @@ package com.vectorsf.jvoice.base.util;
 
 import com.vectorsf.jvoice.base.*;
 
+import java.util.Map;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -68,6 +69,14 @@ public class BaseAdapterFactory extends AdapterFactoryImpl {
 	protected BaseSwitch<Adapter> modelSwitch =
 		new BaseSwitch<Adapter>() {
 			@Override
+			public Adapter caseNamedElement(NamedElement object) {
+				return createNamedElementAdapter();
+			}
+			@Override
+			public Adapter caseJVBean(JVBean object) {
+				return createJVBeanAdapter();
+			}
+			@Override
 			public Adapter caseJVElement(JVElement object) {
 				return createJVElementAdapter();
 			}
@@ -76,20 +85,20 @@ public class BaseAdapterFactory extends AdapterFactoryImpl {
 				return createJVModelAdapter();
 			}
 			@Override
-			public Adapter caseJVProject(JVProject object) {
-				return createJVProjectAdapter();
-			}
-			@Override
-			public Adapter caseNamedElement(NamedElement object) {
-				return createNamedElementAdapter();
-			}
-			@Override
 			public Adapter caseJVPackage(JVPackage object) {
 				return createJVPackageAdapter();
 			}
 			@Override
-			public Adapter caseJVBean(JVBean object) {
-				return createJVBeanAdapter();
+			public Adapter caseJVProject(JVProject object) {
+				return createJVProjectAdapter();
+			}
+			@Override
+			public Adapter caseStringToStringMap(Map.Entry<String, String> object) {
+				return createStringToStringMapAdapter();
+			}
+			@Override
+			public Adapter caseConfiguration(Configuration object) {
+				return createConfigurationAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -150,6 +159,34 @@ public class BaseAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createJVProjectAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To String Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToStringMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.base.Configuration <em>Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.base.Configuration
+	 * @generated
+	 */
+	public Adapter createConfigurationAdapter() {
 		return null;
 	}
 

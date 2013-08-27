@@ -2,7 +2,7 @@
  */
 package com.vectorsf.jvoice.base;
 
-import org.eclipse.emf.common.util.EList;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.base.JVProject#getPackages <em>Packages</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.base.JVProject#getModel <em>Model</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.base.JVProject#getConfiguration <em>Configuration</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,7 +39,7 @@ public interface JVProject extends NamedElement {
 	 * @model opposite="ownerProject" containment="true"
 	 * @generated
 	 */
-	EList<JVPackage> getPackages();
+	List<JVPackage> getPackages();
 
 	/**
 	 * Returns the value of the '<em><b>Model</b></em>' container reference.
@@ -67,5 +68,21 @@ public interface JVProject extends NamedElement {
 	 * @generated
 	 */
 	void setModel(JVModel value);
+
+	/**
+	 * Returns the value of the '<em><b>Configuration</b></em>' containment reference list.
+	 * The list contents are of type {@link com.vectorsf.jvoice.base.Configuration}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Configuration</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Configuration</em>' containment reference list.
+	 * @see com.vectorsf.jvoice.base.BasePackage#getJVProject_Configuration()
+	 * @model containment="true"
+	 * @generated
+	 */
+	List<Configuration> getConfiguration();
 
 } // JVProject

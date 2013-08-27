@@ -2,8 +2,7 @@
  */
 package com.vectorsf.jvoice.base;
 
-import org.eclipse.emf.common.util.EList;
-
+import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -39,6 +38,6 @@ public interface JVModel extends EObject {
 	 * @model opposite="model" containment="true"
 	 * @generated
 	 */
-	EList<JVProject> getProjects();
+	List<JVProject> getProjects();
 
 } // JVModel

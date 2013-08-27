@@ -4,6 +4,7 @@ package com.vectorsf.jvoice.base.impl;
 
 import com.vectorsf.jvoice.base.BaseFactory;
 import com.vectorsf.jvoice.base.BasePackage;
+import com.vectorsf.jvoice.base.Configuration;
 import com.vectorsf.jvoice.base.JVBean;
 import com.vectorsf.jvoice.base.JVElement;
 import com.vectorsf.jvoice.base.JVModel;
@@ -11,6 +12,7 @@ import com.vectorsf.jvoice.base.JVPackage;
 import com.vectorsf.jvoice.base.JVProject;
 import com.vectorsf.jvoice.base.NamedElement;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -45,6 +47,20 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * @generated
 	 */
 	private EClass jvProjectEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToStringMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass configurationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -196,6 +212,60 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getJVProject_Configuration() {
+		return (EReference)jvProjectEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringToStringMap() {
+		return stringToStringMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToStringMap_Key() {
+		return (EAttribute)stringToStringMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToStringMap_Value() {
+		return (EAttribute)stringToStringMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getConfiguration() {
+		return configurationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConfiguration_Parameters() {
+		return (EReference)configurationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getNamedElement() {
 		return namedElementEClass;
 	}
@@ -291,26 +361,34 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		isCreated = true;
 
 		// Create classes and their features
+		namedElementEClass = createEClass(NAMED_ELEMENT);
+		createEAttribute(namedElementEClass, NAMED_ELEMENT__NAME);
+		createEAttribute(namedElementEClass, NAMED_ELEMENT__DESCRIPTION);
+
+		jvBeanEClass = createEClass(JV_BEAN);
+		createEReference(jvBeanEClass, JV_BEAN__OWNER_PACKAGE);
+
 		jvElementEClass = createEClass(JV_ELEMENT);
 		createEAttribute(jvElementEClass, JV_ELEMENT__ID);
 
 		jvModelEClass = createEClass(JV_MODEL);
 		createEReference(jvModelEClass, JV_MODEL__PROJECTS);
 
-		jvProjectEClass = createEClass(JV_PROJECT);
-		createEReference(jvProjectEClass, JV_PROJECT__PACKAGES);
-		createEReference(jvProjectEClass, JV_PROJECT__MODEL);
-
-		namedElementEClass = createEClass(NAMED_ELEMENT);
-		createEAttribute(namedElementEClass, NAMED_ELEMENT__NAME);
-		createEAttribute(namedElementEClass, NAMED_ELEMENT__DESCRIPTION);
-
 		jvPackageEClass = createEClass(JV_PACKAGE);
 		createEReference(jvPackageEClass, JV_PACKAGE__BEANS);
 		createEReference(jvPackageEClass, JV_PACKAGE__OWNER_PROJECT);
 
-		jvBeanEClass = createEClass(JV_BEAN);
-		createEReference(jvBeanEClass, JV_BEAN__OWNER_PACKAGE);
+		jvProjectEClass = createEClass(JV_PROJECT);
+		createEReference(jvProjectEClass, JV_PROJECT__PACKAGES);
+		createEReference(jvProjectEClass, JV_PROJECT__MODEL);
+		createEReference(jvProjectEClass, JV_PROJECT__CONFIGURATION);
+
+		stringToStringMapEClass = createEClass(STRING_TO_STRING_MAP);
+		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__KEY);
+		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__VALUE);
+
+		configurationEClass = createEClass(CONFIGURATION);
+		createEReference(configurationEClass, CONFIGURATION__PARAMETERS);
 	}
 
 	/**
@@ -341,32 +419,41 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		jvProjectEClass.getESuperTypes().add(this.getNamedElement());
 		namedElementEClass.getESuperTypes().add(this.getJVElement());
-		jvPackageEClass.getESuperTypes().add(this.getNamedElement());
 		jvBeanEClass.getESuperTypes().add(this.getNamedElement());
+		jvPackageEClass.getESuperTypes().add(this.getNamedElement());
+		jvProjectEClass.getESuperTypes().add(this.getNamedElement());
+		configurationEClass.getESuperTypes().add(this.getNamedElement());
 
 		// Initialize classes, features, and operations; add parameters
+		initEClass(namedElementEClass, NamedElement.class, "NamedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getNamedElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNamedElement_Description(), ecorePackage.getEString(), "description", null, 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(jvBeanEClass, JVBean.class, "JVBean", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getJVBean_OwnerPackage(), this.getJVPackage(), this.getJVPackage_Beans(), "ownerPackage", null, 0, 1, JVBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(jvElementEClass, JVElement.class, "JVElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getJVElement_Id(), ecorePackage.getEString(), "id", null, 0, 1, JVElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(jvModelEClass, JVModel.class, "JVModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVModel_Projects(), this.getJVProject(), this.getJVProject_Model(), "projects", null, 0, -1, JVModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(jvProjectEClass, JVProject.class, "JVProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getJVProject_Packages(), this.getJVPackage(), this.getJVPackage_OwnerProject(), "packages", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJVProject_Model(), this.getJVModel(), this.getJVModel_Projects(), "model", null, 0, 1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(namedElementEClass, NamedElement.class, "NamedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getNamedElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNamedElement_Description(), ecorePackage.getEString(), "description", null, 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(jvPackageEClass, JVPackage.class, "JVPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVPackage_Beans(), this.getJVBean(), this.getJVBean_OwnerPackage(), "beans", null, 0, -1, JVPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVPackage_OwnerProject(), this.getJVProject(), this.getJVProject_Packages(), "ownerProject", null, 0, 1, JVPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(jvBeanEClass, JVBean.class, "JVBean", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getJVBean_OwnerPackage(), this.getJVPackage(), this.getJVPackage_Beans(), "ownerPackage", null, 0, 1, JVBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(jvProjectEClass, JVProject.class, "JVProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getJVProject_Packages(), this.getJVPackage(), this.getJVPackage_OwnerProject(), "packages", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJVProject_Model(), this.getJVModel(), this.getJVModel_Projects(), "model", null, 0, 1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJVProject_Configuration(), this.getConfiguration(), null, "configuration", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToStringMapEClass, Map.Entry.class, "StringToStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToStringMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToStringMap_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getConfiguration_Parameters(), this.getStringToStringMap(), null, "parameters", null, 0, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

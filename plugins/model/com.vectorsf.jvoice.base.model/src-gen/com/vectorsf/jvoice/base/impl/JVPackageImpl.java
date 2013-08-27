@@ -9,6 +9,7 @@ import com.vectorsf.jvoice.base.JVProject;
 
 import java.util.Collection;
 
+import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -72,7 +73,7 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<JVBean> getBeans() {
+	public List<JVBean> getBeans() {
 		if (beans == null) {
 			beans = new EObjectContainmentWithInverseEList<JVBean>(JVBean.class, this, BasePackage.JV_PACKAGE__BEANS, BasePackage.JV_BEAN__OWNER_PACKAGE);
 		}

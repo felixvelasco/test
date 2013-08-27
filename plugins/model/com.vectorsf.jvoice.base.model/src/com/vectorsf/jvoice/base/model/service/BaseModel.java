@@ -1,6 +1,8 @@
 package com.vectorsf.jvoice.base.model.service;
 
+import java.io.IOException;
 import java.util.Iterator;
+import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -16,6 +18,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 
 import com.vectorsf.jvoice.base.BaseFactory;
+import com.vectorsf.jvoice.base.Configuration;
 import com.vectorsf.jvoice.base.JVBean;
 import com.vectorsf.jvoice.base.JVModel;
 import com.vectorsf.jvoice.base.JVPackage;
@@ -58,7 +61,36 @@ public class BaseModel {
 			}
 		}
 
+		IFolder configurationsFolder = (IFolder) project.findMember("src/main/config/properties");
+		if (configurationsFolder != null) {
+			try {
+				for (IResource res : configurationsFolder.members()) {
+					if (res.getType() == IResource.FILE && res.getFileExtension().equalsIgnoreCase(".properties")) {
+						jvProject.getConfiguration().add(createConfigurationFromFile((IFile) res));
+					}
+				}
+			} catch (CoreException e) {
+			}
+		}
+
 		return jvProject;
+	}
+
+	private Configuration createConfigurationFromFile(IFile res) throws CoreException {
+		Configuration configuration = BaseFactory.eINSTANCE.createConfiguration();
+		configuration.setName(res.getName().substring(0, res.getName().lastIndexOf('.')));
+		Properties pr = new Properties();
+		try {
+			pr.load(res.getContents());
+		} catch (IOException e) {
+			throw new CoreException(null);
+		}
+
+		for (String name : pr.stringPropertyNames()) {
+			configuration.getParameters().put(name, pr.getProperty(name));
+		}
+
+		return configuration;
 	}
 
 	private JVPackage createPackage(IFolder folder, IPath packagePath) throws CoreException {

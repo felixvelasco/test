@@ -141,6 +141,52 @@ public class BaseItemProviderAdapterFactory extends BaseAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected StringToStringMapItemProvider stringToStringMapItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link java.util.Map.Entry}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createStringToStringMapAdapter() {
+		if (stringToStringMapItemProvider == null) {
+			stringToStringMapItemProvider = new StringToStringMapItemProvider(this);
+		}
+
+		return stringToStringMapItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.base.Configuration} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ConfigurationItemProvider configurationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.base.Configuration}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createConfigurationAdapter() {
+		if (configurationItemProvider == null) {
+			configurationItemProvider = new ConfigurationItemProvider(this);
+		}
+
+		return configurationItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.base.NamedElement} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -285,11 +331,13 @@ public class BaseItemProviderAdapterFactory extends BaseAdapterFactory implement
 	 * @generated
 	 */
 	public void dispose() {
+		if (namedElementItemProvider != null) namedElementItemProvider.dispose();
 		if (jvElementItemProvider != null) jvElementItemProvider.dispose();
 		if (jvModelItemProvider != null) jvModelItemProvider.dispose();
-		if (jvProjectItemProvider != null) jvProjectItemProvider.dispose();
-		if (namedElementItemProvider != null) namedElementItemProvider.dispose();
 		if (jvPackageItemProvider != null) jvPackageItemProvider.dispose();
+		if (jvProjectItemProvider != null) jvProjectItemProvider.dispose();
+		if (stringToStringMapItemProvider != null) stringToStringMapItemProvider.dispose();
+		if (configurationItemProvider != null) configurationItemProvider.dispose();
 	}
 
 }

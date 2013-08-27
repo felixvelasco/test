@@ -4,6 +4,7 @@ package com.vectorsf.jvoice.base.util;
 
 import com.vectorsf.jvoice.base.*;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -66,6 +67,21 @@ public class BaseSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case BasePackage.NAMED_ELEMENT: {
+				NamedElement namedElement = (NamedElement)theEObject;
+				T result = caseNamedElement(namedElement);
+				if (result == null) result = caseJVElement(namedElement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BasePackage.JV_BEAN: {
+				JVBean jvBean = (JVBean)theEObject;
+				T result = caseJVBean(jvBean);
+				if (result == null) result = caseNamedElement(jvBean);
+				if (result == null) result = caseJVElement(jvBean);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case BasePackage.JV_ELEMENT: {
 				JVElement jvElement = (JVElement)theEObject;
 				T result = caseJVElement(jvElement);
@@ -78,21 +94,6 @@ public class BaseSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BasePackage.JV_PROJECT: {
-				JVProject jvProject = (JVProject)theEObject;
-				T result = caseJVProject(jvProject);
-				if (result == null) result = caseNamedElement(jvProject);
-				if (result == null) result = caseJVElement(jvProject);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case BasePackage.NAMED_ELEMENT: {
-				NamedElement namedElement = (NamedElement)theEObject;
-				T result = caseNamedElement(namedElement);
-				if (result == null) result = caseJVElement(namedElement);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case BasePackage.JV_PACKAGE: {
 				JVPackage jvPackage = (JVPackage)theEObject;
 				T result = caseJVPackage(jvPackage);
@@ -101,11 +102,25 @@ public class BaseSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BasePackage.JV_BEAN: {
-				JVBean jvBean = (JVBean)theEObject;
-				T result = caseJVBean(jvBean);
-				if (result == null) result = caseNamedElement(jvBean);
-				if (result == null) result = caseJVElement(jvBean);
+			case BasePackage.JV_PROJECT: {
+				JVProject jvProject = (JVProject)theEObject;
+				T result = caseJVProject(jvProject);
+				if (result == null) result = caseNamedElement(jvProject);
+				if (result == null) result = caseJVElement(jvProject);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BasePackage.STRING_TO_STRING_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, String> stringToStringMap = (Map.Entry<String, String>)theEObject;
+				T result = caseStringToStringMap(stringToStringMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BasePackage.CONFIGURATION: {
+				Configuration configuration = (Configuration)theEObject;
+				T result = caseConfiguration(configuration);
+				if (result == null) result = caseNamedElement(configuration);
+				if (result == null) result = caseJVElement(configuration);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -155,6 +170,36 @@ public class BaseSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseJVProject(JVProject object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To String Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To String Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToStringMap(Map.Entry<String, String> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Configuration</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Configuration</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConfiguration(Configuration object) {
 		return null;
 	}
 
