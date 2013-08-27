@@ -3,45 +3,38 @@ grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.xbase.Xbase
 import "platform:/resource/com.isb.bks.ivr.voice.dsl/model/VoiceDsl.ecore"
 
 
-InputElement:
+VoiceDsl:
 	('inputname' name = ID           
-    'configuration' '{'
-	   configuration = Configuration 
-	'}'
-	'grammars' '{'
-	   grammatics += Grammar*
-	'}'
-	properties += Property*
-	conditions += Condition*
-  	'audios' '{' 
-  		defAudios=DefAudios	
-	 '}') 
+      ((configuration = Configuration)& 
+ 	   (grammars = Grammars)&
+	   (properties += Property*)&
+	   (conditions += Condition*))
+  	    audios=Audios	
+	  ) 
 	 
-	 
-     | ('promptname' name = ID 
-     properties += Property*
-	 conditions += Condition*
-  	 'audios' '{' 
-  		defAudios=DefAudios	
-	 '}') 
+    |('promptname' name = ID 
+       ((properties += Property*)&
+	    (conditions += Condition*))
+  	     audios=Audios	
+	   ) 
 
-
-    | ('menuname' name = ID
-	'configuration' '{'
-	   configuration = Configuration 
-	'}'
-    'grammars' '{'
-	grammatics += Grammar*
-	'}'
-	properties += Property*
-	conditions += Condition*
-  	'outputs' '{' 
-  		outputs+=Outputs+
-	 '}') 
-	 
+    |('menuname' name = ID
+	   ((configuration = Configuration)& 
+        (grammars = Grammars)&
+	    (properties += Property*)&
+	    (conditions += Condition*))
+  	     outputs=Outputs
+	   ) 
 ;
 
-DefAudios:
+Grammars:
+	'grammars' '{'
+	       grammatics += Grammar*
+	    '}'
+;
+
+Audios:
+	'audios' '{' 
 	('main' ':' (
 			mainAudios += ConditionalAudio+))? &
 	('match' ':' (
@@ -50,16 +43,22 @@ DefAudios:
 		    noMatchAudios += ConditionalAudio+))? &
 	('noinput' ':' (
 		     noInputAudios += ConditionalAudio+))? 
+		     
+    '}'
 ;
 
 Configuration:
-	  ('maxNoInput' maxNoInput=INT)? & 
-	  ('maxNoMatch' maxNoMatch=INT)? & 
-	  ('maxAttempts' maxAttempts=INT)? &
-	  ('confidence' confidence=FLOAT)? & 
-	  ('bargein' ((bargein?="true")|'false') )? &
-	  ('timeout' timeout=INT ('s'|'ms'))? &
-	  ('interdigittimeout' interdigittimeout=INT ('s'|'ms'))? 
+	'configuration' '{'
+	  configValue += ConfigValue*
+	 '}'
+;
+
+ConfigValue:
+	name = ID value=ConfigValueValue
+;
+
+ConfigValueValue:
+	INT ('ms')?| FLOAT | 'true' | 'false' 
 ;
 
 Grammar:
@@ -67,7 +66,7 @@ Grammar:
 ;
 
 Property:
-	'property' name = ID value = STRING
+	'property' name = QualifiedName value = STRING
 ;
 
 Condition:
@@ -76,28 +75,34 @@ Condition:
 ;
 
 Outputs:
-	 name = ID ':' output+=Output (',' output+=Output)*
+	'outputs' '{' 
+  		  output+=Output+
+	 '}'
 ;
 
 Output:
-	value =STRING | '*'
+	 name = ID ':' outputValue+=OutputValue (',' outputValue+=OutputValue)*
+;
+
+OutputValue:
+	value=STRING | value='*'
 ;
 
 SimpleAudio returns Audio:
 	{Audio}
-	'say' dontBargeIn ?= 'nobargein'? (('src' src=STRING) ('wording' tts=STRING)? |
-		                               (tts=STRING)	)
+	'say' (('src' src=STRING)? ('wording' tts=STRING)? )
 ;	
 
 ConditionalAudio returns Audio:
 	{ConditionalAudio}
-	(( 'when' '('  condit=XExpression) ')' '{' 
-		('say' dontBargeIn ?= 'nobargein'? (('src' src=STRING) ('wording' tts=STRING)? |
-		                                    (tts=STRING)	) )+ '}')		                                      
+	'when' '('  condit=XExpression ')'  '{' (simpleA=SimpleAudio)+ '}'		                                      
     |SimpleAudio
  ;
  
  terminal FLOAT :
    (INT '.' INT)
 ;
+
+
+
 
