@@ -31,6 +31,10 @@ public class BaseModel {
 		return baseModel;
 	}
 
+	public JVModel getModel() {
+		return model;
+	}
+
 	private BaseModel() {
 		model = BaseFactory.eINSTANCE.createJVModel();
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
