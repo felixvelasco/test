@@ -13,6 +13,7 @@ import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 
 import com.vectorsf.jvoice.base.BaseFactory;
 import com.vectorsf.jvoice.base.JVBean;
@@ -45,10 +46,10 @@ public class BaseModel {
 		jvProject.setName(project.getName());
 		jvProject.setDescription(project.getName());
 
-		IFolder packs = (IFolder) project.findMember("src/main/resources/jv");
-		if (packs != null) {
+		IFolder packageFolder = (IFolder) project.findMember("src/main/resources/jv");
+		if (packageFolder != null) {
 			try {
-				packs.accept(new ResourceVisitor(jvProject));
+				packageFolder.accept(new ResourceVisitor(jvProject, packageFolder));
 			} catch (CoreException e) {
 			}
 		}
@@ -56,9 +57,10 @@ public class BaseModel {
 		return jvProject;
 	}
 
-	private JVPackage createPackage(IFolder folder) throws CoreException {
+	private JVPackage createPackage(IFolder folder, IPath packagePath) throws CoreException {
 		JVPackage jvPackage = BaseFactory.eINSTANCE.createJVPackage();
-		jvPackage.setName(folder.getName());
+		IPath relativePath = folder.getProjectRelativePath().makeRelativeTo(packagePath);
+		jvPackage.setName(relativePath.toString().replace("/", "."));
 		jvPackage.setDescription(folder.getName());
 
 		for (IResource res : folder.members()) {
@@ -84,15 +86,19 @@ public class BaseModel {
 	public class ResourceVisitor implements IResourceVisitor {
 
 		private JVProject project;
+		private IFolder packageFolder;
+		private IPath packagePath;
 
-		public ResourceVisitor(JVProject jvProject) {
+		public ResourceVisitor(JVProject jvProject, IFolder packageFolder) {
 			this.project = jvProject;
+			this.packageFolder = packageFolder;
+			packagePath = packageFolder.getProjectRelativePath();
 		}
 
 		@Override
 		public boolean visit(IResource resource) throws CoreException {
-			if (resource instanceof IFolder) {
-				project.getPackages().add(createPackage((IFolder) resource));
+			if (resource instanceof IFolder && resource != packageFolder) {
+				project.getPackages().add(createPackage((IFolder) resource, packagePath));
 			}
 			return true;
 		}
