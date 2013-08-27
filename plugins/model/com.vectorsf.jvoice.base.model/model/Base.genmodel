@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.isb.jvoice.base.model/src-gen" editDirectory="/com.isb.jvoice.base.model.edit/src-gen"
-    modelPluginID="com.isb.jvoice.base.model" modelName="Base" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.vectorsf.jvoice.base.model/src-gen" editDirectory="/com.vectorsf.jvoice.base.model.edit/src-gen"
+    editorDirectory="/com.vectorsf.jvoice.base.model.editor/src" modelPluginID="com.vectorsf.jvoice.base.model"
+    modelName="Base" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
-    operationReflection="true" importOrganizing="true">
+    providerRootExtendsClass="" editPluginID="com.vectorsf.jvoice.base.model.edit"
+    editorPluginID="com.vectorsf.jvoice.base.model.editor" operationReflection="true"
+    importOrganizing="true">
   <foreignModel>Base.ecore</foreignModel>
   <genPackages prefix="Base" basePackage="com.vectorsf.jvoice" disposableProviderFactory="true"
       ecorePackage="Base.ecore#/">
