@@ -28,7 +28,7 @@ import com.vectorsf.jvoice.base.impl.JVBeanImpl;
 public class BaseModel {
 
 	private static BaseModel baseModel = new BaseModel();
-	private JVModel model;
+	public JVModel model;
 
 	public static BaseModel getInstance() {
 		return baseModel;
@@ -133,7 +133,7 @@ public class BaseModel {
 
 		@Override
 		public boolean visit(IResource resource) throws CoreException {
-			if (resource instanceof IFolder && resource != packageFolder) {
+			if (resource instanceof IFolder && !resource.getProjectRelativePath().equals(packagePath)) {
 				project.getPackages().add(createPackage((IFolder) resource, packagePath));
 			}
 			return true;
