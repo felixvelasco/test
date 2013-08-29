@@ -28,7 +28,7 @@ import com.vectorsf.jvoice.base.impl.JVBeanImpl;
 public class BaseModel {
 
 	private static BaseModel baseModel = new BaseModel();
-	public JVModel model;
+	private JVModel model;
 
 	public static BaseModel getInstance() {
 		return baseModel;
@@ -122,12 +122,10 @@ public class BaseModel {
 	public class ResourceVisitor implements IResourceVisitor {
 
 		private JVProject project;
-		private IFolder packageFolder;
 		private IPath packagePath;
 
 		public ResourceVisitor(JVProject jvProject, IFolder packageFolder) {
 			this.project = jvProject;
-			this.packageFolder = packageFolder;
 			packagePath = packageFolder.getProjectRelativePath();
 		}
 
