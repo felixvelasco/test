@@ -8,111 +8,111 @@ import java.util.Set;
 import org.eclipse.xtext.validation.Check;
 
 import com.google.common.collect.Sets;
-
-import voiceDsl.ConditionalAudio;
-import voiceDsl.ConfigValue;
-import voiceDsl.VoiceDslPackage;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.ConfigValue;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 /**
- * Custom validation rules. 
- *
+ * Custom validation rules.
+ * 
  * see http://www.eclipse.org/Xtext/documentation.html#validation
  */
 public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.AbstractVoiceDslJavaValidator {
-	private static final Set<String>      FILTERED_KEYWORDS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts", "confidence", "bargein", "timeout", "interdigittimeout");
-	private static final Set<String>      INT_FILTERED_KEYWORDS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts");
-	private static final Set<String>      MS_FILTERED_KEYWORDS = Sets.newHashSet( "timeout", "interdigittimeout");
+	private static final Set<String> FILTERED_KEYWORDS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts",
+			"confidence", "bargein", "timeout", "interdigittimeout");
+	private static final Set<String> INT_FILTERED_KEYWORDS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts");
+	private static final Set<String> MS_FILTERED_KEYWORDS = Sets.newHashSet("timeout", "interdigittimeout");
 
 	@Check
 	public void checkConfigurations(ConfigValue cValue) {
-		if (cValue.getName()!=null){
+		if (cValue.getName() != null) {
 			String confName = cValue.getName();
 			if (!FILTERED_KEYWORDS.contains(confName)) {
-				error ("Parameter is not valid",VoiceDslPackage.Literals.CONFIG_VALUE__NAME);
-			}else{
-				if (INT_FILTERED_KEYWORDS.contains(confName)){
-					if (cValue.getValue()!=null){
-						if (!isInteger(cValue.getValue())){
-							error ("Type mismatch: cannot convert to int",VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
+				error("Parameter is not valid", VoiceDslPackage.Literals.CONFIG_VALUE__NAME);
+			} else {
+				if (INT_FILTERED_KEYWORDS.contains(confName)) {
+					if (cValue.getValue() != null) {
+						if (!isInteger(cValue.getValue())) {
+							error("Type mismatch: cannot convert to int", VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
 						}
-					}else{
-						error ("Type mismatch: cannot convert to int",VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
+					} else {
+						error("Type mismatch: cannot convert to int", VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
 					}
 				}
 
-				if (MS_FILTERED_KEYWORDS.contains(confName))
-					if (cValue.getValue()!=null){
-						if(	(!cValue.getValue().matches(".*\\d.*")||!cValue.getValue().contains("ms"))){
-							error ("Type mismatch: cannot convert to int ms",VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
+				if (MS_FILTERED_KEYWORDS.contains(confName)) {
+					if (cValue.getValue() != null) {
+						if (!cValue.getValue().matches(".*\\d.*") || !cValue.getValue().contains("ms")) {
+							error("Type mismatch: cannot convert to int ms",
+									VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
 						}
-					}else{
-						error ("Type mismatch: cannot convert to int ms",VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
+					} else {
+						error("Type mismatch: cannot convert to int ms", VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
 					}
-			}
-
-			if (confName.equals("bargein")){
-				if (cValue.getValue()!=null){
-					if(!cValue.getValue().equals("true")&&!cValue.getValue().equals("false")){
-						error ("Type mismatch: cannot convert to boolean",VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
-					}
-				}else{
-					error ("Type mismatch: cannot convert to boolean",VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
 				}
 			}
 
-			if (confName.equals( "confidence")){
-				if (cValue.getValue()!=null){
-					if(	!isNumeric(cValue.getValue())){
-						error ("Type mismatch: cannot convert to float",VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
+			if (confName.equals("bargein")) {
+				if (cValue.getValue() != null) {
+					if (!cValue.getValue().equals("true") && !cValue.getValue().equals("false")) {
+						error("Type mismatch: cannot convert to boolean", VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
 					}
-				}else{
-					error ("Type mismatch: cannot convert to float",VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
+				} else {
+					error("Type mismatch: cannot convert to boolean", VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
 				}
 			}
-		}			 
+
+			if (confName.equals("confidence")) {
+				if (cValue.getValue() != null) {
+					if (!isNumeric(cValue.getValue())) {
+						error("Type mismatch: cannot convert to float", VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
+					}
+				} else {
+					error("Type mismatch: cannot convert to float", VoiceDslPackage.Literals.CONFIG_VALUE__VALUE);
+				}
+			}
+		}
 	}
 
 	@Check
 	public void checkConditions(ConditionalAudio cAudio) {
-		if (cAudio.getCondit()!=null){
+		if (cAudio.getCondit() != null) {
 			String condition = cAudio.getCondit().toString();
 			boolean containsKeyword = false;
 
-			for (String keyword:FILTERED_KEYWORDS){
-				if (condition.contains(keyword)){
+			for (String keyword : FILTERED_KEYWORDS) {
+				if (condition.contains(keyword)) {
 					containsKeyword = true;
 				}
 			}
 
-			if ((condition.contains("XStringLiteral"))){
-				for (String keyword:FILTERED_KEYWORDS){
-					if (condition.contains(keyword)){
+			if (condition.contains("XStringLiteral")) {
+				for (String keyword : FILTERED_KEYWORDS) {
+					if (condition.contains(keyword)) {
 						containsKeyword = true;
 					}
 				}
 
 			}
-			if (!containsKeyword && 
-					!(condition.contains("XBooleanLiteral")||
-					  condition.contains("XBinaryOperation")||
-					  condition.contains("XNumberLiteral"))){
-				error ("Type mismatch: cannot convert to boolean",VoiceDslPackage.Literals.CONDITIONAL_AUDIO__CONDIT);
+			if (!containsKeyword
+					&& !(condition.contains("XBooleanLiteral") || condition.contains("XBinaryOperation") || condition
+							.contains("XNumberLiteral"))) {
+				error("Type mismatch: cannot convert to boolean", VoiceDslPackage.Literals.CONDITIONAL_AUDIO__CONDIT);
 			}
 		}
 	}
 
 	public static boolean isInteger(String s) {
-		try { 
-			Integer.parseInt(s); 
-		} catch(NumberFormatException e) { 
-			return false; 
+		try {
+			Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			return false;
 		}
 		return true;
 	}
 
-	public static boolean isNumeric(String str)
-	{
-		return str.matches("-?\\d+(\\.\\d+)?");  
+	public static boolean isNumeric(String str) {
+		return str.matches("-?\\d+(\\.\\d+)?");
 	}
 
 }

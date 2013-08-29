@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import org.eclipse.xtext.xbase.jvmmodel.AbstractModelInferrer
 import org.eclipse.xtext.xbase.jvmmodel.IJvmDeclaredTypeAcceptor
 import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder
-import voiceDsl.InputElement
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl
 
 /**
  * <p>Infers a JVM model from the source model.</p> 
@@ -44,7 +44,7 @@ class VoiceDslJvmModelInferrer extends AbstractModelInferrer {
 	 *            rely on linking using the index if isPreIndexingPhase is
 	 *            <code>true</code>.
 	 */
-   	def dispatch void infer(InputElement element, IJvmDeclaredTypeAcceptor acceptor, boolean isPreIndexingPhase) {
+   	def dispatch void infer(VoiceDsl element, IJvmDeclaredTypeAcceptor acceptor, boolean isPreIndexingPhase) {
    		// Here you explain how your model is mapped to Java elements, by writing the actual translation code.
    		
    		// An implementation for the initial hello world example could look like this:
@@ -53,7 +53,7 @@ class VoiceDslJvmModelInferrer extends AbstractModelInferrer {
 //   				for (greeting : element.greetings) {
 //   					members += greeting.toMethod("hello" + greeting.name, greeting.newTypeRef(typeof(String))) [
 //   						body = [
-//   							append('''return "Hello «greeting.name»";''')
+//   							append('''return "Hello ï¿½greeting.nameï¿½";''')
 //   						]
 //   					]
 //   				}
