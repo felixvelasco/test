@@ -17,13 +17,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 
-import com.vectorsf.jvoice.base.BaseFactory;
-import com.vectorsf.jvoice.base.Configuration;
-import com.vectorsf.jvoice.base.JVBean;
-import com.vectorsf.jvoice.base.JVModel;
-import com.vectorsf.jvoice.base.JVPackage;
-import com.vectorsf.jvoice.base.JVProject;
-import com.vectorsf.jvoice.base.impl.JVBeanImpl;
+import com.vectorsf.jvoice.model.base.BaseFactory;
+import com.vectorsf.jvoice.model.base.Configuration;
+import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVModel;
+import com.vectorsf.jvoice.model.base.JVPackage;
+import com.vectorsf.jvoice.model.base.JVProject;
+import com.vectorsf.jvoice.model.base.impl.JVBeanImpl;
 
 public class BaseModel {
 

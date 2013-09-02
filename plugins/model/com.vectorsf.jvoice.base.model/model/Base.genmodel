@@ -8,7 +8,7 @@
     editorPluginID="com.vectorsf.jvoice.base.model.editor" operationReflection="true"
     importOrganizing="true">
   <foreignModel>Base.ecore</foreignModel>
-  <genPackages prefix="Base" basePackage="com.vectorsf.jvoice" disposableProviderFactory="true"
+  <genPackages prefix="Base" basePackage="com.vectorsf.jvoice.model" disposableProviderFactory="true"
       ecorePackage="Base.ecore#/">
     <genClasses ecoreClass="Base.ecore#//NamedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Base.ecore#//NamedElement/name"/>
