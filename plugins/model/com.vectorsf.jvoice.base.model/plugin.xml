@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated Base -->
       <package
-            uri="http://base.jvoice.vectorsf.com/"
+            uri="http://base.jvoice.vectorsf.com/1.0"
             class="com.vectorsf.jvoice.base.BasePackage"
             genModel="model/Base.genmodel"/>
    </extension>

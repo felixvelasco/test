@@ -38,7 +38,7 @@ public interface BasePackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://base.jvoice.vectorsf.com/";
+	String eNS_URI = "http://base.jvoice.vectorsf.com/1.0";
 
 	/**
 	 * The package namespace name.
