@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: com.vectorsf.jvoice.operation.model.edit;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: .
+Bundle-Activator: com.vectorsf.jvoice.model.operations.provider.CoreOperationsEditPlugin$Implementation
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: com.vectorsf.jvoice.model.operations.provider
+Require-Bundle: org.eclipse.core.runtime,
+ com.vectorsf.jvoice.operation.model;visibility:=reexport,
+ org.eclipse.emf.edit;visibility:=reexport,
+ com.vectorsf.jvoice.base.model;visibility:=reexport,
+ com.vectorsf.jvoice.base.model.edit;visibility:=reexport
+Bundle-ActivationPolicy: lazy
