@@ -18,9 +18,7 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 	private static Logger logger;
-	
 
-	
 	/**
 	 * The constructor
 	 */
@@ -29,35 +27,37 @@ public class Activator extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		ServiceTracker<ExtendedLogService, ExtendedLogService> logServiceTracker = new ServiceTracker<ExtendedLogService,
-				ExtendedLogService>(
-				                 context, ExtendedLogService.class.getName(), null);
-				         logServiceTracker.open();
-				         ExtendedLogService logservice = logServiceTracker.getService();
+		ServiceTracker<ExtendedLogService, ExtendedLogService> logServiceTracker = new ServiceTracker<ExtendedLogService, ExtendedLogService>(
+				context, ExtendedLogService.class.getName(), null);
+		logServiceTracker.open();
+		ExtendedLogService logservice = logServiceTracker.getService();
 
-				         if (logservice != null) {
-				             logger = logservice.getLogger(EQUINOX_LOGGER_NAME);
-				         }
+		if (logservice != null) {
+			logger = logservice.getLogger(EQUINOX_LOGGER_NAME);
+		}
 
 	}
 
 	/**
 	 * @return logger
 	 */
-	public static Logger getLogger()
-	{
-	     return logger;
+	public static Logger getLogger() {
+		return logger;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
@@ -65,7 +65,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance
-	 *
+	 * 
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {

@@ -3,35 +3,30 @@ package com.isb.jvoice.diagram.core.features;
 import org.eclipse.graphiti.dt.AbstractDiagramTypeProvider;
 import org.eclipse.graphiti.tb.IToolBehaviorProvider;
 
-
-public class CoreDiagramTypeProvider extends AbstractDiagramTypeProvider
-{
+public class CoreDiagramTypeProvider extends AbstractDiagramTypeProvider {
 
 	public static final String IVR_DIAGRAM_TYPE_PROVIDER_ID = "jvoice.ivr.features"; //$NON-NLS-1$
 
 	private IToolBehaviorProvider toolBehaviorProvider;
-	
-	public CoreDiagramTypeProvider() 
-	{
+
+	public CoreDiagramTypeProvider() {
 		super();
 		setFeatureProvider(new CoreFeatureProvider(this));
 	}
-	
-    @Override
 
-    public IToolBehaviorProvider[] getAvailableToolBehaviorProviders() 
-    {
+	@Override
+	public IToolBehaviorProvider[] getAvailableToolBehaviorProviders() {
 
-        if (toolBehaviorProvider == null) {
+		if (toolBehaviorProvider == null) {
 
-        	toolBehaviorProvider =
+			toolBehaviorProvider =
 
-                new CoreToolBehaviourProvider(this);
+			new CoreToolBehaviourProvider(this);
 
-        }
-        
-        return new IToolBehaviorProvider[] {toolBehaviorProvider};
+		}
 
-    }
-    
+		return new IToolBehaviorProvider[] { toolBehaviorProvider };
+
+	}
+
 }
