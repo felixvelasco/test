@@ -6,19 +6,16 @@ import java.util.List;
 
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
-import org.eclipse.graphiti.features.context.IDoubleClickContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.Connection;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
 import org.eclipse.graphiti.tb.ConnectionSelectionInfoImpl;
 import org.eclipse.graphiti.tb.ContextMenuEntry;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
 import org.eclipse.graphiti.tb.IConnectionSelectionInfo;
 import org.eclipse.graphiti.tb.IContextMenuEntry;
-import org.eclipse.graphiti.tb.IDecorator;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
@@ -50,16 +47,12 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	}
 
 	@Override
-	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
-		PictogramElement pe = context.getInnerPictogramElement();
-		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
-
-		return super.getDoubleClickFeature(context);
-	}
-
-	@Override
-	public String getToolTip(GraphicsAlgorithm ga) {
-		return ((Text) ga).getValue();
+	public Object getToolTip(GraphicsAlgorithm ga) {
+		if (ga instanceof Text) {
+			return ((Text) ga).getValue();
+		} else {
+			return super.getToolTip(ga);
+		}
 	}
 
 	@Override
@@ -82,11 +75,6 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		}
 
 		return new IContextMenuEntry[] { subMenu };
-	}
-
-	@Override
-	public IDecorator[] getDecorators(PictogramElement pe) {
-		return super.getDecorators(pe);
 	}
 
 	@Override

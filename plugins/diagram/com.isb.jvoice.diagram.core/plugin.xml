@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="patterContributor" name="patterContributor" schema="schema/patterContributor.exsd"/>
+   <extension-point id="patternContributor" name="patternContributor" schema="schema/patternContributor.exsd"/>
 
 </plugin>
