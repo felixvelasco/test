@@ -35,7 +35,7 @@ public class BaseModel {
 	private String rutaProperties = "src/main/config/properties";
 	private IPath pkgPath = new Path("src/main/resources/jv");
 	private IPath configPath = new Path("src/main/config/properties");
-	public JVModel model;
+	private JVModel model;
 
 	public static BaseModel getInstance() {
 		return baseModel;
@@ -361,8 +361,7 @@ public class BaseModel {
 		}
 		
 		private IPath getRelativePath(IResource resource){
-			if ((pkgPath.isPrefixOf(resource.getProjectRelativePath())
-					&& !pkgPath.equals(resource.getProjectRelativePath()))){
+			if (isValidFolder(resource)){
 				return resource.getProjectRelativePath().makeRelativeTo(pkgPath);
 			}else{
 				return null;
