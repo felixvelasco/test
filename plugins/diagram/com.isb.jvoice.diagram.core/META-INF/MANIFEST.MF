@@ -1,13 +1,14 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Core
-Bundle-SymbolicName: com.isb.jvoice.diagram.core
+Bundle-SymbolicName: com.isb.jvoice.diagram.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.isb.jvoice.diagram.core.Activator
 Bundle-Vendor: ISB
 Require-Bundle: org.eclipse.ui;bundle-version="3.105.0",
  org.eclipse.core.runtime;bundle-version="3.9.0",
  org.eclipse.graphiti;bundle-version="0.10.0",
- org.eclipse.graphiti.ui;bundle-version="0.10.0"
+ org.eclipse.graphiti.ui;bundle-version="0.10.0",
+ org.eclipse.graphiti.pattern;bundle-version="0.10.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
