@@ -2,5 +2,33 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="patternContributor" name="patternContributor" schema="schema/patternContributor.exsd"/>
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypes">
+      <diagramType
+            id="com.isb.jvoice.diagram.core.diagramType"
+            name="jVoice diagram"
+            type="jVoiceDiagram">
+      </diagramType>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypeProviders">
+      <diagramTypeProvider
+            class="com.isb.jvoice.diagram.core.features.CoreDiagramTypeProvider"
+            context="org.eclipse.graphiti.ui.diagramEditor"
+            id="com.isb.jvoice.diagram.core.diagramTypeProvider"
+            name="jVoice diagram type provider">
+         <diagramType
+               id="com.isb.jvoice.diagram.core.diagramType">
+         </diagramType>
+      </diagramTypeProvider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            id="com.isb.jvoice.diagram.core.diagramEditor"
+            name="jVoice diagram context"
+            parentId="org.eclipse.graphiti.ui.diagramEditor">
+      </context>
+   </extension>
 
 </plugin>

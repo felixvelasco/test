@@ -10,6 +10,7 @@ import org.eclipse.graphiti.pattern.IPattern;
 import org.osgi.service.log.LogService;
 
 import com.isb.jvoice.diagram.core.Activator;
+import com.isb.jvoice.diagram.core.pattern.SwitchPattern;
 
 public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 	public static final String PATTERN_EXTENSIONS_ID = "com.isb.jvoice.diagram.core.patternContributor"; //$NON-NLS-1$
@@ -35,5 +36,6 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 			}
 		}
 
+		addPattern(new SwitchPattern());
 	}
 }
