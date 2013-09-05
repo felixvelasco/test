@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.base.model.service;
 
-
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Properties;
@@ -35,7 +34,7 @@ public class BaseModel {
 	private String rutaProperties = "src/main/config/properties";
 	private IPath pkgPath = new Path("src/main/resources/jv");
 	private IPath configPath = new Path("src/main/config/properties");
-	public JVModel model;
+	private JVModel model;
 
 	public static BaseModel getInstance() {
 		return baseModel;
@@ -102,7 +101,8 @@ public class BaseModel {
 
 	private JVPackage createPackage(IFolder folder) throws CoreException {
 		JVPackage jvPackage = BaseFactory.eINSTANCE.createJVPackage();
-		jvPackage.setName(folder.getName());
+		IPath relativePath = folder.getProjectRelativePath().makeRelativeTo(pkgPath);
+		jvPackage.setName(relativePath.toString().replace("/", "."));
 		jvPackage.setDescription(folder.getName());
 
 		for (IResource res : folder.members()) {
@@ -135,9 +135,9 @@ public class BaseModel {
 
 		@Override
 		public boolean visit(IResource resource) throws CoreException {
-			if (resource instanceof IFolder && resource.getProjectRelativePath()!=null 
-					&& (!resource.getProjectRelativePath().toString().trim().equalsIgnoreCase(ruta) 
-							&& !resource.getProjectRelativePath().toString().trim().equalsIgnoreCase(rutaProperties))) {
+			if (resource instanceof IFolder && resource.getProjectRelativePath() != null
+					&& !resource.getProjectRelativePath().toString().trim().equalsIgnoreCase(ruta)
+					&& !resource.getProjectRelativePath().toString().trim().equalsIgnoreCase(rutaProperties)) {
 				project.getPackages().add(createPackage((IFolder) resource));
 			}
 			return true;
@@ -150,22 +150,21 @@ public class BaseModel {
 		@Override
 		public void resourceChanged(IResourceChangeEvent event) {
 			boolean existe = false;
-			
+
 			if (event.getDelta() == null) {
 				return;
 			}
 
-			
 			for (IResourceDelta child : event.getDelta().getAffectedChildren()) {
-				
+
 				IResource res = child.getResource();
 				if (res instanceof IProject) {
 					String name = res.getName();
-					//El modelo está vacío y se está creando un proyecto
-					if ( model.getProjects().isEmpty()){
+					// El modelo estï¿½ vacï¿½o y se estï¿½ creando un proyecto
+					if (model.getProjects().isEmpty()) {
 						model.getProjects().add(createProject((IProject) res));
 						break;
-					}else{
+					} else {
 						for (Iterator<JVProject> it = model.getProjects().iterator(); it.hasNext();) {
 							JVProject prj = it.next();
 							if (name.equals(prj.getName())) {
@@ -173,31 +172,30 @@ public class BaseModel {
 								existe = true;
 							}
 						}
-						//el modelo tiene proyectos, pero no encuentra el solicitado. Es nuevo
-						if(!existe)
+						// el modelo tiene proyectos, pero no encuentra el solicitado. Es nuevo
+						if (!existe) {
 							model.getProjects().add(createProject((IProject) res));
+						}
 					}
-					
+
 				}
 			}
-			
+
 		}
 	}
-	
-	private void updatePackages(IResourceDelta delta, JVProject prj) {
-		if (delta!=null)
-		{
-			CheckDeltaChange visitor = new CheckDeltaChange(prj, null);
-				try {
-					delta.accept(visitor);
-				} catch (CoreException e) {
-				}
 
-				
+	private void updatePackages(IResourceDelta delta, JVProject prj) {
+		if (delta != null) {
+			CheckDeltaChange visitor = new CheckDeltaChange(prj, null);
+			try {
+				delta.accept(visitor);
+			} catch (CoreException e) {
 			}
-		
+
+		}
+
 	}
-	
+
 	private class CheckDeltaChange implements IResourceDeltaVisitor {
 
 		private JVProject jvProject;
@@ -208,98 +206,96 @@ public class BaseModel {
 			currentPackage = null;
 		}
 
-		/* (non-Javadoc)
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see org.eclipse.core.resources.IResourceDeltaVisitor#visit(org.eclipse.core.resources.IResourceDelta)
 		 */
 		@Override
 		public boolean visit(IResourceDelta delta) throws CoreException {
 			boolean existePaquete = false;
 			IResource resource = delta.getResource();
-			switch (resource.getType())
-			{
+			switch (resource.getType()) {
 			case IResource.FOLDER:
-				//SI es un paquete de configuración no debe aparecer en la lista
-				if (isValidFolder(resource) && !isConfigurantionFolder(resource)){
+				// SI es un paquete de configuraciï¿½n no debe aparecer en la lista
+				if (isValidFolder(resource) && !isConfigurantionFolder(resource)) {
 					IPath relPath = getRelativePath(resource);
-					//verificamos si el proyecto tiene paquetes
-					if (jvProject.getPackages().isEmpty()){
-						//es un proyecto vacío, hay que añadirle el paquete
+					// verificamos si el proyecto tiene paquetes
+					if (jvProject.getPackages().isEmpty()) {
+						// es un proyecto vacï¿½o, hay que aï¿½adirle el paquete
 						jvProject.getPackages().add(createPackage((IFolder) resource));
 						return false;
 					}
-					for(JVPackage pkg: jvProject.getPackages())
-						{
-							if (pkg.getName().equals(relPath.toString().replace("/", ".")))
-							{
-								existePaquete=true;
-								currentPackage = pkg;
-								if (isInterestingDelta(delta))
-								{
-									
-									verificarBorrado(delta.getKind(), resource);
-								}
+					for (JVPackage pkg : jvProject.getPackages()) {
+						if (pkg.getName().equals(relPath.toString().replace("/", "."))) {
+							existePaquete = true;
+							currentPackage = pkg;
+							if (isInterestingDelta(delta)) {
+
+								verificarBorrado(delta.getKind(), resource);
 							}
 						}
-					//hemos recorrido los paquete del proyecto pero no encuentra el actual, es nuevo y hay que añadirlo
-					if (!existePaquete){
+					}
+					// hemos recorrido los paquete del proyecto pero no encuentra el actual, es nuevo y hay que aï¿½adirlo
+					if (!existePaquete) {
 						jvProject.getPackages().add(createPackage((IFolder) resource));
 						return false;
 					}
 				}
-				
+
 				return true;
 
 			case IResource.FILE:
 				boolean yaExiste = false;
-				
-				if (isInterestingDelta(delta) && currentPackage != null)
-				{
-					
-					//el paquete está vacío, así que hay que añadir el bean
-					if (currentPackage.getBeans().isEmpty()){
-						currentPackage.getBeans().add(createBean((IFile)resource));
+
+				if (isInterestingDelta(delta) && currentPackage != null) {
+
+					// el paquete estï¿½ vacï¿½o, asï¿½ que hay que aï¿½adir el bean
+					if (currentPackage.getBeans().isEmpty()) {
+						currentPackage.getBeans().add(createBean((IFile) resource));
 						return false;
 					}
-					//si es un evento de adición al paquete, por culpa del bug de eclipse que lanza el delta 2 veces
-					//tenemos que comprobar que lo hemos agregado ya antes, para no duplicarlo
-					if (delta.getKind()== IResourceDelta.ADDED){
-						for (JVBean bean : currentPackage.getBeans()){
-							if (bean.getName().equals(resource.getName())){
+					// si es un evento de adiciï¿½n al paquete, por culpa del bug de eclipse que lanza el delta 2 veces
+					// tenemos que comprobar que lo hemos agregado ya antes, para no duplicarlo
+					if (delta.getKind() == IResourceDelta.ADDED) {
+						for (JVBean bean : currentPackage.getBeans()) {
+							if (bean.getName().equals(resource.getName())) {
 								yaExiste = true;
 								break;
 							}
 						}
-						if(!yaExiste){
-							currentPackage.getBeans().add(createBean((IFile)resource));
+						if (!yaExiste) {
+							currentPackage.getBeans().add(createBean((IFile) resource));
 							return false;
-						}else
+						} else {
 							return true;
-					}else{
-						//se busca el elemento en el paquete y se elimina
+						}
+					} else {
+						// se busca el elemento en el paquete y se elimina
 						verificarBorrado(delta.getKind(), resource);
 					}
-					//Se trata de un archivo de configuración
-				}else if (isInterestingDelta(delta) && resource.getFileExtension().equalsIgnoreCase("properties")){
-					//si es un evento de adición al paquete, por culpa del bug de eclipse que lanza el delta 2 veces
-					//tenemos que comprobar que lo hemos agregado ya antes, para no duplicarlo
-					if (delta.getKind()== IResourceDelta.ADDED){
-						for (Configuration config : jvProject.getConfiguration()){
+					// Se trata de un archivo de configuraciï¿½n
+				} else if (isInterestingDelta(delta) && resource.getFileExtension().equalsIgnoreCase("properties")) {
+					// si es un evento de adiciï¿½n al paquete, por culpa del bug de eclipse que lanza el delta 2 veces
+					// tenemos que comprobar que lo hemos agregado ya antes, para no duplicarlo
+					if (delta.getKind() == IResourceDelta.ADDED) {
+						for (Configuration config : jvProject.getConfiguration()) {
 							String name = resource.getName().substring(0, resource.getName().lastIndexOf('.'));
-							if (config.getName().equals(name)){
+							if (config.getName().equals(name)) {
 								yaExiste = true;
 								break;
 							}
 						}
-						if(!yaExiste){
+						if (!yaExiste) {
 							jvProject.getConfiguration().add(createConfigurationFromFile((IFile) resource));
 							return false;
-						}else{
+						} else {
 							return true;
 						}
-					}else if (delta.getKind()== IResourceDelta.REMOVED){
-						for (Configuration config : jvProject.getConfiguration()){
+					} else if (delta.getKind() == IResourceDelta.REMOVED) {
+						for (Configuration config : jvProject.getConfiguration()) {
 							String name = resource.getName().substring(0, resource.getName().lastIndexOf('.'));
-							if (config.getName().equals(name)){
+							if (config.getName().equals(name)) {
 								jvProject.getConfiguration().remove(config);
 								break;
 							}
@@ -316,62 +312,60 @@ public class BaseModel {
 		}
 
 		private boolean isInterestingDelta(IResourceDelta delta) {
-			return delta.getKind() == IResourceDelta.ADDED || 
-					delta.getKind() == IResourceDelta.REMOVED ||
-					(delta.getKind() == IResourceDelta.CHANGED && ((delta.getFlags() & IResourceDelta.CONTENT) != 0));
+			return delta.getKind() == IResourceDelta.ADDED || delta.getKind() == IResourceDelta.REMOVED
+					|| delta.getKind() == IResourceDelta.CHANGED && (delta.getFlags() & IResourceDelta.CONTENT) != 0;
 		}
-		
-		private boolean verificarBorrado(int estado, IResource recurso) throws CoreException{
-			if (estado==IResourceDelta.REMOVED){
-				if (recurso instanceof IFile){
-					for (JVBean bean : currentPackage.getBeans()){
-						if (bean.getName().equals(recurso.getName())){
+
+		private boolean verificarBorrado(int estado, IResource recurso) throws CoreException {
+			if (estado == IResourceDelta.REMOVED) {
+				if (recurso instanceof IFile) {
+					for (JVBean bean : currentPackage.getBeans()) {
+						if (bean.getName().equals(recurso.getName())) {
 							currentPackage.getBeans().remove(bean);
 							break;
 						}
 					}
-				}else if (recurso instanceof IFolder){
-					for (JVPackage paquete : jvProject.getPackages()){
-						if (paquete.getName().equals(recurso.getName())){
+				} else if (recurso instanceof IFolder) {
+					for (JVPackage paquete : jvProject.getPackages()) {
+						if (paquete.getName().equals(recurso.getName())) {
 							jvProject.getPackages().remove(paquete);
 							break;
 						}
 					}
-				}else if (recurso instanceof IProject){
-					for (JVProject proyecto : model.getProjects()){
-						if (proyecto.getName().equals(recurso.getName())){
+				} else if (recurso instanceof IProject) {
+					for (JVProject proyecto : model.getProjects()) {
+						if (proyecto.getName().equals(recurso.getName())) {
 							model.getProjects().remove(proyecto);
 							break;
 						}
 					}
 				}
-				
+
 			}
 			return true;
 		}
-		
-		private boolean isValidFolder (IResource resource){
-			if ((pkgPath.isPrefixOf(resource.getProjectRelativePath())
-					&& !pkgPath.equals(resource.getProjectRelativePath()))){
+
+		private boolean isValidFolder(IResource resource) {
+			if (pkgPath.isPrefixOf(resource.getProjectRelativePath())
+					&& !pkgPath.equals(resource.getProjectRelativePath())) {
 				return true;
-			}
-			else{
+			} else {
 				return false;
 			}
 		}
-		
-		private IPath getRelativePath(IResource resource){
-			if ((pkgPath.isPrefixOf(resource.getProjectRelativePath())
-					&& !pkgPath.equals(resource.getProjectRelativePath()))){
+
+		private IPath getRelativePath(IResource resource) {
+			if (pkgPath.isPrefixOf(resource.getProjectRelativePath())
+					&& !pkgPath.equals(resource.getProjectRelativePath())) {
 				return resource.getProjectRelativePath().makeRelativeTo(pkgPath);
-			}else{
+			} else {
 				return null;
 			}
 		}
-		
-		private boolean isConfigurantionFolder(IResource resource){
-			if ((configPath.isPrefixOf(resource.getProjectRelativePath())
-					&& configPath.equals(resource.getProjectRelativePath()))){
+
+		private boolean isConfigurantionFolder(IResource resource) {
+			if (configPath.isPrefixOf(resource.getProjectRelativePath())
+					&& configPath.equals(resource.getProjectRelativePath())) {
 				return true;
 			}
 			return false;
