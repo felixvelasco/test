@@ -1,0 +1,109 @@
+grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.xbase.Xbase
+
+import "http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl/1.0"
+//import "http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl/1.0"
+//import "classpath:/model/VoiceDsl.ecore"
+
+VoiceDsl:
+	('inputname' name = ID           
+      ((configuration = Configuration)& 
+ 	   (grammars = Grammars)&
+	   (properties += Property*)&
+	   (conditions += Condition*))
+  	    audios=Audios	
+	  ) 
+	 
+    |('promptname' name = ID 
+       ((properties += Property*)&
+	    (conditions += Condition*))
+  	     audios=Audios	
+	   ) 
+
+    |('menuname' name = ID
+	   ((configuration = Configuration)& 
+        (grammars = Grammars)&
+	    (properties += Property*)&
+	    (conditions += Condition*))
+  	     outputs=Outputs
+	   ) 
+;
+
+Grammars:
+	'grammars' '{'
+	       grammatics += Grammar*
+	    '}'
+;
+
+Audios:
+	'audios' '{' 
+	('main' ':' (
+			mainAudios += ConditionalAudio+))? &
+	('match' ':' (
+			matchAudios += ConditionalAudio+))? &
+	('nomatch' ':' (
+		    noMatchAudios += ConditionalAudio+))? &
+	('noinput' ':' (
+		     noInputAudios += ConditionalAudio+))? 
+		     
+    '}'
+;
+
+Configuration:
+	'configuration' '{'
+	  configValue += ConfigValue*
+	 '}'
+;
+
+ConfigValue:
+	name = ID value=ConfigValueValue
+;
+
+ConfigValueValue:
+	INT ('ms')?| FLOAT | 'true' | 'false' 
+;
+
+Grammar:
+	mode = ('voice'|'dtmf'|'voicedtmf') expr ?= 'expr'? src = STRING
+;
+
+Property:
+	'property' name = QualifiedName value = STRING
+;
+
+Condition:
+	{Condition}
+	'condition' name = ID condition = INT 
+;
+
+Outputs:
+	'outputs' '{' 
+  		  output+=Output+
+	 '}'
+;
+
+Output:
+	 name = ID ':' outputValue+=OutputValue (',' outputValue+=OutputValue)*
+;
+
+OutputValue:
+	value=STRING | value='*'
+;
+
+SimpleAudio returns Audio:
+	{Audio}
+	'say' (('src' src=STRING)? ('wording' tts=STRING)? )
+;	
+
+ConditionalAudio returns Audio:
+	{ConditionalAudio}
+	'when' '('  condit=XExpression ')'  '{' (simpleA=SimpleAudio)+ '}'		                                      
+    |SimpleAudio
+ ;
+ 
+ terminal FLOAT :
+   (INT '.' INT)
+;
+
+
+
+
