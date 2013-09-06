@@ -3,9 +3,6 @@ package com.vectorsf.jvoice.base.provider.ext;
 import org.eclipse.emf.common.notify.Adapter;
 
 import com.vectorsf.jvoice.model.base.provider.BaseItemProviderAdapterFactory;
-import com.vectorsf.jvoice.model.base.provider.ConfigurationItemProvider;
-import com.vectorsf.jvoice.model.base.provider.JVPackageItemProvider;
-import com.vectorsf.jvoice.model.base.provider.NamedElementItemProvider;
 
 public class ExtBaseItemProviderAdapterFactory extends BaseItemProviderAdapterFactory {
 
@@ -21,7 +18,7 @@ public class ExtBaseItemProviderAdapterFactory extends BaseItemProviderAdapterFa
 	@Override
 	public Adapter createJVPackageAdapter() {
 		if (jvPackageItemProvider == null) {
-			jvPackageItemProvider = new JVPackageItemProvider(this);
+			jvPackageItemProvider = new ExtJVPackageItemProvider(this);
 		}
 
 		return jvPackageItemProvider;
@@ -30,7 +27,7 @@ public class ExtBaseItemProviderAdapterFactory extends BaseItemProviderAdapterFa
 	@Override
 	public Adapter createNamedElementAdapter() {
 		if (namedElementItemProvider == null) {
-			namedElementItemProvider = new NamedElementItemProvider(this);
+			namedElementItemProvider = new ExtNamedElementItemProvider(this);
 		}
 
 		return namedElementItemProvider;
@@ -39,7 +36,7 @@ public class ExtBaseItemProviderAdapterFactory extends BaseItemProviderAdapterFa
 	@Override
 	public Adapter createConfigurationAdapter() {
 		if (configurationItemProvider == null) {
-			configurationItemProvider = new ConfigurationItemProvider(this);
+			configurationItemProvider = new ExtConfigurationItemProvider(this);
 		}
 
 		return configurationItemProvider;
