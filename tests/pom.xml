@@ -4,17 +4,14 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.vectorsf.jvoice.core</groupId>
-    <artifactId>plugins</artifactId>
+    <artifactId>jvoice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.vectorsf.jvoice.core</groupId>
-  <artifactId>model</artifactId>
+  <artifactId>tests</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>com.vectorsf.jvoice.base.model</module>
-    <module>com.vectorsf.jvoice.base.model.edit</module>
-    <module>com.vectorsf.jvoice.operation.model</module>
-    <module>com.vectorsf.jvoice.operation.model.edit</module>
+    <module>com.vectorsf.jvoice.base.model.test</module>
   </modules>
 </project>
