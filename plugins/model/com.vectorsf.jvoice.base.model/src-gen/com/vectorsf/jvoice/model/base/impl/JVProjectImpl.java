@@ -8,6 +8,7 @@ import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.List;
 
@@ -151,6 +152,21 @@ public class JVProjectImpl extends NamedElementImpl implements JVProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public JVPackage getPackage(final String name) {
+		for (JVPackage pck: getPackages()) {
+			if (pck.getName().equals(name)) {
+				return pck;
+			}
+		}
+		
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -276,6 +292,20 @@ public class JVProjectImpl extends NamedElementImpl implements JVProject {
 				return configuration != null && !configuration.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case BasePackage.JV_PROJECT___GET_PACKAGE__STRING:
+				return getPackage((String)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //JVProjectImpl

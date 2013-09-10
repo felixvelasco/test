@@ -85,4 +85,12 @@ public interface JVProject extends NamedElement {
 	 */
 	List<Configuration> getConfiguration();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='for (JVPackage pck: getPackages())\n{\n\tif (pck.getName().equals(name)) {\n\t\treturn pck;\n\t}\n}\n\nreturn null;'"
+	 * @generated
+	 */
+	JVPackage getPackage(String name);
+
 } // JVProject

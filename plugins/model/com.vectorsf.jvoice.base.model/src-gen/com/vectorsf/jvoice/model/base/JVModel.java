@@ -41,4 +41,12 @@ public interface JVModel extends EObject {
 	 */
 	List<JVProject> getProjects();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='for (JVProject project: getProjects())\n{\n\tif (project.getName().equals(name)) {\n\t\treturn project;\n\t}\n}\n\nreturn null;'"
+	 * @generated
+	 */
+	JVProject getProject(String name);
+
 } // JVModel

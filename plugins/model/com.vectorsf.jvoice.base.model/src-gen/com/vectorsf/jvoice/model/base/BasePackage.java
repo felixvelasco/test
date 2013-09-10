@@ -4,6 +4,7 @@ package com.vectorsf.jvoice.model.base;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -241,13 +242,22 @@ public interface BasePackage extends EPackage {
 	int JV_MODEL_FEATURE_COUNT = 1;
 
 	/**
+	 * The operation id for the '<em>Get Project</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODEL___GET_PROJECT__STRING = 0;
+
+	/**
 	 * The number of operations of the '<em>JV Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_MODEL_OPERATION_COUNT = 0;
+	int JV_MODEL_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.base.impl.JVPackageImpl <em>JV Package</em>}' class.
@@ -396,13 +406,22 @@ public interface BasePackage extends EPackage {
 	int JV_PROJECT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The operation id for the '<em>Get Package</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_PROJECT___GET_PACKAGE__STRING = NAMED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>JV Project</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_PROJECT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
+	int JV_PROJECT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.base.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
@@ -611,6 +630,16 @@ public interface BasePackage extends EPackage {
 	EReference getJVModel_Projects();
 
 	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVModel#getProject(java.lang.String) <em>Get Project</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Project</em>' operation.
+	 * @see com.vectorsf.jvoice.model.base.JVModel#getProject(java.lang.String)
+	 * @generated
+	 */
+	EOperation getJVModel__GetProject__String();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.base.JVPackage <em>JV Package</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -684,6 +713,16 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getJVProject_Configuration();
+
+	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVProject#getPackage(java.lang.String) <em>Get Package</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Package</em>' operation.
+	 * @see com.vectorsf.jvoice.model.base.JVProject#getPackage(java.lang.String)
+	 * @generated
+	 */
+	EOperation getJVProject__GetPackage__String();
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String Map</em>}'.
@@ -844,6 +883,14 @@ public interface BasePackage extends EPackage {
 		EReference JV_MODEL__PROJECTS = eINSTANCE.getJVModel_Projects();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Project</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation JV_MODEL___GET_PROJECT__STRING = eINSTANCE.getJVModel__GetProject__String();
+
+		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.base.impl.JVPackageImpl <em>JV Package</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -902,6 +949,14 @@ public interface BasePackage extends EPackage {
 		 * @generated
 		 */
 		EReference JV_PROJECT__CONFIGURATION = eINSTANCE.getJVProject_Configuration();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Package</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation JV_PROJECT___GET_PACKAGE__STRING = eINSTANCE.getJVProject__GetPackage__String();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.base.impl.StringToStringMapImpl <em>String To String Map</em>}' class.

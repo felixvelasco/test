@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -231,6 +232,15 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getJVModel__GetProject__String() {
+		return jvModelEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getJVPackage() {
 		return jvPackageEClass;
 	}
@@ -287,6 +297,15 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 */
 	public EReference getJVProject_Configuration() {
 		return (EReference)jvProjectEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getJVProject__GetPackage__String() {
+		return jvProjectEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -374,6 +393,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 
 		jvModelEClass = createEClass(JV_MODEL);
 		createEReference(jvModelEClass, JV_MODEL__PROJECTS);
+		createEOperation(jvModelEClass, JV_MODEL___GET_PROJECT__STRING);
 
 		jvPackageEClass = createEClass(JV_PACKAGE);
 		createEReference(jvPackageEClass, JV_PACKAGE__BEANS);
@@ -383,6 +403,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		createEReference(jvProjectEClass, JV_PROJECT__PACKAGES);
 		createEReference(jvProjectEClass, JV_PROJECT__MODEL);
 		createEReference(jvProjectEClass, JV_PROJECT__CONFIGURATION);
+		createEOperation(jvProjectEClass, JV_PROJECT___GET_PACKAGE__STRING);
 
 		stringToStringMapEClass = createEClass(STRING_TO_STRING_MAP);
 		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__KEY);
@@ -440,6 +461,9 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		initEClass(jvModelEClass, JVModel.class, "JVModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVModel_Projects(), this.getJVProject(), this.getJVProject_Model(), "projects", null, 0, -1, JVModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		EOperation op = initEOperation(getJVModel__GetProject__String(), this.getJVProject(), "getProject", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(jvPackageEClass, JVPackage.class, "JVPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVPackage_Beans(), this.getJVBean(), this.getJVBean_OwnerPackage(), "beans", null, 0, -1, JVPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVPackage_OwnerProject(), this.getJVProject(), this.getJVProject_Packages(), "ownerProject", null, 0, 1, JVPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -448,6 +472,9 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		initEReference(getJVProject_Packages(), this.getJVPackage(), this.getJVPackage_OwnerProject(), "packages", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVProject_Model(), this.getJVModel(), this.getJVModel_Projects(), "model", null, 0, 1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVProject_Configuration(), this.getConfiguration(), null, "configuration", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		op = initEOperation(getJVProject__GetPackage__String(), this.getJVPackage(), "getPackage", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(stringToStringMapEClass, Map.Entry.class, "StringToStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToStringMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
