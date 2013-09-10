@@ -1,4 +1,4 @@
-package com.isb.jvoice.diagram.core.editor;
+package com.vectorsf.jvoice.diagram.core.editor;
 
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 

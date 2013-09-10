@@ -13,7 +13,7 @@
    <extension
          point="org.eclipse.graphiti.ui.diagramTypeProviders">
       <diagramTypeProvider
-            class="com.isb.jvoice.diagram.core.features.CoreDiagramTypeProvider"
+            class="com.vectorsf.jvoice.diagram.core.features.CoreDiagramTypeProvider"
             context="org.eclipse.graphiti.ui.diagramEditor"
             id="com.isb.jvoice.diagram.core.diagramTypeProvider"
             name="jVoice diagram type provider">
@@ -30,5 +30,24 @@
             parentId="org.eclipse.graphiti.ui.diagramEditor">
       </context>
    </extension>
+   	<extension
+         point="com.vectorsf.jvoice.diagram.core.patternContributor">
+      <patternContributor
+            patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.FinalStatePattern">
+      </patternContributor>
+   </extension>
+ <extension
+       point="com.vectorsf.jvoice.diagram.core.patternContributor">
+    <patternContributor
+          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.InitialStatePattern">
+    </patternContributor>
+ </extension>
+ <extension
+       point="com.vectorsf.jvoice.diagram.core.patternContributor">
+    <patternContributor
+          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.SwitchPattern">
+    </patternContributor>
+ </extension>
+  
 
 </plugin>

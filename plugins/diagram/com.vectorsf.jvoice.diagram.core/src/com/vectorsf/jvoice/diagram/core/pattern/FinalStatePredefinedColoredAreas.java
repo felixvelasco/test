@@ -25,7 +25,7 @@ import org.eclipse.graphiti.util.IGradientType;
 import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 import org.eclipse.graphiti.util.PredefinedColoredAreas;
 
-public class SwitchStatePredefinedColoredAreas extends PredefinedColoredAreas {
+public class FinalStatePredefinedColoredAreas extends PredefinedColoredAreas {
 	/**
 	 * The ID for a red-to-white gradient.
 	 */

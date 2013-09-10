@@ -1,4 +1,4 @@
-package com.isb.jvoice.diagram.core.features.editing;
+package com.vectorsf.jvoice.diagram.core.features.editing;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;

@@ -1,4 +1,4 @@
-package com.isb.jvoice.diagram.core.features;
+package com.vectorsf.jvoice.diagram.core.features;
 
 import org.eclipse.graphiti.dt.AbstractDiagramTypeProvider;
 import org.eclipse.graphiti.tb.IToolBehaviorProvider;
