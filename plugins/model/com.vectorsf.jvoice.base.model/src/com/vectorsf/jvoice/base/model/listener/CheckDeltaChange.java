@@ -21,7 +21,6 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 
 	private JVProject jvProject;
 	private JVPackage currentPackage;
-	private BaseModel base;
 	private IPath pkgPath = new Path("src/main/resources/jv");
 	private IPath configPath = new Path("src/main/config/properties");
 
@@ -47,7 +46,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					// verificamos si el proyecto tiene paquetes
 					if (jvProject.getPackages().isEmpty()) {
 						// es un proyecto vac�o, hay que a�adirle el paquete
-						jvProject.getPackages().add(base.createPackage((IFolder) resource));
+						jvProject.getPackages().add(BaseModel.getInstance().createPackage((IFolder) resource));
 						return false;
 					}
 					for (JVPackage pkg : jvProject.getPackages()) {
@@ -61,8 +60,8 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					}
 					// hemos recorrido los paquete del proyecto pero no encuentra el actual, es nuevo y hay que a�adirlo
 					if (!existePaquete) {
-						jvProject.getPackages().add(base.createPackage((IFolder) resource));
-						return false;
+						jvProject.getPackages().add(BaseModel.getInstance().createPackage((IFolder) resource));
+						return true;
 					}
 				}
 				return true;
@@ -71,7 +70,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 				if (isInterestingDelta(delta) && currentPackage != null) {
 					// el paquete est� vac�o, as� que hay que a�adir el bean
 					if (currentPackage.getBeans().isEmpty()) {
-						currentPackage.getBeans().add(base.createBean((IFile) resource));
+						currentPackage.getBeans().add(BaseModel.getInstance().createBean((IFile) resource));
 						return false;
 					}
 					// si es un evento de adici�n al paquete, por culpa del bug de eclipse que lanza el delta 2 veces
@@ -84,7 +83,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 							}
 						}
 						if (!yaExiste) {
-							currentPackage.getBeans().add(base.createBean((IFile) resource));
+							currentPackage.getBeans().add(BaseModel.getInstance().createBean((IFile) resource));
 							return false;
 						} else {
 							return true;
@@ -107,7 +106,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 							}
 						}
 						if (!yaExiste) {
-							jvProject.getConfiguration().add(base.createConfigurationFromFile((IFile) resource));
+							jvProject.getConfiguration().add(BaseModel.getInstance().createConfigurationFromFile((IFile) resource));
 							return false;
 						} else {
 							return true;
@@ -153,7 +152,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 						}
 					}
 				} else if (recurso instanceof IProject) {
-					JVModel model = base.getModel();
+					JVModel model = BaseModel.getInstance().getModel();
 					for (JVProject proyecto : model.getProjects()) {
 						if (proyecto.getName().equals(recurso.getName())) {
 							model.getProjects().remove(proyecto);

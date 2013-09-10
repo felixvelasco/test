@@ -15,15 +15,11 @@ import com.vectorsf.jvoice.model.base.JVProject;
 
 public class BaseModelResourceChangeListener implements IResourceChangeListener{
 	
-	@SuppressWarnings("unused")
-	private JVModel model;
-	private BaseModel base;
-	
 		@Override
 		public void resourceChanged(IResourceChangeEvent event) {
 			boolean existe = false;
 			JVModel model = null;
-			model = base.getModel();
+			model = BaseModel.getInstance().getModel();
 			
 			if (event.getDelta() == null) {
 				return;
@@ -36,7 +32,7 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener{
 					String name = res.getName();
 					// El modelo est� vac�o y se est� creando un proyecto
 					if (model.getProjects().isEmpty()) {
-						model.getProjects().add(base.createProject((IProject) res));
+						model.getProjects().add(BaseModel.getInstance().createProject((IProject) res));
 						break;
 					} else {
 						for (Iterator<JVProject> it = model.getProjects().iterator(); it.hasNext();) {
@@ -48,7 +44,7 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener{
 						}
 						// el modelo tiene proyectos, pero no encuentra el solicitado. Es nuevo
 						if (!existe) {
-							model.getProjects().add(base.createProject((IProject) res));
+							model.getProjects().add(BaseModel.getInstance().createProject((IProject) res));
 						}
 					}
 
