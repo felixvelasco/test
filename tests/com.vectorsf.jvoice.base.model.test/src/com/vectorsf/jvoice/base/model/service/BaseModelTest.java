@@ -38,12 +38,14 @@ import static org.junit.Assert.fail;
 @RunWith(BlockJUnit4ClassRunner.class)
 public class BaseModelTest extends BaseModelResources {
 
+	private static final String BASE = "base";
+
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		IProject base = createProject("base");
+		IProject base = createProject(BASE);
 		createFolders(base, ruta);
 		createFolders(base, rutaProperties);
 		createFolders(base, ruta + "/paq");
@@ -54,7 +56,6 @@ public class BaseModelTest extends BaseModelResources {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		System.out.println("Tamaño " + ResourcesPlugin.getWorkspace().getRoot().getProjects().length);
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 			try {
 				deleteProject(project);
@@ -62,7 +63,6 @@ public class BaseModelTest extends BaseModelResources {
 				fail(ce.getMessage());
 			}
 		}
-		System.out.println("Tamaño despues : " + ResourcesPlugin.getWorkspace().getRoot().getProjects().length);
 	}
 
 	@Test
@@ -70,15 +70,17 @@ public class BaseModelTest extends BaseModelResources {
 		JVModel model = BaseModel.getInstance().getModel();
 		assertThat(model, is(not(nullValue())));
 		assertThat(model.getProjects(), hasSize(1));
-
-		assertThat(model.getProjects().get(0).getPackages(), hasSize(1));
+		assertThat(model.getProject(BASE), is(not(nullValue())));
+		assertThat(model.getProject(BASE).getPackages(), hasSize(1));
+		assertThat(model.getProject(BASE).getPackage("paq"), is(not(nullValue())));
+		assertThat(model.getProject(BASE).getPackage("paq").getBeans(), is(empty()));
 	}
 
 	@Test
 	public void testNewPackage() {
 		JVModel model = BaseModel.getInstance().getModel();
 
-		JVProject jvProject = model.getProjects().get(0);
+		JVProject jvProject = model.getProject(BASE);
 		List<JVPackage> packages = jvProject.getPackages();
 		assertThat(packages, hasSize(1));
 
@@ -106,7 +108,7 @@ public class BaseModelTest extends BaseModelResources {
 	public void testDeletePackage() {
 		JVModel model = BaseModel.getInstance().getModel();
 
-		JVProject jvProject = model.getProjects().get(0);
+		JVProject jvProject = model.getProject(BASE);
 		List<JVPackage> packages = jvProject.getPackages();
 		assertThat(packages, hasSize(1));
 
@@ -132,7 +134,7 @@ public class BaseModelTest extends BaseModelResources {
 	public void testChangeTwoPackages() {
 		JVModel model = BaseModel.getInstance().getModel();
 
-		JVProject jvProject = model.getProjects().get(0);
+		JVProject jvProject = model.getProject(BASE);
 		List<JVPackage> packages = jvProject.getPackages();
 		assertThat(packages, hasSize(1));
 
@@ -150,7 +152,7 @@ public class BaseModelTest extends BaseModelResources {
 	public void testUpdateTwoPackages() {
 		JVModel model = BaseModel.getInstance().getModel();
 
-		JVProject jvProject = model.getProjects().get(0);
+		JVProject jvProject = model.getProject(BASE);
 		List<JVPackage> packages = jvProject.getPackages();
 		assertThat(packages, hasSize(1));
 
@@ -177,13 +179,17 @@ public class BaseModelTest extends BaseModelResources {
 				public void run(IProgressMonitor monitor) throws CoreException {
 					createFile(project, ruta + "/paq/que/te/cuento/primer.bean", "asd");
 					createFile(project, ruta + "/paq/que/te/cuento/segundo.bean", "zxc");
+					createFile(project, ruta + "/el/mono/mario/tercer.bean", "zxc");
 				}
 			});
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
 
-		assertThat(jvProject.getPackages(), hasSize(7));
+		assertThat(jvProject.getPackage("paq.que.te.cuento").getBeans(), hasSize(2));
+		assertThat(jvProject.getPackage("el.mono.mario").getBeans(), hasSize(1));
+		assertThat(jvProject.getPackage("el.mono").getBeans(), is(empty()));
+		assertThat(jvProject.getPackage("paq.que.te").getBeans(), is(empty()));
 	}
 
 	@Test
@@ -203,10 +209,10 @@ public class BaseModelTest extends BaseModelResources {
 		}
 
 		assertThat(model.getProjects(), hasSize(2));
-		JVProject jvProject = model.getProjects().get(1);
+		JVProject jvProject = model.getProject("base2");
 		List<JVPackage> packages = jvProject.getPackages();
 		assertThat(packages, hasSize(1));
-		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name", is("paquetillo"))));
+		assertThat(jvProject.getPackage("paquetillo"), is(not(nullValue())));
 
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
@@ -243,8 +249,8 @@ public class BaseModelTest extends BaseModelResources {
 		}
 
 		assertThat(model.getProjects(), hasSize(3));
-		assertThat(model.getProjects(), Matchers.<JVProject> hasItem(hasProperty("name", is("base2"))));
-		assertThat(model.getProjects(), Matchers.<JVProject> hasItem(hasProperty("name", is("base3"))));
+		assertThat(model.getProject("base2"), is(not(nullValue())));
+		assertThat(model.getProject("base3"), is(not(nullValue())));
 
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
