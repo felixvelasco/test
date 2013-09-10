@@ -4,10 +4,7 @@ import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
-import org.eclipse.graphiti.features.context.IResizeShapeContext;
-import org.eclipse.graphiti.features.context.impl.ResizeShapeContext;
 import org.eclipse.graphiti.features.impl.Reason;
-import org.eclipse.graphiti.func.IDirectEditing;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
@@ -18,7 +15,6 @@ import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.pattern.id.IdLayoutContext;
-import org.eclipse.graphiti.pattern.id.IdPattern;
 import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
@@ -28,20 +24,18 @@ import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 
-public class SwitchPattern extends IdPattern {
+public class SwitchPattern extends StatePattern {
 
 	private static final int MIN_WIDTH = 120;
 	private static final int MIN_HEIGHT = 80;
 	private static final String ID_SWITCH_PREFIX = "switchState_";
 	private static final String ID_NAME_TEXT = ID_SWITCH_PREFIX + "nameText";
-	private static final String ID_OUTER_RECTANGLE = ID_SWITCH_PREFIX + "outerRectangle";
-	private static final String ID_MAIN_RECTANGLE = ID_SWITCH_PREFIX + "mainRectangle";
-	private static final String ID_CASE_POLYGON = ID_SWITCH_PREFIX + "casePolygon";
-
-	@Override
-	public boolean canAdd(IAddContext context) {
-		return super.canAdd(context);
-	}
+	private static final String ID_OUTER_RECTANGLE = ID_SWITCH_PREFIX
+			+ "outerRectangle";
+	private static final String ID_MAIN_RECTANGLE = ID_SWITCH_PREFIX
+			+ "mainRectangle";
+	private static final String ID_CASE_POLYGON = ID_SWITCH_PREFIX
+			+ "casePolygon";
 
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
@@ -51,24 +45,30 @@ public class SwitchPattern extends IdPattern {
 		IGaService gaService = Graphiti.getGaService();
 
 		// Outer container (invisible)
-		ContainerShape outerContainerShape = peCreateService.createContainerShape(targetDiagram, true);
-		Rectangle outerRectangle = gaService.createInvisibleRectangle(outerContainerShape);
+		ContainerShape outerContainerShape = peCreateService
+				.createContainerShape(targetDiagram, true);
+		Rectangle outerRectangle = gaService
+				.createInvisibleRectangle(outerContainerShape);
 		setId(outerRectangle, ID_OUTER_RECTANGLE);
-		gaService.setLocationAndSize(outerRectangle, context.getX(), context.getY(),
-				Math.max(MIN_WIDTH, context.getWidth()), Math.max(MIN_HEIGHT, context.getHeight()));
+		gaService.setLocationAndSize(outerRectangle, context.getX(),
+				context.getY(), Math.max(MIN_WIDTH, context.getWidth()),
+				Math.max(MIN_HEIGHT, context.getHeight()));
 
 		// Default end point
-		Polygon endPoint = gaService.createPlainPolygon(outerRectangle, new int[] { 0, 0, 20, 40, 40, 0 });
+		Polygon endPoint = gaService.createPlainPolygon(outerRectangle,
+				new int[] { 0, 0, 20, 40, 40, 0 });
 		setId(endPoint, ID_CASE_POLYGON);
 		setIndex(endPoint, 0);
 		endPoint.setFilled(true);
-		gaService.setRenderingStyle(endPoint, SwitchStatePredefinedColoredAreas.getGreenWhiteAdaptions());
+		gaService.setRenderingStyle(endPoint,
+				StatePredefinedColoredAreas.getGreenWhiteAdaptions());
 
 		// Main contents area
 		Rectangle mainRectangle = gaService.createRectangle(outerRectangle);
 		setId(mainRectangle, ID_MAIN_RECTANGLE);
 		mainRectangle.setFilled(true);
-		gaService.setRenderingStyle(mainRectangle, SwitchStatePredefinedColoredAreas.getGreenWhiteAdaptions());
+		gaService.setRenderingStyle(mainRectangle,
+				StatePredefinedColoredAreas.getGreenWhiteAdaptions());
 
 		// File name
 		Shape shape = peCreateService.createShape(outerContainerShape, false);
@@ -86,30 +86,18 @@ public class SwitchPattern extends IdPattern {
 	}
 
 	@Override
-	public void resizeShape(IResizeShapeContext context) {
-		if (context.getWidth() < MIN_WIDTH || context.getHeight() < MIN_HEIGHT) {
-			ResizeShapeContext context2 = new ResizeShapeContext(context.getShape());
-			context2.setWidth(Math.max(MIN_WIDTH, context.getWidth()));
-			context2.setHeight(Math.max(MIN_HEIGHT, context.getHeight()));
-			context2.setX(context.getX());
-			context2.setY(context.getY());
-			context2.setDirection(context.getDirection());
-			super.resizeShape(context2);
-		} else {
-			super.resizeShape(context);
-		}
-	}
-
-	@Override
 	protected boolean layout(IdLayoutContext context, String id) {
 		boolean changesDone = false;
 
-		Rectangle outerRectangle = (Rectangle) context.getRootPictogramElement().getGraphicsAlgorithm();
+		Rectangle outerRectangle = (Rectangle) context
+				.getRootPictogramElement().getGraphicsAlgorithm();
 
 		if (id.equals(ID_MAIN_RECTANGLE) || id.equals(ID_NAME_TEXT)) {
 			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
-			if (ga.getWidth() != outerRectangle.getWidth() || ga.getHeight() != outerRectangle.getHeight() - 20) {
-				Graphiti.getGaService().setLocationAndSize(ga, 0, 0, outerRectangle.getWidth(),
+			if (ga.getWidth() != outerRectangle.getWidth()
+					|| ga.getHeight() != outerRectangle.getHeight() - 20) {
+				Graphiti.getGaService().setLocationAndSize(ga, 0, 0,
+						outerRectangle.getWidth(),
 						outerRectangle.getHeight() - 20);
 				changesDone = true;
 			}
@@ -125,11 +113,6 @@ public class SwitchPattern extends IdPattern {
 		}
 
 		return changesDone;
-	}
-
-	@Override
-	public boolean canCreate(ICreateContext context) {
-		return context.getTargetContainer() instanceof Diagram;
 	}
 
 	@Override
@@ -154,7 +137,8 @@ public class SwitchPattern extends IdPattern {
 	@Override
 	protected IReason updateNeeded(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
-			SwitchState ss = (SwitchState) getBusinessObjectForPictogramElement(context.getPictogramElement());
+			SwitchState ss = (SwitchState) getBusinessObjectForPictogramElement(context
+					.getPictogramElement());
 			Text text = (Text) context.getGraphicsAlgorithm();
 			if (!text.getValue().equals(ss.getName())) {
 				return Reason.createTrueReason();
@@ -166,7 +150,8 @@ public class SwitchPattern extends IdPattern {
 	@Override
 	protected boolean update(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
-			SwitchState ss = (SwitchState) getBusinessObjectForPictogramElement(context.getPictogramElement());
+			SwitchState ss = (SwitchState) getBusinessObjectForPictogramElement(context
+					.getPictogramElement());
 			Text text = (Text) context.getGraphicsAlgorithm();
 			text.setValue(ss.getName());
 			return true;
@@ -180,19 +165,11 @@ public class SwitchPattern extends IdPattern {
 	}
 
 	@Override
-	protected boolean canDirectEdit(IDirectEditingContext context, String id) {
-		return id.equals(ID_NAME_TEXT);
-	}
-
-	@Override
-	public int getEditingType() {
-		return IDirectEditing.TYPE_TEXT;
-	}
-
-	@Override
-	protected void setValue(String value, IDirectEditingContext context, String id) {
+	protected void setValue(String value, IDirectEditingContext context,
+			String id) {
 		if (id.equals(ID_NAME_TEXT)) {
-			SwitchState ss = (SwitchState) getBusinessObjectForPictogramElement(context.getPictogramElement());
+			SwitchState ss = (SwitchState) getBusinessObjectForPictogramElement(context
+					.getPictogramElement());
 			ss.setName(value);
 			updatePictogramElement(context.getPictogramElement());
 		}

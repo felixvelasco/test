@@ -4,10 +4,7 @@ import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
-import org.eclipse.graphiti.features.context.IResizeShapeContext;
-import org.eclipse.graphiti.features.context.impl.ResizeShapeContext;
 import org.eclipse.graphiti.features.impl.Reason;
-import org.eclipse.graphiti.func.IDirectEditing;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
@@ -17,7 +14,6 @@ import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.pattern.id.IdLayoutContext;
-import org.eclipse.graphiti.pattern.id.IdPattern;
 import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
@@ -26,7 +22,7 @@ import org.eclipse.graphiti.services.IPeCreateService;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 
-public class FinalStatePattern extends IdPattern {
+public class FinalStatePattern extends StatePattern {
 
 	private static final int MIN_WIDTH = 100;
 	private static final int MIN_HEIGHT = 60;
@@ -36,11 +32,6 @@ public class FinalStatePattern extends IdPattern {
 			+ "outerRectangle";
 	private static final String ID_MAIN_RECTANGLE = ID_FINAL_PREFIX
 			+ "mainRectangle";
-
-	@Override
-	public boolean canAdd(IAddContext context) {
-		return super.canAdd(context);
-	}
 
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
@@ -64,7 +55,7 @@ public class FinalStatePattern extends IdPattern {
 		setId(mainRectangle, ID_MAIN_RECTANGLE);
 		mainRectangle.setFilled(true);
 		gaService.setRenderingStyle(mainRectangle,
-				FinalStatePredefinedColoredAreas.getGreenWhiteAdaptions());
+				StatePredefinedColoredAreas.getGreenWhiteAdaptions());
 
 		// File name
 		Shape shape = peCreateService.createShape(outerContainerShape, false);
@@ -79,22 +70,6 @@ public class FinalStatePattern extends IdPattern {
 		link(shape, addedDomainObject);
 
 		return outerContainerShape;
-	}
-
-	@Override
-	public void resizeShape(IResizeShapeContext context) {
-		if (context.getWidth() < MIN_WIDTH || context.getHeight() < MIN_HEIGHT) {
-			ResizeShapeContext context2 = new ResizeShapeContext(
-					context.getShape());
-			context2.setWidth(Math.max(MIN_WIDTH, context.getWidth()));
-			context2.setHeight(Math.max(MIN_HEIGHT, context.getHeight()));
-			context2.setX(context.getX());
-			context2.setY(context.getY());
-			context2.setDirection(context.getDirection());
-			super.resizeShape(context2);
-		} else {
-			super.resizeShape(context);
-		}
 	}
 
 	@Override
@@ -115,11 +90,6 @@ public class FinalStatePattern extends IdPattern {
 		}
 
 		return changesDone;
-	}
-
-	@Override
-	public boolean canCreate(ICreateContext context) {
-		return context.getTargetContainer() instanceof Diagram;
 	}
 
 	@Override
@@ -166,16 +136,6 @@ public class FinalStatePattern extends IdPattern {
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
 		return mainBusinessObject instanceof FinalState;
-	}
-
-	@Override
-	protected boolean canDirectEdit(IDirectEditingContext context, String id) {
-		return id.equals(ID_NAME_TEXT);
-	}
-
-	@Override
-	public int getEditingType() {
-		return IDirectEditing.TYPE_TEXT;
 	}
 
 	@Override
