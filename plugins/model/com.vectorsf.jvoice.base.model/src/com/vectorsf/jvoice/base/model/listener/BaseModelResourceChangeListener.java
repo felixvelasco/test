@@ -38,7 +38,6 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener{
 						if (prj!=null){
 							updatePackages(child, prj);
 							existe = true;
-							System.out.println(model.getProjects().size());
 						}
 						// el modelo tiene proyectos, pero no encuentra el solicitado. Es nuevo
 						if (!existe) {

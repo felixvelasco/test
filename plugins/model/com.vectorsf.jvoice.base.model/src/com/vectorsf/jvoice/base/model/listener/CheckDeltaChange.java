@@ -1,5 +1,11 @@
 package com.vectorsf.jvoice.base.model.listener;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Properties;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -107,6 +113,24 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 						Configuration config = jvProject.getConfiguration(name);
 						if (config!=null)
 							jvProject.getConfiguration().remove(config);
+					} else if (delta.getKind() == IResourceDelta.CHANGED) {
+						String name = resource.getName().substring(0, resource.getName().lastIndexOf('.'));
+						Configuration config = jvProject.getConfiguration(name);
+						if (config!=null){
+							IFile fichero = (IFile) resource;
+							Properties pr = new Properties();
+							try {
+								pr.load(fichero.getContents());
+							} catch (IOException e) {
+								throw new CoreException(null);
+							}
+
+							config.getParameters().clear();
+							for (String etiqueta : pr.stringPropertyNames()) {
+								config.getParameters().put(etiqueta, pr.getProperty(etiqueta));
+							}
+						}
+						return false;
 					}
 				}
 
