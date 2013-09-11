@@ -371,7 +371,7 @@ public class BaseModelTest extends BaseModelResources {
 		assertThat(model.getProjects(), hasSize(1));
 	}
 
-	// @Test
+	@Test
 	public void testDeleteProjects() {
 		JVModel model = BaseModel.getInstance().getModel();
 

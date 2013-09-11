@@ -92,6 +92,28 @@ public class BaseModelResources {
 		return result[0];
 	}
 
+	protected void updateFile(final IFile file, String contents) throws CoreException {
+		byte[] bytes;
+		try {
+			bytes = contents.getBytes("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new CoreException(new Status(IStatus.ERROR, "", e.getMessage(), e));
+		}
+		InputStream input = new ByteArrayInputStream(bytes);
+		updateFile(file, input);
+	}
+
+	protected void updateFile(final IFile file, final InputStream contents) throws CoreException {
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				file.setContents(contents, true, false, monitor);
+			}
+
+		});
+	}
+
 	protected void deleteProject(final IProject project) throws CoreException {
 		executeWksRunnable(new IWorkspaceRunnable() {
 

@@ -5,7 +5,9 @@ package com.vectorsf.jvoice.base.model.service;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.hamcrest.Matchers;
@@ -21,6 +23,7 @@ import com.vectorsf.jvoice.model.base.JVProject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasProperty;
@@ -83,6 +86,85 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 		assertThat(test.getParameters().keySet(), hasSize(4));
 		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+	}
+
+	@Test
+	public void testDeleteProperties() throws CoreException {
+		JVModel model = BaseModel.getInstance().getModel();
+
+		JVProject jvProject = model.getProject(BASE);
+		List<Configuration> configurations = jvProject.getConfiguration();
+		assertThat(configurations, is(empty()));
+
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(org.eclipse.core.runtime.IProgressMonitor monitor) throws CoreException {
+				createFile(project, rutaProperties + "/test.properties",
+						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
+				createFile(project, rutaProperties + "/test2.properties",
+						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
+			}
+		});
+
+		assertThat(configurations, hasSize(2));
+		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test2"))));
+		Configuration test = configurations.get(0);
+
+		assertThat(test.getParameters().keySet(), hasSize(4));
+		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(org.eclipse.core.runtime.IProgressMonitor monitor) throws CoreException {
+				deleteFile(project, rutaProperties + "/test2.properties");
+			}
+		});
+
+		assertThat(configurations, hasSize(1));
+		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+	}
+
+	@Test
+	public void testUpdateProperties() throws CoreException {
+		JVModel model = BaseModel.getInstance().getModel();
+
+		JVProject jvProject = model.getProject(BASE);
+		List<Configuration> configurations = jvProject.getConfiguration();
+		assertThat(configurations, is(empty()));
+
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IFile[] file = new IFile[1];
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(org.eclipse.core.runtime.IProgressMonitor monitor) throws CoreException {
+				file[0] = createFile(project, rutaProperties + "/test.properties",
+						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
+			}
+		});
+		assertThat(configurations, hasSize(1));
+		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+		Configuration test = configurations.get(0);
+
+		assertThat(test.getParameters().keySet(), hasSize(4));
+		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(org.eclipse.core.runtime.IProgressMonitor monitor) throws CoreException {
+				updateFile(file[0], "one=prueba\ntwo=test\nthree=ejemplo\nfour=example\n");
+			}
+		});
+
+		assertThat(configurations, contains(test));
+		assertThat(test.getParameters().keySet(), hasSize(4));
+		assertThat(test.getParameters().keySet(), containsInAnyOrder("one", "two", "three", "four"));
+
 	}
 
 }
