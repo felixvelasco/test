@@ -49,14 +49,12 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 						jvProject.getPackages().add(BaseModel.getInstance().createPackage((IFolder) resource));
 						return false;
 					}
-					for (JVPackage pkg : jvProject.getPackages()) {
-						if (pkg.getName().equals(relPath.toString().replace("/", "."))) {
-							existePaquete = true;
-							currentPackage = pkg;
-							if (isInterestingDelta(delta)) {
-								verificarBorrado(delta.getKind(), resource);
-							}
-						}
+					JVPackage pkg = jvProject.getPackage(relPath.toString().replace("/", "."));
+					if (pkg!=null){
+						existePaquete = true;
+						currentPackage = pkg;
+						if (isInterestingDelta(delta))
+							verificarBorrado(delta.getKind(), resource);
 					}
 					// hemos recorrido los paquete del proyecto pero no encuentra el actual, es nuevo y hay que a�adirlo
 					if (!existePaquete) {
@@ -76,12 +74,9 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					// si es un evento de adici�n al paquete, por culpa del bug de eclipse que lanza el delta 2 veces
 					// tenemos que comprobar que lo hemos agregado ya antes, para no duplicarlo
 					if (delta.getKind() == IResourceDelta.ADDED) {
-						for (JVBean bean : currentPackage.getBeans()) {
-							if (bean.getName().equals(resource.getName())) {
-								yaExiste = true;
-								break;
-							}
-						}
+						JVBean bean = currentPackage.getBean(resource.getName());
+						if (bean!=null)
+							yaExiste = true;
 						if (!yaExiste) {
 							currentPackage.getBeans().add(BaseModel.getInstance().createBean((IFile) resource));
 							return false;
@@ -98,31 +93,24 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					// si es un evento de adici�n al paquete, por culpa del bug de eclipse que lanza el delta 2 veces
 					// tenemos que comprobar que lo hemos agregado ya antes, para no duplicarlo
 					if (delta.getKind() == IResourceDelta.ADDED) {
-						for (Configuration config : jvProject.getConfiguration()) {
-							String name = resource.getName().substring(0, resource.getName().lastIndexOf('.'));
-							if (config.getName().equals(name)) {
-								yaExiste = true;
-								break;
-							}
-						}
+						String name = resource.getName().substring(0, resource.getName().lastIndexOf('.'));
+						Configuration config = jvProject.getConfiguration(name);
+						if(config!=null)
+							yaExiste = true;
 						if (!yaExiste) {
 							jvProject.getConfiguration().add(BaseModel.getInstance().createConfigurationFromFile((IFile) resource));
 							return false;
-						} else {
+						} else
 							return true;
-						}
 					} else if (delta.getKind() == IResourceDelta.REMOVED) {
-						for (Configuration config : jvProject.getConfiguration()) {
-							String name = resource.getName().substring(0, resource.getName().lastIndexOf('.'));
-							if (config.getName().equals(name)) {
-								jvProject.getConfiguration().remove(config);
-								break;
-							}
-						}
+						String name = resource.getName().substring(0, resource.getName().lastIndexOf('.'));
+						Configuration config = jvProject.getConfiguration(name);
+						if (config!=null)
+							jvProject.getConfiguration().remove(config);
 					}
 				}
 
-				return false;
+				return true;
 			case IResource.PROJECT:
 				return verificarBorrado(delta.getKind(), resource);
 			}
@@ -138,26 +126,23 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 		private boolean verificarBorrado(int estado, IResource recurso) throws CoreException {
 			if (estado == IResourceDelta.REMOVED) {
 				if (recurso instanceof IFile) {
-					for (JVBean bean : currentPackage.getBeans()) {
-						if (bean.getName().equals(recurso.getName())) {
-							currentPackage.getBeans().remove(bean);
-							break;
-						}
+					JVBean bean = currentPackage.getBean(recurso.getName());
+					if(bean!=null){
+						currentPackage.getBeans().remove(bean);
+						return false;
 					}
 				} else if (recurso instanceof IFolder) {
-					for (JVPackage paquete : jvProject.getPackages()) {
-						if (paquete.getName().equals(recurso.getName())) {
-							jvProject.getPackages().remove(paquete);
-							break;
-						}
+					JVPackage paquete = jvProject.getPackage(recurso.getName());
+					if(paquete!=null){
+						jvProject.getPackages().remove(paquete);
+						return false;
 					}
 				} else if (recurso instanceof IProject) {
 					JVModel model = BaseModel.getInstance().getModel();
-					for (JVProject proyecto : model.getProjects()) {
-						if (proyecto.getName().equals(recurso.getName())) {
-							model.getProjects().remove(proyecto);
-							break;
-						}
+					JVProject proyecto = model.getProject(recurso.getName());
+					if(proyecto!=null){
+						model.getProjects().remove(proyecto);
+						return false;
 					}
 				}
 

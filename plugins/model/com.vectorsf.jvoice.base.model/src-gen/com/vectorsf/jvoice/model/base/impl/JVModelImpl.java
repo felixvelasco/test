@@ -2,24 +2,31 @@
  */
 package com.vectorsf.jvoice.model.base.impl;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-import java.util.List;
-
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVProject;
 
+import java.lang.reflect.InvocationTargetException;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>JV Model</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>JV Model</b></em>'.
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -31,9 +38,9 @@ import com.vectorsf.jvoice.model.base.JVProject;
  */
 public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel {
 	/**
-	 * The cached value of the '{@link #getProjects() <em>Projects</em>}' containment reference list. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The cached value of the '{@link #getProjects() <em>Projects</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getProjects()
 	 * @generated
 	 * @ordered
@@ -41,7 +48,8 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	protected EList<JVProject> projects;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected JVModelImpl() {
@@ -49,7 +57,8 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -58,10 +67,10 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public List<JVProject> getProjects() {
 		if (projects == null) {
 			projects = new EObjectContainmentWithInverseEList<JVProject>(JVProject.class, this, BasePackage.JV_MODEL__PROJECTS, BasePackage.JV_PROJECT__MODEL);
@@ -70,10 +79,10 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public JVProject getProject(final String name) {
 		for (JVProject project: getProjects()) {
 			if (project.getName().equals(name)) {
@@ -85,7 +94,8 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -99,7 +109,8 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -112,7 +123,8 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -125,7 +137,8 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -141,7 +154,8 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -155,7 +169,8 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -168,7 +183,8 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -180,4 +196,4 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 		return super.eInvoke(operationID, arguments);
 	}
 
-} // JVModelImpl
+} //JVModelImpl

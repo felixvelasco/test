@@ -268,6 +268,15 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getJVPackage__GetBean__String() {
+		return jvPackageEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getJVProject() {
 		return jvProjectEClass;
 	}
@@ -306,6 +315,15 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 */
 	public EOperation getJVProject__GetPackage__String() {
 		return jvProjectEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getJVProject__GetConfiguration__String() {
+		return jvProjectEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -398,12 +416,14 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		jvPackageEClass = createEClass(JV_PACKAGE);
 		createEReference(jvPackageEClass, JV_PACKAGE__BEANS);
 		createEReference(jvPackageEClass, JV_PACKAGE__OWNER_PROJECT);
+		createEOperation(jvPackageEClass, JV_PACKAGE___GET_BEAN__STRING);
 
 		jvProjectEClass = createEClass(JV_PROJECT);
 		createEReference(jvProjectEClass, JV_PROJECT__PACKAGES);
 		createEReference(jvProjectEClass, JV_PROJECT__MODEL);
 		createEReference(jvProjectEClass, JV_PROJECT__CONFIGURATION);
 		createEOperation(jvProjectEClass, JV_PROJECT___GET_PACKAGE__STRING);
+		createEOperation(jvProjectEClass, JV_PROJECT___GET_CONFIGURATION__STRING);
 
 		stringToStringMapEClass = createEClass(STRING_TO_STRING_MAP);
 		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__KEY);
@@ -468,12 +488,18 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		initEReference(getJVPackage_Beans(), this.getJVBean(), this.getJVBean_OwnerPackage(), "beans", null, 0, -1, JVPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVPackage_OwnerProject(), this.getJVProject(), this.getJVProject_Packages(), "ownerProject", null, 0, 1, JVPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		op = initEOperation(getJVPackage__GetBean__String(), this.getJVBean(), "getBean", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(jvProjectEClass, JVProject.class, "JVProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVProject_Packages(), this.getJVPackage(), this.getJVPackage_OwnerProject(), "packages", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVProject_Model(), this.getJVModel(), this.getJVModel_Projects(), "model", null, 0, 1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVProject_Configuration(), this.getConfiguration(), null, "configuration", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getJVProject__GetPackage__String(), this.getJVPackage(), "getPackage", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getJVProject__GetConfiguration__String(), this.getConfiguration(), "getConfiguration", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(stringToStringMapEClass, Map.Entry.class, "StringToStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);

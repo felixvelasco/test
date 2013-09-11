@@ -68,4 +68,12 @@ public interface JVPackage extends NamedElement {
 	 */
 	void setOwnerProject(JVProject value);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='for (JVBean bean: getBeans()) {\r\n\tif (bean.getName().equals(name)) {\r\n\t\treturn bean;\r\n\t}\r\n}\r\n\t\t\r\nreturn null;'"
+	 * @generated
+	 */
+	JVBean getBean(String name);
+
 } // JVPackage

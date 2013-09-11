@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.base.model.listener;
 
-import java.util.Iterator;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -35,12 +34,11 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener{
 						model.getProjects().add(BaseModel.getInstance().createProject((IProject) res));
 						break;
 					} else {
-						for (Iterator<JVProject> it = model.getProjects().iterator(); it.hasNext();) {
-							JVProject prj = it.next();
-							if (name.equals(prj.getName())) {
-								updatePackages(child, prj);
-								existe = true;
-							}
+						JVProject prj = model.getProject(name);
+						if (prj!=null){
+							updatePackages(child, prj);
+							existe = true;
+							System.out.println(model.getProjects().size());
 						}
 						// el modelo tiene proyectos, pero no encuentra el solicitado. Es nuevo
 						if (!existe) {
