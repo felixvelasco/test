@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ivr
+Bundle-SymbolicName: com.vectorsf.jvoice.ui.navigator;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.vectorsf.jvoice.ui.navigator.activator.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.navigator,
+ org.eclipse.emf.edit;bundle-version="2.9.0",
+ org.eclipse.emf.edit.ui;bundle-version="2.9.0",
+ org.eclipse.core.resources,
+ com.vectorsf.jvoice.base.model;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
