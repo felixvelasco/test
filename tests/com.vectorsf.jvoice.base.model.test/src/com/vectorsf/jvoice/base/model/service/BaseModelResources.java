@@ -11,9 +11,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 
 public class BaseModelResources {
@@ -51,7 +51,7 @@ public class BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				result[0] = project.getFolder(new Path(ruta));
+				result[0] = project.getFolder(ruta);
 				IFolder folder = result[0];
 				createRecursively(folder, monitor);
 			}
@@ -79,7 +79,7 @@ public class BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				result[0] = project.getFile(new Path(ruta));
+				result[0] = project.getFile(ruta);
 				IContainer container = result[0].getParent();
 				if (!container.exists() && container instanceof IFolder) {
 					createRecursively((IFolder) container, monitor);
@@ -108,12 +108,23 @@ public class BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				IFolder folder = project.getFolder(new Path(path));
+				IFolder folder = project.getFolder(path);
 				folder.delete(true, monitor);
 			}
 
 		});
+	}
 
+	protected void deleteFile(final IProject project, final String path) throws CoreException {
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				IFile file = project.getFile(path);
+				file.delete(true, monitor);
+			}
+
+		});
 	}
 
 	private void createRecursively(IFolder container, IProgressMonitor monitor) throws CoreException {
@@ -124,6 +135,19 @@ public class BaseModelResources {
 
 		container.create(true, false, monitor);
 
+	}
+
+	protected void moveFile(final IProject project, final String origin, final String target) throws CoreException {
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				IFile file = project.getFile(origin);
+				final IPath fullPath = project.getFile(target).getFullPath();
+				file.move(fullPath, true, monitor);
+			}
+
+		});
 	}
 
 }

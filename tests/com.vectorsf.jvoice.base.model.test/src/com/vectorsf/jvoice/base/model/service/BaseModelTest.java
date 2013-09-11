@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
+import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
@@ -38,6 +39,7 @@ import static org.junit.Assert.fail;
 @RunWith(BlockJUnit4ClassRunner.class)
 public class BaseModelTest extends BaseModelResources {
 
+	private static final String PAQ = "paq";
 	private static final String BASE = "base";
 
 	/**
@@ -48,7 +50,7 @@ public class BaseModelTest extends BaseModelResources {
 		IProject base = createProject(BASE);
 		createFolders(base, ruta);
 		createFolders(base, rutaProperties);
-		createFolders(base, ruta + "/paq");
+		createFolders(base, ruta + "/" + PAQ);
 	}
 
 	/**
@@ -72,8 +74,8 @@ public class BaseModelTest extends BaseModelResources {
 		assertThat(model.getProjects(), hasSize(1));
 		assertThat(model.getProject(BASE), is(not(nullValue())));
 		assertThat(model.getProject(BASE).getPackages(), hasSize(1));
-		assertThat(model.getProject(BASE).getPackage("paq"), is(not(nullValue())));
-		assertThat(model.getProject(BASE).getPackage("paq").getBeans(), is(empty()));
+		assertThat(model.getProject(BASE).getPackage(PAQ), is(not(nullValue())));
+		assertThat(model.getProject(BASE).getPackage(PAQ).getBeans(), is(empty()));
 	}
 
 	@Test
@@ -140,12 +142,153 @@ public class BaseModelTest extends BaseModelResources {
 
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
 		try {
-			deleteFolder(project, ruta + "/paq");
+			deleteFolder(project, ruta + "/" + PAQ);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
 
 		assertThat(packages, is(empty()));
+	}
+
+	@Test
+	public void testBeanCreation() {
+		JVModel model = BaseModel.getInstance().getModel();
+
+		JVProject jvProject = model.getProject(BASE);
+		JVPackage pack = jvProject.getPackage(PAQ);
+		assertThat(pack.getBeans(), is(empty()));
+
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final String bean1 = "one.jflow";
+		try {
+			executeWksRunnable(new IWorkspaceRunnable() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws CoreException {
+					createFile(project, ruta + "/" + PAQ + "/" + bean1, "asd");
+				}
+			});
+		} catch (CoreException ce) {
+			fail(ce.getMessage());
+		}
+
+		assertThat(pack.getBeans(), hasSize(1));
+
+		final String bean2 = "two.jflow";
+		try {
+			executeWksRunnable(new IWorkspaceRunnable() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws CoreException {
+					createFile(project, ruta + "/" + PAQ + "/" + bean2, "asd");
+				}
+			});
+		} catch (CoreException ce) {
+			fail(ce.getMessage());
+		}
+
+		assertThat(pack.getBeans(), hasSize(2));
+	}
+
+	@Test
+	public void testBeanDelete() {
+		JVModel model = BaseModel.getInstance().getModel();
+
+		JVProject jvProject = model.getProject(BASE);
+		JVPackage pack = jvProject.getPackage(PAQ);
+		assertThat(pack.getBeans(), is(empty()));
+
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final String bean1 = "one.jflow";
+		final String bean2 = "two.jflow";
+		try {
+			executeWksRunnable(new IWorkspaceRunnable() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws CoreException {
+					createFile(project, ruta + "/" + PAQ + "/" + bean1, "asd");
+					createFile(project, ruta + "/" + PAQ + "/" + bean2, "asd");
+				}
+			});
+		} catch (CoreException ce) {
+			fail(ce.getMessage());
+		}
+
+		assertThat(pack.getBeans(), hasSize(2));
+
+		try {
+			executeWksRunnable(new IWorkspaceRunnable() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws CoreException {
+					deleteFile(project, ruta + "/" + PAQ + "/" + bean2);
+				}
+			});
+		} catch (CoreException ce) {
+			fail(ce.getMessage());
+		}
+
+		assertThat(pack.getBeans(), hasSize(1));
+
+		try {
+			executeWksRunnable(new IWorkspaceRunnable() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws CoreException {
+					deleteFile(project, ruta + "/" + PAQ + "/" + bean1);
+				}
+			});
+		} catch (CoreException ce) {
+			fail(ce.getMessage());
+		}
+
+		assertThat(pack.getBeans(), is(empty()));
+	}
+
+	@Test
+	public void testBeanMove() {
+		JVModel model = BaseModel.getInstance().getModel();
+
+		JVProject jvProject = model.getProject(BASE);
+		JVPackage pack = jvProject.getPackage(PAQ);
+		assertThat(pack.getBeans(), is(empty()));
+
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final String bean1 = "one.jflow";
+		try {
+			executeWksRunnable(new IWorkspaceRunnable() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws CoreException {
+					createFile(project, ruta + "/" + PAQ + "/" + bean1, "asd");
+				}
+			});
+		} catch (CoreException ce) {
+			fail(ce.getMessage());
+		}
+
+		assertThat(pack.getBeans(), hasSize(1));
+
+		try {
+			executeWksRunnable(new IWorkspaceRunnable() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws CoreException {
+					createFolders(project, ruta + "/otro/paquete");
+					moveFile(project, ruta + "/" + PAQ + "/" + bean1, ruta + "/otro/paquete/" + bean1);
+				}
+			});
+		} catch (CoreException ce) {
+			fail(ce.getMessage());
+		}
+
+		assertThat(pack.getBeans(), is(empty()));
+		assertThat(jvProject.getPackages(), hasSize(3));
+
+		JVPackage pck = jvProject.getPackage("otro.paquete");
+		assertThat(pck, is(not(nullValue())));
+		assertThat(pck.getBeans(), hasSize(1));
+		assertThat(pck.getBeans(), Matchers.<JVBean> hasItem(hasProperty("name", is(bean1))));
 	}
 
 	@Test
@@ -228,7 +371,7 @@ public class BaseModelTest extends BaseModelResources {
 		assertThat(model.getProjects(), hasSize(1));
 	}
 
-	@Test
+	// @Test
 	public void testDeleteProjects() {
 		JVModel model = BaseModel.getInstance().getModel();
 
