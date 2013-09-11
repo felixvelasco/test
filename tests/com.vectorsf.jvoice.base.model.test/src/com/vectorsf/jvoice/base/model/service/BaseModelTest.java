@@ -5,10 +5,12 @@ package com.vectorsf.jvoice.base.model.service;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -275,7 +277,10 @@ public class BaseModelTest extends BaseModelResources {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
 					createFolders(project, ruta + "/otro/paquete");
-					moveFile(project, ruta + "/" + PAQ + "/" + bean1, ruta + "/otro/paquete/" + bean1);
+					IFile file = project.getFile(ruta + "/" + PAQ + "/" + bean1);
+					IPath fullPath = project.getFile(ruta + "/otro/paquete/" + bean1).getFullPath();
+
+					moveFile(file, fullPath);
 				}
 			});
 		} catch (CoreException ce) {

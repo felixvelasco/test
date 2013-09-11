@@ -159,13 +159,11 @@ public class BaseModelResources {
 
 	}
 
-	protected void moveFile(final IProject project, final String origin, final String target) throws CoreException {
+	protected void moveFile(final IFile file, final IPath fullPath) throws CoreException {
 		executeWksRunnable(new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				IFile file = project.getFile(origin);
-				final IPath fullPath = project.getFile(target).getFullPath();
 				file.move(fullPath, true, monitor);
 			}
 
