@@ -8,6 +8,7 @@
   <packaging>pom</packaging>
   <properties>
     <tycho-version>0.18.1</tycho-version>
+    <jacoco-version>0.6.3.201306030806</jacoco-version>
   </properties>
   <repositories>
     <repository>
@@ -32,6 +33,25 @@
         <artifactId>tycho-maven-plugin</artifactId>
         <version>${tycho-version}</version>
         <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

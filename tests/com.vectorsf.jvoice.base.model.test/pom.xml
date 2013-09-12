@@ -20,7 +20,7 @@
 				<configuration>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>false</useUIThread>
-					<argLine>-Xmx512m</argLine>
+					<argLine>${tycho.testArgLine} -Xmx512m</argLine>
 					<appArgLine>-nl en</appArgLine>
 					<bundleStartLevel>
 						<bundle>
