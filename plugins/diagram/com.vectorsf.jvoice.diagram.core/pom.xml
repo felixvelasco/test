@@ -4,17 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.vectorsf.jvoice.core</groupId>
-    <artifactId>jvoice</artifactId>
+    <artifactId>diagram</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.vectorsf.jvoice.core</groupId>
-  <artifactId>plugins</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <modules>
-    <module>model</module>
-    <module>ui</module>
-    <module>core</module>
-    <module>diagram</module>
-  </modules>
+  <artifactId>com.vectorsf.jvoice.diagram.core</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>eclipse-plugin</packaging>
 </project>
