@@ -9,6 +9,7 @@
   <properties>
     <tycho-version>0.18.1</tycho-version>
     <jacoco-version>0.6.3.201306030806</jacoco-version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <repositories>
     <repository>
