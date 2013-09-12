@@ -106,6 +106,15 @@ public class BaseModelTest extends BaseModelResources {
 
 		assertThat(packages, hasSize(3));
 		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name", is("paq.uete"))));
+
+		try {
+			createFolders(project, ruta + "/otra/jerarquia/de/paquetes");
+		} catch (CoreException ce) {
+			fail(ce.getMessage());
+		}
+
+		assertThat(packages, hasSize(7));
+		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name", is("otra.jerarquia.de.paquetes"))));
 	}
 
 	@Test
@@ -124,7 +133,7 @@ public class BaseModelTest extends BaseModelResources {
 					createFolders(project, ruta + "/paq1");
 					createFolders(project, ruta + "/paq2");
 				}
-			});
+			}, project);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -169,7 +178,7 @@ public class BaseModelTest extends BaseModelResources {
 				public void run(IProgressMonitor monitor) throws CoreException {
 					createFile(project, ruta + "/" + PAQ + "/" + bean1, "asd");
 				}
-			});
+			}, project);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -211,7 +220,7 @@ public class BaseModelTest extends BaseModelResources {
 					createFile(project, ruta + "/" + PAQ + "/" + bean1, "asd");
 					createFile(project, ruta + "/" + PAQ + "/" + bean2, "asd");
 				}
-			});
+			}, project);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -225,7 +234,7 @@ public class BaseModelTest extends BaseModelResources {
 				public void run(IProgressMonitor monitor) throws CoreException {
 					deleteFile(project, ruta + "/" + PAQ + "/" + bean2);
 				}
-			});
+			}, project);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -239,7 +248,7 @@ public class BaseModelTest extends BaseModelResources {
 				public void run(IProgressMonitor monitor) throws CoreException {
 					deleteFile(project, ruta + "/" + PAQ + "/" + bean1);
 				}
-			});
+			}, project);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -264,7 +273,7 @@ public class BaseModelTest extends BaseModelResources {
 				public void run(IProgressMonitor monitor) throws CoreException {
 					createFile(project, ruta + "/" + PAQ + "/" + bean1, "asd");
 				}
-			});
+			}, project);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -313,7 +322,7 @@ public class BaseModelTest extends BaseModelResources {
 					createFolders(project, ruta + "/paq/que/te/cuento");
 					createFolders(project, ruta + "/el/mono/mario");
 				}
-			});
+			}, project);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -329,7 +338,7 @@ public class BaseModelTest extends BaseModelResources {
 					createFile(project, ruta + "/paq/que/te/cuento/segundo.bean", "zxc");
 					createFile(project, ruta + "/el/mono/mario/tercer.bean", "zxc");
 				}
-			});
+			}, project);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -338,6 +347,56 @@ public class BaseModelTest extends BaseModelResources {
 		assertThat(jvProject.getPackage("el.mono.mario").getBeans(), hasSize(1));
 		assertThat(jvProject.getPackage("el.mono").getBeans(), is(empty()));
 		assertThat(jvProject.getPackage("paq.que.te").getBeans(), is(empty()));
+	}
+
+	@Test
+	public void testUpdateTwoProjects() {
+		JVModel model = BaseModel.getInstance().getModel();
+
+		JVProject jvProject = model.getProject(BASE);
+		List<JVPackage> packages = jvProject.getPackages();
+		assertThat(packages, hasSize(1));
+
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(BASE);
+		final String segundo = "segundo";
+		try {
+			executeWksRunnable(new IWorkspaceRunnable() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws CoreException {
+					createProject(segundo);
+				}
+			});
+		} catch (CoreException ce) {
+			fail(ce.getMessage());
+		}
+		final IProject project2 = ResourcesPlugin.getWorkspace().getRoot().getProject(segundo);
+
+		assertThat(model.getProjects(), hasSize(2));
+		JVProject jvProject2 = model.getProject(segundo);
+		List<JVPackage> packages2 = jvProject2.getPackages();
+		assertThat(packages2, is(empty()));
+
+		try {
+			executeWksRunnable(new IWorkspaceRunnable() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws CoreException {
+					createFile(project, ruta + "/paq/que/te/cuento/primer.bean", "asd");
+					createFile(project, ruta + "/paq/que/te/cuento/segundo.bean", "zxc");
+					createFile(project2, ruta + "/el/mono/mario/tercer.bean", "zxc");
+				}
+			});
+		} catch (CoreException ce) {
+			fail(ce.getMessage());
+		}
+		assertThat(jvProject.getPackages(), hasSize(4));
+		assertThat(jvProject2.getPackages(), hasSize(3));
+
+		assertThat(jvProject.getPackage("paq.que.te.cuento").getBeans(), hasSize(2));
+		assertThat(jvProject.getPackage("paq.que.te").getBeans(), is(empty()));
+		assertThat(jvProject2.getPackage("el.mono.mario").getBeans(), hasSize(1));
+		assertThat(jvProject2.getPackage("el.mono").getBeans(), is(empty()));
 	}
 
 	@Test

@@ -8,6 +8,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -15,6 +16,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 
 public class BaseModelResources {
 
@@ -27,6 +29,10 @@ public class BaseModelResources {
 
 	protected void executeWksRunnable(IWorkspaceRunnable runnable) throws CoreException {
 		ResourcesPlugin.getWorkspace().run(runnable, null);
+	}
+
+	protected void executeWksRunnable(IWorkspaceRunnable runnable, ISchedulingRule rule) throws CoreException {
+		ResourcesPlugin.getWorkspace().run(runnable, rule, IWorkspace.AVOID_UPDATE, null);
 	}
 
 	protected IProject createProject(final String name) throws CoreException {
@@ -56,7 +62,7 @@ public class BaseModelResources {
 				createRecursively(folder, monitor);
 			}
 
-		});
+		}, project);
 
 		return result[0];
 	}
@@ -87,7 +93,7 @@ public class BaseModelResources {
 				result[0].create(contents, true, monitor);
 			}
 
-		});
+		}, project);
 
 		return result[0];
 	}
@@ -111,7 +117,7 @@ public class BaseModelResources {
 				file.setContents(contents, true, false, monitor);
 			}
 
-		});
+		}, file);
 	}
 
 	protected void deleteProject(final IProject project) throws CoreException {
@@ -134,7 +140,7 @@ public class BaseModelResources {
 				folder.delete(true, monitor);
 			}
 
-		});
+		}, project);
 	}
 
 	protected void deleteFile(final IProject project, final String path) throws CoreException {
@@ -146,7 +152,7 @@ public class BaseModelResources {
 				file.delete(true, monitor);
 			}
 
-		});
+		}, project);
 	}
 
 	private void createRecursively(IFolder container, IProgressMonitor monitor) throws CoreException {

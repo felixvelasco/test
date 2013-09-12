@@ -81,7 +81,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 				createFile(project, rutaProperties + "/test.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
-		});
+		}, project);
 
 		assertThat(configurations, hasSize(1));
 		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
@@ -109,7 +109,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 				createFile(project, rutaProperties + "/test2.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
-		});
+		}, project);
 
 		assertThat(configurations, hasSize(2));
 		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
@@ -136,7 +136,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 			public void run(IProgressMonitor monitor) throws CoreException {
 				deleteFile(project, rutaProperties + "/test.properties");
 			}
-		});
+		}, project);
 
 		assertThat(configurations, is(empty()));
 	}
@@ -159,7 +159,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 				createFile(project, rutaProperties + "/test2.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
-		});
+		}, project);
 
 		assertThat(configurations, hasSize(2));
 		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
@@ -176,12 +176,12 @@ public class ConfigurationModelTest extends BaseModelResources {
 				deleteFile(project, rutaProperties + "/test2.properties");
 				deleteFile(project, rutaProperties + "/test.properties");
 			}
-		});
+		}, project);
 
 		assertThat(configurations, is(empty()));
 	}
 
-	@Test(timeout = 500)
+	@Test(timeout = 1000)
 	public void testPerfCreateProperties() throws CoreException {
 		JVModel model = BaseModel.getInstance().getModel();
 
@@ -199,7 +199,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 							"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 				}
 			}
-		});
+		}, project);
 
 		assertThat(configurations, hasSize(100));
 	}
@@ -221,7 +221,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 				file[0] = createFile(project, rutaProperties + "/test.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
-		});
+		}, project);
 		assertThat(configurations, hasSize(1));
 		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
 		Configuration test = configurations.get(0);
@@ -260,7 +260,8 @@ public class ConfigurationModelTest extends BaseModelResources {
 				file[0] = createFile(project, rutaProperties + "/test.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
-		});
+		}, project);
+
 		assertThat(configurations, hasSize(1));
 		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
 		Configuration test = configurations.get(0);
