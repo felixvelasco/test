@@ -11,6 +11,7 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -30,6 +31,8 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 
 import static org.junit.Assert.fail;
 
@@ -89,6 +92,104 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 		assertThat(test.getParameters().keySet(), hasSize(4));
 		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+	}
+
+	@Test
+	public void testCreateNonPropertiesFiles() throws CoreException {
+		JVModel model = BaseModel.getInstance().getModel();
+
+		JVProject jvProject = model.getProject(BASE);
+		List<Configuration> configurations = jvProject.getConfiguration();
+		assertThat(configurations, is(empty()));
+
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				createFile(project, rutaProperties + "/test.nonproperties",
+						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
+			}
+		}, project);
+
+		assertThat(configurations, is(empty()));
+
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				createFolders(project, rutaProperties + "/folder.properties");
+			}
+		}, project);
+
+		assertThat(configurations, is(empty()));
+
+	}
+
+	@Test
+	public void testCreatePropertiesAndNonProperties() throws CoreException {
+		JVModel model = BaseModel.getInstance().getModel();
+
+		JVProject jvProject = model.getProject(BASE);
+		List<Configuration> configurations = jvProject.getConfiguration();
+		assertThat(configurations, is(empty()));
+
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				createFile(project, rutaProperties + "/test.properties",
+						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
+				createFile(project, rutaProperties + "/otherTest.nonProperties",
+						"one=prueba\ntwo=test\nthree=ejemplo\nfour=example\n");
+			}
+		}, project);
+
+		assertThat(configurations, hasSize(1));
+		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+		Configuration test = configurations.get(0);
+
+		assertThat(test.getParameters().keySet(), hasSize(4));
+		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+	}
+
+	@Test
+	public void testCreateProjectWithProperties() throws CoreException {
+		JVModel model = BaseModel.getInstance().getModel();
+
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				IProject project = createProject("testing");
+				createFile(project, rutaProperties + "/test.properties",
+						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
+				createFile(project, rutaProperties + "/otherTest.properties",
+						"one=prueba\ntwo=test\nthree=ejemplo\nfour=example\n");
+				createFile(project, rutaProperties + "/otherTest.nonProperties",
+						"un=prueba\ndeux=test\ntrois=ejemplo\nquatre=example\n");
+			}
+		});
+
+		JVProject project = model.getProject("testing");
+		assertThat(project, is(not(nullValue())));
+		List<Configuration> configurations = project.getConfiguration();
+
+		assertThat(configurations, hasSize(2));
+		@SuppressWarnings("unchecked")
+		Matcher<Iterable<? extends Configuration>> containsTestAndOtherTest = containsInAnyOrder(
+				Matchers.<Configuration> hasProperty("name", is("test")),
+				Matchers.<Configuration> hasProperty("name", is("otherTest")));
+		assertThat(configurations, containsTestAndOtherTest);
+
+		Configuration test = project.getConfiguration("test");
+		assertThat(test.getParameters().keySet(), hasSize(4));
+		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+
+		Configuration otherTest = project.getConfiguration("otherTest");
+		assertThat(otherTest.getParameters().keySet(), hasSize(4));
+		assertThat(otherTest.getParameters().keySet(), containsInAnyOrder("one", "two", "three", "four"));
 	}
 
 	@Test
@@ -181,7 +282,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 		assertThat(configurations, is(empty()));
 	}
 
-	@Test(timeout = 1000)
+	@Test(timeout = 5000)
 	public void testPerfCreateProperties() throws CoreException {
 		JVModel model = BaseModel.getInstance().getModel();
 
