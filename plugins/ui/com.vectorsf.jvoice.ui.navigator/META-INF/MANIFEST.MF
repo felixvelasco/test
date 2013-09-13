@@ -4,8 +4,8 @@ Bundle-Name: Ivr
 Bundle-SymbolicName: com.vectorsf.jvoice.ui.navigator;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.vectorsf.jvoice.ui.navigator.activator.Activator
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.ui.navigator,
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.9.0",
+ org.eclipse.ui.navigator;bundle-version="3.5.300",
  org.eclipse.emf.edit;bundle-version="2.9.0",
  org.eclipse.emf.edit.ui;bundle-version="2.9.0",
  org.eclipse.team.ui;bundle-version="3.7.0",
