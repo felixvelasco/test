@@ -225,7 +225,7 @@
                label="Copy"
                style="push">
             <visibleWhen
-                  checkEnabled="false">
+                  checkEnabled="true">
                <with
                      variable="selection">
                   <count
@@ -251,20 +251,6 @@
          <command
                commandId="org.eclipse.ui.edit.paste"
                label="Paste"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <count
-                        value="1">
-                  </count>
-               </with>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.ui.edit.delete"
-               label="Delete"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -345,7 +331,7 @@
                type="org.eclipse.core.resources.mapping.ResourceMapping">
          </adapter>
          <adapter
-               type="com.vectorsf.jvoice.ui.navigator.Adapter8">
+               type="org.eclipse.core.resources.IResource">
          </adapter>
       </factory>
       <factory
@@ -358,7 +344,7 @@
                type="org.eclipse.core.resources.mapping.ResourceMapping">
          </adapter>
          <adapter
-               type="com.vectorsf.jvoice.ui.navigator.Adapter9">
+               type="org.eclipse.core.resources.IResource">
          </adapter>
       </factory>
    </extension>
