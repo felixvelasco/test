@@ -74,6 +74,7 @@ public class BaseModel {
 				System.out.print(e);
 			}
 		}
+
 		return jvProject;
 	}
 
@@ -118,5 +119,5 @@ public class BaseModel {
 		fake.setName(res.getName());
 
 		return fake;
-	}	
+	}
 }

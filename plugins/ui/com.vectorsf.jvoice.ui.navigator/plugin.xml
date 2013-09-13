@@ -29,6 +29,10 @@
                   isRoot="true"
                   pattern="com.vectorsf.jvoice.base.navigator.navigatorContent">
             </contentExtension>
+            <contentExtension
+                  isRoot="false"
+                  pattern="com.vectorsf.jvoice.base.maven.navigatorContent">
+            </contentExtension>
          </includes>
       </viewerContentBinding>
       <viewer
@@ -66,11 +70,32 @@
             icon="res/Component.ico"
             id="com.vectorsf.jvoice.base.navigator.navigatorContent"
             labelProvider="com.vectorsf.jvoice.ui.navigator.ivr.LabelProvider"
-            name="IVR Navigator">
+            name="IVR Navigator"
+            priority="normal">
          <triggerPoints>
             <instanceof
                   value="org.eclipse.emf.ecore.EObject">
             </instanceof>
+         </triggerPoints>
+      </navigatorContent>
+      <navigatorContent
+            contentProvider="com.vectorsf.jvoice.ui.navigator.ivr.MavenContentProvider"
+            id="com.vectorsf.jvoice.base.maven.navigatorContent"
+            labelProvider="org.eclipse.jdt.internal.ui.navigator.JavaNavigatorLabelProvider"
+            name="Maven navigator content"
+            priority="low">
+         <triggerPoints>
+            <or>
+               <instanceof
+                     value="org.eclipse.jdt.core.IJavaElement">
+               </instanceof>
+               <instanceof
+                     value="org.eclipse.jdt.internal.ui.packageview.ClassPathContainer">
+               </instanceof>
+               <instanceof
+                     value="com.vectorsf.jvoice.model.base.JVProject">
+               </instanceof>
+            </or>
          </triggerPoints>
       </navigatorContent>
    </extension>
