@@ -5,19 +5,28 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
+import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.context.ICustomContext;
+import org.eclipse.graphiti.features.context.IPictogramElementContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.Connection;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
 import org.eclipse.graphiti.tb.ConnectionSelectionInfoImpl;
+import org.eclipse.graphiti.tb.ContextButtonEntry;
 import org.eclipse.graphiti.tb.ContextMenuEntry;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
 import org.eclipse.graphiti.tb.IConnectionSelectionInfo;
+import org.eclipse.graphiti.tb.IContextButtonPadData;
 import org.eclipse.graphiti.tb.IContextMenuEntry;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
+
+import com.vectorsf.jvoice.diagram.core.pattern.CreateTransitionFromPad;
+import com.vectorsf.jvoice.diagram.core.pattern.TransitionPattern;
+import com.vectorsf.jvoice.model.operations.State;
 
 public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
@@ -65,11 +74,13 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 		// create a menu-entry in the sub-menu for each custom feature
 		context.putProperty(CONTEXT_MENU_ENTRY, true);
-		ICustomFeature[] customFeatures = getFeatureProvider().getCustomFeatures(context);
+		ICustomFeature[] customFeatures = getFeatureProvider()
+				.getCustomFeatures(context);
 		for (int i = 0; i < customFeatures.length; i++) {
 			ICustomFeature customFeature = customFeatures[i];
 			if (customFeature.isAvailable(context)) {
-				ContextMenuEntry menuEntry = new ContextMenuEntry(customFeature, context);
+				ContextMenuEntry menuEntry = new ContextMenuEntry(
+						customFeature, context);
 				subMenu.add(menuEntry);
 			}
 		}
@@ -78,7 +89,8 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	}
 
 	@Override
-	public IConnectionSelectionInfo getSelectionInfoForConnection(Connection connection) {
+	public IConnectionSelectionInfo getSelectionInfoForConnection(
+			Connection connection) {
 		IColorConstant lineColor = new ColorConstant("191c26"); //$NON-NLS-1$
 		IConnectionSelectionInfo si = new ConnectionSelectionInfoImpl();
 		si.setColor(lineColor);
@@ -86,5 +98,34 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		si.setHoverColorParentSelected(lineColor);
 		si.setLineStyle(connection.getGraphicsAlgorithm().getLineStyle());
 		return si;
+	}
+
+	@Override
+	public IContextButtonPadData getContextButtonPad(
+			IPictogramElementContext context) {
+		IContextButtonPadData data = super.getContextButtonPad(context);
+		PictogramElement pe = context.getPictogramElement();
+		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(
+				pe);
+
+		State sta = (State) bo;
+
+		ContextButtonEntry button = new ContextButtonEntry(null, context);
+		ICreateConnectionFeature feature = new CreateTransitionFromPad(
+				getFeatureProvider(), new TransitionPattern(
+						getFeatureProvider()));
+		button.setText(feature.getCreateName());
+		button.setDescription(feature.getCreateDescription());
+		button.setIconId(getImageFor(sta, feature));
+		button.addDragAndDropFeature(feature);
+
+		data.getDomainSpecificContextButtons().add(button);
+
+		return data;
+	}
+
+	private String getImageFor(State state, ICreateConnectionFeature feature) {
+
+		return feature.getCreateImageId();
 	}
 }

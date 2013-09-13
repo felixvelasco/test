@@ -10,6 +10,7 @@ import org.eclipse.graphiti.pattern.IPattern;
 import org.osgi.service.log.LogService;
 
 import com.vectorsf.jvoice.diagram.core.Activator;
+import com.vectorsf.jvoice.diagram.core.pattern.TransitionPattern;
 
 public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 	public static final String PATTERN_EXTENSIONS_ID = "com.vectorsf.jvoice.diagram.core.patternContributor"; //$NON-NLS-1$
@@ -38,6 +39,7 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 						e);
 			}
 		}
+		addConnectionPattern(new TransitionPattern(this));
 
 	}
 }
