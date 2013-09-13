@@ -4,9 +4,14 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddConnectionContext;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateConnectionContext;
+import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
+import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
+import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
+import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
+import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.AbstractConnectionPattern;
 import org.eclipse.graphiti.services.Graphiti;
@@ -74,17 +79,66 @@ public class TransitionPattern extends AbstractConnectionPattern {
 
 			polylineFinal.setForeground(manageColor(CONNECTION_COLOR));
 
+			ConnectionDecorator cd;
+			cd = peService.createConnectionDecorator(connection, false, 1.0,
+					true);
+			createArrow(cd);
+
 			link(connection, transition);
 			return connection;
 		}
 		return null;
 	}
 
+	private Polyline createArrow(GraphicsAlgorithmContainer gaContainer) {
+		Polygon polyligone = gaService.createPolygon(gaContainer,
+				new int[] { -7, 4, 2, 0, -7, -4, -1, 0, -7, 4, -3, 0, -7, -4,
+						-5, 0, -7, 4 });
+
+		polyligone.setForeground(manageColor(CONNECTION_COLOR));
+		polyligone.setBackground(manageColor(CONNECTION_COLOR));
+
+		polyligone.setLineWidth(1);
+
+		return polyligone;
+
+	}
+
 	@Override
 	public Connection create(ICreateConnectionContext context) {
-		Transition ss = OperationsFactory.eINSTANCE.createTransition();
-		ss.setEventName("trans_1");
-		addGraphicalRepresentation(context, ss);
+
+		State sourceState = getState(context.getSourceAnchor());
+		State targetState = getState(context.getTargetAnchor());
+
+		if (sourceState == null || targetState == null) {
+			return null;
+		}
+
+		Transition transition = OperationsFactory.eINSTANCE.createTransition();
+		transition.setSource(sourceState);
+		transition.setEventName(getCreateName());
+		transition.setTarget(targetState);
+
+		AddConnectionContext addContextInicial = new AddConnectionContext(
+				context.getSourceAnchor(), context.getTargetAnchor());
+		addContextInicial.setNewObject(transition);
+		addContextInicial.setTargetContainer((ContainerShape) context
+				.getSourcePictogramElement());
+
+		Connection connection = (Connection) getFeatureProvider()
+				.addIfPossible(addContextInicial);
+		layoutPictogramElement(connection);
+		return connection;
+
+	}
+
+	private State getState(Anchor anchor) {
+
+		if (anchor != null) {
+			State object = (State) getBusinessObjectForPictogramElement(anchor
+					.getParent());
+			return object;
+		}
 		return null;
 	}
 

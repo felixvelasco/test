@@ -20,6 +20,9 @@
          <diagramType
                id="com.isb.jvoice.diagram.core.diagramType">
          </diagramType>
+         <imageProvider
+               id="com.vectorsf.jvoice.diagram.core.imageProvider1">
+         </imageProvider>
       </diagramTypeProvider>
    </extension>
    <extension
@@ -47,6 +50,13 @@
     <patternContributor
           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.SwitchPattern">
     </patternContributor>
+ </extension>
+ <extension
+       point="org.eclipse.graphiti.ui.imageProviders">
+    <imageProvider
+          class="com.vectorsf.jvoice.diagram.core.features.CoreImageProvider"
+          id="com.vectorsf.jvoice.diagram.core.imageProvider1">
+    </imageProvider>
  </extension>
   
 
