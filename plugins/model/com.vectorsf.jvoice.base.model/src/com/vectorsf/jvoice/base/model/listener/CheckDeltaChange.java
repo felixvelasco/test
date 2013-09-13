@@ -46,13 +46,15 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 				// SI es un paquete de configuraci�n no debe aparecer en la lista
 				if (isValidFolder(resource) && !isConfigurantionFolder(resource)) {
 					IPath relPath = getRelativePath(resource);
+					JVPackage pkg = jvProject.getPackage(relPath.toString().replace("/", "."));
 					// verificamos si el proyecto tiene paquetes
 					if (jvProject.getPackages().isEmpty()) {
 						// es un proyecto vac�o, hay que a�adirle el paquete
 						jvProject.getPackages().add(BaseModel.getInstance().createPackage((IFolder) resource));
-						return false;
+						currentPackage = pkg;
+						return true;
 					}
-					JVPackage pkg = jvProject.getPackage(relPath.toString().replace("/", "."));
+					
 					if (pkg!=null){
 						existePaquete = true;
 						currentPackage = pkg;
@@ -62,6 +64,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					// hemos recorrido los paquete del proyecto pero no encuentra el actual, es nuevo y hay que a�adirlo
 					if (!existePaquete) {
 						jvProject.getPackages().add(BaseModel.getInstance().createPackage((IFolder) resource));
+						currentPackage = pkg;
 						return true;
 					}
 				}
@@ -72,7 +75,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					// el paquete est� vac�o, as� que hay que a�adir el bean
 					if (currentPackage.getBeans().isEmpty()) {
 						currentPackage.getBeans().add(BaseModel.getInstance().createBean((IFile) resource));
-						return false;
+						return true;
 					}
 					// si es un evento de adici�n al paquete, por culpa del bug de eclipse que lanza el delta 2 veces
 					// tenemos que comprobar que lo hemos agregado ya antes, para no duplicarlo
@@ -82,7 +85,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 							yaExiste = true;
 						if (!yaExiste) {
 							currentPackage.getBeans().add(BaseModel.getInstance().createBean((IFile) resource));
-							return false;
+							return true;
 						} else {
 							return true;
 						}
