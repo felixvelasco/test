@@ -4,30 +4,33 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            category="com.vectorsf.jvoice.base.navigator.category"
+            category="com.vectorsf.jvoice.ui.navigator.category"
             class="com.vectorsf.jvoice.ui.navigator.IVRNavigator"
             icon="res/Component.ico"
-            id="com.vectorsf.jvoice.base.navigator.ViewIVR"
+            id="com.vectorsf.jvoice.ui.navigator.ViewIVR"
             name="Navigator IVR">
       </view>
       <category
-            id="com.vectorsf.jvoice.base.navigator.category"
+            id="com.vectorsf.jvoice.ui.navigator.category"
             name="IVR">
       </category>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.viewer">
       <viewerActionBinding
-            viewerId="com.vectorsf.jvoice.base.navigator.ViewIVR">
+            viewerId="com.vectorsf.jvoice.ui.navigator.ViewIVR">
          <includes>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </actionExtension>
          </includes>
       </viewerActionBinding>
       <viewerContentBinding
-            viewerId="com.vectorsf.jvoice.base.navigator.ViewIVR">
+            viewerId="com.vectorsf.jvoice.ui.navigator.ViewIVR">
          <includes>
             <contentExtension
                   isRoot="true"
-                  pattern="com.vectorsf.jvoice.base.navigator.navigatorContent">
+                  pattern="com.vectorsf.jvoice.ui.navigator.navigatorContent">
             </contentExtension>
             <contentExtension
                   isRoot="false"
@@ -36,28 +39,24 @@
          </includes>
       </viewerContentBinding>
       <viewer
-            viewerId="com.vectorsf.jvoice.base.navigator.ViewIVR">
+            viewerId="com.vectorsf.jvoice.ui.navigator.ViewIVR">
          <popupMenu
                allowsPlatformContributions="true"
-               id="com.vectorsf.jvoice.base.navigator.popup">
+               id="com.vectorsf.jvoice.ui.navigator.popup">
             <insertionPoint
                   name="group.new"
-                  separator="false">
+                  separator="true">
             </insertionPoint>
             <insertionPoint
                   name="group.open"
                   separator="true">
             </insertionPoint>
             <insertionPoint
+                  name="group.show"
+                  separator="true">
+            </insertionPoint>
+            <insertionPoint
                   name="group.edit"
-                  separator="true">
-            </insertionPoint>
-            <insertionPoint
-                  name="group.port"
-                  separator="true">
-            </insertionPoint>
-            <insertionPoint
-                  name="group.build"
                   separator="true">
             </insertionPoint></popupMenu>
       </viewer>
@@ -68,7 +67,7 @@
             activeByDefault="true"
             contentProvider="com.vectorsf.jvoice.ui.navigator.ivr.ContentProvider"
             icon="res/Component.ico"
-            id="com.vectorsf.jvoice.base.navigator.navigatorContent"
+            id="com.vectorsf.jvoice.ui.navigator.navigatorContent"
             labelProvider="com.vectorsf.jvoice.ui.navigator.ivr.LabelProvider"
             name="IVR Navigator"
             priority="normal">
@@ -103,10 +102,48 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="true"
-            locationURI="popup:com.vectorsf.jvoice.base.navigator.popup?after=group.new">
+            locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.new">
+         <menu
+               label="New">
+            <command
+                  commandId="org.eclipse.ui.newWizard"
+                  label="Project..."
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                     </and>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="Open"
+                  label="File"
+                  style="push">
+            </command>
+            <command
+                  commandId="com.vectorsf.jvoice.ui.navigator.command3"
+                  label="Folder"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.newWizard"
+                  label="Other..."
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.open">
          <command
-               commandId="org.eclipse.ui.newWizard"
-               label="New"
+               commandId="org.eclipse.jdt.ui.edit.text.java.open.editor"
+               label="Open"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -116,17 +153,79 @@
                      <count
                            value="1">
                      </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVBean">
+                        </instanceof>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.jdt.ui.edit.text.java.open.type.hierarchy"
+               label="Open Type Hierarchy"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <or>
+                           <instanceof
+                                 value="com.vectorsf.jvoice.model.base.JVPackage">
+                           </instanceof>
+                           <instanceof
+                                 value="com.vectorsf.jvoice.model.base.JVBean">
+                           </instanceof>
+                        </or>
+                     </iterate>
                   </and>
                </with>
             </visibleWhen>
          </command>
       </menuContribution>
       <menuContribution
+            allPopups="false"
+            locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.show">
+         <menu
+               label="Show in">
+            <command
+                  commandId="org.eclipse.egit.ui.team.ShowRepositoriesView"
+                  label="Git Repositories"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.team.ShowHistory"
+                  label="History"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.views.properties.NewPropertySheetCommand"
+                  label="Properties"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.views.showView"
+                  label="Show View"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
             allPopups="true"
-            locationURI="popup:com.vectorsf.jvoice.base.navigator.popup?after=group.open">
+            locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.edit">
          <command
-               commandId="org.eclipse.ui.navigate.openResource"
-               label="Open"
+               commandId="org.eclipse.ui.edit.copy"
+               label="Copy"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -139,16 +238,8 @@
             </visibleWhen>
          </command>
          <command
-               commandId="com.vectorsf.jvoice.base.navigator.command7"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="true"
-            locationURI="popup:com.vectorsf.jvoice.base.navigator.popup?after=group.edit">
-         <command
-               commandId="org.eclipse.ui.edit.copy"
-               label="Copy"
+               commandId="org.eclipse.jdt.ui.edit.text.java.copy.qualified.name"
+               label="Copy Qualified Name"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -188,13 +279,9 @@
                </with>
             </visibleWhen>
          </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="true"
-            locationURI="popup:com.vectorsf.jvoice.base.navigator.popup?after=group.port">
          <command
-               commandId="org.eclipse.ui.file.import"
-               label="Import"
+               commandId="com.vectorsf.jvoice.ui.navigator.command7"
+               label="Build Path"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -207,38 +294,76 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.ui.file.export"
-               label="Export"
+               commandId="com.vectorsf.jvoice.ui.navigator.command8"
+               label="Source"
                style="push">
             <visibleWhen
                   checkEnabled="false">
                <with
                      variable="selection">
-                  <count
-                        value="1">
-                  </count>
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <or>
+                           <instanceof
+                                 value="com.vectorsf.jvoice.model.base.JVBean">
+                           </instanceof>
+                           <instanceof
+                                 value="com.vectorsf.jvoice.model.base.JVPackage">
+                           </instanceof>
+                        </or>
+                     </iterate>
+                  </and>
                </with>
             </visibleWhen>
          </command>
       </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:com.vectorsf.jvoice.base.navigator.popup?after=group.build">
-         <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewRefresh"
-               label="Refresh"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <count
-                        value="1">
-                  </count>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="com.vectorsf.jvoice.model.base.JVProject"
+            class="com.vectorsf.jvoice.ui.navigator.AdapterProject">
+         <adapter
+               type="org.eclipse.core.resources.IProject">
+         </adapter>
+         <adapter
+               type="org.eclipse.core.resources.mapping.ResourceMapping">
+         </adapter>
+         <adapter
+               type="org.eclipse.core.resources.IResource">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="com.vectorsf.jvoice.model.base.JVBean"
+            class="com.vectorsf.jvoice.ui.navigator.AdapterBean">
+         <adapter
+               type="org.eclipse.core.resources.IFile">
+         </adapter>
+         <adapter
+               type="org.eclipse.core.resources.mapping.ResourceMapping">
+         </adapter>
+         <adapter
+               type="com.vectorsf.jvoice.ui.navigator.Adapter8">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="com.vectorsf.jvoice.model.base.JVPackage"
+            class="com.vectorsf.jvoice.ui.navigator.AdapterPackage">
+         <adapter
+               type="org.eclipse.core.resources.IFolder">
+         </adapter>
+         <adapter
+               type="org.eclipse.core.resources.mapping.ResourceMapping">
+         </adapter>
+         <adapter
+               type="com.vectorsf.jvoice.ui.navigator.Adapter9">
+         </adapter>
+      </factory>
    </extension>
 
 </plugin>
