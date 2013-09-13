@@ -20,9 +20,6 @@
       <viewerActionBinding
             viewerId="com.vectorsf.jvoice.ui.navigator.ViewIVR">
          <includes>
-            <actionExtension
-                  pattern="org.eclipse.ui.navigator.resources.*">
-            </actionExtension>
          </includes>
       </viewerActionBinding>
       <viewerContentBinding
