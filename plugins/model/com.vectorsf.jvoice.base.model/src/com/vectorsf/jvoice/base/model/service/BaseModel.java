@@ -1,35 +1,34 @@
 package com.vectorsf.jvoice.base.model.service;
 
-import java.io.IOException;
-import java.util.Properties;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.RegistryFactory;
 
-import com.vectorsf.jvoice.base.model.listener.BaseModelResourceChangeListener;
-import com.vectorsf.jvoice.base.model.listener.ResourceVisitor;
 import com.vectorsf.jvoice.model.base.BaseFactory;
-import com.vectorsf.jvoice.model.base.Configuration;
-import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModel;
-import com.vectorsf.jvoice.model.base.JVPackage;
-import com.vectorsf.jvoice.model.base.JVProject;
-import com.vectorsf.jvoice.model.base.impl.JVBeanImpl;
 
 public class BaseModel {
 
+	public static final String BUNDLE_ID = "com.vectorsf.jvoice.base.model";
+	public static final String JV_PATH = "src/main/resources/jv";
+	public static final String PROPERTIES_PATH = "src/main/config/properties";
+
+	private static final String LISTENER_EXTENSION_POINT_NAME = "listener";
+	private static final String CLASS_ATTRIBUTE = "class";
+	private static final String PRIORITY_ATTRIBUTE = "priority";
+
 	private static BaseModel baseModel = new BaseModel();
-	private String ruta = "src/main/resources/jv";
-	private String rutaProperties = "src/main/config/properties";
-	private IPath pkgPath = new Path("src/main/resources/jv");
+
 	private JVModel model;
+	private Set<IConfigurationElement> elements;
+	private Map<IConfigurationElement, JVModelLifecycleListener> listenersCache;
 
 	public static BaseModel getInstance() {
 		return baseModel;
@@ -41,83 +40,69 @@ public class BaseModel {
 
 	private BaseModel() {
 		model = BaseFactory.eINSTANCE.createJVModel();
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		elements = new TreeSet<>(new Sorter());
+		listenersCache = new HashMap<>();
 
-		for (IProject project : workspace.getRoot().getProjects()) {
-			model.getProjects().add(createProject(project));
-		}
-		workspace.addResourceChangeListener(new BaseModelResourceChangeListener());
+		readConfiguration();
+		notifyCreation();
 	}
 
-	public JVProject createProject(IProject project) {
-		JVProject jvProject = BaseFactory.eINSTANCE.createJVProject();
-		jvProject.setName(project.getName());
-		jvProject.setDescription(project.getName());
+	private void notifyCreation() {
 
-		IFolder packageFolder = (IFolder) project.findMember(ruta);
-		if (packageFolder != null) {
+		for (IConfigurationElement element : elements) {
+			JVModelLifecycleListener listener = getListener(element);
+			if (listener != null) {
+				listener.modelCreated(this);
+			}
+		}
+	}
+
+	private JVModelLifecycleListener getListener(IConfigurationElement element) {
+		JVModelLifecycleListener listener = listenersCache.get(element);
+		if (listener == null) {
 			try {
-				packageFolder.accept(new ResourceVisitor(jvProject, this));
+				listener = (JVModelLifecycleListener) element.createExecutableExtension(CLASS_ATTRIBUTE);
 			} catch (CoreException e) {
 			}
+			listenersCache.put(element, listener);
 		}
+		return listener;
+	}
 
-		IFolder configurationsFolder = (IFolder) project.findMember(rutaProperties);
-		if (configurationsFolder != null) {
-			try {
-				for (IResource res : configurationsFolder.members()) {
-					if (res.getType() == IResource.FILE && res.getFileExtension().equalsIgnoreCase("properties")) {
-						jvProject.getConfiguration().add(createConfigurationFromFile((IFile) res));
-					}
-				}
-			} catch (CoreException e) {
-				System.out.print(e);
+	private void readConfiguration() {
+
+		final IConfigurationElement[] configurationElements = RegistryFactory.getRegistry()
+				.getConfigurationElementsFor(BUNDLE_ID, LISTENER_EXTENSION_POINT_NAME);
+
+		Collections.addAll(elements, configurationElements);
+	}
+
+	private class Sorter implements Comparator<IConfigurationElement> {
+
+		@Override
+		public int compare(IConfigurationElement element1, IConfigurationElement element2) {
+			int p1 = getPriority(element1);
+			int p2 = getPriority(element2);
+
+			if (p1 != p2) {
+				return p2 - p1;
+			} else {
+				return element2.hashCode() - element1.hashCode();
 			}
 		}
 
-		return jvProject;
-	}
-
-	public Configuration createConfigurationFromFile(IFile res) throws CoreException {
-		Configuration configuration = BaseFactory.eINSTANCE.createConfiguration();
-		configuration.setName(res.getName().substring(0, res.getName().lastIndexOf('.')));
-		Properties pr = new Properties();
-		try {
-			pr.load(res.getContents());
-		} catch (IOException e) {
-			throw new CoreException(null);
-		}
-
-		for (String name : pr.stringPropertyNames()) {
-			configuration.getParameters().put(name, pr.getProperty(name));
-		}
-
-		return configuration;
-	}
-
-	public JVPackage createPackage(IFolder folder) throws CoreException {
-		JVPackage jvPackage = BaseFactory.eINSTANCE.createJVPackage();
-		IPath relativePath = folder.getProjectRelativePath().makeRelativeTo(pkgPath);
-		jvPackage.setName(relativePath.toString().replace("/", "."));
-		jvPackage.setDescription(folder.getName());
-
-		for (IResource res : folder.members()) {
-			if (res instanceof IFile) {
-				JVBean bean = createBean((IFile) res);
-				if (bean != null) {
-					jvPackage.getBeans().add(bean);
+		private int getPriority(IConfigurationElement element) {
+			String sPriority = element.getAttribute(PRIORITY_ATTRIBUTE);
+			int priority = 500;
+			if (sPriority != null) {
+				try {
+					priority = Integer.valueOf(sPriority);
+				} catch (NumberFormatException nfe) {
 				}
 			}
+			return priority;
 		}
 
-		return jvPackage;
 	}
 
-	public JVBean createBean(IFile res) {
-		JVBean fake = new JVBeanImpl() {
-		};
-		fake.setName(res.getName());
-
-		return fake;
-	}
 }

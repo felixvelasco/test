@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+    <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener200"
+            priority="200">
+      </listener>
+   </extension>
+  <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener314"
+            priority="314">
+      </listener>
+   </extension>
+
+    
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener500"
+            priority="500">
+      </listener>
+   </extension>
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener301"
+            priority="301">
+      </listener>
+   </extension>
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener300"
+            priority="300">
+      </listener>
+   </extension>
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener304"
+            priority="304">
+      </listener>
+   </extension>
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener311"
+            priority="311">
+      </listener>
+   </extension>
+
+
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener309"
+            priority="309">
+      </listener>
+   </extension>
+     <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener700"
+            priority="700">
+      </listener>
+   </extension>
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener308"
+            priority="308">
+      </listener>
+   </extension>
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener310"
+            priority="310">
+      </listener>
+   </extension>
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener320"
+            priority="320">
+      </listener>
+   </extension>
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener307"
+            priority="307">
+      </listener>
+   </extension>
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener316"
+            priority="316">
+      </listener>
+   </extension>
+
+    <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener305"
+            priority="305">
+      </listener>
+   </extension>
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener306"
+            priority="306">
+      </listener>
+   </extension>
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener312"
+            priority="312">
+      </listener>
+   </extension>
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener302"
+            priority="302">
+      </listener>
+   </extension>
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener303"
+            priority="303">
+      </listener>
+   </extension>
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener318"
+            priority="318">
+      </listener>
+   </extension>
+
+
+    <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener315"
+            priority="315">
+      </listener>
+   </extension>
+
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener317"
+            priority="317">
+      </listener>
+   </extension>
+
+   <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener319"
+            priority="319">
+      </listener>
+   </extension>
+  <extension
+         point="com.vectorsf.jvoice.base.model.listener">
+      <listener
+            class="com.vectorsf.jvoice.base.model.service.BaseModelTest$Listener313"
+            priority="313">
+      </listener>
+   </extension>
+
+
+</fragment>
