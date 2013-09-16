@@ -1,7 +1,5 @@
 package com.vectorsf.jvoice.ui.navigator;
 
-
-import org.eclipse.core.internal.resources.mapping.SimpleResourceMapping;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -10,42 +8,35 @@ import org.eclipse.core.runtime.IAdapterFactory;
 
 import com.vectorsf.jvoice.model.base.JVProject;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings("rawtypes")
 public class AdapterProject implements IAdapterFactory {
 
-	@SuppressWarnings("rawtypes")
+	private static final Class[] ADAPTER_TYPES = new Class[] { IProject.class, ResourceMapping.class };
+
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (adaptableObject instanceof JVProject) {
-			
-			if(adapterType == IProject.class){
 
-					return adaptarElemento (adaptableObject);
-					
-				}else if(adapterType == ResourceMapping.class){
-					
-					return new SimpleResourceMapping(adaptarElemento (adaptableObject));
-				
-				}else if(adapterType == IResource.class){
-					
-					return (IResource) adaptarElemento (adaptableObject);
-					
-				}
-				
+			if (adapterType == IProject.class || adapterType == IResource.class) {
+				return adaptarElemento(adaptableObject);
+			} else if (adapterType == ResourceMapping.class) {
+				@SuppressWarnings("restriction")
+				final ResourceMapping simpleResourceMapping = new org.eclipse.core.internal.resources.mapping.SimpleResourceMapping(
+						adaptarElemento(adaptableObject));
+				return simpleResourceMapping;
 			}
+		}
 		return null;
 	}
-	
-	private IProject adaptarElemento (Object adaptableObject){
-		JVProject proyecto = (JVProject)adaptableObject;
+
+	private IProject adaptarElemento(Object adaptableObject) {
+		JVProject proyecto = (JVProject) adaptableObject;
 		return ResourcesPlugin.getWorkspace().getRoot().getProject(proyecto.getName());
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public Class[] getAdapterList() {
-		// TODO Auto-generated method stub
-		return new Class [] { JVProject.class, IProject.class, ResourceMapping.class};
+		return ADAPTER_TYPES;
 	}
 
 }

@@ -12,11 +12,12 @@ import org.eclipse.jface.viewers.Viewer;
 import com.vectorsf.jvoice.model.base.JVProject;
 
 public class ContentProvider implements ITreeContentProvider {
-	
+
 	AdapterFactoryContentProvider afcp;
+
 	public ContentProvider() {
 		ComposedAdapterFactory factory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		afcp = new  AdapterFactoryContentProvider(factory);
+		afcp = new AdapterFactoryContentProvider(factory);
 	}
 
 	@Override
@@ -30,34 +31,34 @@ public class ContentProvider implements ITreeContentProvider {
 	}
 
 	@Override
-	public Object[] getElements(Object inputElement) {		
+	public Object[] getElements(Object inputElement) {
 		return afcp.getElements(inputElement);
 	}
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
-		if (parentElement instanceof JVProject)
-		{
+		if (parentElement instanceof JVProject) {
 			List<Object> children = new ArrayList<>();
 			Collections.addAll(children, afcp.getChildren(parentElement));
 
-//			try {
-//				for(int i=0; i<jProject.getRawClasspath().length; i++){
-//					IClasspathEntry miclase = jProject.getRawClasspath()[i];
-//					children.add(miclase);
-//				}
-//				//children.add(jProject.getRawClasspath());
-//			} catch (JavaModelException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			// try {
+			// for(int i=0; i<jProject.getRawClasspath().length; i++){
+			// IClasspathEntry miclase = jProject.getRawClasspath()[i];
+			// children.add(miclase);
+			// }
+			// //children.add(jProject.getRawClasspath());
+			// } catch (JavaModelException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
 			return children.toArray();
-		} else
-		return afcp.getChildren(parentElement);
+		} else {
+			return afcp.getChildren(parentElement);
+		}
 	}
 
 	@Override
-	public Object getParent(Object element) {	
+	public Object getParent(Object element) {
 		return afcp.getParent(element);
 	}
 
@@ -65,6 +66,5 @@ public class ContentProvider implements ITreeContentProvider {
 	public boolean hasChildren(Object element) {
 		return afcp.hasChildren(element) || true;
 	}
-	
 
 }

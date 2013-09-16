@@ -13,11 +13,9 @@ import org.eclipse.jdt.internal.ui.packageview.ClassPathContainer;
 
 import com.vectorsf.jvoice.model.base.JVProject;
 
-
-
 @SuppressWarnings("restriction")
 public class MavenContentProvider extends JavaNavigatorContentProvider {
-	
+
 	private IPath mavenPath = new Path("org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER");
 
 	@Override
@@ -25,25 +23,27 @@ public class MavenContentProvider extends JavaNavigatorContentProvider {
 		if (object instanceof JVProject) {
 			IProject prj = ResourcesPlugin.getWorkspace().getRoot().getProject(((JVProject) object).getName());
 			IJavaProject project = JavaCore.create(prj);
-			
-			if (!project.getProject().isOpen())
+
+			if (!project.getProject().isOpen()) {
 				return NO_CHILDREN;
-	
+			}
+
 			try {
-				IClasspathEntry[] rawClasspath= project.getRawClasspath();
-				for (int i= 0; i < rawClasspath.length; i++) {
-					IClasspathEntry classpathEntry= rawClasspath[i];
+				IClasspathEntry[] rawClasspath = project.getRawClasspath();
+				for (int i = 0; i < rawClasspath.length; i++) {
+					IClasspathEntry classpathEntry = rawClasspath[i];
 					System.out.println(classpathEntry.getPath());
-					if (classpathEntry.getEntryKind() == IClasspathEntry.CPE_CONTAINER && classpathEntry.getPath().equals(mavenPath)) {
-						return new Object[] {new ClassPathContainer(project, classpathEntry) };
+					if (classpathEntry.getEntryKind() == IClasspathEntry.CPE_CONTAINER
+							&& classpathEntry.getPath().equals(mavenPath)) {
+						return new Object[] { new ClassPathContainer(project, classpathEntry) };
 					}
 				}
 			} catch (JavaModelException e) {
 				e.printStackTrace();
 			}
-			return new Object [0];
+			return new Object[0];
 		}
-	
+
 		return super.getChildren(object);
 	}
 }

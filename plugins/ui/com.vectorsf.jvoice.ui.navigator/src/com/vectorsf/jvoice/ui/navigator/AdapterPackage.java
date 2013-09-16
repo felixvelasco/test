@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.ui.navigator;
 
-import org.eclipse.core.internal.resources.mapping.SimpleResourceMapping;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -11,40 +10,39 @@ import org.eclipse.core.runtime.Path;
 
 import com.vectorsf.jvoice.model.base.JVPackage;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings("rawtypes")
 public class AdapterPackage implements IAdapterFactory {
 
-	@SuppressWarnings("rawtypes")
+	private static final Class[] ADAPTER_TYPES = new Class[] { IFolder.class, ResourceMapping.class, IResource.class };
+
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 
-		if (adaptableObject instanceof JVPackage){
-			
-			if(adapterType == IFolder.class){
-				return adaptarElemento (adaptableObject);
-				
-			}else if(adapterType == ResourceMapping.class){
-				return new SimpleResourceMapping(adaptarElemento (adaptableObject));
-			
-			}else if(adapterType == IResource.class){
-				return (IResource) adaptarElemento (adaptableObject);
+		if (adaptableObject instanceof JVPackage) {
+
+			if (adapterType == IFolder.class || adapterType == IResource.class) {
+				return adaptarElemento(adaptableObject);
+			} else if (adapterType == ResourceMapping.class) {
+				@SuppressWarnings("restriction")
+				final ResourceMapping simpleResourceMapping = new org.eclipse.core.internal.resources.mapping.SimpleResourceMapping(
+						adaptarElemento(adaptableObject));
+				return simpleResourceMapping;
 			}
 		}
 		return null;
 	}
-	
-	private IFolder adaptarElemento (Object adaptableObject){
+
+	private IFolder adaptarElemento(Object adaptableObject) {
 		JVPackage pck = (JVPackage) adaptableObject;
-		String relName = pck.getName().replace( '.', IPath.SEPARATOR);
-		IPath path = new Path(IPath.SEPARATOR + pck.getOwnerProject().getName()).append("main/resources/jv").append(relName);
+		String relName = pck.getName().replace('.', IPath.SEPARATOR);
+		IPath path = new Path(IPath.SEPARATOR + pck.getOwnerProject().getName()).append("main/resources/jv").append(
+				relName);
 		return ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public Class[] getAdapterList() {
-		// TODO Auto-generated method stub
-		return new Class[] {JVPackage.class, IFolder.class, ResourceMapping.class, IResource.class};
+		return ADAPTER_TYPES;
 	}
 
 }

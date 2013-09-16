@@ -7,9 +7,8 @@ import com.vectorsf.jvoice.base.model.service.BaseModel;
 public class IVRNavigator extends CommonNavigator {
 
 	@Override
-    protected Object getInitialInput() {
-        return BaseModel.getInstance().getModel();
-    }
-
+	protected Object getInitialInput() {
+		return BaseModel.getInstance().getModel();
+	}
 
 }

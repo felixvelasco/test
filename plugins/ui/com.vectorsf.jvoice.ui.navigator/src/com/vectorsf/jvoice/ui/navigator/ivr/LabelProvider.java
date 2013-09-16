@@ -7,14 +7,14 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
 
 public class LabelProvider implements ILabelProvider {
-	
+
 	AdapterFactoryLabelProvider aflp;
-	
-	public  LabelProvider() {
-		ComposedAdapterFactory factorylabel = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+
+	public LabelProvider() {
+		ComposedAdapterFactory factorylabel = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		aflp = new AdapterFactoryLabelProvider(factorylabel);
-		
-		
+
 	}
 
 	@Override
@@ -46,8 +46,8 @@ public class LabelProvider implements ILabelProvider {
 	}
 
 	@Override
-	public String getText(Object element) {        
-        return aflp.getText(element);
+	public String getText(Object element) {
+		return aflp.getText(element);
 	}
 
 }
