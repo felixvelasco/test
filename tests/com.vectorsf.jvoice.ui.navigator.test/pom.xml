@@ -42,6 +42,11 @@
 							<artifactId>com.vectorsf.jvoice.base.model.edit</artifactId>
 							<version>1.0.0</version>
 						</dependency>
+						<dependency>
+							<type>eclipse-feature</type>
+							<artifactId>org.eclipse.m2e.feature</artifactId>
+							<version>1.4.0</version>
+						</dependency>
 					</dependencies>
 				</configuration>
 			</plugin>
