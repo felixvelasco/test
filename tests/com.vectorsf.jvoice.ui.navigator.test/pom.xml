@@ -36,6 +36,12 @@
 							<artifactId>com.vectorsf.jvoice.core.reconciliator</artifactId>
 							<version>1.0.0</version>
 						</dependency>
+						<dependency>
+							<type>eclipse-plugin</type>
+							<groupId>com.vectorsf.jvoice.core</groupId>
+							<artifactId>com.vectorsf.jvoice.base.model.edit</artifactId>
+							<version>1.0.0</version>
+						</dependency>
 					</dependencies>
 				</configuration>
 			</plugin>
