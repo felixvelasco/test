@@ -304,6 +304,34 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.ui.edit.delete"
+               label="Delete"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <or>
+                           <instanceof
+                                 value="com.vectorsf.jvoice.model.base.JVBean">
+                           </instanceof>
+                           <instanceof
+                                 value="com.vectorsf.jvoice.model.base.JVPackage">
+                           </instanceof>
+                        </or>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -347,6 +375,29 @@
                type="org.eclipse.core.resources.IResource">
          </adapter>
       </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="com.vectorsf.jvoice.ui.navigator.handler.DeleteHandler"
+            commandId="org.eclipse.ui.edit.delete">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     operator="and">
+                  <or>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVPackage">
+                     </instanceof>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVBean">
+                     </instanceof>
+                  </or>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
    </extension>
 
 </plugin>
