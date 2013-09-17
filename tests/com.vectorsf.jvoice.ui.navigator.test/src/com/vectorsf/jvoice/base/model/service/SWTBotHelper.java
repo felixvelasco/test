@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
+import org.apache.maven.model.Model;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -17,6 +18,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.m2e.core.MavenPlugin;
+import org.eclipse.m2e.core.project.ProjectImportConfiguration;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -69,10 +72,12 @@ public class SWTBotHelper {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				result[0] = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
-				result[0].create(monitor);
-				result[0].open(monitor);
+				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
+				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null, getModel(project),
+						new String[] { "src/main/java", "src/main/resources/jv" }, new ProjectImportConfiguration(),
+						monitor);
 
+				result[0] = project;
 			}
 		});
 
@@ -183,16 +188,6 @@ public class SWTBotHelper {
 		}, project);
 	}
 
-	private static void createRecursively(IFolder container, IProgressMonitor monitor) throws CoreException {
-		IContainer parent = container.getParent();
-		if (parent instanceof IFolder && !parent.exists()) {
-			createRecursively((IFolder) parent, monitor);
-		}
-
-		container.create(true, false, monitor);
-
-	}
-
 	public static void moveFile(final IFile file, final IPath fullPath) throws CoreException {
 		executeWksRunnable(new IWorkspaceRunnable() {
 
@@ -204,4 +199,27 @@ public class SWTBotHelper {
 		});
 	}
 
+	private static void createRecursively(IFolder container, IProgressMonitor monitor) throws CoreException {
+		IContainer parent = container.getParent();
+		if (parent instanceof IFolder && !parent.exists()) {
+			createRecursively((IFolder) parent, monitor);
+		}
+
+		container.create(true, false, monitor);
+
+	}
+
+	private static Model getModel(IProject project) {
+		Model model = new Model();
+		model.setModelVersion("4.0.0"); //$NON-NLS-1$
+
+		model.setGroupId(project.getName());
+		model.setArtifactId(project.getName());
+		model.setVersion("1.0.0");
+		model.setPackaging("jar");
+
+		model.setName(project.getName());
+
+		return model;
+	}
 }

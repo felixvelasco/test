@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -81,25 +82,24 @@ public class IVRNavigatorTest {
 
 	@Test
 	public void testCreateProjects() throws CoreException {
-		assertThat(view.bot().tree().rowCount(), is(0));
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
 		SWTBotHelper.createProject("testNavigator");
 
 		bot.sleep(SMALL_SLEEP);
-		assertThat(view.bot().tree().rowCount(), is(1));
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
-		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(), is(emptyArray()));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(), is(arrayWithSize(2)));
 
 		SWTBotHelper.createProject("testNavigator2");
 
 		bot.sleep(SMALL_SLEEP);
-		assertThat(view.bot().tree().rowCount(), is(2));
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
-		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(), is(emptyArray()));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(), is(arrayWithSize(2)));
 
 		assertThat(view.bot().tree().getTreeItem("testNavigator2"), is(not(nullValue())));
-		assertThat(view.bot().tree().getTreeItem("testNavigator2").expand().getItems(), is(emptyArray()));
-
+		assertThat(view.bot().tree().getTreeItem("testNavigator2").expand().getItems(), is(arrayWithSize(2)));
 	}
 
 	@Test
@@ -110,18 +110,18 @@ public class IVRNavigatorTest {
 		final IProject project2 = SWTBotHelper.createProject("testNavigator2");
 
 		bot.sleep(SMALL_SLEEP);
-		assertThat(view.bot().tree().rowCount(), is(2));
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
 
 		SWTBotHelper.deleteProject(project2);
 
 		bot.sleep(SMALL_SLEEP);
-		assertThat(view.bot().tree().rowCount(), is(1));
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
 
 		SWTBotHelper.deleteProject(project1);
 
 		bot.sleep(SMALL_SLEEP);
-		assertThat(view.bot().tree().rowCount(), is(0));
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(0)));
 
 	}
 }
