@@ -13,7 +13,8 @@ import com.vectorsf.jvoice.model.base.JVPackage;
 @SuppressWarnings("rawtypes")
 public class AdapterPackage implements IAdapterFactory {
 
-	private static final Class[] ADAPTER_TYPES = new Class[] { IFolder.class, ResourceMapping.class, IResource.class };
+	private static final Class[] ADAPTER_TYPES = new Class[] { IFolder.class,
+			ResourceMapping.class, IResource.class };
 
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
@@ -35,8 +36,8 @@ public class AdapterPackage implements IAdapterFactory {
 	private IFolder adaptarElemento(Object adaptableObject) {
 		JVPackage pck = (JVPackage) adaptableObject;
 		String relName = pck.getName().replace('.', IPath.SEPARATOR);
-		IPath path = new Path(IPath.SEPARATOR + pck.getOwnerProject().getName()).append("main/resources/jv").append(
-				relName);
+		IPath path = new Path(IPath.SEPARATOR + pck.getOwnerProject().getName())
+				.append("src/main/resources/jv").append(relName);
 		return ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
 	}
 

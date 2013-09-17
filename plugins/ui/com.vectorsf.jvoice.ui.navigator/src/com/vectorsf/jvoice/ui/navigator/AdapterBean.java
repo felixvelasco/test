@@ -13,7 +13,8 @@ import com.vectorsf.jvoice.model.base.JVBean;
 @SuppressWarnings("rawtypes")
 public class AdapterBean implements IAdapterFactory {
 
-	private static final Class[] ADAPTER_TYPES = new Class[] { IFile.class, ResourceMapping.class, IResource.class };
+	private static final Class[] ADAPTER_TYPES = new Class[] { IFile.class,
+			ResourceMapping.class, IResource.class };
 
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
@@ -35,8 +36,10 @@ public class AdapterBean implements IAdapterFactory {
 	private IFile adaptarElemento(Object adaptableObject) {
 		JVBean bean = (JVBean) adaptableObject;
 		String relName = bean.getName();
-		IPath path = new Path(IPath.SEPARATOR + bean.getOwnerPackage().getOwnerProject().getName())
-				.append("main/resources/jv").append(bean.getOwnerPackage().getName()).append(relName);
+		IPath path = new Path(IPath.SEPARATOR
+				+ bean.getOwnerPackage().getOwnerProject().getName())
+				.append("src/main/resources/jv")
+				.append(bean.getOwnerPackage().getName()).append(relName);
 		return ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 	}
 
