@@ -23,6 +23,8 @@ public class MavenContentProvider extends JavaNavigatorContentProvider {
 	private IPath mavenPath = new Path(
 			"org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER");
 
+	private static final String EXCLUCION_PATTERNT = "**";
+
 	@Override
 	public Object[] getChildren(Object object) {
 		if (object instanceof JVProject) {
@@ -40,13 +42,25 @@ public class MavenContentProvider extends JavaNavigatorContentProvider {
 
 				for (int i = 0; i < rawClasspath.length; i++) {
 					IClasspathEntry classpathEntry = rawClasspath[i];
+					String cadenaExcluxion = null;
+
+					for (IPath excluxion : classpathEntry
+							.getExclusionPatterns()) {
+
+						if (excluxion.toString().equals(EXCLUCION_PATTERNT)) {
+							cadenaExcluxion = excluxion.toString();
+						}
+
+					}
+
 					if (classpathEntry.getEntryKind() == IClasspathEntry.CPE_CONTAINER
 							&& classpathEntry.getPath().equals(mavenPath)) {
 						result.add(new ClassPathContainer(project,
 								classpathEntry));
 						hayElementos = true;
 
-					} else if (classpathEntry.getEntryKind() == IClasspathEntry.CPE_SOURCE) {
+					} else if (classpathEntry.getEntryKind() == IClasspathEntry.CPE_SOURCE
+							&& cadenaExcluxion == null) {
 
 						IPackageFragmentRoot root = project
 								.findPackageFragmentRoot(classpathEntry
@@ -55,8 +69,8 @@ public class MavenContentProvider extends JavaNavigatorContentProvider {
 							result.add(root);
 							hayElementos = true;
 						}
-
 					}
+
 				}
 			} catch (JavaModelException e) {
 				e.printStackTrace();
@@ -70,4 +84,5 @@ public class MavenContentProvider extends JavaNavigatorContentProvider {
 
 		return super.getChildren(object);
 	}
+
 }
