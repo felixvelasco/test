@@ -117,12 +117,10 @@ public class SwitchPattern extends StatePattern {
 
 	@Override
 	public Object[] create(ICreateContext context) {
-		Diagram diagram = (Diagram) context.getTargetContainer();
-		Flow flow = (Flow) getBusinessObjectForPictogramElement(diagram);
-
+		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		SwitchState ss = OperationsFactory.eINSTANCE.createSwitchState();
-		ss.setName("Nombrecillo");
-		// flow.getStates().add(ss);
+		ss.setName("Switch");
+		flow.getStates().add(ss);
 
 		addGraphicalRepresentation(context, ss);
 

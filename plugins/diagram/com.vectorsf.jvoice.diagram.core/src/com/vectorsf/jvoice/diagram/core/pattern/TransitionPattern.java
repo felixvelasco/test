@@ -3,6 +3,7 @@ package com.vectorsf.jvoice.diagram.core.pattern;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddConnectionContext;
 import org.eclipse.graphiti.features.context.IAddContext;
+import org.eclipse.graphiti.features.context.IConnectionContext;
 import org.eclipse.graphiti.features.context.ICreateConnectionContext;
 import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
 import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
@@ -20,17 +21,20 @@ import org.eclipse.graphiti.services.IPeService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
+import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 public class TransitionPattern extends AbstractConnectionPattern {
 
-	private IPeService peService;
-	private IGaService gaService;
+	protected IPeService peService;
+	protected IGaService gaService;
 
-	private final IColorConstant CONNECTION_COLOR = new ColorConstant("bcbcbc");
+	protected final IColorConstant CONNECTION_COLOR = new ColorConstant(
+			"bcbcbc");
 	private IFeatureProvider featureProvider;
 
 	public TransitionPattern(IFeatureProvider in_featureProvider) {
@@ -46,8 +50,12 @@ public class TransitionPattern extends AbstractConnectionPattern {
 
 	@Override
 	public boolean canAdd(IAddContext context) {
+		State sourceState = getState(((IConnectionContext) context)
+				.getSourceAnchor());
 		return context.getNewObject() instanceof Transition
+				&& !(sourceState instanceof SwitchState)
 				&& context instanceof IAddConnectionContext;
+
 	}
 
 	@Override
@@ -90,7 +98,7 @@ public class TransitionPattern extends AbstractConnectionPattern {
 		return null;
 	}
 
-	private Polyline createArrow(GraphicsAlgorithmContainer gaContainer) {
+	protected Polyline createArrow(GraphicsAlgorithmContainer gaContainer) {
 		Polygon polyligone = gaService.createPolygon(gaContainer,
 				new int[] { -7, 4, 2, 0, -7, -4, -1, 0, -7, 4, -3, 0, -7, -4,
 						-5, 0, -7, 4 });
@@ -119,6 +127,12 @@ public class TransitionPattern extends AbstractConnectionPattern {
 		transition.setEventName(getCreateName());
 		transition.setTarget(targetState);
 
+		targetState.getIncomingTransitions().add(transition);
+		sourceState.getOutgoingTransitions().add(transition);
+
+		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+		flow.getTransitions().add(transition);
+
 		AddConnectionContext addContextInicial = new AddConnectionContext(
 				context.getSourceAnchor(), context.getTargetAnchor());
 		addContextInicial.setNewObject(transition);
@@ -132,7 +146,7 @@ public class TransitionPattern extends AbstractConnectionPattern {
 
 	}
 
-	private State getState(Anchor anchor) {
+	protected State getState(Anchor anchor) {
 
 		if (anchor != null) {
 			State object = (State) getBusinessObjectForPictogramElement(anchor
@@ -157,7 +171,13 @@ public class TransitionPattern extends AbstractConnectionPattern {
 		Object boTarget = featureProvider
 				.getBusinessObjectForPictogramElement(context
 						.getTargetPictogramElement());
-		return boTarget instanceof State && !(boTarget instanceof InitialState);
+		// Object boSource = featureProvider
+		// .getBusinessObjectForPictogramElement(context
+		// .getSourcePictogramElement());
+		return boTarget instanceof State && !(boTarget instanceof InitialState)
+		// && boSource instanceof InitialState
+		// && ((InitialState) boSource).getOutgoingTransitions().size() == 0
+		;
 
 	}
 

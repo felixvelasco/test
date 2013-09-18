@@ -127,6 +127,15 @@ public class OperationsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case OperationsPackage.CALL_STATE: {
+				CallState callState = (CallState)theEObject;
+				T result = caseCallState(callState);
+				if (result == null) result = caseState(callState);
+				if (result == null) result = caseNamedElement(callState);
+				if (result == null) result = caseJVElement(callState);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -233,6 +242,21 @@ public class OperationsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCase(Case object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Call State</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Call State</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCallState(CallState object) {
 		return null;
 	}
 

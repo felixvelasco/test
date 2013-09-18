@@ -21,13 +21,14 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 
+import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 
 public class InitialStatePattern extends StatePattern {
 
-	private static final int MIN_WIDTH = 80;
-	private static final int MIN_HEIGHT = 80;
+	private static final int MIN_WIDTH = 60;
+	private static final int MIN_HEIGHT = 60;
 	private static final String ID_INITIAL_PREFIX = "initialState_";
 	private static final String ID_NAME_TEXT = ID_INITIAL_PREFIX + "nameText";
 	private static final String ID_OUTER_RECTANGLE = ID_INITIAL_PREFIX
@@ -119,12 +120,14 @@ public class InitialStatePattern extends StatePattern {
 	@Override
 	public Object[] create(ICreateContext context) {
 
-		InitialState ss = OperationsFactory.eINSTANCE.createInitialState();
-		ss.setName("Initial");
+		InitialState is = OperationsFactory.eINSTANCE.createInitialState();
+		is.setName("Initial");
+		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+		flow.getStates().add(is);
 
-		addGraphicalRepresentation(context, ss);
+		addGraphicalRepresentation(context, is);
 
-		return new Object[] { ss };
+		return new Object[] { is };
 	}
 
 	@Override

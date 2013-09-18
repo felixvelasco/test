@@ -4,6 +4,7 @@ package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.base.BasePackage;
 
+import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -76,6 +77,13 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * @generated
 	 */
 	private EClass caseEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass callStateEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -299,6 +307,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getCallState() {
+		return callStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public OperationsFactory getOperationsFactory() {
 		return (OperationsFactory)getEFactoryInstance();
 	}
@@ -345,6 +362,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		caseEClass = createEClass(CASE);
 		createEAttribute(caseEClass, CASE__CONDITION);
 		createEAttribute(caseEClass, CASE__EVENT_NAME);
+
+		callStateEClass = createEClass(CALL_STATE);
 	}
 
 	/**
@@ -384,6 +403,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initialStateEClass.getESuperTypes().add(this.getState());
 		finalStateEClass.getESuperTypes().add(this.getState());
 		switchStateEClass.getESuperTypes().add(this.getState());
+		callStateEClass.getESuperTypes().add(this.getState());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(stateEClass, State.class, "State", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -409,6 +429,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEClass(caseEClass, Case.class, "Case", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCase_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCase_EventName(), ecorePackage.getEString(), "eventName", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(callStateEClass, CallState.class, "CallState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

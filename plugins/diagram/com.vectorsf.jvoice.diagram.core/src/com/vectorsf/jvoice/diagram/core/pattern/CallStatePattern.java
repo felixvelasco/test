@@ -19,25 +19,24 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 
-import com.vectorsf.jvoice.model.operations.FinalState;
+import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 
-public class FinalStatePattern extends StatePattern {
+public class CallStatePattern extends StatePattern {
 
-	private static final int MIN_WIDTH = 60;
-	private static final int MIN_HEIGHT = 60;
-	private static final String ID_FINAL_PREFIX = "finalState_";
-	private static final String ID_NAME_TEXT = ID_FINAL_PREFIX + "nameText";
-	private static final String ID_OUTER_RECTANGLE = ID_FINAL_PREFIX
+	private static int MIN_WIDTH = 120;
+	private static int MIN_HEIGHT = 60;
+	private static String ID_CALL_PREFIX = "callState_";
+	private static String ID_NAME_TEXT = ID_CALL_PREFIX + "nameText";
+	private static String ID_OUTER_RECTANGLE = ID_CALL_PREFIX
 			+ "outerRectangle";
-	private static final String ID_MAIN_RECTANGLE = ID_FINAL_PREFIX
-			+ "mainRectangle";
+	private static String ID_MAIN_RECTANGLE = ID_CALL_PREFIX + "mainRectangle";
 
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
 		Diagram targetDiagram = (Diagram) context.getTargetContainer();
-		FinalState addedDomainObject = (FinalState) context.getNewObject();
+		CallState addedDomainObject = (CallState) context.getNewObject();
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
 
@@ -96,25 +95,25 @@ public class FinalStatePattern extends StatePattern {
 	@Override
 	public Object[] create(ICreateContext context) {
 
-		FinalState fs = OperationsFactory.eINSTANCE.createFinalState();
-		fs.setName("Final");
+		CallState cs = OperationsFactory.eINSTANCE.createCallState();
+		cs.setName("Call");
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
-		flow.getStates().add(fs);
+		flow.getStates().add(cs);
 
-		addGraphicalRepresentation(context, fs);
+		addGraphicalRepresentation(context, cs);
 
-		return new Object[] { fs };
+		return new Object[] { cs };
 	}
 
 	@Override
 	public String getCreateName() {
-		return "Final";
+		return "Call";
 	}
 
 	@Override
 	protected IReason updateNeeded(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
-			FinalState ss = (FinalState) getBusinessObjectForPictogramElement(context
+			CallState ss = (CallState) getBusinessObjectForPictogramElement(context
 					.getPictogramElement());
 			Text text = (Text) context.getGraphicsAlgorithm();
 			if (!text.getValue().equals(ss.getName())) {
@@ -127,7 +126,7 @@ public class FinalStatePattern extends StatePattern {
 	@Override
 	protected boolean update(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
-			FinalState ss = (FinalState) getBusinessObjectForPictogramElement(context
+			CallState ss = (CallState) getBusinessObjectForPictogramElement(context
 					.getPictogramElement());
 			Text text = (Text) context.getGraphicsAlgorithm();
 			text.setValue(ss.getName());
@@ -138,14 +137,14 @@ public class FinalStatePattern extends StatePattern {
 
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
-		return mainBusinessObject instanceof FinalState;
+		return mainBusinessObject instanceof CallState;
 	}
 
 	@Override
 	protected void setValue(String value, IDirectEditingContext context,
 			String id) {
 		if (id.equals(ID_NAME_TEXT)) {
-			FinalState ss = (FinalState) getBusinessObjectForPictogramElement(context
+			CallState ss = (CallState) getBusinessObjectForPictogramElement(context
 					.getPictogramElement());
 			ss.setName(value);
 			updatePictogramElement(context.getPictogramElement());
