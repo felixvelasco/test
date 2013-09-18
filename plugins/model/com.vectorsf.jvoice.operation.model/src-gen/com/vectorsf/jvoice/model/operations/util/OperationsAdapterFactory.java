@@ -100,6 +100,10 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 				return createCaseAdapter();
 			}
 			@Override
+			public Adapter caseCallState(CallState object) {
+				return createCallStateAdapter();
+			}
+			@Override
 			public Adapter caseJVElement(JVElement object) {
 				return createJVElementAdapter();
 			}
@@ -226,6 +230,20 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCaseAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.operations.CallState <em>Call State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.operations.CallState
+	 * @generated
+	 */
+	public Adapter createCallStateAdapter() {
 		return null;
 	}
 

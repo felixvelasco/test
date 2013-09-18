@@ -26,7 +26,9 @@ import org.eclipse.graphiti.util.IColorConstant;
 
 import com.vectorsf.jvoice.diagram.core.pattern.CreateTransitionFromPad;
 import com.vectorsf.jvoice.diagram.core.pattern.TransitionPattern;
+import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.SwitchState;
 
 public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
@@ -109,17 +111,24 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 				pe);
 
 		State sta = (State) bo;
+		if (!(sta instanceof FinalState)) {
+			ContextButtonEntry button = new ContextButtonEntry(null, context);
+			ICreateConnectionFeature feature = null;
+			if (sta instanceof SwitchState) {
 
-		ContextButtonEntry button = new ContextButtonEntry(null, context);
-		ICreateConnectionFeature feature = new CreateTransitionFromPad(
-				getFeatureProvider(), new TransitionPattern(
-						getFeatureProvider()));
-		button.setText(feature.getCreateName());
-		button.setDescription(feature.getCreateDescription());
-		button.setIconId(getImageFor(sta, feature));
-		button.addDragAndDropFeature(feature);
+				feature = new CreateTransitionFromPad(getFeatureProvider(),
+						new TransitionSwitchPattern(getFeatureProvider()));
+			} else {
+				feature = new CreateTransitionFromPad(getFeatureProvider(),
+						new TransitionPattern(getFeatureProvider()));
+			}
+			button.setText(feature.getCreateName());
+			button.setDescription(feature.getCreateDescription());
+			button.setIconId(getImageFor(sta, feature));
+			button.addDragAndDropFeature(feature);
 
-		data.getDomainSpecificContextButtons().add(button);
+			data.getDomainSpecificContextButtons().add(button);
+		}
 
 		return data;
 	}

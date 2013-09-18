@@ -76,6 +76,15 @@ public interface OperationsFactory extends EFactory {
 	Case createCase();
 
 	/**
+	 * Returns a new object of class '<em>Call State</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Call State</em>'.
+	 * @generated
+	 */
+	CallState createCallState();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

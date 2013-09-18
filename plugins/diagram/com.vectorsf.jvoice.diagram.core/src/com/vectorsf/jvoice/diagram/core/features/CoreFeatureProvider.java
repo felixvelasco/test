@@ -40,6 +40,7 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 			}
 		}
 		addConnectionPattern(new TransitionPattern(this));
+		addConnectionPattern(new TransitionSwitchPattern(this));
 
 	}
 }

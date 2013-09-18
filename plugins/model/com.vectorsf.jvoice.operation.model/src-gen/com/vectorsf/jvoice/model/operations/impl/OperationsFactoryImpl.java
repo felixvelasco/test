@@ -62,6 +62,7 @@ public class OperationsFactoryImpl extends EFactoryImpl implements OperationsFac
 			case OperationsPackage.FINAL_STATE: return createFinalState();
 			case OperationsPackage.SWITCH_STATE: return createSwitchState();
 			case OperationsPackage.CASE: return createCase();
+			case OperationsPackage.CALL_STATE: return createCallState();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -125,6 +126,16 @@ public class OperationsFactoryImpl extends EFactoryImpl implements OperationsFac
 	public Case createCase() {
 		CaseImpl case_ = new CaseImpl();
 		return case_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CallState createCallState() {
+		CallStateImpl callState = new CallStateImpl();
+		return callState;
 	}
 
 	/**

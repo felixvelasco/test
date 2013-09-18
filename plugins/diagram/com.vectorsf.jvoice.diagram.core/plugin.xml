@@ -52,11 +52,29 @@
     </patternContributor>
  </extension>
  <extension
+       point="com.vectorsf.jvoice.diagram.core.patternContributor">
+    <patternContributor
+          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.CallStatePattern">
+    </patternContributor>
+ </extension>
+ <extension
        point="org.eclipse.graphiti.ui.imageProviders">
     <imageProvider
           class="com.vectorsf.jvoice.diagram.core.features.CoreImageProvider"
           id="com.vectorsf.jvoice.diagram.core.imageProvider1">
     </imageProvider>
+ </extension>
+ <extension
+       point="org.eclipse.ui.newWizards">
+    <category
+          id="com.vectorsf.jvoice.diagram.core.category1"
+          name="JVOICE">
+    </category>
+    <wizard
+          class="com.vectorsf.jvoice.diagram.core.diagram.CreateDiagramJVoice"
+          id="com.vectorsf.jvoice.diagram.core.wizard1"
+          name="JVOICE">
+    </wizard>
  </extension>
   
 

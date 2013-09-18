@@ -14,6 +14,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.9.0",
  org.eclipse.graphiti.ui;bundle-version="0.10.0",
  org.eclipse.ui;bundle-version="3.105.0",
  org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.0",
- com.vectorsf.jvoice.operation.model;bundle-version="0.1.0"
+ com.vectorsf.jvoice.operation.model;bundle-version="0.1.0",
+ org.eclipse.ui.ide;bundle-version="3.9.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
