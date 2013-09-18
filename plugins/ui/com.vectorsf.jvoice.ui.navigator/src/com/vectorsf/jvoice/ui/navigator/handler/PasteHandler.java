@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.ui.navigator.handler;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,10 +14,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.Clipboard;
@@ -49,26 +45,25 @@ public class PasteHandler extends AbstractHandler {
 			IResource targetRes = (IResource) Platform.getAdapterManager()
 					.getAdapter(target, IResource.class);
 			IPath targetPath = targetRes.getFullPath().append(miBean.getName());
-			boolean renamed = false;
+
 			if (root.getFile(targetPath).exists()) {
-				renamed = true;
-				String newName = getNewName(
-						target,
-						"CopyOf "
-								+ miBean.getName().substring(0,
-										miBean.getName().lastIndexOf('.')));
-				targetPath = targetRes.getFullPath().append(
-						newName + "." + targetPath.getFileExtension()); //$NON-NLS-1$
+
+				String newName = getNewName(target,
+						"CopyOf " + miBean.getName());
+				targetPath = targetRes.getFullPath().append(newName);
+
+				/*
+				 * JOptionPane.showMessageDialog(null,
+				 * "The file name already exists in the package. It has generated a file named "
+				 * + newName.toString());
+				 */
+
 			}
 
 			try {
 				miBean.copy(targetPath, true, null);
 			} catch (CoreException e) {
 				e.printStackTrace();
-			}
-
-			if (renamed) {
-				renameBean(targetPath);
 			}
 		}
 
@@ -104,28 +99,6 @@ public class PasteHandler extends AbstractHandler {
 			}
 		}
 		return toPaste;
-	}
-
-	private void renameBean(IPath targetPath) {
-		String newName = targetPath.lastSegment();
-		newName = newName.substring(0, newName.lastIndexOf('.'));
-		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
-		Resource emfRes = resourceSetImpl.createResource(URI
-				.createPlatformResourceURI(targetPath.toString(), true));
-		try {
-			emfRes.load(null);
-
-			for (EObject obj : emfRes.getContents()) {
-				if (obj instanceof JVBean) {
-					JVBean bean = (JVBean) obj;
-					bean.setId(newName);
-					bean.setName(newName);
-				}
-			}
-			emfRes.save(null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private String getNewName(JVPackage beanPackage, String name) {

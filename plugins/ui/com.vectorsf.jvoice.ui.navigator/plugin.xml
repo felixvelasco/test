@@ -225,12 +225,9 @@
                label="Copy"
                style="push">
             <visibleWhen
-                  checkEnabled="true">
+                  checkEnabled="false">
                <with
                      variable="selection">
-                  <count
-                        value="1">
-                  </count>
                </with>
             </visibleWhen>
          </command>
@@ -312,23 +309,21 @@
                   checkEnabled="false">
                <with
                      variable="selection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate
-                           ifEmpty="false"
-                           operator="and">
-                        <or>
-                           <instanceof
-                                 value="com.vectorsf.jvoice.model.base.JVBean">
-                           </instanceof>
-                           <instanceof
-                                 value="com.vectorsf.jvoice.model.base.JVPackage">
-                           </instanceof>
-                        </or>
-                     </iterate>
-                  </and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVBean">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
+                     </or>
+                  </iterate>
                </with>
             </visibleWhen>
          </command>
@@ -393,7 +388,40 @@
                      <instanceof
                            value="com.vectorsf.jvoice.model.base.JVBean">
                      </instanceof>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVProject">
+                     </instanceof>
                   </or>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="com.vectorsf.jvoice.ui.navigator.handler.PasteHandler"
+            commandId="org.eclipse.ui.edit.paste">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     operator="and">
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVPackage">
+                  </instanceof>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="com.vectorsf.jvoice.ui.navigator.handler.CopyHandler"
+            commandId="org.eclipse.ui.edit.copy">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     operator="and">
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVBean">
+                  </instanceof>
                </iterate>
             </with>
          </activeWhen>
