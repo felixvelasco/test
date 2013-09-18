@@ -30,7 +30,6 @@ public class InitialStatePattern extends StatePattern {
 	private static final int MIN_WIDTH = 60;
 	private static final int MIN_HEIGHT = 60;
 	private static final String ID_INITIAL_PREFIX = "initialState_";
-	private static final String ID_NAME_TEXT = ID_INITIAL_PREFIX + "nameText";
 	private static final String ID_OUTER_RECTANGLE = ID_INITIAL_PREFIX
 			+ "outerRectangle";
 	private static final String ID_MAIN_CIRCLE = ID_INITIAL_PREFIX

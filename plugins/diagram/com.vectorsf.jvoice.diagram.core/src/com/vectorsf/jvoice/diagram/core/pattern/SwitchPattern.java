@@ -29,7 +29,6 @@ public class SwitchPattern extends StatePattern {
 	private static final int MIN_WIDTH = 120;
 	private static final int MIN_HEIGHT = 80;
 	private static final String ID_SWITCH_PREFIX = "switchState_";
-	private static final String ID_NAME_TEXT = ID_SWITCH_PREFIX + "nameText";
 	private static final String ID_OUTER_RECTANGLE = ID_SWITCH_PREFIX
 			+ "outerRectangle";
 	private static final String ID_MAIN_RECTANGLE = ID_SWITCH_PREFIX
