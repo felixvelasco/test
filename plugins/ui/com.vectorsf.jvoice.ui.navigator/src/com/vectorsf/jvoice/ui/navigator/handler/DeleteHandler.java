@@ -42,7 +42,7 @@ public class DeleteHandler extends AbstractHandler {
 	private boolean delete(final IResource[] resources) {
 		DeleteResourcesWizard refactoringWizard = new DeleteResourcesWizard(
 				resources);
-		refactoringWizard.setWindowTitle("Borrar");
+		refactoringWizard.setDefaultPageTitle("Borrar");
 		RefactoringWizardOpenOperation op = new RefactoringWizardOpenOperation(
 				refactoringWizard);
 		try {
