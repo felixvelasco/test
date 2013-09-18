@@ -18,6 +18,7 @@ import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
+import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -28,7 +29,6 @@ public class FinalStatePattern extends StatePattern {
 	private static final int MIN_WIDTH = 60;
 	private static final int MIN_HEIGHT = 60;
 	private static final String ID_FINAL_PREFIX = "finalState_";
-	private static final String ID_NAME_TEXT = ID_FINAL_PREFIX + "nameText";
 	private static final String ID_OUTER_RECTANGLE = ID_FINAL_PREFIX
 			+ "outerRectangle";
 	private static final String ID_MAIN_RECTANGLE = ID_FINAL_PREFIX
@@ -55,8 +55,11 @@ public class FinalStatePattern extends StatePattern {
 		Rectangle mainRectangle = gaService.createRectangle(outerRectangle);
 		setId(mainRectangle, ID_MAIN_RECTANGLE);
 		mainRectangle.setFilled(true);
-		gaService.setRenderingStyle(mainRectangle,
-				StatePredefinedColoredAreas.getGreenWhiteAdaptions());
+		gaService
+				.setRenderingStyle(
+						mainRectangle,
+						StatePredefinedColoredAreas
+								.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.LIGHT_YELLOW_ID));
 
 		// File name
 		Shape shape = peCreateService.createShape(outerContainerShape, false);

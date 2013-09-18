@@ -18,6 +18,7 @@ import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
+import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -28,7 +29,6 @@ public class CallStatePattern extends StatePattern {
 	private static int MIN_WIDTH = 120;
 	private static int MIN_HEIGHT = 60;
 	private static String ID_CALL_PREFIX = "callState_";
-	private static String ID_NAME_TEXT = ID_CALL_PREFIX + "nameText";
 	private static String ID_OUTER_RECTANGLE = ID_CALL_PREFIX
 			+ "outerRectangle";
 	private static String ID_MAIN_RECTANGLE = ID_CALL_PREFIX + "mainRectangle";
@@ -54,8 +54,23 @@ public class CallStatePattern extends StatePattern {
 		Rectangle mainRectangle = gaService.createRectangle(outerRectangle);
 		setId(mainRectangle, ID_MAIN_RECTANGLE);
 		mainRectangle.setFilled(true);
-		gaService.setRenderingStyle(mainRectangle,
-				StatePredefinedColoredAreas.getGreenWhiteAdaptions());
+		gaService
+				.setRenderingStyle(
+						mainRectangle,
+						StatePredefinedColoredAreas
+								.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.BLUE_WHITE_GLOSS_ID));
+
+		// BLUE_WHITE_GLOSS_ID.equals(id)) {
+		// return getBlueWhiteGlossAdaptions();
+		// } else if (BLUE_WHITE_ID.equals(id)) {
+		// return getBlueWhiteAdaptions();
+		// } else if (LIGHT_YELLOW_ID.equals(id)) {
+		// return getLightYellowAdaptions();
+		// } else if (LIGHT_GRAY_ID.equals(id)) {
+		// return getLightGrayAdaptions();
+		// } else if (COPPER_WHITE_GLOSS_ID.equals(id)) {
+		// return getCopperWhiteGlossAdaptions();
+		// } else if (SILVER_WHITE_GLOSS_ID.
 
 		// File name
 		Shape shape = peCreateService.createShape(outerContainerShape, false);

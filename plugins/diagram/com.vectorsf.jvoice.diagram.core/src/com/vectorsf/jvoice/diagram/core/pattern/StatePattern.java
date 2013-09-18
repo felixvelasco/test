@@ -15,7 +15,7 @@ import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 
 public class StatePattern extends IdPattern {
 
-	private static final String ID_NAME_TEXT = "nameText";
+	protected static final String ID_NAME_TEXT = "nameText";
 	private static final int MIN_WIDTH = 100;
 	private static final int MIN_HEIGHT = 60;
 
