@@ -22,12 +22,22 @@ public class AdapterBean implements IAdapterFactory {
 		if (adaptableObject instanceof JVBean) {
 
 			if (adapterType == IFile.class || adapterType == IResource.class) {
-				return adaptarElemento(adaptableObject);
+				if (verificaPadre(adaptableObject)) {
+					return adaptarElemento(adaptableObject);
+				} else {
+					return null;
+				}
+
 			} else if (adapterType == ResourceMapping.class) {
-				@SuppressWarnings("restriction")
-				final ResourceMapping simpleResourceMapping = new org.eclipse.core.internal.resources.mapping.SimpleResourceMapping(
-						adaptarElemento(adaptableObject));
-				return simpleResourceMapping;
+				if (verificaPadre(adaptableObject)) {
+					@SuppressWarnings("restriction")
+					final ResourceMapping simpleResourceMapping = new org.eclipse.core.internal.resources.mapping.SimpleResourceMapping(
+							adaptarElemento(adaptableObject));
+					return simpleResourceMapping;
+				} else {
+					return null;
+				}
+
 			}
 		}
 		return null;
@@ -46,6 +56,15 @@ public class AdapterBean implements IAdapterFactory {
 	@Override
 	public Class[] getAdapterList() {
 		return ADAPTER_TYPES;
+	}
+
+	private boolean verificaPadre(Object adaptableObject) {
+		JVBean bean = (JVBean) adaptableObject;
+		if (bean.getOwnerPackage() != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

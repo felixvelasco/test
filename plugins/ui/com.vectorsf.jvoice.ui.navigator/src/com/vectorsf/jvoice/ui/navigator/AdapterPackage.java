@@ -22,12 +22,22 @@ public class AdapterPackage implements IAdapterFactory {
 		if (adaptableObject instanceof JVPackage) {
 
 			if (adapterType == IFolder.class || adapterType == IResource.class) {
-				return adaptarElemento(adaptableObject);
+				if (verificaPadre(adaptableObject)) {
+					return adaptarElemento(adaptableObject);
+				} else {
+					return null;
+				}
+
 			} else if (adapterType == ResourceMapping.class) {
-				@SuppressWarnings("restriction")
-				final ResourceMapping simpleResourceMapping = new org.eclipse.core.internal.resources.mapping.SimpleResourceMapping(
-						adaptarElemento(adaptableObject));
-				return simpleResourceMapping;
+				if (verificaPadre(adaptableObject)) {
+					@SuppressWarnings("restriction")
+					final ResourceMapping simpleResourceMapping = new org.eclipse.core.internal.resources.mapping.SimpleResourceMapping(
+							adaptarElemento(adaptableObject));
+					return simpleResourceMapping;
+				} else {
+					return null;
+				}
+
 			}
 		}
 		return null;
@@ -44,6 +54,15 @@ public class AdapterPackage implements IAdapterFactory {
 	@Override
 	public Class[] getAdapterList() {
 		return ADAPTER_TYPES;
+	}
+
+	private boolean verificaPadre(Object adaptableObject) {
+		JVPackage pck = (JVPackage) adaptableObject;
+		if (pck.getOwnerProject() != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
