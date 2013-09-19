@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.diagram.core.pattern;
+package com.vectorsf.jvoice.diagram.core.pattern.transition;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddConnectionContext;
@@ -9,6 +9,8 @@ import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
 import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
+import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
@@ -92,10 +94,33 @@ public class TransitionPattern extends AbstractConnectionPattern {
 					true);
 			createArrow(cd);
 
+			createTextEvent(context, connection);
+
 			link(connection, transition);
 			return connection;
 		}
 		return null;
+	}
+
+	private void createTextEvent(IAddContext context, Connection connection) {
+		ConnectionDecorator cdEvent;
+		cdEvent = peService.createConnectionDecorator(connection, true, 0.5,
+				true);
+		Text text = gaService.createText(
+				cdEvent,
+
+				getState(((IConnectionContext) context).getSourceAnchor())
+
+				.getName()
+						+ "_"
+						+ getState(
+								((IConnectionContext) context)
+										.getTargetAnchor())
+
+						.getName());
+		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
+		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
+
 	}
 
 	protected Polyline createArrow(GraphicsAlgorithmContainer gaContainer) {
@@ -171,14 +196,13 @@ public class TransitionPattern extends AbstractConnectionPattern {
 		Object boTarget = featureProvider
 				.getBusinessObjectForPictogramElement(context
 						.getTargetPictogramElement());
-		// Object boSource = featureProvider
-		// .getBusinessObjectForPictogramElement(context
-		// .getSourcePictogramElement());
-		return boTarget instanceof State && !(boTarget instanceof InitialState)
-		// && boSource instanceof InitialState
-		// && ((InitialState) boSource).getOutgoingTransitions().size() == 0
-		;
-
+		Object boSource = featureProvider
+				.getBusinessObjectForPictogramElement(context
+						.getSourcePictogramElement());
+		return boTarget instanceof State
+				&& !(boTarget instanceof InitialState)
+				&& !(boSource instanceof InitialState && ((InitialState) boSource)
+						.getOutgoingTransitions().size() > 0);
 	}
 
 }
