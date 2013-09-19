@@ -440,7 +440,7 @@
                            value="com.vectorsf.jvoice.model.base.JVPackage">
                      </instanceof>
                      <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVProject">
+                           value="com.vectorsf.jvoice.model.base.JVBean">
                      </instanceof>
                   </or>
                </iterate>
@@ -460,7 +460,7 @@
                            value="com.vectorsf.jvoice.model.base.JVPackage">
                      </instanceof>
                      <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVProject">
+                           value="com.vectorsf.jvoice.model.base.JVBean">
                      </instanceof>
                   </or>
                </iterate>

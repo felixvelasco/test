@@ -3,6 +3,8 @@ package com.vectorsf.jvoice.ui.navigator.handler;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -53,19 +55,8 @@ public class PasteHandler extends AbstractHandler {
 					.getAdapter(target, IResource.class);
 			IPath targetPath = targetRes.getFullPath().append(miBean.getName());
 
-			if (root.getFile(targetPath).exists()) {
-
-				String newName = getNewName(target,
-						"CopyOf " + miBean.getName());
-				targetPath = targetRes.getFullPath().append(newName);
-
-				/*
-				 * JOptionPane.showMessageDialog(null,
-				 * "The file name already exists in the package. It has generated a file named "
-				 * + newName.toString());
-				 */
-
-			}
+			targetPath = validarNombre(root, targetPath, target, miBean,
+					targetRes);
 
 			try {
 				miBean.copy(targetPath, true, null);
@@ -115,10 +106,33 @@ public class PasteHandler extends AbstractHandler {
 				if (navName != null && navName.equals(name)) {
 					// Se vuelve a llamar a sí mismo para comprobar que el
 					// nombre creado tampoco existe.
-					return getNewName(beanPackage, "CopyOf " + name);
+					return getNewName(beanPackage, "Copy of " + name);
 				}
 			}
 		}
 		return name;
+	}
+
+	private IPath validarNombre(IWorkspaceRoot root, IPath targetPath,
+			JVPackage target, IFile miBean, IResource targetRes) {
+		if (root.getFile(targetPath).exists()) {
+
+			String newName = getNewName(target, "Copy of " + miBean.getName());
+
+			String cadena1 = newName
+					+ " exists in the selected destination. Enter a new name";
+
+			newName = (String) JOptionPane.showInputDialog(null, "Warning",
+					cadena1, JOptionPane.QUESTION_MESSAGE, null, null, newName);
+
+			newName = getNewName(target, newName);
+
+			targetPath = targetRes.getFullPath().append(newName);
+
+			return validarNombre(root, targetPath, target, miBean, targetRes);
+
+		} else {
+			return targetPath;
+		}
 	}
 }
