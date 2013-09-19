@@ -246,6 +246,17 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.ui.edit.cut"
+               label="Cut"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+               </with>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.ui.edit.paste"
                label="Paste"
                style="push">
@@ -404,9 +415,14 @@
                   variable="selection">
                <iterate
                      operator="and">
-                  <instanceof
-                        value="com.vectorsf.jvoice.model.base.JVPackage">
-                  </instanceof>
+                  <or>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVPackage">
+                     </instanceof>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVProject">
+                     </instanceof>
+                  </or>
                </iterate>
             </with>
          </activeWhen>
@@ -419,9 +435,34 @@
                   variable="selection">
                <iterate
                      operator="and">
-                  <instanceof
-                        value="com.vectorsf.jvoice.model.base.JVBean">
-                  </instanceof>
+                  <or>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVPackage">
+                     </instanceof>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVProject">
+                     </instanceof>
+                  </or>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="com.vectorsf.jvoice.ui.navigator.handler.CutHandler"
+            commandId="org.eclipse.ui.edit.cut">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     operator="and">
+                  <or>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVPackage">
+                     </instanceof>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVProject">
+                     </instanceof>
+                  </or>
                </iterate>
             </with>
          </activeWhen>

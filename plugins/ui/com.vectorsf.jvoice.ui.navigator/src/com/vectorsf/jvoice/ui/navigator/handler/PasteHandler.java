@@ -27,6 +27,13 @@ public class PasteHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+
+		Clipboard clip = new Clipboard(Display.getCurrent());
+		Object contents = clip
+				.getContents(LocalSelectionTransfer.getTransfer());
+		if (contents == null) {
+			return null;
+		}
 		JVPackage target = getValidTarget(((IEvaluationContext) event
 				.getApplicationContext()).getDefaultVariable());
 		if (target == null) {
