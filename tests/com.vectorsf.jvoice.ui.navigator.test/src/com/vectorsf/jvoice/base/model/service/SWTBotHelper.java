@@ -1,6 +1,7 @@
 package com.vectorsf.jvoice.base.model.service;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
@@ -16,6 +17,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.m2e.core.MavenPlugin;
@@ -23,11 +25,16 @@ import org.eclipse.m2e.core.project.ProjectImportConfiguration;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.osgi.framework.Bundle;
+
+import static org.junit.Assert.fail;
 
 public class SWTBotHelper {
 
 	protected String ruta = "src/main/resources/jv";
 	protected String rutaProperties = "src/main/config/properties";
+
+	protected static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.ui.navigator");
 
 	private SWTBotHelper() {
 	}
@@ -222,4 +229,14 @@ public class SWTBotHelper {
 
 		return model;
 	}
+
+	public static InputStream getInputStreamResource(String resourceName) {
+		try {
+			return bundle.getResource("/resources/" + resourceName).openStream();
+		} catch (IOException e) {
+			fail(e.getMessage());
+			return null;
+		}
+	}
+
 }

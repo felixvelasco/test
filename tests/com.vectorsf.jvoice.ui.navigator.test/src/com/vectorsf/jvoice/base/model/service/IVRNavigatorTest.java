@@ -3,7 +3,6 @@
  */
 package com.vectorsf.jvoice.base.model.service;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -13,6 +12,7 @@ import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.ui.PlatformUI;
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.emptyArray;
@@ -28,6 +29,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+
 import static org.junit.Assert.fail;
 
 /**
@@ -40,6 +42,10 @@ public class IVRNavigatorTest {
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
+	@SuppressWarnings("unchecked")
+	private final Matcher<Object[]> arrayContainingTextOne = arrayContaining(hasProperty("text", is("Flow one")));
+	@SuppressWarnings("unchecked")
+	private final Matcher<Object[]> arrayContainingTextTwo = arrayContaining(hasProperty("text", is("Flow two")));
 
 	/**
 	 * @throws java.lang.Exception
@@ -145,13 +151,13 @@ public class IVRNavigatorTest {
 				hasItemInArray(hasProperty("text", is("several.packages.inside"))));
 
 	}
-	
+
 	@Test
 	public void testDeleteFolders() throws CoreException {
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 		IProject project = SWTBotHelper.createProject("testNavigator");
 		SWTBotHelper.createFolders(project, BaseModel.JV_PATH + "/several/packages/inside");
-		
+
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
@@ -161,9 +167,9 @@ public class IVRNavigatorTest {
 				hasItemInArray(hasProperty("text", is("several.packages"))));
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
 				hasItemInArray(hasProperty("text", is("several.packages.inside"))));
-		
+
 		SWTBotHelper.createFolders(project, BaseModel.JV_PATH + "/otros/nuevos");
-		
+
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
@@ -171,9 +177,9 @@ public class IVRNavigatorTest {
 				hasItemInArray(hasProperty("text", is("otros"))));
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
 				hasItemInArray(hasProperty("text", is("otros.nuevos"))));
-		
+
 		SWTBotHelper.deleteFolder(project, BaseModel.JV_PATH + "/otros/nuevos");
-		
+
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
@@ -183,12 +189,12 @@ public class IVRNavigatorTest {
 				hasItemInArray(hasProperty("text", is("several.packages"))));
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
 				hasItemInArray(hasProperty("text", is("several.packages.inside"))));
-		
+
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
 				hasItemInArray(hasProperty("text", is(not("otros.nuevos")))));
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
 				hasItemInArray(hasProperty("text", is(not("otros")))));
-		
+
 	}
 
 	@Test
@@ -196,46 +202,47 @@ public class IVRNavigatorTest {
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/test.bean", "...");
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/one.jvflow",
+				SWTBotHelper.getInputStreamResource("one.jvflow"));
 
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
 		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside").getItems(),
-				is(arrayContaining(hasProperty("text", is("test.bean")))));
+				is(arrayContainingTextOne));
 
 	}
 
-	
 	@Test
 	public void testDeleteFiles() throws CoreException {
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
 		final IProject project1 = SWTBotHelper.createProject("testNavigator");
 		final IProject project2 = SWTBotHelper.createProject("testNavigator2");
-		
-		final IFile file1 =SWTBotHelper.createFile(project1, BaseModel.JV_PATH + "/several/packages/inside/test.bean", "...");
-		final IFile file2 =SWTBotHelper.createFile(project2, BaseModel.JV_PATH + "/several/packages/inside/test.bean", "...");
+
+		SWTBotHelper.createFile(project1, BaseModel.JV_PATH + "/several/packages/inside/one.jvflow",
+				SWTBotHelper.getInputStreamResource("one.jvflow"));
+		SWTBotHelper.createFile(project2, BaseModel.JV_PATH + "/several/packages/inside/two.jvflow",
+				SWTBotHelper.getInputStreamResource("two.jvflow"));
 
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
 		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside").getItems(),
-				is(arrayContaining(hasProperty("text", is("test.bean")))));
-		
-		String ruta = BaseModel.JV_PATH + "/several/packages/inside/test.bean";
+				is(arrayContainingTextOne));
+
+		String ruta = BaseModel.JV_PATH + "/several/packages/inside/one.jvflow";
 		SWTBotHelper.deleteFile(project1, ruta);
-		
+
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
 		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside").getItems(),
-				is(not(arrayContaining(hasProperty("text", is("test.bean"))))));
+				is(not(arrayContainingTextOne)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator2"), is(not(nullValue())));
 		assertThat(view.bot().tree().expandNode("testNavigator2", "several.packages.inside").getItems(),
-				is((arrayContaining(hasProperty("text", is("test.bean"))))));
-		
-		
+				is(arrayContainingTextTwo));
+
 	}
 
 }

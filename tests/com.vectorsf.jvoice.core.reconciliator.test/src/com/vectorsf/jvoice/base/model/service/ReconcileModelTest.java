@@ -12,9 +12,14 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -23,9 +28,11 @@ import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
+import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
@@ -39,10 +46,17 @@ import static org.junit.Assert.fail;
  * 
  */
 @RunWith(BlockJUnit4ClassRunner.class)
-public class BaseModelTest extends BaseModelResources {
+public class ReconcileModelTest extends BaseModelResources {
 
 	private static final String PAQ = "paq";
 	private static final String BASE = "base";
+
+	@BeforeClass
+	public static void setClassUp() {
+		@SuppressWarnings("unused")
+		OperationsPackage einstance = OperationsPackage.eINSTANCE;
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
+	}
 
 	/**
 	 * @throws java.lang.Exception
@@ -170,13 +184,13 @@ public class BaseModelTest extends BaseModelResources {
 		assertThat(pack.getBeans(), is(empty()));
 
 		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
-		final String bean1 = "one.jflow";
+		final String bean1 = "one.jvflow";
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/" + PAQ + "/" + bean1, "asd");
+					createFile(project, ruta + "/" + PAQ + "/" + bean1, getInputStreamResource("one.jvflow"));
 				}
 			}, project);
 		} catch (CoreException ce) {
@@ -184,47 +198,56 @@ public class BaseModelTest extends BaseModelResources {
 		}
 
 		assertThat(pack.getBeans(), hasSize(1));
+		assertThat(pack.getBeans(), Matchers.<JVBean> hasItem(hasProperty("name", is("one"))));
 
-		final String bean2 = "two.jflow";
+		final String bean2 = "two.jvflow";
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/" + PAQ + "/" + bean2, "asd");
+					createFile(project, ruta + "/" + PAQ + "/" + bean2, getInputStreamResource("two.jvflow"));
 				}
 			});
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
 
+		@SuppressWarnings("unchecked")
+		Matcher<Iterable<? extends JVBean>> containsOneAndTwo = containsInAnyOrder(
+				Matchers.<JVBean> hasProperty("name", is("one")), Matchers.<JVBean> hasProperty("name", is("two")));
+
 		assertThat(pack.getBeans(), hasSize(2));
+		assertThat(pack.getBeans(), containsOneAndTwo);
 	}
 
 	@Test
 	public void testBeanDelete() {
 		JVModel model = BaseModel.getInstance().getModel();
+		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
+		assertThat(resourceSet.getResources(), is(empty()));
 
 		JVProject jvProject = model.getProject(BASE);
 		JVPackage pack = jvProject.getPackage(PAQ);
 		assertThat(pack.getBeans(), is(empty()));
 
 		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
-		final String bean1 = "one.jflow";
-		final String bean2 = "two.jflow";
+		final String bean1 = "one.jvflow";
+		final String bean2 = "two.jvflow";
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/" + PAQ + "/" + bean1, "asd");
-					createFile(project, ruta + "/" + PAQ + "/" + bean2, "asd");
+					createFile(project, ruta + "/" + PAQ + "/" + bean1, getInputStreamResource(bean1));
+					createFile(project, ruta + "/" + PAQ + "/" + bean2, getInputStreamResource(bean2));
 				}
 			}, project);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
 
+		assertThat(resourceSet.getResources(), hasSize(2));
 		assertThat(pack.getBeans(), hasSize(2));
 
 		try {
@@ -239,6 +262,7 @@ public class BaseModelTest extends BaseModelResources {
 			fail(ce.getMessage());
 		}
 
+		assertThat(resourceSet.getResources(), hasSize(1));
 		assertThat(pack.getBeans(), hasSize(1));
 
 		try {
@@ -254,6 +278,8 @@ public class BaseModelTest extends BaseModelResources {
 		}
 
 		assertThat(pack.getBeans(), is(empty()));
+
+		assertThat(BaseModel.getInstance().getResourceSet().getResources(), is(empty()));
 	}
 
 	@Test
@@ -261,24 +287,24 @@ public class BaseModelTest extends BaseModelResources {
 		JVModel model = BaseModel.getInstance().getModel();
 
 		JVProject jvProject = model.getProject(BASE);
-		JVPackage pack = jvProject.getPackage(PAQ);
-		assertThat(pack.getBeans(), is(empty()));
+		JVPackage paqPackage = jvProject.getPackage(PAQ);
+		assertThat(paqPackage.getBeans(), is(empty()));
 
 		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
-		final String bean1 = "one.jflow";
+		final String bean1 = "one.jvflow";
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/" + PAQ + "/" + bean1, "asd");
+					createFile(project, ruta + "/" + PAQ + "/" + bean1, getInputStreamResource(bean1));
 				}
 			}, project);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
 
-		assertThat(pack.getBeans(), hasSize(1));
+		assertThat(paqPackage.getBeans(), hasSize(1));
 
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
@@ -296,13 +322,13 @@ public class BaseModelTest extends BaseModelResources {
 			fail(ce.getMessage());
 		}
 
-		assertThat(pack.getBeans(), is(empty()));
+		assertThat(paqPackage.getBeans(), is(empty()));
 		assertThat(jvProject.getPackages(), hasSize(3));
 
-		JVPackage pck = jvProject.getPackage("otro.paquete");
-		assertThat(pck, is(not(nullValue())));
-		assertThat(pck.getBeans(), hasSize(1));
-		assertThat(pck.getBeans(), Matchers.<JVBean> hasItem(hasProperty("name", is(bean1))));
+		JVPackage otherPackage = jvProject.getPackage("otro.paquete");
+		assertThat(otherPackage, is(not(nullValue())));
+		assertThat(otherPackage.getBeans(), hasSize(1));
+		assertThat(otherPackage.getBeans(), Matchers.<JVBean> hasItem(hasProperty("name", is("one"))));
 	}
 
 	@Test
@@ -334,9 +360,9 @@ public class BaseModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/paq/que/te/cuento/primer.bean", "asd");
-					createFile(project, ruta + "/paq/que/te/cuento/segundo.bean", "zxc");
-					createFile(project, ruta + "/el/mono/mario/tercer.bean", "zxc");
+					createFile(project, ruta + "/paq/que/te/cuento/one.jvflow", getInputStreamResource("one.jvflow"));
+					createFile(project, ruta + "/paq/que/te/cuento/two.jvflow", getInputStreamResource("two.jvflow"));
+					createFile(project, ruta + "/el/mono/mario/three.jvflow", getInputStreamResource("three.jvflow"));
 				}
 			}, project);
 		} catch (CoreException ce) {
@@ -382,9 +408,9 @@ public class BaseModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/paq/que/te/cuento/primer.bean", "asd");
-					createFile(project, ruta + "/paq/que/te/cuento/segundo.bean", "zxc");
-					createFile(project2, ruta + "/el/mono/mario/tercer.bean", "zxc");
+					createFile(project, ruta + "/paq/que/te/cuento/one.jvflow", getInputStreamResource("one.jvflow"));
+					createFile(project, ruta + "/paq/que/te/cuento/two.jvflow", getInputStreamResource("two.jvflow"));
+					createFile(project2, ruta + "/el/mono/mario/three.jvflow", getInputStreamResource("three.jvflow"));
 				}
 			});
 		} catch (CoreException ce) {
