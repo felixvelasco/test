@@ -20,8 +20,11 @@ import org.junit.runner.RunWith;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.emptyArray;
+import static org.hamcrest.Matchers.hasItemInArray;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
@@ -124,4 +127,39 @@ public class IVRNavigatorTest {
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(0)));
 
 	}
+
+	@Test
+	public void testCreateFolders() throws CoreException {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+
+		IProject project = SWTBotHelper.createProject("testNavigator");
+		SWTBotHelper.createFolders(project, BaseModel.JV_PATH + "/several/packages/inside");
+
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("several"))));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("several.packages"))));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("several.packages.inside"))));
+
+	}
+
+	@Test
+	public void testCreateFiles() throws CoreException {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+
+		IProject project = SWTBotHelper.createProject("testNavigator");
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/test.bean", "...");
+
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside").getItems(),
+				is(arrayContaining(hasProperty("text", is("test.bean")))));
+
+	}
+
 }
