@@ -56,6 +56,16 @@ public abstract class JVBeanImpl extends NamedElementImpl implements JVBean {
 	 */
 	public JVPackage getOwnerPackage() {
 		if (eContainerFeatureID() != BasePackage.JV_BEAN__OWNER_PACKAGE) return null;
+		return (JVPackage)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JVPackage basicGetOwnerPackage() {
+		if (eContainerFeatureID() != BasePackage.JV_BEAN__OWNER_PACKAGE) return null;
 		return (JVPackage)eInternalContainer();
 	}
 
@@ -143,7 +153,8 @@ public abstract class JVBeanImpl extends NamedElementImpl implements JVBean {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case BasePackage.JV_BEAN__OWNER_PACKAGE:
-				return getOwnerPackage();
+				if (resolve) return getOwnerPackage();
+				return basicGetOwnerPackage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -187,7 +198,7 @@ public abstract class JVBeanImpl extends NamedElementImpl implements JVBean {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case BasePackage.JV_BEAN__OWNER_PACKAGE:
-				return getOwnerPackage() != null;
+				return basicGetOwnerPackage() != null;
 		}
 		return super.eIsSet(featureID);
 	}

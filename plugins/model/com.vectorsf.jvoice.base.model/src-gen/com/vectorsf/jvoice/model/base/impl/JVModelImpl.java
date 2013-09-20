@@ -73,7 +73,7 @@ public class JVModelImpl extends MinimalEObjectImpl.Container implements JVModel
 	 */
 	public List<JVProject> getProjects() {
 		if (projects == null) {
-			projects = new EObjectContainmentWithInverseEList<JVProject>(JVProject.class, this, BasePackage.JV_MODEL__PROJECTS, BasePackage.JV_PROJECT__MODEL);
+			projects = new EObjectContainmentWithInverseEList.Resolving<JVProject>(JVProject.class, this, BasePackage.JV_MODEL__PROJECTS, BasePackage.JV_PROJECT__MODEL);
 		}
 		return projects;
 	}

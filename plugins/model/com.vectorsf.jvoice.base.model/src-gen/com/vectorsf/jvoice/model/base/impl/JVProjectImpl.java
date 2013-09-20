@@ -90,7 +90,7 @@ public class JVProjectImpl extends NamedElementImpl implements JVProject {
 	 */
 	public List<JVPackage> getPackages() {
 		if (packages == null) {
-			packages = new EObjectContainmentWithInverseEList<JVPackage>(JVPackage.class, this, BasePackage.JV_PROJECT__PACKAGES, BasePackage.JV_PACKAGE__OWNER_PROJECT);
+			packages = new EObjectContainmentWithInverseEList.Resolving<JVPackage>(JVPackage.class, this, BasePackage.JV_PROJECT__PACKAGES, BasePackage.JV_PACKAGE__OWNER_PROJECT);
 		}
 		return packages;
 	}
@@ -101,6 +101,16 @@ public class JVProjectImpl extends NamedElementImpl implements JVProject {
 	 * @generated
 	 */
 	public JVModel getModel() {
+		if (eContainerFeatureID() != BasePackage.JV_PROJECT__MODEL) return null;
+		return (JVModel)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JVModel basicGetModel() {
 		if (eContainerFeatureID() != BasePackage.JV_PROJECT__MODEL) return null;
 		return (JVModel)eInternalContainer();
 	}
@@ -143,7 +153,7 @@ public class JVProjectImpl extends NamedElementImpl implements JVProject {
 	 */
 	public List<Configuration> getConfiguration() {
 		if (configuration == null) {
-			configuration = new EObjectContainmentEList<Configuration>(Configuration.class, this, BasePackage.JV_PROJECT__CONFIGURATION);
+			configuration = new EObjectContainmentEList.Resolving<Configuration>(Configuration.class, this, BasePackage.JV_PROJECT__CONFIGURATION);
 		}
 		return configuration;
 	}
@@ -240,7 +250,8 @@ public class JVProjectImpl extends NamedElementImpl implements JVProject {
 			case BasePackage.JV_PROJECT__PACKAGES:
 				return getPackages();
 			case BasePackage.JV_PROJECT__MODEL:
-				return getModel();
+				if (resolve) return getModel();
+				return basicGetModel();
 			case BasePackage.JV_PROJECT__CONFIGURATION:
 				return getConfiguration();
 		}
@@ -303,7 +314,7 @@ public class JVProjectImpl extends NamedElementImpl implements JVProject {
 			case BasePackage.JV_PROJECT__PACKAGES:
 				return packages != null && !packages.isEmpty();
 			case BasePackage.JV_PROJECT__MODEL:
-				return getModel() != null;
+				return basicGetModel() != null;
 			case BasePackage.JV_PROJECT__CONFIGURATION:
 				return configuration != null && !configuration.isEmpty();
 		}

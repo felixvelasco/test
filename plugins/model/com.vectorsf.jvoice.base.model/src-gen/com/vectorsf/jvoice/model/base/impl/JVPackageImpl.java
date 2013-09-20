@@ -76,7 +76,7 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 */
 	public List<JVBean> getBeans() {
 		if (beans == null) {
-			beans = new EObjectContainmentWithInverseEList<JVBean>(JVBean.class, this, BasePackage.JV_PACKAGE__BEANS, BasePackage.JV_BEAN__OWNER_PACKAGE);
+			beans = new EObjectContainmentWithInverseEList.Resolving<JVBean>(JVBean.class, this, BasePackage.JV_PACKAGE__BEANS, BasePackage.JV_BEAN__OWNER_PACKAGE);
 		}
 		return beans;
 	}
@@ -87,6 +87,16 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * @generated
 	 */
 	public JVProject getOwnerProject() {
+		if (eContainerFeatureID() != BasePackage.JV_PACKAGE__OWNER_PROJECT) return null;
+		return (JVProject)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JVProject basicGetOwnerProject() {
 		if (eContainerFeatureID() != BasePackage.JV_PACKAGE__OWNER_PROJECT) return null;
 		return (JVProject)eInternalContainer();
 	}
@@ -197,7 +207,8 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 			case BasePackage.JV_PACKAGE__BEANS:
 				return getBeans();
 			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				return getOwnerProject();
+				if (resolve) return getOwnerProject();
+				return basicGetOwnerProject();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -251,7 +262,7 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 			case BasePackage.JV_PACKAGE__BEANS:
 				return beans != null && !beans.isEmpty();
 			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				return getOwnerProject() != null;
+				return basicGetOwnerProject() != null;
 		}
 		return super.eIsSet(featureID);
 	}

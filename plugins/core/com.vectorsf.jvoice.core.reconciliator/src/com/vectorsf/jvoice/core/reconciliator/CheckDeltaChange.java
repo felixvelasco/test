@@ -1,19 +1,20 @@
 package com.vectorsf.jvoice.core.reconciliator;
 
+import java.util.List;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVBean;
-import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 
@@ -48,7 +49,8 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 				if (pkg != null) {
 					currentPackage = pkg;
 					if (delta.getKind() == IResourceDelta.REMOVED) {
-						delete(resource);
+						jvProject.getPackages().remove(currentPackage);
+						removeResources(currentPackage);
 						return false;
 					}
 				} else {
@@ -60,19 +62,24 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 		case IResource.FILE:
 			if (isInterestingDelta(delta)) {
 				if (currentPackage != null) {
-					JVBean bean = currentPackage.getBean(getBeanName((IFile) resource));
+					JVBean bean = currentPackage.getBean(JVoiceModelReconcilier.getInstance().getBeanName(
+							(IFile) resource));
+					final List<JVBean> beans = currentPackage.getBeans();
 					if (delta.getKind() == IResourceDelta.ADDED) {
 						if (bean == null) {
-							currentPackage.getBeans().add(
-									JVoiceModelReconcilier.getInstance().createBean((IFile) resource));
+							JVBean createBean = JVoiceModelReconcilier.getInstance().createBean((IFile) resource);
+							beans.add(createBean);
 						}
 
 					} else if (delta.getKind() == IResourceDelta.CHANGED) {
-						reloadBean(bean, (IFile) resource);
+						int index = beans.indexOf(bean);
+						beans.remove(index);
+						beans.add(index, JVoiceModelReconcilier.getInstance().createBean((IFile) resource));
 
 					} else if (delta.getKind() == IResourceDelta.REMOVED) {
 						// se busca el elemento en el paquete y se elimina
-						delete(resource);
+						BaseModel.getInstance().getResourceSet().getResources().remove(bean.eResource());
+						beans.remove(bean);
 					}
 					// Se trata de un archivo de configuración
 				} else if (resource.getFileExtension().equalsIgnoreCase("properties")) {
@@ -98,7 +105,9 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 			return false;
 		case IResource.PROJECT:
 			if (delta.getKind() == IResourceDelta.REMOVED) {
-				delete(resource);
+				jvProject.getModel().getProjects().remove(jvProject);
+				removeResources(jvProject);
+
 				return false;
 			}
 		}
@@ -106,31 +115,24 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 		return true;
 	}
 
+	private void removeResources(JVProject jvProject) {
+		for (JVPackage pck : jvProject.getPackages()) {
+			removeResources(pck);
+		}
+
+	}
+
+	private void removeResources(JVPackage jvPackage) {
+		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
+		for (JVBean bean : jvPackage.getBeans()) {
+			resourceSet.getResources().remove(bean.eResource());
+		}
+
+	}
+
 	private boolean isInterestingDelta(IResourceDelta delta) {
 		return delta.getKind() == IResourceDelta.ADDED || delta.getKind() == IResourceDelta.REMOVED
 				|| delta.getKind() == IResourceDelta.CHANGED && (delta.getFlags() & IResourceDelta.CONTENT) != 0;
-	}
-
-	private void delete(IResource resource) throws CoreException {
-		if (resource instanceof IFile) {
-			currentPackage.getBeans().remove(currentPackage.getBean(getBeanName((IFile) resource)));
-
-		} else if (resource instanceof IFolder) {
-			jvProject.getPackages().remove(jvProject.getPackage(resource.getName()));
-
-		} else if (resource instanceof IProject) {
-			JVModel model = BaseModel.getInstance().getModel();
-			model.getProjects().remove(model.getProject(resource.getName()));
-		}
-	}
-
-	private String getBeanName(IFile file) {
-		// TODO: Enganchar punto de extensión ¿Llevar al reconciliador?
-		return file.getName();
-	}
-
-	private void reloadBean(JVBean bean, IFile resource) {
-		// TODO: Enganchar punto de extensión ¿Llevar al reconciliador?
 	}
 
 	private boolean isValidFolder(IResource resource) {

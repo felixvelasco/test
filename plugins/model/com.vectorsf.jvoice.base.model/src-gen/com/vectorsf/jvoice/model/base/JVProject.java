@@ -36,7 +36,7 @@ public interface JVProject extends NamedElement {
 	 * @return the value of the '<em>Packages</em>' containment reference list.
 	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVProject_Packages()
 	 * @see com.vectorsf.jvoice.model.base.JVPackage#getOwnerProject
-	 * @model opposite="ownerProject" containment="true"
+	 * @model opposite="ownerProject" containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	List<JVPackage> getPackages();
@@ -80,7 +80,7 @@ public interface JVProject extends NamedElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Configuration</em>' containment reference list.
 	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVProject_Configuration()
-	 * @model containment="true"
+	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	List<Configuration> getConfiguration();

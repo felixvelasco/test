@@ -4,9 +4,9 @@
     editorDirectory="/com.vectorsf.jvoice.base.model.editor/src" modelPluginID="com.vectorsf.jvoice.base.model"
     templateDirectory="" redirection="" modelName="Base" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     suppressEMFTypes="true" booleanFlagsField="" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="7.0" copyrightFields="false" providerRootExtendsClass="" editPluginID="com.vectorsf.jvoice.base.model.edit"
-    editorPluginID="com.vectorsf.jvoice.base.model.editor" operationReflection="true"
-    importOrganizing="true">
+    containmentProxies="true" complianceLevel="7.0" copyrightFields="false" providerRootExtendsClass=""
+    editPluginID="com.vectorsf.jvoice.base.model.edit" editorPluginID="com.vectorsf.jvoice.base.model.editor"
+    operationReflection="true" importOrganizing="true">
   <foreignModel>Base.ecore</foreignModel>
   <genPackages prefix="Base" basePackage="com.vectorsf.jvoice.model" disposableProviderFactory="true"
       ecorePackage="Base.ecore#/">
@@ -22,15 +22,27 @@
     </genClasses>
     <genClasses ecoreClass="Base.ecore#//JVModel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Base.ecore#//JVModel/projects"/>
+      <genOperations ecoreOperation="Base.ecore#//JVModel/getProject">
+        <genParameters ecoreParameter="Base.ecore#//JVModel/getProject/name"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Base.ecore#//JVPackage">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Base.ecore#//JVPackage/beans"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Base.ecore#//JVPackage/ownerProject"/>
+      <genOperations ecoreOperation="Base.ecore#//JVPackage/getBean">
+        <genParameters ecoreParameter="Base.ecore#//JVPackage/getBean/name"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Base.ecore#//JVProject">
       <genFeatures property="Readonly" children="true" createChild="true" ecoreFeature="ecore:EReference Base.ecore#//JVProject/packages"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Base.ecore#//JVProject/model"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Base.ecore#//JVProject/configuration"/>
+      <genOperations ecoreOperation="Base.ecore#//JVProject/getPackage">
+        <genParameters ecoreParameter="Base.ecore#//JVProject/getPackage/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="Base.ecore#//JVProject/getConfiguration">
+        <genParameters ecoreParameter="Base.ecore#//JVProject/getConfiguration/name"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Base.ecore#//StringToStringMap">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Base.ecore#//StringToStringMap/key"/>

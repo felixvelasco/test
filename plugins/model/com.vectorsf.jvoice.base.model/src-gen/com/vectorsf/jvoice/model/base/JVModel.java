@@ -36,7 +36,7 @@ public interface JVModel extends EObject {
 	 * @return the value of the '<em>Projects</em>' containment reference list.
 	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVModel_Projects()
 	 * @see com.vectorsf.jvoice.model.base.JVProject#getModel
-	 * @model opposite="model" containment="true"
+	 * @model opposite="model" containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	List<JVProject> getProjects();

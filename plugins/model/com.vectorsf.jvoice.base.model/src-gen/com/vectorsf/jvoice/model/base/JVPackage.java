@@ -35,7 +35,7 @@ public interface JVPackage extends NamedElement {
 	 * @return the value of the '<em>Beans</em>' containment reference list.
 	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVPackage_Beans()
 	 * @see com.vectorsf.jvoice.model.base.JVBean#getOwnerPackage
-	 * @model opposite="ownerPackage" containment="true"
+	 * @model opposite="ownerPackage" containment="true" resolveProxies="true"
 	 * @generated
 	 */
 	List<JVBean> getBeans();

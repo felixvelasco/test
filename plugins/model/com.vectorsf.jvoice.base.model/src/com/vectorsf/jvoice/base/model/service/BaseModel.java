@@ -10,6 +10,8 @@ import java.util.TreeSet;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.RegistryFactory;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import com.vectorsf.jvoice.model.base.BaseFactory;
 import com.vectorsf.jvoice.model.base.JVModel;
@@ -29,6 +31,7 @@ public class BaseModel {
 	private JVModel model;
 	private Set<IConfigurationElement> elements;
 	private Map<IConfigurationElement, JVModelLifecycleListener> listenersCache;
+	private ResourceSet resourceSet;
 
 	public static BaseModel getInstance() {
 		return baseModel;
@@ -38,7 +41,12 @@ public class BaseModel {
 		return model;
 	}
 
+	public ResourceSet getResourceSet() {
+		return resourceSet;
+	}
+
 	private BaseModel() {
+		resourceSet = new ResourceSetImpl();
 		model = BaseFactory.eINSTANCE.createJVModel();
 		elements = new TreeSet<>(new Sorter());
 		listenersCache = new HashMap<>();

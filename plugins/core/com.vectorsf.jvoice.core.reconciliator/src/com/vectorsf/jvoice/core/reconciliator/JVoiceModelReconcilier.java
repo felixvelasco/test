@@ -15,12 +15,13 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.core.factory.JVBeanFactory;
+import com.vectorsf.jvoice.core.factory.JVBeanFactoryManager;
 import com.vectorsf.jvoice.model.base.BaseFactory;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
-import com.vectorsf.jvoice.model.base.impl.JVBeanImpl;
 
 public class JVoiceModelReconcilier {
 
@@ -118,13 +119,14 @@ public class JVoiceModelReconcilier {
 		return jvPackage;
 	}
 
-	public JVBean createBean(IFile res) {
-		// TODO: Enganchar punto de extensión
-		JVBean fake = new JVBeanImpl() {
-		};
-		fake.setName(res.getName());
+	public JVBean createBean(IFile file) {
+		JVBeanFactory factory = JVBeanFactoryManager.getInstance().getFactory(file);
+		return factory != null ? factory.loadBeanFromFile(file) : null;
+	}
 
-		return fake;
+	public String getBeanName(IFile file) {
+		JVBeanFactory factory = JVBeanFactoryManager.getInstance().getFactory(file);
+		return factory != null ? factory.getNameFromFile(file) : null;
 	}
 
 	public class ResourceVisitor implements IResourceVisitor {
