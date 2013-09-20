@@ -21,7 +21,7 @@
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>false</useUIThread>
 					<argLine>${tycho.testArgLine} -Xmx512m</argLine>
-					<appArgLine>-nl en</appArgLine>
+					<appArgLine>-nl en -pluginCustomization plugin_customization.ini</appArgLine>
 					<bundleStartLevel>
 						<bundle>
 							<id>org.eclipse.equinox.ds</id>
