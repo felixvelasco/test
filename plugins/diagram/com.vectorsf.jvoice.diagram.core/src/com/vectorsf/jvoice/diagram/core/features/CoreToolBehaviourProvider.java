@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
+import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.context.ICustomContext;
+import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.IPictogramElementContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
@@ -24,8 +26,9 @@ import org.eclipse.graphiti.tb.IContextMenuEntry;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
-import com.vectorsf.jvoice.diagram.core.pattern.CreateTransitionFromPad;
-import com.vectorsf.jvoice.diagram.core.pattern.TransitionPattern;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.CreateTransitionFromPad;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
@@ -136,5 +139,8 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	private String getImageFor(State state, ICreateConnectionFeature feature) {
 
 		return feature.getCreateImageId();
+	}
+	public IDirectEditingFeature getDirectEditingFeature(IDirectEditingContext context) {
+		return null;
 	}
 }

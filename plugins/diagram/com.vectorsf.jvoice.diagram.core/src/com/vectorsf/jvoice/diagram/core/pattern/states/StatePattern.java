@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.diagram.core.pattern;
+package com.vectorsf.jvoice.diagram.core.pattern.states;
 
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;

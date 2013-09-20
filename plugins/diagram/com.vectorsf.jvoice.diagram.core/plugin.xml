@@ -36,25 +36,25 @@
    	<extension
          point="com.vectorsf.jvoice.diagram.core.patternContributor">
       <patternContributor
-            patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.FinalStatePattern">
+            patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.FinalStatePattern">
       </patternContributor>
    </extension>
  <extension
        point="com.vectorsf.jvoice.diagram.core.patternContributor">
     <patternContributor
-          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.InitialStatePattern">
+          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.InitialStatePattern">
     </patternContributor>
  </extension>
  <extension
        point="com.vectorsf.jvoice.diagram.core.patternContributor">
     <patternContributor
-          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.SwitchPattern">
+          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.SwitchPattern">
     </patternContributor>
  </extension>
  <extension
        point="com.vectorsf.jvoice.diagram.core.patternContributor">
     <patternContributor
-          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.CallStatePattern">
+          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CallStatePattern">
     </patternContributor>
  </extension>
  <extension

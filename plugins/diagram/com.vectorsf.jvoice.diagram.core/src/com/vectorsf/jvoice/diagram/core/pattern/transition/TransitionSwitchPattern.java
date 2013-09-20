@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.diagram.core.features;
+package com.vectorsf.jvoice.diagram.core.pattern.transition;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddConnectionContext;
@@ -10,7 +10,6 @@ import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 
-import com.vectorsf.jvoice.diagram.core.pattern.TransitionPattern;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 

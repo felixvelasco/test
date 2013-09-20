@@ -1,10 +1,12 @@
-package com.vectorsf.jvoice.diagram.core.pattern;
+package com.vectorsf.jvoice.diagram.core.pattern.states;
 
+import org.eclipse.graphiti.datatypes.ILocation;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.impl.Reason;
+import org.eclipse.graphiti.mm.algorithms.Ellipse;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
@@ -18,25 +20,26 @@ import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
-import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 
-import com.vectorsf.jvoice.model.operations.CallState;
+import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 
-public class CallStatePattern extends StatePattern {
+public class InitialStatePattern extends StatePattern {
 
-	private static int MIN_WIDTH = 120;
-	private static int MIN_HEIGHT = 60;
-	private static String ID_CALL_PREFIX = "callState_";
-	private static String ID_OUTER_RECTANGLE = ID_CALL_PREFIX
+	private static final int MIN_WIDTH = 60;
+	private static final int MIN_HEIGHT = 60;
+	private static final String ID_INITIAL_PREFIX = "initialState_";
+	private static final String ID_OUTER_RECTANGLE = ID_INITIAL_PREFIX
 			+ "outerRectangle";
-	private static String ID_MAIN_RECTANGLE = ID_CALL_PREFIX + "mainRectangle";
+	private static final String ID_MAIN_CIRCLE = ID_INITIAL_PREFIX
+			+ "mainCircle";
 
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
 		Diagram targetDiagram = (Diagram) context.getTargetContainer();
-		CallState addedDomainObject = (CallState) context.getNewObject();
+		InitialState addedDomainObject = (InitialState) context.getNewObject();
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
 
@@ -50,35 +53,43 @@ public class CallStatePattern extends StatePattern {
 				context.getY(), Math.max(MIN_WIDTH, context.getWidth()),
 				Math.max(MIN_HEIGHT, context.getHeight()));
 
-		// Main contents area
-		Rectangle mainRectangle = gaService.createRectangle(outerRectangle);
-		setId(mainRectangle, ID_MAIN_RECTANGLE);
-		mainRectangle.setFilled(true);
-		gaService
-				.setRenderingStyle(
-						mainRectangle,
-						StatePredefinedColoredAreas
-								.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.BLUE_WHITE_GLOSS_ID));
+		final int width = MIN_WIDTH;
+		final int height = MIN_HEIGHT;
+		ContainerShape parent = context.getTargetContainer();
+		int x = context.getX();
+		int y = context.getY();
 
-		// BLUE_WHITE_GLOSS_ID.equals(id)) {
-		// return getBlueWhiteGlossAdaptions();
-		// } else if (BLUE_WHITE_ID.equals(id)) {
-		// return getBlueWhiteAdaptions();
-		// } else if (LIGHT_YELLOW_ID.equals(id)) {
-		// return getLightYellowAdaptions();
-		// } else if (LIGHT_GRAY_ID.equals(id)) {
-		// return getLightGrayAdaptions();
-		// } else if (COPPER_WHITE_GLOSS_ID.equals(id)) {
-		// return getCopperWhiteGlossAdaptions();
-		// } else if (SILVER_WHITE_GLOSS_ID.
+		ILocation shapeLocation = Graphiti.getLayoutService()
+				.getLocationRelativeToDiagram(parent);
+		x += shapeLocation.getX();
+		y += shapeLocation.getY();
 
-		// File name
+		Ellipse circle;
+		{
+			final Ellipse invisibleCircle = gaService
+					.createEllipse(outerContainerShape);
+			invisibleCircle.setFilled(false);
+			invisibleCircle.setLineVisible(false);
+			gaService.setLocationAndSize(invisibleCircle, x, y, width, height);
+
+			// create and set visible circle inside invisible circle
+			circle = gaService.createEllipse(invisibleCircle);
+			circle.setParentGraphicsAlgorithm(invisibleCircle);
+			gaService.setLocationAndSize(circle, 0, 0, width, height);
+
+		}
+		setId(circle, ID_MAIN_CIRCLE);
+		gaService.setRenderingStyle(circle,
+				StatePredefinedColoredAreas.getRedWhiteAdaptions());
+
+		// name
 		Shape shape = peCreateService.createShape(outerContainerShape, false);
 		Text text = gaService.createText(shape, addedDomainObject.getName());
 		setId(text, ID_NAME_TEXT);
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
-
+		gaService.setRenderingStyle(text,
+				StatePredefinedColoredAreas.getRedWhiteAdaptions());
 		peCreateService.createChopboxAnchor(outerContainerShape);
 
 		link(outerContainerShape, addedDomainObject);
@@ -91,44 +102,43 @@ public class CallStatePattern extends StatePattern {
 	protected boolean layout(IdLayoutContext context, String id) {
 		boolean changesDone = false;
 
-		Rectangle outerRectangle = (Rectangle) context
-				.getRootPictogramElement().getGraphicsAlgorithm();
+		Ellipse outerCircle = (Ellipse) context.getRootPictogramElement()
+				.getGraphicsAlgorithm();
 
-		if (id.equals(ID_MAIN_RECTANGLE) || id.equals(ID_NAME_TEXT)) {
+		if (id.equals(ID_MAIN_CIRCLE) || id.equals(ID_NAME_TEXT)) {
 			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
-			if (ga.getWidth() != outerRectangle.getWidth()
-					|| ga.getHeight() != outerRectangle.getHeight()) {
+			if (ga.getWidth() != outerCircle.getWidth()
+					|| ga.getHeight() != outerCircle.getHeight()) {
 				Graphiti.getGaService().setLocationAndSize(ga, 0, 0,
-						outerRectangle.getWidth(), outerRectangle.getHeight());
+						outerCircle.getWidth(), outerCircle.getHeight());
 				changesDone = true;
 			}
 		}
-
 		return changesDone;
 	}
 
 	@Override
 	public Object[] create(ICreateContext context) {
 
-		CallState cs = OperationsFactory.eINSTANCE.createCallState();
-		cs.setName("Call");
+		InitialState is = OperationsFactory.eINSTANCE.createInitialState();
+		is.setName("Initial");
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
-		flow.getStates().add(cs);
+		flow.getStates().add(is);
 
-		addGraphicalRepresentation(context, cs);
+		addGraphicalRepresentation(context, is);
 
-		return new Object[] { cs };
+		return new Object[] { is };
 	}
 
 	@Override
 	public String getCreateName() {
-		return "Call";
+		return "Initial";
 	}
 
 	@Override
 	protected IReason updateNeeded(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
-			CallState ss = (CallState) getBusinessObjectForPictogramElement(context
+			InitialState ss = (InitialState) getBusinessObjectForPictogramElement(context
 					.getPictogramElement());
 			Text text = (Text) context.getGraphicsAlgorithm();
 			if (!text.getValue().equals(ss.getName())) {
@@ -141,7 +151,7 @@ public class CallStatePattern extends StatePattern {
 	@Override
 	protected boolean update(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
-			CallState ss = (CallState) getBusinessObjectForPictogramElement(context
+			InitialState ss = (InitialState) getBusinessObjectForPictogramElement(context
 					.getPictogramElement());
 			Text text = (Text) context.getGraphicsAlgorithm();
 			text.setValue(ss.getName());
@@ -152,14 +162,14 @@ public class CallStatePattern extends StatePattern {
 
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
-		return mainBusinessObject instanceof CallState;
+		return mainBusinessObject instanceof InitialState;
 	}
 
 	@Override
 	protected void setValue(String value, IDirectEditingContext context,
 			String id) {
 		if (id.equals(ID_NAME_TEXT)) {
-			CallState ss = (CallState) getBusinessObjectForPictogramElement(context
+			InitialState ss = (InitialState) getBusinessObjectForPictogramElement(context
 					.getPictogramElement());
 			ss.setName(value);
 			updatePictogramElement(context.getPictogramElement());

@@ -21,7 +21,7 @@
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>false</useUIThread>
 					<argLine>${tycho.testArgLine} -Xmx512m</argLine>
-					<appArgLine>-nl en</appArgLine>
+					<appArgLine>-nl en -pluginCustomization plugin_customization.ini</appArgLine>
 					<bundleStartLevel>
 						<bundle>
 							<id>org.eclipse.equinox.ds</id>
@@ -41,6 +41,11 @@
 							<groupId>com.vectorsf.jvoice.core</groupId>
 							<artifactId>com.vectorsf.jvoice.base.model.edit</artifactId>
 							<version>1.0.0</version>
+						</dependency>
+						<dependency>
+							<type>eclipse-feature</type>
+							<artifactId>org.eclipse.m2e.feature</artifactId>
+							<version>1.4.0</version>
 						</dependency>
 					</dependencies>
 				</configuration>

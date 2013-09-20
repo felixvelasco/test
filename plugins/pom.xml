@@ -12,9 +12,16 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>model</module>
-    <module>ui</module>
-    <module>core</module>
-    <module>diagram</module>
+    <module>model/com.vectorsf.jvoice.base.model</module>
+    <module>model/com.vectorsf.jvoice.base.model.edit</module>
+    <module>model/com.vectorsf.jvoice.operation.model</module>
+    <module>model/com.vectorsf.jvoice.operation.model.edit</module>
+
+    <module>ui/com.vectorsf.jvoice.ui.navigator</module>
+
+    <module>core/com.vectorsf.jvoice.core.uri</module>
+    <module>core/com.vectorsf.jvoice.core.reconciliator</module>
+
+    <module>diagram/com.vectorsf.jvoice.diagram.core</module>
   </modules>
 </project>

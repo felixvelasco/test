@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.diagram.core.pattern;
+package com.vectorsf.jvoice.diagram.core.pattern.transition;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.pattern.CreateConnectionFeatureForPattern;
