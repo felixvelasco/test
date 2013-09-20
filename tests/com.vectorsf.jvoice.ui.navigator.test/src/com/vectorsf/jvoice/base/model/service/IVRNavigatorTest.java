@@ -146,6 +146,51 @@ public class IVRNavigatorTest {
 				hasItemInArray(hasProperty("text", is("several.packages.inside"))));
 
 	}
+	
+	@Test
+	public void testDeleteFolders() throws CoreException {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+		IProject project = SWTBotHelper.createProject("testNavigator");
+		SWTBotHelper.createFolders(project, BaseModel.JV_PATH + "/several/packages/inside");
+		
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("several"))));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("several.packages"))));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("several.packages.inside"))));
+		
+		SWTBotHelper.createFolders(project, BaseModel.JV_PATH + "/otros/nuevos");
+		
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("otros"))));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("otros.nuevos"))));
+		
+		SWTBotHelper.deleteFolder(project, BaseModel.JV_PATH + "/otros/nuevos");
+		
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("several"))));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("several.packages"))));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is("several.packages.inside"))));
+		
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is(not("otros.nuevos")))));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
+				hasItemInArray(hasProperty("text", is(not("otros")))));
+		
+	}
 
 	@Test
 	public void testCreateFiles() throws CoreException {
@@ -161,5 +206,4 @@ public class IVRNavigatorTest {
 				is(arrayContaining(hasProperty("text", is("test.bean")))));
 
 	}
-
 }
