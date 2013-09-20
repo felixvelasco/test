@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-Activator: com.vectorsf.jvoice.model.base.provider.BaseEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: com.vectorsf.jvoice.model.base.provider
 Require-Bundle: org.eclipse.core.runtime,
  com.vectorsf.jvoice.base.model;visibility:=reexport,
