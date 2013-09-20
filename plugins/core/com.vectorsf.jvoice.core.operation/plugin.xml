@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="com.vectorsf.jvoice.core.reconciliator.factory">
+      <factory
+            class="com.vectorsf.jvoice.core.operation.FlowFactory"
+            extension="jvflow">
+      </factory>
+   </extension>
+
+</plugin>

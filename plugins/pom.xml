@@ -19,8 +19,9 @@
 
     <module>ui/com.vectorsf.jvoice.ui.navigator</module>
 
-    <module>core/com.vectorsf.jvoice.core.uri</module>
+    <module>core/com.vectorsf.jvoice.core.operation</module>
     <module>core/com.vectorsf.jvoice.core.reconciliator</module>
+    <module>core/com.vectorsf.jvoice.core.uri</module>
 
     <module>diagram/com.vectorsf.jvoice.diagram.core</module>
   </modules>
