@@ -120,6 +120,7 @@
             </command>
             <command
                   commandId="org.eclipse.ui.newWizard"
+                  label="Diagrama"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -274,17 +275,6 @@
                   <count
                         value="1">
                   </count>
-               </with>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.ui.edit.cut"
-               label="Cut"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
                </with>
             </visibleWhen>
          </command>
@@ -462,26 +452,6 @@
       <handler
             class="com.vectorsf.jvoice.ui.navigator.handler.CopyHandler"
             commandId="org.eclipse.ui.edit.copy">
-         <activeWhen>
-            <with
-                  variable="selection">
-               <iterate
-                     operator="and">
-                  <or>
-                     <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVPackage">
-                     </instanceof>
-                     <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVBean">
-                     </instanceof>
-                  </or>
-               </iterate>
-            </with>
-         </activeWhen>
-      </handler>
-      <handler
-            class="com.vectorsf.jvoice.ui.navigator.handler.CutHandler"
-            commandId="org.eclipse.ui.edit.cut">
          <activeWhen>
             <with
                   variable="selection">
