@@ -26,7 +26,12 @@ public class BaseModel {
 	private static final String CLASS_ATTRIBUTE = "class";
 	private static final String PRIORITY_ATTRIBUTE = "priority";
 
-	private static BaseModel baseModel = new BaseModel();
+	private static final BaseModel baseModel;
+	static {
+		baseModel = new BaseModel();
+		baseModel.notifyCreation();
+
+	}
 
 	private JVModel model;
 	private Set<IConfigurationElement> elements;
@@ -52,7 +57,6 @@ public class BaseModel {
 		listenersCache = new HashMap<>();
 
 		readConfiguration();
-		notifyCreation();
 	}
 
 	private void notifyCreation() {
