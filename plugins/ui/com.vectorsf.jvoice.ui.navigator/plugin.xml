@@ -119,19 +119,51 @@
                </visibleWhen>
             </command>
             <command
-                  commandId="Open"
-                  label="File"
+                  commandId="org.eclipse.ui.newWizard"
                   style="push">
-            </command>
-            <command
-                  commandId="com.vectorsf.jvoice.ui.navigator.command3"
-                  label="Folder"
-                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate
+                              ifEmpty="false"
+                              operator="and">
+                           <or>
+                              <instanceof
+                                    value="com.vectorsf.jvoice.model.base.JVPackage">
+                              </instanceof>
+                              <instanceof
+                                    value="com.vectorsf.jvoice.model.base.JVProject">
+                              </instanceof>
+                           </or>
+                        </iterate>
+                     </and>
+                  </with>
+               </visibleWhen>
+               <parameter
+                     name="newWizardId"
+                     value="com.vectorsf.jvoice.diagram.core.wizard">
+               </parameter>
             </command>
             <command
                   commandId="org.eclipse.ui.newWizard"
                   label="Other..."
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                     </and>
+                  </with>
+               </visibleWhen>
             </command>
          </menu>
       </menuContribution>
