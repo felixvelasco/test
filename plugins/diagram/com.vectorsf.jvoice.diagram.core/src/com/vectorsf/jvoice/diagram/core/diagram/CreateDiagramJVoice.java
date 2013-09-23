@@ -78,18 +78,21 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 				.getText();
 
 		IProject project = null;
+		IFolder diagramFolder = null;
 
 		Object element = getSelection().getFirstElement();
 		if (element instanceof IProject) {
 			project = (IProject) element;
 		} else if (element instanceof IFolder) {
-			project = ((IFolder) element).getProject();
+			diagramFolder = (IFolder) element;
+			project = diagramFolder.getProject();
 		} else if (element instanceof JVProject) {
 			project = (IProject) Platform.getAdapterManager().getAdapter(
 					element, IProject.class);
 		} else if (element instanceof JVPackage) {
-			project = ((IFolder) Platform.getAdapterManager().getAdapter(
-					element, IFolder.class)).getProject();
+			diagramFolder = (IFolder) Platform.getAdapterManager().getAdapter(
+					element, IFolder.class);
+			project = diagramFolder.getProject();
 		}
 
 		if (project == null || !project.isAccessible()) {
@@ -135,7 +138,8 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 			}
 		}
 
-		IFile diagramFile = project
+		IFile diagramFile = diagramFolder != null ? diagramFolder
+				.getFile(diagramName + "." + editorExtension) : project
 				.getFile(diagramName + "." + editorExtension); //$NON-NLS-1$
 		URI uri = URI.createPlatformResourceURI(diagramFile.getFullPath()
 				.toString(), true);
