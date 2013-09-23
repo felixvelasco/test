@@ -3,6 +3,7 @@
  */
 package com.vectorsf.jvoice.base.model.service;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -19,7 +20,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.emptyArray;
@@ -28,7 +28,6 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-
 import static org.junit.Assert.fail;
 
 /**
@@ -160,6 +159,37 @@ public class IVRNavigatorTest {
 		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside").getItems(),
 				is(arrayContaining(hasProperty("text", is("test.bean")))));
 
+	}
+	
+	@Test
+	public void testDeleteFiles() throws CoreException {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+
+		final IProject project1 = SWTBotHelper.createProject("testNavigator");
+		final IProject project2 = SWTBotHelper.createProject("testNavigator2");
+		
+		final IFile file1 =SWTBotHelper.createFile(project1, BaseModel.JV_PATH + "/several/packages/inside/test.bean", "...");
+		final IFile file2 =SWTBotHelper.createFile(project2, BaseModel.JV_PATH + "/several/packages/inside/test.bean", "...");
+
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside").getItems(),
+				is(arrayContaining(hasProperty("text", is("test.bean")))));
+		
+		String ruta = BaseModel.JV_PATH + "/several/packages/inside/test.bean";
+		SWTBotHelper.deleteFile(project1, ruta);
+		
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside").getItems(),
+				is(not(arrayContaining(hasProperty("text", is("test.bean"))))));
+		assertThat(view.bot().tree().getTreeItem("testNavigator2"), is(not(nullValue())));
+		assertThat(view.bot().tree().expandNode("testNavigator2", "several.packages.inside").getItems(),
+				is((arrayContaining(hasProperty("text", is("test.bean"))))));
+		
+		
 	}
 
 }
