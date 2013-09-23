@@ -94,19 +94,14 @@ public abstract class AbstractVoiceDslRuntimeModule extends DefaultRuntimeModule
 		return org.eclipse.xtext.parser.antlr.UnorderedGroupHelper.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends com.isb.bks.ivr.voice.dsl.validation.VoiceDslValidator> bindVoiceDslValidator() {
-		return com.isb.bks.ivr.voice.dsl.validation.VoiceDslValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends com.isb.bks.ivr.voice.dsl.validation.VoiceDslJavaValidator> bindVoiceDslJavaValidator() {
+		return com.isb.bks.ivr.voice.dsl.validation.VoiceDslJavaValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
 	public void configureIgnoreCaseLinking(com.google.inject.Binder binder) {
 		binder.bindConstant().annotatedWith(org.eclipse.xtext.scoping.IgnoreCaseLinking.class).to(false);
-	}
-
-	// contributed by org.eclipse.xtext.generator.exporting.SimpleNamesFragment
-	public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
-		return org.eclipse.xtext.naming.SimpleNameProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
@@ -167,6 +162,11 @@ public abstract class AbstractVoiceDslRuntimeModule extends DefaultRuntimeModule
 	// contributed by org.eclipse.xtext.generator.xbase.XbaseGeneratorFragment
 	public Class<? extends org.eclipse.xtext.naming.IQualifiedNameConverter> bindIQualifiedNameConverter() {
 		return org.eclipse.xtext.xbase.XbaseQualifiedNameConverter.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.xbase.XbaseGeneratorFragment
+	public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
+		return org.eclipse.xtext.xbase.scoping.XbaseQualifiedNameProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.xbase.XbaseGeneratorFragment

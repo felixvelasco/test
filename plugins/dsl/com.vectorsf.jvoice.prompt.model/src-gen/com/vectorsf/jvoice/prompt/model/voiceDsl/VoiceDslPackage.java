@@ -130,13 +130,31 @@ public interface VoiceDslPackage extends EPackage {
 	int VOICE_DSL__OUTPUTS = 6;
 
 	/**
+	 * The feature id for the '<em><b>Variables</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VOICE_DSL__VARIABLES = 7;
+
+	/**
+	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VOICE_DSL__TYPES = 8;
+
+	/**
 	 * The number of structural features of the '<em>Voice Dsl</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL_FEATURE_COUNT = 7;
+	int VOICE_DSL_FEATURE_COUNT = 9;
 
 	/**
 	 * The number of operations of the '<em>Voice Dsl</em>' class.
@@ -534,22 +552,22 @@ public interface VoiceDslPackage extends EPackage {
 	int CONDITIONAL_AUDIO__SRC = AUDIO__SRC;
 
 	/**
-	 * The feature id for the '<em><b>Condit</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONDITIONAL_AUDIO__CONDIT = AUDIO_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Simple A</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONDITIONAL_AUDIO__SIMPLE_A = AUDIO_FEATURE_COUNT + 1;
+	int CONDITIONAL_AUDIO__SIMPLE_A = AUDIO_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Condit</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITIONAL_AUDIO__CONDIT = AUDIO_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Conditional Audio</em>' class.
@@ -726,6 +744,517 @@ public interface VoiceDslPackage extends EPackage {
 	 */
 	int OUTPUT_OPERATION_COUNT = 0;
 
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VariablesImpl <em>Variables</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VariablesImpl
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getVariables()
+	 * @generated
+	 */
+	int VARIABLES = 13;
+
+	/**
+	 * The feature id for the '<em><b>Variable</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLES__VARIABLE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Variables</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLES_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Variables</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLES_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VariableImpl <em>Variable</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VariableImpl
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getVariable()
+	 * @generated
+	 */
+	int VARIABLE = 14;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>External Var</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE__EXTERNAL_VAR = 1;
+
+	/**
+	 * The feature id for the '<em><b>Method</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE__METHOD = 2;
+
+	/**
+	 * The number of structural features of the '<em>Variable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Variable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.TypeImpl <em>Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.TypeImpl
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getType()
+	 * @generated
+	 */
+	int TYPE = 15;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE__ANNOTATIONS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.MemberImpl <em>Member</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.MemberImpl
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getMember()
+	 * @generated
+	 */
+	int MEMBER = 16;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MEMBER__ANNOTATIONS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Annotation Info</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MEMBER__ANNOTATION_INFO = 1;
+
+	/**
+	 * The number of structural features of the '<em>Member</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MEMBER_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Member</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MEMBER_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ClassImpl <em>Class</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ClassImpl
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getClass_()
+	 * @generated
+	 */
+	int CLASS = 17;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__ANNOTATIONS = TYPE__ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Annotation Info</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__ANNOTATION_INFO = TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__ABSTRACT = TYPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__NAME = TYPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Type Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__TYPE_PARAMETERS = TYPE_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Extends</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__EXTENDS = TYPE_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Implements</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__IMPLEMENTS = TYPE_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Members</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__MEMBERS = TYPE_FEATURE_COUNT + 6;
+
+	/**
+	 * The number of structural features of the '<em>Class</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS_FEATURE_COUNT = TYPE_FEATURE_COUNT + 7;
+
+	/**
+	 * The number of operations of the '<em>Class</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS_OPERATION_COUNT = TYPE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FieldImpl <em>Field</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FieldImpl
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getField()
+	 * @generated
+	 */
+	int FIELD = 18;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__ANNOTATIONS = MEMBER__ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Annotation Info</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__ANNOTATION_INFO = MEMBER__ANNOTATION_INFO;
+
+	/**
+	 * The feature id for the '<em><b>Extension</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__EXTENSION = MEMBER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Final</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__FINAL = MEMBER_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__TYPE = MEMBER_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__NAME = MEMBER_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Static</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__STATIC = MEMBER_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__INITIAL_VALUE = MEMBER_FEATURE_COUNT + 5;
+
+	/**
+	 * The number of structural features of the '<em>Field</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_FEATURE_COUNT = MEMBER_FEATURE_COUNT + 6;
+
+	/**
+	 * The number of operations of the '<em>Field</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_OPERATION_COUNT = MEMBER_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FunctionImpl <em>Function</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FunctionImpl
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getFunction()
+	 * @generated
+	 */
+	int FUNCTION = 19;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__ANNOTATIONS = MEMBER__ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Annotation Info</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__ANNOTATION_INFO = MEMBER__ANNOTATION_INFO;
+
+	/**
+	 * The feature id for the '<em><b>Override</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__OVERRIDE = MEMBER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Static</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__STATIC = MEMBER_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Dispatch</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__DISPATCH = MEMBER_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Type Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__TYPE_PARAMETERS = MEMBER_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Return Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__RETURN_TYPE = MEMBER_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__NAME = MEMBER_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Exceptions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__EXCEPTIONS = MEMBER_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__EXPRESSION = MEMBER_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Exp</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__EXP = MEMBER_FEATURE_COUNT + 8;
+
+	/**
+	 * The feature id for the '<em><b>Var Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION__VAR_NAME = MEMBER_FEATURE_COUNT + 9;
+
+	/**
+	 * The number of structural features of the '<em>Function</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_FEATURE_COUNT = MEMBER_FEATURE_COUNT + 10;
+
+	/**
+	 * The number of operations of the '<em>Function</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_OPERATION_COUNT = MEMBER_OPERATION_COUNT + 0;
+
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl <em>Voice Dsl</em>}'.
@@ -813,6 +1342,28 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getVoiceDsl_Outputs();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getVariables <em>Variables</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Variables</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getVariables()
+	 * @see #getVoiceDsl()
+	 * @generated
+	 */
+	EReference getVoiceDsl_Variables();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getTypes <em>Types</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Types</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getTypes()
+	 * @see #getVoiceDsl()
+	 * @generated
+	 */
+	EReference getVoiceDsl_Types();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration <em>Configuration</em>}'.
@@ -1082,17 +1633,6 @@ public interface VoiceDslPackage extends EPackage {
 	EClass getConditionalAudio();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getCondit <em>Condit</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Condit</em>'.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getCondit()
-	 * @see #getConditionalAudio()
-	 * @generated
-	 */
-	EReference getConditionalAudio_Condit();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getSimpleA <em>Simple A</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1102,6 +1642,17 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getConditionalAudio_SimpleA();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getCondit <em>Condit</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Condit</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getCondit()
+	 * @see #getConditionalAudio()
+	 * @generated
+	 */
+	EAttribute getConditionalAudio_Condit();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue <em>Output Value</em>}'.
@@ -1199,6 +1750,406 @@ public interface VoiceDslPackage extends EPackage {
 	EReference getOutput_OutputValue();
 
 	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variables <em>Variables</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Variables</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Variables
+	 * @generated
+	 */
+	EClass getVariables();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variables#getVariable <em>Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Variable</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Variables#getVariable()
+	 * @see #getVariables()
+	 * @generated
+	 */
+	EReference getVariables_Variable();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variable <em>Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Variable</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Variable
+	 * @generated
+	 */
+	EClass getVariable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variable#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Variable#getName()
+	 * @see #getVariable()
+	 * @generated
+	 */
+	EAttribute getVariable_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variable#getExternalVar <em>External Var</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>External Var</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Variable#getExternalVar()
+	 * @see #getVariable()
+	 * @generated
+	 */
+	EAttribute getVariable_ExternalVar();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variable#getMethod <em>Method</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Method</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Variable#getMethod()
+	 * @see #getVariable()
+	 * @generated
+	 */
+	EAttribute getVariable_Method();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Type <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Type</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Type
+	 * @generated
+	 */
+	EClass getType();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Type#getAnnotations <em>Annotations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Annotations</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Type#getAnnotations()
+	 * @see #getType()
+	 * @generated
+	 */
+	EReference getType_Annotations();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Member <em>Member</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Member</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Member
+	 * @generated
+	 */
+	EClass getMember();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Member#getAnnotations <em>Annotations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Annotations</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Member#getAnnotations()
+	 * @see #getMember()
+	 * @generated
+	 */
+	EReference getMember_Annotations();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Member#getAnnotationInfo <em>Annotation Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Annotation Info</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Member#getAnnotationInfo()
+	 * @see #getMember()
+	 * @generated
+	 */
+	EReference getMember_AnnotationInfo();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class <em>Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Class</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Class
+	 * @generated
+	 */
+	EClass getClass_();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getAnnotationInfo <em>Annotation Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Annotation Info</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getAnnotationInfo()
+	 * @see #getClass_()
+	 * @generated
+	 */
+	EReference getClass_AnnotationInfo();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class#isAbstract <em>Abstract</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Abstract</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Class#isAbstract()
+	 * @see #getClass_()
+	 * @generated
+	 */
+	EAttribute getClass_Abstract();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getName()
+	 * @see #getClass_()
+	 * @generated
+	 */
+	EAttribute getClass_Name();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getTypeParameters <em>Type Parameters</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Type Parameters</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getTypeParameters()
+	 * @see #getClass_()
+	 * @generated
+	 */
+	EReference getClass_TypeParameters();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getExtends <em>Extends</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Extends</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getExtends()
+	 * @see #getClass_()
+	 * @generated
+	 */
+	EReference getClass_Extends();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getImplements <em>Implements</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Implements</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getImplements()
+	 * @see #getClass_()
+	 * @generated
+	 */
+	EReference getClass_Implements();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getMembers <em>Members</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Members</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Class#getMembers()
+	 * @see #getClass_()
+	 * @generated
+	 */
+	EReference getClass_Members();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Field <em>Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Field</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Field
+	 * @generated
+	 */
+	EClass getField();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Field#isExtension <em>Extension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Extension</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Field#isExtension()
+	 * @see #getField()
+	 * @generated
+	 */
+	EAttribute getField_Extension();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Field#isFinal <em>Final</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Final</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Field#isFinal()
+	 * @see #getField()
+	 * @generated
+	 */
+	EAttribute getField_Final();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Field#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Type</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Field#getType()
+	 * @see #getField()
+	 * @generated
+	 */
+	EReference getField_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Field#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Field#getName()
+	 * @see #getField()
+	 * @generated
+	 */
+	EAttribute getField_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Field#isStatic <em>Static</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Static</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Field#isStatic()
+	 * @see #getField()
+	 * @generated
+	 */
+	EAttribute getField_Static();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Field#getInitialValue <em>Initial Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Initial Value</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Field#getInitialValue()
+	 * @see #getField()
+	 * @generated
+	 */
+	EReference getField_InitialValue();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function <em>Function</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Function</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function
+	 * @generated
+	 */
+	EClass getFunction();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#isOverride <em>Override</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Override</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#isOverride()
+	 * @see #getFunction()
+	 * @generated
+	 */
+	EAttribute getFunction_Override();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#isStatic <em>Static</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Static</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#isStatic()
+	 * @see #getFunction()
+	 * @generated
+	 */
+	EAttribute getFunction_Static();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#isDispatch <em>Dispatch</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Dispatch</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#isDispatch()
+	 * @see #getFunction()
+	 * @generated
+	 */
+	EAttribute getFunction_Dispatch();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getTypeParameters <em>Type Parameters</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Type Parameters</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getTypeParameters()
+	 * @see #getFunction()
+	 * @generated
+	 */
+	EReference getFunction_TypeParameters();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getReturnType <em>Return Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Return Type</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getReturnType()
+	 * @see #getFunction()
+	 * @generated
+	 */
+	EReference getFunction_ReturnType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getName()
+	 * @see #getFunction()
+	 * @generated
+	 */
+	EAttribute getFunction_Name();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExceptions <em>Exceptions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Exceptions</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExceptions()
+	 * @see #getFunction()
+	 * @generated
+	 */
+	EReference getFunction_Exceptions();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Expression</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExpression()
+	 * @see #getFunction()
+	 * @generated
+	 */
+	EReference getFunction_Expression();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExp <em>Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Exp</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExp()
+	 * @see #getFunction()
+	 * @generated
+	 */
+	EReference getFunction_Exp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getVarName <em>Var Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Var Name</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getVarName()
+	 * @see #getFunction()
+	 * @generated
+	 */
+	EAttribute getFunction_VarName();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1286,6 +2237,22 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EReference VOICE_DSL__OUTPUTS = eINSTANCE.getVoiceDsl_Outputs();
+
+		/**
+		 * The meta object literal for the '<em><b>Variables</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VOICE_DSL__VARIABLES = eINSTANCE.getVoiceDsl_Variables();
+
+		/**
+		 * The meta object literal for the '<em><b>Types</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VOICE_DSL__TYPES = eINSTANCE.getVoiceDsl_Types();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConfigurationImpl <em>Configuration</em>}' class.
@@ -1504,20 +2471,20 @@ public interface VoiceDslPackage extends EPackage {
 		EClass CONDITIONAL_AUDIO = eINSTANCE.getConditionalAudio();
 
 		/**
-		 * The meta object literal for the '<em><b>Condit</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CONDITIONAL_AUDIO__CONDIT = eINSTANCE.getConditionalAudio_Condit();
-
-		/**
 		 * The meta object literal for the '<em><b>Simple A</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference CONDITIONAL_AUDIO__SIMPLE_A = eINSTANCE.getConditionalAudio_SimpleA();
+
+		/**
+		 * The meta object literal for the '<em><b>Condit</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONDITIONAL_AUDIO__CONDIT = eINSTANCE.getConditionalAudio_Condit();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.OutputValueImpl <em>Output Value</em>}' class.
@@ -1598,6 +2565,316 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EReference OUTPUT__OUTPUT_VALUE = eINSTANCE.getOutput_OutputValue();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VariablesImpl <em>Variables</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VariablesImpl
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getVariables()
+		 * @generated
+		 */
+		EClass VARIABLES = eINSTANCE.getVariables();
+
+		/**
+		 * The meta object literal for the '<em><b>Variable</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VARIABLES__VARIABLE = eINSTANCE.getVariables_Variable();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VariableImpl <em>Variable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VariableImpl
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getVariable()
+		 * @generated
+		 */
+		EClass VARIABLE = eINSTANCE.getVariable();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VARIABLE__NAME = eINSTANCE.getVariable_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>External Var</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VARIABLE__EXTERNAL_VAR = eINSTANCE.getVariable_ExternalVar();
+
+		/**
+		 * The meta object literal for the '<em><b>Method</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VARIABLE__METHOD = eINSTANCE.getVariable_Method();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.TypeImpl <em>Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.TypeImpl
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getType()
+		 * @generated
+		 */
+		EClass TYPE = eINSTANCE.getType();
+
+		/**
+		 * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TYPE__ANNOTATIONS = eINSTANCE.getType_Annotations();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.MemberImpl <em>Member</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.MemberImpl
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getMember()
+		 * @generated
+		 */
+		EClass MEMBER = eINSTANCE.getMember();
+
+		/**
+		 * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MEMBER__ANNOTATIONS = eINSTANCE.getMember_Annotations();
+
+		/**
+		 * The meta object literal for the '<em><b>Annotation Info</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MEMBER__ANNOTATION_INFO = eINSTANCE.getMember_AnnotationInfo();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ClassImpl <em>Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ClassImpl
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getClass_()
+		 * @generated
+		 */
+		EClass CLASS = eINSTANCE.getClass_();
+
+		/**
+		 * The meta object literal for the '<em><b>Annotation Info</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CLASS__ANNOTATION_INFO = eINSTANCE.getClass_AnnotationInfo();
+
+		/**
+		 * The meta object literal for the '<em><b>Abstract</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CLASS__ABSTRACT = eINSTANCE.getClass_Abstract();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CLASS__NAME = eINSTANCE.getClass_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Parameters</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CLASS__TYPE_PARAMETERS = eINSTANCE.getClass_TypeParameters();
+
+		/**
+		 * The meta object literal for the '<em><b>Extends</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CLASS__EXTENDS = eINSTANCE.getClass_Extends();
+
+		/**
+		 * The meta object literal for the '<em><b>Implements</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CLASS__IMPLEMENTS = eINSTANCE.getClass_Implements();
+
+		/**
+		 * The meta object literal for the '<em><b>Members</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CLASS__MEMBERS = eINSTANCE.getClass_Members();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FieldImpl <em>Field</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FieldImpl
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getField()
+		 * @generated
+		 */
+		EClass FIELD = eINSTANCE.getField();
+
+		/**
+		 * The meta object literal for the '<em><b>Extension</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIELD__EXTENSION = eINSTANCE.getField_Extension();
+
+		/**
+		 * The meta object literal for the '<em><b>Final</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIELD__FINAL = eINSTANCE.getField_Final();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIELD__TYPE = eINSTANCE.getField_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIELD__NAME = eINSTANCE.getField_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIELD__STATIC = eINSTANCE.getField_Static();
+
+		/**
+		 * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIELD__INITIAL_VALUE = eINSTANCE.getField_InitialValue();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FunctionImpl <em>Function</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FunctionImpl
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getFunction()
+		 * @generated
+		 */
+		EClass FUNCTION = eINSTANCE.getFunction();
+
+		/**
+		 * The meta object literal for the '<em><b>Override</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FUNCTION__OVERRIDE = eINSTANCE.getFunction_Override();
+
+		/**
+		 * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FUNCTION__STATIC = eINSTANCE.getFunction_Static();
+
+		/**
+		 * The meta object literal for the '<em><b>Dispatch</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FUNCTION__DISPATCH = eINSTANCE.getFunction_Dispatch();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Parameters</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FUNCTION__TYPE_PARAMETERS = eINSTANCE.getFunction_TypeParameters();
+
+		/**
+		 * The meta object literal for the '<em><b>Return Type</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FUNCTION__RETURN_TYPE = eINSTANCE.getFunction_ReturnType();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FUNCTION__NAME = eINSTANCE.getFunction_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Exceptions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FUNCTION__EXCEPTIONS = eINSTANCE.getFunction_Exceptions();
+
+		/**
+		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FUNCTION__EXPRESSION = eINSTANCE.getFunction_Expression();
+
+		/**
+		 * The meta object literal for the '<em><b>Exp</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FUNCTION__EXP = eINSTANCE.getFunction_Exp();
+
+		/**
+		 * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FUNCTION__VAR_NAME = eINSTANCE.getFunction_VarName();
 
 	}
 

@@ -29,6 +29,10 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 	protected AbstractElementAlias match_Audios___RightCurlyBracketKeyword_3_1_p___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p__p;
 	protected AbstractElementAlias match_Audios_____AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p__a_RightCurlyBracketKeyword_3_1_a__q;
 	protected AbstractElementAlias match_Audios_____RightCurlyBracketKeyword_3_1_a_AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p_MainKeyword_0_2_0_ColonKeyword_0_2_1__q;
+	protected AbstractElementAlias match_Member_SemicolonKeyword_2_0_3_q;
+	protected AbstractElementAlias match_XAnnotationElementValue_LeftParenthesisKeyword_7_0_a;
+	protected AbstractElementAlias match_XAnnotationElementValue_LeftParenthesisKeyword_7_0_p;
+	protected AbstractElementAlias match_XAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q;
 	protected AbstractElementAlias match_XBlockExpression_SemicolonKeyword_2_1_q;
 	protected AbstractElementAlias match_XConstructorCall___LeftParenthesisKeyword_4_0_RightParenthesisKeyword_4_2__q;
 	protected AbstractElementAlias match_XExpressionInClosure_SemicolonKeyword_1_1_q;
@@ -50,6 +54,10 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 		match_Audios___RightCurlyBracketKeyword_3_1_p___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p__p = new GroupAlias(true, false, new TokenAlias(true, false, grammarAccess.getAudiosAccess().getRightCurlyBracketKeyword_3_1()), new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getAudiosAccess().getAudiosKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getAudiosAccess().getLeftCurlyBracketKeyword_0_1())));
 		match_Audios_____AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p__a_RightCurlyBracketKeyword_3_1_a__q = new GroupAlias(false, true, new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getAudiosAccess().getAudiosKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getAudiosAccess().getLeftCurlyBracketKeyword_0_1())), new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAudiosAccess().getRightCurlyBracketKeyword_3_1()), new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getAudiosAccess().getAudiosKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getAudiosAccess().getLeftCurlyBracketKeyword_0_1()))), new TokenAlias(true, true, grammarAccess.getAudiosAccess().getRightCurlyBracketKeyword_3_1()));
 		match_Audios_____RightCurlyBracketKeyword_3_1_a_AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p_MainKeyword_0_2_0_ColonKeyword_0_2_1__q = new GroupAlias(false, true, new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAudiosAccess().getRightCurlyBracketKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getAudiosAccess().getAudiosKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getAudiosAccess().getLeftCurlyBracketKeyword_0_1())), new TokenAlias(false, false, grammarAccess.getAudiosAccess().getMainKeyword_0_2_0()), new TokenAlias(false, false, grammarAccess.getAudiosAccess().getColonKeyword_0_2_1()));
+		match_Member_SemicolonKeyword_2_0_3_q = new TokenAlias(false, true, grammarAccess.getMemberAccess().getSemicolonKeyword_2_0_3());
+		match_XAnnotationElementValue_LeftParenthesisKeyword_7_0_a = new TokenAlias(true, true, grammarAccess.getXAnnotationElementValueAccess().getLeftParenthesisKeyword_7_0());
+		match_XAnnotationElementValue_LeftParenthesisKeyword_7_0_p = new TokenAlias(true, false, grammarAccess.getXAnnotationElementValueAccess().getLeftParenthesisKeyword_7_0());
+		match_XAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getXAnnotationAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getXAnnotationAccess().getRightParenthesisKeyword_3_2()));
 		match_XBlockExpression_SemicolonKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getXBlockExpressionAccess().getSemicolonKeyword_2_1());
 		match_XConstructorCall___LeftParenthesisKeyword_4_0_RightParenthesisKeyword_4_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getXConstructorCallAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getXConstructorCallAccess().getRightParenthesisKeyword_4_2()));
 		match_XExpressionInClosure_SemicolonKeyword_1_1_q = new TokenAlias(false, true, grammarAccess.getXExpressionInClosureAccess().getSemicolonKeyword_1_1());
@@ -116,6 +124,14 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 				emit_Audios_____AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p__a_RightCurlyBracketKeyword_3_1_a__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_Audios_____RightCurlyBracketKeyword_3_1_a_AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p_MainKeyword_0_2_0_ColonKeyword_0_2_1__q.equals(syntax))
 				emit_Audios_____RightCurlyBracketKeyword_3_1_a_AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p_MainKeyword_0_2_0_ColonKeyword_0_2_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Member_SemicolonKeyword_2_0_3_q.equals(syntax))
+				emit_Member_SemicolonKeyword_2_0_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_XAnnotationElementValue_LeftParenthesisKeyword_7_0_a.equals(syntax))
+				emit_XAnnotationElementValue_LeftParenthesisKeyword_7_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_XAnnotationElementValue_LeftParenthesisKeyword_7_0_p.equals(syntax))
+				emit_XAnnotationElementValue_LeftParenthesisKeyword_7_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_XAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q.equals(syntax))
+				emit_XAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_XBlockExpression_SemicolonKeyword_2_1_q.equals(syntax))
 				emit_XBlockExpression_SemicolonKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_XConstructorCall___LeftParenthesisKeyword_4_0_RightParenthesisKeyword_4_2__q.equals(syntax))
@@ -169,6 +185,7 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 	/**
 	 * Syntax:
 	 *     (
+	     ('}'* 'noinput' ':')? | 
 	     (
 	         '}'* 
 	         ('audios' '{')+ 
@@ -176,8 +193,7 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 	         '}'* 
 	         'noinput' 
 	         ':'
-	     ) | 
-	     ('}'* 'noinput' ':')?
+	     )
 	 )
 	 */
 	protected void emit_Audios___RightCurlyBracketKeyword_3_1_a_NoinputKeyword_3_0_0_ColonKeyword_3_0_1__q_or___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p__a_RightCurlyBracketKeyword_3_1_a_NoinputKeyword_3_0_0_ColonKeyword_3_0_1__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -221,6 +237,38 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 	 *     (('}'* 'audios' '{')+ 'main' ':')?
 	 */
 	protected void emit_Audios_____RightCurlyBracketKeyword_3_1_a_AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p_MainKeyword_0_2_0_ColonKeyword_0_2_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     ';'?
+	 */
+	protected void emit_Member_SemicolonKeyword_2_0_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     '('*
+	 */
+	protected void emit_XAnnotationElementValue_LeftParenthesisKeyword_7_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     '('+
+	 */
+	protected void emit_XAnnotationElementValue_LeftParenthesisKeyword_7_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     ('(' ')')?
+	 */
+	protected void emit_XAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

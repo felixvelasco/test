@@ -9,12 +9,18 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Condition;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.ConfigValue;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Field;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Function;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Member;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 import org.eclipse.emf.ecore.EObject;
@@ -64,14 +70,18 @@ import org.eclipse.xtext.xbase.XUnaryOperation;
 import org.eclipse.xtext.xbase.XVariableDeclaration;
 import org.eclipse.xtext.xbase.XWhileExpression;
 import org.eclipse.xtext.xbase.XbasePackage;
-import org.eclipse.xtext.xbase.serializer.XbaseSemanticSequencer;
+import org.eclipse.xtext.xbase.annotations.serializer.XbaseWithAnnotationsSemanticSequencer;
+import org.eclipse.xtext.xbase.annotations.xAnnotations.XAnnotation;
+import org.eclipse.xtext.xbase.annotations.xAnnotations.XAnnotationElementValueBinaryOperation;
+import org.eclipse.xtext.xbase.annotations.xAnnotations.XAnnotationElementValuePair;
+import org.eclipse.xtext.xbase.annotations.xAnnotations.XAnnotationsPackage;
 import org.eclipse.xtext.xtype.XFunctionTypeRef;
 import org.eclipse.xtext.xtype.XImportDeclaration;
 import org.eclipse.xtext.xtype.XImportSection;
 import org.eclipse.xtext.xtype.XtypePackage;
 
 @SuppressWarnings("all")
-public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSequencer {
+public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotationsSemanticSequencer {
 
 	@Inject
 	private VoiceDslGrammarAccess grammarAccess;
@@ -149,6 +159,12 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 					return; 
 				}
 				else break;
+			case VoiceDslPackage.CLASS:
+				if(context == grammarAccess.getTypeRule()) {
+					sequence_Type(context, (com.vectorsf.jvoice.prompt.model.voiceDsl.Class) semanticObject); 
+					return; 
+				}
+				else break;
 			case VoiceDslPackage.CONDITION:
 				if(context == grammarAccess.getConditionRule()) {
 					sequence_Condition(context, (Condition) semanticObject); 
@@ -173,6 +189,18 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 					return; 
 				}
 				else break;
+			case VoiceDslPackage.FIELD:
+				if(context == grammarAccess.getMemberRule()) {
+					sequence_Member(context, (Field) semanticObject); 
+					return; 
+				}
+				else break;
+			case VoiceDslPackage.FUNCTION:
+				if(context == grammarAccess.getMemberRule()) {
+					sequence_Member(context, (Function) semanticObject); 
+					return; 
+				}
+				else break;
 			case VoiceDslPackage.GRAMMAR:
 				if(context == grammarAccess.getGrammarRule()) {
 					sequence_Grammar(context, (Grammar) semanticObject); 
@@ -182,6 +210,13 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 			case VoiceDslPackage.GRAMMARS:
 				if(context == grammarAccess.getGrammarsRule()) {
 					sequence_Grammars(context, (Grammars) semanticObject); 
+					return; 
+				}
+				else break;
+			case VoiceDslPackage.MEMBER:
+				if(context == grammarAccess.getMemberAccess().getFieldAnnotationInfoAction_2_0_0() ||
+				   context == grammarAccess.getMemberAccess().getFunctionAnnotationInfoAction_2_1_0()) {
+					sequence_Member_Field_2_0_0_Function_2_1_0(context, (Member) semanticObject); 
 					return; 
 				}
 				else break;
@@ -209,9 +244,52 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 					return; 
 				}
 				else break;
+			case VoiceDslPackage.TYPE:
+				if(context == grammarAccess.getTypeAccess().getClassAnnotationInfoAction_2_0()) {
+					sequence_Type_Class_2_0(context, (Type) semanticObject); 
+					return; 
+				}
+				else break;
+			case VoiceDslPackage.VARIABLE:
+				if(context == grammarAccess.getVariableRule()) {
+					sequence_Variable(context, (Variable) semanticObject); 
+					return; 
+				}
+				else break;
+			case VoiceDslPackage.VARIABLES:
+				if(context == grammarAccess.getVariablesRule()) {
+					sequence_Variables(context, (Variables) semanticObject); 
+					return; 
+				}
+				else break;
 			case VoiceDslPackage.VOICE_DSL:
 				if(context == grammarAccess.getVoiceDslRule()) {
 					sequence_VoiceDsl(context, (VoiceDsl) semanticObject); 
+					return; 
+				}
+				else break;
+			}
+		else if(semanticObject.eClass().getEPackage() == XAnnotationsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case XAnnotationsPackage.XANNOTATION:
+				if(context == grammarAccess.getXAnnotationRule() ||
+				   context == grammarAccess.getXAnnotationElementValueRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationAccess().getXAnnotationElementValueBinaryOperationLeftOperandAction_1_0()) {
+					sequence_XAnnotation(context, (XAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			case XAnnotationsPackage.XANNOTATION_ELEMENT_VALUE_BINARY_OPERATION:
+				if(context == grammarAccess.getXAnnotationElementValueRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationAccess().getXAnnotationElementValueBinaryOperationLeftOperandAction_1_0()) {
+					sequence_XAnnotationElementValueStringConcatenation(context, (XAnnotationElementValueBinaryOperation) semanticObject); 
+					return; 
+				}
+				else break;
+			case XAnnotationsPackage.XANNOTATION_ELEMENT_VALUE_PAIR:
+				if(context == grammarAccess.getXAnnotationElementValuePairRule()) {
+					sequence_XAnnotationElementValuePair(context, (XAnnotationElementValuePair) semanticObject); 
 					return; 
 				}
 				else break;
@@ -323,6 +401,9 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 				   context == grammarAccess.getXAdditiveExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
 				   context == grammarAccess.getXAndExpressionRule() ||
 				   context == grammarAccess.getXAndExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
+				   context == grammarAccess.getXAnnotationElementValueRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationAccess().getXAnnotationElementValueBinaryOperationLeftOperandAction_1_0() ||
 				   context == grammarAccess.getXAssignmentRule() ||
 				   context == grammarAccess.getXAssignmentAccess().getXBinaryOperationLeftOperandAction_1_1_0_0_0() ||
 				   context == grammarAccess.getXBooleanLiteralRule() ||
@@ -501,7 +582,16 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 				}
 				else break;
 			case XbasePackage.XFEATURE_CALL:
-				if(context == grammarAccess.getXAdditiveExpressionRule() ||
+				if(context == grammarAccess.getXAnnotationElementValueRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationAccess().getXAnnotationElementValueBinaryOperationLeftOperandAction_1_0() ||
+				   context == grammarAccess.getXAnnotationValueFieldReferenceRule() ||
+				   context == grammarAccess.getXAnnotationValueMemberFieldReferenceRule() ||
+				   context == grammarAccess.getXAnnotationValueMemberFieldReferenceAccess().getXMemberFeatureCallMemberCallTargetAction_1_0()) {
+					sequence_XAnnotationValueFieldReference(context, (XFeatureCall) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getXAdditiveExpressionRule() ||
 				   context == grammarAccess.getXAdditiveExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
 				   context == grammarAccess.getXAndExpressionRule() ||
 				   context == grammarAccess.getXAndExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
@@ -636,6 +726,9 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 				   context == grammarAccess.getXAdditiveExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
 				   context == grammarAccess.getXAndExpressionRule() ||
 				   context == grammarAccess.getXAndExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
+				   context == grammarAccess.getXAnnotationElementValueRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationAccess().getXAnnotationElementValueBinaryOperationLeftOperandAction_1_0() ||
 				   context == grammarAccess.getXAssignmentRule() ||
 				   context == grammarAccess.getXAssignmentAccess().getXBinaryOperationLeftOperandAction_1_1_0_0_0() ||
 				   context == grammarAccess.getXCastedExpressionRule() ||
@@ -667,7 +760,15 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 				}
 				else break;
 			case XbasePackage.XMEMBER_FEATURE_CALL:
-				if(context == grammarAccess.getXAdditiveExpressionRule() ||
+				if(context == grammarAccess.getXAnnotationElementValueRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationAccess().getXAnnotationElementValueBinaryOperationLeftOperandAction_1_0() ||
+				   context == grammarAccess.getXAnnotationValueMemberFieldReferenceRule() ||
+				   context == grammarAccess.getXAnnotationValueMemberFieldReferenceAccess().getXMemberFeatureCallMemberCallTargetAction_1_0()) {
+					sequence_XAnnotationValueMemberFieldReference(context, (XMemberFeatureCall) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getXAdditiveExpressionRule() ||
 				   context == grammarAccess.getXAdditiveExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
 				   context == grammarAccess.getXAndExpressionRule() ||
 				   context == grammarAccess.getXAndExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
@@ -737,6 +838,9 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 				   context == grammarAccess.getXAdditiveExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
 				   context == grammarAccess.getXAndExpressionRule() ||
 				   context == grammarAccess.getXAndExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
+				   context == grammarAccess.getXAnnotationElementValueRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationAccess().getXAnnotationElementValueBinaryOperationLeftOperandAction_1_0() ||
 				   context == grammarAccess.getXAssignmentRule() ||
 				   context == grammarAccess.getXAssignmentAccess().getXBinaryOperationLeftOperandAction_1_1_0_0_0() ||
 				   context == grammarAccess.getXCastedExpressionRule() ||
@@ -839,6 +943,9 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 				   context == grammarAccess.getXAdditiveExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
 				   context == grammarAccess.getXAndExpressionRule() ||
 				   context == grammarAccess.getXAndExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
+				   context == grammarAccess.getXAnnotationElementValueRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationAccess().getXAnnotationElementValueBinaryOperationLeftOperandAction_1_0() ||
 				   context == grammarAccess.getXAssignmentRule() ||
 				   context == grammarAccess.getXAssignmentAccess().getXBinaryOperationLeftOperandAction_1_1_0_0_0() ||
 				   context == grammarAccess.getXCastedExpressionRule() ||
@@ -972,6 +1079,9 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 				   context == grammarAccess.getXAdditiveExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
 				   context == grammarAccess.getXAndExpressionRule() ||
 				   context == grammarAccess.getXAndExpressionAccess().getXBinaryOperationLeftOperandAction_1_0_0_0() ||
+				   context == grammarAccess.getXAnnotationElementValueRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationRule() ||
+				   context == grammarAccess.getXAnnotationElementValueStringConcatenationAccess().getXAnnotationElementValueBinaryOperationLeftOperandAction_1_0() ||
 				   context == grammarAccess.getXAssignmentRule() ||
 				   context == grammarAccess.getXAssignmentAccess().getXBinaryOperationLeftOperandAction_1_1_0_0_0() ||
 				   context == grammarAccess.getXCastedExpressionRule() ||
@@ -1129,7 +1239,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (condit=XExpression simpleA=SimpleAudio+)
+	 *     (condit=STRING simpleA=SimpleAudio+)
 	 */
 	protected void sequence_ConditionalAudio(EObject context, ConditionalAudio semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1157,7 +1267,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     configValue+=ConfigValue*
+	 *     (configValue+=ConfigValue*)
 	 */
 	protected void sequence_Configuration(EObject context, Configuration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1175,9 +1285,36 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     grammatics+=Grammar*
+	 *     (grammatics+=Grammar*)
 	 */
 	protected void sequence_Grammars(EObject context, Grammars semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotationInfo=Member_Field_2_0_0 (type=JvmTypeReference name=ID) initialValue=XExpression?)
+	 */
+	protected void sequence_Member(EObject context, Field semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     annotations+=XAnnotation+
+	 */
+	protected void sequence_Member_Field_2_0_0_Function_2_1_0(EObject context, Member semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotationInfo=Member_Function_2_1_0 (returnType=JvmTypeReference name=ID) expression=XBlockExpression)
+	 */
+	protected void sequence_Member(EObject context, Function semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1239,24 +1376,76 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseSemanticSeq
 	
 	/**
 	 * Constraint:
+	 *     ((annotationInfo=Type_Class_2_0 members+=Member*) | annotationInfo=Type_Class_2_0)
+	 */
+	protected void sequence_Type(EObject context, com.vectorsf.jvoice.prompt.model.voiceDsl.Class semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     annotations+=XAnnotation+
+	 */
+	protected void sequence_Type_Class_2_0(EObject context, Type semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ID externalVar=ID method=ID)
+	 */
+	protected void sequence_Variable(EObject context, Variable semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, VoiceDslPackage.Literals.VARIABLE__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, VoiceDslPackage.Literals.VARIABLE__NAME));
+			if(transientValues.isValueTransient(semanticObject, VoiceDslPackage.Literals.VARIABLE__EXTERNAL_VAR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, VoiceDslPackage.Literals.VARIABLE__EXTERNAL_VAR));
+			if(transientValues.isValueTransient(semanticObject, VoiceDslPackage.Literals.VARIABLE__METHOD) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, VoiceDslPackage.Literals.VARIABLE__METHOD));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getVariableAccess().getExternalVarIDTerminalRuleCall_2_0(), semanticObject.getExternalVar());
+		feeder.accept(grammarAccess.getVariableAccess().getMethodIDTerminalRuleCall_4_0(), semanticObject.getMethod());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (variable+=Variable*)
+	 */
+	protected void sequence_Variables(EObject context, Variables semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (
 	 *         (
 	 *             name=ID 
 	 *             configuration=Configuration 
 	 *             grammars=Grammars 
 	 *             properties+=Property* 
+	 *             variables=Variables? 
 	 *             conditions+=Condition* 
 	 *             audios=Audios
 	 *         ) | 
-	 *         (name=ID properties+=Property* conditions+=Condition* audios=Audios) | 
+	 *         (name=ID properties+=Property* variables=Variables? conditions+=Condition* audios=Audios) | 
 	 *         (
 	 *             name=ID 
 	 *             configuration=Configuration 
 	 *             grammars=Grammars 
 	 *             properties+=Property* 
+	 *             variables=Variables? 
 	 *             conditions+=Condition* 
 	 *             outputs=Outputs
-	 *         )
+	 *         ) | 
+	 *         types+=Type*
 	 *     )
 	 */
 	protected void sequence_VoiceDsl(EObject context, VoiceDsl semanticObject) {

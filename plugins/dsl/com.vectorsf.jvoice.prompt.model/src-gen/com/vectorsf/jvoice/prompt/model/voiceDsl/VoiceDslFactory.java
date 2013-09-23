@@ -139,6 +139,69 @@ public interface VoiceDslFactory extends EFactory {
 	Output createOutput();
 
 	/**
+	 * Returns a new object of class '<em>Variables</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Variables</em>'.
+	 * @generated
+	 */
+	Variables createVariables();
+
+	/**
+	 * Returns a new object of class '<em>Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Variable</em>'.
+	 * @generated
+	 */
+	Variable createVariable();
+
+	/**
+	 * Returns a new object of class '<em>Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Type</em>'.
+	 * @generated
+	 */
+	Type createType();
+
+	/**
+	 * Returns a new object of class '<em>Member</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Member</em>'.
+	 * @generated
+	 */
+	Member createMember();
+
+	/**
+	 * Returns a new object of class '<em>Class</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Class</em>'.
+	 * @generated
+	 */
+	Class createClass();
+
+	/**
+	 * Returns a new object of class '<em>Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Field</em>'.
+	 * @generated
+	 */
+	Field createField();
+
+	/**
+	 * Returns a new object of class '<em>Function</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Function</em>'.
+	 * @generated
+	 */
+	Function createFunction();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

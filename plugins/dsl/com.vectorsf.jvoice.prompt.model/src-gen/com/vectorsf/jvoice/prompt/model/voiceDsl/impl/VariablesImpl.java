@@ -2,8 +2,8 @@
  */
 package com.vectorsf.jvoice.prompt.model.voiceDsl.impl;
 
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 import java.util.Collection;
@@ -22,34 +22,34 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Grammars</b></em>'.
+ * An implementation of the model object '<em><b>Variables</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.GrammarsImpl#getGrammatics <em>Grammatics</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VariablesImpl#getVariable <em>Variable</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class GrammarsImpl extends MinimalEObjectImpl.Container implements Grammars {
+public class VariablesImpl extends MinimalEObjectImpl.Container implements Variables {
 	/**
-	 * The cached value of the '{@link #getGrammatics() <em>Grammatics</em>}' containment reference list.
+	 * The cached value of the '{@link #getVariable() <em>Variable</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getGrammatics()
+	 * @see #getVariable()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Grammar> grammatics;
+	protected EList<Variable> variable;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GrammarsImpl() {
+	protected VariablesImpl() {
 		super();
 	}
 
@@ -60,7 +60,7 @@ public class GrammarsImpl extends MinimalEObjectImpl.Container implements Gramma
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return VoiceDslPackage.Literals.GRAMMARS;
+		return VoiceDslPackage.Literals.VARIABLES;
 	}
 
 	/**
@@ -68,11 +68,11 @@ public class GrammarsImpl extends MinimalEObjectImpl.Container implements Gramma
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Grammar> getGrammatics() {
-		if (grammatics == null) {
-			grammatics = new EObjectContainmentEList<Grammar>(Grammar.class, this, VoiceDslPackage.GRAMMARS__GRAMMATICS);
+	public EList<Variable> getVariable() {
+		if (variable == null) {
+			variable = new EObjectContainmentEList<Variable>(Variable.class, this, VoiceDslPackage.VARIABLES__VARIABLE);
 		}
-		return grammatics;
+		return variable;
 	}
 
 	/**
@@ -83,8 +83,8 @@ public class GrammarsImpl extends MinimalEObjectImpl.Container implements Gramma
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case VoiceDslPackage.GRAMMARS__GRAMMATICS:
-				return ((InternalEList<?>)getGrammatics()).basicRemove(otherEnd, msgs);
+			case VoiceDslPackage.VARIABLES__VARIABLE:
+				return ((InternalEList<?>)getVariable()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -97,8 +97,8 @@ public class GrammarsImpl extends MinimalEObjectImpl.Container implements Gramma
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case VoiceDslPackage.GRAMMARS__GRAMMATICS:
-				return getGrammatics();
+			case VoiceDslPackage.VARIABLES__VARIABLE:
+				return getVariable();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -112,9 +112,9 @@ public class GrammarsImpl extends MinimalEObjectImpl.Container implements Gramma
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case VoiceDslPackage.GRAMMARS__GRAMMATICS:
-				getGrammatics().clear();
-				getGrammatics().addAll((Collection<? extends Grammar>)newValue);
+			case VoiceDslPackage.VARIABLES__VARIABLE:
+				getVariable().clear();
+				getVariable().addAll((Collection<? extends Variable>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -128,8 +128,8 @@ public class GrammarsImpl extends MinimalEObjectImpl.Container implements Gramma
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case VoiceDslPackage.GRAMMARS__GRAMMATICS:
-				getGrammatics().clear();
+			case VoiceDslPackage.VARIABLES__VARIABLE:
+				getVariable().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -143,10 +143,10 @@ public class GrammarsImpl extends MinimalEObjectImpl.Container implements Gramma
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case VoiceDslPackage.GRAMMARS__GRAMMATICS:
-				return grammatics != null && !grammatics.isEmpty();
+			case VoiceDslPackage.VARIABLES__VARIABLE:
+				return variable != null && !variable.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //GrammarsImpl
+} //VariablesImpl

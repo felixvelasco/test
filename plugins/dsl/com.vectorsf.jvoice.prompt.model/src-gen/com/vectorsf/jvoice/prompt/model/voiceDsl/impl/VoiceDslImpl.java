@@ -8,6 +8,8 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
@@ -41,6 +43,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getAudios <em>Audios</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getGrammars <em>Grammars</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getVariables <em>Variables</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getTypes <em>Types</em>}</li>
  * </ul>
  * </p>
  *
@@ -126,6 +130,26 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 	 * @ordered
 	 */
 	protected Outputs outputs;
+
+	/**
+	 * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVariables()
+	 * @generated
+	 * @ordered
+	 */
+	protected Variables variables;
+
+	/**
+	 * The cached value of the '{@link #getTypes() <em>Types</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTypes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Type> types;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -368,6 +392,61 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Variables getVariables() {
+		return variables;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetVariables(Variables newVariables, NotificationChain msgs) {
+		Variables oldVariables = variables;
+		variables = newVariables;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, VoiceDslPackage.VOICE_DSL__VARIABLES, oldVariables, newVariables);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVariables(Variables newVariables) {
+		if (newVariables != variables) {
+			NotificationChain msgs = null;
+			if (variables != null)
+				msgs = ((InternalEObject)variables).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.VOICE_DSL__VARIABLES, null, msgs);
+			if (newVariables != null)
+				msgs = ((InternalEObject)newVariables).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.VOICE_DSL__VARIABLES, null, msgs);
+			msgs = basicSetVariables(newVariables, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.VOICE_DSL__VARIABLES, newVariables, newVariables));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Type> getTypes() {
+		if (types == null) {
+			types = new EObjectContainmentEList<Type>(Type.class, this, VoiceDslPackage.VOICE_DSL__TYPES);
+		}
+		return types;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -383,6 +462,10 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 				return basicSetGrammars(null, msgs);
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				return basicSetOutputs(null, msgs);
+			case VoiceDslPackage.VOICE_DSL__VARIABLES:
+				return basicSetVariables(null, msgs);
+			case VoiceDslPackage.VOICE_DSL__TYPES:
+				return ((InternalEList<?>)getTypes()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -409,6 +492,10 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 				return getGrammars();
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				return getOutputs();
+			case VoiceDslPackage.VOICE_DSL__VARIABLES:
+				return getVariables();
+			case VoiceDslPackage.VOICE_DSL__TYPES:
+				return getTypes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -445,6 +532,13 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				setOutputs((Outputs)newValue);
 				return;
+			case VoiceDslPackage.VOICE_DSL__VARIABLES:
+				setVariables((Variables)newValue);
+				return;
+			case VoiceDslPackage.VOICE_DSL__TYPES:
+				getTypes().clear();
+				getTypes().addAll((Collection<? extends Type>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -478,6 +572,12 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				setOutputs((Outputs)null);
 				return;
+			case VoiceDslPackage.VOICE_DSL__VARIABLES:
+				setVariables((Variables)null);
+				return;
+			case VoiceDslPackage.VOICE_DSL__TYPES:
+				getTypes().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -504,6 +604,10 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 				return grammars != null;
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				return outputs != null;
+			case VoiceDslPackage.VOICE_DSL__VARIABLES:
+				return variables != null;
+			case VoiceDslPackage.VOICE_DSL__TYPES:
+				return types != null && !types.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

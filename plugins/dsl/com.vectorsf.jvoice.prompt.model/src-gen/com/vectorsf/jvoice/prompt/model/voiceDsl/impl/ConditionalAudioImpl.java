@@ -14,8 +14,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.xtext.xbase.XExpression;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Conditional Audio</b></em>'.
@@ -23,24 +21,14 @@ import org.eclipse.xtext.xbase.XExpression;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConditionalAudioImpl#getCondit <em>Condit</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConditionalAudioImpl#getSimpleA <em>Simple A</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConditionalAudioImpl#getCondit <em>Condit</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio {
-	/**
-	 * The cached value of the '{@link #getCondit() <em>Condit</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCondit()
-	 * @generated
-	 * @ordered
-	 */
-	protected XExpression condit;
-
 	/**
 	 * The cached value of the '{@link #getSimpleA() <em>Simple A</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -50,6 +38,26 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	 * @ordered
 	 */
 	protected Audio simpleA;
+
+	/**
+	 * The default value of the '{@link #getCondit() <em>Condit</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCondit()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CONDIT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getCondit() <em>Condit</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCondit()
+	 * @generated
+	 * @ordered
+	 */
+	protected String condit = CONDIT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -68,49 +76,6 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	@Override
 	protected EClass eStaticClass() {
 		return VoiceDslPackage.Literals.CONDITIONAL_AUDIO;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public XExpression getCondit() {
-		return condit;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetCondit(XExpression newCondit, NotificationChain msgs) {
-		XExpression oldCondit = condit;
-		condit = newCondit;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT, oldCondit, newCondit);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCondit(XExpression newCondit) {
-		if (newCondit != condit) {
-			NotificationChain msgs = null;
-			if (condit != null)
-				msgs = ((InternalEObject)condit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT, null, msgs);
-			if (newCondit != null)
-				msgs = ((InternalEObject)newCondit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT, null, msgs);
-			msgs = basicSetCondit(newCondit, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT, newCondit, newCondit));
 	}
 
 	/**
@@ -161,11 +126,30 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getCondit() {
+		return condit;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCondit(String newCondit) {
+		String oldCondit = condit;
+		condit = newCondit;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT, oldCondit, condit));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
-				return basicSetCondit(null, msgs);
 			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
 				return basicSetSimpleA(null, msgs);
 		}
@@ -180,10 +164,10 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
-				return getCondit();
 			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
 				return getSimpleA();
+			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
+				return getCondit();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -196,11 +180,11 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
-				setCondit((XExpression)newValue);
-				return;
 			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
 				setSimpleA((Audio)newValue);
+				return;
+			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
+				setCondit((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -214,11 +198,11 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
-				setCondit((XExpression)null);
-				return;
 			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
 				setSimpleA((Audio)null);
+				return;
+			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
+				setCondit(CONDIT_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -232,12 +216,28 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
-				return condit != null;
 			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
 				return simpleA != null;
+			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
+				return CONDIT_EDEFAULT == null ? condit != null : !CONDIT_EDEFAULT.equals(condit);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (condit: ");
+		result.append(condit);
+		result.append(')');
+		return result.toString();
 	}
 
 } //ConditionalAudioImpl

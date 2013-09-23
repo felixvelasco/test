@@ -2,7 +2,27 @@
  */
 package com.vectorsf.jvoice.prompt.model.voiceDsl.impl;
 
-import com.vectorsf.jvoice.prompt.model.voiceDsl.*;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Audios;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Condition;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.ConfigValue;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Field;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Function;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Member;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslFactory;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -69,6 +89,13 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 			case VoiceDslPackage.OUTPUTS: return createOutputs();
 			case VoiceDslPackage.GRAMMARS: return createGrammars();
 			case VoiceDslPackage.OUTPUT: return createOutput();
+			case VoiceDslPackage.VARIABLES: return createVariables();
+			case VoiceDslPackage.VARIABLE: return createVariable();
+			case VoiceDslPackage.TYPE: return createType();
+			case VoiceDslPackage.MEMBER: return createMember();
+			case VoiceDslPackage.CLASS: return createClass();
+			case VoiceDslPackage.FIELD: return createField();
+			case VoiceDslPackage.FUNCTION: return createFunction();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -202,6 +229,76 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 	public Output createOutput() {
 		OutputImpl output = new OutputImpl();
 		return output;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Variables createVariables() {
+		VariablesImpl variables = new VariablesImpl();
+		return variables;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Variable createVariable() {
+		VariableImpl variable = new VariableImpl();
+		return variable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Type createType() {
+		TypeImpl type = new TypeImpl();
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Member createMember() {
+		MemberImpl member = new MemberImpl();
+		return member;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public com.vectorsf.jvoice.prompt.model.voiceDsl.Class createClass() {
+		ClassImpl class_ = new ClassImpl();
+		return class_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Field createField() {
+		FieldImpl field = new FieldImpl();
+		return field;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Function createFunction() {
+		FunctionImpl function = new FunctionImpl();
+		return function;
 	}
 
 	/**
