@@ -14,14 +14,14 @@
          point="org.eclipse.graphiti.ui.diagramTypeProviders">
       <diagramTypeProvider
             class="com.vectorsf.jvoice.diagram.core.features.CoreDiagramTypeProvider"
-            context="org.eclipse.graphiti.ui.diagramEditor"
+            context="com.isb.jvoice.diagram.core.diagramEditor"
             id="com.isb.jvoice.diagram.core.diagramTypeProvider"
             name="jVoice diagram type provider">
          <diagramType
                id="com.isb.jvoice.diagram.core.diagramType">
          </diagramType>
          <imageProvider
-               id="com.vectorsf.jvoice.diagram.core.imageProvider1">
+               id="com.vectorsf.jvoice.diagram.core.imageProvider">
          </imageProvider>
       </diagramTypeProvider>
    </extension>
@@ -38,22 +38,13 @@
       <patternContributor
             patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.FinalStatePattern">
       </patternContributor>
-   </extension>
- <extension
-       point="com.vectorsf.jvoice.diagram.core.patternContributor">
     <patternContributor
           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.InitialStatePattern">
     </patternContributor>
- </extension>
- <extension
-       point="com.vectorsf.jvoice.diagram.core.patternContributor">
-    <patternContributor
+     <patternContributor
           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.SwitchPattern">
     </patternContributor>
- </extension>
- <extension
-       point="com.vectorsf.jvoice.diagram.core.patternContributor">
-    <patternContributor
+     <patternContributor
           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CallStatePattern">
     </patternContributor>
  </extension>
@@ -61,21 +52,36 @@
        point="org.eclipse.graphiti.ui.imageProviders">
     <imageProvider
           class="com.vectorsf.jvoice.diagram.core.features.CoreImageProvider"
-          id="com.vectorsf.jvoice.diagram.core.imageProvider1">
+          id="com.vectorsf.jvoice.diagram.core.imageProvider">
     </imageProvider>
  </extension>
  <extension
        point="org.eclipse.ui.newWizards">
     <category
-          id="com.vectorsf.jvoice.diagram.core.category1"
-          name="JVOICE">
+          id="com.vectorsf.jvoice.diagram.core.category"
+          name="jvoice">
     </category>
     <wizard
           class="com.vectorsf.jvoice.diagram.core.diagram.CreateDiagramJVoice"
-          id="com.vectorsf.jvoice.diagram.core.wizard1"
-          name="JVOICE">
+          id="com.vectorsf.jvoice.diagram.core.wizard"
+          name="jvoice">
     </wizard>
  </extension>
+     <extension
+         point="org.eclipse.ui.editors">
+       <editor
+          class="org.eclipse.graphiti.ui.editor.DiagramEditor"
+          contributorClass="org.eclipse.graphiti.ui.editor.DiagramEditorActionBarContributor"
+          default="true"
+          extensions="jvflow"
+          id="org.eclipse.graphiti.ui.editor.DiagramEditorJVoice"
+          matchingStrategy="org.eclipse.graphiti.ui.editor.DiagramEditorMatchingStrategy"
+          name="JVoice Editor">
+       <contentTypeBinding
+             contentTypeId="org.eclipse.graphiti.content.diagram">
+       </contentTypeBinding>
+      </editor>
+   </extension>
   
 
 </plugin>
