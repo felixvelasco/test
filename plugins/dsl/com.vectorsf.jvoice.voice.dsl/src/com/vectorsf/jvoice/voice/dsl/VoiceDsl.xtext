@@ -1,11 +1,9 @@
-grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.xbase.Xbase
-
+grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.xbase.annotations.XbaseWithAnnotations
 import "http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl/1.0"
-//import "http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl/1.0"
-//import "classpath:/model/VoiceDsl.ecore"
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 
-VoiceDsl:
+VoiceDsl returns VoiceDsl:
 	('inputname' name = ID           
       ((configuration = Configuration)& 
  	   (grammars = Grammars)&
@@ -30,6 +28,8 @@ VoiceDsl:
 	    (conditions += Condition*))
   	     outputs=Outputs
 	   ) 
+	   
+	   |(  (types+=Type)*)
 ;
 
  
@@ -40,11 +40,9 @@ Variables:
 	 '}'
 ;
 
-
 Variable:
     name=ID '=' externalVar = ID '.' method = ID '()' ';'
 ;
-
 
 Grammars:
 	{Grammars}
@@ -124,15 +122,28 @@ ConditionalAudio returns Audio:
    (INT '.' INT)
 ;
 
-QualifiedName: 
-	ID (=>'.' ID)*
+Type :
+  {Type} annotations+=XAnnotation*
+  (
+  	{Class.annotationInfo = current}
+    'variables' 
+    '{'
+    (members+=Member)*
+    '}'
+  )
 ;
 
-
-
-
-
-
-
+Member :
+	{Member}
+   annotations+=XAnnotation*
+   (    
+  	{Field.annotationInfo = current}
+    ((type=JvmTypeReference) name=ID) ('=' initialValue=XExpression)? ';'?
+    
+    |
+     {Function.annotationInfo = current}
+    ('public' =>(returnType=JvmTypeReference name=ID ))   (expression=XBlockExpression)
+   
+) ;
 
 

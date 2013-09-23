@@ -13,12 +13,12 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.vectorsf.jvoice.prompt.model,
- com.vectorsf.jvoice.operation.model,
- com.vectorsf.jvoice.base.model,
  org.eclipse.xtext.util,
  org.antlr.runtime,
  org.eclipse.xtext.common.types,
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -29,7 +29,7 @@ Workflow {
 	component = Generator {
 		pathRtProject = runtimeProject
 		pathUiProject = "${runtimeProject}.ui"
-		pathTestProject = "${runtimeProject}.tests"
+		
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
 		language = auto-inject {
@@ -42,7 +42,7 @@ Workflow {
 			// fragment = ecore.EcoreGeneratorFragment auto-inject {}
 
 			// the Ecore2Xtext specific terminal converter
-			fragment = ecore2xtext.Ecore2XtextValueConverterServiceFragment auto-inject {}
+//			fragment = ecore2xtext.Ecore2XtextValueConverterServiceFragment auto-inject {}
 
 			// serializer 2.0
 			fragment = serializer.SerializerFragment auto-inject {
@@ -69,20 +69,20 @@ Workflow {
 			}
 
 			// old scoping and exporting API 
-			// fragment = scoping.ImportNamespacesScopingFragment auto-inject {}
-			// fragment = exporting.QualifiedNamesFragment auto-inject {}
+			 fragment = scoping.ImportNamespacesScopingFragment auto-inject {}
+			 fragment = exporting.QualifiedNamesFragment auto-inject {}
 
 			// scoping and exporting API
-			fragment = scoping.ImportURIScopingFragment auto-inject {}
-			fragment = exporting.SimpleNamesFragment auto-inject {}
+//			fragment = scoping.ImportURIScopingFragment auto-inject {}
+//			fragment = exporting.SimpleNamesFragment auto-inject {}
 			fragment = builder.BuilderIntegrationFragment auto-inject {}		
 
 			// generator API
 			fragment = generator.GeneratorFragment auto-inject {}
 
 			// formatter API 
-			// fragment = formatting.FormatterFragment auto-inject {}
-			fragment = ecore2xtext.FormatterFragment auto-inject {}
+			 fragment = formatting.FormatterFragment auto-inject {}
+//			fragment = ecore2xtext.FormatterFragment auto-inject {}
 
 			// labeling API 
 			fragment = labeling.LabelProviderFragment auto-inject {}
