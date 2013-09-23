@@ -46,8 +46,8 @@ import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
  */
 public class CreateDiagramJVoice extends BasicNewResourceWizard {
 
-	private static final String PAGE_NAME_DIAGRAM_NAME = "PAGE_NAME_DIAGRAM_NAME";
-	private static final String WIZARD_WINDOW_TITLE = "WIZARD_WINDOW_TITLE";
+	private static final String PAGE_NAME_DIAGRAM_NAME = "JVoice Project Name";
+	private static final String WIZARD_WINDOW_TITLE = "New JVoice Project";
 
 	private Diagram diagram;
 
@@ -99,7 +99,7 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 		}
 
 		String editorID = DiagramEditor.DIAGRAM_EDITOR_ID;
-		String editorExtension = "diagram"; //$NON-NLS-1$
+		String editorExtension = "jvflow"; //$NON-NLS-1$
 		String diagramTypeProviderId = GraphitiUi.getExtensionManager()
 				.getDiagramTypeProviderId("jVoiceDiagram");
 		String namingConventionID = diagramTypeProviderId + ".editor"; //$NON-NLS-1$

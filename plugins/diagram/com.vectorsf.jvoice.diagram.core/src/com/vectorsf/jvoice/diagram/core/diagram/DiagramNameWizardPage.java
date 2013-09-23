@@ -16,8 +16,8 @@ import org.eclipse.swt.widgets.Text;
 
 public class DiagramNameWizardPage extends AbstractWizardPage {
 
-	private static final String PAGE_DESC = "DiagramNameWizardPage_PageDescription";
-	private static final String PAGE_TITLE = "DiagramNameWizardPage_PageTitle";
+	private static final String PAGE_DESC = "Enter a project name";
+	private static final String PAGE_TITLE = "New JVoice Project";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
@@ -76,7 +76,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		String text = getTextFieldValue();
 		if (text.equals("")) { //$NON-NLS-1$
 			setErrorMessage(null);
-			setMessage("DiagramNameWizardPage_Message");
+			setMessage("Message empty");
 			return false;
 		}
 
@@ -107,7 +107,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 		// new project label
 		Label projectLabel = new Label(projectGroup, SWT.NONE);
-		projectLabel.setText("DiagramNameWizardPage_Label");
+		projectLabel.setText("Project name:");
 		projectLabel.setFont(parent.getFont());
 
 		// new project name entry field
@@ -134,7 +134,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	}
 
 	private String getInitialTextFieldValue() {
-		return "newDiagram"; //$NON-NLS-1$
+		return "newJVoice"; //$NON-NLS-1$
 	}
 
 	private IStatus doWorkspaceValidation(IWorkspace workspace, String text) {
