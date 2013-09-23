@@ -16,8 +16,8 @@ import org.eclipse.swt.widgets.Text;
 
 public class DiagramNameWizardPage extends AbstractWizardPage {
 
-	private static final String PAGE_DESC = "Enter a project name";
-	private static final String PAGE_TITLE = "New JVoice Project";
+	private static final String PAGE_DESC = "Enter a diagram name";
+	private static final String PAGE_TITLE = "New JVoice Diagram";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
@@ -107,7 +107,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 		// new project label
 		Label projectLabel = new Label(projectGroup, SWT.NONE);
-		projectLabel.setText("Project name:");
+		projectLabel.setText("Diagram name:");
 		projectLabel.setFont(parent.getFont());
 
 		// new project name entry field

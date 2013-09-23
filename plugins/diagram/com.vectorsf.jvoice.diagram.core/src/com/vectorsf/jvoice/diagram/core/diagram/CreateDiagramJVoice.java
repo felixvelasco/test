@@ -49,8 +49,8 @@ import com.vectorsf.jvoice.model.base.JVProject;
  */
 public class CreateDiagramJVoice extends BasicNewResourceWizard {
 
-	private static final String PAGE_NAME_DIAGRAM_NAME = "JVoice Project Name";
-	private static final String WIZARD_WINDOW_TITLE = "New JVoice Project";
+	private static final String PAGE_NAME_DIAGRAM_NAME = "JVoice Diagram Name";
+	private static final String WIZARD_WINDOW_TITLE = "New JVoice Diagram";
 
 	private Diagram diagram;
 
@@ -96,9 +96,9 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 		}
 
 		if (project == null || !project.isAccessible()) {
-			String error = "noProjectFound";
+			String error = "No Project Found";
 			IStatus status = new Status(IStatus.ERROR, "1", error);
-			ErrorDialog.openError(getShell(), "noProjectFound", null, status);
+			ErrorDialog.openError(getShell(), error, null, status);
 			return false;
 		}
 
@@ -154,9 +154,9 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 					.getActivePage().openEditor(editorInput, editorID);
 		} catch (PartInitException e) {
-			String error = "error";
+			String error = "error open editor";
 			IStatus status = new Status(IStatus.ERROR, "0", error, e);
-			ErrorDialog.openError(getShell(), "error_tilte", null, status);
+			ErrorDialog.openError(getShell(), error, null, status);
 			return false;
 		}
 
