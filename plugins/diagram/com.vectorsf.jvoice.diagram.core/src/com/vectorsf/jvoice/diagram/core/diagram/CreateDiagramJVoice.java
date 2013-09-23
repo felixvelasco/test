@@ -41,6 +41,9 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
+import com.vectorsf.jvoice.model.base.JVPackage;
+import com.vectorsf.jvoice.model.base.JVProject;
+
 /**
  * The Class CreateDiagramWizard.
  */
@@ -75,14 +78,18 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 				.getText();
 
 		IProject project = null;
-		IFolder diagramFolder = null;
 
 		Object element = getSelection().getFirstElement();
 		if (element instanceof IProject) {
 			project = (IProject) element;
 		} else if (element instanceof IFolder) {
-			diagramFolder = (IFolder) element;
-			project = diagramFolder.getProject();
+			project = ((IFolder) element).getProject();
+		} else if (element instanceof JVProject) {
+			project = (IProject) Platform.getAdapterManager().getAdapter(
+					element, IProject.class);
+		} else if (element instanceof JVPackage) {
+			project = ((IFolder) Platform.getAdapterManager().getAdapter(
+					element, IFolder.class)).getProject();
 		}
 
 		if (project == null || !project.isAccessible()) {
@@ -94,9 +101,6 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 
 		Diagram diagram = Graphiti.getPeCreateService().createDiagram(
 				"jVoiceDiagram", diagramName, true);
-		if (diagramFolder == null) {
-			diagramFolder = project.getFolder("src/diagrams/"); //$NON-NLS-1$
-		}
 
 		String editorID = DiagramEditor.DIAGRAM_EDITOR_ID;
 		String editorExtension = "jvflow"; //$NON-NLS-1$
@@ -131,8 +135,8 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 			}
 		}
 
-		IFile diagramFile = diagramFolder.getFile(diagramName
-				+ "." + editorExtension); //$NON-NLS-1$
+		IFile diagramFile = project
+				.getFile(diagramName + "." + editorExtension); //$NON-NLS-1$
 		URI uri = URI.createPlatformResourceURI(diagramFile.getFullPath()
 				.toString(), true);
 
