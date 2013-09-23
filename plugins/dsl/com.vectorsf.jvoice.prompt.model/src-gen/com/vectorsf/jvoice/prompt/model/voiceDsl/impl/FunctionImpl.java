@@ -40,8 +40,6 @@ import org.eclipse.xtext.xbase.XExpression;
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FunctionImpl#getName <em>Name</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FunctionImpl#getExceptions <em>Exceptions</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FunctionImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FunctionImpl#getExp <em>Exp</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.FunctionImpl#getVarName <em>Var Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -167,36 +165,6 @@ public class FunctionImpl extends MemberImpl implements Function {
 	 * @ordered
 	 */
 	protected XExpression expression;
-
-	/**
-	 * The cached value of the '{@link #getExp() <em>Exp</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getExp()
-	 * @generated
-	 * @ordered
-	 */
-	protected XExpression exp;
-
-	/**
-	 * The default value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVarName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String VAR_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVarName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String varName = VAR_NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -416,70 +384,6 @@ public class FunctionImpl extends MemberImpl implements Function {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public XExpression getExp() {
-		return exp;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetExp(XExpression newExp, NotificationChain msgs) {
-		XExpression oldExp = exp;
-		exp = newExp;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, VoiceDslPackage.FUNCTION__EXP, oldExp, newExp);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setExp(XExpression newExp) {
-		if (newExp != exp) {
-			NotificationChain msgs = null;
-			if (exp != null)
-				msgs = ((InternalEObject)exp).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.FUNCTION__EXP, null, msgs);
-			if (newExp != null)
-				msgs = ((InternalEObject)newExp).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.FUNCTION__EXP, null, msgs);
-			msgs = basicSetExp(newExp, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.FUNCTION__EXP, newExp, newExp));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getVarName() {
-		return varName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setVarName(String newVarName) {
-		String oldVarName = varName;
-		varName = newVarName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.FUNCTION__VAR_NAME, oldVarName, varName));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -491,8 +395,6 @@ public class FunctionImpl extends MemberImpl implements Function {
 				return ((InternalEList<?>)getExceptions()).basicRemove(otherEnd, msgs);
 			case VoiceDslPackage.FUNCTION__EXPRESSION:
 				return basicSetExpression(null, msgs);
-			case VoiceDslPackage.FUNCTION__EXP:
-				return basicSetExp(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -521,10 +423,6 @@ public class FunctionImpl extends MemberImpl implements Function {
 				return getExceptions();
 			case VoiceDslPackage.FUNCTION__EXPRESSION:
 				return getExpression();
-			case VoiceDslPackage.FUNCTION__EXP:
-				return getExp();
-			case VoiceDslPackage.FUNCTION__VAR_NAME:
-				return getVarName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -564,12 +462,6 @@ public class FunctionImpl extends MemberImpl implements Function {
 			case VoiceDslPackage.FUNCTION__EXPRESSION:
 				setExpression((XExpression)newValue);
 				return;
-			case VoiceDslPackage.FUNCTION__EXP:
-				setExp((XExpression)newValue);
-				return;
-			case VoiceDslPackage.FUNCTION__VAR_NAME:
-				setVarName((String)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -606,12 +498,6 @@ public class FunctionImpl extends MemberImpl implements Function {
 			case VoiceDslPackage.FUNCTION__EXPRESSION:
 				setExpression((XExpression)null);
 				return;
-			case VoiceDslPackage.FUNCTION__EXP:
-				setExp((XExpression)null);
-				return;
-			case VoiceDslPackage.FUNCTION__VAR_NAME:
-				setVarName(VAR_NAME_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -640,10 +526,6 @@ public class FunctionImpl extends MemberImpl implements Function {
 				return exceptions != null && !exceptions.isEmpty();
 			case VoiceDslPackage.FUNCTION__EXPRESSION:
 				return expression != null;
-			case VoiceDslPackage.FUNCTION__EXP:
-				return exp != null;
-			case VoiceDslPackage.FUNCTION__VAR_NAME:
-				return VAR_NAME_EDEFAULT == null ? varName != null : !VAR_NAME_EDEFAULT.equals(varName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -666,8 +548,6 @@ public class FunctionImpl extends MemberImpl implements Function {
 		result.append(dispatch);
 		result.append(", name: ");
 		result.append(name);
-		result.append(", varName: ");
-		result.append(varName);
 		result.append(')');
 		return result.toString();
 	}

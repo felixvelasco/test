@@ -2,6 +2,8 @@
  */
 package com.vectorsf.jvoice.prompt.model.voiceDsl.impl;
 
+import com.vectorsf.jvoice.model.base.impl.JVBeanImpl;
+
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audios;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Condition;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration;
@@ -24,7 +26,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -36,7 +37,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getName <em>Name</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getConditions <em>Conditions</em>}</li>
@@ -50,27 +50,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceDsl {
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
+public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 	/**
 	 * The cached value of the '{@link #getConfiguration() <em>Configuration</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -168,27 +148,6 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 	@Override
 	protected EClass eStaticClass() {
 		return VoiceDslPackage.Literals.VOICE_DSL;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.VOICE_DSL__NAME, oldName, name));
 	}
 
 	/**
@@ -478,8 +437,6 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case VoiceDslPackage.VOICE_DSL__NAME:
-				return getName();
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
 				return getConfiguration();
 			case VoiceDslPackage.VOICE_DSL__PROPERTIES:
@@ -509,9 +466,6 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case VoiceDslPackage.VOICE_DSL__NAME:
-				setName((String)newValue);
-				return;
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
 				setConfiguration((Configuration)newValue);
 				return;
@@ -551,9 +505,6 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case VoiceDslPackage.VOICE_DSL__NAME:
-				setName(NAME_EDEFAULT);
-				return;
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
 				setConfiguration((Configuration)null);
 				return;
@@ -590,8 +541,6 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case VoiceDslPackage.VOICE_DSL__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
 				return configuration != null;
 			case VoiceDslPackage.VOICE_DSL__PROPERTIES:
@@ -610,22 +559,6 @@ public class VoiceDslImpl extends MinimalEObjectImpl.Container implements VoiceD
 				return types != null && !types.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
 	}
 
 } //VoiceDslImpl

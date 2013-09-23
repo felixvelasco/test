@@ -2,6 +2,10 @@
  */
 package com.vectorsf.jvoice.prompt.model.voiceDsl.util;
 
+import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVElement;
+import com.vectorsf.jvoice.model.base.NamedElement;
+
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audios;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Condition;
@@ -165,6 +169,18 @@ public class VoiceDslAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseFunction(Function object) {
 				return createFunctionAdapter();
+			}
+			@Override
+			public Adapter caseJVElement(JVElement object) {
+				return createJVElementAdapter();
+			}
+			@Override
+			public Adapter caseNamedElement(NamedElement object) {
+				return createNamedElementAdapter();
+			}
+			@Override
+			public Adapter caseJVBean(JVBean object) {
+				return createJVBeanAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -463,6 +479,48 @@ public class VoiceDslAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFunctionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.base.JVElement <em>JV Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.base.JVElement
+	 * @generated
+	 */
+	public Adapter createJVElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.base.NamedElement <em>Named Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.base.NamedElement
+	 * @generated
+	 */
+	public Adapter createNamedElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.base.JVBean <em>JV Bean</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.base.JVBean
+	 * @generated
+	 */
+	public Adapter createJVBeanAdapter() {
 		return null;
 	}
 

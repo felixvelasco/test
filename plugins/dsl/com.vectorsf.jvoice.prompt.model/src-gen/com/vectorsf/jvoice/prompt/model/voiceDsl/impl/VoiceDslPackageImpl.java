@@ -2,6 +2,8 @@
  */
 package com.vectorsf.jvoice.prompt.model.voiceDsl.impl;
 
+import com.vectorsf.jvoice.model.base.BasePackage;
+
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audios;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Condition;
@@ -231,8 +233,9 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		isInited = true;
 
 		// Initialize simple dependencies
-		XbasePackage.eINSTANCE.eClass();
+		BasePackage.eINSTANCE.eClass();
 		XAnnotationsPackage.eINSTANCE.eClass();
+		XbasePackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theVoiceDslPackage.createPackageContents();
@@ -263,17 +266,8 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getVoiceDsl_Name() {
-		return (EAttribute)voiceDslEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getVoiceDsl_Configuration() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(1);
+		return (EReference)voiceDslEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -282,7 +276,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	public EReference getVoiceDsl_Properties() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(2);
+		return (EReference)voiceDslEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -291,7 +285,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	public EReference getVoiceDsl_Conditions() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(3);
+		return (EReference)voiceDslEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -300,7 +294,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	public EReference getVoiceDsl_Audios() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(4);
+		return (EReference)voiceDslEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -309,7 +303,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	public EReference getVoiceDsl_Grammars() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(5);
+		return (EReference)voiceDslEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -318,7 +312,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	public EReference getVoiceDsl_Outputs() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(6);
+		return (EReference)voiceDslEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -327,7 +321,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	public EReference getVoiceDsl_Variables() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(7);
+		return (EReference)voiceDslEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -336,7 +330,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	public EReference getVoiceDsl_Types() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(8);
+		return (EReference)voiceDslEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -983,24 +977,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getFunction_Exp() {
-		return (EReference)functionEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getFunction_VarName() {
-		return (EAttribute)functionEClass.getEStructuralFeatures().get(9);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public VoiceDslFactory getVoiceDslFactory() {
 		return (VoiceDslFactory)getEFactoryInstance();
 	}
@@ -1025,7 +1001,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 
 		// Create classes and their features
 		voiceDslEClass = createEClass(VOICE_DSL);
-		createEAttribute(voiceDslEClass, VOICE_DSL__NAME);
 		createEReference(voiceDslEClass, VOICE_DSL__CONFIGURATION);
 		createEReference(voiceDslEClass, VOICE_DSL__PROPERTIES);
 		createEReference(voiceDslEClass, VOICE_DSL__CONDITIONS);
@@ -1124,8 +1099,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		createEAttribute(functionEClass, FUNCTION__NAME);
 		createEReference(functionEClass, FUNCTION__EXCEPTIONS);
 		createEReference(functionEClass, FUNCTION__EXPRESSION);
-		createEReference(functionEClass, FUNCTION__EXP);
-		createEAttribute(functionEClass, FUNCTION__VAR_NAME);
 	}
 
 	/**
@@ -1152,6 +1125,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
+		BasePackage theBasePackage = (BasePackage)EPackage.Registry.INSTANCE.getEPackage(BasePackage.eNS_URI);
 		XAnnotationsPackage theXAnnotationsPackage = (XAnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(XAnnotationsPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		XbasePackage theXbasePackage = (XbasePackage)EPackage.Registry.INSTANCE.getEPackage(XbasePackage.eNS_URI);
@@ -1161,6 +1135,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		voiceDslEClass.getESuperTypes().add(theBasePackage.getJVBean());
 		conditionalAudioEClass.getESuperTypes().add(this.getAudio());
 		classEClass.getESuperTypes().add(this.getType());
 		fieldEClass.getESuperTypes().add(this.getMember());
@@ -1168,7 +1143,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(voiceDslEClass, VoiceDsl.class, "VoiceDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getVoiceDsl_Name(), ecorePackage.getEString(), "name", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Configuration(), this.getConfiguration(), null, "configuration", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Properties(), this.getProperty(), null, "properties", null, 0, -1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Conditions(), this.getCondition(), null, "conditions", null, 0, -1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1267,8 +1241,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEAttribute(getFunction_Name(), ecorePackage.getEString(), "name", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFunction_Exceptions(), theTypesPackage.getJvmTypeReference(), null, "exceptions", null, 0, -1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFunction_Expression(), theXbasePackage.getXExpression(), null, "expression", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getFunction_Exp(), theXbasePackage.getXExpression(), null, "exp", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getFunction_VarName(), ecorePackage.getEString(), "varName", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

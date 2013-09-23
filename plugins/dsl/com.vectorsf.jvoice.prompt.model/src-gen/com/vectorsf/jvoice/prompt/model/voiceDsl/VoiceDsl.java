@@ -2,9 +2,9 @@
  */
 package com.vectorsf.jvoice.prompt.model.voiceDsl;
 
-import org.eclipse.emf.common.util.EList;
+import com.vectorsf.jvoice.model.base.JVBean;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getName <em>Name</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getProperties <em>Properties</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getConditions <em>Conditions</em>}</li>
@@ -30,33 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface VoiceDsl extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getVoiceDsl_Name()
-	 * @model
-	 * @generated
-	 */
-	String getName();
-
-	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
-	 */
-	void setName(String value);
-
+public interface VoiceDsl extends JVBean {
 	/**
 	 * Returns the value of the '<em><b>Configuration</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

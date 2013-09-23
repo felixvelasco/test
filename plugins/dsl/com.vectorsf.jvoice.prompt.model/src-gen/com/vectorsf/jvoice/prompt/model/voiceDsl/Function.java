@@ -25,8 +25,6 @@ import org.eclipse.xtext.xbase.XExpression;
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getName <em>Name</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExceptions <em>Exceptions</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExpression <em>Expression</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExp <em>Exp</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getVarName <em>Var Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -222,57 +220,5 @@ public interface Function extends Member {
 	 * @generated
 	 */
 	void setExpression(XExpression value);
-
-	/**
-	 * Returns the value of the '<em><b>Exp</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Exp</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Exp</em>' containment reference.
-	 * @see #setExp(XExpression)
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getFunction_Exp()
-	 * @model containment="true"
-	 * @generated
-	 */
-	XExpression getExp();
-
-	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExp <em>Exp</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Exp</em>' containment reference.
-	 * @see #getExp()
-	 * @generated
-	 */
-	void setExp(XExpression value);
-
-	/**
-	 * Returns the value of the '<em><b>Var Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Var Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Var Name</em>' attribute.
-	 * @see #setVarName(String)
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getFunction_VarName()
-	 * @model
-	 * @generated
-	 */
-	String getVarName();
-
-	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getVarName <em>Var Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Var Name</em>' attribute.
-	 * @see #getVarName()
-	 * @generated
-	 */
-	void setVarName(String value);
 
 } // Function

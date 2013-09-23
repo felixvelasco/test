@@ -2,6 +2,8 @@
  */
 package com.vectorsf.jvoice.prompt.model.voiceDsl;
 
+import com.vectorsf.jvoice.model.base.BasePackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -67,13 +69,40 @@ public interface VoiceDslPackage extends EPackage {
 	int VOICE_DSL = 0;
 
 	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VOICE_DSL__ID = BasePackage.JV_BEAN__ID;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL__NAME = 0;
+	int VOICE_DSL__NAME = BasePackage.JV_BEAN__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VOICE_DSL__DESCRIPTION = BasePackage.JV_BEAN__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owner Package</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VOICE_DSL__OWNER_PACKAGE = BasePackage.JV_BEAN__OWNER_PACKAGE;
 
 	/**
 	 * The feature id for the '<em><b>Configuration</b></em>' containment reference.
@@ -82,7 +111,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL__CONFIGURATION = 1;
+	int VOICE_DSL__CONFIGURATION = BasePackage.JV_BEAN_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -91,7 +120,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL__PROPERTIES = 2;
+	int VOICE_DSL__PROPERTIES = BasePackage.JV_BEAN_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Conditions</b></em>' containment reference list.
@@ -100,7 +129,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL__CONDITIONS = 3;
+	int VOICE_DSL__CONDITIONS = BasePackage.JV_BEAN_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Audios</b></em>' containment reference.
@@ -109,7 +138,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL__AUDIOS = 4;
+	int VOICE_DSL__AUDIOS = BasePackage.JV_BEAN_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Grammars</b></em>' containment reference.
@@ -118,7 +147,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL__GRAMMARS = 5;
+	int VOICE_DSL__GRAMMARS = BasePackage.JV_BEAN_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' containment reference.
@@ -127,7 +156,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL__OUTPUTS = 6;
+	int VOICE_DSL__OUTPUTS = BasePackage.JV_BEAN_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Variables</b></em>' containment reference.
@@ -136,7 +165,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL__VARIABLES = 7;
+	int VOICE_DSL__VARIABLES = BasePackage.JV_BEAN_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
@@ -145,7 +174,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL__TYPES = 8;
+	int VOICE_DSL__TYPES = BasePackage.JV_BEAN_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Voice Dsl</em>' class.
@@ -154,7 +183,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL_FEATURE_COUNT = 9;
+	int VOICE_DSL_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of operations of the '<em>Voice Dsl</em>' class.
@@ -163,7 +192,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL_OPERATION_COUNT = 0;
+	int VOICE_DSL_OPERATION_COUNT = BasePackage.JV_BEAN_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConfigurationImpl <em>Configuration</em>}' class.
@@ -1220,31 +1249,13 @@ public interface VoiceDslPackage extends EPackage {
 	int FUNCTION__EXPRESSION = MEMBER_FEATURE_COUNT + 7;
 
 	/**
-	 * The feature id for the '<em><b>Exp</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTION__EXP = MEMBER_FEATURE_COUNT + 8;
-
-	/**
-	 * The feature id for the '<em><b>Var Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTION__VAR_NAME = MEMBER_FEATURE_COUNT + 9;
-
-	/**
 	 * The number of structural features of the '<em>Function</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_FEATURE_COUNT = MEMBER_FEATURE_COUNT + 10;
+	int FUNCTION_FEATURE_COUNT = MEMBER_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of operations of the '<em>Function</em>' class.
@@ -1265,17 +1276,6 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getVoiceDsl();
-
-	/**
-	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getName()
-	 * @see #getVoiceDsl()
-	 * @generated
-	 */
-	EAttribute getVoiceDsl_Name();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getConfiguration <em>Configuration</em>}'.
@@ -2128,28 +2128,6 @@ public interface VoiceDslPackage extends EPackage {
 	EReference getFunction_Expression();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExp <em>Exp</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Exp</em>'.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getExp()
-	 * @see #getFunction()
-	 * @generated
-	 */
-	EReference getFunction_Exp();
-
-	/**
-	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getVarName <em>Var Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Var Name</em>'.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function#getVarName()
-	 * @see #getFunction()
-	 * @generated
-	 */
-	EAttribute getFunction_VarName();
-
-	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2181,14 +2159,6 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EClass VOICE_DSL = eINSTANCE.getVoiceDsl();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute VOICE_DSL__NAME = eINSTANCE.getVoiceDsl_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Configuration</b></em>' containment reference feature.
@@ -2859,22 +2829,6 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EReference FUNCTION__EXPRESSION = eINSTANCE.getFunction_Expression();
-
-		/**
-		 * The meta object literal for the '<em><b>Exp</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FUNCTION__EXP = eINSTANCE.getFunction_Exp();
-
-		/**
-		 * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FUNCTION__VAR_NAME = eINSTANCE.getFunction_VarName();
 
 	}
 
