@@ -7,14 +7,14 @@ import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import com.vectorsf.jvoice.model.base.JVBean;
 
 @SuppressWarnings("rawtypes")
 public class AdapterBean implements IAdapterFactory {
 
-	private static final Class[] ADAPTER_TYPES = new Class[] { IFile.class,
-			ResourceMapping.class, IResource.class };
+	private static final Class[] ADAPTER_TYPES = new Class[] { IFile.class, ResourceMapping.class, IResource.class };
 
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
@@ -45,11 +45,10 @@ public class AdapterBean implements IAdapterFactory {
 
 	private IFile adaptarElemento(Object adaptableObject) {
 		JVBean bean = (JVBean) adaptableObject;
-		String relName = bean.getName();
-		IPath path = new Path(IPath.SEPARATOR
-				+ bean.getOwnerPackage().getOwnerProject().getName())
-				.append("src/main/resources/jv")
-				.append(bean.getOwnerPackage().getName()).append(relName);
+		Resource res = bean.eResource();
+
+		IPath path = new Path(res.getURI().toPlatformString(true));
+		System.out.println(path);
 		return ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 	}
 
