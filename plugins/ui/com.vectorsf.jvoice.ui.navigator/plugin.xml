@@ -73,6 +73,16 @@
                   value="org.eclipse.emf.ecore.EObject">
             </instanceof>
          </triggerPoints>
+         <dropAssistant
+               class="com.vectorsf.jvoice.ui.navigator.drop.BeanCommonDropAdapterAssistant"
+               id="com.vectorsf.jvoice.ui.navigator.drop.dropAssistant">
+            <possibleDropTargets>
+               <or>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVPackage">
+                  </instanceof>
+               </or></possibleDropTargets>
+         </dropAssistant>
       </navigatorContent>
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.navigator.ivr.MavenContentProvider"
@@ -180,9 +190,6 @@
                <with
                      variable="selection">
                   <and>
-                     <count
-                           value="1">
-                     </count>
                      <iterate
                            ifEmpty="false"
                            operator="and">
