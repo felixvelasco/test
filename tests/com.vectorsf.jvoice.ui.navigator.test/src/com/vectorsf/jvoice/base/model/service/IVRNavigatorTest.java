@@ -43,9 +43,9 @@ public class IVRNavigatorTest {
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
 	@SuppressWarnings("unchecked")
-	private final Matcher<Object[]> arrayContainingTextOne = arrayContaining(hasProperty("text", is("Flow one")));
+	private final Matcher<Object[]> arrayContainingTextOne = arrayContaining(hasProperty("text", is("one")));
 	@SuppressWarnings("unchecked")
-	private final Matcher<Object[]> arrayContainingTextTwo = arrayContaining(hasProperty("text", is("Flow two")));
+	private final Matcher<Object[]> arrayContainingTextTwo = arrayContaining(hasProperty("text", is("two")));
 
 	/**
 	 * @throws java.lang.Exception
