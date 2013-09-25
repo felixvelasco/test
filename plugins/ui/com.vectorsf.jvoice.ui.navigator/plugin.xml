@@ -52,6 +52,10 @@
                   separator="true">
             </insertionPoint>
             <insertionPoint
+                  name="group.openWith"
+                  separator="false">
+            </insertionPoint>
+            <insertionPoint
                   name="group.show"
                   separator="true">
             </insertionPoint>
@@ -198,30 +202,6 @@
                </visibleWhen>
             </command>
          </menu>
-      </menuContribution>
-      <menuContribution
-            allPopups="true"
-            locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.open">
-         <command
-               commandId="org.eclipse.jdt.ui.navigate.open.type"
-               label="Open"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <and>
-                     <iterate
-                           ifEmpty="false"
-                           operator="and">
-                        <instanceof
-                              value="com.vectorsf.jvoice.model.base.JVBean">
-                        </instanceof>
-                     </iterate>
-                  </and>
-               </with>
-            </visibleWhen>
-         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -466,24 +446,6 @@
                      </instanceof>
                   </or>
                </iterate>
-            </with>
-         </activeWhen>
-      </handler>
-      <handler
-            class="com.vectorsf.jvoice.ui.navigator.handler.OpenHandler"
-            commandId="org.eclipse.jdt.ui.navigate.open.type">
-         <activeWhen>
-            <with
-                  variable="selection">
-               <and>
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVBean">
-                     </instanceof>
-                  </iterate>
-               </and>
             </with>
          </activeWhen>
       </handler>
