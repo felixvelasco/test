@@ -6,8 +6,8 @@
     complianceLevel="7.0" copyrightFields="false" usedGenPackages="../../com.vectorsf.jvoice.base.model/model/Base.genmodel#//base"
     operationReflection="true" importOrganizing="true">
   <foreignModel>coreOperations.ecore</foreignModel>
-  <genPackages prefix="Operations" basePackage="com.vectorsf.jvoice.model" disposableProviderFactory="true"
-      ecorePackage="coreOperations.ecore#/">
+  <genPackages prefix="Operations" basePackage="com.vectorsf.jvoice.model" resource="XMI"
+      disposableProviderFactory="true" fileExtensions="jvflow" ecorePackage="coreOperations.ecore#/">
     <genClasses image="false" ecoreClass="coreOperations.ecore#//State">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//State/incomingTransitions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//State/outgoingTransitions"/>
@@ -30,5 +30,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//Case/condition"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//Case/eventName"/>
     </genClasses>
+    <genClasses ecoreClass="coreOperations.ecore#//CallState"/>
   </genPackages>
 </genmodel:GenModel>
