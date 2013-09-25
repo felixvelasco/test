@@ -20,6 +20,9 @@
       <viewerActionBinding
             viewerId="com.vectorsf.jvoice.ui.navigator.ViewIVR">
          <includes>
+            <actionExtension
+                  pattern="com.vectorsf.jvoice.ui.navigator.ActionProvider">
+            </actionExtension>
          </includes>
       </viewerActionBinding>
       <viewerContentBinding
@@ -104,6 +107,24 @@
             </or>
          </triggerPoints>
       </navigatorContent>
+      <actionProvider
+            class="com.vectorsf.jvoice.ui.navigator.CommonActionProviderIVR"
+            id="com.vectorsf.jvoice.ui.navigator.ActionProvider">
+         <enablement>
+            <with
+                  variable="selection">
+               <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVBean">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </with>
+         </enablement>
+      </actionProvider>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
