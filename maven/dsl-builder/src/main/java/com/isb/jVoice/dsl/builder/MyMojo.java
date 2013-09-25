@@ -1,21 +1,5 @@
 package com.isb.jVoice.dsl.builder;
 
-/*
- * Copyright 2001-2005 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -42,15 +26,12 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
-import Core.CorePackage;
-import Generic_BKS.Flow;
-import Generic_BKS.Generic_BKSPackage;
-import Generic_BKS.State;
-import Generic_BKS.SubFlow;
-import IVR.IVRPackage;
-
 import com.google.inject.Injector;
 import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
+import com.vectorsf.jvoice.model.base.BasePackage;
+import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.model.operations.OperationsPackage;
+import com.vectorsf.jvoice.model.operations.State;
 
 /**
  * Goal which touches a timestamp file.
@@ -71,7 +52,7 @@ public class MyMojo extends AbstractMojo {
 	/**
 	 * Location of the source directory.
 	 * 
-	 * @parameter expression="${basedir}/vega/jVoice"
+	 * @parameter expression="${basedir}/src/main/resources/jv"
 	 * @required
 	 */
 	private File sourceDirectory;
@@ -117,12 +98,11 @@ public class MyMojo extends AbstractMojo {
 
 		try {
 			Injector injector = new VoiceDslStandaloneSetup().createInjectorAndDoEMFRegistration();
-			
-			EPackage.Registry.INSTANCE.put(Generic_BKSPackage.eNS_URI, Generic_BKSPackage.eINSTANCE);
-			EPackage.Registry.INSTANCE.put(IVRPackage.eNS_URI, IVRPackage.eINSTANCE);
-			EPackage.Registry.INSTANCE.put(CorePackage.eNS_URI, CorePackage.eINSTANCE);
-			
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("flow", new XMIResourceFactoryImpl());
+
+			EPackage.Registry.INSTANCE.put(BasePackage.eNS_URI, BasePackage.eINSTANCE);
+			EPackage.Registry.INSTANCE.put(OperationsPackage.eNS_URI, OperationsPackage.eINSTANCE);
+
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("jvflow", new XMIResourceFactoryImpl());
 
 			processDSLFiles(injector);
 			processFlowFiles();
@@ -171,7 +151,7 @@ public class MyMojo extends AbstractMojo {
 			URI uri = URI.createFileURI(dslFile.getCanonicalPath());
 			Resource resource = resourceSet.getResource(uri, true);
 
-			//JSPGenerator.compile(targetFile, resource);
+			// JSPGenerator.compile(targetFile, resource);
 
 			return true;
 		} else {
@@ -227,7 +207,7 @@ public class MyMojo extends AbstractMojo {
 	}
 
 	private void processFlowFiles() throws InclusionScanException, IOException {
-		SourceMapping mapping = new SuffixMapping("flow", Collections.<String> emptySet());
+		SourceMapping mapping = new SuffixMapping("jvflow", Collections.<String> emptySet());
 		Set<String> includes = getFlowIncludesPatterns();
 		SourceInclusionScanner scan = new SimpleSourceInclusionScanner(includes, excludes);
 
@@ -253,42 +233,36 @@ public class MyMojo extends AbstractMojo {
 		File targetFile = new File(outputDirectory, getTargetFlowName(flowFile.getName()));
 		if (buildRequired(flowFile, Collections.singletonList(targetFile))) {
 			targetFile.createNewFile();
-			
+
 			// resolve test
-			ResourceSet rSet = new ResourceSetImpl();			
+			ResourceSet rSet = new ResourceSetImpl();
 			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl();
 			vegaURIHandler.setMavenProject(project);
-			rSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
-					vegaURIHandler);
+			rSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 			URI uri = URI.createFileURI(flowFile.getCanonicalPath().toString());
 			Resource res = rSet.getResource(uri, true);
 
-			Flow flow = (Flow)res.getContents().get(0);
+			Flow flow = (Flow) res.getContents().get(0);
 
-			for (State state:flow.getStates())
-			{
-				if (state instanceof SubFlow)
-				{	
-					SubFlow sf = (SubFlow)state;
-					Flow flowCC = sf.getCalledFlow();
-					String gramma = "El estado " + sf.getName() + " apunta a " + flowCC.getName(); 					
-				}
-			}			
+			for (State state : flow.getStates()) {
+				/*
+				 * if (state instanceof SubFlow) { SubFlow sf = (SubFlow) state; Flow flowCC = sf.getCalledFlow();
+				 * String gramma = "El estado " + sf.getName() + " apunta a " + flowCC.getName(); }
+				 */
+				// TODO Integrar con cambios de subflujo
+			}
 			// deresolve test
 			URI uri2 = URI.createFileURI("D:/workspaces/prueba_xtext/padre/src/main/resources/o.flow");
-			
+
 			ResourceSet rSet2 = new ResourceSetImpl();
-			rSet2.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
-					vegaURIHandler);
+			rSet2.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 			Resource res2 = rSet2.getResource(uri2, true);
 
-			if(res2 instanceof XMLResource) {
-				
-				
-				((XMLResource)res2).getDefaultSaveOptions().put(
-						XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
+			if (res2 instanceof XMLResource) {
+
+				((XMLResource) res2).getDefaultSaveOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 			}
-			
+
 			try {
 				res2.save(Collections.EMPTY_MAP);
 			} catch (IOException e) {
