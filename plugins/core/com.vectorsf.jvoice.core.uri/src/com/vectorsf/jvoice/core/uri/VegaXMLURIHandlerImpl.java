@@ -39,23 +39,19 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 	private static final String ARCHIVE_SEPARATOR = "!/";
 	private static final String FRAGMENT0 = "#/";
 	private URI baseUri;
-	private IMavenProjectFacade mproject;
+	private IMavenProjectFacade mproject=null;
 
 	@Override
 	public void setBaseURI(URI uri) {
 		this.baseUri = uri;
-		IWorkspace ws = ResourcesPlugin.getWorkspace();
-		URI uriG = baseUri.trimFragment();
-		if (uriG.isPlatform()) {
-			uriG = URI.createURI(uriG.toPlatformString(true));
-		}
-		IResource resource = ws.getRoot().findMember(uriG.toString());
-		mproject = MavenPlugin.getMavenProjectRegistry()
-		.getProject(resource.getProject());
 	}
 
 	@Override
 	public URI deresolve(URI uri) {
+		if (mproject==null)
+		{
+			searchMavenProject();
+		}
 		URI vegaURI=null;
 		String sScheme = uri.scheme();
 		if (PLATFORM.equals(sScheme))
@@ -74,8 +70,25 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 	}
 
 
+	private void searchMavenProject() 
+	{
+		IWorkspace ws = ResourcesPlugin.getWorkspace();
+		URI uriG = baseUri.trimFragment();
+		if (uriG.isPlatform()) {
+			uriG = URI.createURI(uriG.toPlatformString(true));
+		}
+		IResource resource = ws.getRoot().findMember(uriG.toString());
+		mproject = MavenPlugin.getMavenProjectRegistry()
+		.getProject(resource.getProject());
+	}
+
 	@Override
-	public URI resolve(URI uri) {
+	public URI resolve(URI uri) 
+	{
+		if (mproject==null)
+		{
+			searchMavenProject();
+		}
 		URI vegaURI = null;
 		if (uri.toString().startsWith(VEGA_URI)) {
 			String uriPath = uri.path();
