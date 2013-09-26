@@ -26,12 +26,18 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
+import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
+import org.eclipse.ui.dialogs.PatternFilter;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
+import com.vectorsf.jvoice.model.base.JVPackage;
+import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
@@ -120,9 +126,39 @@ public class InputStatePattern extends StatePattern implements
 				new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
 						ComposedAdapterFactory.Descriptor.Registry.INSTANCE)),
 				new AdapterFactoryContentProvider(new ComposedAdapterFactory(
-						ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+						ComposedAdapterFactory.Descriptor.Registry.INSTANCE))) {
+			@Override
+			protected org.eclipse.jface.viewers.TreeViewer doCreateTreeViewer(
+					org.eclipse.swt.widgets.Composite parent, int style) {
+				PatternFilter filter = new PatternFilter();
+				FilteredTree filteredTree = new FilteredTree(parent, style,
+						filter, true);
+				return filteredTree.getViewer();
+
+			};
+		};
 		dialog.setAllowMultiple(false);
 		dialog.setValidator(this);
+		ViewerFilter vfilter = new ViewerFilter() {
+			@Override
+			public boolean select(Viewer viewer, Object parentElement,
+					Object element) {
+				if (element instanceof JVProject
+						|| element instanceof JVPackage) {
+					return true;
+				}
+				if (element instanceof VoiceDsl) {
+					if (((VoiceDsl) element).getDslType().equals("inputname")) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+		};
+
+		dialog.addFilter(vfilter);
 		dialog.setTitle("Input Selection");
 		dialog.setMessage("Select an input:");
 		dialog.setInput(BaseModel.getInstance().getModel());
