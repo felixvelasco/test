@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="com.vectorsf.jvoice.diagram.core.category"
+            class="com.vectorsf.jvoice.ui.wizard.Wizards.CreateProjectJVoice"
+            id="com.vectorsf.jvoice.ui.Wizard.wizard"
+            name="Project JVoice"
+            project="true">
+      </wizard>
+   </extension>
+
+</plugin>

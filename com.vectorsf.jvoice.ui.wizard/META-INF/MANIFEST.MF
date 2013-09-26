@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Wizard
+Bundle-SymbolicName: com.vectorsf.jvoice.ui.wizard;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.vectorsf.jvoice.ui.wizard.Activator
+Bundle-Vendor: VECTORSF
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.ide,
+ org.eclipse.core.resources,
+ org.eclipse.jdt.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Import-Package: com.vectorsf.jvoice.core.project
