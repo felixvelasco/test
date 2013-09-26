@@ -47,6 +47,18 @@
      <patternContributor
           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CallStatePattern">
     </patternContributor>
+     <patternContributor
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CallFlowStatePattern">
+     </patternContributor>
+     <patternContributor
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.PromptStatePattern">
+     </patternContributor>
+     <patternContributor
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.InputStatePattern">
+     </patternContributor>
+     <patternContributor
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.MenuStatePattern">
+     </patternContributor>
  </extension>
  <extension
        point="org.eclipse.graphiti.ui.imageProviders">
