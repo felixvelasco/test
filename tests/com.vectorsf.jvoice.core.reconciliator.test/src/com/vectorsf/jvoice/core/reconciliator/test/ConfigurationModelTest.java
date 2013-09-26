@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.vectorsf.jvoice.base.model.service;
+package com.vectorsf.jvoice.core.reconciliator.test;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVProject;

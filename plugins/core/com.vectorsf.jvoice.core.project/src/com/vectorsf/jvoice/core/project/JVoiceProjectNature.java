@@ -8,6 +8,10 @@ import org.eclipse.core.runtime.CoreException;
 
 public class JVoiceProjectNature implements IProjectNature {
 
+	public static final String PLUGIN_ID = "com.vectorsf.jvoice.core.project"; //$NON-NLS-1$
+	public static final String NATURE_ID = PLUGIN_ID + ".jVoiceNature"; //$NON-NLS-1$
+	public static final String BUILDER_ID = PLUGIN_ID + ".jVoiceBuilder"; //$NON-NLS-1$
+
 	private static final String JVOICEBUILDER = "jvoicebuildertest";
 	private IProject project;
 

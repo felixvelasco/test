@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.base.model.service;
+package com.vectorsf.jvoice.core.reconciliator.test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -21,13 +21,15 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.osgi.framework.Bundle;
 
+import com.vectorsf.jvoice.core.project.JVoiceProjectConfigurator;
+
 import static org.junit.Assert.fail;
 
 public class BaseModelResources {
 
 	protected String ruta = "src/main/resources/jv";
 	protected String rutaProperties = "src/main/config/properties";
-	
+
 	protected static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.core.reconciliator");
 
 	public BaseModelResources() {
@@ -43,19 +45,7 @@ public class BaseModelResources {
 	}
 
 	protected IProject createProject(final String name) throws CoreException {
-		final IProject result[] = new IProject[1];
-		executeWksRunnable(new IWorkspaceRunnable() {
-
-			@Override
-			public void run(IProgressMonitor monitor) throws CoreException {
-				result[0] = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
-				result[0].create(monitor);
-				result[0].open(monitor);
-
-			}
-		});
-
-		return result[0];
+		return JVoiceProjectConfigurator.createProject(name, name, name);
 	}
 
 	protected IFolder createFolders(final IProject project, final String ruta) throws CoreException {
@@ -168,7 +158,9 @@ public class BaseModelResources {
 			createRecursively((IFolder) parent, monitor);
 		}
 
-		container.create(true, false, monitor);
+		if (!container.exists()) {
+			container.create(true, false, monitor);
+		}
 
 	}
 

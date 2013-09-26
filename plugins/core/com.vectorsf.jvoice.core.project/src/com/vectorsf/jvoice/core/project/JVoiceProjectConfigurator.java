@@ -2,6 +2,7 @@ package com.vectorsf.jvoice.core.project;
 
 import org.apache.maven.model.Model;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -39,10 +40,9 @@ public final class JVoiceProjectConfigurator {
 				result[0] = project;
 			}
 		};
-		IProject project = result[0];
 		ResourcesPlugin.getWorkspace().run(action, null);
-		ResourcesPlugin.getWorkspace()
-				.run(new AddJVoiceNatureRunnable(project), project, IWorkspace.AVOID_UPDATE, null);
+		IProject project = result[0];
+		ResourcesPlugin.getWorkspace().run(new AddJVoiceNatureRunnable(project), null);
 
 		return result[0];
 	}
@@ -70,8 +70,15 @@ public final class JVoiceProjectConfigurator {
 
 		@Override
 		public void run(IProgressMonitor monitor) throws CoreException {
-			project.getDescription().getNatureIds();
+			IProjectDescription description = project.getDescription();
+			String[] natureIds = description.getNatureIds();
 
+			String[] newNatureIds = new String[natureIds.length + 1];
+			System.arraycopy(natureIds, 0, newNatureIds, 1, natureIds.length);
+			newNatureIds[0] = JVoiceProjectNature.NATURE_ID;
+			description.setNatureIds(newNatureIds);
+
+			this.project.setDescription(description, null);
 		}
 	}
 
