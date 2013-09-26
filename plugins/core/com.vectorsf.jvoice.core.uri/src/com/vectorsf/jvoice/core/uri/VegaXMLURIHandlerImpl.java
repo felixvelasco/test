@@ -12,7 +12,6 @@ import java.util.zip.ZipInputStream;
 
 import org.apache.maven.artifact.Artifact;
 import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
@@ -40,11 +39,19 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 	private static final String ARCHIVE_SEPARATOR = "!/";
 	private static final String FRAGMENT0 = "#/";
 	private URI baseUri;
-	private IFile file;
+	private IMavenProjectFacade mproject;
 
 	@Override
 	public void setBaseURI(URI uri) {
 		this.baseUri = uri;
+		IWorkspace ws = ResourcesPlugin.getWorkspace();
+		URI uriG = baseUri.trimFragment();
+		if (uriG.isPlatform()) {
+			uriG = URI.createURI(uriG.toPlatformString(true));
+		}
+		IResource resource = ws.getRoot().findMember(uriG.toString());
+		mproject = MavenPlugin.getMavenProjectRegistry()
+		.getProject(resource.getProject());
 	}
 
 	@Override
@@ -59,8 +66,11 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		{
 			vegaURI = getURIJar(uri);
 		}
-		
-		return vegaURI;
+		if (vegaURI != null) {
+			return vegaURI;
+		} else {
+			return uri.deresolve(baseUri);
+		}
 	}
 
 
@@ -73,9 +83,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			{
 				String fileNameToSearch = uriPath.substring(uriPath
 						.lastIndexOf(SEPARATOR) + 1);
-				IMavenProjectFacade project = MavenPlugin.getMavenProjectRegistry()
-					.getProject(file.getProject());
-				vegaURI = searchURIs(uri, vegaURI, fileNameToSearch, project);
+				vegaURI = searchURIs(uri, vegaURI, fileNameToSearch, mproject);
 			}
 		}
 		if (vegaURI != null) {
@@ -85,9 +93,6 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		}
 	}
 
-	public void setFile(IFile file2) {
-		this.file = file2;
-	}
 
 	private URI searchURIs(URI uri, URI vegaURI, String fileNameToSearch,
 			IMavenProjectFacade project) {
