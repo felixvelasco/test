@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.vectorsf.jvoice.prompt.model/src-gen" modelPluginID="com.vectorsf.jvoice.prompt.model"
-    modelName="VoiceDsl" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.vectorsf.jvoice.prompt.model/src-gen" editDirectory="/com.vectorsf.jvoice.prompt.model.edit/src-gen"
+    modelPluginID="com.vectorsf.jvoice.prompt.model" modelName="VoiceDsl" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
     usedGenPackages="../../com.vectorsf.jvoice.base.model/model/Base.genmodel#//base ../../org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel#//types ../../org.eclipse.xtext.xbase/model/Xbase.genmodel#//xAnnotations ../../org.eclipse.xtext.xbase/model/Xbase.genmodel#//xbase"
     operationReflection="true" importOrganizing="true">

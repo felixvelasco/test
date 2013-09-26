@@ -10,10 +10,15 @@ public class ExtFlowItemProvider extends FlowItemProvider {
 	public ExtFlowItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
-	
+
 	@Override
 	public String getText(Object object) {
-		String label = ((Flow)object).getName();
-		return label ;
+		String label = ((Flow) object).getName();
+		return label;
+	}
+
+	@Override
+	public Object getImage(Object object) {
+		return getResourceLocator().getImage("full/obj16/Flow.png");
 	}
 }

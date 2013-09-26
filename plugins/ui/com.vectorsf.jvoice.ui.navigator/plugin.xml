@@ -6,7 +6,7 @@
       <view
             category="com.vectorsf.jvoice.ui.navigator.category"
             class="com.vectorsf.jvoice.ui.navigator.IVRNavigator"
-            icon="res/Component.ico"
+            icon="res/navigator.png"
             id="com.vectorsf.jvoice.ui.navigator.ViewIVR"
             name="Navigator IVR">
       </view>
