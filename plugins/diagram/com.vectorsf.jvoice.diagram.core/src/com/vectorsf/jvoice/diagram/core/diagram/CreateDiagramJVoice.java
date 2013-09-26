@@ -33,6 +33,7 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorDescriptor;
@@ -57,7 +58,10 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 	@Override
 	public void addPages() {
 		super.addPages();
-		addPage(new DiagramNameWizardPage(PAGE_NAME_DIAGRAM_NAME));
+		DiagramNameWizardPage pageName = new DiagramNameWizardPage(
+				PAGE_NAME_DIAGRAM_NAME);
+		pageName.setSelection(getSelection().getFirstElement());
+		addPage(pageName);
 	}
 
 	@Override
@@ -92,6 +96,10 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 		} else if (element instanceof JVPackage) {
 			diagramFolder = (IFolder) Platform.getAdapterManager().getAdapter(
 					element, IFolder.class);
+			project = diagramFolder.getProject();
+		} else if (element instanceof IPackageFragmentRoot) {
+			IPackageFragmentRoot prueba = (IPackageFragmentRoot) element;
+			diagramFolder = (IFolder) prueba.getResource();
 			project = diagramFolder.getProject();
 		}
 
