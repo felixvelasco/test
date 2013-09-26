@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.vectorsf.jvoice.operation.model/src-gen" editDirectory="/com.vectorsf.jvoice.operation.model.edit/src-gen"
     modelPluginID="com.vectorsf.jvoice.operation.model" modelName="CoreOperations"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="7.0" copyrightFields="false" usedGenPackages="../../com.vectorsf.jvoice.base.model/model/Base.genmodel#//base"
+    complianceLevel="7.0" copyrightFields="false" usedGenPackages="../../com.vectorsf.jvoice.base.model/model/Base.genmodel#//base ../../org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel#//types ../../com.vectorsf.jvoice.prompt.model/model/VoiceDsl.genmodel#//voiceDsl ../../org.eclipse.xtext.xbase/model/Xbase.genmodel#//xAnnotations ../../org.eclipse.xtext.xbase/model/Xbase.genmodel#//xbase"
     operationReflection="true" importOrganizing="true">
   <foreignModel>coreOperations.ecore</foreignModel>
   <genPackages prefix="Operations" basePackage="com.vectorsf.jvoice.model" resource="XMI"
@@ -31,5 +31,17 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//Case/eventName"/>
     </genClasses>
     <genClasses ecoreClass="coreOperations.ecore#//CallState"/>
+    <genClasses ecoreClass="coreOperations.ecore#//CallFlowState">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//CallFlowState/subflow"/>
+    </genClasses>
+    <genClasses ecoreClass="coreOperations.ecore#//PromptState">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//PromptState/locution"/>
+    </genClasses>
+    <genClasses ecoreClass="coreOperations.ecore#//InputState">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//InputState/locution"/>
+    </genClasses>
+    <genClasses ecoreClass="coreOperations.ecore#//MenuState">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//MenuState/locution"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

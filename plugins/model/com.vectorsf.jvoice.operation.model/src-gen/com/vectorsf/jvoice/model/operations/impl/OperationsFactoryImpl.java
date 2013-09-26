@@ -63,6 +63,10 @@ public class OperationsFactoryImpl extends EFactoryImpl implements OperationsFac
 			case OperationsPackage.SWITCH_STATE: return createSwitchState();
 			case OperationsPackage.CASE: return createCase();
 			case OperationsPackage.CALL_STATE: return createCallState();
+			case OperationsPackage.CALL_FLOW_STATE: return createCallFlowState();
+			case OperationsPackage.PROMPT_STATE: return createPromptState();
+			case OperationsPackage.INPUT_STATE: return createInputState();
+			case OperationsPackage.MENU_STATE: return createMenuState();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -136,6 +140,46 @@ public class OperationsFactoryImpl extends EFactoryImpl implements OperationsFac
 	public CallState createCallState() {
 		CallStateImpl callState = new CallStateImpl();
 		return callState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CallFlowState createCallFlowState() {
+		CallFlowStateImpl callFlowState = new CallFlowStateImpl();
+		return callFlowState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PromptState createPromptState() {
+		PromptStateImpl promptState = new PromptStateImpl();
+		return promptState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public InputState createInputState() {
+		InputStateImpl inputState = new InputStateImpl();
+		return inputState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MenuState createMenuState() {
+		MenuStateImpl menuState = new MenuStateImpl();
+		return menuState;
 	}
 
 	/**

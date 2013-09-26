@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getVariables <em>Variables</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getTypes <em>Types</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getDslType <em>Dsl Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -207,5 +208,31 @@ public interface VoiceDsl extends JVBean {
 	 * @generated
 	 */
 	EList<Type> getTypes();
+
+	/**
+	 * Returns the value of the '<em><b>Dsl Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Dsl Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Dsl Type</em>' attribute.
+	 * @see #setDslType(String)
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getVoiceDsl_DslType()
+	 * @model
+	 * @generated
+	 */
+	String getDslType();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getDslType <em>Dsl Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Dsl Type</em>' attribute.
+	 * @see #getDslType()
+	 * @generated
+	 */
+	void setDslType(String value);
 
 } // VoiceDsl

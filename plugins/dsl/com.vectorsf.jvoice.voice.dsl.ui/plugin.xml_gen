@@ -225,28 +225,28 @@
     </extension>
 
 
-	<!-- marker definitions for com.isb.bks.ivr.voice.dsl.VoiceDsl -->
-	<extension
-	        id="voicedsl.check.fast"
-	        name="VoiceDsl Problem"
-	        point="org.eclipse.core.resources.markers">
-	    <super type="org.eclipse.xtext.ui.check.fast"/>
-	    <persistent value="true"/>
-	</extension>
-	<extension
-	        id="voicedsl.check.normal"
-	        name="VoiceDsl Problem"
-	        point="org.eclipse.core.resources.markers">
-	    <super type="org.eclipse.xtext.ui.check.normal"/>
-	    <persistent value="true"/>
-	</extension>
-	<extension
-	        id="voicedsl.check.expensive"
-	        name="VoiceDsl Problem"
-	        point="org.eclipse.core.resources.markers">
-	    <super type="org.eclipse.xtext.ui.check.expensive"/>
-	    <persistent value="true"/>
-	</extension>
+    <!-- marker definitions for com.isb.bks.ivr.voice.dsl.VoiceDsl -->
+    <extension
+            id="voicedsl.check.fast"
+            name="VoiceDsl Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="voicedsl.check.normal"
+            name="VoiceDsl Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.normal"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="voicedsl.check.expensive"
+            name="VoiceDsl Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.expensive"/>
+        <persistent value="true"/>
+    </extension>
 
    <extension
          point="org.eclipse.xtext.builder.participant">

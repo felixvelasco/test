@@ -9,6 +9,7 @@ import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
+import org.eclipse.graphiti.features.context.IDoubleClickContext;
 import org.eclipse.graphiti.features.context.IPictogramElementContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
@@ -26,10 +27,15 @@ import org.eclipse.graphiti.tb.IContextMenuEntry;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
+import com.vectorsf.jvoice.diagram.core.pattern.states.OpenEditor;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.CreateTransitionFromPad;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
+import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.FinalState;
+import com.vectorsf.jvoice.model.operations.InputState;
+import com.vectorsf.jvoice.model.operations.MenuState;
+import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 
@@ -140,7 +146,28 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 		return feature.getCreateImageId();
 	}
-	public IDirectEditingFeature getDirectEditingFeature(IDirectEditingContext context) {
+
+	public IDirectEditingFeature getDirectEditingFeature(
+			IDirectEditingContext context) {
 		return null;
+	}
+
+	@Override
+	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
+		if (getFeatureProvider().getBusinessObjectForPictogramElement(
+				context.getInnerPictogramElement()) instanceof CallFlowState
+				|| getFeatureProvider().getBusinessObjectForPictogramElement(
+						context.getInnerPictogramElement()) instanceof InputState
+				|| getFeatureProvider().getBusinessObjectForPictogramElement(
+						context.getInnerPictogramElement()) instanceof MenuState
+				|| getFeatureProvider().getBusinessObjectForPictogramElement(
+						context.getInnerPictogramElement()) instanceof PromptState) {
+
+			OpenEditor oe = new OpenEditor(getFeatureProvider());
+
+			return oe;
+		}
+
+		return super.getDoubleClickFeature(context);
 	}
 }

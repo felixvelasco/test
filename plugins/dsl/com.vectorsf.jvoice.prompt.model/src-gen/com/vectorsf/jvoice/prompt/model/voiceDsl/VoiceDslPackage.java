@@ -177,13 +177,22 @@ public interface VoiceDslPackage extends EPackage {
 	int VOICE_DSL__TYPES = BasePackage.JV_BEAN_FEATURE_COUNT + 7;
 
 	/**
+	 * The feature id for the '<em><b>Dsl Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VOICE_DSL__DSL_TYPE = BasePackage.JV_BEAN_FEATURE_COUNT + 8;
+
+	/**
 	 * The number of structural features of the '<em>Voice Dsl</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 8;
+	int VOICE_DSL_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 9;
 
 	/**
 	 * The number of operations of the '<em>Voice Dsl</em>' class.
@@ -1366,6 +1375,17 @@ public interface VoiceDslPackage extends EPackage {
 	EReference getVoiceDsl_Types();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getDslType <em>Dsl Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Dsl Type</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getDslType()
+	 * @see #getVoiceDsl()
+	 * @generated
+	 */
+	EAttribute getVoiceDsl_DslType();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration <em>Configuration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2223,6 +2243,14 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EReference VOICE_DSL__TYPES = eINSTANCE.getVoiceDsl_Types();
+
+		/**
+		 * The meta object literal for the '<em><b>Dsl Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VOICE_DSL__DSL_TYPE = eINSTANCE.getVoiceDsl_DslType();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConfigurationImpl <em>Configuration</em>}' class.
