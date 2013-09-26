@@ -551,7 +551,6 @@ public interface OperationsPackage extends EPackage {
 	 */
 	int CASE_OPERATION_COUNT = 0;
 
-
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl <em>Call State</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -624,6 +623,334 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int CALL_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl <em>Call Flow State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCallFlowState()
+	 * @generated
+	 */
+	int CALL_FLOW_STATE = 8;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE__ID = STATE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE__NAME = STATE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE__DESCRIPTION = STATE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Subflow</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE__SUBFLOW = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Call Flow State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Call Flow State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.PromptStateImpl <em>Prompt State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.impl.PromptStateImpl
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getPromptState()
+	 * @generated
+	 */
+	int PROMPT_STATE = 9;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE__ID = STATE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE__NAME = STATE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE__DESCRIPTION = STATE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Locution</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE__LOCUTION = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Prompt State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Prompt State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.InputStateImpl <em>Input State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.impl.InputStateImpl
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getInputState()
+	 * @generated
+	 */
+	int INPUT_STATE = 10;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE__ID = STATE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE__NAME = STATE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE__DESCRIPTION = STATE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Locution</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE__LOCUTION = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Input State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Input State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.MenuStateImpl <em>Menu State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.impl.MenuStateImpl
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getMenuState()
+	 * @generated
+	 */
+	int MENU_STATE = 11;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__ID = STATE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__NAME = STATE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__DESCRIPTION = STATE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Locution</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__LOCUTION = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Menu State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Menu State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
 
 
 	/**
@@ -817,6 +1144,90 @@ public interface OperationsPackage extends EPackage {
 	EClass getCallState();
 
 	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.CallFlowState <em>Call Flow State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Call Flow State</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.CallFlowState
+	 * @generated
+	 */
+	EClass getCallFlowState();
+
+	/**
+	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.CallFlowState#getSubflow <em>Subflow</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Subflow</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.CallFlowState#getSubflow()
+	 * @see #getCallFlowState()
+	 * @generated
+	 */
+	EReference getCallFlowState_Subflow();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.PromptState <em>Prompt State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Prompt State</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.PromptState
+	 * @generated
+	 */
+	EClass getPromptState();
+
+	/**
+	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.PromptState#getLocution <em>Locution</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Locution</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.PromptState#getLocution()
+	 * @see #getPromptState()
+	 * @generated
+	 */
+	EReference getPromptState_Locution();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.InputState <em>Input State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Input State</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.InputState
+	 * @generated
+	 */
+	EClass getInputState();
+
+	/**
+	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.InputState#getLocution <em>Locution</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Locution</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.InputState#getLocution()
+	 * @see #getInputState()
+	 * @generated
+	 */
+	EReference getInputState_Locution();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.MenuState <em>Menu State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Menu State</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.MenuState
+	 * @generated
+	 */
+	EClass getMenuState();
+
+	/**
+	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.MenuState#getLocution <em>Locution</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Locution</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.MenuState#getLocution()
+	 * @see #getMenuState()
+	 * @generated
+	 */
+	EReference getMenuState_Locution();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -998,6 +1409,78 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CALL_STATE = eINSTANCE.getCallState();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl <em>Call Flow State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCallFlowState()
+		 * @generated
+		 */
+		EClass CALL_FLOW_STATE = eINSTANCE.getCallFlowState();
+
+		/**
+		 * The meta object literal for the '<em><b>Subflow</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CALL_FLOW_STATE__SUBFLOW = eINSTANCE.getCallFlowState_Subflow();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.PromptStateImpl <em>Prompt State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.impl.PromptStateImpl
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getPromptState()
+		 * @generated
+		 */
+		EClass PROMPT_STATE = eINSTANCE.getPromptState();
+
+		/**
+		 * The meta object literal for the '<em><b>Locution</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROMPT_STATE__LOCUTION = eINSTANCE.getPromptState_Locution();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.InputStateImpl <em>Input State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.impl.InputStateImpl
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getInputState()
+		 * @generated
+		 */
+		EClass INPUT_STATE = eINSTANCE.getInputState();
+
+		/**
+		 * The meta object literal for the '<em><b>Locution</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INPUT_STATE__LOCUTION = eINSTANCE.getInputState_Locution();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.MenuStateImpl <em>Menu State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.impl.MenuStateImpl
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getMenuState()
+		 * @generated
+		 */
+		EClass MENU_STATE = eINSTANCE.getMenuState();
+
+		/**
+		 * The meta object literal for the '<em><b>Locution</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MENU_STATE__LOCUTION = eINSTANCE.getMenuState_Locution();
 
 	}
 

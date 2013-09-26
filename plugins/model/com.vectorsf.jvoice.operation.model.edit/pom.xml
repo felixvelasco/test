@@ -5,11 +5,10 @@
   <parent>
     <groupId>com.vectorsf.jvoice.core</groupId>
     <artifactId>plugins</artifactId>
-    <relativePath>../..</relativePath>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.vectorsf.jvoice.core</groupId>
   <artifactId>com.vectorsf.jvoice.operation.model.edit</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>

@@ -45,6 +45,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getTypes <em>Types</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getDslType <em>Dsl Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -130,6 +131,26 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 	 * @ordered
 	 */
 	protected EList<Type> types;
+
+	/**
+	 * The default value of the '{@link #getDslType() <em>Dsl Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDslType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DSL_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDslType() <em>Dsl Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDslType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String dslType = DSL_TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -406,6 +427,27 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getDslType() {
+		return dslType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDslType(String newDslType) {
+		String oldDslType = dslType;
+		dslType = newDslType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.VOICE_DSL__DSL_TYPE, oldDslType, dslType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -453,6 +495,8 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 				return getVariables();
 			case VoiceDslPackage.VOICE_DSL__TYPES:
 				return getTypes();
+			case VoiceDslPackage.VOICE_DSL__DSL_TYPE:
+				return getDslType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -493,6 +537,9 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 				getTypes().clear();
 				getTypes().addAll((Collection<? extends Type>)newValue);
 				return;
+			case VoiceDslPackage.VOICE_DSL__DSL_TYPE:
+				setDslType((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -529,6 +576,9 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 			case VoiceDslPackage.VOICE_DSL__TYPES:
 				getTypes().clear();
 				return;
+			case VoiceDslPackage.VOICE_DSL__DSL_TYPE:
+				setDslType(DSL_TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -557,8 +607,26 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 				return variables != null;
 			case VoiceDslPackage.VOICE_DSL__TYPES:
 				return types != null && !types.isEmpty();
+			case VoiceDslPackage.VOICE_DSL__DSL_TYPE:
+				return DSL_TYPE_EDEFAULT == null ? dslType != null : !DSL_TYPE_EDEFAULT.equals(dslType);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (dslType: ");
+		result.append(dslType);
+		result.append(')');
+		return result.toString();
 	}
 
 } //VoiceDslImpl

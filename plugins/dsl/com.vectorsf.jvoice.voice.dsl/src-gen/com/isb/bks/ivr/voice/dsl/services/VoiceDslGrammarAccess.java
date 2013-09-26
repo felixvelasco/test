@@ -24,7 +24,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VoiceDsl");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Keyword cInputnameKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Assignment cDslTypeAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final Keyword cDslTypeInputnameKeyword_0_0_0 = (Keyword)cDslTypeAssignment_0_0.eContents().get(0);
 		private final Assignment cNameAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_0_1_0 = (RuleCall)cNameAssignment_0_1.eContents().get(0);
 		private final UnorderedGroup cUnorderedGroup_0_2 = (UnorderedGroup)cGroup_0.eContents().get(2);
@@ -41,7 +42,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAudiosAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
 		private final RuleCall cAudiosAudiosParserRuleCall_0_3_0 = (RuleCall)cAudiosAssignment_0_3.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Keyword cPromptnameKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cDslTypeAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final Keyword cDslTypePromptnameKeyword_1_0_0 = (Keyword)cDslTypeAssignment_1_0.eContents().get(0);
 		private final Assignment cNameAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_1_0 = (RuleCall)cNameAssignment_1_1.eContents().get(0);
 		private final UnorderedGroup cUnorderedGroup_1_2 = (UnorderedGroup)cGroup_1.eContents().get(2);
@@ -54,7 +56,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAudiosAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
 		private final RuleCall cAudiosAudiosParserRuleCall_1_3_0 = (RuleCall)cAudiosAssignment_1_3.eContents().get(0);
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Keyword cMenunameKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cDslTypeAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final Keyword cDslTypeMenunameKeyword_2_0_0 = (Keyword)cDslTypeAssignment_2_0.eContents().get(0);
 		private final Assignment cNameAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_2_1_0 = (RuleCall)cNameAssignment_2_1.eContents().get(0);
 		private final UnorderedGroup cUnorderedGroup_2_2 = (UnorderedGroup)cGroup_2.eContents().get(2);
@@ -75,31 +78,38 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//VoiceDsl:
 		//
-		//	"inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+		//	dslType="inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* &
 		//
-		//	conditions+=Condition*) audios=Audios | "promptname" name=ID (properties+=Property* & variables=Variables? &
+		//	variables=Variables? & conditions+=Condition*) audios=Audios | dslType="promptname" name=ID (properties+=Property* &
 		//
-		//	conditions+=Condition*) audios=Audios | "menuname" name=ID (configuration=Configuration & grammars=Grammars &
+		//	variables=Variables? & conditions+=Condition*) audios=Audios | dslType="menuname" name=ID
 		//
-		//	properties+=Property* & variables=Variables? & conditions+=Condition*) outputs=Outputs | types+=Type*;
+		//	(configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+		//
+		//	conditions+=Condition*) outputs=Outputs | types+=Type*;
 		public ParserRule getRule() { return rule; }
 
-		//"inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+		//dslType="inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* &
 		//
-		//conditions+=Condition*) audios=Audios | "promptname" name=ID (properties+=Property* & variables=Variables? &
+		//variables=Variables? & conditions+=Condition*) audios=Audios | dslType="promptname" name=ID (properties+=Property* &
 		//
-		//conditions+=Condition*) audios=Audios | "menuname" name=ID (configuration=Configuration & grammars=Grammars &
+		//variables=Variables? & conditions+=Condition*) audios=Audios | dslType="menuname" name=ID (configuration=Configuration
 		//
-		//properties+=Property* & variables=Variables? & conditions+=Condition*) outputs=Outputs | types+=Type*
+		//& grammars=Grammars & properties+=Property* & variables=Variables? & conditions+=Condition*) outputs=Outputs |
+		//
+		//types+=Type*
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//"inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+		//dslType="inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* &
 		//
-		//conditions+=Condition*) audios=Audios
+		//variables=Variables? & conditions+=Condition*) audios=Audios
 		public Group getGroup_0() { return cGroup_0; }
 
+		//dslType="inputname"
+		public Assignment getDslTypeAssignment_0_0() { return cDslTypeAssignment_0_0; }
+
 		//"inputname"
-		public Keyword getInputnameKeyword_0_0() { return cInputnameKeyword_0_0; }
+		public Keyword getDslTypeInputnameKeyword_0_0_0() { return cDslTypeInputnameKeyword_0_0_0; }
 
 		//name=ID
 		public Assignment getNameAssignment_0_1() { return cNameAssignment_0_1; }
@@ -146,11 +156,14 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//Audios
 		public RuleCall getAudiosAudiosParserRuleCall_0_3_0() { return cAudiosAudiosParserRuleCall_0_3_0; }
 
-		//"promptname" name=ID (properties+=Property* & variables=Variables? & conditions+=Condition*) audios=Audios
+		//dslType="promptname" name=ID (properties+=Property* & variables=Variables? & conditions+=Condition*) audios=Audios
 		public Group getGroup_1() { return cGroup_1; }
 
+		//dslType="promptname"
+		public Assignment getDslTypeAssignment_1_0() { return cDslTypeAssignment_1_0; }
+
 		//"promptname"
-		public Keyword getPromptnameKeyword_1_0() { return cPromptnameKeyword_1_0; }
+		public Keyword getDslTypePromptnameKeyword_1_0_0() { return cDslTypePromptnameKeyword_1_0_0; }
 
 		//name=ID
 		public Assignment getNameAssignment_1_1() { return cNameAssignment_1_1; }
@@ -185,13 +198,16 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//Audios
 		public RuleCall getAudiosAudiosParserRuleCall_1_3_0() { return cAudiosAudiosParserRuleCall_1_3_0; }
 
-		//"menuname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+		//dslType="menuname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* &
 		//
-		//conditions+=Condition*) outputs=Outputs
+		//variables=Variables? & conditions+=Condition*) outputs=Outputs
 		public Group getGroup_2() { return cGroup_2; }
 
+		//dslType="menuname"
+		public Assignment getDslTypeAssignment_2_0() { return cDslTypeAssignment_2_0; }
+
 		//"menuname"
-		public Keyword getMenunameKeyword_2_0() { return cMenunameKeyword_2_0; }
+		public Keyword getDslTypeMenunameKeyword_2_0_0() { return cDslTypeMenunameKeyword_2_0_0; }
 
 		//name=ID
 		public Assignment getNameAssignment_2_1() { return cNameAssignment_2_1; }
@@ -1189,13 +1205,15 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VoiceDsl:
 	//
-	//	"inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+	//	dslType="inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* &
 	//
-	//	conditions+=Condition*) audios=Audios | "promptname" name=ID (properties+=Property* & variables=Variables? &
+	//	variables=Variables? & conditions+=Condition*) audios=Audios | dslType="promptname" name=ID (properties+=Property* &
 	//
-	//	conditions+=Condition*) audios=Audios | "menuname" name=ID (configuration=Configuration & grammars=Grammars &
+	//	variables=Variables? & conditions+=Condition*) audios=Audios | dslType="menuname" name=ID
 	//
-	//	properties+=Property* & variables=Variables? & conditions+=Condition*) outputs=Outputs | types+=Type*;
+	//	(configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+	//
+	//	conditions+=Condition*) outputs=Outputs | types+=Type*;
 	public VoiceDslElements getVoiceDslAccess() {
 		return (pVoiceDsl != null) ? pVoiceDsl : (pVoiceDsl = new VoiceDslElements());
 	}

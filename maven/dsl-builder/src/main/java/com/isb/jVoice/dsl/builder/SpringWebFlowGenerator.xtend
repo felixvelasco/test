@@ -1,20 +1,20 @@
 package com.isb.jVoice.dsl.builder
 
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl
 import java.io.File
 import java.io.FileWriter
 import java.util.List
 import org.eclipse.emf.ecore.resource.Resource
+import voiceDsl.Audio
+import voiceDsl.InputElement
 
 class SpringWebFlowGenerator {
 	
 	Resource res
-	VoiceDsl element
+	InputElement element
 	
 	new(Resource resource) {
 		res = resource;
-		element = res.getEObject("/0") as VoiceDsl;
+		element = res.getEObject("/0") as InputElement;
 	}
 		
 	def generate(File file) {
@@ -25,10 +25,10 @@ class SpringWebFlowGenerator {
 	}
 	
 	def doGenerate(String name) '''
-	Â«doGenerateHeader(name)Â»
-		Â«doGenerateInitial(element.audios.mainAudios)Â»
-		Â«doGenerateNoMatch(element.audios.noMatchAudios)Â»
-	Â«doGenerateFooter()Â»
+	«doGenerateHeader(name)»
+		«if (element.initialAudios != null) doGenerateInitial(element.initialAudios)»
+		«doGenerateNoMatch(element.noMatchAudios)»
+	«doGenerateFooter()»
 	'''
 	
 	def doGenerateFooter() '''
@@ -39,9 +39,9 @@ class SpringWebFlowGenerator {
 	def doGenerateInitial(List<Audio> initial) '''
 		<div class='initial'>
 		<h1>Saludo inicial</h1>
-			Â«FOR Audio audio: initialÂ»
-				Â«printAudio(audio)Â»
-			Â«ENDFORÂ»
+			«FOR Audio audio: initial»
+				«printAudio(audio)»
+			«ENDFOR»
 		</div>
 		
 	'''
@@ -49,9 +49,9 @@ class SpringWebFlowGenerator {
 	def doGenerateNoMatch(List<Audio> match) '''
 		<div class='nomatch'>
 		<h1>No match</h1>
-			Â«FOR Audio audio: matchÂ»
-				Â«printAudio(audio)Â»
-			Â«ENDFORÂ»
+			«FOR Audio audio: match»
+				«printAudio(audio)»
+			«ENDFOR»
 		</div>
 		
 	'''
@@ -59,20 +59,20 @@ class SpringWebFlowGenerator {
 	def doGenerateHeader(String name) '''
 	<html>
 	<head>
-		<title>Â«element.nameÂ»</title>
+		<title>«element.name»</title>
 	</head>
 	<body>
 	'''
 	
 	def printAudio(Audio audio) '''
 		<p>
-		Â«IF audio.tts != null Â»
-			<h2>Â»audio.ttsÂ»</h2>
-		Â«ENDIFÂ»
+		«IF audio.tts != null »
+			<h2>«audio.tts»</h2>
+		«ENDIF»
 		&nbsp;
-		Â«IF audio.src != null Â»
-			<h2><b>Â«audio.srcÂ»</b></h2>
-		Â«ENDIFÂ»
+		«IF audio.src != null »
+			<h2><b>«audio.src»</b></h2>
+		«ENDIF»
 		</p>
 	'''
 	

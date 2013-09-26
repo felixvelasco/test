@@ -104,6 +104,22 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 				return createCallStateAdapter();
 			}
 			@Override
+			public Adapter caseCallFlowState(CallFlowState object) {
+				return createCallFlowStateAdapter();
+			}
+			@Override
+			public Adapter casePromptState(PromptState object) {
+				return createPromptStateAdapter();
+			}
+			@Override
+			public Adapter caseInputState(InputState object) {
+				return createInputStateAdapter();
+			}
+			@Override
+			public Adapter caseMenuState(MenuState object) {
+				return createMenuStateAdapter();
+			}
+			@Override
 			public Adapter caseJVElement(JVElement object) {
 				return createJVElementAdapter();
 			}
@@ -244,6 +260,62 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCallStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.operations.CallFlowState <em>Call Flow State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.operations.CallFlowState
+	 * @generated
+	 */
+	public Adapter createCallFlowStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.operations.PromptState <em>Prompt State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.operations.PromptState
+	 * @generated
+	 */
+	public Adapter createPromptStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.operations.InputState <em>Input State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.operations.InputState
+	 * @generated
+	 */
+	public Adapter createInputStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.operations.MenuState <em>Menu State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.operations.MenuState
+	 * @generated
+	 */
+	public Adapter createMenuStateAdapter() {
 		return null;
 	}
 
