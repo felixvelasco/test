@@ -1427,7 +1427,6 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	 * Constraint:
 	 *     (
 	 *         (
-	 *             dslType='inputname' 
 	 *             name=ID 
 	 *             configuration=Configuration 
 	 *             grammars=Grammars 
@@ -1436,16 +1435,8 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	 *             conditions+=Condition* 
 	 *             audios=Audios
 	 *         ) | 
+	 *         (name=ID properties+=Property* variables=Variables? conditions+=Condition* audios=Audios) | 
 	 *         (
-	 *             dslType='promptname' 
-	 *             name=ID 
-	 *             properties+=Property* 
-	 *             variables=Variables? 
-	 *             conditions+=Condition* 
-	 *             audios=Audios
-	 *         ) | 
-	 *         (
-	 *             dslType='menuname' 
 	 *             name=ID 
 	 *             configuration=Configuration 
 	 *             grammars=Grammars 

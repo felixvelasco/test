@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.maven.model.Model;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -20,18 +19,17 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.m2e.core.MavenPlugin;
-import org.eclipse.m2e.core.project.ProjectImportConfiguration;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.osgi.framework.Bundle;
 
+import com.vectorsf.jvoice.core.project.JVoiceProjectConfigurator;
+
 import static org.junit.Assert.fail;
 
 public class SWTBotHelper {
 
-	protected String ruta = "src/main/resources/jv";
 	protected String rutaProperties = "src/main/config/properties";
 
 	protected static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.ui.navigator");
@@ -74,21 +72,7 @@ public class SWTBotHelper {
 	}
 
 	public static IProject createProject(final String name) throws CoreException {
-		final IProject result[] = new IProject[1];
-		executeWksRunnable(new IWorkspaceRunnable() {
-
-			@Override
-			public void run(IProgressMonitor monitor) throws CoreException {
-				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
-				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null, getModel(project),
-						new String[] { "src/main/java", "src/main/resources/jv" }, new ProjectImportConfiguration(),
-						monitor);
-
-				result[0] = project;
-			}
-		});
-
-		return result[0];
+		return JVoiceProjectConfigurator.createProject(name, name, name);
 	}
 
 	public static IFolder createFolders(final IProject project, final String ruta) throws CoreException {
@@ -212,22 +196,10 @@ public class SWTBotHelper {
 			createRecursively((IFolder) parent, monitor);
 		}
 
-		container.create(true, false, monitor);
+		if (!container.exists()) {
+			container.create(true, false, monitor);
+		}
 
-	}
-
-	private static Model getModel(IProject project) {
-		Model model = new Model();
-		model.setModelVersion("4.0.0"); //$NON-NLS-1$
-
-		model.setGroupId(project.getName());
-		model.setArtifactId(project.getName());
-		model.setVersion("1.0.0");
-		model.setPackaging("jar");
-
-		model.setName(project.getName());
-
-		return model;
 	}
 
 	public static InputStream getInputStreamResource(String resourceName) {

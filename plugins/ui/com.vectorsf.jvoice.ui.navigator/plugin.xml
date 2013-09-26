@@ -20,6 +20,9 @@
       <viewerActionBinding
             viewerId="com.vectorsf.jvoice.ui.navigator.ViewIVR">
          <includes>
+            <actionExtension
+                  pattern="com.vectorsf.jvoice.ui.navigator.ActionProvider">
+            </actionExtension>
          </includes>
       </viewerActionBinding>
       <viewerContentBinding
@@ -47,6 +50,10 @@
             <insertionPoint
                   name="group.open"
                   separator="true">
+            </insertionPoint>
+            <insertionPoint
+                  name="group.openWith"
+                  separator="false">
             </insertionPoint>
             <insertionPoint
                   name="group.show"
@@ -104,6 +111,24 @@
             </or>
          </triggerPoints>
       </navigatorContent>
+      <actionProvider
+            class="com.vectorsf.jvoice.ui.navigator.CommonActionProviderIVR"
+            id="com.vectorsf.jvoice.ui.navigator.ActionProvider">
+         <enablement>
+            <with
+                  variable="selection">
+               <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVBean">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </with>
+         </enablement>
+      </actionProvider>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -177,30 +202,6 @@
                </visibleWhen>
             </command>
          </menu>
-      </menuContribution>
-      <menuContribution
-            allPopups="true"
-            locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.open">
-         <command
-               commandId="org.eclipse.jdt.ui.navigate.open.type"
-               label="Open"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <and>
-                     <iterate
-                           ifEmpty="false"
-                           operator="and">
-                        <instanceof
-                              value="com.vectorsf.jvoice.model.base.JVBean">
-                        </instanceof>
-                     </iterate>
-                  </and>
-               </with>
-            </visibleWhen>
-         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -445,24 +446,6 @@
                      </instanceof>
                   </or>
                </iterate>
-            </with>
-         </activeWhen>
-      </handler>
-      <handler
-            class="com.vectorsf.jvoice.ui.navigator.handler.OpenHandler"
-            commandId="org.eclipse.jdt.ui.navigate.open.type">
-         <activeWhen>
-            <with
-                  variable="selection">
-               <and>
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVBean">
-                     </instanceof>
-                  </iterate>
-               </and>
             </with>
          </activeWhen>
       </handler>

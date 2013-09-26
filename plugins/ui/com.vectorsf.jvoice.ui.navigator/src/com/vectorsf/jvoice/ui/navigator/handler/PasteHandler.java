@@ -1,5 +1,6 @@
 package com.vectorsf.jvoice.ui.navigator.handler;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,11 +12,16 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jdt.internal.ui.refactoring.reorg.ReorgMessages;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -36,10 +42,12 @@ public class PasteHandler extends AbstractHandler {
 	private IFolder miPack;
 	private IFile miBean;
 	private IWorkspaceRoot root;
+	private boolean rename;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
+		rename = false;
 		Clipboard clip = new Clipboard(Display.getCurrent());
 		Object contents = clip
 				.getContents(LocalSelectionTransfer.getTransfer());
@@ -80,6 +88,7 @@ public class PasteHandler extends AbstractHandler {
 				// lanza un cuadro de dialogo donde el usuario podra poner el
 				// nombre que desee al fichero.
 				if (root.getFile(targetPath).exists()) {
+					rename = true;
 					// Proponemos al usuario un nombre valido para el fichero.
 					InputDialog ventana = new InputDialog(
 							JavaPlugin.getActiveWorkbenchShell(),
@@ -115,7 +124,20 @@ public class PasteHandler extends AbstractHandler {
 
 				// Realizamos la copia del fichero al destino.
 				try {
-					miBean.copy(targetPath, true, null);
+					IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+
+						@Override
+						public void run(IProgressMonitor monitor)
+								throws CoreException {
+							miBean.copy(targetPath, true, null);
+							if (rename) {
+								renameBean(targetPath);
+							}
+
+						}
+					};
+					ResourcesPlugin.getWorkspace().run(runnable, null);
+
 				} catch (CoreException e) {
 					e.printStackTrace();
 				}
@@ -320,6 +342,26 @@ public class PasteHandler extends AbstractHandler {
 
 		} else {
 			return null;
+		}
+	}
+
+	private void renameBean(IPath targetPath) {
+		String newName = targetPath.lastSegment();
+		newName = newName.substring(0, newName.lastIndexOf('.'));
+		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
+		Resource emfRes = resourceSetImpl.createResource(URI
+				.createPlatformResourceURI(targetPath.toString(), true));
+		try {
+			emfRes.load(null);
+
+			for (EObject obj : emfRes.getContents()) {
+				if (obj instanceof JVBean) {
+					((JVBean) obj).setName(newName);
+				}
+			}
+			emfRes.save(null);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

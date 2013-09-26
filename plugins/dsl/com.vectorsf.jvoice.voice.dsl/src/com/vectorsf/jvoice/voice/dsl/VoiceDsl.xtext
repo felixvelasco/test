@@ -4,7 +4,7 @@ import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 
 VoiceDsl returns VoiceDsl:
-	(dslType = 'inputname'  name = ID           
+	('inputname' name = ID           
       ((configuration = Configuration)& 
  	   (grammars = Grammars)&
 	   (properties += Property*)&
@@ -13,14 +13,14 @@ VoiceDsl returns VoiceDsl:
   	    audios=Audios	
 	  ) 
 	 
-    |(dslType = 'promptname'  name = ID 
+    |('promptname' name = ID 
        ((properties += Property*)&
        	((variables = Variables)?)& 
 	    (conditions += Condition*))
   	     audios=Audios	
 	   ) 
 
-    |(dslType = 'menuname'  name = ID
+    |('menuname' name = ID
 	   ((configuration = Configuration)& 
         (grammars = Grammars)&
 	    (properties += Property*)&

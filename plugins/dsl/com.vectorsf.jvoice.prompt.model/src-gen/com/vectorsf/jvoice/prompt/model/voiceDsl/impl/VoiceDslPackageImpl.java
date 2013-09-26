@@ -338,15 +338,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getVoiceDsl_DslType() {
-		return (EAttribute)voiceDslEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getConfiguration() {
 		return configurationEClass;
 	}
@@ -1018,7 +1009,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		createEReference(voiceDslEClass, VOICE_DSL__OUTPUTS);
 		createEReference(voiceDslEClass, VOICE_DSL__VARIABLES);
 		createEReference(voiceDslEClass, VOICE_DSL__TYPES);
-		createEAttribute(voiceDslEClass, VOICE_DSL__DSL_TYPE);
 
 		configurationEClass = createEClass(CONFIGURATION);
 		createEReference(configurationEClass, CONFIGURATION__CONFIG_VALUE);
@@ -1161,7 +1151,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEReference(getVoiceDsl_Outputs(), this.getOutputs(), null, "outputs", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Variables(), this.getVariables(), null, "variables", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Types(), this.getType(), null, "types", null, 0, -1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getVoiceDsl_DslType(), ecorePackage.getEString(), "dslType", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getConfiguration_ConfigValue(), this.getConfigValue(), null, "configValue", null, 0, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

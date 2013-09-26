@@ -17,7 +17,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/outputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/variables"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/types"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//VoiceDsl/dslType"/>
     </genClasses>
     <genClasses ecoreClass="VoiceDsl.ecore#//Configuration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Configuration/configValue"/>

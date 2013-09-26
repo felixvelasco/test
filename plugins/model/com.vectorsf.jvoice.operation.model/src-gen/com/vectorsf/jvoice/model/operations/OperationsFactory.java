@@ -85,42 +85,6 @@ public interface OperationsFactory extends EFactory {
 	CallState createCallState();
 
 	/**
-	 * Returns a new object of class '<em>Call Flow State</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Call Flow State</em>'.
-	 * @generated
-	 */
-	CallFlowState createCallFlowState();
-
-	/**
-	 * Returns a new object of class '<em>Prompt State</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Prompt State</em>'.
-	 * @generated
-	 */
-	PromptState createPromptState();
-
-	/**
-	 * Returns a new object of class '<em>Input State</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Input State</em>'.
-	 * @generated
-	 */
-	InputState createInputState();
-
-	/**
-	 * Returns a new object of class '<em>Menu State</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Menu State</em>'.
-	 * @generated
-	 */
-	MenuState createMenuState();
-
-	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

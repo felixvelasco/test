@@ -5,11 +5,11 @@
   <parent>
     <groupId>com.vectorsf.jvoice.core</groupId>
     <artifactId>jvoice</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
   <groupId>com.vectorsf.jvoice.core</groupId>
   <artifactId>plugins</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>model/com.vectorsf.jvoice.base.model</module>
@@ -20,6 +20,7 @@
     <module>ui/com.vectorsf.jvoice.ui.navigator</module>
 
     <module>core/com.vectorsf.jvoice.core.operation</module>
+    <module>core/com.vectorsf.jvoice.core.project</module>
     <module>core/com.vectorsf.jvoice.core.prompt</module>
     <module>core/com.vectorsf.jvoice.core.reconciliator</module>
     <module>core/com.vectorsf.jvoice.core.uri</module>

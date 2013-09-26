@@ -77,22 +77,11 @@ ruleVoiceDsl returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(((
-(
-		lv_dslType_0_0=	'inputname' 
+((	otherlv_0='inputname' 
     {
-        newLeafNode(lv_dslType_0_0, grammarAccess.getVoiceDslAccess().getDslTypeInputnameKeyword_0_0_0());
+    	newLeafNode(otherlv_0, grammarAccess.getVoiceDslAccess().getInputnameKeyword_0_0());
     }
- 
-	    {
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getVoiceDslRule());
-	        }
-       		setWithLastConsumed($current, "dslType", lv_dslType_0_0, "inputname");
-	    }
-
-)
-)(
+(
 (
 		lv_name_1_0=RULE_ID
 		{
@@ -296,22 +285,11 @@ ruleVoiceDsl returns [EObject current=null]
 
 )
 ))
-    |((
-(
-		lv_dslType_9_0=	'promptname' 
+    |(	otherlv_9='promptname' 
     {
-        newLeafNode(lv_dslType_9_0, grammarAccess.getVoiceDslAccess().getDslTypePromptnameKeyword_1_0_0());
+    	newLeafNode(otherlv_9, grammarAccess.getVoiceDslAccess().getPromptnameKeyword_1_0());
     }
- 
-	    {
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getVoiceDslRule());
-	        }
-       		setWithLastConsumed($current, "dslType", lv_dslType_9_0, "promptname");
-	    }
-
-)
-)(
+(
 (
 		lv_name_10_0=RULE_ID
 		{
@@ -454,22 +432,11 @@ ruleVoiceDsl returns [EObject current=null]
 
 )
 ))
-    |((
-(
-		lv_dslType_16_0=	'menuname' 
+    |(	otherlv_16='menuname' 
     {
-        newLeafNode(lv_dslType_16_0, grammarAccess.getVoiceDslAccess().getDslTypeMenunameKeyword_2_0_0());
+    	newLeafNode(otherlv_16, grammarAccess.getVoiceDslAccess().getMenunameKeyword_2_0());
     }
- 
-	    {
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getVoiceDslRule());
-	        }
-       		setWithLastConsumed($current, "dslType", lv_dslType_16_0, "menuname");
-	    }
-
-)
-)(
+(
 (
 		lv_name_17_0=RULE_ID
 		{

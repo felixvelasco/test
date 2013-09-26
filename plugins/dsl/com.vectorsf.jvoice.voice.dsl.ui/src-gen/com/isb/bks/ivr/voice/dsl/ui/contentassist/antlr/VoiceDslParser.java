@@ -283,7 +283,6 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedNameWithWildcardAccess().getGroup(), "rule__QualifiedNameWithWildcard__Group__0");
 					put(grammarAccess.getXImportDeclarationAccess().getGroup(), "rule__XImportDeclaration__Group__0");
 					put(grammarAccess.getXImportDeclarationAccess().getGroup_1_0(), "rule__XImportDeclaration__Group_1_0__0");
-					put(grammarAccess.getVoiceDslAccess().getDslTypeAssignment_0_0(), "rule__VoiceDsl__DslTypeAssignment_0_0");
 					put(grammarAccess.getVoiceDslAccess().getNameAssignment_0_1(), "rule__VoiceDsl__NameAssignment_0_1");
 					put(grammarAccess.getVoiceDslAccess().getConfigurationAssignment_0_2_0(), "rule__VoiceDsl__ConfigurationAssignment_0_2_0");
 					put(grammarAccess.getVoiceDslAccess().getGrammarsAssignment_0_2_1(), "rule__VoiceDsl__GrammarsAssignment_0_2_1");
@@ -291,13 +290,11 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVoiceDslAccess().getVariablesAssignment_0_2_3(), "rule__VoiceDsl__VariablesAssignment_0_2_3");
 					put(grammarAccess.getVoiceDslAccess().getConditionsAssignment_0_2_4(), "rule__VoiceDsl__ConditionsAssignment_0_2_4");
 					put(grammarAccess.getVoiceDslAccess().getAudiosAssignment_0_3(), "rule__VoiceDsl__AudiosAssignment_0_3");
-					put(grammarAccess.getVoiceDslAccess().getDslTypeAssignment_1_0(), "rule__VoiceDsl__DslTypeAssignment_1_0");
 					put(grammarAccess.getVoiceDslAccess().getNameAssignment_1_1(), "rule__VoiceDsl__NameAssignment_1_1");
 					put(grammarAccess.getVoiceDslAccess().getPropertiesAssignment_1_2_0(), "rule__VoiceDsl__PropertiesAssignment_1_2_0");
 					put(grammarAccess.getVoiceDslAccess().getVariablesAssignment_1_2_1(), "rule__VoiceDsl__VariablesAssignment_1_2_1");
 					put(grammarAccess.getVoiceDslAccess().getConditionsAssignment_1_2_2(), "rule__VoiceDsl__ConditionsAssignment_1_2_2");
 					put(grammarAccess.getVoiceDslAccess().getAudiosAssignment_1_3(), "rule__VoiceDsl__AudiosAssignment_1_3");
-					put(grammarAccess.getVoiceDslAccess().getDslTypeAssignment_2_0(), "rule__VoiceDsl__DslTypeAssignment_2_0");
 					put(grammarAccess.getVoiceDslAccess().getNameAssignment_2_1(), "rule__VoiceDsl__NameAssignment_2_1");
 					put(grammarAccess.getVoiceDslAccess().getConfigurationAssignment_2_2_0(), "rule__VoiceDsl__ConfigurationAssignment_2_2_0");
 					put(grammarAccess.getVoiceDslAccess().getGrammarsAssignment_2_2_1(), "rule__VoiceDsl__GrammarsAssignment_2_2_1");

@@ -136,42 +136,6 @@ public class OperationsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OperationsPackage.CALL_FLOW_STATE: {
-				CallFlowState callFlowState = (CallFlowState)theEObject;
-				T result = caseCallFlowState(callFlowState);
-				if (result == null) result = caseState(callFlowState);
-				if (result == null) result = caseNamedElement(callFlowState);
-				if (result == null) result = caseJVElement(callFlowState);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case OperationsPackage.PROMPT_STATE: {
-				PromptState promptState = (PromptState)theEObject;
-				T result = casePromptState(promptState);
-				if (result == null) result = caseState(promptState);
-				if (result == null) result = caseNamedElement(promptState);
-				if (result == null) result = caseJVElement(promptState);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case OperationsPackage.INPUT_STATE: {
-				InputState inputState = (InputState)theEObject;
-				T result = caseInputState(inputState);
-				if (result == null) result = caseState(inputState);
-				if (result == null) result = caseNamedElement(inputState);
-				if (result == null) result = caseJVElement(inputState);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case OperationsPackage.MENU_STATE: {
-				MenuState menuState = (MenuState)theEObject;
-				T result = caseMenuState(menuState);
-				if (result == null) result = caseState(menuState);
-				if (result == null) result = caseNamedElement(menuState);
-				if (result == null) result = caseJVElement(menuState);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -293,66 +257,6 @@ public class OperationsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCallState(CallState object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Call Flow State</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Call Flow State</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCallFlowState(CallFlowState object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Prompt State</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Prompt State</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T casePromptState(PromptState object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Input State</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Input State</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseInputState(InputState object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Menu State</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Menu State</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseMenuState(MenuState object) {
 		return null;
 	}
 
