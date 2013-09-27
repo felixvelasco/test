@@ -331,6 +331,15 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getJVProject__GetReferencedProjects() {
+		return jvProjectEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getStringToStringMap() {
 		return stringToStringMapEClass;
 	}
@@ -424,6 +433,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		createEReference(jvProjectEClass, JV_PROJECT__CONFIGURATION);
 		createEOperation(jvProjectEClass, JV_PROJECT___GET_PACKAGE__STRING);
 		createEOperation(jvProjectEClass, JV_PROJECT___GET_CONFIGURATION__STRING);
+		createEOperation(jvProjectEClass, JV_PROJECT___GET_REFERENCED_PROJECTS);
 
 		stringToStringMapEClass = createEClass(STRING_TO_STRING_MAP);
 		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__KEY);
@@ -501,6 +511,8 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 
 		op = initEOperation(getJVProject__GetConfiguration__String(), this.getConfiguration(), "getConfiguration", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getJVProject__GetReferencedProjects(), this.getJVProject(), "getReferencedProjects", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(stringToStringMapEClass, Map.Entry.class, "StringToStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToStringMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

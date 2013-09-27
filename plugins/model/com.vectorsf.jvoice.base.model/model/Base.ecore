@@ -48,6 +48,11 @@
       </eAnnotations>
       <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
+    <eOperations name="getReferencedProjects" upperBound="-1" eType="#//JVProject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="return &lt;%com.vectorsf.jvoice.base.model.service.BaseModel%>.getInstance().getVisibleProjects(this);"/>
+      </eAnnotations>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="packages" upperBound="-1"
         eType="#//JVPackage" containment="true" eOpposite="#//JVPackage/ownerProject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//JVModel"

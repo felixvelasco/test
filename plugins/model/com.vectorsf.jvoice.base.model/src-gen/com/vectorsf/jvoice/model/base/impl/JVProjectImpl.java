@@ -2,6 +2,8 @@
  */
 package com.vectorsf.jvoice.model.base.impl;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
+
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVModel;
@@ -193,6 +195,15 @@ public class JVProjectImpl extends NamedElementImpl implements JVProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public List<JVProject> getReferencedProjects() {
+		return BaseModel.getInstance().getVisibleProjects(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -333,6 +344,8 @@ public class JVProjectImpl extends NamedElementImpl implements JVProject {
 				return getPackage((String)arguments.get(0));
 			case BasePackage.JV_PROJECT___GET_CONFIGURATION__STRING:
 				return getConfiguration((String)arguments.get(0));
+			case BasePackage.JV_PROJECT___GET_REFERENCED_PROJECTS:
+				return getReferencedProjects();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
