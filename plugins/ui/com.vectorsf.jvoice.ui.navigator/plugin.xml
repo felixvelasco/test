@@ -29,6 +29,15 @@
             <actionExtension
                   pattern="com.vectorsf.jvoice.ui.navigator.PropertiesActionProvider">
             </actionExtension>
+            <actionExtension
+                  pattern="com.vectorsf.jvoice.ui.navigator.RefactorActionProvider">
+            </actionExtension>
+            <actionExtension
+                  pattern="com.vectorsf.jvoice.ui.navigator.ResourceMgmtActionProvider">
+            </actionExtension>
+            <actionExtension
+                  pattern="com.vectorsf.jvoice.ui.navigator.NewActionProvider">
+            </actionExtension>
          </includes>
       </viewerActionBinding>
       <viewerContentBinding
@@ -58,20 +67,29 @@
                   separator="true">
             </insertionPoint>
             <insertionPoint
-                  name="group.openWith"
-                  separator="false">
+                  name="group.openWith">
             </insertionPoint>
             <insertionPoint
                   name="group.edit"
                   separator="true">
             </insertionPoint>
             <insertionPoint
+                  name="group.reorganize">
+            </insertionPoint>
+            <insertionPoint
                   name="group.port"
+                  separator="true">
+            </insertionPoint>
+            <insertionPoint
+                  name="group.build"
                   separator="true">
             </insertionPoint>
             <insertionPoint
                   name="group.properties"
                   separator="true">
+            </insertionPoint>
+            <insertionPoint
+                  name="additions">
             </insertionPoint></popupMenu>
       </viewer>
    </extension>
@@ -192,80 +210,90 @@
             </with>
          </enablement>
       </actionProvider>
+      <actionProvider
+            appearsBefore="org.eclipse.ui.navigator.resources.PortingActions"
+            class="org.eclipse.ui.internal.navigator.resources.actions.RefactorActionProvider"
+            id="com.vectorsf.jvoice.ui.navigator.RefactorActionProvider">
+         <enablement>
+            <with
+                  variable="selection">
+               <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVBean">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </with>
+         </enablement>
+      </actionProvider>
+      <actionProvider
+            appearsBefore="org.eclipse.ui.navigator.resources.PropertiesActionProvider"
+            class="org.eclipse.ui.internal.navigator.resources.actions.ResourceMgmtActionProvider"
+            id="com.vectorsf.jvoice.ui.navigator.ResourceMgmtActionProvider">
+         <enablement>
+            <with
+                  variable="selection">
+               <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVBean">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </with>
+         </enablement>
+      </actionProvider>
+      <actionProvider
+            appearsBefore="org.eclipse.ui.navigator.resources.OpenActions"
+            class="com.vectorsf.jvoice.ui.navigator.NewActionProviderIVR"
+            id="com.vectorsf.jvoice.ui.navigator.NewActionProvider">
+         <enablement>
+            <with
+                  variable="selection">
+               <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVBean">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </with>
+         </enablement>
+      </actionProvider>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="true"
-            locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.new">
-         <menu
-               label="New">
-            <command
-                  commandId="org.eclipse.ui.newWizard"
-                  label="Project..."
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <with
-                        variable="selection">
-                     <and>
-                        <count
-                              value="1">
-                        </count>
-                     </and>
-                  </with>
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.eclipse.ui.newWizard"
-                  label="Diagrama"
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <with
-                        variable="selection">
-                     <and>
-                        <count
-                              value="1">
-                        </count>
-                        <iterate
-                              ifEmpty="false"
-                              operator="and">
-                           <or>
-                              <instanceof
-                                    value="com.vectorsf.jvoice.model.base.JVPackage">
-                              </instanceof>
-                              <instanceof
-                                    value="com.vectorsf.jvoice.model.base.JVProject">
-                              </instanceof>
-                           </or>
-                        </iterate>
-                     </and>
-                  </with>
-               </visibleWhen>
-               <parameter
-                     name="newWizardId"
-                     value="com.vectorsf.jvoice.diagram.core.wizard">
-               </parameter>
-            </command>
-            <command
-                  commandId="org.eclipse.ui.newWizard"
-                  label="Other..."
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <with
-                        variable="selection">
-                     <and>
-                        <count
-                              value="1">
-                        </count>
-                     </and>
-                  </with>
-               </visibleWhen>
-            </command>
-         </menu>
-      </menuContribution>
       <menuContribution
             allPopups="true"
             locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.edit">
