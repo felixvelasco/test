@@ -83,7 +83,7 @@
      <extension
          point="org.eclipse.ui.editors">
        <editor
-          class="org.eclipse.graphiti.ui.editor.DiagramEditor"
+          class="com.vectorsf.jvoice.diagram.core.editor.JVoiceDiagramEditor"
           contributorClass="org.eclipse.graphiti.ui.editor.DiagramEditorActionBarContributor"
           default="true"
           extensions="jvflow"
