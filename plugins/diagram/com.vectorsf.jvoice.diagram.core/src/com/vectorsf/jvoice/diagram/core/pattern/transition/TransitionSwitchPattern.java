@@ -4,26 +4,58 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddConnectionContext;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.IConnectionContext;
+import org.eclipse.graphiti.features.context.ICreateConnectionContext;
+import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
+import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
+import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
+import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
+import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.services.IGaService;
+import org.eclipse.graphiti.services.IPeService;
+import org.eclipse.graphiti.util.ColorConstant;
+import org.eclipse.graphiti.util.IColorConstant;
 
-import com.vectorsf.jvoice.model.operations.SwitchState;
+import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.model.operations.InitialState;
+import com.vectorsf.jvoice.model.operations.OperationsFactory;
+import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 public class TransitionSwitchPattern extends TransitionPattern {
 
+	protected IPeService peService;
+	protected IGaService gaService;
+
+	protected final IColorConstant CONNECTION_COLOR = new ColorConstant(
+			"bcbcbc");
+	private IFeatureProvider featureProvider;
+
 	public TransitionSwitchPattern(IFeatureProvider in_featureProvider) {
 		super(in_featureProvider);
+		featureProvider = in_featureProvider;
+		peService = Graphiti.getPeService();
+		gaService = Graphiti.getGaService();
+	}
+
+	@Override
+	public IFeatureProvider getFeatureProvider() {
+		return featureProvider;
 	}
 
 	@Override
 	public boolean canAdd(IAddContext context) {
+		State sourceState = getState(((IConnectionContext) context)
+				.getSourceAnchor());
 		return context.getNewObject() instanceof Transition
-				&& getState(((IConnectionContext) context).getSourceAnchor()) instanceof SwitchState
 				&& context instanceof IAddConnectionContext;
+
 	}
 
 	@Override
@@ -33,6 +65,7 @@ public class TransitionSwitchPattern extends TransitionPattern {
 		if (context instanceof IAddConnectionContext) {
 
 			Anchor anchor = ((IAddConnectionContext) context).getSourceAnchor();
+			//
 			if (anchor == null) {
 				Anchor chopboxAnchor = peService.getChopboxAnchor(context
 						.getTargetContainer());
@@ -59,9 +92,117 @@ public class TransitionSwitchPattern extends TransitionPattern {
 					true);
 			createArrow(cd);
 
+			createTextEvent(context, connection);
+
 			link(connection, transition);
 			return connection;
 		}
 		return null;
 	}
+
+	private void createTextEvent(IAddContext context, Connection connection) {
+		ConnectionDecorator cdEvent;
+		cdEvent = peService.createConnectionDecorator(connection, true, 0.5,
+				true);
+		Text text = gaService.createText(
+				cdEvent,
+
+				getState(((IConnectionContext) context).getSourceAnchor())
+
+				.getName()
+						+ "_"
+						+ getState(
+								((IConnectionContext) context)
+										.getTargetAnchor())
+
+						.getName());
+		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
+		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
+
+	}
+
+	@Override
+	protected Polyline createArrow(GraphicsAlgorithmContainer gaContainer) {
+		Polygon polyligone = gaService.createPolygon(gaContainer,
+				new int[] { -7, 4, 2, 0, -7, -4, -1, 0, -7, 4, -3, 0, -7, -4,
+						-5, 0, -7, 4 });
+
+		polyligone.setForeground(manageColor(CONNECTION_COLOR));
+		polyligone.setBackground(manageColor(CONNECTION_COLOR));
+
+		polyligone.setLineWidth(1);
+
+		return polyligone;
+
+	}
+
+	@Override
+	public Connection create(ICreateConnectionContext context) {
+
+		State sourceState = getState(context.getSourceAnchor());
+		State targetState = getState(context.getTargetAnchor());
+
+		if (sourceState == null || targetState == null) {
+			return null;
+		}
+
+		Transition transition = OperationsFactory.eINSTANCE.createTransition();
+		transition.setSource(sourceState);
+		transition.setEventName(getCreateName());
+		transition.setTarget(targetState);
+
+		targetState.getIncomingTransitions().add(transition);
+		sourceState.getOutgoingTransitions().add(transition);
+
+		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+		flow.getTransitions().add(transition);
+
+		AddConnectionContext addContextInicial = new AddConnectionContext(
+				context.getSourceAnchor(), context.getTargetAnchor());
+		addContextInicial.setNewObject(transition);
+		addContextInicial.setTargetContainer((ContainerShape) context
+				.getSourcePictogramElement());
+
+		Connection connection = (Connection) getFeatureProvider()
+				.addIfPossible(addContextInicial);
+		layoutPictogramElement(connection);
+		return connection;
+
+	}
+
+	@Override
+	protected State getState(Anchor anchor) {
+
+		if (anchor != null) {
+			State object = (State) getBusinessObjectForPictogramElement(anchor
+					.getParent());
+			return object;
+		}
+		return null;
+	}
+
+	@Override
+	public String getCreateName() {
+		return "Transition";
+	}
+
+	@Override
+	public String getCreateDescription() {
+		return "Transition Description";
+	}
+
+	@Override
+	public boolean canCreate(ICreateConnectionContext context) {
+		Object boTarget = featureProvider
+				.getBusinessObjectForPictogramElement(context
+						.getTargetPictogramElement());
+		Object boSource = featureProvider
+				.getBusinessObjectForPictogramElement(context
+						.getSourcePictogramElement());
+		return boTarget instanceof State
+				&& !(boTarget instanceof InitialState)
+				&& !(boSource instanceof InitialState && ((InitialState) boSource)
+						.getOutgoingTransitions().size() > 0);
+	}
+
 }
