@@ -23,6 +23,12 @@
             <actionExtension
                   pattern="com.vectorsf.jvoice.ui.navigator.ActionProvider">
             </actionExtension>
+            <actionExtension
+                  pattern="com.vectorsf.jvoice.ui.navigator.PortingActionProvider">
+            </actionExtension>
+            <actionExtension
+                  pattern="com.vectorsf.jvoice.ui.navigator.PropertiesActionProvider">
+            </actionExtension>
          </includes>
       </viewerActionBinding>
       <viewerContentBinding
@@ -56,11 +62,15 @@
                   separator="false">
             </insertionPoint>
             <insertionPoint
-                  name="group.show"
+                  name="group.edit"
                   separator="true">
             </insertionPoint>
             <insertionPoint
-                  name="group.edit"
+                  name="group.port"
+                  separator="true">
+            </insertionPoint>
+            <insertionPoint
+                  name="group.properties"
                   separator="true">
             </insertionPoint></popupMenu>
       </viewer>
@@ -124,6 +134,59 @@
                      <instanceof
                            value="com.vectorsf.jvoice.model.base.JVBean">
                      </instanceof>
+                  </iterate>
+               </and>
+            </with>
+         </enablement>
+      </actionProvider>
+      <actionProvider
+            appearsBefore="org.eclipse.ui.navigator.resources.PropertiesActionProvider"
+            class="org.eclipse.ui.internal.navigator.resources.actions.PortingActionProvider"
+            id="com.vectorsf.jvoice.ui.navigator.PortingActionProvider">
+         <enablement>
+            <with
+                  variable="selection">
+               <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVBean">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </with>
+         </enablement>
+      </actionProvider>
+      <actionProvider
+            class="org.eclipse.ui.internal.navigator.resources.actions.PropertiesActionProvider"
+            id="com.vectorsf.jvoice.ui.navigator.PropertiesActionProvider">
+         <enablement>
+            <with
+                  variable="selection">
+               <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVBean">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                     </or>
                   </iterate>
                </and>
             </with>
@@ -204,33 +267,6 @@
          </menu>
       </menuContribution>
       <menuContribution
-            allPopups="false"
-            locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.show">
-         <menu
-               label="Show in">
-            <command
-                  commandId="org.eclipse.egit.ui.team.ShowRepositoriesView"
-                  label="Git Repositories"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.eclipse.egit.ui.team.ShowHistory"
-                  label="History"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.eclipse.ui.views.properties.NewPropertySheetCommand"
-                  label="Properties"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.eclipse.ui.views.showView"
-                  label="Show View"
-                  style="push">
-            </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
             allPopups="true"
             locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.edit">
          <command
@@ -245,20 +281,6 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.jdt.ui.edit.text.java.copy.qualified.name"
-               label="Copy Qualified Name"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <count
-                        value="1">
-                  </count>
-               </with>
-            </visibleWhen>
-         </command>
-         <command
                commandId="org.eclipse.ui.edit.paste"
                label="Paste"
                style="push">
@@ -269,48 +291,6 @@
                   <count
                         value="1">
                   </count>
-               </with>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="com.vectorsf.jvoice.ui.navigator.command7"
-               label="Build Path"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <count
-                        value="1">
-                  </count>
-               </with>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="com.vectorsf.jvoice.ui.navigator.command8"
-               label="Source"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate
-                           ifEmpty="false"
-                           operator="and">
-                        <or>
-                           <instanceof
-                                 value="com.vectorsf.jvoice.model.base.JVBean">
-                           </instanceof>
-                           <instanceof
-                                 value="com.vectorsf.jvoice.model.base.JVPackage">
-                           </instanceof>
-                        </or>
-                     </iterate>
-                  </and>
                </with>
             </visibleWhen>
          </command>
