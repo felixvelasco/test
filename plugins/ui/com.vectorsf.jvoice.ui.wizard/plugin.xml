@@ -6,9 +6,16 @@
       <wizard
             category="com.vectorsf.jvoice.diagram.core.category"
             class="com.vectorsf.jvoice.ui.wizard.Wizards.CreateProjectJVoice"
-            id="com.vectorsf.jvoice.ui.Wizard.wizard"
-            name="Project JVoice"
+            id="com.vectorsf.jvoice.ui.project.wizard"
+            name="JVoice project"
             project="true">
+      </wizard>
+      <wizard
+            category="com.vectorsf.jvoice.diagram.core.category"
+            class="com.vectorsf.jvoice.ui.wizard.Wizards.CreateJVPackageWizard"
+            id="com.vectorsf.jvoice.ui.package.wizard"
+            name="JVoice package"
+            project="false">
       </wizard>
    </extension>
 

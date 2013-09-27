@@ -1,5 +1,6 @@
 package com.vectorsf.jvoice.ui.wizard.Wizards;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -12,8 +13,7 @@ import org.eclipse.swt.widgets.Composite;
  */
 public abstract class AbstractWizardPage extends WizardPage {
 
-	public AbstractWizardPage(String pageName, String title,
-			ImageDescriptor titleImage) {
+	public AbstractWizardPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 	}
 
@@ -40,7 +40,6 @@ public abstract class AbstractWizardPage extends WizardPage {
 
 	abstract protected void createWizardContents(Composite parent);
 
-	public String getText() {
-		return null;
-	};
+	abstract protected void createResource() throws CoreException;
+
 }
