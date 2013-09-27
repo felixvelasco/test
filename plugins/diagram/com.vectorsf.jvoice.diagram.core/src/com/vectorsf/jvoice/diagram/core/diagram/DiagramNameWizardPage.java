@@ -111,7 +111,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		IPath ruta = new Path(path);
 
 		// si la última barra no está en la posición 0 el path es un paquete
-		if (ruta.toString().lastIndexOf("/") != 0) {
+		if (ruta.toString().lastIndexOf("/") != 0
+				&& ruta.toString().length() - 1 != ruta.toString().lastIndexOf(
+						"/")) {
 			setSelection(root.getFolder(ruta));
 		} else {
 			// se trata de un proyecto
