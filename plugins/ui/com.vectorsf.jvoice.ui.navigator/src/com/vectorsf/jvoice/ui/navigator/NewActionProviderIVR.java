@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.ui.navigator;
 
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -21,6 +20,7 @@ import org.eclipse.ui.wizards.IWizardRegistry;
 
 import com.vectorsf.jvoice.ui.navigator.util.Submenujvoices;
 
+@SuppressWarnings("restriction")
 public class NewActionProviderIVR extends NewActionProvider {
 
 	private static final String FULL_EXAMPLES_WIZARD_CATEGORY = "org.eclipse.ui.Examples"; //$NON-NLS-1$
@@ -34,8 +34,6 @@ public class NewActionProviderIVR extends NewActionProvider {
 	private IAction newExampleAction;
 
 	private IAction ProjectJvoices;
-
-	private Action action;
 
 	private WizardActionGroup newWizardActionGroup;
 
@@ -51,7 +49,7 @@ public class NewActionProviderIVR extends NewActionProvider {
 			newProjectAction = new NewProjectAction(window);
 			newExampleAction = new NewExampleAction(window);
 
-			ProjectJvoices = new Submenujvoices();
+			ProjectJvoices = new Submenujvoices(window);
 
 			newWizardActionGroup = new WizardActionGroup(window, PlatformUI
 					.getWorkbench().getNewWizardRegistry(),
