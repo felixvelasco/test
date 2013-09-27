@@ -36,7 +36,7 @@
                   pattern="com.vectorsf.jvoice.ui.navigator.ResourceMgmtActionProvider">
             </actionExtension>
             <actionExtension
-                  pattern="com.vectorsf.jvoice.ui.navigator.NewActionProvider">
+                  pattern="org.eclipse.ui.navigator.resources.NewActions">
             </actionExtension>
          </includes>
       </viewerActionBinding>
@@ -98,7 +98,7 @@
       <navigatorContent
             activeByDefault="true"
             contentProvider="com.vectorsf.jvoice.ui.navigator.ivr.ContentProvider"
-            icon="res/Component.ico"
+            icon="res/navigator.png"
             id="com.vectorsf.jvoice.ui.navigator.navigatorContent"
             labelProvider="com.vectorsf.jvoice.ui.navigator.ivr.LabelProvider"
             name="IVR Navigator"
@@ -118,6 +118,64 @@
                   </instanceof>
                </or></possibleDropTargets>
          </dropAssistant>
+         <commonWizard
+               type="new"
+               wizardId="com.vectorsf.jvoice.ui.package.wizard">
+            <enablement>
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="true"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </with>
+            </enablement>
+         </commonWizard>
+         <commonWizard
+               type="new"
+               wizardId="com.vectorsf.jvoice.ui.project.wizard">
+            <enablement>
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="true"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </with>
+            </enablement>
+         </commonWizard>
+         <commonWizard
+               type="new"
+               wizardId="com.vectorsf.jvoice.diagram.core.wizard">
+            <enablement>
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                  </iterate>
+               </with>
+            </enablement>
+         </commonWizard>
       </navigatorContent>
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.navigator.ivr.MavenContentProvider"
@@ -241,33 +299,6 @@
             appearsBefore="org.eclipse.ui.navigator.resources.PropertiesActionProvider"
             class="org.eclipse.ui.internal.navigator.resources.actions.ResourceMgmtActionProvider"
             id="com.vectorsf.jvoice.ui.navigator.ResourceMgmtActionProvider">
-         <enablement>
-            <with
-                  variable="selection">
-               <and>
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <or>
-                        <instanceof
-                              value="com.vectorsf.jvoice.model.base.JVProject">
-                        </instanceof>
-                        <instanceof
-                              value="com.vectorsf.jvoice.model.base.JVBean">
-                        </instanceof>
-                        <instanceof
-                              value="com.vectorsf.jvoice.model.base.JVPackage">
-                        </instanceof>
-                     </or>
-                  </iterate>
-               </and>
-            </with>
-         </enablement>
-      </actionProvider>
-      <actionProvider
-            appearsBefore="org.eclipse.ui.navigator.resources.OpenActions"
-            class="com.vectorsf.jvoice.ui.navigator.NewActionProviderIVR"
-            id="com.vectorsf.jvoice.ui.navigator.NewActionProvider">
          <enablement>
             <with
                   variable="selection">
