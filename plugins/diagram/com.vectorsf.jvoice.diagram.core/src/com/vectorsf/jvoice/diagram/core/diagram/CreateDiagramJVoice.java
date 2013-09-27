@@ -54,12 +54,12 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 	private static final String WIZARD_WINDOW_TITLE = "New JVoice Diagram";
 
 	private Diagram diagram;
+	DiagramNameWizardPage pageName;
 
 	@Override
 	public void addPages() {
 		super.addPages();
-		DiagramNameWizardPage pageName = new DiagramNameWizardPage(
-				PAGE_NAME_DIAGRAM_NAME);
+		pageName = new DiagramNameWizardPage(PAGE_NAME_DIAGRAM_NAME);
 		pageName.setSelection(getSelection().getFirstElement());
 		addPage(pageName);
 	}
@@ -84,7 +84,7 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 		IProject project = null;
 		IFolder diagramFolder = null;
 
-		Object element = getSelection().getFirstElement();
+		Object element = pageName.getSelection();
 		if (element instanceof IProject) {
 			project = (IProject) element;
 		} else if (element instanceof IFolder) {

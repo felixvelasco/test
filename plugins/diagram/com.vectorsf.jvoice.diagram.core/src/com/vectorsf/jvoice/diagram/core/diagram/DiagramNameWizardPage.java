@@ -18,11 +18,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
@@ -109,6 +109,15 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IPath ruta = new Path(path);
+
+		// si la última barra no está en la posición 0 el path es un paquete
+		if (ruta.toString().lastIndexOf("/") != 0) {
+			setSelection(root.getFolder(ruta));
+		} else {
+			// se trata de un proyecto
+			setErrorMessage("Debe seleccionar un paquete");
+			return false;
+		}
 
 		if (root.exists(ruta)) {
 			ruta = ruta.append(text);
@@ -197,14 +206,19 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 			@Override
 			public void handleEvent(Event event) {
-				DirectoryDialog dd = new DirectoryDialog(getShell());
-				dd.setText("Select Package Root");
-				dd.setMessage("Package");
-				dd.setFilterPath("d:/alberto");
-				String pick = dd.open();
-
-				if (pick != null) {
-					textFieldFolder.setText(pick);
+				ContainerSelectionDialog dialog = new ContainerSelectionDialog(
+						getShell(), null, true, "Select a parent:");
+				dialog.setTitle("Container Selection");
+				dialog.open();
+				Object[] result = dialog.getResult();
+				if (result != null && result.length == 1) {
+					IPath ruta = (IPath) result[0];
+					IFolder fichero = ResourcesPlugin.getWorkspace().getRoot()
+							.getFolder(ruta);
+					setSelection(fichero);
+					textFieldFolder.setText(ruta.toString());
+				} else {
+					textFieldFolder.setText("");
 				}
 			}
 		});
@@ -260,5 +274,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	public void setSelection(Object firstElement) {
 		selection = firstElement;
 
+	}
+
+	public Object getSelection() {
+		return selection;
 	}
 }
