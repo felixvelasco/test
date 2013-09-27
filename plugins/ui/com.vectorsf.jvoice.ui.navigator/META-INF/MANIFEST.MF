@@ -22,6 +22,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.9.0",
  org.eclipse.graphiti.mm;bundle-version="0.10.0",
  org.eclipse.ui.navigator.resources;bundle-version="3.4.500",
  org.eclipse.graphiti.ui;bundle-version="0.10.0",
- org.eclipse.emf.transaction;bundle-version="1.4.0"
+ org.eclipse.emf.transaction;bundle-version="1.4.0",
+ com.vectorsf.jvoice.ui.wizard;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
