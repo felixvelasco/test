@@ -433,13 +433,22 @@ public interface BasePackage extends EPackage {
 	int JV_PROJECT___GET_CONFIGURATION__STRING = NAMED_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Projects</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_PROJECT___GET_REFERENCED_PROJECTS = NAMED_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
 	 * The number of operations of the '<em>JV Project</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_PROJECT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 2;
+	int JV_PROJECT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.base.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
@@ -763,6 +772,16 @@ public interface BasePackage extends EPackage {
 	EOperation getJVProject__GetConfiguration__String();
 
 	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVProject#getReferencedProjects() <em>Get Referenced Projects</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Referenced Projects</em>' operation.
+	 * @see com.vectorsf.jvoice.model.base.JVProject#getReferencedProjects()
+	 * @generated
+	 */
+	EOperation getJVProject__GetReferencedProjects();
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1011,6 +1030,14 @@ public interface BasePackage extends EPackage {
 		 * @generated
 		 */
 		EOperation JV_PROJECT___GET_CONFIGURATION__STRING = eINSTANCE.getJVProject__GetConfiguration__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Referenced Projects</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation JV_PROJECT___GET_REFERENCED_PROJECTS = eINSTANCE.getJVProject__GetReferencedProjects();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.base.impl.StringToStringMapImpl <em>String To String Map</em>}' class.

@@ -101,4 +101,13 @@ public interface JVProject extends NamedElement {
 	 */
 	Configuration getConfiguration(String name);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%com.vectorsf.jvoice.base.model.service.BaseModel%>.getInstance().getVisibleProjects(this);'"
+	 * @generated
+	 */
+	List<JVProject> getReferencedProjects();
+
 } // JVProject
