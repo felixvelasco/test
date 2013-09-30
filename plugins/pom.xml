@@ -29,6 +29,7 @@
     <module>diagram/com.vectorsf.jvoice.diagram.core</module>
 
     <module>dsl/com.vectorsf.jvoice.prompt.model</module>
+    <module>dsl/com.vectorsf.jvoice.prompt.model.edit</module>
     <module>dsl/com.vectorsf.jvoice.voice.dsl</module>
     <module>dsl/com.vectorsf.jvoice.voice.dsl.ui</module>
 
