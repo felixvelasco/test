@@ -33,7 +33,6 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorDescriptor;
@@ -85,23 +84,32 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 		IFolder diagramFolder = null;
 
 		Object element = pageName.getSelection();
-		if (element instanceof IProject) {
-			project = (IProject) element;
-		} else if (element instanceof IFolder) {
-			diagramFolder = (IFolder) element;
-			project = diagramFolder.getProject();
-		} else if (element instanceof JVProject) {
+
+		if (element instanceof JVProject) {
 			project = (IProject) Platform.getAdapterManager().getAdapter(
 					element, IProject.class);
 		} else if (element instanceof JVPackage) {
 			diagramFolder = (IFolder) Platform.getAdapterManager().getAdapter(
 					element, IFolder.class);
 			project = diagramFolder.getProject();
-		} else if (element instanceof IPackageFragmentRoot) {
-			IPackageFragmentRoot prueba = (IPackageFragmentRoot) element;
-			diagramFolder = (IFolder) prueba.getResource();
-			project = diagramFolder.getProject();
 		}
+		// if (element instanceof IProject) {
+		// project = (IProject) element;
+		// } else if (element instanceof IFolder) {
+		// diagramFolder = (IFolder) element;
+		// project = diagramFolder.getProject();
+		// } else if (element instanceof JVProject) {
+		// project = (IProject) Platform.getAdapterManager().getAdapter(
+		// element, IProject.class);
+		// } else if (element instanceof JVPackage) {
+		// diagramFolder = (IFolder) Platform.getAdapterManager().getAdapter(
+		// element, IFolder.class);
+		// project = diagramFolder.getProject();
+		// } else if (element instanceof IPackageFragmentRoot) {
+		// IPackageFragmentRoot prueba = (IPackageFragmentRoot) element;
+		// diagramFolder = (IFolder) prueba.getResource();
+		// project = diagramFolder.getProject();
+		// }
 
 		if (project == null || !project.isAccessible()) {
 			String error = "No Project Found";

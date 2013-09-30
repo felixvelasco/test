@@ -3,6 +3,9 @@
  */
 package com.vectorsf.jvoice.ui.wizard.Wizards;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -12,18 +15,24 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVPackage;
@@ -67,7 +76,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		String projectName = getProjectFieldValue();
 		if (projectName.equals("")) { //$NON-NLS-1$
 			setErrorMessage(null);
-			setMessage("package name empty");
+			setMessage("project name empty");
 			return false;
 		}
 
@@ -88,8 +97,10 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 				return false;
 			}
 		}
-
-		if (root.getProject(projectName).getFolder(packageName).exists()) {
+		IPath path = new Path(BaseModel.JV_PATH + "/" + toPath(packageName));
+		
+		
+		if (root.getProject(projectName).getFolder(path).exists()) {
 			setErrorMessage("Package already exists");
 			return false;
 		}
@@ -104,7 +115,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 
 		Composite projectGroup = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
-		layout.numColumns = 1;
+		layout.numColumns = 3;
 		projectGroup.setLayout(layout);
 		projectGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -118,6 +129,35 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		data.widthHint = SIZING_TEXT_FIELD_WIDTH;
 		textField.setLayoutData(data);
 		textField.setFont(parent.getFont());
+		
+		// browse button on right
+		Button browse = new Button(projectGroup, SWT.PUSH);
+		browse.setText("Browse...");
+		browse.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
+								getShell(),
+								new AdapterFactoryLabelProvider(
+										new ComposedAdapterFactory(
+												ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+						dialog.setTitle("Container Selection");
+						dialog.setAllowDuplicates(false);
+						dialog.setMultipleSelection(false);
+
+						dialog.setElements(llenarElementos().toArray());
+						dialog.open();
+						Object[] result = dialog.getResult();
+						if (result != null && result.length == 1) {
+							JVProject projecto = (JVProject) result[0];
+							setSelection(projecto);
+							textField.setText(projecto.getName());
+						} else {
+							textField.setText("");
+						}
+					}
+				});
 		
 		if (getInitialTextFieldValue()!=null){
 			textField.setText(getInitialTextFieldValue());
@@ -231,5 +271,20 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 			return null;
 		}
 		
+	}
+	
+	private List<JVProject> llenarElementos() {
+		
+		List<JVProject> input = new ArrayList<JVProject>();
+		for (int i = 0; i < ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects().length; i++) {
+			IProject proyecto = ResourcesPlugin.getWorkspace().getRoot()
+					.getProjects()[i];
+			String nombreProyecto = proyecto.getName();
+			JVProject project = BaseModel.getInstance().getModel()
+					.getProject(nombreProyecto);
+			input.add(project);
+		}
+		return input;
 	}
 }

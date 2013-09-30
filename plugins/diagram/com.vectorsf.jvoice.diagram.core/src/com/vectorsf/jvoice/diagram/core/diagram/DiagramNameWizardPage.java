@@ -1,15 +1,17 @@
 package com.vectorsf.jvoice.diagram.core.diagram;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.internal.ui.wizards.dialogfields.DialogField;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -22,8 +24,10 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.dialogs.ContainerSelectionDialog;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 
@@ -35,8 +39,11 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
-	Text textField;
-	Text textFieldFolder;
+	Text textFieldDiagram;
+	Text textFieldProject;
+	Text textFieldPackage;
+
+	private Button browsePackage;
 
 	private Listener nameModifyListener = new Listener() {
 		@Override
@@ -48,6 +55,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	};
 	private Object selection;
 	private String initialFolder = "";
+	private String initialProject = "";
 
 	public DiagramNameWizardPage(String pageName, String title,
 			ImageDescriptor titleImage) {
@@ -83,7 +91,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	@Override
 	public String getText() {
-		if (textField == null) {
+		if (textFieldDiagram == null) {
 			return getInitialTextFieldValue();
 		}
 
@@ -92,14 +100,27 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	protected boolean validatePage() {
 		String text = getTextFieldValue();
-		String path = getPathFieldValue();
-		if (text.equals("") || path.equals("")) { //$NON-NLS-1$
+		if (text.isEmpty()) {
 			setErrorMessage(null);
-			setMessage("Message empty");
+			setMessage("Diagram name empty");
+			return false;
+		}
+
+		String projectName = getProjectFieldValue();
+		if (projectName.isEmpty()) {
+			setErrorMessage("Project name empty");
+			browsePackage.setEnabled(false);
 			return false;
 		}
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IWorkspaceRoot root = workspace.getRoot();
+
+		if (!root.getProject(projectName).exists()) {
+			setErrorMessage("Project does not exist");
+			browsePackage.setEnabled(false);
+			return false;
+		}
 
 		IStatus status = doWorkspaceValidation(workspace, text);
 		if (!status.isOK()) {
@@ -107,35 +128,34 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IPath ruta = new Path(path);
+		String packageName = getPackageFieldValue();
+		browsePackage.setEnabled(true);
 
-		// si la última barra no está en la posición 0 el path es un paquete
-		if (ruta.toString().lastIndexOf("/") != 0
-				&& ruta.toString().length() - 1 != ruta.toString().lastIndexOf(
-						"/")) {
-			setSelection(root.getFolder(ruta));
-		} else {
-			// se trata de un proyecto
-			setErrorMessage("Debe seleccionar un paquete");
+		if (packageName.isEmpty()) {
+			setErrorMessage("Package name empty");
 			return false;
 		}
 
-		if (root.exists(ruta)) {
-			ruta = ruta.append(text);
-			ruta = ruta.addFileExtension("jvflow");
-			if (!root.exists(ruta)) {
-				setErrorMessage(null);
-				setMessage(null);
-				return true;
-			} else {
-				setErrorMessage("Resource with this name already exists");
-				return false;
-			}
-		} else {
-			setErrorMessage("La ruta seleccionada no existe");
+		JVProject project = BaseModel.getInstance().getModel()
+				.getProject(projectName);
+		JVPackage paquete = project.getPackage(packageName);
+
+		if (paquete == null) {
+			setErrorMessage("Package does not exist");
 			return false;
 		}
+
+		JVBean diagrama = paquete.getBean(text);
+
+		if (diagrama != null) {
+			setErrorMessage("Diagram already exists");
+			return false;
+		}
+
+		setSelection(paquete);
+		setErrorMessage(null);
+		setMessage(null);
+		return true;
 	}
 
 	@Override
@@ -145,30 +165,34 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	private final void createProjectNameGroup(Composite parent) {
 
-		IProject project = null;
-		IFolder diagramFolder = null;
+		JVProject project = null;
+		JVPackage diagramFolder = null;
 		if (selection instanceof IProject) {
-			project = (IProject) selection;
+			IProject iProject = (IProject) selection;
+			project = BaseModel.getInstance().getModel()
+					.getProject(iProject.getName());
 		} else if (selection instanceof IFolder) {
-			diagramFolder = (IFolder) selection;
-			project = diagramFolder.getProject();
+			IFolder folder = (IFolder) selection;
+			IProject iProject = folder.getProject();
+			project = BaseModel.getInstance().getModel()
+					.getProject(iProject.getName());
+			diagramFolder = project.getPackage(folder.getName());
 		} else if (selection instanceof JVProject) {
-			project = (IProject) Platform.getAdapterManager().getAdapter(
-					selection, IProject.class);
-			diagramFolder = (IFolder) Platform.getAdapterManager().getAdapter(
-					selection, IFolder.class);
+			project = (JVProject) selection;
 		} else if (selection instanceof JVPackage) {
-			diagramFolder = (IFolder) Platform.getAdapterManager().getAdapter(
-					selection, IFolder.class);
-			project = diagramFolder.getProject();
+			diagramFolder = (JVPackage) selection;
+			project = diagramFolder.getOwnerProject();
 		} else if (selection instanceof IPackageFragmentRoot) {
 			IPackageFragmentRoot prueba = (IPackageFragmentRoot) selection;
-			diagramFolder = (IFolder) prueba.getResource();
-			project = diagramFolder.getProject();
+			IFolder folder = (IFolder) prueba.getResource();
+			IProject iProject = folder.getProject();
+			project = BaseModel.getInstance().getModel()
+					.getProject(iProject.getName());
+			diagramFolder = project.getPackage(folder.getName());
 		}
 
-		initialFolder = diagramFolder != null ? diagramFolder.getFullPath()
-				.toString() : project.getFullPath().toString();
+		initialFolder = diagramFolder != null ? diagramFolder.getName() : "";
+		initialProject = project != null ? project.getName() : "";
 
 		Composite projectGroup = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
@@ -182,24 +206,24 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		projectLabel.setFont(parent.getFont());
 
 		// new project name entry field
-		textField = new Text(projectGroup, SWT.BORDER);
+		textFieldDiagram = new Text(projectGroup, SWT.BORDER);
 		GridData data = new GridData(GridData.FILL_HORIZONTAL);
 		data.widthHint = SIZING_TEXT_FIELD_WIDTH;
-		textField.setLayoutData(data);
-		textField.setFont(parent.getFont());
+		textFieldDiagram.setLayoutData(data);
+		textFieldDiagram.setFont(parent.getFont());
 
 		DialogField.createEmptySpace(projectGroup);
 
 		// new project label
 		Label projectLabel2 = new Label(projectGroup, SWT.NONE);
-		projectLabel2.setText("folder:");
+		projectLabel2.setText("project:");
 		projectLabel2.setFont(parent.getFont());
 
-		textFieldFolder = new Text(projectGroup, SWT.BORDER);
+		textFieldProject = new Text(projectGroup, SWT.BORDER);
 		GridData data2 = new GridData(GridData.FILL_HORIZONTAL);
 		data2.widthHint = SIZING_TEXT_FIELD_WIDTH;
-		textFieldFolder.setLayoutData(data2);
-		textFieldFolder.setFont(parent.getFont());
+		textFieldProject.setLayoutData(data2);
+		textFieldProject.setFont(parent.getFont());
 
 		// browse button on right
 		Button browse = new Button(projectGroup, SWT.PUSH);
@@ -208,47 +232,89 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 			@Override
 			public void handleEvent(Event event) {
-				ContainerSelectionDialog dialog = new ContainerSelectionDialog(
-						getShell(), null, true, "Select a parent:");
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
+						getShell(),
+						new AdapterFactoryLabelProvider(
+								new ComposedAdapterFactory(
+										ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 				dialog.setTitle("Container Selection");
+				dialog.setAllowDuplicates(false);
+				dialog.setMultipleSelection(false);
+
+				dialog.setElements(llenarProyectos().toArray());
 				dialog.open();
 				Object[] result = dialog.getResult();
 				if (result != null && result.length == 1) {
-					IPath ruta = (IPath) result[0];
-					IFolder fichero = ResourcesPlugin.getWorkspace().getRoot()
-							.getFolder(ruta);
-					setSelection(fichero);
-					textFieldFolder.setText(ruta.toString());
+					JVProject projecto = (JVProject) result[0];
+					setSelection(projecto);
+					textFieldProject.setText(projecto.getName());
 				} else {
-					textFieldFolder.setText("");
+					textFieldProject.setText("");
 				}
 			}
 		});
 
+		// new project label
+		Label projectLabel3 = new Label(projectGroup, SWT.NONE);
+		projectLabel3.setText("folder:");
+		projectLabel3.setFont(parent.getFont());
+
+		textFieldPackage = new Text(projectGroup, SWT.BORDER);
+		GridData data3 = new GridData(GridData.FILL_HORIZONTAL);
+		data3.widthHint = SIZING_TEXT_FIELD_WIDTH;
+		textFieldPackage.setLayoutData(data3);
+		textFieldPackage.setFont(parent.getFont());
+
+		// browse button on right
+		browsePackage = new Button(projectGroup, SWT.PUSH);
+		browsePackage.setText("Browse...");
+		browsePackage.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
+						getShell(),
+						new AdapterFactoryLabelProvider(
+								new ComposedAdapterFactory(
+										ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+				dialog.setTitle("Container Selection");
+				dialog.setAllowDuplicates(false);
+				dialog.setMultipleSelection(false);
+
+				dialog.setElements(llenarPaquetes().toArray());
+				dialog.open();
+				Object[] result = dialog.getResult();
+				if (result != null && result.length == 1) {
+					JVPackage paquete = (JVPackage) result[0];
+					setSelection(paquete);
+					textFieldPackage.setText(paquete.getName());
+				} else {
+					textFieldPackage.setText("");
+				}
+			}
+		});
+
+		browsePackage.setEnabled(false);
+
 		// Set the initial value first before listener
 		// to avoid handling an event during the creation.
 		if (getInitialTextFieldValue() != null) {
-			textField.setText(getInitialTextFieldValue());
+			textFieldDiagram.setText(getInitialTextFieldValue());
 		}
-		textField.addListener(SWT.Modify, nameModifyListener);
+		textFieldDiagram.addListener(SWT.Modify, nameModifyListener);
 
-		textFieldFolder.setText(getInitialTextFolderFieldValue());
-		textFieldFolder.addListener(SWT.Modify, nameModifyListener);
+		textFieldProject.setText(getInitialTextProjectFieldValue());
+		textFieldProject.addListener(SWT.Modify, nameModifyListener);
+
+		textFieldPackage.setText(getInitialTextFolderFieldValue());
+		textFieldPackage.addListener(SWT.Modify, nameModifyListener);
 	}
 
 	private String getTextFieldValue() {
-		if (textField == null) {
+		if (textFieldDiagram == null) {
 			return ""; //$NON-NLS-1$
 		}
 
-		return textField.getText().trim();
-	}
-
-	private String getPathFieldValue() {
-		if (textFieldFolder == null) {
-			return ""; //$NON-NLS-1$
-		}
-		return textFieldFolder.getText().trim();
+		return textFieldDiagram.getText().trim();
 	}
 
 	private String getInitialTextFieldValue() {
@@ -257,6 +323,10 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	private String getInitialTextFolderFieldValue() {
 		return initialFolder;
+	}
+
+	private String getInitialTextProjectFieldValue() {
+		return initialProject;
 	}
 
 	private IStatus doWorkspaceValidation(IWorkspace workspace, String text) {
@@ -268,8 +338,8 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (visible) {
-			textField.setFocus();
-			textField.selectAll();
+			textFieldDiagram.setFocus();
+			textFieldDiagram.selectAll();
 		}
 	}
 
@@ -280,5 +350,48 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	public Object getSelection() {
 		return selection;
+	}
+
+	private List<JVProject> llenarProyectos() {
+
+		List<JVProject> input = new ArrayList<JVProject>();
+
+		for (int i = 0; i < ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects().length; i++) {
+			IProject proyecto = ResourcesPlugin.getWorkspace().getRoot()
+					.getProjects()[i];
+			String nombreProyecto = proyecto.getName();
+			JVProject project = BaseModel.getInstance().getModel()
+					.getProject(nombreProyecto);
+			input.add(project);
+		}
+		return input;
+	}
+
+	private List<JVPackage> llenarPaquetes() {
+
+		IProject proyecto = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(textFieldProject.getText());
+
+		JVProject project = BaseModel.getInstance().getModel()
+				.getProject(proyecto.getName());
+
+		return project.getPackages();
+	}
+
+	private String getProjectFieldValue() {
+		if (textFieldProject == null) {
+			return ""; //$NON-NLS-1$
+		}
+
+		return textFieldProject.getText().trim();
+	}
+
+	private String getPackageFieldValue() {
+		if (textFieldPackage == null) {
+			return ""; //$NON-NLS-1$
+		}
+
+		return textFieldPackage.getText().trim();
 	}
 }
