@@ -43,7 +43,7 @@ import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
 public class MenuStatePattern extends StatePattern implements
 		ISelectionStatusValidator {
@@ -150,8 +150,10 @@ public class MenuStatePattern extends StatePattern implements
 						|| element instanceof JVPackage) {
 					return true;
 				}
-				if (element instanceof MenuDsl) {
-					return true;
+				if (element instanceof VoiceDsl) {
+					if (((VoiceDsl) element).getDslType().equals("menuname")) {
+						return true;
+					}
 				}
 
 				return false;
@@ -174,9 +176,9 @@ public class MenuStatePattern extends StatePattern implements
 
 		Object[] results = dialog.getResult();
 		String menuStateName = null;
-		MenuDsl result = null;
-		if (results != null && results[0] instanceof MenuDsl) {
-			result = (MenuDsl) results[0];
+		VoiceDsl result = null;
+		if (results != null && results[0] instanceof VoiceDsl) {
+			result = (VoiceDsl) results[0];
 			menuStateName = result.getName();
 
 		} else {
@@ -249,8 +251,14 @@ public class MenuStatePattern extends StatePattern implements
 	@Override
 	public IStatus validate(Object[] selection) {
 		if (selection.length > 0) {
-			if (selection[0] instanceof MenuDsl) {
-				return Status.OK_STATUS;
+			if (selection[0] instanceof VoiceDsl) {
+				VoiceDsl voiceDsl = (VoiceDsl) selection[0];
+				if (voiceDsl.getDslType().equals("menuname")) {
+					return Status.OK_STATUS;
+				} else {
+					return new Status(IStatus.ERROR,
+							"com.vectorsf.jvoice.diagram.core", "Select a menu");
+				}
 			} else {
 				return new Status(IStatus.ERROR,
 						"com.vectorsf.jvoice.diagram.core", "Select a menu");

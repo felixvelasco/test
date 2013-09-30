@@ -112,7 +112,7 @@ RULE_WS=12
 '/'=76
 '=='=58
 'switch'=87
-'promptname'=14
+'promptname'=15
 'say'=44
 '>'=65
 'grammars'=24
@@ -187,7 +187,7 @@ RULE_WS=12
 '}'=19
 'wording'=46
 '<='=64
-'inputname'=16
+'inputname'=14
 '!='=59
 '!=='=61
 'false'=34
@@ -196,7 +196,7 @@ RULE_WS=12
 '<'=66
 '['=82
 '*'=43
-'menuname'=15
+'menuname'=16
 '()'=22
 '&'=109
 'dtmf'=36

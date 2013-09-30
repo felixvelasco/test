@@ -7,6 +7,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVProject;
+import com.vectorsf.jvoice.model.operations.Flow;
 
 public class JVBeanContentProvider extends AdapterFactoryContentProvider {
 

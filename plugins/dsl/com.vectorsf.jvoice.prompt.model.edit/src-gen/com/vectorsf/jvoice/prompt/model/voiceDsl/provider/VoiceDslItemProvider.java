@@ -26,6 +26,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -63,75 +64,29 @@ public class VoiceDslItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addInputDslPropertyDescriptor(object);
-			addPromptDslPropertyDescriptor(object);
-			addMenuDslPropertyDescriptor(object);
+			addDslTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Input Dsl feature.
+	 * This adds a property descriptor for the Dsl Type feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addInputDslPropertyDescriptor(Object object) {
+	protected void addDslTypePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_VoiceDsl_inputDsl_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VoiceDsl_inputDsl_feature", "_UI_VoiceDsl_type"),
-				 VoiceDslPackage.Literals.VOICE_DSL__INPUT_DSL,
+				 getString("_UI_VoiceDsl_dslType_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_VoiceDsl_dslType_feature", "_UI_VoiceDsl_type"),
+				 VoiceDslPackage.Literals.VOICE_DSL__DSL_TYPE,
 				 true,
 				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Prompt Dsl feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addPromptDslPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_VoiceDsl_promptDsl_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VoiceDsl_promptDsl_feature", "_UI_VoiceDsl_type"),
-				 VoiceDslPackage.Literals.VOICE_DSL__PROMPT_DSL,
-				 true,
 				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Menu Dsl feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addMenuDslPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_VoiceDsl_menuDsl_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VoiceDsl_menuDsl_feature", "_UI_VoiceDsl_type"),
-				 VoiceDslPackage.Literals.VOICE_DSL__MENU_DSL,
-				 true,
-				 false,
-				 true,
-				 null,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -153,9 +108,9 @@ public class VoiceDslItemProvider
 			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__CONDITIONS);
 			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__AUDIOS);
 			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__GRAMMARS);
+			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__OUTPUTS);
 			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__VARIABLES);
 			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__TYPES);
-			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__OUTPUTS);
 		}
 		return childrenFeatures;
 	}
@@ -210,14 +165,17 @@ public class VoiceDslItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(VoiceDsl.class)) {
+			case VoiceDslPackage.VOICE_DSL__DSL_TYPE:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
 			case VoiceDslPackage.VOICE_DSL__PROPERTIES:
 			case VoiceDslPackage.VOICE_DSL__CONDITIONS:
 			case VoiceDslPackage.VOICE_DSL__AUDIOS:
 			case VoiceDslPackage.VOICE_DSL__GRAMMARS:
+			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 			case VoiceDslPackage.VOICE_DSL__VARIABLES:
 			case VoiceDslPackage.VOICE_DSL__TYPES:
-			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -262,6 +220,11 @@ public class VoiceDslItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
+				(VoiceDslPackage.Literals.VOICE_DSL__OUTPUTS,
+				 VoiceDslFactory.eINSTANCE.createOutputs()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(VoiceDslPackage.Literals.VOICE_DSL__VARIABLES,
 				 VoiceDslFactory.eINSTANCE.createVariables()));
 
@@ -274,11 +237,6 @@ public class VoiceDslItemProvider
 			(createChildParameter
 				(VoiceDslPackage.Literals.VOICE_DSL__TYPES,
 				 VoiceDslFactory.eINSTANCE.createClass()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(VoiceDslPackage.Literals.VOICE_DSL__OUTPUTS,
-				 VoiceDslFactory.eINSTANCE.createOutputs()));
 	}
 
 	/**

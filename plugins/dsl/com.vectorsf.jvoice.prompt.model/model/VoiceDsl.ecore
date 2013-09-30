@@ -13,15 +13,13 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="grammars" eType="#//Grammars"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" eType="#//Outputs"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variables" eType="#//Variables"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
         eType="#//Type" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inputDsl" eType="#//InputDsl"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="promptDsl" eType="#//PromptDsl"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="menuDsl" eType="#//MenuDsl"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" eType="#//Outputs"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dslType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Configuration">
     <eStructuralFeatures xsi:type="ecore:EReference" name="configValue" upperBound="-1"
@@ -144,7 +142,4 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../org.eclipse.xtext.xbase/model/Xbase.ecore#//XExpression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InputDsl" eSuperTypes="#//VoiceDsl"/>
-  <eClassifiers xsi:type="ecore:EClass" name="MenuDsl" eSuperTypes="#//VoiceDsl"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PromptDsl" eSuperTypes="#//VoiceDsl"/>
 </ecore:EPackage>

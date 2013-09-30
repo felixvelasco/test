@@ -210,121 +210,6 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.CallState} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected CallStateItemProvider callStateItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.CallState}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createCallStateAdapter() {
-		if (callStateItemProvider == null) {
-			callStateItemProvider = new CallStateItemProvider(this);
-		}
-
-		return callStateItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.CallFlowState} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected CallFlowStateItemProvider callFlowStateItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.CallFlowState}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createCallFlowStateAdapter() {
-		if (callFlowStateItemProvider == null) {
-			callFlowStateItemProvider = new CallFlowStateItemProvider(this);
-		}
-
-		return callFlowStateItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.PromptState} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected PromptStateItemProvider promptStateItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.PromptState}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createPromptStateAdapter() {
-		if (promptStateItemProvider == null) {
-			promptStateItemProvider = new PromptStateItemProvider(this);
-		}
-
-		return promptStateItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.InputState} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected InputStateItemProvider inputStateItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.InputState}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createInputStateAdapter() {
-		if (inputStateItemProvider == null) {
-			inputStateItemProvider = new InputStateItemProvider(this);
-		}
-
-		return inputStateItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.MenuState} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected MenuStateItemProvider menuStateItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.MenuState}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createMenuStateAdapter() {
-		if (menuStateItemProvider == null) {
-			menuStateItemProvider = new MenuStateItemProvider(this);
-		}
-
-		return menuStateItemProvider;
-	}
-
-	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -429,11 +314,6 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 		if (finalStateItemProvider != null) finalStateItemProvider.dispose();
 		if (switchStateItemProvider != null) switchStateItemProvider.dispose();
 		if (caseItemProvider != null) caseItemProvider.dispose();
-		if (callStateItemProvider != null) callStateItemProvider.dispose();
-		if (callFlowStateItemProvider != null) callFlowStateItemProvider.dispose();
-		if (promptStateItemProvider != null) promptStateItemProvider.dispose();
-		if (inputStateItemProvider != null) inputStateItemProvider.dispose();
-		if (menuStateItemProvider != null) menuStateItemProvider.dispose();
 	}
 
 }

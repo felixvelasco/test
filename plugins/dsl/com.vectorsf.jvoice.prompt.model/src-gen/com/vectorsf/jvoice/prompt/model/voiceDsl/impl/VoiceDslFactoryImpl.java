@@ -12,13 +12,10 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Field;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Function;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Member;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
@@ -99,9 +96,6 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 			case VoiceDslPackage.CLASS: return createClass();
 			case VoiceDslPackage.FIELD: return createField();
 			case VoiceDslPackage.FUNCTION: return createFunction();
-			case VoiceDslPackage.INPUT_DSL: return createInputDsl();
-			case VoiceDslPackage.MENU_DSL: return createMenuDsl();
-			case VoiceDslPackage.PROMPT_DSL: return createPromptDsl();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -305,36 +299,6 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 	public Function createFunction() {
 		FunctionImpl function = new FunctionImpl();
 		return function;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public InputDsl createInputDsl() {
-		InputDslImpl inputDsl = new InputDslImpl();
-		return inputDsl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public MenuDsl createMenuDsl() {
-		MenuDslImpl menuDsl = new MenuDslImpl();
-		return menuDsl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public PromptDsl createPromptDsl() {
-		PromptDslImpl promptDsl = new PromptDslImpl();
-		return promptDsl;
 	}
 
 	/**

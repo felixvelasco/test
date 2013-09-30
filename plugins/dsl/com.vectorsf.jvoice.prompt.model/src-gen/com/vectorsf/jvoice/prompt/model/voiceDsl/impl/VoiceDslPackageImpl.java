@@ -14,13 +14,10 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Field;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Function;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Member;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
@@ -190,27 +187,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	private EClass functionEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass inputDslEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass menuDslEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass promptDslEClass = null;
-
-	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -335,7 +311,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getVoiceDsl_Variables() {
+	public EReference getVoiceDsl_Outputs() {
 		return (EReference)voiceDslEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -344,7 +320,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getVoiceDsl_Types() {
+	public EReference getVoiceDsl_Variables() {
 		return (EReference)voiceDslEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -353,7 +329,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getVoiceDsl_InputDsl() {
+	public EReference getVoiceDsl_Types() {
 		return (EReference)voiceDslEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -362,26 +338,8 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getVoiceDsl_PromptDsl() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVoiceDsl_MenuDsl() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(9);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVoiceDsl_Outputs() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(10);
+	public EAttribute getVoiceDsl_DslType() {
+		return (EAttribute)voiceDslEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -1028,33 +986,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getInputDsl() {
-		return inputDslEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getMenuDsl() {
-		return menuDslEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getPromptDsl() {
-		return promptDslEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public VoiceDslFactory getVoiceDslFactory() {
 		return (VoiceDslFactory)getEFactoryInstance();
 	}
@@ -1084,12 +1015,10 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		createEReference(voiceDslEClass, VOICE_DSL__CONDITIONS);
 		createEReference(voiceDslEClass, VOICE_DSL__AUDIOS);
 		createEReference(voiceDslEClass, VOICE_DSL__GRAMMARS);
+		createEReference(voiceDslEClass, VOICE_DSL__OUTPUTS);
 		createEReference(voiceDslEClass, VOICE_DSL__VARIABLES);
 		createEReference(voiceDslEClass, VOICE_DSL__TYPES);
-		createEReference(voiceDslEClass, VOICE_DSL__INPUT_DSL);
-		createEReference(voiceDslEClass, VOICE_DSL__PROMPT_DSL);
-		createEReference(voiceDslEClass, VOICE_DSL__MENU_DSL);
-		createEReference(voiceDslEClass, VOICE_DSL__OUTPUTS);
+		createEAttribute(voiceDslEClass, VOICE_DSL__DSL_TYPE);
 
 		configurationEClass = createEClass(CONFIGURATION);
 		createEReference(configurationEClass, CONFIGURATION__CONFIG_VALUE);
@@ -1180,12 +1109,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		createEAttribute(functionEClass, FUNCTION__NAME);
 		createEReference(functionEClass, FUNCTION__EXCEPTIONS);
 		createEReference(functionEClass, FUNCTION__EXPRESSION);
-
-		inputDslEClass = createEClass(INPUT_DSL);
-
-		menuDslEClass = createEClass(MENU_DSL);
-
-		promptDslEClass = createEClass(PROMPT_DSL);
 	}
 
 	/**
@@ -1227,9 +1150,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		classEClass.getESuperTypes().add(this.getType());
 		fieldEClass.getESuperTypes().add(this.getMember());
 		functionEClass.getESuperTypes().add(this.getMember());
-		inputDslEClass.getESuperTypes().add(this.getVoiceDsl());
-		menuDslEClass.getESuperTypes().add(this.getVoiceDsl());
-		promptDslEClass.getESuperTypes().add(this.getVoiceDsl());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(voiceDslEClass, VoiceDsl.class, "VoiceDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1238,12 +1158,10 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEReference(getVoiceDsl_Conditions(), this.getCondition(), null, "conditions", null, 0, -1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Audios(), this.getAudios(), null, "audios", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Grammars(), this.getGrammars(), null, "grammars", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getVoiceDsl_Outputs(), this.getOutputs(), null, "outputs", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Variables(), this.getVariables(), null, "variables", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Types(), this.getType(), null, "types", null, 0, -1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVoiceDsl_InputDsl(), this.getInputDsl(), null, "inputDsl", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVoiceDsl_PromptDsl(), this.getPromptDsl(), null, "promptDsl", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVoiceDsl_MenuDsl(), this.getMenuDsl(), null, "menuDsl", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVoiceDsl_Outputs(), this.getOutputs(), null, "outputs", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getVoiceDsl_DslType(), ecorePackage.getEString(), "dslType", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getConfiguration_ConfigValue(), this.getConfigValue(), null, "configValue", null, 0, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1334,12 +1252,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEAttribute(getFunction_Name(), ecorePackage.getEString(), "name", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFunction_Exceptions(), theTypesPackage.getJvmTypeReference(), null, "exceptions", null, 0, -1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFunction_Expression(), theXbasePackage.getXExpression(), null, "expression", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(inputDslEClass, InputDsl.class, "InputDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(menuDslEClass, MenuDsl.class, "MenuDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(promptDslEClass, PromptDsl.class, "PromptDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

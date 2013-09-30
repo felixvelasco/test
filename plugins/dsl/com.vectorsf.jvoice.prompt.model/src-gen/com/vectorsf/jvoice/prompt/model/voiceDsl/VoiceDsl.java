@@ -19,12 +19,10 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getConditions <em>Conditions</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getAudios <em>Audios</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getGrammars <em>Grammars</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getVariables <em>Variables</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getTypes <em>Types</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getInputDsl <em>Input Dsl</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getPromptDsl <em>Prompt Dsl</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getMenuDsl <em>Menu Dsl</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getDslType <em>Dsl Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -144,6 +142,32 @@ public interface VoiceDsl extends JVBean {
 	void setGrammars(Grammars value);
 
 	/**
+	 * Returns the value of the '<em><b>Outputs</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Outputs</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Outputs</em>' containment reference.
+	 * @see #setOutputs(Outputs)
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getVoiceDsl_Outputs()
+	 * @model containment="true"
+	 * @generated
+	 */
+	Outputs getOutputs();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getOutputs <em>Outputs</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Outputs</em>' containment reference.
+	 * @see #getOutputs()
+	 * @generated
+	 */
+	void setOutputs(Outputs value);
+
+	/**
 	 * Returns the value of the '<em><b>Variables</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -186,107 +210,29 @@ public interface VoiceDsl extends JVBean {
 	EList<Type> getTypes();
 
 	/**
-	 * Returns the value of the '<em><b>Input Dsl</b></em>' reference.
+	 * Returns the value of the '<em><b>Dsl Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Input Dsl</em>' reference isn't clear,
+	 * If the meaning of the '<em>Dsl Type</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Input Dsl</em>' reference.
-	 * @see #setInputDsl(InputDsl)
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getVoiceDsl_InputDsl()
+	 * @return the value of the '<em>Dsl Type</em>' attribute.
+	 * @see #setDslType(String)
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getVoiceDsl_DslType()
 	 * @model
 	 * @generated
 	 */
-	InputDsl getInputDsl();
+	String getDslType();
 
 	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getInputDsl <em>Input Dsl</em>}' reference.
+	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getDslType <em>Dsl Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Input Dsl</em>' reference.
-	 * @see #getInputDsl()
+	 * @param value the new value of the '<em>Dsl Type</em>' attribute.
+	 * @see #getDslType()
 	 * @generated
 	 */
-	void setInputDsl(InputDsl value);
-
-	/**
-	 * Returns the value of the '<em><b>Prompt Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Prompt Dsl</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Prompt Dsl</em>' reference.
-	 * @see #setPromptDsl(PromptDsl)
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getVoiceDsl_PromptDsl()
-	 * @model
-	 * @generated
-	 */
-	PromptDsl getPromptDsl();
-
-	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getPromptDsl <em>Prompt Dsl</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Prompt Dsl</em>' reference.
-	 * @see #getPromptDsl()
-	 * @generated
-	 */
-	void setPromptDsl(PromptDsl value);
-
-	/**
-	 * Returns the value of the '<em><b>Menu Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Menu Dsl</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Menu Dsl</em>' reference.
-	 * @see #setMenuDsl(MenuDsl)
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getVoiceDsl_MenuDsl()
-	 * @model
-	 * @generated
-	 */
-	MenuDsl getMenuDsl();
-
-	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getMenuDsl <em>Menu Dsl</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Menu Dsl</em>' reference.
-	 * @see #getMenuDsl()
-	 * @generated
-	 */
-	void setMenuDsl(MenuDsl value);
-
-	/**
-	 * Returns the value of the '<em><b>Outputs</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Outputs</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Outputs</em>' containment reference.
-	 * @see #setOutputs(Outputs)
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getVoiceDsl_Outputs()
-	 * @model containment="true"
-	 * @generated
-	 */
-	Outputs getOutputs();
-
-	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getOutputs <em>Outputs</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Outputs</em>' containment reference.
-	 * @see #getOutputs()
-	 * @generated
-	 */
-	void setOutputs(Outputs value);
+	void setDslType(String value);
 
 } // VoiceDsl

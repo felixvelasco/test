@@ -16,13 +16,10 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Field;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Function;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Member;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
@@ -216,36 +213,6 @@ public class VoiceDslSwitch<T> extends Switch<T> {
 				Function function = (Function)theEObject;
 				T result = caseFunction(function);
 				if (result == null) result = caseMember(function);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case VoiceDslPackage.INPUT_DSL: {
-				InputDsl inputDsl = (InputDsl)theEObject;
-				T result = caseInputDsl(inputDsl);
-				if (result == null) result = caseVoiceDsl(inputDsl);
-				if (result == null) result = caseJVBean(inputDsl);
-				if (result == null) result = caseNamedElement(inputDsl);
-				if (result == null) result = caseJVElement(inputDsl);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case VoiceDslPackage.MENU_DSL: {
-				MenuDsl menuDsl = (MenuDsl)theEObject;
-				T result = caseMenuDsl(menuDsl);
-				if (result == null) result = caseVoiceDsl(menuDsl);
-				if (result == null) result = caseJVBean(menuDsl);
-				if (result == null) result = caseNamedElement(menuDsl);
-				if (result == null) result = caseJVElement(menuDsl);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case VoiceDslPackage.PROMPT_DSL: {
-				PromptDsl promptDsl = (PromptDsl)theEObject;
-				T result = casePromptDsl(promptDsl);
-				if (result == null) result = caseVoiceDsl(promptDsl);
-				if (result == null) result = caseJVBean(promptDsl);
-				if (result == null) result = caseNamedElement(promptDsl);
-				if (result == null) result = caseJVElement(promptDsl);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -550,51 +517,6 @@ public class VoiceDslSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseFunction(Function object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Input Dsl</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Input Dsl</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseInputDsl(InputDsl object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Menu Dsl</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Menu Dsl</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseMenuDsl(MenuDsl object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Prompt Dsl</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Prompt Dsl</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T casePromptDsl(PromptDsl object) {
 		return null;
 	}
 
