@@ -29,6 +29,7 @@ import org.eclipse.graphiti.util.IColorConstant;
 
 import com.vectorsf.jvoice.diagram.core.pattern.states.OpenEditor;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.CreateTransitionFromPad;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionMenuPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
@@ -138,16 +139,18 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 				MenuState menuState = (MenuState) sta;
 				List<Output> outputs = menuState.getLocution().getOutputs()
 						.getOutput();
+				ContextButtonEntry menuButton = new ContextButtonEntry(null,
+						context);
+				menuButton.setText("Transition");
+
 				for (Output output : outputs) {
 					feature = new CreateTransitionFromPad(getFeatureProvider(),
-							new TransitionPattern(getFeatureProvider()));
-					ContextButtonEntry menuButton = new ContextButtonEntry(
-							null, context);
-					menuButton.setText(output.getName());
+							new TransitionMenuPattern(output,
+									getFeatureProvider()));
 					menuButton.setIconId(getImageFor(sta, feature));
 					menuButton.addDragAndDropFeature(feature);
-					data.getDomainSpecificContextButtons().add(menuButton);
 				}
+				data.getDomainSpecificContextButtons().add(menuButton);
 
 			} else {
 				feature = new CreateTransitionFromPad(getFeatureProvider(),
