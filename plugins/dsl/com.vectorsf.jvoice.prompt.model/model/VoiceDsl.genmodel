@@ -14,10 +14,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/conditions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/audios"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/grammars"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/outputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/variables"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/types"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//VoiceDsl/dslType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/inputDsl"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/promptDsl"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/menuDsl"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/outputs"/>
     </genClasses>
     <genClasses ecoreClass="VoiceDsl.ecore#//Configuration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Configuration/configValue"/>
@@ -109,5 +111,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Function/exceptions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Function/expression"/>
     </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//InputDsl"/>
+    <genClasses ecoreClass="VoiceDsl.ecore#//MenuDsl"/>
+    <genClasses ecoreClass="VoiceDsl.ecore#//PromptDsl"/>
   </genPackages>
 </genmodel:GenModel>

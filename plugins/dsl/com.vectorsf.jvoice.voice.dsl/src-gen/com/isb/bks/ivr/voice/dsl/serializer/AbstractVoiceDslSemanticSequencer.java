@@ -13,10 +13,13 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Field;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Function;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Member;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
@@ -213,10 +216,24 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 					return; 
 				}
 				else break;
+			case VoiceDslPackage.INPUT_DSL:
+				if(context == grammarAccess.getInputDslRule() ||
+				   context == grammarAccess.getVoiceDslRule()) {
+					sequence_InputDsl(context, (InputDsl) semanticObject); 
+					return; 
+				}
+				else break;
 			case VoiceDslPackage.MEMBER:
 				if(context == grammarAccess.getMemberAccess().getFieldAnnotationInfoAction_2_0_0() ||
 				   context == grammarAccess.getMemberAccess().getFunctionAnnotationInfoAction_2_1_0()) {
 					sequence_Member_Field_2_0_0_Function_2_1_0(context, (Member) semanticObject); 
+					return; 
+				}
+				else break;
+			case VoiceDslPackage.MENU_DSL:
+				if(context == grammarAccess.getMenuDslRule() ||
+				   context == grammarAccess.getVoiceDslRule()) {
+					sequence_MenuDsl(context, (MenuDsl) semanticObject); 
 					return; 
 				}
 				else break;
@@ -235,6 +252,13 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 			case VoiceDslPackage.OUTPUTS:
 				if(context == grammarAccess.getOutputsRule()) {
 					sequence_Outputs(context, (Outputs) semanticObject); 
+					return; 
+				}
+				else break;
+			case VoiceDslPackage.PROMPT_DSL:
+				if(context == grammarAccess.getPromptDslRule() ||
+				   context == grammarAccess.getVoiceDslRule()) {
+					sequence_PromptDsl(context, (PromptDsl) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1294,6 +1318,23 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	
 	/**
 	 * Constraint:
+	 *     (
+	 *         name=ID 
+	 *         configuration=Configuration 
+	 *         grammars=Grammars 
+	 *         properties+=Property* 
+	 *         variables=Variables? 
+	 *         conditions+=Condition* 
+	 *         audios=Audios
+	 *     )
+	 */
+	protected void sequence_InputDsl(EObject context, InputDsl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (annotationInfo=Member_Field_2_0_0 (type=JvmTypeReference name=ID) initialValue=XExpression?)
 	 */
 	protected void sequence_Member(EObject context, Field semanticObject) {
@@ -1321,6 +1362,23 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	
 	/**
 	 * Constraint:
+	 *     (
+	 *         name=ID 
+	 *         configuration=Configuration 
+	 *         grammars=Grammars 
+	 *         properties+=Property* 
+	 *         variables=Variables? 
+	 *         conditions+=Condition* 
+	 *         outputs=Outputs
+	 *     )
+	 */
+	protected void sequence_MenuDsl(EObject context, MenuDsl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (value=STRING | value='*')
 	 */
 	protected void sequence_OutputValue(EObject context, OutputValue semanticObject) {
@@ -1342,6 +1400,15 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	 *     output+=Output+
 	 */
 	protected void sequence_Outputs(EObject context, Outputs semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ID properties+=Property* variables=Variables? conditions+=Condition* audios=Audios)
+	 */
+	protected void sequence_PromptDsl(EObject context, PromptDsl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1425,37 +1492,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         (
-	 *             dslType='inputname' 
-	 *             name=ID 
-	 *             configuration=Configuration 
-	 *             grammars=Grammars 
-	 *             properties+=Property* 
-	 *             variables=Variables? 
-	 *             conditions+=Condition* 
-	 *             audios=Audios
-	 *         ) | 
-	 *         (
-	 *             dslType='promptname' 
-	 *             name=ID 
-	 *             properties+=Property* 
-	 *             variables=Variables? 
-	 *             conditions+=Condition* 
-	 *             audios=Audios
-	 *         ) | 
-	 *         (
-	 *             dslType='menuname' 
-	 *             name=ID 
-	 *             configuration=Configuration 
-	 *             grammars=Grammars 
-	 *             properties+=Property* 
-	 *             variables=Variables? 
-	 *             conditions+=Condition* 
-	 *             outputs=Outputs
-	 *         ) | 
-	 *         types+=Type*
-	 *     )
+	 *     types+=Type*
 	 */
 	protected void sequence_VoiceDsl(EObject context, VoiceDsl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

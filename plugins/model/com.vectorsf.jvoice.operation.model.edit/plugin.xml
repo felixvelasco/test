@@ -10,7 +10,7 @@
       <!-- @generated coreOperations -->
       <factory
             uri="http://jvoice.vectorsf.com/operations/1.0"
-            class="com.vectorsf.jvoice.model.operations.provider.ext.ExtOperationsItemProviderAdapterFactory"
+            class="com.vectorsf.jvoice.model.operations.provider.OperationsItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider
