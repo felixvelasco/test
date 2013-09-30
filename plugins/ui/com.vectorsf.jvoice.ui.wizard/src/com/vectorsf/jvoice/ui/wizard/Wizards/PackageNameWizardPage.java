@@ -14,6 +14,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -25,6 +26,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.model.base.JVPackage;
+import com.vectorsf.jvoice.model.base.JVProject;
 
 public class PackageNameWizardPage extends AbstractWizardPage {
 
@@ -35,6 +38,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 
 	private Text textField;
 	private Text packageField;
+	private Object selection;
 
 	private Listener nameModifyListener = new Listener() {
 		@Override
@@ -114,6 +118,10 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		data.widthHint = SIZING_TEXT_FIELD_WIDTH;
 		textField.setLayoutData(data);
 		textField.setFont(parent.getFont());
+		
+		if (getInitialTextFieldValue()!=null){
+			textField.setText(getInitialTextFieldValue());
+		}
 
 		textField.addListener(SWT.Modify, nameModifyListener);
 		textField.addListener(SWT.FocusIn, nameModifyListener);
@@ -200,5 +208,28 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 			container.create(true, true, monitor);
 		}
 
+	}
+	
+	public void setSelection(Object firstElement) {
+		selection = firstElement;
+
+	}
+	
+	private String getInitialTextFieldValue() {
+		if (selection instanceof JVProject){
+			return ((JVProject)selection).getName(); //$NON-NLS-1$ 
+		}else if (selection instanceof IProject){
+			return ((IProject)selection).getName(); //$NON-NLS-1$
+		}else if (selection instanceof IFolder){
+			return ((IFolder)selection).getProject().getName(); //$NON-NLS-1$
+		}else if (selection instanceof JVPackage){
+			return ((JVPackage)selection).getOwnerProject().getName(); //$NON-NLS-1$
+		}else if (selection instanceof IPackageFragmentRoot){
+			IPackageFragmentRoot iPackageFragmentRoot = (IPackageFragmentRoot) selection;
+			return ((IFolder)iPackageFragmentRoot.getResource()).getProject().getName();
+		}else{
+			return null;
+		}
+		
 	}
 }

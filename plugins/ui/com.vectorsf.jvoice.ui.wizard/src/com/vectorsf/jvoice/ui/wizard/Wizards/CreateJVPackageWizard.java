@@ -14,6 +14,7 @@ public class CreateJVPackageWizard extends BasicNewResourceWizard {
 	public void addPages() {
 		super.addPages();
 		PackageNameWizardPage pageName = new PackageNameWizardPage(PAGE_NAME_PROJECT_NAME);
+		pageName.setSelection(getSelection().getFirstElement());
 		addPage(pageName);
 	}
 
