@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
@@ -13,6 +14,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.core.project.JVoiceProjectNature;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVPackage;
@@ -109,6 +111,14 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 				removeResources(jvProject);
 
 				return false;
+			}
+			if (delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() == IResourceDelta.DESCRIPTION) {
+				IProject project = (IProject) resource;
+				if (!project.isOpen() || !project.hasNature(JVoiceProjectNature.NATURE_ID)) {
+					jvProject.getModel().getProjects().remove(jvProject);
+					removeResources(jvProject);
+					return false;
+				}
 			}
 		}
 

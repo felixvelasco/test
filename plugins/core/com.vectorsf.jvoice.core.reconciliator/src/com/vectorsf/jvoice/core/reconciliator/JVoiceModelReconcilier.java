@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.Path;
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.factory.JVBeanFactory;
 import com.vectorsf.jvoice.core.factory.JVBeanFactoryManager;
+import com.vectorsf.jvoice.core.project.JVoiceProjectNature;
 import com.vectorsf.jvoice.model.base.BaseFactory;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVBean;
@@ -43,7 +44,14 @@ public class JVoiceModelReconcilier {
 
 		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		for (IProject project : workspace.getRoot().getProjects()) {
-			baseModel.getModel().getProjects().add(createProject(project));
+			try {
+				if (project.isOpen() && project.hasNature(JVoiceProjectNature.NATURE_ID)) {
+					baseModel.getModel().getProjects().add(createProject(project));
+				}
+			} catch (CoreException e) {
+				// CoreException is only launched on closed or non-existing projects, and we are guarded against both
+				// conditions
+			}
 		}
 
 		workspace.addResourceChangeListener(new BaseModelResourceChangeListener());
