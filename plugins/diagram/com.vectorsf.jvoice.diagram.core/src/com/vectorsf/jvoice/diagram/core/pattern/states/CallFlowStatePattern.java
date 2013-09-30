@@ -131,8 +131,6 @@ public class CallFlowStatePattern extends StatePattern implements
 				shell,
 				new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
 						ComposedAdapterFactory.Descriptor.Registry.INSTANCE)),
-				// new AdapterFactoryContentProvider(new ComposedAdapterFactory(
-				// ComposedAdapterFactory.Descriptor.Registry.INSTANCE))) {
 				callFlowContentProvider) {
 
 			@Override

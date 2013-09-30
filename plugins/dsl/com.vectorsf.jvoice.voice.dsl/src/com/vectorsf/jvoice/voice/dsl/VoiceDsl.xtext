@@ -3,24 +3,24 @@ import "http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl/1.0"
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 
-VoiceDsl returns VoiceDsl:
-	(dslType = 'inputname'  name = ID           
-      ((configuration = Configuration)& 
- 	   (grammars = Grammars)&
-	   (properties += Property*)&
-	   ((variables = Variables)?)&
-	   (conditions += Condition*))
-  	    audios=Audios	
-	  ) 
-	 
-    |(dslType = 'promptname'  name = ID 
+VoiceDsl:
+	InputDsl 
+	| MenuDsl 
+	| PromptDsl
+    |(  (types+=Type)*)
+;
+
+PromptDsl:
+	('promptname'  name = ID 
        ((properties += Property*)&
        	((variables = Variables)?)& 
 	    (conditions += Condition*))
   	     audios=Audios	
 	   ) 
+;
 
-    |(dslType = 'menuname'  name = ID
+MenuDsl:
+	('menuname'  name = ID
 	   ((configuration = Configuration)& 
         (grammars = Grammars)&
 	    (properties += Property*)&
@@ -28,11 +28,20 @@ VoiceDsl returns VoiceDsl:
 	    (conditions += Condition*))
   	     outputs=Outputs
 	   ) 
-	   
-	   |(  (types+=Type)*)
 ;
 
- 
+InputDsl:
+	('inputname'  name = ID           
+      ((configuration = Configuration)& 
+ 	   (grammars = Grammars)&
+	   (properties += Property*)&
+	   ((variables = Variables)?)&
+	   (conditions += Condition*))
+  	    audios=Audios	
+	  ) 
+;
+	
+	  
 Variables:
 	{Variables}
 	'variables' '{'

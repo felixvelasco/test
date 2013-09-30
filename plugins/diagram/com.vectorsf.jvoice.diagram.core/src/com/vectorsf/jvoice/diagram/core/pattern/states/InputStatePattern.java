@@ -43,7 +43,7 @@ import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
 
 public class InputStatePattern extends StatePattern implements
 		ISelectionStatusValidator {
@@ -151,10 +151,8 @@ public class InputStatePattern extends StatePattern implements
 						|| element instanceof JVPackage) {
 					return true;
 				}
-				if (element instanceof VoiceDsl) {
-					if (((VoiceDsl) element).getDslType().equals("inputname")) {
-						return true;
-					}
+				if (element instanceof InputDsl) {
+					return true;
 				}
 
 				return false;
@@ -176,9 +174,9 @@ public class InputStatePattern extends StatePattern implements
 
 		Object[] results = dialog.getResult();
 		String inputStateName = null;
-		VoiceDsl result = null;
-		if (results != null && results[0] instanceof VoiceDsl) {
-			result = (VoiceDsl) results[0];
+		InputDsl result = null;
+		if (results != null && results[0] instanceof InputDsl) {
+			result = (InputDsl) results[0];
 			inputStateName = result.getName();
 		} else {
 			throw new OperationCanceledException();
@@ -250,19 +248,13 @@ public class InputStatePattern extends StatePattern implements
 	@Override
 	public IStatus validate(Object[] selection) {
 		if (selection.length > 0) {
-			if (selection[0] instanceof VoiceDsl) {
-				VoiceDsl voiceDsl = (VoiceDsl) selection[0];
-				if (voiceDsl.getDslType().equals("inputname")) {
-					return Status.OK_STATUS;
-				} else {
-					return new Status(IStatus.ERROR,
-							"com.vectorsf.jvoice.diagram.core",
-							"Select an input");
-				}
+			if (selection[0] instanceof InputDsl) {
+				return Status.OK_STATUS;
 			} else {
 				return new Status(IStatus.ERROR,
 						"com.vectorsf.jvoice.diagram.core", "Select an input");
 			}
+
 		} else {
 			return new Status(IStatus.ERROR,
 					"com.vectorsf.jvoice.diagram.core", "Select an input");

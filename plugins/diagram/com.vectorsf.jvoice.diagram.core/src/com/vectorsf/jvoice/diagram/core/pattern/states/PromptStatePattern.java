@@ -43,7 +43,7 @@ import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.PromptState;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 
 public class PromptStatePattern extends StatePattern implements
 		ISelectionStatusValidator {
@@ -153,10 +153,8 @@ public class PromptStatePattern extends StatePattern implements
 						|| element instanceof JVPackage) {
 					return true;
 				}
-				if (element instanceof VoiceDsl) {
-					if (((VoiceDsl) element).getDslType().equals("promptname")) {
-						return true;
-					}
+				if (element instanceof PromptDsl) {
+					return true;
 				}
 
 				return false;
@@ -178,10 +176,10 @@ public class PromptStatePattern extends StatePattern implements
 
 		Object[] results = dialog.getResult();
 		String promptStateName = null;
-		VoiceDsl result = null;
+		PromptDsl result = null;
 
-		if (results != null && results[0] instanceof VoiceDsl) {
-			result = (VoiceDsl) results[0];
+		if (results != null && results[0] instanceof PromptDsl) {
+			result = (PromptDsl) results[0];
 			promptStateName = result.getName();
 		} else {
 			throw new OperationCanceledException();
@@ -253,23 +251,16 @@ public class PromptStatePattern extends StatePattern implements
 	@Override
 	public IStatus validate(Object[] selection) {
 		if (selection.length > 0) {
-			if (selection[0] instanceof VoiceDsl) {
-				VoiceDsl voiceDsl = (VoiceDsl) selection[0];
-				if (voiceDsl.getDslType().equals("promptname")) {
-					return Status.OK_STATUS;
-				} else {
-					return new Status(IStatus.ERROR,
-							"com.vectorsf.jvoice.diagram.core",
-							"Select a prompt");
-				}
+			if (selection[0] instanceof PromptDsl) {
+				return Status.OK_STATUS;
 			} else {
 				return new Status(IStatus.ERROR,
 						"com.vectorsf.jvoice.diagram.core", "Select a prompt");
 			}
+
 		} else {
 			return new Status(IStatus.ERROR,
 					"com.vectorsf.jvoice.diagram.core", "Select a prompt");
 		}
 	}
-
 }

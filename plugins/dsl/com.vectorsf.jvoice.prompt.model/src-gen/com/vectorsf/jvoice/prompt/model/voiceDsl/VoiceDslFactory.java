@@ -202,6 +202,33 @@ public interface VoiceDslFactory extends EFactory {
 	Function createFunction();
 
 	/**
+	 * Returns a new object of class '<em>Input Dsl</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Input Dsl</em>'.
+	 * @generated
+	 */
+	InputDsl createInputDsl();
+
+	/**
+	 * Returns a new object of class '<em>Menu Dsl</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Menu Dsl</em>'.
+	 * @generated
+	 */
+	MenuDsl createMenuDsl();
+
+	/**
+	 * Returns a new object of class '<em>Prompt Dsl</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Prompt Dsl</em>'.
+	 * @generated
+	 */
+	PromptDsl createPromptDsl();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

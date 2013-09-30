@@ -532,6 +532,75 @@ public class VoiceDslItemProviderAdapterFactory extends VoiceDslAdapterFactory i
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InputDslItemProvider inputDslItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createInputDslAdapter() {
+		if (inputDslItemProvider == null) {
+			inputDslItemProvider = new InputDslItemProvider(this);
+		}
+
+		return inputDslItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected MenuDslItemProvider menuDslItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createMenuDslAdapter() {
+		if (menuDslItemProvider == null) {
+			menuDslItemProvider = new MenuDslItemProvider(this);
+		}
+
+		return menuDslItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PromptDslItemProvider promptDslItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createPromptDslAdapter() {
+		if (promptDslItemProvider == null) {
+			promptDslItemProvider = new PromptDslItemProvider(this);
+		}
+
+		return promptDslItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -650,6 +719,9 @@ public class VoiceDslItemProviderAdapterFactory extends VoiceDslAdapterFactory i
 		if (classItemProvider != null) classItemProvider.dispose();
 		if (fieldItemProvider != null) fieldItemProvider.dispose();
 		if (functionItemProvider != null) functionItemProvider.dispose();
+		if (inputDslItemProvider != null) inputDslItemProvider.dispose();
+		if (menuDslItemProvider != null) menuDslItemProvider.dispose();
+		if (promptDslItemProvider != null) promptDslItemProvider.dispose();
 	}
 
 }

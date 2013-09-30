@@ -170,6 +170,31 @@ public class FlowItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
+				(OperationsPackage.Literals.FLOW__STATES,
+				 OperationsFactory.eINSTANCE.createCallState()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(OperationsPackage.Literals.FLOW__STATES,
+				 OperationsFactory.eINSTANCE.createCallFlowState()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(OperationsPackage.Literals.FLOW__STATES,
+				 OperationsFactory.eINSTANCE.createPromptState()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(OperationsPackage.Literals.FLOW__STATES,
+				 OperationsFactory.eINSTANCE.createInputState()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(OperationsPackage.Literals.FLOW__STATES,
+				 OperationsFactory.eINSTANCE.createMenuState()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(OperationsPackage.Literals.FLOW__TRANSITIONS,
 				 OperationsFactory.eINSTANCE.createTransition()));
 	}

@@ -23,242 +23,257 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	public class VoiceDslElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VoiceDsl");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Assignment cDslTypeAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
-		private final Keyword cDslTypeInputnameKeyword_0_0_0 = (Keyword)cDslTypeAssignment_0_0.eContents().get(0);
-		private final Assignment cNameAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_0_1_0 = (RuleCall)cNameAssignment_0_1.eContents().get(0);
-		private final UnorderedGroup cUnorderedGroup_0_2 = (UnorderedGroup)cGroup_0.eContents().get(2);
-		private final Assignment cConfigurationAssignment_0_2_0 = (Assignment)cUnorderedGroup_0_2.eContents().get(0);
-		private final RuleCall cConfigurationConfigurationParserRuleCall_0_2_0_0 = (RuleCall)cConfigurationAssignment_0_2_0.eContents().get(0);
-		private final Assignment cGrammarsAssignment_0_2_1 = (Assignment)cUnorderedGroup_0_2.eContents().get(1);
-		private final RuleCall cGrammarsGrammarsParserRuleCall_0_2_1_0 = (RuleCall)cGrammarsAssignment_0_2_1.eContents().get(0);
-		private final Assignment cPropertiesAssignment_0_2_2 = (Assignment)cUnorderedGroup_0_2.eContents().get(2);
-		private final RuleCall cPropertiesPropertyParserRuleCall_0_2_2_0 = (RuleCall)cPropertiesAssignment_0_2_2.eContents().get(0);
-		private final Assignment cVariablesAssignment_0_2_3 = (Assignment)cUnorderedGroup_0_2.eContents().get(3);
-		private final RuleCall cVariablesVariablesParserRuleCall_0_2_3_0 = (RuleCall)cVariablesAssignment_0_2_3.eContents().get(0);
-		private final Assignment cConditionsAssignment_0_2_4 = (Assignment)cUnorderedGroup_0_2.eContents().get(4);
-		private final RuleCall cConditionsConditionParserRuleCall_0_2_4_0 = (RuleCall)cConditionsAssignment_0_2_4.eContents().get(0);
-		private final Assignment cAudiosAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cAudiosAudiosParserRuleCall_0_3_0 = (RuleCall)cAudiosAssignment_0_3.eContents().get(0);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Assignment cDslTypeAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final Keyword cDslTypePromptnameKeyword_1_0_0 = (Keyword)cDslTypeAssignment_1_0.eContents().get(0);
-		private final Assignment cNameAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_1_0 = (RuleCall)cNameAssignment_1_1.eContents().get(0);
-		private final UnorderedGroup cUnorderedGroup_1_2 = (UnorderedGroup)cGroup_1.eContents().get(2);
-		private final Assignment cPropertiesAssignment_1_2_0 = (Assignment)cUnorderedGroup_1_2.eContents().get(0);
-		private final RuleCall cPropertiesPropertyParserRuleCall_1_2_0_0 = (RuleCall)cPropertiesAssignment_1_2_0.eContents().get(0);
-		private final Assignment cVariablesAssignment_1_2_1 = (Assignment)cUnorderedGroup_1_2.eContents().get(1);
-		private final RuleCall cVariablesVariablesParserRuleCall_1_2_1_0 = (RuleCall)cVariablesAssignment_1_2_1.eContents().get(0);
-		private final Assignment cConditionsAssignment_1_2_2 = (Assignment)cUnorderedGroup_1_2.eContents().get(2);
-		private final RuleCall cConditionsConditionParserRuleCall_1_2_2_0 = (RuleCall)cConditionsAssignment_1_2_2.eContents().get(0);
-		private final Assignment cAudiosAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cAudiosAudiosParserRuleCall_1_3_0 = (RuleCall)cAudiosAssignment_1_3.eContents().get(0);
-		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Assignment cDslTypeAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
-		private final Keyword cDslTypeMenunameKeyword_2_0_0 = (Keyword)cDslTypeAssignment_2_0.eContents().get(0);
-		private final Assignment cNameAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_2_1_0 = (RuleCall)cNameAssignment_2_1.eContents().get(0);
-		private final UnorderedGroup cUnorderedGroup_2_2 = (UnorderedGroup)cGroup_2.eContents().get(2);
-		private final Assignment cConfigurationAssignment_2_2_0 = (Assignment)cUnorderedGroup_2_2.eContents().get(0);
-		private final RuleCall cConfigurationConfigurationParserRuleCall_2_2_0_0 = (RuleCall)cConfigurationAssignment_2_2_0.eContents().get(0);
-		private final Assignment cGrammarsAssignment_2_2_1 = (Assignment)cUnorderedGroup_2_2.eContents().get(1);
-		private final RuleCall cGrammarsGrammarsParserRuleCall_2_2_1_0 = (RuleCall)cGrammarsAssignment_2_2_1.eContents().get(0);
-		private final Assignment cPropertiesAssignment_2_2_2 = (Assignment)cUnorderedGroup_2_2.eContents().get(2);
-		private final RuleCall cPropertiesPropertyParserRuleCall_2_2_2_0 = (RuleCall)cPropertiesAssignment_2_2_2.eContents().get(0);
-		private final Assignment cVariablesAssignment_2_2_3 = (Assignment)cUnorderedGroup_2_2.eContents().get(3);
-		private final RuleCall cVariablesVariablesParserRuleCall_2_2_3_0 = (RuleCall)cVariablesAssignment_2_2_3.eContents().get(0);
-		private final Assignment cConditionsAssignment_2_2_4 = (Assignment)cUnorderedGroup_2_2.eContents().get(4);
-		private final RuleCall cConditionsConditionParserRuleCall_2_2_4_0 = (RuleCall)cConditionsAssignment_2_2_4.eContents().get(0);
-		private final Assignment cOutputsAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
-		private final RuleCall cOutputsOutputsParserRuleCall_2_3_0 = (RuleCall)cOutputsAssignment_2_3.eContents().get(0);
+		private final RuleCall cInputDslParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cMenuDslParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cPromptDslParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final Assignment cTypesAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
 		private final RuleCall cTypesTypeParserRuleCall_3_0 = (RuleCall)cTypesAssignment_3.eContents().get(0);
 		
 		//VoiceDsl:
 		//
-		//	dslType="inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* &
-		//
-		//	variables=Variables? & conditions+=Condition*) audios=Audios | dslType="promptname" name=ID (properties+=Property* &
-		//
-		//	variables=Variables? & conditions+=Condition*) audios=Audios | dslType="menuname" name=ID
-		//
-		//	(configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
-		//
-		//	conditions+=Condition*) outputs=Outputs | types+=Type*;
+		//	InputDsl | MenuDsl | PromptDsl | types+=Type*;
 		public ParserRule getRule() { return rule; }
 
-		//dslType="inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* &
-		//
-		//variables=Variables? & conditions+=Condition*) audios=Audios | dslType="promptname" name=ID (properties+=Property* &
-		//
-		//variables=Variables? & conditions+=Condition*) audios=Audios | dslType="menuname" name=ID (configuration=Configuration
-		//
-		//& grammars=Grammars & properties+=Property* & variables=Variables? & conditions+=Condition*) outputs=Outputs |
-		//
-		//types+=Type*
+		//InputDsl | MenuDsl | PromptDsl | types+=Type*
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//dslType="inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* &
-		//
-		//variables=Variables? & conditions+=Condition*) audios=Audios
-		public Group getGroup_0() { return cGroup_0; }
+		//InputDsl
+		public RuleCall getInputDslParserRuleCall_0() { return cInputDslParserRuleCall_0; }
 
-		//dslType="inputname"
-		public Assignment getDslTypeAssignment_0_0() { return cDslTypeAssignment_0_0; }
+		//MenuDsl
+		public RuleCall getMenuDslParserRuleCall_1() { return cMenuDslParserRuleCall_1; }
 
-		//"inputname"
-		public Keyword getDslTypeInputnameKeyword_0_0_0() { return cDslTypeInputnameKeyword_0_0_0; }
-
-		//name=ID
-		public Assignment getNameAssignment_0_1() { return cNameAssignment_0_1; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_0_1_0() { return cNameIDTerminalRuleCall_0_1_0; }
-
-		//configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? & conditions+=Condition*
-		public UnorderedGroup getUnorderedGroup_0_2() { return cUnorderedGroup_0_2; }
-
-		//configuration=Configuration
-		public Assignment getConfigurationAssignment_0_2_0() { return cConfigurationAssignment_0_2_0; }
-
-		//Configuration
-		public RuleCall getConfigurationConfigurationParserRuleCall_0_2_0_0() { return cConfigurationConfigurationParserRuleCall_0_2_0_0; }
-
-		//grammars=Grammars
-		public Assignment getGrammarsAssignment_0_2_1() { return cGrammarsAssignment_0_2_1; }
-
-		//Grammars
-		public RuleCall getGrammarsGrammarsParserRuleCall_0_2_1_0() { return cGrammarsGrammarsParserRuleCall_0_2_1_0; }
-
-		//properties+=Property*
-		public Assignment getPropertiesAssignment_0_2_2() { return cPropertiesAssignment_0_2_2; }
-
-		//Property
-		public RuleCall getPropertiesPropertyParserRuleCall_0_2_2_0() { return cPropertiesPropertyParserRuleCall_0_2_2_0; }
-
-		//variables=Variables?
-		public Assignment getVariablesAssignment_0_2_3() { return cVariablesAssignment_0_2_3; }
-
-		//Variables
-		public RuleCall getVariablesVariablesParserRuleCall_0_2_3_0() { return cVariablesVariablesParserRuleCall_0_2_3_0; }
-
-		//conditions+=Condition*
-		public Assignment getConditionsAssignment_0_2_4() { return cConditionsAssignment_0_2_4; }
-
-		//Condition
-		public RuleCall getConditionsConditionParserRuleCall_0_2_4_0() { return cConditionsConditionParserRuleCall_0_2_4_0; }
-
-		//audios=Audios
-		public Assignment getAudiosAssignment_0_3() { return cAudiosAssignment_0_3; }
-
-		//Audios
-		public RuleCall getAudiosAudiosParserRuleCall_0_3_0() { return cAudiosAudiosParserRuleCall_0_3_0; }
-
-		//dslType="promptname" name=ID (properties+=Property* & variables=Variables? & conditions+=Condition*) audios=Audios
-		public Group getGroup_1() { return cGroup_1; }
-
-		//dslType="promptname"
-		public Assignment getDslTypeAssignment_1_0() { return cDslTypeAssignment_1_0; }
-
-		//"promptname"
-		public Keyword getDslTypePromptnameKeyword_1_0_0() { return cDslTypePromptnameKeyword_1_0_0; }
-
-		//name=ID
-		public Assignment getNameAssignment_1_1() { return cNameAssignment_1_1; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_1_0() { return cNameIDTerminalRuleCall_1_1_0; }
-
-		//properties+=Property* & variables=Variables? & conditions+=Condition*
-		public UnorderedGroup getUnorderedGroup_1_2() { return cUnorderedGroup_1_2; }
-
-		//properties+=Property*
-		public Assignment getPropertiesAssignment_1_2_0() { return cPropertiesAssignment_1_2_0; }
-
-		//Property
-		public RuleCall getPropertiesPropertyParserRuleCall_1_2_0_0() { return cPropertiesPropertyParserRuleCall_1_2_0_0; }
-
-		//variables=Variables?
-		public Assignment getVariablesAssignment_1_2_1() { return cVariablesAssignment_1_2_1; }
-
-		//Variables
-		public RuleCall getVariablesVariablesParserRuleCall_1_2_1_0() { return cVariablesVariablesParserRuleCall_1_2_1_0; }
-
-		//conditions+=Condition*
-		public Assignment getConditionsAssignment_1_2_2() { return cConditionsAssignment_1_2_2; }
-
-		//Condition
-		public RuleCall getConditionsConditionParserRuleCall_1_2_2_0() { return cConditionsConditionParserRuleCall_1_2_2_0; }
-
-		//audios=Audios
-		public Assignment getAudiosAssignment_1_3() { return cAudiosAssignment_1_3; }
-
-		//Audios
-		public RuleCall getAudiosAudiosParserRuleCall_1_3_0() { return cAudiosAudiosParserRuleCall_1_3_0; }
-
-		//dslType="menuname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* &
-		//
-		//variables=Variables? & conditions+=Condition*) outputs=Outputs
-		public Group getGroup_2() { return cGroup_2; }
-
-		//dslType="menuname"
-		public Assignment getDslTypeAssignment_2_0() { return cDslTypeAssignment_2_0; }
-
-		//"menuname"
-		public Keyword getDslTypeMenunameKeyword_2_0_0() { return cDslTypeMenunameKeyword_2_0_0; }
-
-		//name=ID
-		public Assignment getNameAssignment_2_1() { return cNameAssignment_2_1; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_1_0() { return cNameIDTerminalRuleCall_2_1_0; }
-
-		//configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? & conditions+=Condition*
-		public UnorderedGroup getUnorderedGroup_2_2() { return cUnorderedGroup_2_2; }
-
-		//configuration=Configuration
-		public Assignment getConfigurationAssignment_2_2_0() { return cConfigurationAssignment_2_2_0; }
-
-		//Configuration
-		public RuleCall getConfigurationConfigurationParserRuleCall_2_2_0_0() { return cConfigurationConfigurationParserRuleCall_2_2_0_0; }
-
-		//grammars=Grammars
-		public Assignment getGrammarsAssignment_2_2_1() { return cGrammarsAssignment_2_2_1; }
-
-		//Grammars
-		public RuleCall getGrammarsGrammarsParserRuleCall_2_2_1_0() { return cGrammarsGrammarsParserRuleCall_2_2_1_0; }
-
-		//properties+=Property*
-		public Assignment getPropertiesAssignment_2_2_2() { return cPropertiesAssignment_2_2_2; }
-
-		//Property
-		public RuleCall getPropertiesPropertyParserRuleCall_2_2_2_0() { return cPropertiesPropertyParserRuleCall_2_2_2_0; }
-
-		//variables=Variables?
-		public Assignment getVariablesAssignment_2_2_3() { return cVariablesAssignment_2_2_3; }
-
-		//Variables
-		public RuleCall getVariablesVariablesParserRuleCall_2_2_3_0() { return cVariablesVariablesParserRuleCall_2_2_3_0; }
-
-		//conditions+=Condition*
-		public Assignment getConditionsAssignment_2_2_4() { return cConditionsAssignment_2_2_4; }
-
-		//Condition
-		public RuleCall getConditionsConditionParserRuleCall_2_2_4_0() { return cConditionsConditionParserRuleCall_2_2_4_0; }
-
-		//outputs=Outputs
-		public Assignment getOutputsAssignment_2_3() { return cOutputsAssignment_2_3; }
-
-		//Outputs
-		public RuleCall getOutputsOutputsParserRuleCall_2_3_0() { return cOutputsOutputsParserRuleCall_2_3_0; }
+		//PromptDsl
+		public RuleCall getPromptDslParserRuleCall_2() { return cPromptDslParserRuleCall_2; }
 
 		//types+=Type*
 		public Assignment getTypesAssignment_3() { return cTypesAssignment_3; }
 
 		//Type
 		public RuleCall getTypesTypeParserRuleCall_3_0() { return cTypesTypeParserRuleCall_3_0; }
+	}
+
+	public class PromptDslElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PromptDsl");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cPromptnameKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final UnorderedGroup cUnorderedGroup_2 = (UnorderedGroup)cGroup.eContents().get(2);
+		private final Assignment cPropertiesAssignment_2_0 = (Assignment)cUnorderedGroup_2.eContents().get(0);
+		private final RuleCall cPropertiesPropertyParserRuleCall_2_0_0 = (RuleCall)cPropertiesAssignment_2_0.eContents().get(0);
+		private final Assignment cVariablesAssignment_2_1 = (Assignment)cUnorderedGroup_2.eContents().get(1);
+		private final RuleCall cVariablesVariablesParserRuleCall_2_1_0 = (RuleCall)cVariablesAssignment_2_1.eContents().get(0);
+		private final Assignment cConditionsAssignment_2_2 = (Assignment)cUnorderedGroup_2.eContents().get(2);
+		private final RuleCall cConditionsConditionParserRuleCall_2_2_0 = (RuleCall)cConditionsAssignment_2_2.eContents().get(0);
+		private final Assignment cAudiosAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cAudiosAudiosParserRuleCall_3_0 = (RuleCall)cAudiosAssignment_3.eContents().get(0);
+		
+		//PromptDsl:
+		//
+		//	"promptname" name=ID (properties+=Property* & variables=Variables? & conditions+=Condition*) audios=Audios;
+		public ParserRule getRule() { return rule; }
+
+		//"promptname" name=ID (properties+=Property* & variables=Variables? & conditions+=Condition*) audios=Audios
+		public Group getGroup() { return cGroup; }
+
+		//"promptname"
+		public Keyword getPromptnameKeyword_0() { return cPromptnameKeyword_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//properties+=Property* & variables=Variables? & conditions+=Condition*
+		public UnorderedGroup getUnorderedGroup_2() { return cUnorderedGroup_2; }
+
+		//properties+=Property*
+		public Assignment getPropertiesAssignment_2_0() { return cPropertiesAssignment_2_0; }
+
+		//Property
+		public RuleCall getPropertiesPropertyParserRuleCall_2_0_0() { return cPropertiesPropertyParserRuleCall_2_0_0; }
+
+		//variables=Variables?
+		public Assignment getVariablesAssignment_2_1() { return cVariablesAssignment_2_1; }
+
+		//Variables
+		public RuleCall getVariablesVariablesParserRuleCall_2_1_0() { return cVariablesVariablesParserRuleCall_2_1_0; }
+
+		//conditions+=Condition*
+		public Assignment getConditionsAssignment_2_2() { return cConditionsAssignment_2_2; }
+
+		//Condition
+		public RuleCall getConditionsConditionParserRuleCall_2_2_0() { return cConditionsConditionParserRuleCall_2_2_0; }
+
+		//audios=Audios
+		public Assignment getAudiosAssignment_3() { return cAudiosAssignment_3; }
+
+		//Audios
+		public RuleCall getAudiosAudiosParserRuleCall_3_0() { return cAudiosAudiosParserRuleCall_3_0; }
+	}
+
+	public class MenuDslElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MenuDsl");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cMenunameKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final UnorderedGroup cUnorderedGroup_2 = (UnorderedGroup)cGroup.eContents().get(2);
+		private final Assignment cConfigurationAssignment_2_0 = (Assignment)cUnorderedGroup_2.eContents().get(0);
+		private final RuleCall cConfigurationConfigurationParserRuleCall_2_0_0 = (RuleCall)cConfigurationAssignment_2_0.eContents().get(0);
+		private final Assignment cGrammarsAssignment_2_1 = (Assignment)cUnorderedGroup_2.eContents().get(1);
+		private final RuleCall cGrammarsGrammarsParserRuleCall_2_1_0 = (RuleCall)cGrammarsAssignment_2_1.eContents().get(0);
+		private final Assignment cPropertiesAssignment_2_2 = (Assignment)cUnorderedGroup_2.eContents().get(2);
+		private final RuleCall cPropertiesPropertyParserRuleCall_2_2_0 = (RuleCall)cPropertiesAssignment_2_2.eContents().get(0);
+		private final Assignment cVariablesAssignment_2_3 = (Assignment)cUnorderedGroup_2.eContents().get(3);
+		private final RuleCall cVariablesVariablesParserRuleCall_2_3_0 = (RuleCall)cVariablesAssignment_2_3.eContents().get(0);
+		private final Assignment cConditionsAssignment_2_4 = (Assignment)cUnorderedGroup_2.eContents().get(4);
+		private final RuleCall cConditionsConditionParserRuleCall_2_4_0 = (RuleCall)cConditionsAssignment_2_4.eContents().get(0);
+		private final Assignment cOutputsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cOutputsOutputsParserRuleCall_3_0 = (RuleCall)cOutputsAssignment_3.eContents().get(0);
+		
+		//MenuDsl:
+		//
+		//	"menuname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+		//
+		//	conditions+=Condition*) outputs=Outputs;
+		public ParserRule getRule() { return rule; }
+
+		//"menuname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+		//
+		//conditions+=Condition*) outputs=Outputs
+		public Group getGroup() { return cGroup; }
+
+		//"menuname"
+		public Keyword getMenunameKeyword_0() { return cMenunameKeyword_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? & conditions+=Condition*
+		public UnorderedGroup getUnorderedGroup_2() { return cUnorderedGroup_2; }
+
+		//configuration=Configuration
+		public Assignment getConfigurationAssignment_2_0() { return cConfigurationAssignment_2_0; }
+
+		//Configuration
+		public RuleCall getConfigurationConfigurationParserRuleCall_2_0_0() { return cConfigurationConfigurationParserRuleCall_2_0_0; }
+
+		//grammars=Grammars
+		public Assignment getGrammarsAssignment_2_1() { return cGrammarsAssignment_2_1; }
+
+		//Grammars
+		public RuleCall getGrammarsGrammarsParserRuleCall_2_1_0() { return cGrammarsGrammarsParserRuleCall_2_1_0; }
+
+		//properties+=Property*
+		public Assignment getPropertiesAssignment_2_2() { return cPropertiesAssignment_2_2; }
+
+		//Property
+		public RuleCall getPropertiesPropertyParserRuleCall_2_2_0() { return cPropertiesPropertyParserRuleCall_2_2_0; }
+
+		//variables=Variables?
+		public Assignment getVariablesAssignment_2_3() { return cVariablesAssignment_2_3; }
+
+		//Variables
+		public RuleCall getVariablesVariablesParserRuleCall_2_3_0() { return cVariablesVariablesParserRuleCall_2_3_0; }
+
+		//conditions+=Condition*
+		public Assignment getConditionsAssignment_2_4() { return cConditionsAssignment_2_4; }
+
+		//Condition
+		public RuleCall getConditionsConditionParserRuleCall_2_4_0() { return cConditionsConditionParserRuleCall_2_4_0; }
+
+		//outputs=Outputs
+		public Assignment getOutputsAssignment_3() { return cOutputsAssignment_3; }
+
+		//Outputs
+		public RuleCall getOutputsOutputsParserRuleCall_3_0() { return cOutputsOutputsParserRuleCall_3_0; }
+	}
+
+	public class InputDslElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InputDsl");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cInputnameKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final UnorderedGroup cUnorderedGroup_2 = (UnorderedGroup)cGroup.eContents().get(2);
+		private final Assignment cConfigurationAssignment_2_0 = (Assignment)cUnorderedGroup_2.eContents().get(0);
+		private final RuleCall cConfigurationConfigurationParserRuleCall_2_0_0 = (RuleCall)cConfigurationAssignment_2_0.eContents().get(0);
+		private final Assignment cGrammarsAssignment_2_1 = (Assignment)cUnorderedGroup_2.eContents().get(1);
+		private final RuleCall cGrammarsGrammarsParserRuleCall_2_1_0 = (RuleCall)cGrammarsAssignment_2_1.eContents().get(0);
+		private final Assignment cPropertiesAssignment_2_2 = (Assignment)cUnorderedGroup_2.eContents().get(2);
+		private final RuleCall cPropertiesPropertyParserRuleCall_2_2_0 = (RuleCall)cPropertiesAssignment_2_2.eContents().get(0);
+		private final Assignment cVariablesAssignment_2_3 = (Assignment)cUnorderedGroup_2.eContents().get(3);
+		private final RuleCall cVariablesVariablesParserRuleCall_2_3_0 = (RuleCall)cVariablesAssignment_2_3.eContents().get(0);
+		private final Assignment cConditionsAssignment_2_4 = (Assignment)cUnorderedGroup_2.eContents().get(4);
+		private final RuleCall cConditionsConditionParserRuleCall_2_4_0 = (RuleCall)cConditionsAssignment_2_4.eContents().get(0);
+		private final Assignment cAudiosAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cAudiosAudiosParserRuleCall_3_0 = (RuleCall)cAudiosAssignment_3.eContents().get(0);
+		
+		//InputDsl:
+		//
+		//	"inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+		//
+		//	conditions+=Condition*) audios=Audios;
+		public ParserRule getRule() { return rule; }
+
+		//"inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+		//
+		//conditions+=Condition*) audios=Audios
+		public Group getGroup() { return cGroup; }
+
+		//"inputname"
+		public Keyword getInputnameKeyword_0() { return cInputnameKeyword_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? & conditions+=Condition*
+		public UnorderedGroup getUnorderedGroup_2() { return cUnorderedGroup_2; }
+
+		//configuration=Configuration
+		public Assignment getConfigurationAssignment_2_0() { return cConfigurationAssignment_2_0; }
+
+		//Configuration
+		public RuleCall getConfigurationConfigurationParserRuleCall_2_0_0() { return cConfigurationConfigurationParserRuleCall_2_0_0; }
+
+		//grammars=Grammars
+		public Assignment getGrammarsAssignment_2_1() { return cGrammarsAssignment_2_1; }
+
+		//Grammars
+		public RuleCall getGrammarsGrammarsParserRuleCall_2_1_0() { return cGrammarsGrammarsParserRuleCall_2_1_0; }
+
+		//properties+=Property*
+		public Assignment getPropertiesAssignment_2_2() { return cPropertiesAssignment_2_2; }
+
+		//Property
+		public RuleCall getPropertiesPropertyParserRuleCall_2_2_0() { return cPropertiesPropertyParserRuleCall_2_2_0; }
+
+		//variables=Variables?
+		public Assignment getVariablesAssignment_2_3() { return cVariablesAssignment_2_3; }
+
+		//Variables
+		public RuleCall getVariablesVariablesParserRuleCall_2_3_0() { return cVariablesVariablesParserRuleCall_2_3_0; }
+
+		//conditions+=Condition*
+		public Assignment getConditionsAssignment_2_4() { return cConditionsAssignment_2_4; }
+
+		//Condition
+		public RuleCall getConditionsConditionParserRuleCall_2_4_0() { return cConditionsConditionParserRuleCall_2_4_0; }
+
+		//audios=Audios
+		public Assignment getAudiosAssignment_3() { return cAudiosAssignment_3; }
+
+		//Audios
+		public RuleCall getAudiosAudiosParserRuleCall_3_0() { return cAudiosAudiosParserRuleCall_3_0; }
 	}
 
 	public class VariablesElements extends AbstractParserRuleElementFinder {
@@ -1146,6 +1161,9 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private VoiceDslElements pVoiceDsl;
+	private PromptDslElements pPromptDsl;
+	private MenuDslElements pMenuDsl;
+	private InputDslElements pInputDsl;
 	private VariablesElements pVariables;
 	private VariableElements pVariable;
 	private GrammarsElements pGrammars;
@@ -1205,21 +1223,50 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VoiceDsl:
 	//
-	//	dslType="inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* &
-	//
-	//	variables=Variables? & conditions+=Condition*) audios=Audios | dslType="promptname" name=ID (properties+=Property* &
-	//
-	//	variables=Variables? & conditions+=Condition*) audios=Audios | dslType="menuname" name=ID
-	//
-	//	(configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
-	//
-	//	conditions+=Condition*) outputs=Outputs | types+=Type*;
+	//	InputDsl | MenuDsl | PromptDsl | types+=Type*;
 	public VoiceDslElements getVoiceDslAccess() {
 		return (pVoiceDsl != null) ? pVoiceDsl : (pVoiceDsl = new VoiceDslElements());
 	}
 	
 	public ParserRule getVoiceDslRule() {
 		return getVoiceDslAccess().getRule();
+	}
+
+	//PromptDsl:
+	//
+	//	"promptname" name=ID (properties+=Property* & variables=Variables? & conditions+=Condition*) audios=Audios;
+	public PromptDslElements getPromptDslAccess() {
+		return (pPromptDsl != null) ? pPromptDsl : (pPromptDsl = new PromptDslElements());
+	}
+	
+	public ParserRule getPromptDslRule() {
+		return getPromptDslAccess().getRule();
+	}
+
+	//MenuDsl:
+	//
+	//	"menuname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+	//
+	//	conditions+=Condition*) outputs=Outputs;
+	public MenuDslElements getMenuDslAccess() {
+		return (pMenuDsl != null) ? pMenuDsl : (pMenuDsl = new MenuDslElements());
+	}
+	
+	public ParserRule getMenuDslRule() {
+		return getMenuDslAccess().getRule();
+	}
+
+	//InputDsl:
+	//
+	//	"inputname" name=ID (configuration=Configuration & grammars=Grammars & properties+=Property* & variables=Variables? &
+	//
+	//	conditions+=Condition*) audios=Audios;
+	public InputDslElements getInputDslAccess() {
+		return (pInputDsl != null) ? pInputDsl : (pInputDsl = new InputDslElements());
+	}
+	
+	public ParserRule getInputDslRule() {
+		return getInputDslAccess().getRule();
 	}
 
 	//Variables:
