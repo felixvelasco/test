@@ -87,6 +87,14 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 			setErrorMessage("Project does not exist");
 			return false;
 		}
+		
+		JVProject proyecto = BaseModel.getInstance().getModel().getProject(projectName);
+		
+		//verificamos que el proyecto es de tipo jvoice
+		if(proyecto == null){
+			setErrorMessage("Project does not jvoice project");
+			return false;
+		}
 
 		String packageName = getPackageFieldValue();
 
@@ -259,7 +267,13 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		if (selection instanceof JVProject){
 			return ((JVProject)selection).getName(); //$NON-NLS-1$ 
 		}else if (selection instanceof IProject){
-			return ((IProject)selection).getName(); //$NON-NLS-1$
+			IProject project = (IProject)selection;
+			JVProject jvProject = BaseModel.getInstance().getModel().getProject(project.getName());
+			if(jvProject!=null){
+				return ((IProject)selection).getName(); //$NON-NLS-1$
+			}else{
+				return null;
+			}
 		}else if (selection instanceof IFolder){
 			return ((IFolder)selection).getProject().getName(); //$NON-NLS-1$
 		}else if (selection instanceof JVPackage){
@@ -283,7 +297,10 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 			String nombreProyecto = proyecto.getName();
 			JVProject project = BaseModel.getInstance().getModel()
 					.getProject(nombreProyecto);
-			input.add(project);
+			
+			if (project!=null){
+				input.add(project);
+			}
 		}
 		return input;
 	}

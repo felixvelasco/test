@@ -122,6 +122,14 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
+		JVProject proyecto = BaseModel.getInstance().getModel()
+				.getProject(projectName);
+		if (proyecto == null) {
+			setErrorMessage("Project does not jvoice project");
+			browsePackage.setEnabled(false);
+			return false;
+		}
+
 		IStatus status = doWorkspaceValidation(workspace, text);
 		if (!status.isOK()) {
 			setErrorMessage(status.getMessage());
@@ -136,9 +144,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
-		JVProject project = BaseModel.getInstance().getModel()
-				.getProject(projectName);
-		JVPackage paquete = project.getPackage(packageName);
+		JVPackage paquete = proyecto.getPackage(packageName);
 
 		if (paquete == null) {
 			setErrorMessage("Package does not exist");
@@ -176,7 +182,13 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			IProject iProject = folder.getProject();
 			project = BaseModel.getInstance().getModel()
 					.getProject(iProject.getName());
-			diagramFolder = project.getPackage(folder.getName());
+
+			// si el proyecto es nulo es porque el proyecto donde se quiere
+			// crear el flujo no
+			// es un proyecto jvoice
+			if (project != null) {
+				diagramFolder = project.getPackage(folder.getName());
+			}
 		} else if (selection instanceof JVProject) {
 			project = (JVProject) selection;
 		} else if (selection instanceof JVPackage) {
@@ -363,7 +375,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			String nombreProyecto = proyecto.getName();
 			JVProject project = BaseModel.getInstance().getModel()
 					.getProject(nombreProyecto);
-			input.add(project);
+			if (project != null) {
+				input.add(project);
+			}
 		}
 		return input;
 	}
