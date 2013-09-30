@@ -8,7 +8,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
-import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.ui.IWorkbenchPage;
@@ -16,6 +15,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 
+import com.vectorsf.jvoice.diagram.core.editor.JVoiceDiagramEditor;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InputState;
@@ -51,7 +51,7 @@ public class OpenEditor extends AbstractCustomFeature {
 					.getActiveWorkbenchWindow().getActivePage();
 
 			try {
-				page.openEditor(input, DiagramEditor.DIAGRAM_EDITOR_ID);
+				page.openEditor(input, JVoiceDiagramEditor.DIAGRAM_EDITOR_ID);
 			} catch (PartInitException e) {
 				e.printStackTrace();
 			}
