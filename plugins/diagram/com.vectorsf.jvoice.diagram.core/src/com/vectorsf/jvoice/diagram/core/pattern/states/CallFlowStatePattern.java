@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.graphiti.features.IReason;
@@ -184,6 +185,11 @@ public class CallFlowStatePattern extends StatePattern implements
 		} else {
 			throw new OperationCanceledException();
 		}
+		Resource eResource = result.eResource();
+		URI flowURI = eResource.getURI().appendFragment(
+				eResource.getURIFragment(result));
+		result = (Flow) flow.eResource().getResourceSet()
+				.getEObject(flowURI, true);
 
 		CallFlowState callFlowState = OperationsFactory.eINSTANCE
 				.createCallFlowState();

@@ -38,6 +38,7 @@ import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 
 public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
@@ -127,16 +128,38 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 				feature = new CreateTransitionFromPad(getFeatureProvider(),
 						new TransitionSwitchPattern(getFeatureProvider()));
+				button.setText(feature.getCreateName());
+				button.setDescription(feature.getCreateDescription());
+				button.setIconId(getImageFor(sta, feature));
+				button.addDragAndDropFeature(feature);
+
+				data.getDomainSpecificContextButtons().add(button);
+			} else if (sta instanceof MenuState) {
+				MenuState menuState = (MenuState) sta;
+				List<Output> outputs = menuState.getLocution().getOutputs()
+						.getOutput();
+				for (Output output : outputs) {
+					feature = new CreateTransitionFromPad(getFeatureProvider(),
+							new TransitionPattern(getFeatureProvider()));
+					ContextButtonEntry menuButton = new ContextButtonEntry(
+							null, context);
+					menuButton.setText(output.getName());
+					menuButton.setIconId(getImageFor(sta, feature));
+					menuButton.addDragAndDropFeature(feature);
+					data.getDomainSpecificContextButtons().add(menuButton);
+				}
+
 			} else {
 				feature = new CreateTransitionFromPad(getFeatureProvider(),
 						new TransitionPattern(getFeatureProvider()));
-			}
-			button.setText(feature.getCreateName());
-			button.setDescription(feature.getCreateDescription());
-			button.setIconId(getImageFor(sta, feature));
-			button.addDragAndDropFeature(feature);
+				button.setText(feature.getCreateName());
+				button.setDescription(feature.getCreateDescription());
+				button.setIconId(getImageFor(sta, feature));
+				button.addDragAndDropFeature(feature);
 
-			data.getDomainSpecificContextButtons().add(button);
+				data.getDomainSpecificContextButtons().add(button);
+			}
+
 		}
 
 		return data;

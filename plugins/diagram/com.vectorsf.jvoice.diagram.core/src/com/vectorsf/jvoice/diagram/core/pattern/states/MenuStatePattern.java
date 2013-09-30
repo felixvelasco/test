@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.graphiti.features.IReason;
@@ -44,7 +45,6 @@ import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
 public class MenuStatePattern extends StatePattern implements
 		ISelectionStatusValidator {
@@ -152,7 +152,7 @@ public class MenuStatePattern extends StatePattern implements
 					return true;
 				}
 				if (element instanceof MenuDsl) {
-						return true;
+					return true;
 				}
 
 				return false;
@@ -187,6 +187,12 @@ public class MenuStatePattern extends StatePattern implements
 
 		MenuState menuState = OperationsFactory.eINSTANCE.createMenuState();
 		menuState.setName(menuStateName);
+		Resource eResource = result.eResource();
+		URI flowURI = eResource.getURI().appendFragment(
+				eResource.getURIFragment(result));
+		result = (MenuDsl) flow.eResource().getResourceSet()
+				.getEObject(flowURI, true);
+
 		menuState.setLocution(result);
 
 		flow.getStates().add(menuState);

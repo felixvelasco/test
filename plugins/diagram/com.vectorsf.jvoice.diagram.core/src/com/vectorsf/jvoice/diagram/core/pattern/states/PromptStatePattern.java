@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.graphiti.features.IReason;
@@ -188,6 +189,11 @@ public class PromptStatePattern extends StatePattern implements
 		PromptState promptState = OperationsFactory.eINSTANCE
 				.createPromptState();
 		promptState.setName(promptStateName);
+		Resource eResource = result.eResource();
+		URI flowURI = eResource.getURI().appendFragment(
+				eResource.getURIFragment(result));
+		result = (PromptDsl) flow.eResource().getResourceSet()
+				.getEObject(flowURI, true);
 		promptState.setLocution(result);
 
 		flow.getStates().add(promptState);
