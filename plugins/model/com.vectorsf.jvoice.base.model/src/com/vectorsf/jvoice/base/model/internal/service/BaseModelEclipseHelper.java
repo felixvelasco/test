@@ -48,8 +48,7 @@ public class BaseModelEclipseHelper {
 		List<JVProject> ret = new ArrayList<>();
 		ret.add(jvproject);
 		JVModel model = BaseModel.getInstance().getModel();
-
-		IProject project = (IProject) Platform.getAdapterManager().getAdapter(jvproject, IProject.class);
+		IProject project = (IProject) Platform.getAdapterManager().loadAdapter(jvproject, IProject.class.getName());
 		IJavaProject javaProject = JavaCore.create(project);
 		IClasspathEntry[] resolvedClasspath = new IClasspathEntry[0];
 		try {

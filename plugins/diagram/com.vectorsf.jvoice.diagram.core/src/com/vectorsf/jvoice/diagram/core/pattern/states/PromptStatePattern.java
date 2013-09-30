@@ -1,10 +1,12 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
+import java.util.List;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
@@ -122,12 +124,15 @@ public class PromptStatePattern extends StatePattern implements
 
 		Shell shell = new Shell();
 
+		JVBeanContentProvider locutionCP = new JVBeanContentProvider(
+				new ComposedAdapterFactory(
+						ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+
 		ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(
 				shell,
 				new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
 						ComposedAdapterFactory.Descriptor.Registry.INSTANCE)),
-				new AdapterFactoryContentProvider(new ComposedAdapterFactory(
-						ComposedAdapterFactory.Descriptor.Registry.INSTANCE))) {
+				locutionCP) {
 			@Override
 			protected org.eclipse.jface.viewers.TreeViewer doCreateTreeViewer(
 					org.eclipse.swt.widgets.Composite parent, int style) {
@@ -162,7 +167,13 @@ public class PromptStatePattern extends StatePattern implements
 		dialog.addFilter(vfilter);
 		dialog.setTitle("Prompt Selection");
 		dialog.setMessage("Select a prompt:");
-		dialog.setInput(BaseModel.getInstance().getModel());
+		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+		URI res = flow.eResource().getURI();
+		String projectName = res.segment(1);
+		JVProject project = BaseModel.getInstance().getModel()
+				.getProject(projectName);
+		List<JVProject> proj = project.getReferencedProjects();
+		dialog.setInput(proj);
 		dialog.open();
 
 		Object[] results = dialog.getResult();
@@ -181,7 +192,6 @@ public class PromptStatePattern extends StatePattern implements
 		promptState.setName(promptStateName);
 		promptState.setLocution(result);
 
-		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		flow.getStates().add(promptState);
 
 		addGraphicalRepresentation(context, promptState);

@@ -31,9 +31,10 @@ public class OpenEditor extends AbstractCustomFeature {
 
 	@Override
 	public void execute(ICustomContext context) {
-
-		if (getFeatureProvider().getBusinessObjectForPictogramElement(
-				context.getInnerPictogramElement()) instanceof CallFlowState) {
+		Object businessObject = getFeatureProvider()
+				.getBusinessObjectForPictogramElement(
+						context.getInnerPictogramElement());
+		if (businessObject instanceof CallFlowState) {
 
 			CallFlowState callFlowState = (CallFlowState) getFeatureProvider()
 					.getBusinessObjectForPictogramElement(
@@ -56,13 +57,21 @@ public class OpenEditor extends AbstractCustomFeature {
 			}
 		}
 
-		else if (getFeatureProvider().getBusinessObjectForPictogramElement(
-				context.getInnerPictogramElement()) instanceof InputState) {
-			InputState inputState = (InputState) getFeatureProvider()
-					.getBusinessObjectForPictogramElement(
-							context.getInnerPictogramElement());
-			VoiceDsl locution = inputState.getLocution();
+		else if (businessObject instanceof InputState
+				|| businessObject instanceof MenuState
+				|| businessObject instanceof PromptState) {
+			VoiceDsl locution = null;
+			if (businessObject instanceof InputState) {
+				InputState inputState = (InputState) businessObject;
+				locution = inputState.getLocution();
+			} else if (businessObject instanceof MenuState) {
+				MenuState menuState = (MenuState) businessObject;
+				locution = menuState.getLocution();
 
+			} else if (businessObject instanceof PromptState) {
+				PromptState promptState = (PromptState) businessObject;
+				locution = promptState.getLocution();
+			}
 			URI locutionUri = EcoreUtil.getURI(locution);
 
 			IWorkbenchPage page = PlatformUI.getWorkbench()
@@ -77,47 +86,6 @@ public class OpenEditor extends AbstractCustomFeature {
 			} catch (PartInitException e) {
 
 			}
-
-		} else if (getFeatureProvider().getBusinessObjectForPictogramElement(
-				context.getInnerPictogramElement()) instanceof MenuState) {
-			MenuState menuState = (MenuState) getFeatureProvider()
-					.getBusinessObjectForPictogramElement(
-							context.getInnerPictogramElement());
-			VoiceDsl locution = menuState.getLocution();
-			URI locutionUri = EcoreUtil.getURI(locution);
-			IWorkbenchPage page = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage();
-
-			String fileString = URI.decode(locutionUri.path().substring(9));
-			IFile file = ResourcesPlugin.getWorkspace().getRoot()
-					.getFile(new Path(fileString));
-
-			try {
-				IDE.openEditor(page, file);
-			} catch (PartInitException e) {
-
-			}
-
-		} else if (getFeatureProvider().getBusinessObjectForPictogramElement(
-				context.getInnerPictogramElement()) instanceof PromptState) {
-			PromptState promptState = (PromptState) getFeatureProvider()
-					.getBusinessObjectForPictogramElement(
-							context.getInnerPictogramElement());
-			VoiceDsl locution = promptState.getLocution();
-			URI locutionUri = EcoreUtil.getURI(locution);
-			IWorkbenchPage page = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage();
-
-			String fileString = URI.decode(locutionUri.path().substring(9));
-			IFile file = ResourcesPlugin.getWorkspace().getRoot()
-					.getFile(new Path(fileString));
-
-			try {
-				IDE.openEditor(page, file);
-			} catch (PartInitException e) {
-
-			}
-
 		}
 
 	}
