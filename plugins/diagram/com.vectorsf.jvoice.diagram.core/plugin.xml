@@ -75,7 +75,7 @@
     </category>
     <wizard
           category="com.vectorsf.jvoice.diagram.core.category"
-          class="com.vectorsf.jvoice.diagram.core.diagram.CreateDiagramJVoice"
+          class="com.vectorsf.jvoice.ui.wizard.Wizards.CreateDiagramJVoice"
           id="com.vectorsf.jvoice.diagram.core.wizard"
           name="JVoice flow">
     </wizard>

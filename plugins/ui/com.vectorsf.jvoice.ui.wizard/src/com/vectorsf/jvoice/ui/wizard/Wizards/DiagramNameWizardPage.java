@@ -1,19 +1,35 @@
-package com.vectorsf.jvoice.diagram.core.diagram;
+package com.vectorsf.jvoice.ui.wizard.Wizards;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.ui.editor.DiagramEditor;
+import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
+import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.internal.ui.wizards.dialogfields.DialogField;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -24,6 +40,9 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
@@ -89,7 +108,6 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		setControl(composite);
 	}
 
-	@Override
 	public String getText() {
 		if (textFieldDiagram == null) {
 			return getInitialTextFieldValue();
@@ -407,5 +425,87 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		}
 
 		return textFieldPackage.getText().trim();
+	}
+
+	@Override
+	protected void createResource() throws CoreException {
+		String diagramName = getText();
+		IProject project = null;
+		IFolder diagramFolder = null;
+
+		Object element = getSelection();
+		if (element instanceof JVProject) {
+			project = (IProject) Platform.getAdapterManager().getAdapter(
+					element, IProject.class);
+		} else if (element instanceof JVPackage) {
+			diagramFolder = (IFolder) Platform.getAdapterManager().getAdapter(
+					element, IFolder.class);
+			project = diagramFolder.getProject();
+		}
+
+		if (project == null || !project.isAccessible()) {
+			String error = "No Project Found";
+			IStatus status = new Status(IStatus.ERROR, "1", error);
+			ErrorDialog.openError(getShell(), error, null, status);
+			throw new CoreException(status);
+		}
+
+		Diagram diagram = Graphiti.getPeCreateService().createDiagram(
+				"jVoiceDiagram", diagramName, true);
+
+		String editorID = DiagramEditor.DIAGRAM_EDITOR_ID;
+		String editorExtension = "jvflow"; //$NON-NLS-1$
+		String diagramTypeProviderId = GraphitiUi.getExtensionManager()
+				.getDiagramTypeProviderId("jVoiceDiagram");
+		String namingConventionID = diagramTypeProviderId + ".editor"; //$NON-NLS-1$
+		IEditorDescriptor specificEditor = PlatformUI.getWorkbench()
+				.getEditorRegistry().findEditor(namingConventionID);
+
+		// If there is a specific editor get the file extension
+		if (specificEditor != null) {
+			editorID = namingConventionID;
+			IExtensionRegistry extensionRegistry = Platform
+					.getExtensionRegistry();
+			IExtensionPoint extensionPoint = extensionRegistry
+					.getExtensionPoint("org.eclipse.ui.editors"); //$NON-NLS-1$
+			IExtension[] extensions = extensionPoint.getExtensions();
+			for (IExtension ext : extensions) {
+				IConfigurationElement[] configurationElements = ext
+						.getConfigurationElements();
+				for (IConfigurationElement ce : configurationElements) {
+					String id = ce.getAttribute("id"); //$NON-NLS-1$
+					if (editorID.equals(id)) {
+						String fileExt = ce.getAttribute("extensions"); //$NON-NLS-1$
+						if (fileExt != null) {
+							editorExtension = fileExt;
+							break;
+						}
+					}
+
+				}
+			}
+		}
+
+		IFile diagramFile = diagramFolder != null ? diagramFolder
+				.getFile(diagramName + "." + editorExtension) : project
+				.getFile(diagramName + "." + editorExtension); //$NON-NLS-1$
+		URI uri = URI.createPlatformResourceURI(diagramFile.getFullPath()
+				.toString(), true);
+
+		FileService.createEmfFileForDiagram(uri, diagram, diagramName);
+		String providerId = GraphitiUi.getExtensionManager()
+				.getDiagramTypeProviderId(diagram.getDiagramTypeId());
+		DiagramEditorInput editorInput = new DiagramEditorInput(
+				EcoreUtil.getURI(diagram), providerId);
+
+		try {
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getActivePage().openEditor(editorInput, editorID);
+		} catch (PartInitException e) {
+			String error = "error open editor";
+			IStatus status = new Status(IStatus.ERROR, "0", error, e);
+			ErrorDialog.openError(getShell(), error, null, status);
+			throw new CoreException(status);
+		}
 	}
 }

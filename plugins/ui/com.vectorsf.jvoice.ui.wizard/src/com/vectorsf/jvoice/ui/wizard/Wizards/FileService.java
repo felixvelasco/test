@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.diagram.core.diagram;
+package com.vectorsf.jvoice.ui.wizard.Wizards;
 
 import java.io.IOException;
 import java.io.PrintWriter;
