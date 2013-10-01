@@ -75,8 +75,13 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 
 					} else if (delta.getKind() == IResourceDelta.CHANGED) {
 						int index = beans.indexOf(bean);
-						beans.remove(index);
-						beans.add(index, JVoiceModelReconcilier.getInstance().createBean((IFile) resource));
+						if (index!= -1) {
+							beans.remove(index);
+							beans.add(index, JVoiceModelReconcilier.getInstance().createBean((IFile) resource));
+						} else 
+						{
+							beans.add(JVoiceModelReconcilier.getInstance().createBean((IFile) resource));  
+						}
 
 					} else if (delta.getKind() == IResourceDelta.REMOVED) {
 						// se busca el elemento en el paquete y se elimina
@@ -85,6 +90,9 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					}
 					// Se trata de un archivo de configuración
 				} else if (resource.getFileExtension().equalsIgnoreCase("properties")) {
+					if (!isConfigurationFolder(resource.getParent())){
+						return false;
+					}
 					String name = resource.getName().substring(0, resource.getName().lastIndexOf('.'));
 					// si es un evento de adición al paquete, por culpa del bug de eclipse que lanza el delta 2 veces
 					// tenemos que comprobar que lo hemos agregado ya antes, para no duplicarlo
@@ -104,7 +112,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					}
 				}
 			}
-			return false;
+			return true;
 		case IResource.PROJECT:
 			if (delta.getKind() == IResourceDelta.REMOVED) {
 				jvProject.getModel().getProjects().remove(jvProject);

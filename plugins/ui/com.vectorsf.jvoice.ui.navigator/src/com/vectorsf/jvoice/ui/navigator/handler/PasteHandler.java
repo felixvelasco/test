@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Display;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
 public class PasteHandler extends AbstractHandler {
 
@@ -101,6 +102,9 @@ public class PasteHandler extends AbstractHandler {
 								@Override
 								public String isValid(String input) {
 
+									if (input.contains(" ")) {
+										return ReorgMessages.ReorgQueries_invalidNameMessage;
+									}
 									targetPath = targetRes.getFullPath()
 											.append(miBean.getParent()
 													.getProjectRelativePath()
@@ -182,6 +186,9 @@ public class PasteHandler extends AbstractHandler {
 								@Override
 								public String isValid(String input) {
 
+									if (input.contains(" ")) {
+										return ReorgMessages.ReorgQueries_invalidNameMessage;
+									}
 									targetPath = targetRes.getFullPath()
 											.append(miPack.getParent()
 													.getProjectRelativePath()
@@ -308,7 +315,7 @@ public class PasteHandler extends AbstractHandler {
 			if (root.getFolder(targetPath).exists()) {
 
 				String newName = getNewName(target,
-						"Copy of " + mipackage.getName());
+						"CopyOf" + mipackage.getName());
 
 				targetPath = targetRes.getFullPath().append(
 						mipackage.getParent().getProjectRelativePath()
@@ -327,7 +334,7 @@ public class PasteHandler extends AbstractHandler {
 			if (root.getFile(targetPath).exists()) {
 
 				String newName = getNewName(target,
-						"Copy of " + mipackage.getName());
+						"CopyOf" + mipackage.getName());
 
 				targetPath = targetRes.getFullPath().append(
 						mipackage.getParent().getProjectRelativePath()
@@ -355,7 +362,10 @@ public class PasteHandler extends AbstractHandler {
 			emfRes.load(null);
 
 			for (EObject obj : emfRes.getContents()) {
-				if (obj instanceof JVBean) {
+				if (obj instanceof VoiceDsl) {
+					((VoiceDsl) obj).setName(newName);
+
+				} else if (obj instanceof JVBean) {
 					((JVBean) obj).setName(newName);
 				}
 			}
