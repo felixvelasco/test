@@ -1,5 +1,6 @@
 package com.vectorsf.jvoice.ui.wizard.Wizards;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,20 +10,29 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.mm.pictograms.PictogramLink;
+import org.eclipse.graphiti.mm.pictograms.PictogramsFactory;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
@@ -49,6 +59,8 @@ import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
+import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.model.operations.OperationsFactory;
 
 @SuppressWarnings("restriction")
 public class DiagramNameWizardPage extends AbstractWizardPage {
@@ -76,8 +88,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	private String initialFolder = "";
 	private String initialProject = "";
 
-	public DiagramNameWizardPage(String pageName, String title,
-			ImageDescriptor titleImage) {
+	public DiagramNameWizardPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 	}
 
@@ -140,8 +151,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
-		JVProject proyecto = BaseModel.getInstance().getModel()
-				.getProject(projectName);
+		JVProject proyecto = BaseModel.getInstance().getModel().getProject(projectName);
 		if (proyecto == null) {
 			setErrorMessage("Project does not jvoice project");
 			browsePackage.setEnabled(false);
@@ -193,13 +203,11 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		JVPackage diagramFolder = null;
 		if (selection instanceof IProject) {
 			IProject iProject = (IProject) selection;
-			project = BaseModel.getInstance().getModel()
-					.getProject(iProject.getName());
+			project = BaseModel.getInstance().getModel().getProject(iProject.getName());
 		} else if (selection instanceof IFolder) {
 			IFolder folder = (IFolder) selection;
 			IProject iProject = folder.getProject();
-			project = BaseModel.getInstance().getModel()
-					.getProject(iProject.getName());
+			project = BaseModel.getInstance().getModel().getProject(iProject.getName());
 
 			// si el proyecto es nulo es porque el proyecto donde se quiere
 			// crear el flujo no
@@ -216,8 +224,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			IPackageFragmentRoot prueba = (IPackageFragmentRoot) selection;
 			IFolder folder = (IFolder) prueba.getResource();
 			IProject iProject = folder.getProject();
-			project = BaseModel.getInstance().getModel()
-					.getProject(iProject.getName());
+			project = BaseModel.getInstance().getModel().getProject(iProject.getName());
 			diagramFolder = project.getPackage(folder.getName());
 		}
 
@@ -262,11 +269,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 			@Override
 			public void handleEvent(Event event) {
-				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
-						getShell(),
-						new AdapterFactoryLabelProvider(
-								new ComposedAdapterFactory(
-										ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(),
+						new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+								ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 				dialog.setTitle("Container Selection");
 				dialog.setAllowDuplicates(false);
 				dialog.setMultipleSelection(false);
@@ -301,11 +306,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		browsePackage.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
-						getShell(),
-						new AdapterFactoryLabelProvider(
-								new ComposedAdapterFactory(
-										ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(),
+						new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+								ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 				dialog.setTitle("Container Selection");
 				dialog.setAllowDuplicates(false);
 				dialog.setMultipleSelection(false);
@@ -386,13 +389,10 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 		List<JVProject> input = new ArrayList<JVProject>();
 
-		for (int i = 0; i < ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects().length; i++) {
-			IProject proyecto = ResourcesPlugin.getWorkspace().getRoot()
-					.getProjects()[i];
+		for (int i = 0; i < ResourcesPlugin.getWorkspace().getRoot().getProjects().length; i++) {
+			IProject proyecto = ResourcesPlugin.getWorkspace().getRoot().getProjects()[i];
 			String nombreProyecto = proyecto.getName();
-			JVProject project = BaseModel.getInstance().getModel()
-					.getProject(nombreProyecto);
+			JVProject project = BaseModel.getInstance().getModel().getProject(nombreProyecto);
 			if (project != null) {
 				input.add(project);
 			}
@@ -402,11 +402,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	private List<JVPackage> llenarPaquetes() {
 
-		IProject proyecto = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(textFieldProject.getText());
+		IProject proyecto = ResourcesPlugin.getWorkspace().getRoot().getProject(textFieldProject.getText());
 
-		JVProject project = BaseModel.getInstance().getModel()
-				.getProject(proyecto.getName());
+		JVProject project = BaseModel.getInstance().getModel().getProject(proyecto.getName());
 
 		return project.getPackages();
 	}
@@ -435,11 +433,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 		Object element = getSelection();
 		if (element instanceof JVProject) {
-			project = (IProject) Platform.getAdapterManager().getAdapter(
-					element, IProject.class);
+			project = (IProject) Platform.getAdapterManager().getAdapter(element, IProject.class);
 		} else if (element instanceof JVPackage) {
-			diagramFolder = (IFolder) Platform.getAdapterManager().getAdapter(
-					element, IFolder.class);
+			diagramFolder = (IFolder) Platform.getAdapterManager().getAdapter(element, IFolder.class);
 			project = diagramFolder.getProject();
 		}
 
@@ -450,28 +446,22 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			throw new CoreException(status);
 		}
 
-		Diagram diagram = Graphiti.getPeCreateService().createDiagram(
-				"jVoiceDiagram", diagramName, true);
+		Diagram diagram = Graphiti.getPeCreateService().createDiagram("jVoiceDiagram", diagramName, true);
 
 		String editorID = DiagramEditor.DIAGRAM_EDITOR_ID;
 		String editorExtension = "jvflow"; //$NON-NLS-1$
-		String diagramTypeProviderId = GraphitiUi.getExtensionManager()
-				.getDiagramTypeProviderId("jVoiceDiagram");
+		String diagramTypeProviderId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId("jVoiceDiagram");
 		String namingConventionID = diagramTypeProviderId + ".editor"; //$NON-NLS-1$
-		IEditorDescriptor specificEditor = PlatformUI.getWorkbench()
-				.getEditorRegistry().findEditor(namingConventionID);
+		IEditorDescriptor specificEditor = PlatformUI.getWorkbench().getEditorRegistry().findEditor(namingConventionID);
 
 		// If there is a specific editor get the file extension
 		if (specificEditor != null) {
 			editorID = namingConventionID;
-			IExtensionRegistry extensionRegistry = Platform
-					.getExtensionRegistry();
-			IExtensionPoint extensionPoint = extensionRegistry
-					.getExtensionPoint("org.eclipse.ui.editors"); //$NON-NLS-1$
+			IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+			IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint("org.eclipse.ui.editors"); //$NON-NLS-1$
 			IExtension[] extensions = extensionPoint.getExtensions();
 			for (IExtension ext : extensions) {
-				IConfigurationElement[] configurationElements = ext
-						.getConfigurationElements();
+				IConfigurationElement[] configurationElements = ext.getConfigurationElements();
 				for (IConfigurationElement ce : configurationElements) {
 					String id = ce.getAttribute("id"); //$NON-NLS-1$
 					if (editorID.equals(id)) {
@@ -486,21 +476,16 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			}
 		}
 
-		IFile diagramFile = diagramFolder != null ? diagramFolder
-				.getFile(diagramName + "." + editorExtension) : project
-				.getFile(diagramName + "." + editorExtension); //$NON-NLS-1$
-		URI uri = URI.createPlatformResourceURI(diagramFile.getFullPath()
-				.toString(), true);
+		IFile diagramFile = diagramFolder != null ? diagramFolder.getFile(diagramName + "." + editorExtension)
+				: project.getFile(diagramName + "." + editorExtension); //$NON-NLS-1$
+		URI uri = URI.createPlatformResourceURI(diagramFile.getFullPath().toString(), true);
 
-		FileService.createEmfFileForDiagram(uri, diagram, diagramName);
-		String providerId = GraphitiUi.getExtensionManager()
-				.getDiagramTypeProviderId(diagram.getDiagramTypeId());
-		DiagramEditorInput editorInput = new DiagramEditorInput(
-				EcoreUtil.getURI(diagram), providerId);
+		createFile(uri, diagram, diagramName);
+		String providerId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagram.getDiagramTypeId());
+		DiagramEditorInput editorInput = new DiagramEditorInput(EcoreUtil.getURI(diagram), providerId);
 
 		try {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getActivePage().openEditor(editorInput, editorID);
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(editorInput, editorID);
 		} catch (PartInitException e) {
 			String error = "error open editor";
 			IStatus status = new Status(IStatus.ERROR, "0", error, e);
@@ -508,4 +493,69 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			throw new CoreException(status);
 		}
 	}
+
+	public static void createFile(URI diagramResourceUri, final Diagram diagram, final String diagramName) {
+
+		// Create a resource set and EditingDomain
+		final TransactionalEditingDomain editingDomain = TransactionalEditingDomain.Factory.INSTANCE
+				.createEditingDomain();
+		ResourceSet resourceSet = editingDomain.getResourceSet();
+		// Create a resource for this file.
+		final Resource resource = resourceSet.createResource(diagramResourceUri);
+		final CommandStack commandStack = editingDomain.getCommandStack();
+		commandStack.execute(new RecordingCommand(editingDomain) {
+
+			@Override
+			protected void doExecute() {
+				resource.setTrackingModification(true);
+				resource.getContents().add(diagram);
+				Flow nFlow = OperationsFactory.eINSTANCE.createFlow();
+				nFlow.setDescription(diagramName);
+				nFlow.setName(diagramName);
+
+				resource.getContents().add(nFlow);
+
+				// create new link
+				PictogramLink link = PictogramsFactory.eINSTANCE.createPictogramLink();
+				link.setPictogramElement(diagram);
+				// add new link to diagram
+				diagram.getPictogramLinks().add(link);
+				link.getBusinessObjects().add(nFlow);
+			}
+		});
+
+		IWorkspaceRunnable wsRunnable = new IWorkspaceRunnable() {
+			@Override
+			public void run(final IProgressMonitor monitor) throws CoreException {
+
+				final Runnable runnable = new Runnable() {
+					@Override
+					public void run() {
+						try {
+							resource.save(null);
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
+					}
+				};
+
+				try {
+					editingDomain.runExclusive(runnable);
+				} catch (final InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		};
+		try {
+			ResourcesPlugin.getWorkspace().run(wsRunnable, null);
+		} catch (final CoreException e) {
+			final Throwable cause = e.getStatus().getException();
+			if (cause instanceof RuntimeException) {
+				throw (RuntimeException) cause;
+			}
+			throw new RuntimeException(e);
+		}
+		editingDomain.dispose();
+	}
+
 }
