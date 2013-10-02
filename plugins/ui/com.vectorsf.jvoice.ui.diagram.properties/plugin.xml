@@ -16,7 +16,7 @@
             contributorId="jVoiceDiagram.PropertyContributor">
          <propertyTab
                category="Graphiti"
-               id="graphiti.main.tab"
+               id="graphiti.main.tab.final"
                label="Main">
          </propertyTab>
       </propertyTabs>
@@ -26,18 +26,131 @@
       <propertySections
             contributorId="jVoiceDiagram.PropertyContributor">
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.FinalStateSection"
-               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.FinalStateFilter"
-               id="graphiti.main.tab.emfclass"
-               tab="graphiti.main.tab">
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.CallStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.CallStateFilter"
+               id="graphiti.main.tab.emfclass.callState"
+               tab="graphiti.main.tab.callState">
+         </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.CallFlowStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.CallFlowStateFilter"
+               id="graphiti.main.tab.emfclass.callFlowState"
+               tab="graphiti.main.tab.callFlowState">
+         </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.PromptStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.PromptStateFilter"
+               id="graphiti.main.tab.emfclass.prompState"
+               tab="graphiti.main.tab.prompState">
+         </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.InputStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.InputStateFilter"
+               id="graphiti.main.tab.emfclass.inputState"
+               tab="graphiti.main.tab.inputState">
+         </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.MenuStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.MenuStateFilter"
+               id="graphiti.main.tab.emfclass.menuState"
+               tab="graphiti.main.tab.menuState">
          </propertySection>
          <propertySection
                class="com.vectorsf.jvoice.ui.diagram.properties.filters.InitialStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.InitialStateFilter"
-               id="graphiti.main.tab.emfclass"
-               tab="graphiti.main.tab">
+               id="graphiti.main.tab.emfclass.initialState"
+               tab="graphiti.main.tab.initialState">
+         </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.FinalStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.FinalStateFilter"
+               id="graphiti.main.tab.emfclass.finalState"
+               tab="graphiti.main.tab.final">
+         </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.SwitchStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.SwitchStateFilter"
+               id="graphiti.main.tab.emfclass.switchState"
+               tab="graphiti.main.tab.switchState">
          </propertySection>
       </propertySections>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="jVoiceDiagram.PropertyContributor">
+         <propertyTab
+               category="Graphiti"
+               id="graphiti.main.tab.callState"
+               label="Main">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="jVoiceDiagram.PropertyContributor">
+         <propertyTab
+               category="Graphiti"
+               id="graphiti.main.tab.switchState"
+               label="Main">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="jVoiceDiagram.PropertyContributor">
+         <propertyTab
+               category="Graphiti"
+               id="graphiti.main.tab.menuState"
+               label="Main">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="jVoiceDiagram.PropertyContributor">
+         <propertyTab
+               category="Graphiti"
+               id="graphiti.main.tab.initialState"
+               label="Main">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="jVoiceDiagram.PropertyContributor">
+         <propertyTab
+               category="Graphiti"
+               id="graphiti.main.tab.inputState"
+               label="Main">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="jVoiceDiagram.PropertyContributor">
+         <propertyTab
+               category="Graphiti"
+               id="graphiti.main.tab.prompState"
+               label="Main">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="jVoiceDiagram.PropertyContributor">
+         <propertyTab
+               category="Graphiti"
+               id="graphiti.main.tab.callFlowState"
+               label="Main">
+         </propertyTab>
+      </propertyTabs>
    </extension>
 
 </plugin>
