@@ -11,17 +11,6 @@
       </propertyContributor>
    </extension>
    <extension
-         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-      <propertyTabs
-            contributorId="jVoiceDiagram.PropertyContributor">
-         <propertyTab
-               category="Graphiti"
-               id="graphiti.main.tab.final"
-               label="Main">
-         </propertyTab>
-      </propertyTabs>
-   </extension>
-   <extension
          point="org.eclipse.ui.views.properties.tabbed.propertySections">
       <propertySections
             contributorId="jVoiceDiagram.PropertyContributor">
@@ -81,70 +70,39 @@
             contributorId="jVoiceDiagram.PropertyContributor">
          <propertyTab
                category="Graphiti"
+               id="graphiti.main.tab.final"
+               label="Main">
+         </propertyTab>
+         <propertyTab
+               category="Graphiti"
                id="graphiti.main.tab.callState"
                label="Main">
          </propertyTab>
-      </propertyTabs>
-   </extension>
-   <extension
-         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-      <propertyTabs
-            contributorId="jVoiceDiagram.PropertyContributor">
          <propertyTab
                category="Graphiti"
                id="graphiti.main.tab.switchState"
                label="Main">
          </propertyTab>
-      </propertyTabs>
-   </extension>
-   <extension
-         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-      <propertyTabs
-            contributorId="jVoiceDiagram.PropertyContributor">
          <propertyTab
                category="Graphiti"
                id="graphiti.main.tab.menuState"
                label="Main">
          </propertyTab>
-      </propertyTabs>
-   </extension>
-   <extension
-         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-      <propertyTabs
-            contributorId="jVoiceDiagram.PropertyContributor">
          <propertyTab
                category="Graphiti"
                id="graphiti.main.tab.initialState"
                label="Main">
          </propertyTab>
-      </propertyTabs>
-   </extension>
-   <extension
-         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-      <propertyTabs
-            contributorId="jVoiceDiagram.PropertyContributor">
          <propertyTab
                category="Graphiti"
                id="graphiti.main.tab.inputState"
                label="Main">
          </propertyTab>
-      </propertyTabs>
-   </extension>
-   <extension
-         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-      <propertyTabs
-            contributorId="jVoiceDiagram.PropertyContributor">
          <propertyTab
                category="Graphiti"
                id="graphiti.main.tab.prompState"
                label="Main">
          </propertyTab>
-      </propertyTabs>
-   </extension>
-   <extension
-         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-      <propertyTabs
-            contributorId="jVoiceDiagram.PropertyContributor">
          <propertyTab
                category="Graphiti"
                id="graphiti.main.tab.callFlowState"
