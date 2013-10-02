@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="jVoiceDiagram.PropertyContributor">
+         <propertyCategory
+               category="Graphiti">
+         </propertyCategory>
+      </propertyContributor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="jVoiceDiagram.PropertyContributor">
+         <propertyTab
+               category="Graphiti"
+               id="graphiti.main.tab"
+               label="Main">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections
+            contributorId="jVoiceDiagram.PropertyContributor">
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.jVoiceDiagramEClassSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.jVoiceDiagramEClassFilter"
+               id="graphiti.main.tab.emfclass"
+               tab="graphiti.main.tab">
+         </propertySection>
+      </propertySections>
+   </extension>
+
+</plugin>
