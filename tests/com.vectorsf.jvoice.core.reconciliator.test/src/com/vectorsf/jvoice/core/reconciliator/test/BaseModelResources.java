@@ -36,6 +36,32 @@ public class BaseModelResources {
 		super();
 	}
 
+	private void safelyRetry(IWorkspaceRunnable iWorkspaceRunnable) throws CoreException {
+		safelyRetry(iWorkspaceRunnable, null);
+	}
+
+	private void safelyRetry(IWorkspaceRunnable iWorkspaceRunnable, ISchedulingRule rule) throws CoreException {
+		int count = 0;
+		boolean executed = false;
+		CoreException lastException = null;
+		while (count < 10 && !executed) {
+			try {
+				count++;
+				executeWksRunnable(iWorkspaceRunnable, rule);
+				executed = true;
+			} catch (CoreException e) {
+				lastException = e;
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e1) {
+				}
+			}
+		}
+		if (!executed) {
+			throw lastException;
+		}
+	}
+
 	protected void executeWksRunnable(IWorkspaceRunnable runnable) throws CoreException {
 		ResourcesPlugin.getWorkspace().run(runnable, null);
 	}
@@ -118,62 +144,34 @@ public class BaseModelResources {
 	}
 
 	protected void deleteProject(final IProject project) throws CoreException {
-		executeWksRunnable(new IWorkspaceRunnable() {
+		safelyRetry(new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				int count = 0;
-				boolean deleted = false;
-				while (count < 10 && !deleted) {
-					try {
-						count++;
-						project.delete(true, true, monitor);
-						deleted = true;
-					} catch (CoreException e) {
-					}
-				}
+				project.delete(true, true, monitor);
 			}
-
 		});
 	}
 
 	protected void deleteFolder(final IProject project, final String path) throws CoreException {
-		executeWksRunnable(new IWorkspaceRunnable() {
+		safelyRetry(new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IFolder folder = project.getFolder(path);
-				int count = 0;
-				boolean deleted = false;
-				while (count < 10 && !deleted) {
-					try {
-						count++;
-						folder.delete(true, monitor);
-						deleted = true;
-					} catch (CoreException e) {
-					}
-				}
+				folder.delete(true, monitor);
 			}
 
 		}, project);
 	}
 
 	protected void deleteFile(final IProject project, final String path) throws CoreException {
-		executeWksRunnable(new IWorkspaceRunnable() {
+		safelyRetry(new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IFile file = project.getFile(path);
-				int count = 0;
-				boolean deleted = false;
-				while (count < 10 && !deleted) {
-					try {
-						count++;
-						file.delete(true, monitor);
-						deleted = true;
-					} catch (CoreException e) {
-					}
-				}
+				file.delete(true, monitor);
 			}
 
 		}, project);
