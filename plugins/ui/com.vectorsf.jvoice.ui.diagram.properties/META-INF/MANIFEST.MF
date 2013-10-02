@@ -9,18 +9,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.0",
  org.eclipse.graphiti.ui;bundle-version="0.10.0",
-<<<<<<< Upstream, based on origin/master
  org.eclipse.emf.ecore,
  org.eclipse.graphiti,
  com.vectorsf.jvoice.operation.model;bundle-version="0.1.0",
- com.vectorsf.jvoice.diagram.core;bundle-version="0.1.0"
-=======
- org.eclipse.graphiti.mm,
- org.eclipse.emf.ecore,
- org.eclipse.graphiti,
- com.vectorsf.jvoice.operation.model;bundle-version="0.1.0",
- com.vectorsf.jvoice.core.operation;bundle-version="0.1.0"
->>>>>>> 5380579 Propiedades para el estado Inicial
+ com.vectorsf.jvoice.diagram.core;bundle-version="0.1.0",
+ org.eclipse.emf.transaction;bundle-version="1.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Import-Package: com.vectorsf.jvoice.model.operations

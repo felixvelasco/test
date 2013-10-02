@@ -26,8 +26,8 @@
       <propertySections
             contributorId="jVoiceDiagram.PropertyContributor">
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.jVoiceDiagramEClassSection"
-               filter="com.vectorsf.jvoice.ui.diagram.properties.jVoiceDiagramEClassFilter"
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.FinalStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.FinalStateFilter"
                id="graphiti.main.tab.emfclass"
                tab="graphiti.main.tab">
          </propertySection>
