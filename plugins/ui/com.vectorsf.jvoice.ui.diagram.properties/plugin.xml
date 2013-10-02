@@ -31,6 +31,12 @@
                id="graphiti.main.tab.emfclass"
                tab="graphiti.main.tab">
          </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.InitialStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.InitialStateFilter"
+               id="graphiti.main.tab.emfclass"
+               tab="graphiti.main.tab">
+         </propertySection>
       </propertySections>
    </extension>
 
