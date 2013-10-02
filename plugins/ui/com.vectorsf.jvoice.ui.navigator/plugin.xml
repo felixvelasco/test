@@ -176,6 +176,22 @@
                </with>
             </enablement>
          </commonWizard>
+         <commonWizard
+               type="new"
+               wizardId="com.vectorsf.jvoice.ui.wizard.wizardDSL">
+            <enablement>
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVPackage">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </enablement>
+         </commonWizard>
       </navigatorContent>
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.navigator.ivr.MavenContentProvider"
