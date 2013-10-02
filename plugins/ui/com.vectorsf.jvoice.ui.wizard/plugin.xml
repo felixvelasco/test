@@ -17,6 +17,13 @@
             name="JVoice package"
             project="false">
       </wizard>
+      <wizard
+            category="com.vectorsf.jvoice.diagram.core.category"
+            class="com.vectorsf.jvoice.ui.wizard.Wizards.CreateDslJVoice"
+            id="com.vectorsf.jvoice.ui.wizard.wizardDSL"
+            name="JVoice Dsl"
+            project="false">
+      </wizard>
    </extension>
 
 </plugin>
