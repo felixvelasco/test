@@ -122,7 +122,16 @@ public class BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				project.delete(true, true, monitor);
+				int count = 0;
+				boolean deleted = false;
+				while (count < 10 && !deleted) {
+					try {
+						count++;
+						project.delete(true, true, monitor);
+						deleted = true;
+					} catch (CoreException e) {
+					}
+				}
 			}
 
 		});
@@ -134,7 +143,16 @@ public class BaseModelResources {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IFolder folder = project.getFolder(path);
-				folder.delete(true, monitor);
+				int count = 0;
+				boolean deleted = false;
+				while (count < 10 && !deleted) {
+					try {
+						count++;
+						folder.delete(true, monitor);
+						deleted = true;
+					} catch (CoreException e) {
+					}
+				}
 			}
 
 		}, project);
@@ -146,7 +164,16 @@ public class BaseModelResources {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IFile file = project.getFile(path);
-				file.delete(true, monitor);
+				int count = 0;
+				boolean deleted = false;
+				while (count < 10 && !deleted) {
+					try {
+						count++;
+						file.delete(true, monitor);
+						deleted = true;
+					} catch (CoreException e) {
+					}
+				}
 			}
 
 		}, project);
@@ -159,7 +186,7 @@ public class BaseModelResources {
 		}
 
 		if (!container.exists()) {
-			container.create(true, false, monitor);
+			container.create(true, true, monitor);
 		}
 
 	}

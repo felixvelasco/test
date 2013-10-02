@@ -149,11 +149,14 @@ public class SWTBotHelper {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				try{
-				   project.delete(true, true, monitor);
-				}catch(Exception e){
-					for (int i = 0; i < 10; i++){ 
+				int count = 0;
+				boolean deleted = false;
+				while (count < 10 && !deleted) {
+					try {
+						count++;
 						project.delete(true, true, monitor);
+						deleted = true;
+					} catch (CoreException e) {
 					}
 				}
 			}
@@ -167,7 +170,16 @@ public class SWTBotHelper {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IFolder folder = project.getFolder(path);
-				folder.delete(true, monitor);
+				int count = 0;
+				boolean deleted = false;
+				while (count < 10 && !deleted) {
+					try {
+						count++;
+						folder.delete(true, monitor);
+						deleted = true;
+					} catch (CoreException e) {
+					}
+				}
 			}
 
 		}, project);
@@ -179,7 +191,16 @@ public class SWTBotHelper {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IFile file = project.getFile(path);
-				file.delete(true, monitor);
+				int count = 0;
+				boolean deleted = false;
+				while (count < 10 && !deleted) {
+					try {
+						count++;
+						file.delete(true, monitor);
+						deleted = true;
+					} catch (CoreException e) {
+					}
+				}
 			}
 
 		}, project);
