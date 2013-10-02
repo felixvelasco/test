@@ -149,7 +149,13 @@ public class SWTBotHelper {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				project.delete(true, true, monitor);
+				try{
+				   project.delete(true, true, monitor);
+				}catch(Exception e){
+					for (int i = 0; i < 10; i++){ 
+						project.delete(true, true, monitor);
+					}
+				}
 			}
 
 		});
@@ -197,7 +203,7 @@ public class SWTBotHelper {
 		}
 
 		if (!container.exists()) {
-			container.create(true, false, monitor);
+			container.create(true, true, monitor);
 		}
 
 	}
