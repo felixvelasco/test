@@ -18,7 +18,6 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
-import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InitialState;
 
 
@@ -35,7 +34,7 @@ ITabbedPropertyConstants {
 
 		// set the new name for the Intention
 		PictogramElement pe = getSelectedPictogramElement();
-		final FinalState bimElement = (FinalState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
+		final InitialState bimElement = (InitialState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
 
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
 
@@ -63,6 +62,7 @@ ITabbedPropertyConstants {
         data.right = new FormAttachment(100, 0);
         data.top = new FormAttachment(0, VSPACE);
         nameText.setLayoutData(data);
+        nameText.addModifyListener(listenerIntentionName);
  
         CLabel valueLabel = factory.createCLabel(composite, "Name:");
         data = new FormData();
@@ -74,6 +74,7 @@ ITabbedPropertyConstants {
  
     @Override
     public void refresh() {
+    	nameText.removeModifyListener(listenerIntentionName);
         PictogramElement pe = getSelectedPictogramElement();
         if (pe != null) {
             Object bo = Graphiti.getLinkService()

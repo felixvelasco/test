@@ -39,7 +39,7 @@ public class FinalStateSection extends GFPropertySection implements
 
 		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 		protected void doExecute() {
-		bimElement.setName(nameText.getText());
+			bimElement.setName(nameText.getText());
 		}
 		});
 
@@ -61,6 +61,7 @@ public class FinalStateSection extends GFPropertySection implements
         data.right = new FormAttachment(100, 0);
         data.top = new FormAttachment(0, VSPACE);
         nameText.setLayoutData(data);
+        nameText.addModifyListener(listenerIntentionName);
  
         CLabel valueLabel = factory.createCLabel(composite, "Name:");
         data = new FormData();
@@ -72,6 +73,7 @@ public class FinalStateSection extends GFPropertySection implements
  
     @Override
     public void refresh() {
+    	nameText.removeModifyListener(listenerIntentionName);
         PictogramElement pe = getSelectedPictogramElement();
         if (pe != null) {
             Object bo = Graphiti.getLinkService()
