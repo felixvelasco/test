@@ -1,10 +1,15 @@
 package com.vectorsf.jvoice.ui.diagram.properties.filters;
 
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -20,10 +25,26 @@ public class FinalStateSection extends GFPropertySection implements
 	
 	private Text nameText;
 
+	public FinalStateSection() {}
+	
+	private ModifyListener listenerIntentionName = new ModifyListener(){
 
-	public FinalStateSection() {
-		// TODO Auto-generated constructor stub
-	}
+		public void modifyText (ModifyEvent arg0){
+
+		// set the new name for the Intention
+		PictogramElement pe = getSelectedPictogramElement();
+		final FinalState bimElement = (FinalState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
+
+		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
+
+		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+		protected void doExecute() {
+		bimElement.setName(nameText.getText());
+		}
+		});
+
+		}
+	};
 	
 	@Override
     public void createControls(Composite parent,
@@ -59,11 +80,10 @@ public class FinalStateSection extends GFPropertySection implements
             if (bo == null)
                 return;
             String name = null;
-            if (bo instanceof FinalState){
-            	name = ((FinalState) bo).getName();
-            }
+            name = ((FinalState) bo).getName();
             
             nameText.setText(name == null ? "" : name);
+            nameText.addModifyListener(listenerIntentionName);
         }
     }
 

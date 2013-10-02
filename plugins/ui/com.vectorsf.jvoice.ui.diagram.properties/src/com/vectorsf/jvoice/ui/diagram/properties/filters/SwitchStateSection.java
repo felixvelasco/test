@@ -1,10 +1,15 @@
 package com.vectorsf.jvoice.ui.diagram.properties.filters;
 
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -13,15 +18,35 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
+import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.SwitchState;
-
-
 
 
 public class SwitchStateSection extends GFPropertySection implements
 ITabbedPropertyConstants {
 
 	private Text nameText;
+	
+	public SwitchStateSection(){}
+	
+	private ModifyListener listenerIntentionName = new ModifyListener(){
+
+		public void modifyText (ModifyEvent arg0){
+
+		// set the new name for the Intention
+		PictogramElement pe = getSelectedPictogramElement();
+		final FinalState bimElement = (FinalState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
+
+		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
+
+		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+		protected void doExecute() {
+		bimElement.setName(nameText.getText());
+		}
+		});
+
+		}
+	};
 	 
     @Override
     public void createControls(Composite parent,
@@ -58,6 +83,7 @@ ITabbedPropertyConstants {
                 return;
             String name = ((SwitchState) bo).getName();
             nameText.setText(name == null ? "" : name);
+            nameText.addModifyListener(listenerIntentionName);
         }
     }
 
