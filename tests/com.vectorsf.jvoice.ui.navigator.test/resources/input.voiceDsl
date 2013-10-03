@@ -1,0 +1,11 @@
+inputname input
+
+configuration{
+ //setting variables 
+}
+grammars{
+ // User's grammar 
+ }
+audios{
+ //Code 
+}

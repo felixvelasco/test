@@ -1,0 +1,11 @@
+menuname menu
+
+configuration{
+ //setting variables 
+}
+grammars{
+ // User's grammar 
+ }
+outputs{
+ //Variables 
+}
