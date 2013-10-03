@@ -35,4 +35,9 @@
     <module>dsl/com.vectorsf.jvoice.voice.dsl.ui</module>
 
   </modules>
+  <properties>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.jacoco.itReportPath>${project.basedir}/../../../tests/target/jacoco-it.exec</sonar.jacoco.itReportPath>
+    <sonar.language>java</sonar.language>
+  </properties>
 </project>
