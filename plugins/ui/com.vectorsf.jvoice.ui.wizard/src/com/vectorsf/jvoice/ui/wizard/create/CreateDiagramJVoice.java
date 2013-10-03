@@ -14,12 +14,15 @@
  * </copyright>
  *
  *******************************************************************************/
-package com.vectorsf.jvoice.ui.wizard.Wizards;
+package com.vectorsf.jvoice.ui.wizard.create;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
+
+import com.vectorsf.jvoice.ui.wizard.page.AbstractWizardPage;
+import com.vectorsf.jvoice.ui.wizard.page.DiagramNameWizardPage;
 
 /**
  * The Class CreateDiagramWizard.

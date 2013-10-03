@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.wizard.Wizards;
+package com.vectorsf.jvoice.ui.wizard.page;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +38,6 @@ import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.jdt.internal.ui.wizards.dialogfields.DialogField;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -62,7 +61,6 @@ import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 
-@SuppressWarnings("restriction")
 public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	private static final String PAGE_DESC = "Enter a diagram name";
@@ -92,7 +90,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		super(pageName, title, titleImage);
 	}
 
-	protected DiagramNameWizardPage(String pageName) {
+	public DiagramNameWizardPage(String pageName) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
@@ -249,7 +247,15 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		textFieldDiagram.setLayoutData(data);
 		textFieldDiagram.setFont(parent.getFont());
 
-		DialogField.createEmptySpace(projectGroup);
+		Label label= new Label(parent, SWT.LEFT);
+		GridData gd= new GridData();
+		gd.horizontalAlignment= GridData.BEGINNING;
+		gd.grabExcessHorizontalSpace= false;
+		gd.horizontalSpan= 1;
+		gd.horizontalIndent= 0;
+		gd.widthHint= 0;
+		gd.heightHint= 0;
+		label.setLayoutData(gd);
 
 		// new project label
 		Label projectLabel2 = new Label(projectGroup, SWT.NONE);
@@ -426,7 +432,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	}
 
 	@Override
-	protected void createResource() throws CoreException {
+	public void createResource() throws CoreException {
 		String diagramName = getText();
 		IProject project = null;
 		IFolder diagramFolder = null;

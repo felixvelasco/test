@@ -1,13 +1,13 @@
-package com.vectorsf.jvoice.ui.wizard.Wizards;
+package com.vectorsf.jvoice.ui.wizard.create;
 
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
 import com.vectorsf.jvoice.core.project.JVoiceProjectConfigurator;
+import com.vectorsf.jvoice.ui.wizard.page.ProjectNameWizardPage;
 
 
 
@@ -26,7 +26,6 @@ public class CreateProjectJVoice extends BasicNewResourceWizard {
 		super.addPages();
 		ProjectNameWizardPage pageName = new ProjectNameWizardPage(
 				PAGE_NAME_PROJECT_NAME);
-		pageName.setSelection(getSelection().getFirstElement());
 		addPage(pageName);
 	}
 
@@ -48,11 +47,8 @@ public class CreateProjectJVoice extends BasicNewResourceWizard {
 				.getText();
 		
 		try {
-			IProject proyecto = JVoiceProjectConfigurator.createProject(ProjectName, ProjectName, ProjectName);
-	
+			JVoiceProjectConfigurator.createProject(ProjectName, ProjectName, ProjectName);
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return false;
 		}
 		

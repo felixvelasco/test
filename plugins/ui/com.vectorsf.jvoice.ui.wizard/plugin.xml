@@ -5,21 +5,21 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             category="com.vectorsf.jvoice.diagram.core.category"
-            class="com.vectorsf.jvoice.ui.wizard.Wizards.CreateProjectJVoice"
+            class="com.vectorsf.jvoice.ui.wizard.create.CreateProjectJVoice"
             id="com.vectorsf.jvoice.ui.project.wizard"
             name="JVoice project"
             project="true">
       </wizard>
       <wizard
             category="com.vectorsf.jvoice.diagram.core.category"
-            class="com.vectorsf.jvoice.ui.wizard.Wizards.CreateJVPackageWizard"
+            class="com.vectorsf.jvoice.ui.wizard.create.CreateJVPackageWizard"
             id="com.vectorsf.jvoice.ui.package.wizard"
             name="JVoice package"
             project="false">
       </wizard>
       <wizard
             category="com.vectorsf.jvoice.diagram.core.category"
-            class="com.vectorsf.jvoice.ui.wizard.Wizards.CreateDslJVoice"
+            class="com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice"
             id="com.vectorsf.jvoice.ui.wizard.wizardDSL"
             name="JVoice Dsl"
             project="false">
