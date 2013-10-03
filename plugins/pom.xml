@@ -17,6 +17,7 @@
     <module>model/com.vectorsf.jvoice.operation.model</module>
     <module>model/com.vectorsf.jvoice.operation.model.edit</module>
 
+    <module>ui/com.vectorsf.jvoice.ui.diagram.properties</module>
     <module>ui/com.vectorsf.jvoice.ui.navigator</module>
     <module>ui/com.vectorsf.jvoice.ui.wizard</module>
 
