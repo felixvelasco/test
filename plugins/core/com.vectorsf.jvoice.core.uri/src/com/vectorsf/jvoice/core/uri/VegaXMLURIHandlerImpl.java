@@ -39,7 +39,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 	private static final String PLATFORM_RESOURCE = "platform:/resource";
 	private static final String JAR_FILE = "jar:file:/";
 	private static final String ARCHIVE_SEPARATOR = "!/";
-	private static final String FRAGMENT0 = "#/";
+	private static final String FRAGMENT0 = "#/1";
 	private static final String JV = "jv";
 	private URI baseUri;
 	private IMavenProjectFacade mproject=null;
@@ -50,29 +50,29 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 	}
 
 	@Override
-	public URI resolve(URI uri) 
+	public URI resolve(URI vegaURI) 
 	{
 		if (mproject==null)
 		{
 			searchMavenProject();
 		}
-		URI vegaURI = null;
+		URI uri = null;
 		if (mproject.getMavenProject()!=null)
 		{
-			if (uri.toString().startsWith(VEGA_URI)) {
-				String uriPath = uri.path();
+			if (vegaURI.toString().startsWith(VEGA_URI)) {
+				String uriPath = vegaURI.path();
 				if (uriPath!=null)
 				{
 					String fileNameToSearch = uriPath.substring(uriPath
 							.lastIndexOf(SEPARATOR) + 1);
-					vegaURI = searchURIs(uri, vegaURI, fileNameToSearch, mproject);
+					uri = searchURIs(vegaURI, uri, fileNameToSearch, mproject);
 				}
 			}
 		}
-		if (vegaURI != null) {
-			return vegaURI;
+		if (uri != null) {
+			return uri;
 		} else {
-			return uri.resolve(baseUri);
+			return vegaURI.resolve(baseUri);
 		}
 	}
 	
