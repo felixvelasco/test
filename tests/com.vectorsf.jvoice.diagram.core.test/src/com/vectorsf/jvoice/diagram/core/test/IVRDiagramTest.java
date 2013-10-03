@@ -1,8 +1,22 @@
+package com.vectorsf.jvoice.diagram.core.test;
 
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.util.ArrayList;
+import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.asyncExec;
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.emptyArray;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -10,43 +24,14 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.gef.ConnectionEditPart;
-import org.eclipse.gef.DragTracker;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gef.EditPartListener;
-import org.eclipse.gef.EditPartViewer;
-import org.eclipse.gef.EditPolicy;
-import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.LayerConstants;
-import org.eclipse.gef.NodeListener;
-import org.eclipse.gef.Request;
-import org.eclipse.gef.RootEditPart;
-import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
-import org.eclipse.gef.palette.ToolEntry;
-import org.eclipse.graphiti.dt.IDiagramTypeProvider;
-import org.eclipse.graphiti.features.IAddFeature;
-import org.eclipse.graphiti.features.IFeatureProvider;
-import org.eclipse.graphiti.features.context.impl.AddContext;
-import org.eclipse.graphiti.features.context.impl.AreaContext;
-import org.eclipse.graphiti.mm.pictograms.Connection;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
-import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
 import org.eclipse.graphiti.ui.internal.contextbuttons.ContextButton;
 import org.eclipse.graphiti.ui.internal.contextbuttons.ContextButtonPad;
-import org.eclipse.graphiti.ui.internal.editor.GFFigureCanvas;
-import org.eclipse.graphiti.ui.internal.parts.ContainerShapeEditPart;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
-import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefConnectionEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefViewer;
@@ -55,10 +40,7 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarButton;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -72,22 +54,8 @@ import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
-import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.State;
-
-import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.asyncExec;
-import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.emptyArray;
-import static org.hamcrest.Matchers.hasItemInArray;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.*;
 
 /**
  * 
@@ -278,13 +246,10 @@ public class IVRDiagramTest {
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
-		bot.sleep(5000);
 		view.bot().tree().expandNode("testNavigator", "several.packages.inside","five").doubleClick();
 		editor = getGefEditor();
 		
 		SWTBotGefViewer gefViewer =   editor.getSWTBotGefViewer();
-		
-		
 	
 		gefViewer =   editor.getSWTBotGefViewer();
 		gefViewer.activateTool(stateName);
@@ -417,12 +382,12 @@ public class IVRDiagramTest {
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
 		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/empty.jvflow",
 				SWTBotHelper.getInputStreamResource("empty.jvflow"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/menu.voiceDsl",
-				SWTBotHelper.getInputStreamResource("menu.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/input.voiceDsl",
-				SWTBotHelper.getInputStreamResource("input.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/prompt.voiceDsl",
-				SWTBotHelper.getInputStreamResource("prompt.voiceDsl"));
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/Menu.voiceDsl",
+				SWTBotHelper.getInputStreamResource("Menu.voiceDsl"));
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/Input.voiceDsl",
+				SWTBotHelper.getInputStreamResource("Input.voiceDsl"));
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/Prompt.voiceDsl",
+				SWTBotHelper.getInputStreamResource("Prompt.voiceDsl"));
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
@@ -485,12 +450,12 @@ public class IVRDiagramTest {
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
 		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/empty.jvflow",
 				SWTBotHelper.getInputStreamResource("empty.jvflow"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/menu.voiceDsl",
-				SWTBotHelper.getInputStreamResource("menu.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/input.voiceDsl",
-				SWTBotHelper.getInputStreamResource("input.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/prompt.voiceDsl",
-				SWTBotHelper.getInputStreamResource("prompt.voiceDsl"));
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/Menu.voiceDsl",
+				SWTBotHelper.getInputStreamResource("Menu.voiceDsl"));
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/Input.voiceDsl",
+				SWTBotHelper.getInputStreamResource("Input.voiceDsl"));
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/Prompt.voiceDsl",
+				SWTBotHelper.getInputStreamResource("Prompt.voiceDsl"));
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));

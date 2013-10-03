@@ -1,3 +1,4 @@
+package com.vectorsf.jvoice.diagram.core.test;
 
 
 import java.io.ByteArrayInputStream;
