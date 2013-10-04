@@ -150,5 +150,10 @@
 			<artifactId>com.isb.ivr.operation.model</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>uuu</groupId>
+			<artifactId>uuu</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 </project>

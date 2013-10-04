@@ -27,7 +27,6 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
-import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
@@ -97,14 +96,12 @@ public class MyMojo extends AbstractMojo {
 		}
 
 		try {
-			Injector injector = new VoiceDslStandaloneSetup().createInjectorAndDoEMFRegistration();
 
-			EPackage.Registry.INSTANCE.put(BasePackage.eNS_URI, BasePackage.eINSTANCE);
 			EPackage.Registry.INSTANCE.put(OperationsPackage.eNS_URI, OperationsPackage.eINSTANCE);
 
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("jvflow", new XMIResourceFactoryImpl());
 
-			processDSLFiles(injector);
+			
 			processFlowFiles();
 		} catch (Exception e) {
 			throw new MojoExecutionException("", e);
@@ -112,52 +109,12 @@ public class MyMojo extends AbstractMojo {
 		project.getArtifacts();
 		if (project != null) {
 			projectHelper.addResource(project, sourceDirectory.getAbsolutePath(),
-					Collections.singletonList("**/**.voiceDsl"), Collections.emptyList());
+					Collections.singletonList("**/**.jvflow"), Collections.emptyList());
 			// project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
 
 		}
 	}
 
-	private void processDSLFiles(Injector injector) throws InclusionScanException, IOException {
-		SourceMapping mapping = new SuffixMapping("voiceDsl", Collections.<String> emptySet());
-		Set<String> includes = getDSLIncludesPatterns();
-		SourceInclusionScanner scan = new SimpleSourceInclusionScanner(includes, excludes);
-
-		scan.addSourceMapping(mapping);
-		Set<File> grammarFiles = scan.getIncludedSources(sourceDirectory, null);
-		if (grammarFiles.isEmpty()) {
-			if (getLog().isInfoEnabled()) {
-				getLog().info("No DSLs to process");
-			}
-		} else {
-			boolean built = false;
-			for (File dsl : grammarFiles) {
-				built |= processGrammarFile(dsl, injector);
-			}
-			if (!built && getLog().isInfoEnabled()) {
-				getLog().info("No DSL processed; generated files are up to date");
-			}
-		}
-
-	}
-
-	private boolean processGrammarFile(File dslFile, Injector injector) throws IOException {
-		File targetFile = new File(outputDirectory, getTargetDSLName(dslFile.getName()));
-		if (buildRequired(dslFile, Collections.singletonList(targetFile))) {
-			targetFile.createNewFile();
-
-			XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
-			resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-			URI uri = URI.createFileURI(dslFile.getCanonicalPath());
-			Resource resource = resourceSet.getResource(uri, true);
-
-			// JSPGenerator.compile(targetFile, resource);
-
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	private String getTargetDSLName(String name) {
 		String basename = name.substring(0, name.lastIndexOf('.'));
@@ -180,7 +137,7 @@ public class MyMojo extends AbstractMojo {
 
 	private Set<String> getFlowIncludesPatterns() {
 		if (includes == null || includes.isEmpty()) {
-			return Collections.singleton("**/*.flow");
+			return Collections.singleton("**/*.jvflow");
 		}
 		return includes;
 	}
@@ -236,8 +193,7 @@ public class MyMojo extends AbstractMojo {
 
 			// resolve test
 			ResourceSet rSet = new ResourceSetImpl();
-			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl();
-			vegaURIHandler.setMavenProject(project);
+			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project);
 			rSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 			URI uri = URI.createFileURI(flowFile.getCanonicalPath().toString());
 			Resource res = rSet.getResource(uri, true);
@@ -245,14 +201,10 @@ public class MyMojo extends AbstractMojo {
 			Flow flow = (Flow) res.getContents().get(0);
 
 			for (State state : flow.getStates()) {
-				/*
-				 * if (state instanceof SubFlow) { SubFlow sf = (SubFlow) state; Flow flowCC = sf.getCalledFlow();
-				 * String gramma = "El estado " + sf.getName() + " apunta a " + flowCC.getName(); }
-				 */
-				// TODO Integrar con cambios de subflujo
+
 			}
 			// deresolve test
-			URI uri2 = URI.createFileURI("D:/workspaces/prueba_xtext/padre/src/main/resources/o.flow");
+			URI uri2 = URI.createFileURI("C:/Users/xIS02462/git/test/maven/test/testMavenResolveDeresolveProject/src/main/resources/jv/qwe.jvflow");
 
 			ResourceSet rSet2 = new ResourceSetImpl();
 			rSet2.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
