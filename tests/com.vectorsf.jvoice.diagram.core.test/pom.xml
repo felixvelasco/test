@@ -96,6 +96,11 @@
 							<version>0.1.0</version>
 						</dependency>
 						<dependency>
+							<type>eclipse-plugin</type>
+							<artifactId>org.objectweb.asm</artifactId>
+							<version>4.0</version>
+						</dependency>
+						<dependency>
 							<type>eclipse-feature</type>
 							<artifactId>org.eclipse.m2e.feature</artifactId>
 							<version>1.4.0</version>
