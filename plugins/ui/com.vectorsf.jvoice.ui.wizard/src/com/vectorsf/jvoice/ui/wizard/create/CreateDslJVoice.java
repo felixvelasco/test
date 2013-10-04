@@ -1,23 +1,27 @@
-package com.vectorsf.jvoice.ui.wizard.Wizards;
+package com.vectorsf.jvoice.ui.wizard.create;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
-public class CreateJVPackageWizard extends BasicNewResourceWizard {
+import com.vectorsf.jvoice.ui.wizard.page.AbstractWizardPage;
+import com.vectorsf.jvoice.ui.wizard.page.DslNameWizardPage;
 
-	private static final String PAGE_NAME_PROJECT_NAME = "JVoice package Name";
-	private static final String WIZARD_WINDOW_TITLE = "New JVoice package";
-
+public class CreateDslJVoice extends BasicNewResourceWizard {
+	
+	private static final String PAGE_NAME_DSL_NAME = "JVoice DSL Name";
+	private static final String WIZARD_WINDOW_TITLE = "New JVoice DSL";
+	
 	@Override
 	public void addPages() {
 		super.addPages();
-		PackageNameWizardPage pageName = new PackageNameWizardPage(PAGE_NAME_PROJECT_NAME);
+		DslNameWizardPage pageName = new DslNameWizardPage(
+				PAGE_NAME_DSL_NAME);
 		pageName.setSelection(getSelection().getFirstElement());
 		addPage(pageName);
 	}
-
+	
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection currentSelection) {
 		super.init(workbench, currentSelection);
@@ -28,12 +32,15 @@ public class CreateJVPackageWizard extends BasicNewResourceWizard {
 	public boolean performFinish() {
 
 		try {
-			((AbstractWizardPage) getPage(PAGE_NAME_PROJECT_NAME)).createResource();
+			((AbstractWizardPage) getPage(PAGE_NAME_DSL_NAME))
+					.createResource();
 		} catch (CoreException e) {
 			e.printStackTrace();
 			return false;
 		}
 
 		return true;
+
 	}
+
 }

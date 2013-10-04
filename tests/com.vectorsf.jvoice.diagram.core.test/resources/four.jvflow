@@ -665,7 +665,7 @@
     <colors red="255" green="255" blue="255"/>
     <colors red="188" green="188" blue="188"/>
   </pi:Diagram>
-  <operations:Flow name="two" description="desc de prueba_01" id="two">
+  <operations:Flow name="four" description="desc de prueba_01" id="fpur">
     <states xsi:type="operations:InitialState" name="Initial" outgoingTransitions="/1/@transitions.0"/>
     <states xsi:type="operations:CallState" name="llamada1" incomingTransitions="/1/@transitions.0" outgoingTransitions="/1/@transitions.1 /1/@transitions.3"/>
     <states xsi:type="operations:SwitchState" name="Switch" incomingTransitions="/1/@transitions.1" outgoingTransitions="/1/@transitions.2"/>

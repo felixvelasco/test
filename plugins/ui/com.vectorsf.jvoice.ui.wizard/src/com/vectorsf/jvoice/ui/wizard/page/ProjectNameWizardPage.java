@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.vectorsf.jvoice.ui.wizard.Wizards;
+package com.vectorsf.jvoice.ui.wizard.page;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
@@ -9,7 +9,6 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jdt.internal.ui.wizards.dialogfields.DialogField;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -41,13 +40,12 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 
 		}
 	};
-	private Object selection;
 
 	public ProjectNameWizardPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 	}
 
-	protected ProjectNameWizardPage(String pageName) {
+	public ProjectNameWizardPage(String pageName) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
@@ -127,7 +125,15 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 		textField.setLayoutData(data);
 		textField.setFont(parent.getFont());
 
-		DialogField.createEmptySpace(projectGroup);
+		Label label= new Label(parent, SWT.LEFT);
+		GridData gd= new GridData();
+		gd.horizontalAlignment= GridData.BEGINNING;
+		gd.grabExcessHorizontalSpace= false;
+		gd.horizontalSpan= 1;
+		gd.horizontalIndent= 0;
+		gd.widthHint= 0;
+		gd.heightHint= 0;
+		label.setLayoutData(gd);
 
 		textField.addListener(SWT.Modify, nameModifyListener);
 		textField.addListener(SWT.FocusIn, nameModifyListener);
@@ -158,20 +164,13 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 		}
 	}
 
-	public void setSelection(Object firstElement) {
-		selection = firstElement;
-
-	}
-
 	@Override
 	protected void createWizardContents(Composite parent) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void createResource() throws CoreException {
-		// TODO Auto-generated method stub
+	public void createResource() throws CoreException {
 
 	}
 

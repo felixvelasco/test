@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.vectorsf.jvoice.ui.wizard.Wizards;
+package com.vectorsf.jvoice.ui.wizard.page;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +62,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		super(pageName, title, titleImage);
 	}
 
-	protected PackageNameWizardPage(String pageName) {
+	public PackageNameWizardPage(String pageName) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
@@ -220,7 +220,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	}
 
 	@Override
-	protected void createResource() throws CoreException {
+	public void createResource() throws CoreException {
 		final IFolder packageFolder = getFolder();
 		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
 

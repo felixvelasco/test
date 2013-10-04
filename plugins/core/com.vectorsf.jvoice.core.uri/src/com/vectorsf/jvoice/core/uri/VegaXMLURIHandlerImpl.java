@@ -165,16 +165,14 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		if (resourceBaseURI != null) {
 			IProject project = resourceBaseURI.getProject();
 			IResource resource = null;
-			IProject[] lProjects = project.getReferencedProjects();
 
-			IProject projectI = project;
-			int nIndex = 0;
-			do {
-				resource = searchProject(fileNameToSearch, projectName,
-						projectI);
-				projectI = lProjects[nIndex];
-				nIndex++;
-			} while (resource == null && nIndex < lProjects.length);
+			resource = searchProject(fileNameToSearch, projectName, project);
+			if (resource == null) {
+				IProject[] lProjects = project.getReferencedProjects();
+				for (IProject prj : lProjects) {
+					resource = searchProject(fileNameToSearch, projectName, prj);
+				}
+			}
 
 			if (resource != null) {
 				vegaURI = URI.createURI(PLATFORM_RESOURCE

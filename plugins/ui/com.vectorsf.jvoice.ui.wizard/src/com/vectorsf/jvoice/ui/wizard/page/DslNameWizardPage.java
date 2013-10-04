@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.wizard.Wizards;
+package com.vectorsf.jvoice.ui.wizard.page;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.jdt.internal.ui.wizards.dialogfields.DialogField;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -82,7 +81,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		super(pageName, title, titleImage);
 	}
 
-	protected DslNameWizardPage(String pageName) {
+	public DslNameWizardPage(String pageName) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
@@ -243,8 +242,16 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		textFieldDSL.setLayoutData(data);
 		textFieldDSL.setFont(parent.getFont());
 
-		DialogField.createEmptySpace(projectGroup);
-
+		Label label= new Label(parent, SWT.LEFT);
+		GridData gd= new GridData();
+		gd.horizontalAlignment= GridData.BEGINNING;
+		gd.grabExcessHorizontalSpace= false;
+		gd.horizontalSpan= 1;
+		gd.horizontalIndent= 0;
+		gd.widthHint= 0;
+		gd.heightHint= 0;
+		label.setLayoutData(gd);
+		
 		// new project label
 		Label projectLabel2 = new Label(projectGroup, SWT.NONE);
 		projectLabel2.setText("project:");
@@ -445,7 +452,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	
 	//Equivalente al performFinish
 	@Override
-	protected void createResource() throws CoreException {
+	public void createResource() throws CoreException {
 		String DslName = getText();
 		IProject project = null;
 		IFolder DslFolder = null;

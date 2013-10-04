@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.wizard.Wizards;
+package com.vectorsf.jvoice.ui.wizard.page;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -40,6 +40,6 @@ public abstract class AbstractWizardPage extends WizardPage {
 
 	abstract protected void createWizardContents(Composite parent);
 
-	abstract protected void createResource() throws CoreException;
+	public abstract void createResource() throws CoreException;
 
 }
