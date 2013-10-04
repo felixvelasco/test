@@ -74,8 +74,7 @@ ITabbedPropertyConstants {
         data.top = new FormAttachment(0, VSPACE);
         nameText.setLayoutData(data);
         nameText.addModifyListener(listenerIntentionName);
-        
- 
+     
         CLabel LabelName = factory.createCLabel(composite, "Name:");
         data = new FormData();
         data.left = new FormAttachment(0, 0);
@@ -120,7 +119,9 @@ ITabbedPropertyConstants {
  
     @Override
     public void refresh() {
+    		
     	nameText.removeModifyListener(listenerIntentionName);
+    	
         PictogramElement pe = getSelectedPictogramElement();
         if (pe != null) {
             Object bo = Graphiti.getLinkService()
@@ -131,6 +132,7 @@ ITabbedPropertyConstants {
             String name = ((InitialState) bo).getName();
             nameText.setText(name == null ? "" : name);
             nameText.addModifyListener(listenerIntentionName);
+
             String path = (((InitialState) bo).eResource()).getURI().path().substring(9).toString();
             pathText.setText(path == null ? "" : path);
             EList<Transition> listadoOut =((InitialState) bo).getOutgoingTransitions();

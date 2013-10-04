@@ -1,9 +1,9 @@
 package com.vectorsf.jvoice.ui.diagram.properties.filters;
 
+
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -161,7 +161,7 @@ ITabbedPropertyConstants {
 
             if(OUTtransaction.size()>0){             	
             	for (Object trans : OUTtransaction){            		
-            		Transition tr = (Transition)trans;
+            		Transition tr = (Transition)trans;            		
                 	//Cogemos el Pictogram Elements a la transacion.
                 	List li = Graphiti.getLinkService().getPictogramElements(getDiagramTypeProvider().getDiagram(), tr);
                 	for (Object object : li) {            		
