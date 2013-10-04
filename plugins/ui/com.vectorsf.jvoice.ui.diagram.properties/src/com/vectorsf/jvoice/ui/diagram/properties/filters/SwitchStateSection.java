@@ -6,6 +6,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
@@ -53,11 +54,9 @@ ITabbedPropertyConstants {
 
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
 
-		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
-		protected void doExecute() {
-		bimElement.setName(nameText.getText());
-		}
-		});
+		IFeatureProvider fp =getDiagramTypeProvider().getFeatureProvider();
+		
+		editingDomain.getCommandStack().execute(new RenameCommand(editingDomain, pe, bimElement, nameText.getText(), fp));
 
 		}
 	};

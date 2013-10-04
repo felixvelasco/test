@@ -3,9 +3,9 @@ package com.vectorsf.jvoice.ui.diagram.properties.filters;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
@@ -43,16 +43,14 @@ ITabbedPropertyConstants {
 		public void modifyText (ModifyEvent arg0){
 
 		// set the new name for the Intention
-		PictogramElement pe = getSelectedPictogramElement();
+		final PictogramElement pe = getSelectedPictogramElement();
 		final InitialState bimElement = (InitialState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
 
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
 
-		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
-		protected void doExecute() {
-		bimElement.setName(nameText.getText());
-		}
-		});
+		IFeatureProvider fp =getDiagramTypeProvider().getFeatureProvider();
+		
+		editingDomain.getCommandStack().execute(new RenameCommand(editingDomain, pe, bimElement, nameText.getText(), fp));
 
 		}
 	};
@@ -61,11 +59,13 @@ ITabbedPropertyConstants {
     public void createControls(Composite parent,
         TabbedPropertySheetPage tabbedPropertySheetPage) {
         super.createControls(parent, tabbedPropertySheetPage);
- 
+        
+        super.getWidgetFactory();
+        
         TabbedPropertySheetWidgetFactory factory = getWidgetFactory();
         Composite composite = factory.createFlatFormComposite(parent);
         FormData data;
- 
+  
         //Nombre del elemento
         nameText = factory.createText(composite, "");
         data = new FormData();
@@ -74,6 +74,7 @@ ITabbedPropertyConstants {
         data.top = new FormAttachment(0, VSPACE);
         nameText.setLayoutData(data);
         nameText.addModifyListener(listenerIntentionName);
+        
  
         CLabel LabelName = factory.createCLabel(composite, "Name:");
         data = new FormData();
@@ -129,7 +130,8 @@ ITabbedPropertyConstants {
                 return;
             String name = ((InitialState) bo).getName();
             nameText.setText(name == null ? "" : name);
-            nameText.addModifyListener(listenerIntentionName);            String path = (((InitialState) bo).eResource()).getURI().path().substring(9).toString();
+            nameText.addModifyListener(listenerIntentionName);
+            String path = (((InitialState) bo).eResource()).getURI().path().substring(9).toString();
             pathText.setText(path == null ? "" : path);
             EList<Transition> listadoOut =((InitialState) bo).getOutgoingTransitions();
             if(listadoOut.size()==0){

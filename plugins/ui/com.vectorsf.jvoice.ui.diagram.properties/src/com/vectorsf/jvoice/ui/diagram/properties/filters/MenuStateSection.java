@@ -3,6 +3,7 @@ package com.vectorsf.jvoice.ui.diagram.properties.filters;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
@@ -38,11 +39,9 @@ ITabbedPropertyConstants {
 
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
 
-		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
-		protected void doExecute() {
-		bimElement.setName(nameText.getText());
-		}
-		});
+		IFeatureProvider fp =getDiagramTypeProvider().getFeatureProvider();
+		
+		editingDomain.getCommandStack().execute(new RenameCommand(editingDomain, pe, bimElement, nameText.getText(), fp));
 
 		}
 	};
