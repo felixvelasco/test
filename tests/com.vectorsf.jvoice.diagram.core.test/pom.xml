@@ -20,7 +20,7 @@
 				<configuration>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>false</useUIThread>
-					<argLine>${tycho.testArgLine} -Xmx512m</argLine>
+					<argLine>${tycho.testArgLine} -Xmx512m -XX:MaxPermSize=128m</argLine>
 					<appArgLine>-nl en -pluginCustomization plugin_customization.ini</appArgLine>
 					<bundleStartLevel>
 						<bundle>
