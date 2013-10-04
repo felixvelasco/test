@@ -106,10 +106,12 @@ public class IVRDiagramTest {
 	@After
 	public void tearDown() throws Exception {
 		bot.viewById(NAVIGATOR_ID).close();
-		
+		if (editor!=null){
+			editor.close();
+		}
 	
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-			editor.close();
+			
 			try {
 				SWTBotHelper.deleteProject(project);
 			} catch (CoreException ce) {
@@ -263,10 +265,8 @@ public class IVRDiagramTest {
 
 		shell.bot().button("Cancel").click();
 		
-		JVModel model = BaseModel.getInstance().getModel();
-		JVProject proj = model.getProject("testNavigator");
-		JVPackage pack = proj.getPackage("several.packages.inside");
-		JVBean bean = pack.getBean("five");
+
+		JVBean 	bean = BaseModel.getInstance().getModel().getProject("testNavigator").getPackage("several.packages.inside").getBean("five");
 		if (bean instanceof Flow){
 			Flow flow = (Flow) bean;
 			List<State> states = flow.getStates();
@@ -281,12 +281,10 @@ public class IVRDiagramTest {
 		
 		gefViewer.activateTool(stateName);
 		gefViewer.drag(55, 55, 150, 100);
-		
 		SWTBotTreeItem selected = bot.tree().expandNode("testNavigator", "several.packages.inside",stateName).select();
 		selected.doubleClick();
- 
-		editor.save();
-		bean = pack.getBean("five");
+ 		editor.save();
+		bean = BaseModel.getInstance().getModel().getProject("testNavigator").getPackage("several.packages.inside").getBean("five");
 		if (bean instanceof Flow){
 			Flow flow = (Flow) bean;
 			List<State> states = flow.getStates();
