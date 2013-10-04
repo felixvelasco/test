@@ -19,7 +19,7 @@
       <url>http://download.eclipse.org/releases/kepler</url>
     </repository>
     <repository>
-      <id>orbit-I20130827062727</id>
+      <id>orbit-R20130827064939</id>
       <layout>p2</layout>
       <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/</url>
     </repository>
