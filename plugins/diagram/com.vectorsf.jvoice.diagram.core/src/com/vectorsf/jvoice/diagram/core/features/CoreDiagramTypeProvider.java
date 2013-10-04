@@ -29,4 +29,10 @@ public class CoreDiagramTypeProvider extends AbstractDiagramTypeProvider {
 
 	}
 
+	// Para solucionar problemas de pila.
+	@Override
+	public boolean isAutoUpdateAtRuntime() {
+		return false;
+	}
+
 }
