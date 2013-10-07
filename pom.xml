@@ -41,47 +41,38 @@
         <version>${tycho-version}</version>
         <extensions>true</extensions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-toolchains-plugin</artifactId>
-        <version>1.0</version>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>toolchain</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <toolchains>
-            <jdk>
-              <version>1.7</version>
-            </jdk>
-          </toolchains>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   <profiles>
     <profile>
       <id>analyze</id>
+      <activation>
+        <property>
+          <name>environment</name>
+          <value>toolchains</value>
+        </property>
+      </activation>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-            <version>${findbugs-version}</version>
-            <configuration>
-              <xmlOutput>true</xmlOutput>
-            </configuration>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-toolchains-plugin</artifactId>
+            <version>1.0</version>
             <executions>
               <execution>
+                <phase>validate</phase>
                 <goals>
-                  <goal>findbugs</goal> 
+                  <goal>toolchain</goal>
                 </goals>
               </execution>
             </executions>
+            <configuration>
+              <toolchains>
+                <jdk>
+                  <version>1.7</version>
+                </jdk>
+              </toolchains>
+            </configuration>
           </plugin>
         </plugins>
       </build>
