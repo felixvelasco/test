@@ -23,4 +23,8 @@ Require-Bundle: org.eclipse.swtbot.go,
  org.eclipse.graphiti,
  com.vectorsf.jvoice.operation.model,
  org.eclipse.graphiti.mm,
- org.eclipse.emf.codegen.ecore
+ org.eclipse.emf.codegen.ecore,
+ com.vectorsf.jvoice.diagram.core,
+ org.eclipse.ui.ide,
+ org.eclipse.emf.edit;bundle-version="2.9.0",
+ org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.0"

@@ -26,6 +26,7 @@ import org.eclipse.gef.LayerConstants;
 import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.internal.contextbuttons.ContextButton;
 import org.eclipse.graphiti.ui.internal.contextbuttons.ContextButtonPad;
 import org.eclipse.swt.widgets.Display;
@@ -55,7 +56,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
-import com.vectorsf.jvoice.diagram.core.editor.JVoiceDiagramEditor;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVPackage;
@@ -154,6 +154,7 @@ public class IVRDiagramTest {
 		gefViewer.drag(55, 55, 150, 100);
 
 		bot.waitUntil(Conditions.shellIsActive("Flow Selection"));
+		bot.sleep(LARGE_SLEEP);
 		SWTBotTreeItem selected = bot
 				.tree()
 				.expandNode("testNavigator", "several.packages.inside", "empty")
@@ -161,21 +162,14 @@ public class IVRDiagramTest {
 		selected.doubleClick();
 		editor.save();
 
-		JVModel model = BaseModel.getInstance().getModel();
-		JVProject proj = model.getProject("testNavigator");
-		JVPackage pack = proj.getPackage("several.packages.inside");
-		JVBean bean = pack.getBean("five");
-		if (bean instanceof Flow) {
-			Flow flow = (Flow) bean;
-			List<State> states = flow.getStates();
-			boolean exists = false;
-			for (State state : states) {
-				if (state.getName().equals("empty")) {
-					exists = true;
-				}
-			}
-			assertTrue(exists);
-		}
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
+				.getEditor(true);
+		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
+		Flow flow = (Flow) Graphiti.getLinkService()
+				.getBusinessObjectForLinkedPictogramElement(diagram);
+
+		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed("empty");
+		assertThat(flow.getStates(), not(hasItemWithNameStateName));
 
 	}
 
@@ -227,8 +221,8 @@ public class IVRDiagramTest {
 		editor = getGefEditor();
 		gefViewer = editor.getSWTBotGefViewer();
 
-		JVoiceDiagramEditor diaEditor = (JVoiceDiagramEditor) editor
-				.getReference().getEditor(true);
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
+				.getEditor(true);
 		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
 		Flow flow = (Flow) Graphiti.getLinkService()
 				.getBusinessObjectForLinkedPictogramElement(diagram);
@@ -251,13 +245,13 @@ public class IVRDiagramTest {
 	}
 
 	@Test
-	public void testCreateMenuState() throws CoreException {
-		createLocutionState("Menu");
+	public void testCreateInputState() throws CoreException {
+		createLocutionState("Input");
 	}
 
 	@Test
-	public void testCreateInputState() throws CoreException {
-		createLocutionState("Input");
+	public void testCreateMenuState() throws CoreException {
+		createLocutionState("Menu");
 	}
 
 	public void createLocutionState(String stateName) throws CoreException {
@@ -287,8 +281,8 @@ public class IVRDiagramTest {
 
 		SWTBotGefViewer gefViewer = editor.getSWTBotGefViewer();
 
-		JVoiceDiagramEditor diaEditor = (JVoiceDiagramEditor) editor
-				.getReference().getEditor(true);
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
+				.getEditor(true);
 		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
 		flow = (Flow) Graphiti.getLinkService()
 				.getBusinessObjectForLinkedPictogramElement(diagram);
@@ -371,7 +365,6 @@ public class IVRDiagramTest {
 
 		editor.getEditPart("empty").activateDirectEdit("empty");
 		editor.getEditPart("empty").click();
-		editor.directEditType("empty");
 
 		editor.save();
 	}
