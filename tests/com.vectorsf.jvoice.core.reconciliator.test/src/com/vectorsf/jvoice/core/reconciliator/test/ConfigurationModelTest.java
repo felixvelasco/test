@@ -35,13 +35,22 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
-import static org.junit.Assert.fail;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.CONFIG_PATH;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.JV_PATH;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFolders;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.executeWksRunnable;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.moveFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.updateFile;
 
 /**
  * 
  */
 @RunWith(BlockJUnit4ClassRunner.class)
-public class ConfigurationModelTest extends BaseModelResources {
+public class ConfigurationModelTest {
 
 	private static final String BASE = "base";
 
@@ -51,8 +60,8 @@ public class ConfigurationModelTest extends BaseModelResources {
 	@Before
 	public void setUp() throws Exception {
 		IProject base = createProject(BASE);
-		createFolders(base, ruta);
-		createFolders(base, rutaProperties);
+		createFolders(base, JV_PATH);
+		createFolders(base, CONFIG_PATH);
 	}
 
 	/**
@@ -61,11 +70,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 	@After
 	public void tearDown() throws Exception {
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-			try {
-				deleteProject(project);
-			} catch (CoreException ce) {
-				fail(ce.getMessage());
-			}
+			deleteProject(project);
 		}
 	}
 
@@ -82,7 +87,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				createFile(project, rutaProperties + "/test.properties",
+				createFile(project, CONFIG_PATH + "/test.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
 		}, project);
@@ -108,7 +113,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				createFile(project, rutaProperties + "/test.nonproperties",
+				createFile(project, CONFIG_PATH + "/test.nonproperties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
 		}, project);
@@ -119,7 +124,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				createFolders(project, rutaProperties + "/folder.properties");
+				createFolders(project, CONFIG_PATH + "/folder.properties");
 			}
 		}, project);
 
@@ -140,9 +145,9 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				createFile(project, rutaProperties + "/test.properties",
+				createFile(project, CONFIG_PATH + "/test.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
-				createFile(project, rutaProperties + "/otherTest.nonProperties",
+				createFile(project, CONFIG_PATH + "/otherTest.nonProperties",
 						"one=prueba\ntwo=test\nthree=ejemplo\nfour=example\n");
 			}
 		}, project);
@@ -164,11 +169,11 @@ public class ConfigurationModelTest extends BaseModelResources {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IProject project = createProject("testing");
-				createFile(project, rutaProperties + "/test.properties",
+				createFile(project, CONFIG_PATH + "/test.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
-				createFile(project, rutaProperties + "/otherTest.properties",
+				createFile(project, CONFIG_PATH + "/otherTest.properties",
 						"one=prueba\ntwo=test\nthree=ejemplo\nfour=example\n");
-				createFile(project, rutaProperties + "/otherTest.nonProperties",
+				createFile(project, CONFIG_PATH + "/otherTest.nonProperties",
 						"un=prueba\ndeux=test\ntrois=ejemplo\nquatre=example\n");
 			}
 		});
@@ -206,9 +211,9 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				createFile(project, rutaProperties + "/test.properties",
+				createFile(project, CONFIG_PATH + "/test.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
-				createFile(project, rutaProperties + "/test2.properties",
+				createFile(project, CONFIG_PATH + "/test2.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
 		}, project);
@@ -225,7 +230,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				deleteFile(project, rutaProperties + "/test2.properties");
+				deleteFile(project, CONFIG_PATH + "/test2.properties");
 			}
 		});
 
@@ -236,7 +241,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				deleteFile(project, rutaProperties + "/test.properties");
+				deleteFile(project, CONFIG_PATH + "/test.properties");
 			}
 		}, project);
 
@@ -256,9 +261,9 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				createFile(project, rutaProperties + "/test.properties",
+				createFile(project, CONFIG_PATH + "/test.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
-				createFile(project, rutaProperties + "/test2.properties",
+				createFile(project, CONFIG_PATH + "/test2.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
 		}, project);
@@ -275,8 +280,8 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				deleteFile(project, rutaProperties + "/test2.properties");
-				deleteFile(project, rutaProperties + "/test.properties");
+				deleteFile(project, CONFIG_PATH + "/test2.properties");
+				deleteFile(project, CONFIG_PATH + "/test.properties");
 			}
 		}, project);
 
@@ -297,7 +302,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				for (int i = 0; i < 100; i++) {
-					createFile(project, rutaProperties + "/test" + i + ".properties",
+					createFile(project, CONFIG_PATH + "/test" + i + ".properties",
 							"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 				}
 			}
@@ -320,7 +325,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				file[0] = createFile(project, rutaProperties + "/test.properties",
+				file[0] = createFile(project, CONFIG_PATH + "/test.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
 		}, project);
@@ -359,7 +364,7 @@ public class ConfigurationModelTest extends BaseModelResources {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				file[0] = createFile(project, rutaProperties + "/test.properties",
+				file[0] = createFile(project, CONFIG_PATH + "/test.properties",
 						"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 			}
 		}, project);

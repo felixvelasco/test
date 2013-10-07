@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>com.vectorsf.jvoice.base.model.test</module>
+    <module>com.vectorsf.jvoice.base.test</module>
     <module>com.vectorsf.jvoice.ui.navigator.test</module>
     <module>com.vectorsf.jvoice.core.reconciliator.test</module>
     <module>com.vectorsf.jvoice.diagram.core.test</module>

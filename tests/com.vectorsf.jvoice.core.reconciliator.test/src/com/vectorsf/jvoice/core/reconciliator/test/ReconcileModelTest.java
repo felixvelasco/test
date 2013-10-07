@@ -3,6 +3,7 @@
  */
 package com.vectorsf.jvoice.core.reconciliator.test;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -12,6 +13,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
@@ -23,6 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
+import org.osgi.framework.Bundle;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
@@ -43,14 +46,28 @@ import static org.hamcrest.Matchers.nullValue;
 
 import static org.junit.Assert.fail;
 
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.CONFIG_PATH;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.JV_PATH;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFolders;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFolder;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.executeWksRunnable;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.moveFile;
+
 /**
  * 
  */
 @RunWith(BlockJUnit4ClassRunner.class)
-public class ReconcileModelTest extends BaseModelResources {
+public class ReconcileModelTest {
 
 	private static final String PAQ = "paq";
 	private static final String BASE = "base";
+
+	public static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.core.reconciliator");
 
 	@BeforeClass
 	public static void setClassUp() {
@@ -65,9 +82,9 @@ public class ReconcileModelTest extends BaseModelResources {
 	@Before
 	public void setUp() throws Exception {
 		IProject base = createProject(BASE);
-		createFolders(base, ruta);
-		createFolders(base, rutaProperties);
-		createFolders(base, ruta + "/" + PAQ);
+		createFolders(base, JV_PATH);
+		createFolders(base, CONFIG_PATH);
+		createFolders(base, JV_PATH + "/" + PAQ);
 	}
 
 	/**
@@ -105,7 +122,7 @@ public class ReconcileModelTest extends BaseModelResources {
 
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
 		try {
-			createFolders(project, ruta + "/paq1");
+			createFolders(project, JV_PATH + "/paq1");
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -114,7 +131,7 @@ public class ReconcileModelTest extends BaseModelResources {
 		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name", is("paq1"))));
 
 		try {
-			createFolders(project, ruta + "/paq/uete");
+			createFolders(project, JV_PATH + "/paq/uete");
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -123,7 +140,7 @@ public class ReconcileModelTest extends BaseModelResources {
 		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name", is("paq.uete"))));
 
 		try {
-			createFolders(project, ruta + "/otra/jerarquia/de/paquetes");
+			createFolders(project, JV_PATH + "/otra/jerarquia/de/paquetes");
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -145,8 +162,8 @@ public class ReconcileModelTest extends BaseModelResources {
 			executeWksRunnable(new IWorkspaceRunnable() {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFolders(project, ruta + "/paq1");
-					createFolders(project, ruta + "/paq2");
+					createFolders(project, JV_PATH + "/paq1");
+					createFolders(project, JV_PATH + "/paq2");
 				}
 			}, project);
 		} catch (CoreException ce) {
@@ -168,7 +185,7 @@ public class ReconcileModelTest extends BaseModelResources {
 
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
 		try {
-			deleteFolder(project, ruta + "/" + PAQ);
+			deleteFolder(project, JV_PATH + "/" + PAQ);
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
@@ -191,7 +208,12 @@ public class ReconcileModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/" + PAQ + "/" + bean1, getInputStreamResource("one.jvflow"));
+					try {
+						createFile(project, JV_PATH + "/" + PAQ + "/" + bean1,
+								getInputStreamResource(bundle, "one.jvflow"));
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
 				}
 			}, project);
 		} catch (CoreException ce) {
@@ -207,7 +229,12 @@ public class ReconcileModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/" + PAQ + "/" + bean2, getInputStreamResource("two.jvflow"));
+					try {
+						createFile(project, JV_PATH + "/" + PAQ + "/" + bean2,
+								getInputStreamResource(bundle, "two.jvflow"));
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
 				}
 			});
 		} catch (CoreException ce) {
@@ -240,8 +267,12 @@ public class ReconcileModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/" + PAQ + "/" + bean1, getInputStreamResource(bean1));
-					createFile(project, ruta + "/" + PAQ + "/" + bean2, getInputStreamResource(bean2));
+					try {
+						createFile(project, JV_PATH + "/" + PAQ + "/" + bean1, getInputStreamResource(bundle, bean1));
+						createFile(project, JV_PATH + "/" + PAQ + "/" + bean2, getInputStreamResource(bundle, bean2));
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
 				}
 			}, project);
 		} catch (CoreException ce) {
@@ -256,7 +287,7 @@ public class ReconcileModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					deleteFile(project, ruta + "/" + PAQ + "/" + bean2);
+					deleteFile(project, JV_PATH + "/" + PAQ + "/" + bean2);
 				}
 			}, project);
 		} catch (CoreException ce) {
@@ -271,7 +302,7 @@ public class ReconcileModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					deleteFile(project, ruta + "/" + PAQ + "/" + bean1);
+					deleteFile(project, JV_PATH + "/" + PAQ + "/" + bean1);
 				}
 			}, project);
 		} catch (CoreException ce) {
@@ -298,7 +329,11 @@ public class ReconcileModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/" + PAQ + "/" + bean1, getInputStreamResource(bean1));
+					try {
+						createFile(project, JV_PATH + "/" + PAQ + "/" + bean1, getInputStreamResource(bundle, bean1));
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
 				}
 			}, project);
 		} catch (CoreException ce) {
@@ -312,9 +347,9 @@ public class ReconcileModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFolders(project, ruta + "/otro/paquete");
-					IFile file = project.getFile(ruta + "/" + PAQ + "/" + bean1);
-					IPath fullPath = project.getFile(ruta + "/otro/paquete/" + bean1).getFullPath();
+					createFolders(project, JV_PATH + "/otro/paquete");
+					IFile file = project.getFile(JV_PATH + "/" + PAQ + "/" + bean1);
+					IPath fullPath = project.getFile(JV_PATH + "/otro/paquete/" + bean1).getFullPath();
 
 					moveFile(file, fullPath);
 				}
@@ -346,8 +381,8 @@ public class ReconcileModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFolders(project, ruta + "/paq/que/te/cuento");
-					createFolders(project, ruta + "/el/mono/mario");
+					createFolders(project, JV_PATH + "/paq/que/te/cuento");
+					createFolders(project, JV_PATH + "/el/mono/mario");
 				}
 			}, project);
 		} catch (CoreException ce) {
@@ -361,9 +396,16 @@ public class ReconcileModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/paq/que/te/cuento/one.jvflow", getInputStreamResource("one.jvflow"));
-					createFile(project, ruta + "/paq/que/te/cuento/two.jvflow", getInputStreamResource("two.jvflow"));
-					createFile(project, ruta + "/el/mono/mario/three.jvflow", getInputStreamResource("three.jvflow"));
+					try {
+						createFile(project, JV_PATH + "/paq/que/te/cuento/one.jvflow",
+								getInputStreamResource(bundle, "one.jvflow"));
+						createFile(project, JV_PATH + "/paq/que/te/cuento/two.jvflow",
+								getInputStreamResource(bundle, "two.jvflow"));
+						createFile(project, JV_PATH + "/el/mono/mario/three.jvflow",
+								getInputStreamResource(bundle, "three.jvflow"));
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
 				}
 			}, project);
 		} catch (CoreException ce) {
@@ -409,9 +451,16 @@ public class ReconcileModelTest extends BaseModelResources {
 
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					createFile(project, ruta + "/paq/que/te/cuento/one.jvflow", getInputStreamResource("one.jvflow"));
-					createFile(project, ruta + "/paq/que/te/cuento/two.jvflow", getInputStreamResource("two.jvflow"));
-					createFile(project2, ruta + "/el/mono/mario/three.jvflow", getInputStreamResource("three.jvflow"));
+					try {
+						createFile(project, JV_PATH + "/paq/que/te/cuento/one.jvflow",
+								getInputStreamResource(bundle, "one.jvflow"));
+						createFile(project, JV_PATH + "/paq/que/te/cuento/two.jvflow",
+								getInputStreamResource(bundle, "two.jvflow"));
+						createFile(project2, JV_PATH + "/el/mono/mario/three.jvflow",
+								getInputStreamResource(bundle, "three.jvflow"));
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
 				}
 			});
 		} catch (CoreException ce) {
@@ -435,7 +484,7 @@ public class ReconcileModelTest extends BaseModelResources {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
 					IProject base = createProject("base2");
-					createFolders(base, ruta + "/paquetillo");
+					createFolders(base, JV_PATH + "/paquetillo");
 				}
 			});
 		} catch (CoreException ce) {
@@ -472,10 +521,10 @@ public class ReconcileModelTest extends BaseModelResources {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
 					prjs[0] = createProject("base2");
-					createFolders(prjs[0], ruta + "/paquetillo");
+					createFolders(prjs[0], JV_PATH + "/paquetillo");
 
 					prjs[1] = createProject("base3");
-					createFolders(prjs[1], ruta + "/paquete/cuento");
+					createFolders(prjs[1], JV_PATH + "/paquete/cuento");
 				}
 			});
 		} catch (CoreException ce) {

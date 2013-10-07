@@ -1,5 +1,4 @@
-package com.vectorsf.jvoice.diagram.core.test;
-
+package com.vectorsf.jvoice.base.test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -17,50 +16,44 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
-import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.osgi.framework.Bundle;
 
 import com.vectorsf.jvoice.core.project.JVoiceProjectConfigurator;
 
-import static org.junit.Assert.fail;
+public class ResourcesHelper {
 
-public class SWTBotHelper {
+	public static final String JV_PATH = "src/main/resources/jv";
+	public static final String CONFIG_PATH = "src/main/config/properties";
 
-	protected String rutaProperties = "src/main/config/properties";
-
-	protected static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.diagram.core.test");
-
-	private SWTBotHelper() {
+	private ResourcesHelper() {
+		super();
 	}
 
-	public static void openView(SWTWorkbenchBot bot, String node, String view) {
-		bot.menu("Window").menu("Show View").menu("Other...").click();
-		SWTBotShell shell1 = bot.shell("Show View");
-		shell1.activate();
-		bot.tree().expandNode(node).select(view);
-		bot.button("OK").click();
-
+	public static void safelyRetry(IWorkspaceRunnable iWorkspaceRunnable) throws CoreException {
+		safelyRetry(iWorkspaceRunnable, null);
 	}
 
-	public static void openPerspective(SWTWorkbenchBot bot, String perspective) {
-		bot.menu("Window").menu("Open Perspective").menu("Other...").click();
-		SWTBotShell openPerspectiveShell = bot.shell("Open Perspective");
-		openPerspectiveShell.activate();
-		bot.table().select(perspective);
-		bot.button("OK").click();
-
-	}
-
-	public static void closeWelcomeView(SWTWorkbenchBot bot) {
-		try {
-			bot.viewByTitle("Welcome").close();
-		} catch (WidgetNotFoundException e) {
-			// do nothing
+	public static void safelyRetry(IWorkspaceRunnable iWorkspaceRunnable, ISchedulingRule rule) throws CoreException {
+		int count = 0;
+		boolean executed = false;
+		CoreException lastException = null;
+		while (count < 10 && !executed) {
+			try {
+				count++;
+				executeWksRunnable(iWorkspaceRunnable, rule);
+				executed = true;
+			} catch (CoreException e) {
+				lastException = e;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+				}
+			}
+		}
+		if (!executed) {
+			throw lastException;
 		}
 	}
 
@@ -146,24 +139,17 @@ public class SWTBotHelper {
 	}
 
 	public static void deleteProject(final IProject project) throws CoreException {
-		executeWksRunnable(new IWorkspaceRunnable() {
+		safelyRetry(new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				try{
 				project.delete(true, true, monitor);
-				}catch(Exception e){
-					for (int i = 0; i < 10; i++){ 
-						project.delete(true, true, monitor);
-					}
-				}
 			}
-
 		});
 	}
 
 	public static void deleteFolder(final IProject project, final String path) throws CoreException {
-		executeWksRunnable(new IWorkspaceRunnable() {
+		safelyRetry(new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
@@ -175,7 +161,7 @@ public class SWTBotHelper {
 	}
 
 	public static void deleteFile(final IProject project, final String path) throws CoreException {
-		executeWksRunnable(new IWorkspaceRunnable() {
+		safelyRetry(new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
@@ -184,17 +170,6 @@ public class SWTBotHelper {
 			}
 
 		}, project);
-	}
-
-	public static void moveFile(final IFile file, final IPath fullPath) throws CoreException {
-		executeWksRunnable(new IWorkspaceRunnable() {
-
-			@Override
-			public void run(IProgressMonitor monitor) throws CoreException {
-				file.move(fullPath, true, monitor);
-			}
-
-		});
 	}
 
 	private static void createRecursively(IFolder container, IProgressMonitor monitor) throws CoreException {
@@ -209,13 +184,19 @@ public class SWTBotHelper {
 
 	}
 
-	public static InputStream getInputStreamResource(String resourceName) {
-		try {
-			return bundle.getResource("/resources/" + resourceName).openStream();
-		} catch (IOException e) {
-			fail(e.getMessage());
-			return null;
-		}
+	public static void moveFile(final IFile file, final IPath fullPath) throws CoreException {
+		executeWksRunnable(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				file.move(fullPath, true, monitor);
+			}
+
+		});
+	}
+
+	public static InputStream getInputStreamResource(Bundle bundle, String resourceName) throws IOException {
+		return bundle.getResource("/resources/" + resourceName).openStream();
 	}
 
 }

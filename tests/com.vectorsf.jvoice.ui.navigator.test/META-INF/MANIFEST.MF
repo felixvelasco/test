@@ -14,5 +14,6 @@ Require-Bundle: org.junit;bundle-version="4.11.0",
  org.eclipse.swtbot.eclipse.ui;bundle-version="2.1.1",
  org.eclipse.swtbot.junit4_x;bundle-version="2.1.1",
  org.eclipse.swtbot.swt.finder;bundle-version="2.1.1",
- com.vectorsf.jvoice.core.project
+ com.vectorsf.jvoice.core.project,
+ com.vectorsf.jvoice.base.test;bundle-version="0.1.0"
 
