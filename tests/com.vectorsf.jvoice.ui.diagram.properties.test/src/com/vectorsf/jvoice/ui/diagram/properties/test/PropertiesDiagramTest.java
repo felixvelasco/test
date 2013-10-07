@@ -3,11 +3,14 @@
  */
 package com.vectorsf.jvoice.ui.diagram.properties.test;
 
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.fail;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -18,11 +21,12 @@ import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefViewer;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.ui.PlatformUI;
-import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.ui.diagram.properties.test.SWTBotHelper;
 
 /**
@@ -31,20 +35,13 @@ import com.vectorsf.jvoice.ui.diagram.properties.test.SWTBotHelper;
  */
 public class PropertiesDiagramTest {
 
-	private static final int SMALL_SLEEP = 200;
 	private static final int LARGE_SLEEP = 100;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
-	private static final String DIAGRAM_ID = "org.eclipse.graphiti.ui.editor.DiagramEditor";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
+	private SWTBotView viewProperties;
 	private SWTBotGefEditor editor;
 	private SWTBotGefViewer gefViewer;
-	@SuppressWarnings("unchecked")
-	private final Matcher<Object[]> arrayContainingTextOne = arrayContaining(hasProperty(
-			"text", is("one")));
-	@SuppressWarnings("unchecked")
-	private final Matcher<Object[]> arrayContainingTextTwo = arrayContaining(hasProperty(
-			"text", is("two")));
 	
 	/**
 	 * @throws java.lang.Exception
@@ -68,7 +65,6 @@ public class PropertiesDiagramTest {
 		});
 
 		SWTBotHelper.openView(bot, "IVR", "Navigator IVR");
-
 		view = bot.viewById(NAVIGATOR_ID);
 	}
 
@@ -77,6 +73,7 @@ public class PropertiesDiagramTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		bot.viewByTitle("Properties").close();
 		bot.viewById(NAVIGATOR_ID).close();
 		if (editor != null) {
 			editor.close();
@@ -93,4 +90,33 @@ public class PropertiesDiagramTest {
 			}
 		}
 	}
+	
+	@Test
+	public void testPropertiesFinalState() throws CoreException {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+
+		IProject project = SWTBotHelper.createProject("testNavigator");
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/five.jvflow",
+				SWTBotHelper.getInputStreamResource("five.jvflow"));
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/empty.jvflow",
+				SWTBotHelper.getInputStreamResource("empty.jvflow"));
+
+		SWTBotHelper.openFile(file);
+		bot.sleep(LARGE_SLEEP);
+		
+
+		editor = SWTBotHelper.getGefEditor(bot);
+		gefViewer = editor.getSWTBotGefViewer();
+		
+		SWTBotHelper.openView(bot, "General", "Properties");
+		viewProperties = bot.viewByTitle("Properties");
+		gefViewer.click("Final");
+		
+		assertThat(viewProperties.bot().clabel("pepe:"), is(not(nullValue())));
+		assertThat(viewProperties.bot().text("Final"), is(not(nullValue())));
+
+	}
+	
 }

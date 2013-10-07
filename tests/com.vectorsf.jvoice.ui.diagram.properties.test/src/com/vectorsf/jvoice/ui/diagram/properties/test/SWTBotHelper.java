@@ -24,9 +24,17 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
+import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
+import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
 import org.osgi.framework.Bundle;
 
 import com.vectorsf.jvoice.core.project.JVoiceProjectConfigurator;
@@ -220,6 +228,29 @@ public class SWTBotHelper {
 			fail(e.getMessage());
 			return null;
 		}
+	}
+	
+	public static void openFile(final IFile file) {
+		Display.getDefault().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				IWorkbenchPage activePage = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage();
+				try {
+					IDE.openEditor(activePage, file);
+				} catch (PartInitException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		});
+	}
+	
+	public static SWTBotGefEditor getGefEditor(SWTGefBot bot) {
+		SWTBotEditor activeEditor = bot.activeEditor();
+		String title = activeEditor.getTitle();
+		SWTBotGefEditor ed = bot.gefEditor(title);
+		return ed;
 	}
 
 }
