@@ -62,6 +62,12 @@
                id="graphiti.main.tab.emfclass.switchState"
                tab="graphiti.main.tab.switchState">
          </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.TransitionSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.TransitionFilter"
+               id="graphiti.main.tab.emfclass.transition"
+               tab="graphiti.main.tab.arrow">
+         </propertySection>
       </propertySections>
    </extension>
    <extension
@@ -106,6 +112,11 @@
          <propertyTab
                category="Graphiti"
                id="graphiti.main.tab.callFlowState"
+               label="Main">
+         </propertyTab>
+         <propertyTab
+               category="Graphiti"
+               id="graphiti.main.tab.arrow"
                label="Main">
          </propertyTab>
       </propertyTabs>
