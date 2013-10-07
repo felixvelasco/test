@@ -14,8 +14,8 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -38,21 +38,22 @@ ITabbedPropertyConstants {
 	 
 	public InitialStateSection(){}
 	
-	private ModifyListener listenerIntentionName = new ModifyListener(){
+	private FocusListener listenerIntentionName = new FocusListener(){
+		@Override
+		public void focusLost(FocusEvent e) {
+			PictogramElement pe = getSelectedPictogramElement();
+			final InitialState bimElement = (InitialState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
 
-		public void modifyText (ModifyEvent arg0){
+			TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
 
-		// set the new name for the Intention
-		final PictogramElement pe = getSelectedPictogramElement();
-		final InitialState bimElement = (InitialState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
+			IFeatureProvider fp =getDiagramTypeProvider().getFeatureProvider();
+			
+			editingDomain.getCommandStack().execute(new RenameCommand(editingDomain, pe, bimElement, nameText.getText(), fp));
 
-		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
+			}
 
-		IFeatureProvider fp =getDiagramTypeProvider().getFeatureProvider();
-		
-		editingDomain.getCommandStack().execute(new RenameCommand(editingDomain, pe, bimElement, nameText.getText(), fp));
-
-		}
+		@Override
+		public void focusGained(FocusEvent e) {}
 	};
 	
     @Override
@@ -73,7 +74,7 @@ ITabbedPropertyConstants {
         data.right = new FormAttachment(100, 0);
         data.top = new FormAttachment(0, VSPACE);
         nameText.setLayoutData(data);
-        nameText.addModifyListener(listenerIntentionName);
+        nameText.addFocusListener(listenerIntentionName);
      
         CLabel LabelName = factory.createCLabel(composite, "Name:");
         data = new FormData();
@@ -120,7 +121,7 @@ ITabbedPropertyConstants {
     @Override
     public void refresh() {
     		
-    	nameText.removeModifyListener(listenerIntentionName);
+    	nameText.removeFocusListener(listenerIntentionName);
     	
         PictogramElement pe = getSelectedPictogramElement();
         if (pe != null) {
@@ -131,7 +132,7 @@ ITabbedPropertyConstants {
                 return;
             String name = ((InitialState) bo).getName();
             nameText.setText(name == null ? "" : name);
-            nameText.addModifyListener(listenerIntentionName);
+            nameText.addFocusListener(listenerIntentionName);
 
             String path = (((InitialState) bo).eResource()).getURI().path().substring(9).toString();
             pathText.setText(path == null ? "" : path);
@@ -142,7 +143,7 @@ ITabbedPropertyConstants {
             	//Solo puede tener una transicion de salida, ya que se trata del estado inicial.
             	Transition tr = (Transition)listadoOut.get(0);
             	//Cogemos el Pictogram Elements a la transacion.
-            	List li = Graphiti.getLinkService().getPictogramElements(getDiagramTypeProvider().getDiagram(), tr);
+            	List<?> li = Graphiti.getLinkService().getPictogramElements(getDiagramTypeProvider().getDiagram(), tr);
             	for (Object object : li) {            		
             		if(object instanceof Connection){
             		Connection connection = (Connection) object;
