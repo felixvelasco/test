@@ -20,6 +20,8 @@ import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefViewer;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotCCombo;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.ui.PlatformUI;
 import org.junit.After;
 import org.junit.Before;
@@ -64,6 +66,8 @@ public class PropertiesDiagramTest {
 			}
 		});
 
+		SWTBotHelper.openView(bot, "General", "Properties");
+		viewProperties = bot.viewByTitle("Properties");
 		SWTBotHelper.openView(bot, "IVR", "Navigator IVR");
 		view = bot.viewById(NAVIGATOR_ID);
 	}
@@ -99,9 +103,6 @@ public class PropertiesDiagramTest {
 		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/five.jvflow",
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/empty.jvflow",
-				SWTBotHelper.getInputStreamResource("empty.jvflow"));
 
 		SWTBotHelper.openFile(file);
 		bot.sleep(LARGE_SLEEP);
@@ -110,13 +111,64 @@ public class PropertiesDiagramTest {
 		editor = SWTBotHelper.getGefEditor(bot);
 		gefViewer = editor.getSWTBotGefViewer();
 		
-		SWTBotHelper.openView(bot, "General", "Properties");
-		viewProperties = bot.viewByTitle("Properties");
+		bot.sleep(LARGE_SLEEP);
+
 		gefViewer.click("Final");
 		
-		assertThat(viewProperties.bot().clabel("pepe:"), is(not(nullValue())));
+		bot.sleep(LARGE_SLEEP);
+		
+		viewProperties.setFocus();
+		
+		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Final"), is(not(nullValue())));
-
+		SWTBotText textName = viewProperties.bot().text("Final");
+		assertThat(viewProperties.bot().ccomboBox("Switch_Final"), is(not(nullValue())));
+		SWTBotCCombo transitions = viewProperties.bot().ccomboBox("Switch_Final");
+		assertThat(transitions.itemCount(), is(2));
+		transitions.setSelection(1);
+		assertThat(viewProperties.bot().ccomboBox("empty_Final"), is(not(nullValue())));
+		textName.setFocus();
+		textName.setText("otro");
+		transitions.setFocus();
+		assertThat(viewProperties.bot().text("otro"), is(not(nullValue())));
+		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
+		assertThat(viewProperties.bot().text("/testNavigator/" + BaseModel.JV_PATH + "/several/packages/inside/five.jvflow"), is(not(nullValue())));
+		assertThat(viewProperties.bot().clabel("Incoming Transitions:"), is(not(nullValue())));
 	}
 	
+//	@Test
+//	public void testPropertiesInitialState() throws CoreException {
+//		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+//
+//		IProject project = SWTBotHelper.createProject("testNavigator");
+//		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
+//				+ "/several/packages/inside/five.jvflow",
+//				SWTBotHelper.getInputStreamResource("five.jvflow"));
+//
+//		SWTBotHelper.openFile(file);
+//		bot.sleep(LARGE_SLEEP);
+//		
+//
+//		editor = SWTBotHelper.getGefEditor(bot);
+//		gefViewer = editor.getSWTBotGefViewer();
+//		
+//		bot.sleep(LARGE_SLEEP);
+//		viewProperties.setFocus();
+//
+//		gefViewer.click("Initial");
+//		
+//		bot.sleep(LARGE_SLEEP);
+//		
+//		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
+//		assertThat(viewProperties.bot().text("Initial"), is(not(nullValue())));
+//		SWTBotText textName = viewProperties.bot().text("Initial");
+//		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
+//		assertThat(viewProperties.bot().text("/testNavigator/" + BaseModel.JV_PATH + "/several/packages/inside/five.jvflow"), is(not(nullValue())));
+//		assertThat(viewProperties.bot().clabel("Out Transitions: "), is(not(nullValue())));
+//		assertThat(viewProperties.bot().text("Initial_Call"), is(not(nullValue())));
+//		textName.setFocus();
+//		textName.setText("otro");
+//		gefViewer.click("Initial");
+//		assertThat(viewProperties.bot().text("otro"), is(not(nullValue())));
+//	}
 }
