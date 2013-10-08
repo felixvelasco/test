@@ -40,6 +40,8 @@ import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
 public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
@@ -137,20 +139,28 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 				data.getDomainSpecificContextButtons().add(button);
 			} else if (sta instanceof MenuState) {
 				MenuState menuState = (MenuState) sta;
-				List<Output> outputs = menuState.getLocution().getOutputs()
-						.getOutput();
-				ContextButtonEntry menuButton = new ContextButtonEntry(null,
-						context);
-				menuButton.setText("Transition");
+				List<Output> outputs = new ArrayList<Output>();
+				VoiceDsl locution = menuState.getLocution();
+				if (locution != null) {
+					Outputs locutionOutputs = menuState.getLocution()
+							.getOutputs();
+					if (locutionOutputs != null) {
+						outputs = locutionOutputs.getOutput();
+						ContextButtonEntry menuButton = new ContextButtonEntry(
+								null, context);
+						menuButton.setText("Transition");
 
-				for (Output output : outputs) {
-					feature = new CreateTransitionFromPad(getFeatureProvider(),
-							new TransitionMenuPattern(output,
-									getFeatureProvider()));
-					menuButton.setIconId(getImageFor(sta, feature));
-					menuButton.addDragAndDropFeature(feature);
+						for (Output output : outputs) {
+							feature = new CreateTransitionFromPad(
+									getFeatureProvider(),
+									new TransitionMenuPattern(output,
+											getFeatureProvider()));
+							menuButton.setIconId(getImageFor(sta, feature));
+							menuButton.addDragAndDropFeature(feature);
+						}
+						data.getDomainSpecificContextButtons().add(menuButton);
+					}
 				}
-				data.getDomainSpecificContextButtons().add(menuButton);
 
 			} else {
 				feature = new CreateTransitionFromPad(getFeatureProvider(),
