@@ -140,41 +140,41 @@ public class PropertiesDiagramTest {
 		assertThat(viewProperties.bot().clabel("Incoming Transitions:"), is(not(nullValue())));
 	}
 	
-//	@Test
-//	public void testPropertiesInitialState() throws CoreException {
-//		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
-//
-//		IProject project = SWTBotHelper.createProject("testNavigator");
-//		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-//				+ "/several/packages/inside/five.jvflow",
-//				SWTBotHelper.getInputStreamResource("five.jvflow"));
-//
-//		SWTBotHelper.openFile(file);
-//		bot.sleep(LARGE_SLEEP);
-//		
-//
-//		editor = SWTBotHelper.getGefEditor(bot);
-//		gefViewer = editor.getSWTBotGefViewer();
-//		
-//		bot.sleep(LARGE_SLEEP);
-//		viewProperties.setFocus();
-//
-//		gefViewer.click("Inicial");
-//		
-//		bot.sleep(LARGE_SLEEP);
-//		
-//		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
-//		assertThat(viewProperties.bot().text("Inicial"), is(not(nullValue())));
-//		SWTBotText textName = viewProperties.bot().text("Inicial");
-//		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-//		assertThat(viewProperties.bot().text("/testNavigator/" + BaseModel.JV_PATH + "/several/packages/inside/five.jvflow"), is(not(nullValue())));
-//		assertThat(viewProperties.bot().clabel("Out Transitions: "), is(not(nullValue())));
-//		assertThat(viewProperties.bot().text("Initial_Call"), is(not(nullValue())));
-//		textName.setFocus();
-//		textName.setText("otro");
-//		gefViewer.click("Inicial");
-//		assertThat(viewProperties.bot().text("otro"), is(not(nullValue())));
-//	}
+	@Test
+	public void testPropertiesInitialState() throws CoreException {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+
+		IProject project = SWTBotHelper.createProject("testNavigator");
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/five.jvflow",
+				SWTBotHelper.getInputStreamResource("five.jvflow"));
+
+		SWTBotHelper.openFile(file);
+		bot.sleep(LARGE_SLEEP);
+		
+
+		editor = SWTBotHelper.getGefEditor(bot);
+		gefViewer = editor.getSWTBotGefViewer();
+		
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.setFocus();
+
+		gefViewer.click("Inicial");
+		
+		bot.sleep(LARGE_SLEEP);
+		
+		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
+		assertThat(viewProperties.bot().text("Inicial"), is(not(nullValue())));
+		SWTBotText textName = viewProperties.bot().text("Inicial");
+		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
+		assertThat(viewProperties.bot().text("/testNavigator/" + BaseModel.JV_PATH + "/several/packages/inside/five.jvflow"), is(not(nullValue())));
+		assertThat(viewProperties.bot().clabel("Out Transitions:"), is(not(nullValue())));
+		assertThat(viewProperties.bot().text("Initial_Call"), is(not(nullValue())));
+		textName.setFocus();
+		textName.setText("otro");
+		gefViewer.click("Inicial");
+		assertThat(viewProperties.bot().text("otro"), is(not(nullValue())));
+	}
 	
 	@Test
 	public void testPropertiesCallState() throws CoreException {
