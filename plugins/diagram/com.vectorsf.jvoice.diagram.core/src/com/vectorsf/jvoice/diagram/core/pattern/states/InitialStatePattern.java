@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
-import org.eclipse.graphiti.datatypes.ILocation;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
@@ -8,13 +7,10 @@ import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.Ellipse;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
-import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.pattern.id.IdLayoutContext;
 import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
@@ -31,69 +27,39 @@ public class InitialStatePattern extends StatePattern {
 	private static final int MIN_WIDTH = 60;
 	private static final int MIN_HEIGHT = 60;
 	private static final String ID_INITIAL_PREFIX = "initialState_";
-	private static final String ID_OUTER_RECTANGLE = ID_INITIAL_PREFIX
-			+ "outerRectangle";
 	private static final String ID_MAIN_CIRCLE = ID_INITIAL_PREFIX
 			+ "mainCircle";
 
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
-		Diagram targetDiagram = (Diagram) context.getTargetContainer();
 		InitialState addedDomainObject = (InitialState) context.getNewObject();
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
-
-		// Outer container (invisible)
-		ContainerShape outerContainerShape = peCreateService
-				.createContainerShape(targetDiagram, true);
-		Rectangle outerRectangle = gaService
-				.createInvisibleRectangle(outerContainerShape);
-		setId(outerRectangle, ID_OUTER_RECTANGLE);
-		gaService.setLocationAndSize(outerRectangle, context.getX(),
-				context.getY(), Math.max(MIN_WIDTH, context.getWidth()),
-				Math.max(MIN_HEIGHT, context.getHeight()));
-
 		final int width = MIN_WIDTH;
 		final int height = MIN_HEIGHT;
-		ContainerShape parent = context.getTargetContainer();
-		int x = context.getX();
-		int y = context.getY();
-
-		ILocation shapeLocation = Graphiti.getLayoutService()
-				.getLocationRelativeToDiagram(parent);
-		x += shapeLocation.getX();
-		y += shapeLocation.getY();
-
+		ContainerShape outerContainerShape = peCreateService
+				.createContainerShape(getDiagram(), true);
 		Ellipse circle;
 		{
-			final Ellipse invisibleCircle = gaService
-					.createEllipse(outerContainerShape);
-			invisibleCircle.setFilled(false);
-			invisibleCircle.setLineVisible(false);
-			gaService.setLocationAndSize(invisibleCircle, x, y, width, height);
 
-			// create and set visible circle inside invisible circle
-			circle = gaService.createEllipse(invisibleCircle);
-			circle.setParentGraphicsAlgorithm(invisibleCircle);
-			gaService.setLocationAndSize(circle, 0, 0, width, height);
-
+			circle = gaService.createEllipse(outerContainerShape);
+			gaService.setLocationAndSize(circle, context.getX(),
+					context.getY(), width, height);
 		}
-		setId(circle, ID_MAIN_CIRCLE);
 		gaService.setRenderingStyle(circle,
 				StatePredefinedColoredAreas.getRedWhiteAdaptions());
+		setId(circle, ID_MAIN_CIRCLE);
 
-		// name
-		Shape shape = peCreateService.createShape(outerContainerShape, false);
-		Text text = gaService.createText(shape, addedDomainObject.getName());
+		Text text = gaService.createText(circle, addedDomainObject.getName());
 		setId(text, ID_NAME_TEXT);
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
 		gaService.setRenderingStyle(text,
 				StatePredefinedColoredAreas.getRedWhiteAdaptions());
+		gaService.setLocationAndSize(text, 0, 0, width, height);
 		peCreateService.createChopboxAnchor(outerContainerShape);
 
 		link(outerContainerShape, addedDomainObject);
-		link(shape, addedDomainObject);
 
 		return outerContainerShape;
 	}
@@ -139,7 +105,7 @@ public class InitialStatePattern extends StatePattern {
 	protected IReason updateNeeded(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
 			InitialState ss = (InitialState) getBusinessObjectForPictogramElement(context
-					.getPictogramElement());
+					.getRootPictogramElement());
 			Text text = (Text) context.getGraphicsAlgorithm();
 			if (!text.getValue().equals(ss.getName())) {
 				return Reason.createTrueReason();
@@ -152,7 +118,7 @@ public class InitialStatePattern extends StatePattern {
 	protected boolean update(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
 			InitialState ss = (InitialState) getBusinessObjectForPictogramElement(context
-					.getPictogramElement());
+					.getRootPictogramElement());
 			Text text = (Text) context.getGraphicsAlgorithm();
 			text.setValue(ss.getName());
 			return true;
