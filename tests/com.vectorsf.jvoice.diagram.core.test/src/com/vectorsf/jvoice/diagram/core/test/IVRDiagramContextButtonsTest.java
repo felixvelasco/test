@@ -245,7 +245,7 @@ public class IVRDiagramContextButtonsTest {
 	}
 
 	@Test
-	public void testCreateTransitionInitialCall() throws Exception {
+	public void testCreateTransitionCallFinal() throws Exception {
 		createTransition("Call", "Final");
 	}
 
