@@ -48,7 +48,7 @@ public class InitialStateSection extends StateSection {
         OutTransitions.setEditable(false);
         OutTransitions.setEnabled(false);
         
-        CLabel LabelOutTrans = factory.createCLabel(composite, "Out Transitions: ");
+        CLabel LabelOutTrans = factory.createCLabel(composite, "Out Transitions:");
         data = new FormData();
         data.left = new FormAttachment(0, 0);
         data.right = new FormAttachment(OutTransitions,-HSPACE+200);

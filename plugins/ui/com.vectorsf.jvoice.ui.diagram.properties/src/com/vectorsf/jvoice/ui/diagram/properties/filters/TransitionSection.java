@@ -6,8 +6,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.graphiti.features.IFeatureProvider;
-import org.eclipse.graphiti.features.context.impl.UpdateContext;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
@@ -36,7 +34,6 @@ public class TransitionSection extends GFPropertySection implements
 	private Text InitialState;
 	private Text FinalState;
 	private org.eclipse.graphiti.mm.algorithms.Text nameArrow;
-	private IFeatureProvider fp;
 	private PictogramElement pe;
 
 	public TransitionSection() {}
@@ -50,8 +47,6 @@ public class TransitionSection extends GFPropertySection implements
 		final Transition bimElement = (Transition) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
 
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
-
-		fp =getDiagramTypeProvider().getFeatureProvider();
 		
 		
 		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
@@ -59,7 +54,7 @@ public class TransitionSection extends GFPropertySection implements
 			@Override
 			protected void doExecute() {
 			
-	            List lista = Graphiti.getLinkService().getPictogramElements(getDiagramTypeProvider().getDiagram(), bimElement);
+	            List<?> lista = Graphiti.getLinkService().getPictogramElements(getDiagramTypeProvider().getDiagram(), bimElement);
 	        	for (Object object : lista) {            		
 	        		if(object instanceof Connection){
 	        		Connection connection = (Connection) object;
@@ -142,7 +137,8 @@ public class TransitionSection extends GFPropertySection implements
        	data.right = new FormAttachment(100, 0);
        	data.top = new FormAttachment(0, VSPACE+60);
        	InitialState.setLayoutData(data);
-       	InitialState.setEditable(false); 
+       	InitialState.setEditable(false);
+       	InitialState.setEnabled(false); 
         	
         CLabel LabelIniState = factory.createCLabel(composite, "Initial State:");
         data = new FormData();
@@ -159,6 +155,7 @@ public class TransitionSection extends GFPropertySection implements
        	data.top = new FormAttachment(0, VSPACE+90);
        	FinalState.setLayoutData(data);
        	FinalState.setEditable(false); 
+       	FinalState.setEnabled(false); 
         	
         CLabel LabelFinState = factory.createCLabel(composite, "Final State:");
         data = new FormData();
@@ -181,7 +178,7 @@ public class TransitionSection extends GFPropertySection implements
             String name = null;
             //Vamos a obtener el nombre del GA
             Transition tr = (Transition)bo;
-            List li = Graphiti.getLinkService().getPictogramElements(getDiagramTypeProvider().getDiagram(), tr);
+            List<?> li = Graphiti.getLinkService().getPictogramElements(getDiagramTypeProvider().getDiagram(), tr);
         	for (Object object : li) {            		
         		if(object instanceof Connection){
         		Connection connection = (Connection) object;
