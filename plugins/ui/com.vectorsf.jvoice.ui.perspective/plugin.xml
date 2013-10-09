@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="com.vectorsf.jvoice.ui.perspective.ivr.PerspectiveFactory"
+            id="com.vectorsf.jvoice.ui.perspective.perspective"
+            name="IVR">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+             <view
+                   id="com.vectorsf.jvoice.ui.navigator.ViewIVR"
+                   minimized="false"
+                   moveable="false"
+                   ratio="0.2"
+                   relationship="left"
+                   relative="com.vectorsf.jvoice.diagram.core.editor.JVoiceDiagramEditor"
+                   visible="true">
+            </view>
+             <view
+                   id="com.vectorsf.jvoice.diagram.core.editor.JVoiceDiagramEditor"
+                   minimized="true"
+                   moveable="false"
+                   ratio="0.2"
+                   relationship="right"
+                   relative="com.vectorsf.jvoice.ui.navigator.ViewIVR"
+                   visible="true">
+             </view>
+ 
+            <view
+                  id="org.eclipse.ui.views.PropertySheet"
+                  minimized="false"
+                  moveable="false"
+                  ratio="0.8"
+                  relationship="bottom"
+                  relative="com.vectorsf.jvoice.diagram.core.editor.JVoiceDiagramEditor"
+                  visible="true">
+            </view>
+            <view
+                  id="org.eclipse.ui.views.ProblemView"
+                  minimized="false"
+                  moveable="false"
+                  ratio="0.8"
+                  relationship="stack"
+                  relative="org.eclipse.ui.views.PropertySheet"
+                  visible="true">
+            </view>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>
