@@ -7,5 +7,5 @@ grammars{
  // User's grammar 
  }
 outputs{
- //Variables 
+ otros: * 
 }

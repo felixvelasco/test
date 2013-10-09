@@ -5,30 +5,42 @@ import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
 import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.asyncExec;
+import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.syncExec;
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.fail;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
+import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
 import org.eclipse.graphiti.ui.internal.contextbuttons.ContextButton;
 import org.eclipse.graphiti.ui.internal.contextbuttons.ContextButtonPad;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
@@ -57,6 +69,7 @@ import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.base.test.SWTBotHelper;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.Transition;
 
 /**
  * 
@@ -245,18 +258,49 @@ public class IVRDiagramContextButtonsTest {
 	}
 
 	@Test
-	public void testCreateTransitionCallFinal() throws Exception {
-		createTransition("Call", "Final");
+	public void testCreateTransitionCallPrompt() throws Exception {
+		createTransition("Call", "Prompt", 375, 79, 116, 210);
 	}
 
-	public void createTransition(String sourceName, String targetName)
-			throws Exception {
+	@Test
+	public void testCreateTransitionPromptMenu() throws Exception {
+		createTransition("Prompt", "Menu", 221, 185, 330, 310);
+	}
+
+	@Test
+	public void testCreateTransitionInputMenu() throws Exception {
+		createTransition("input", "Menu", 400, 185, 330, 310);
+	}
+
+	@Test
+	public void testCreateTransitionEmptyPrompt() throws Exception {
+		createTransition("empty", "Prompt", 550, 70, 116, 210);
+	}
+
+	@Test
+	public void testCreateTransitionSwitchFinal() throws Exception {
+		createTransition("Switch", "Final", 550, 185, 141, 336);
+	}
+
+	@Test
+	public void testCreateTransitionMenuInput() throws Exception {
+		createTransition("Menu", "input", 425, 278, 320, 210);
+	}
+
+	@Test
+	public void testCreateTransitionInitialPrompt() throws Exception {
+		createTransition("Initial", "Prompt", 175, 80, 116, 210);
+	}
+
+	public void createTransition(final String sourceName, String targetName,
+			final int initialx, final int initialy, final int finalx,
+			final int finaly) throws Exception {
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
 		IProject project = createProject("testNavigator");
 		IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "five.jvflow"));
+				+ "/several/packages/inside/six.jvflow",
+				getInputStreamResource(bundle, "six.jvflow"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/empty.jvflow",
 				getInputStreamResource(bundle, "empty.jvflow"));
@@ -275,13 +319,82 @@ public class IVRDiagramContextButtonsTest {
 
 		editor = getGefEditor();
 		gefViewer = editor.getSWTBotGefViewer();
-
 		SWTBotGefEditPart entity = editor.getEditPart(sourceName);
 		entity.click();
-		pressEntityContextButton(entity, "Transition");
+		syncExec(new VoidResult() {
+
+			@Override
+			public void run() {
+				IDiagramContainerUI diagramEditor = (IDiagramContainerUI) editor
+						.getReference().getEditor(true);
+				diagramEditor.getDiagramBehavior().getMouseLocation().x = initialx;
+				diagramEditor.getDiagramBehavior().getMouseLocation().y = initialy;
+
+				GraphicalViewer graphicalViewer = (GraphicalViewer) diagramEditor
+						.getAdapter(GraphicalViewer.class);
+				final Control control = graphicalViewer.getControl();
+				assertThat(control, instanceOf(FigureCanvas.class));
+				final FigureCanvas canvas = (FigureCanvas) control;
+				try {
+					Point p = canvas.toDisplay(0, 0);
+					Robot robot = new Robot();
+					robot.mouseMove(p.x + initialx, p.y + initialy);
+
+				} catch (AWTException e) {
+				}
+			}
+		});
+		bot.sleep(LARGE_SLEEP);
+		syncExec(new VoidResult() {
+
+			@Override
+			public void run() {
+				IDiagramContainerUI diagramEditor = (IDiagramContainerUI) editor
+						.getReference().getEditor(true);
+				diagramEditor.getDiagramBehavior().getMouseLocation().x = initialx;
+				diagramEditor.getDiagramBehavior().getMouseLocation().y = initialy;
+
+				GraphicalViewer graphicalViewer = (GraphicalViewer) diagramEditor
+						.getAdapter(GraphicalViewer.class);
+				final Control control = graphicalViewer.getControl();
+				assertThat(control, instanceOf(FigureCanvas.class));
+				final FigureCanvas canvas = (FigureCanvas) control;
+				try {
+					Point p = canvas.toDisplay(0, 0);
+					Robot robot = new Robot();
+					robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+
+					robot.mouseMove(p.x + finalx, p.y + finaly);
+
+					robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				} catch (AWTException e) {
+				}
+			}
+		});
 
 		editor.save();
 
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
+				.getEditor(true);
+		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
+		Flow flow = (Flow) Graphiti.getLinkService()
+				.getBusinessObjectForLinkedPictogramElement(diagram);
+
+		Matcher<Iterable<? super Transition>> hasTransition = hasTransition(
+				sourceName, targetName);
+
+		assertThat(flow.getTransitions(), hasTransition);
+
+	}
+
+	private Matcher<Iterable<? super Transition>> hasTransition(
+			String sourceName, String targetName) {
+		return Matchers
+				.<Transition> hasItem(both(
+						hasProperty("source",
+								hasProperty("name", is(sourceName)))).and(
+						hasProperty("target",
+								hasProperty("name", is(targetName)))));
 	}
 
 	public void deleteState(String stateName) throws Exception {
@@ -451,7 +564,6 @@ public class IVRDiagramContextButtonsTest {
 					@Override
 					public void run() {
 						((ContextButton) button).doClick();
-
 					}
 				});
 			}
