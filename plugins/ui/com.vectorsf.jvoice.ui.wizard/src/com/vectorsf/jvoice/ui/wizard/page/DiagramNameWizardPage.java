@@ -244,18 +244,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		textFieldDiagram = new Text(projectGroup, SWT.BORDER);
 		GridData data = new GridData(GridData.FILL_HORIZONTAL);
 		data.widthHint = SIZING_TEXT_FIELD_WIDTH;
+		data.horizontalSpan = 2;
 		textFieldDiagram.setLayoutData(data);
 		textFieldDiagram.setFont(parent.getFont());
-
-		Label label= new Label(parent, SWT.LEFT);
-		GridData gd= new GridData();
-		gd.horizontalAlignment= GridData.BEGINNING;
-		gd.grabExcessHorizontalSpace= false;
-		gd.horizontalSpan= 1;
-		gd.horizontalIndent= 0;
-		gd.widthHint= 0;
-		gd.heightHint= 0;
-		label.setLayoutData(gd);
 
 		// new project label
 		Label projectLabel2 = new Label(projectGroup, SWT.NONE);
