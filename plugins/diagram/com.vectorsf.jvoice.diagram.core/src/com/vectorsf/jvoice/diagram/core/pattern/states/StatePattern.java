@@ -6,18 +6,25 @@ import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.impl.ResizeShapeContext;
+import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.func.IDirectEditing;
+import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.id.IdLayoutContext;
 import org.eclipse.graphiti.pattern.id.IdPattern;
 import org.eclipse.graphiti.pattern.id.IdUpdateContext;
+import org.eclipse.graphiti.services.Graphiti;
+
+import com.vectorsf.jvoice.model.operations.State;
 
 public class StatePattern extends IdPattern {
 
 	protected static final String ID_NAME_TEXT = "nameText";
-	private static final int MIN_WIDTH = 100;
-	private static final int MIN_HEIGHT = 60;
+	protected static final String ID_MAIN_FIGURE = "mainFigure";
+	protected static final int MIN_WIDTH = 100;
+	protected static final int MIN_HEIGHT = 60;
 
 	@Override
 	public boolean canAdd(IAddContext context) {
@@ -61,23 +68,64 @@ public class StatePattern extends IdPattern {
 	}
 
 	@Override
-	protected boolean layout(IdLayoutContext context, String id) {
+	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
 		return false;
+	}
+
+	@Override
+	protected boolean layout(IdLayoutContext context, String id) {
+		boolean changesDone = false;
+
+		GraphicsAlgorithm gaOuter = context.getRootPictogramElement()
+				.getGraphicsAlgorithm();
+
+		if (id.equals(ID_MAIN_FIGURE) || id.equals(ID_NAME_TEXT)) {
+			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
+			if (ga.getWidth() != gaOuter.getWidth()
+					|| ga.getHeight() != gaOuter.getHeight()) {
+				Graphiti.getGaService().setLocationAndSize(ga, 0, 0,
+						gaOuter.getWidth(), gaOuter.getHeight());
+				changesDone = true;
+			}
+		}
+
+		return changesDone;
 	}
 
 	@Override
 	protected IReason updateNeeded(IdUpdateContext context, String id) {
-		return null;
+		if (id.equals(ID_NAME_TEXT)) {
+			State ss = (State) getBusinessObjectForPictogramElement(context
+					.getRootPictogramElement());
+			Text text = (Text) context.getGraphicsAlgorithm();
+			if (!text.getValue().equals(ss.getName())) {
+				return Reason.createTrueReason();
+			}
+		}
+		return Reason.createFalseReason();
 	}
 
 	@Override
 	protected boolean update(IdUpdateContext context, String id) {
+		if (id.equals(ID_NAME_TEXT)) {
+			State ss = (State) getBusinessObjectForPictogramElement(context
+					.getRootPictogramElement());
+			Text text = (Text) context.getGraphicsAlgorithm();
+			text.setValue(ss.getName());
+			return true;
+		}
 		return false;
 	}
 
 	@Override
-	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
-		return false;
+	protected void setValue(String value, IDirectEditingContext context,
+			String id) {
+		if (id.equals(ID_NAME_TEXT)) {
+			State ss = (State) getBusinessObjectForPictogramElement(context
+					.getPictogramElement());
+			ss.setName(value);
+			updatePictogramElement(context.getPictogramElement());
+		}
 	}
 
 }

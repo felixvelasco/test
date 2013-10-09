@@ -1,21 +1,15 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
-import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
-import org.eclipse.graphiti.features.context.IDirectEditingContext;
-import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.pattern.id.IdLayoutContext;
-import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
@@ -27,29 +21,23 @@ import com.vectorsf.jvoice.model.operations.SwitchState;
 
 public class SwitchPattern extends StatePattern {
 
+	private static final String SWITCH = "Switch";
 	private static final int MIN_WIDTH = 120;
 	private static final int MIN_HEIGHT = 80;
-	private static final String ID_SWITCH_PREFIX = "switchState_";
-	private static final String ID_OUTER_RECTANGLE = ID_SWITCH_PREFIX
-			+ "outerRectangle";
-	private static final String ID_MAIN_RECTANGLE = ID_SWITCH_PREFIX
-			+ "mainRectangle";
-	private static final String ID_CASE_POLYGON = ID_SWITCH_PREFIX
-			+ "casePolygon";
+	private static final String ID_CASE_POLYGON = "casePolygon";
 
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
-		Diagram targetDiagram = (Diagram) context.getTargetContainer();
+
 		SwitchState addedDomainObject = (SwitchState) context.getNewObject();
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
 
 		// Outer container (invisible)
 		ContainerShape outerContainerShape = peCreateService
-				.createContainerShape(targetDiagram, true);
+				.createContainerShape(getDiagram(), true);
 		Rectangle outerRectangle = gaService
 				.createInvisibleRectangle(outerContainerShape);
-		setId(outerRectangle, ID_OUTER_RECTANGLE);
 		gaService.setLocationAndSize(outerRectangle, context.getX(),
 				context.getY(), Math.max(MIN_WIDTH, context.getWidth()),
 				Math.max(MIN_HEIGHT, context.getHeight()));
@@ -63,16 +51,17 @@ public class SwitchPattern extends StatePattern {
 		gaService.setRenderingStyle(endPoint,
 				StatePredefinedColoredAreas.getGreenWhiteAdaptions());
 
-		// Main contents area
+		// Main contents area,
+		// this comment is to know if its true that Jose Luis is reading
+		// comments.
 		Rectangle mainRectangle = gaService.createRectangle(outerRectangle);
-		setId(mainRectangle, ID_MAIN_RECTANGLE);
+		setId(mainRectangle, ID_MAIN_FIGURE);
 		mainRectangle.setFilled(true);
 		gaService.setRenderingStyle(mainRectangle,
 				StatePredefinedColoredAreas.getGreenWhiteAdaptions());
 
-		// File name
-		Shape shape = peCreateService.createShape(outerContainerShape, false);
-		Text text = gaService.createText(shape, addedDomainObject.getName());
+		Text text = gaService.createText(mainRectangle,
+				addedDomainObject.getName());
 		setId(text, ID_NAME_TEXT);
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
@@ -80,9 +69,9 @@ public class SwitchPattern extends StatePattern {
 		peCreateService.createChopboxAnchor(outerContainerShape);
 
 		link(outerContainerShape, addedDomainObject);
-		link(shape, addedDomainObject);
 
 		return outerContainerShape;
+
 	}
 
 	@Override
@@ -92,7 +81,7 @@ public class SwitchPattern extends StatePattern {
 		Rectangle outerRectangle = (Rectangle) context
 				.getRootPictogramElement().getGraphicsAlgorithm();
 
-		if (id.equals(ID_MAIN_RECTANGLE) || id.equals(ID_NAME_TEXT)) {
+		if (id.equals(ID_MAIN_FIGURE) || id.equals(ID_NAME_TEXT)) {
 			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
 			if (ga.getWidth() != outerRectangle.getWidth()
 					|| ga.getHeight() != outerRectangle.getHeight() - 20) {
@@ -119,7 +108,7 @@ public class SwitchPattern extends StatePattern {
 	public Object[] create(ICreateContext context) {
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		SwitchState ss = OperationsFactory.eINSTANCE.createSwitchState();
-		ss.setName("Switch");
+		ss.setName(SWITCH);
 		flow.getStates().add(ss);
 
 		addGraphicalRepresentation(context, ss);
@@ -129,32 +118,7 @@ public class SwitchPattern extends StatePattern {
 
 	@Override
 	public String getCreateName() {
-		return "Switch";
-	}
-
-	@Override
-	protected IReason updateNeeded(IdUpdateContext context, String id) {
-		if (id.equals(ID_NAME_TEXT)) {
-			SwitchState ss = (SwitchState) getBusinessObjectForPictogramElement(context
-					.getPictogramElement());
-			Text text = (Text) context.getGraphicsAlgorithm();
-			if (!text.getValue().equals(ss.getName())) {
-				return Reason.createTrueReason();
-			}
-		}
-		return Reason.createFalseReason();
-	}
-
-	@Override
-	protected boolean update(IdUpdateContext context, String id) {
-		if (id.equals(ID_NAME_TEXT)) {
-			SwitchState ss = (SwitchState) getBusinessObjectForPictogramElement(context
-					.getPictogramElement());
-			Text text = (Text) context.getGraphicsAlgorithm();
-			text.setValue(ss.getName());
-			return true;
-		}
-		return false;
+		return SWITCH;
 	}
 
 	@Override
@@ -162,14 +126,4 @@ public class SwitchPattern extends StatePattern {
 		return mainBusinessObject instanceof SwitchState;
 	}
 
-	@Override
-	protected void setValue(String value, IDirectEditingContext context,
-			String id) {
-		if (id.equals(ID_NAME_TEXT)) {
-			SwitchState ss = (SwitchState) getBusinessObjectForPictogramElement(context
-					.getPictogramElement());
-			ss.setName(value);
-			updatePictogramElement(context.getPictogramElement());
-		}
-	}
 }
