@@ -53,6 +53,7 @@ import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+import org.eclipse.ui.ide.IDE;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
@@ -445,33 +446,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 		Diagram diagram = Graphiti.getPeCreateService().createDiagram("jVoiceDiagram", diagramName, true);
 
-		String editorID = DiagramEditor.DIAGRAM_EDITOR_ID;
 		String editorExtension = "jvflow"; //$NON-NLS-1$
-		String diagramTypeProviderId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId("jVoiceDiagram");
-		String namingConventionID = diagramTypeProviderId + ".editor"; //$NON-NLS-1$
-		IEditorDescriptor specificEditor = PlatformUI.getWorkbench().getEditorRegistry().findEditor(namingConventionID);
-
-		// If there is a specific editor get the file extension
-		if (specificEditor != null) {
-			editorID = namingConventionID;
-			IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-			IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint("org.eclipse.ui.editors"); //$NON-NLS-1$
-			IExtension[] extensions = extensionPoint.getExtensions();
-			for (IExtension ext : extensions) {
-				IConfigurationElement[] configurationElements = ext.getConfigurationElements();
-				for (IConfigurationElement ce : configurationElements) {
-					String id = ce.getAttribute("id"); //$NON-NLS-1$
-					if (editorID.equals(id)) {
-						String fileExt = ce.getAttribute("extensions"); //$NON-NLS-1$
-						if (fileExt != null) {
-							editorExtension = fileExt;
-							break;
-						}
-					}
-
-				}
-			}
-		}
 
 		IFile diagramFile = diagramFolder != null ? diagramFolder.getFile(diagramName + "." + editorExtension)
 				: project.getFile(diagramName + "." + editorExtension); //$NON-NLS-1$
@@ -482,7 +457,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		DiagramEditorInput editorInput = new DiagramEditorInput(EcoreUtil.getURI(diagram), providerId);
 
 		try {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(editorInput, editorID);
+			IDE.openEditor(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage(), diagramFile);
 		} catch (PartInitException e) {
 			String error = "error open editor";
 			IStatus status = new Status(IStatus.ERROR, "0", error, e);
