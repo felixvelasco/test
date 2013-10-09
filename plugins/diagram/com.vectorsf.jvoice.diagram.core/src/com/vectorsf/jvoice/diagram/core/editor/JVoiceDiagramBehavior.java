@@ -1,6 +1,7 @@
 package com.vectorsf.jvoice.diagram.core.editor;
 
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.graphiti.ui.editor.DefaultPersistencyBehavior;
 import org.eclipse.graphiti.ui.editor.DiagramBehavior;
 import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
 
@@ -18,5 +19,10 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 		getResourceSet().getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
 				new VegaXMLURIHandlerImpl());
 
+	}
+
+	@Override
+	protected DefaultPersistencyBehavior createPersistencyBehavior() {
+		return new JVoicePersistencyBehavior(this);
 	}
 }
