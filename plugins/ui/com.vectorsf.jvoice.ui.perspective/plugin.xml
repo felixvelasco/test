@@ -5,8 +5,9 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="com.vectorsf.jvoice.ui.perspective.ivr.PerspectiveFactory"
+            icon="res/perspective.png"
             id="com.vectorsf.jvoice.ui.perspective.perspective"
-            name="IVR">
+            name="JVoice">
       </perspective>
    </extension>
    <extension
