@@ -1,26 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: com.vectorsf.jvoice.voice.dsl
-Bundle-Vendor: My Company
+Bundle-Vendor: Vector SF
 Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: com.vectorsf.jvoice.voice.dsl; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;visibility:=reexport,
- org.eclipse.xtext.xbase;resolution:=optional;visibility:=reexport,
- org.eclipse.xtext.generator;resolution:=optional,
- org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
- org.eclipse.emf.codegen.ecore;resolution:=optional,
- org.eclipse.emf.mwe.utils;resolution:=optional,
- org.eclipse.emf.mwe2.launch;resolution:=optional,
- com.vectorsf.jvoice.prompt.model,
- org.eclipse.xtext.util,
- org.antlr.runtime,
- org.eclipse.xtext.common.types,
- org.eclipse.xtext.xbase.lib,
- org.eclipse.emf.ecore,
- org.eclipse.emf.common
-Import-Package: org.apache.log4j,
- org.eclipse.xtext.xbase.lib
+Require-Bundle: org.eclipse.xtext.generator;bundle-version="2.4.2";resolution:=optional,
+ org.eclipse.emf.mwe2.launch;bundle-version="2.4.0";resolution:=optional,
+ com.vectorsf.jvoice.prompt.model;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: com.isb.bks.ivr.voice.dsl,
  com.isb.bks.ivr.voice.dsl.services,

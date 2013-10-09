@@ -10,9 +10,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: com.vectorsf.jvoice.prompt.model.voiceDsl,
  com.vectorsf.jvoice.prompt.model.voiceDsl.impl,
  com.vectorsf.jvoice.prompt.model.voiceDsl.util
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- com.vectorsf.jvoice.base.model;visibility:=reexport,
- org.eclipse.xtext.common.types;visibility:=reexport,
- org.eclipse.xtext.xbase;visibility:=reexport
+Require-Bundle: com.vectorsf.jvoice.base.model;bundle-version="0.1.0";visibility:=reexport,
+ org.eclipse.xtext.xbase;bundle-version="2.4.2";visibility:=reexport
 Bundle-ActivationPolicy: lazy

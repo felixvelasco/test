@@ -1,0 +1,9 @@
+<site>
+<feature id="com.vectorsf.jvoice.feature" version="0.1.0">
+<category name="jVoice"/>
+</feature>
+<!--<feature id="com.vectorsf.feature.source" version="0.0.0">
+<category name="jVoice"/>
+</feature>-->
+<category-def name="jVoice" label="jVoice"/>
+</site>

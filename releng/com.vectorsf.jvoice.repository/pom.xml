@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+       <modelVersion>4.0.0</modelVersion>
+       <parent>
+             <groupId>com.vectorsf.jvoice.core</groupId>
+             <artifactId>releng</artifactId>
+             <version>0.1.0-SNAPSHOT</version>
+       </parent>
+       <artifactId>com.vectorsf.jvoice.repository</artifactId>
+       <packaging>eclipse-repository</packaging>
+       <version>0.1.0-SNAPSHOT</version>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>nexus</id>
+      <name>Corporate Repository</name>
+      <url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/ivr/</url>
+      <layout>default</layout>
+    </repository>
+  </distributionManagement>
+
+</project>

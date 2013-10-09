@@ -5,26 +5,16 @@ Bundle-SymbolicName: com.vectorsf.jvoice.diagram.core;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: com.vectorsf.jvoice.diagram.core.Activator
 Bundle-Vendor: ISB
-Require-Bundle: org.eclipse.core.runtime;bundle-version="3.9.0",
- org.eclipse.emf.edit;bundle-version="2.9.0",
- org.eclipse.emf.transaction;bundle-version="1.4.0",
+Require-Bundle: org.eclipse.emf.transaction;bundle-version="1.4.0",
  org.eclipse.gef;bundle-version="3.9.0",
  org.eclipse.graphiti;bundle-version="0.10.0",
  org.eclipse.graphiti.pattern;bundle-version="0.10.0",
  org.eclipse.graphiti.ui;bundle-version="0.10.0",
- org.eclipse.ui;bundle-version="3.105.0",
  org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.0",
  com.vectorsf.jvoice.operation.model;bundle-version="0.1.0",
  org.eclipse.ui.ide;bundle-version="3.9.0",
- org.eclipse.jdt.ui;bundle-version="3.9.0",
- org.eclipse.jdt.core,
- org.eclipse.emf.edit.ui,
- org.eclipse.text,
- org.eclipse.jface.text;bundle-version="3.8.100",
- org.eclipse.equinox.bidi;bundle-version="0.10.0",
- com.vectorsf.jvoice.core.uri,
- org.eclipse.emf.ecore.xmi,
- com.vectorsf.jvoice.base.model,
- com.vectorsf.jvoice.ui.wizard;bundle-version="0.1.0"
+ org.eclipse.emf.edit.ui;bundle-version="2.9.0",
+ com.vectorsf.jvoice.core.uri;bundle-version="0.1.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.9.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
