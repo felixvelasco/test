@@ -4,6 +4,8 @@ import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
+import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.syncExec;
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.emptyArray;
@@ -16,6 +18,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
@@ -104,19 +107,6 @@ public class IVRDiagramOpenStatesTest {
 			editor.close();
 		}
 
-		SWTBotShell[] shells = bot.shells();
-		for (int i = 0; i < shells.length; i++) {
-			if (shells[i].isOpen()) {
-				SWTBotShell shell = shells[i];
-				if (shell.getText().contains("Input")
-						|| shell.getText().contains("Menu")
-						|| shell.getText().contains("Flow")
-						|| shell.getText().contains("Menu")) {
-					shell.close();
-				}
-			}
-		}
-
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects()) {
 
@@ -151,53 +141,26 @@ public class IVRDiagramOpenStatesTest {
 
 	@Test
 	public void testOpenCallFlow() throws Exception {
-		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
-
-		IProject project = createProject("testNavigator");
-		IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "five.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "empty.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Menu.voiceDsl",
-				getInputStreamResource(bundle, "Menu.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Input.voiceDsl",
-				getInputStreamResource(bundle, "Input.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Prompt.voiceDsl",
-				getInputStreamResource(bundle, "Prompt.voiceDsl"));
-		openFile(file);
-		bot.sleep(LARGE_SLEEP);
-
-		editor = getGefEditor();
-		gefViewer = editor.getSWTBotGefViewer();
-
-		SWTBotGefEditPart entity = editor.getEditPart("empty");
-
-		editor.doubleClick("empty");
-
-		editor.save();
+		openState("empty", 425, 65);
 	}
 
 	@Test
 	public void testOpenMenu() throws Exception {
-		openLocution("Menu");
+		openState("Menu", 305, 275);
 	}
 
 	@Test
 	public void testOpenInput() throws Exception {
-		openLocution("Input");
+		openState("Input", 265, 175);
 	}
 
 	@Test
 	public void testOpenPrompt() throws Exception {
-		openLocution("Prompt");
+		openState("Prompt", 90, 175);
 	}
 
-	public void openLocution(String locutionName) throws Exception {
+	public void openState(final String stateName, final int x, final int y)
+			throws Exception {
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
 		IProject project = createProject("testNavigator");
@@ -222,11 +185,43 @@ public class IVRDiagramOpenStatesTest {
 		editor = getGefEditor();
 		gefViewer = editor.getSWTBotGefViewer();
 
-		SWTBotGefEditPart entity = editor.getEditPart(locutionName);
+		SWTBotGefEditPart entity = editor.getEditPart(stateName);
 
-		editor.doubleClick(locutionName);
+		syncExec(new VoidResult() {
+
+			@Override
+			public void run() {
+
+				IDiagramContainerUI diagramEditor = (IDiagramContainerUI) editor
+						.getReference().getEditor(true);
+				diagramEditor.getDiagramBehavior().getMouseLocation().x = x;
+				diagramEditor.getDiagramBehavior().getMouseLocation().y = y;
+				editor.select(stateName);
+			}
+		});
+		bot.sleep(LARGE_SLEEP);
+		editor.doubleClick(stateName);
+		if (stateName != "empty") {
+			bot.waitUntil(shellIsActive("Add Xtext Nature"), 10000);
+			if (shellIsActive("Add Xtext Nature") != null) {
+				SWTBotShell shell = bot.shell("Add Xtext Nature");
+				shell.bot().button("Yes").click();
+			}
+		}
 
 		editor.save();
+
+		SWTBotShell[] shells = bot.shells();
+		boolean hasShell = false;
+		for (int i = 0; i < shells.length; i++) {
+			if (shells[i].isOpen()) {
+				SWTBotShell shell = shells[i];
+				if (shell.getText().contains(stateName)) {
+					hasShell = true;
+				}
+			}
+		}
+		assertThat(hasShell, is(true));
 	}
 
 	public SWTBotGefEditor getGefEditor() {
