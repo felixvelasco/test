@@ -7,23 +7,30 @@
             category="com.vectorsf.jvoice.diagram.core.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateProjectJVoice"
             id="com.vectorsf.jvoice.ui.project.wizard"
-            name="JVoice project"
+            name="jVoice project"
             project="true">
       </wizard>
-      <wizard
+     <wizard
+            category="com.vectorsf.jvoice.diagram.core.category"
+            class="com.vectorsf.jvoice.ui.wizard.create.CreateDiagramJVoice"
+            id="com.vectorsf.jvoice.ui.wizard.DiagramJVoice"
+            name="jVoice flow"
+            project="false">
+      </wizard>
+ 		<wizard
             category="com.vectorsf.jvoice.diagram.core.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateJVPackageWizard"
             id="com.vectorsf.jvoice.ui.package.wizard"
-            name="JVoice package"
+            name="jVoice package"
             project="false">
       </wizard>
       <wizard
             category="com.vectorsf.jvoice.diagram.core.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice"
             id="com.vectorsf.jvoice.ui.wizard.wizardDSL"
-            name="JVoice Dsl"
+            name="jVoice Dsl"
             project="false">
       </wizard>
-   </extension>
 
+   </extension>
 </plugin>

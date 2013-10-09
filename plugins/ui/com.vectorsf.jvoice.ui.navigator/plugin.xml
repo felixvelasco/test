@@ -162,7 +162,7 @@
          </commonWizard>
          <commonWizard
                type="new"
-               wizardId="com.vectorsf.jvoice.diagram.core.wizard">
+               wizardId="com.vectorsf.jvoice.ui.wizard.DiagramJVoice">
             <enablement>
                <with
                      variable="selection">

@@ -67,19 +67,7 @@
           id="com.vectorsf.jvoice.diagram.core.imageProvider">
     </imageProvider>
  </extension>
- <extension
-       point="org.eclipse.ui.newWizards">
-    <category
-          id="com.vectorsf.jvoice.diagram.core.category"
-          name="jvoice">
-    </category>
-    <wizard
-          category="com.vectorsf.jvoice.diagram.core.category"
-          class="com.vectorsf.jvoice.ui.wizard.create.CreateDiagramJVoice"
-          id="com.vectorsf.jvoice.diagram.core.wizard"
-          name="JVoice flow">
-    </wizard>
- </extension>
+ 
      <extension
          point="org.eclipse.ui.editors">
        <editor
