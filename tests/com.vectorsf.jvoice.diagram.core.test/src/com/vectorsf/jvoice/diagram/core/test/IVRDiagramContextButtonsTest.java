@@ -269,7 +269,7 @@ public class IVRDiagramContextButtonsTest {
 
 	@Test
 	public void testCreateTransitionInputMenu() throws Exception {
-		createTransition("input", "Menu", 400, 185, 330, 310);
+		createTransition("Input", "Menu", 400, 185, 330, 310);
 	}
 
 	@Test
@@ -284,7 +284,7 @@ public class IVRDiagramContextButtonsTest {
 
 	@Test
 	public void testCreateTransitionMenuInput() throws Exception {
-		createTransition("Menu", "input", 425, 278, 320, 210);
+		createTransition("Menu", "Input", 425, 278, 320, 210);
 	}
 
 	@Test
