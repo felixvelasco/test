@@ -289,7 +289,7 @@ public class IVRDiagramContextButtonsTest {
 
 	@Test
 	public void testCreateTransitionInitialPrompt() throws Exception {
-		createTransition("Initial", "Prompt", 175, 80, 116, 210);
+		createTransition("Initial", "Prompt", 181, 81, 120, 210);
 	}
 
 	public void createTransition(final String sourceName, String targetName,

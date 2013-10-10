@@ -1,92 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:al="http://eclipse.org/graphiti/mm/algorithms" xmlns:operations="http://jvoice.vectorsf.com/operations/1.0" xmlns:pi="http://eclipse.org/graphiti/mm/pictograms">
-  <pi:Diagram visible="true" gridUnit="10" diagramTypeId="jVoiceDiagram" name="six" snapToGrid="true" pictogramLinks="/0/@link /0/@children.0/@link /0/@children.0/@children.0/@link /0/@children.1/@link /0/@children.1/@children.0/@link /0/@children.2/@link /0/@children.2/@children.0/@link /0/@connections.0/@link /0/@children.3/@link /0/@children.3/@children.0/@link /0/@connections.1/@link /0/@children.4/@link /0/@children.4/@children.0/@link /0/@connections.2/@link /0/@children.5/@link /0/@children.5/@children.0/@link /0/@children.6/@link /0/@children.6/@children.0/@link /0/@connections.3/@link /0/@connections.4/@link /0/@connections.5/@link /0/@children.7/@link /0/@children.7/@children.0/@link /0/@connections.6/@link /0/@connections.7/@link" version="0.10.0">
+  <pi:Diagram visible="true" gridUnit="10" diagramTypeId="jVoiceDiagram" name="six" snapToGrid="true" pictogramLinks="/0/@link /0/@children.0/@link /0/@children.0/@children.0/@link /0/@children.1/@link /0/@children.1/@children.0/@link /0/@children.2/@link /0/@children.2/@children.0/@link /0/@connections.0/@link /0/@children.3/@link /0/@children.3/@children.0/@link /0/@connections.1/@link /0/@children.4/@link /0/@children.4/@children.0/@link /0/@children.5/@link /0/@children.5/@children.0/@link /0/@connections.2/@link /0/@connections.3/@link /0/@connections.4/@link /0/@children.6/@link /0/@children.6/@children.0/@link /0/@connections.5/@link /0/@connections.6/@link /0/@children.7/@link" version="0.10.0">
     <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@colors.1" foreground="/0/@colors.0" lineWidth="1" transparency="0.0" width="1000" height="1000"/>
     <link businessObjects="/1"/>
-    <children xsi:type="pi:ContainerShape" visible="true" active="true">
-      <properties key="org.eclipse.graphiti.pattern.patternType" value="org.eclipse.graphiti.pattern.idpattern"/>
-      <graphicsAlgorithm xsi:type="al:Ellipse" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="60" height="60" x="111" y="64">
-        <graphicsAlgorithmChildren xsi:type="al:Ellipse" lineWidth="1" transparency="0.0" width="60" height="60">
-          <properties key="org.eclipse.graphiti.pattern.id.id" value="initialState_mainCircle"/>
-          <renderingStyle>
-            <adaptedGradientColoredAreas definedStyleId="red-white" gradientType="0">
-              <adaptedGradientColoredAreas styleAdaption="0">
-                <gradientColor>
-                  <start locationType="LOCATION_TYPE_ABSOLUTE_START" locationValue="0">
-                    <color red="248" green="212" blue="231"/>
-                  </start>
-                  <end locationType="LOCATION_TYPE_ABSOLUTE_END" locationValue="0">
-                    <color red="252" green="250" blue="251"/>
-                  </end>
-                </gradientColor>
-              </adaptedGradientColoredAreas>
-              <adaptedGradientColoredAreas styleAdaption="1">
-                <gradientColor>
-                  <start locationType="LOCATION_TYPE_ABSOLUTE_START" locationValue="0">
-                    <color red="234" green="129" blue="185"/>
-                  </start>
-                  <end locationType="LOCATION_TYPE_ABSOLUTE_END" locationValue="0">
-                    <color red="242" green="170" blue="208"/>
-                  </end>
-                </gradientColor>
-              </adaptedGradientColoredAreas>
-              <adaptedGradientColoredAreas styleAdaption="2">
-                <gradientColor>
-                  <start locationType="LOCATION_TYPE_ABSOLUTE_START" locationValue="0">
-                    <color red="247" green="187" blue="218"/>
-                  </start>
-                  <end locationType="LOCATION_TYPE_ABSOLUTE_END" locationValue="0">
-                    <color red="247" green="197" blue="224"/>
-                  </end>
-                </gradientColor>
-              </adaptedGradientColoredAreas>
-            </adaptedGradientColoredAreas>
-          </renderingStyle>
-        </graphicsAlgorithmChildren>
-      </graphicsAlgorithm>
-      <link businessObjects="/1/@states.0"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.0"/>
-      <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="60" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="Initial">
-          <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
-          <renderingStyle>
-            <adaptedGradientColoredAreas definedStyleId="red-white" gradientType="0">
-              <adaptedGradientColoredAreas styleAdaption="0">
-                <gradientColor>
-                  <start locationType="LOCATION_TYPE_ABSOLUTE_START" locationValue="0">
-                    <color red="248" green="212" blue="231"/>
-                  </start>
-                  <end locationType="LOCATION_TYPE_ABSOLUTE_END" locationValue="0">
-                    <color red="252" green="250" blue="251"/>
-                  </end>
-                </gradientColor>
-              </adaptedGradientColoredAreas>
-              <adaptedGradientColoredAreas styleAdaption="1">
-                <gradientColor>
-                  <start locationType="LOCATION_TYPE_ABSOLUTE_START" locationValue="0">
-                    <color red="234" green="129" blue="185"/>
-                  </start>
-                  <end locationType="LOCATION_TYPE_ABSOLUTE_END" locationValue="0">
-                    <color red="242" green="170" blue="208"/>
-                  </end>
-                </gradientColor>
-              </adaptedGradientColoredAreas>
-              <adaptedGradientColoredAreas styleAdaption="2">
-                <gradientColor>
-                  <start locationType="LOCATION_TYPE_ABSOLUTE_START" locationValue="0">
-                    <color red="247" green="187" blue="218"/>
-                  </start>
-                  <end locationType="LOCATION_TYPE_ABSOLUTE_END" locationValue="0">
-                    <color red="247" green="197" blue="224"/>
-                  </end>
-                </gradientColor>
-              </adaptedGradientColoredAreas>
-            </adaptedGradientColoredAreas>
-          </renderingStyle>
-        </graphicsAlgorithm>
-        <link businessObjects="/1/@states.0"/>
-      </children>
-    </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
       <properties key="org.eclipse.graphiti.pattern.patternType" value="org.eclipse.graphiti.pattern.idpattern"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="60" height="60" x="111" y="296">
@@ -129,13 +45,13 @@
           </renderingStyle>
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
-      <link businessObjects="/1/@states.1"/>
-      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.5 /0/@connections.7"/>
+      <link businessObjects="/1/@states.0"/>
+      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.4 /0/@connections.6"/>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="60" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="Final">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
         </graphicsAlgorithm>
-        <link businessObjects="/1/@states.1"/>
+        <link businessObjects="/1/@states.0"/>
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
@@ -296,13 +212,13 @@
           </renderingStyle>
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
-      <link businessObjects="/1/@states.2"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.1" incomingConnections="/0/@connections.0"/>
+      <link businessObjects="/1/@states.1"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.0"/>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="120" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="Call">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
         </graphicsAlgorithm>
-        <link businessObjects="/1/@states.2"/>
+        <link businessObjects="/1/@states.1"/>
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
@@ -351,13 +267,13 @@
           </renderingStyle>
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
-      <link businessObjects="/1/@states.3"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.2" incomingConnections="/0/@connections.1"/>
+      <link businessObjects="/1/@states.2"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.1" incomingConnections="/0/@connections.0"/>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="120" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="empty">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
         </graphicsAlgorithm>
-        <link businessObjects="/1/@states.3"/>
+        <link businessObjects="/1/@states.2"/>
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
@@ -443,13 +359,13 @@
           </renderingStyle>
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
-      <link businessObjects="/1/@states.4"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.3 /0/@connections.6" incomingConnections="/0/@connections.2"/>
+      <link businessObjects="/1/@states.3"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.2 /0/@connections.5" incomingConnections="/0/@connections.1"/>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="120" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="Switch">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
         </graphicsAlgorithm>
-        <link businessObjects="/1/@states.4"/>
+        <link businessObjects="/1/@states.3"/>
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
@@ -494,13 +410,13 @@
           </renderingStyle>
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
-      <link businessObjects="/1/@states.5"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.5" incomingConnections="/0/@connections.4"/>
+      <link businessObjects="/1/@states.4"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.4" incomingConnections="/0/@connections.3"/>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="120" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="Prompt">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
         </graphicsAlgorithm>
-        <link businessObjects="/1/@states.5"/>
+        <link businessObjects="/1/@states.4"/>
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
@@ -549,13 +465,13 @@
           </renderingStyle>
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
-      <link businessObjects="/1/@states.6"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.4" incomingConnections="/0/@connections.3"/>
+      <link businessObjects="/1/@states.5"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.3" incomingConnections="/0/@connections.2"/>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="120" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="Input">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
         </graphicsAlgorithm>
-        <link businessObjects="/1/@states.6"/>
+        <link businessObjects="/1/@states.5"/>
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
@@ -600,36 +516,61 @@
           </renderingStyle>
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
-      <link businessObjects="/1/@states.7"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.7" incomingConnections="/0/@connections.6"/>
+      <link businessObjects="/1/@states.6"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.6" incomingConnections="/0/@connections.5"/>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="120" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="Menu">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
         </graphicsAlgorithm>
-        <link businessObjects="/1/@states.7"/>
+        <link businessObjects="/1/@states.6"/>
       </children>
     </children>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.0/@anchors.0" end="/0/@children.2/@anchors.0">
-      <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
-      <link businessObjects="/1/@transitions.0"/>
-      <connectionDecorators visible="true" locationRelative="true" location="1.0">
-        <graphicsAlgorithm xsi:type="al:Polygon" background="/0/@colors.2" foreground="/0/@colors.2" lineWidth="1" filled="true" transparency="0.0">
-          <points x="-7" y="4"/>
-          <points x="2"/>
-          <points x="-7" y="-4"/>
-          <points x="-1"/>
-          <points x="-7" y="4"/>
-          <points x="-3"/>
-          <points x="-7" y="-4"/>
-          <points x="-5"/>
-          <points x="-7" y="4"/>
-        </graphicsAlgorithm>
-      </connectionDecorators>
-      <connectionDecorators visible="true" active="true" locationRelative="true" location="0.5">
-        <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" horizontalAlignment="ALIGNMENT_CENTER" value="Initial_Call"/>
-      </connectionDecorators>
-    </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.2/@anchors.0" end="/0/@children.3/@anchors.0">
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <properties key="org.eclipse.graphiti.pattern.patternType" value="org.eclipse.graphiti.pattern.idpattern"/>
+      <graphicsAlgorithm xsi:type="al:RoundedRectangle" lineWidth="1" filled="true" transparency="0.0" width="60" height="60" x="111" y="64" cornerHeight="60" cornerWidth="60">
+        <properties key="org.eclipse.graphiti.pattern.id.id" value="mainFigure"/>
+        <renderingStyle>
+          <adaptedGradientColoredAreas definedStyleId="light-gray" gradientType="0">
+            <adaptedGradientColoredAreas styleAdaption="0">
+              <gradientColor>
+                <start locationType="LOCATION_TYPE_ABSOLUTE_START" locationValue="0">
+                  <color red="245" green="245" blue="237"/>
+                </start>
+                <end locationType="LOCATION_TYPE_ABSOLUTE_END" locationValue="0">
+                  <color red="245" green="245" blue="237"/>
+                </end>
+              </gradientColor>
+            </adaptedGradientColoredAreas>
+            <adaptedGradientColoredAreas styleAdaption="1">
+              <gradientColor>
+                <start locationType="LOCATION_TYPE_ABSOLUTE_START" locationValue="0">
+                  <color red="214" green="214" blue="208"/>
+                </start>
+                <end locationType="LOCATION_TYPE_ABSOLUTE_END" locationValue="0">
+                  <color red="214" green="214" blue="208"/>
+                </end>
+              </gradientColor>
+            </adaptedGradientColoredAreas>
+            <adaptedGradientColoredAreas styleAdaption="2">
+              <gradientColor>
+                <start locationType="LOCATION_TYPE_ABSOLUTE_START" locationValue="0">
+                  <color red="229" green="229" blue="223"/>
+                </start>
+                <end locationType="LOCATION_TYPE_ABSOLUTE_END" locationValue="0">
+                  <color red="229" green="229" blue="223"/>
+                </end>
+              </gradientColor>
+            </adaptedGradientColoredAreas>
+          </adaptedGradientColoredAreas>
+        </renderingStyle>
+        <graphicsAlgorithmChildren xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="60" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="Initial">
+          <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
+        </graphicsAlgorithmChildren>
+      </graphicsAlgorithm>
+      <link businessObjects="/1/@states.7"/>
+      <anchors xsi:type="pi:ChopboxAnchor"/>
+    </children>
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@anchors.0" end="/0/@children.2/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
       <link businessObjects="/1/@transitions.1"/>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
@@ -649,7 +590,7 @@
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" y="10" horizontalAlignment="ALIGNMENT_CENTER" value="Call_empty"/>
       </connectionDecorators>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.3/@anchors.0" end="/0/@children.4/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.2/@anchors.0" end="/0/@children.3/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
       <link businessObjects="/1/@transitions.7"/>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
@@ -669,7 +610,7 @@
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" horizontalAlignment="ALIGNMENT_CENTER" value="empty_Switch"/>
       </connectionDecorators>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.4/@anchors.0" end="/0/@children.6/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.3/@anchors.0" end="/0/@children.5/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
       <link businessObjects="/1/@transitions.8"/>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
@@ -689,7 +630,7 @@
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" horizontalAlignment="ALIGNMENT_CENTER" value="Switch_Input"/>
       </connectionDecorators>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.6/@anchors.0" end="/0/@children.5/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.5/@anchors.0" end="/0/@children.4/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
       <link businessObjects="/1/@transitions.10"/>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
@@ -709,7 +650,7 @@
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" horizontalAlignment="ALIGNMENT_CENTER" value="Input_Prompt"/>
       </connectionDecorators>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.5/@anchors.0" end="/0/@children.1/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.4/@anchors.0" end="/0/@children.0/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
       <link businessObjects="/1/@transitions.11"/>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
@@ -729,7 +670,7 @@
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" horizontalAlignment="ALIGNMENT_CENTER" value="Prompt_Final"/>
       </connectionDecorators>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.4/@anchors.0" end="/0/@children.7/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.3/@anchors.0" end="/0/@children.6/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
       <link businessObjects="/1/@transitions.14"/>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
@@ -749,7 +690,7 @@
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" horizontalAlignment="ALIGNMENT_CENTER" value="Switch_Menu"/>
       </connectionDecorators>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.7/@anchors.0" end="/0/@children.1/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.6/@anchors.0" end="/0/@children.0/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
       <link businessObjects="/1/@transitions.15"/>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
@@ -774,7 +715,6 @@
     <colors red="188" green="188" blue="188"/>
   </pi:Diagram>
   <operations:Flow name="six" description="six">
-    <states xsi:type="operations:InitialState" name="Initial" outgoingTransitions="/1/@transitions.0"/>
     <states xsi:type="operations:FinalState" name="Final" incomingTransitions="/1/@transitions.5 /1/@transitions.6 /1/@transitions.11 /1/@transitions.12 /1/@transitions.15"/>
     <states xsi:type="operations:CallState" name="Call" incomingTransitions="/1/@transitions.0" outgoingTransitions="/1/@transitions.1"/>
     <states xsi:type="operations:CallFlowState" name="empty" incomingTransitions="/1/@transitions.1" outgoingTransitions="/1/@transitions.7">
@@ -788,23 +728,24 @@
       <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Input#/1"/>
     </states>
     <states xsi:type="operations:MenuState" name="Menu" incomingTransitions="/1/@transitions.14" outgoingTransitions="/1/@transitions.15">
-      <locution href="Menu.voiceDsl#/0"/>
+      <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Menu#/1"/>
     </states>
-    <transitions source="/1/@states.0" target="/1/@states.2" eventName="Transition"/>
-    <transitions source="/1/@states.2" target="/1/@states.3" eventName="Transition"/>
-    <transitions source="/1/@states.4" eventName="Transition"/>
-    <transitions source="/1/@states.4" eventName="Transition"/>
+    <states xsi:type="operations:InitialState" name="Initial"/>
+    <transitions target="/1/@states.1" eventName="Transition"/>
+    <transitions source="/1/@states.1" target="/1/@states.2" eventName="Transition"/>
+    <transitions source="/1/@states.3" eventName="Transition"/>
+    <transitions source="/1/@states.3" eventName="Transition"/>
     <transitions eventName="otros"/>
-    <transitions target="/1/@states.1" eventName="Transition"/>
-    <transitions target="/1/@states.1" eventName="Transition"/>
-    <transitions source="/1/@states.3" target="/1/@states.4" eventName="Transition"/>
-    <transitions source="/1/@states.4" target="/1/@states.6" eventName="Transition"/>
-    <transitions source="/1/@states.4" eventName="Transition"/>
-    <transitions source="/1/@states.6" target="/1/@states.5" eventName="Transition"/>
-    <transitions source="/1/@states.5" target="/1/@states.1" eventName="Transition"/>
-    <transitions target="/1/@states.1" eventName="others"/>
-    <transitions source="/1/@states.4" eventName="Transition"/>
-    <transitions source="/1/@states.4" target="/1/@states.7" eventName="Transition"/>
-    <transitions source="/1/@states.7" target="/1/@states.1" eventName="others"/>
+    <transitions target="/1/@states.0" eventName="Transition"/>
+    <transitions target="/1/@states.0" eventName="Transition"/>
+    <transitions source="/1/@states.2" target="/1/@states.3" eventName="Transition"/>
+    <transitions source="/1/@states.3" target="/1/@states.5" eventName="Transition"/>
+    <transitions source="/1/@states.3" eventName="Transition"/>
+    <transitions source="/1/@states.5" target="/1/@states.4" eventName="Transition"/>
+    <transitions source="/1/@states.4" target="/1/@states.0" eventName="Transition"/>
+    <transitions target="/1/@states.0" eventName="others"/>
+    <transitions source="/1/@states.3" eventName="Transition"/>
+    <transitions source="/1/@states.3" target="/1/@states.6" eventName="Transition"/>
+    <transitions source="/1/@states.6" target="/1/@states.0" eventName="others"/>
   </operations:Flow>
 </xmi:XMI>
