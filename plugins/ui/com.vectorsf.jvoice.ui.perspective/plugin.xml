@@ -13,43 +13,25 @@
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="*">
+            targetID="com.vectorsf.jvoice.ui.perspective.perspective">
              <view
                    id="com.vectorsf.jvoice.ui.navigator.ViewIVR"
-                   minimized="false"
-                   moveable="false"
                    ratio="0.2"
                    relationship="left"
-                   relative="com.vectorsf.jvoice.diagram.core.editor.JVoiceDiagramEditor"
-                   visible="true">
+                   relative="org.eclipse.ui.editorss">
             </view>
-             <view
-                   id="com.vectorsf.jvoice.diagram.core.editor.JVoiceDiagramEditor"
-                   minimized="true"
-                   moveable="false"
-                   ratio="0.2"
-                   relationship="right"
-                   relative="com.vectorsf.jvoice.ui.navigator.ViewIVR"
-                   visible="true">
-             </view>
  
             <view
                   id="org.eclipse.ui.views.PropertySheet"
-                  minimized="false"
-                  moveable="false"
-                  ratio="0.8"
+                  ratio="0.7"
                   relationship="bottom"
-                  relative="com.vectorsf.jvoice.diagram.core.editor.JVoiceDiagramEditor"
-                  visible="true">
+                  relative="org.eclipse.ui.editorss">
             </view>
             <view
                   id="org.eclipse.ui.views.ProblemView"
-                  minimized="false"
-                  moveable="false"
-                  ratio="0.8"
+                  ratio="0.7"
                   relationship="stack"
-                  relative="org.eclipse.ui.views.PropertySheet"
-                  visible="true">
+                  relative="org.eclipse.ui.views.PropertySheet">
             </view>
       </perspectiveExtension>
    </extension>
