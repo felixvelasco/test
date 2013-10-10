@@ -2,7 +2,7 @@ package com.vectorsf.jvoice.diagram.core.pattern.states;
 
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
-import org.eclipse.graphiti.mm.algorithms.Ellipse;
+import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
@@ -10,6 +10,7 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
+import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -31,12 +32,16 @@ public class InitialStatePattern extends StatePattern {
 		ContainerShape outerContainerShape = peCreateService
 				.createContainerShape(getDiagram(), true);
 
-		Ellipse circle = gaService.createEllipse(outerContainerShape);
+		RoundedRectangle circle = gaService.createRoundedRectangle(
+				outerContainerShape, 60, 60);
 
-		gaService.setRenderingStyle(circle,
-				StatePredefinedColoredAreas.getRedWhiteAdaptions());
 		setId(circle, ID_MAIN_FIGURE);
 		circle.setFilled(true);
+		gaService
+				.setRenderingStyle(
+						circle,
+						StatePredefinedColoredAreas
+								.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.LIGHT_GRAY_ID));
 		gaService.setLocationAndSize(circle, context.getX(), context.getY(),
 				Math.max(MIN_WIDTH, context.getWidth()),
 				Math.max(MIN_HEIGHT, context.getHeight()));
