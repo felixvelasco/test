@@ -1369,6 +1369,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	 *         properties+=Property* 
 	 *         variables=Variables? 
 	 *         conditions+=Condition* 
+	 *         audios=Audios 
 	 *         outputs=Outputs
 	 *     )
 	 */

@@ -25,7 +25,8 @@ MenuDsl:
         (grammars = Grammars)&
 	    (properties += Property*)&
 	    ((variables = Variables)?)& 
-	    (conditions += Condition*))
+	    (conditions += Condition*))&
+	     (audios=Audios)&
   	     outputs=Outputs
 	   ) 
 ;

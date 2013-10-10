@@ -2130,8 +2130,8 @@ public class InternalVoiceDslLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24187:12: ( RULE_INT '.' RULE_INT )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24187:14: RULE_INT '.' RULE_INT
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24300:12: ( RULE_INT '.' RULE_INT )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24300:14: RULE_INT '.' RULE_INT
             {
             mRULE_INT(); 
             match('.'); 
@@ -2152,10 +2152,10 @@ public class InternalVoiceDslLexer extends Lexer {
         try {
             int _type = RULE_HEX;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:10: ( ( '0x' | '0X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' | '_' )+ ( '#' ( ( 'b' | 'B' ) ( 'i' | 'I' ) | ( 'l' | 'L' ) ) )? )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:12: ( '0x' | '0X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' | '_' )+ ( '#' ( ( 'b' | 'B' ) ( 'i' | 'I' ) | ( 'l' | 'L' ) ) )?
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:10: ( ( '0x' | '0X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' | '_' )+ ( '#' ( ( 'b' | 'B' ) ( 'i' | 'I' ) | ( 'l' | 'L' ) ) )? )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:12: ( '0x' | '0X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' | '_' )+ ( '#' ( ( 'b' | 'B' ) ( 'i' | 'I' ) | ( 'l' | 'L' ) ) )?
             {
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:12: ( '0x' | '0X' )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:12: ( '0x' | '0X' )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -2183,7 +2183,7 @@ public class InternalVoiceDslLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:13: '0x'
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:13: '0x'
                     {
                     match("0x"); 
 
@@ -2191,7 +2191,7 @@ public class InternalVoiceDslLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:18: '0X'
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:18: '0X'
                     {
                     match("0X"); 
 
@@ -2201,7 +2201,7 @@ public class InternalVoiceDslLexer extends Lexer {
 
             }
 
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:24: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' | '_' )+
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:24: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' | '_' )+
             int cnt2=0;
             loop2:
             do {
@@ -2239,7 +2239,7 @@ public class InternalVoiceDslLexer extends Lexer {
                 cnt2++;
             } while (true);
 
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:58: ( '#' ( ( 'b' | 'B' ) ( 'i' | 'I' ) | ( 'l' | 'L' ) ) )?
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:58: ( '#' ( ( 'b' | 'B' ) ( 'i' | 'I' ) | ( 'l' | 'L' ) ) )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -2248,10 +2248,10 @@ public class InternalVoiceDslLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:59: '#' ( ( 'b' | 'B' ) ( 'i' | 'I' ) | ( 'l' | 'L' ) )
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:59: '#' ( ( 'b' | 'B' ) ( 'i' | 'I' ) | ( 'l' | 'L' ) )
                     {
                     match('#'); 
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:63: ( ( 'b' | 'B' ) ( 'i' | 'I' ) | ( 'l' | 'L' ) )
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:63: ( ( 'b' | 'B' ) ( 'i' | 'I' ) | ( 'l' | 'L' ) )
                     int alt3=2;
                     int LA3_0 = input.LA(1);
 
@@ -2269,7 +2269,7 @@ public class InternalVoiceDslLexer extends Lexer {
                     }
                     switch (alt3) {
                         case 1 :
-                            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:64: ( 'b' | 'B' ) ( 'i' | 'I' )
+                            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:64: ( 'b' | 'B' ) ( 'i' | 'I' )
                             {
                             if ( input.LA(1)=='B'||input.LA(1)=='b' ) {
                                 input.consume();
@@ -2293,7 +2293,7 @@ public class InternalVoiceDslLexer extends Lexer {
                             }
                             break;
                         case 2 :
-                            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24189:84: ( 'l' | 'L' )
+                            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24302:84: ( 'l' | 'L' )
                             {
                             if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
                                 input.consume();
@@ -2332,11 +2332,11 @@ public class InternalVoiceDslLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24191:10: ( '0' .. '9' ( '0' .. '9' | '_' )* )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24191:12: '0' .. '9' ( '0' .. '9' | '_' )*
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24304:10: ( '0' .. '9' ( '0' .. '9' | '_' )* )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24304:12: '0' .. '9' ( '0' .. '9' | '_' )*
             {
             matchRange('0','9'); 
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24191:21: ( '0' .. '9' | '_' )*
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24304:21: ( '0' .. '9' | '_' )*
             loop5:
             do {
                 int alt5=2;
@@ -2385,11 +2385,11 @@ public class InternalVoiceDslLexer extends Lexer {
         try {
             int _type = RULE_DECIMAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24193:14: ( RULE_INT ( ( 'e' | 'E' ) ( '+' | '-' )? RULE_INT )? ( ( 'b' | 'B' ) ( 'i' | 'I' | 'd' | 'D' ) | ( 'l' | 'L' | 'd' | 'D' | 'f' | 'F' ) )? )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24193:16: RULE_INT ( ( 'e' | 'E' ) ( '+' | '-' )? RULE_INT )? ( ( 'b' | 'B' ) ( 'i' | 'I' | 'd' | 'D' ) | ( 'l' | 'L' | 'd' | 'D' | 'f' | 'F' ) )?
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24306:14: ( RULE_INT ( ( 'e' | 'E' ) ( '+' | '-' )? RULE_INT )? ( ( 'b' | 'B' ) ( 'i' | 'I' | 'd' | 'D' ) | ( 'l' | 'L' | 'd' | 'D' | 'f' | 'F' ) )? )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24306:16: RULE_INT ( ( 'e' | 'E' ) ( '+' | '-' )? RULE_INT )? ( ( 'b' | 'B' ) ( 'i' | 'I' | 'd' | 'D' ) | ( 'l' | 'L' | 'd' | 'D' | 'f' | 'F' ) )?
             {
             mRULE_INT(); 
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24193:25: ( ( 'e' | 'E' ) ( '+' | '-' )? RULE_INT )?
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24306:25: ( ( 'e' | 'E' ) ( '+' | '-' )? RULE_INT )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -2398,7 +2398,7 @@ public class InternalVoiceDslLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24193:26: ( 'e' | 'E' ) ( '+' | '-' )? RULE_INT
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24306:26: ( 'e' | 'E' ) ( '+' | '-' )? RULE_INT
                     {
                     if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                         input.consume();
@@ -2409,7 +2409,7 @@ public class InternalVoiceDslLexer extends Lexer {
                         recover(mse);
                         throw mse;}
 
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24193:36: ( '+' | '-' )?
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24306:36: ( '+' | '-' )?
                     int alt6=2;
                     int LA6_0 = input.LA(1);
 
@@ -2442,7 +2442,7 @@ public class InternalVoiceDslLexer extends Lexer {
 
             }
 
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24193:58: ( ( 'b' | 'B' ) ( 'i' | 'I' | 'd' | 'D' ) | ( 'l' | 'L' | 'd' | 'D' | 'f' | 'F' ) )?
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24306:58: ( ( 'b' | 'B' ) ( 'i' | 'I' | 'd' | 'D' ) | ( 'l' | 'L' | 'd' | 'D' | 'f' | 'F' ) )?
             int alt8=3;
             int LA8_0 = input.LA(1);
 
@@ -2454,7 +2454,7 @@ public class InternalVoiceDslLexer extends Lexer {
             }
             switch (alt8) {
                 case 1 :
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24193:59: ( 'b' | 'B' ) ( 'i' | 'I' | 'd' | 'D' )
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24306:59: ( 'b' | 'B' ) ( 'i' | 'I' | 'd' | 'D' )
                     {
                     if ( input.LA(1)=='B'||input.LA(1)=='b' ) {
                         input.consume();
@@ -2478,7 +2478,7 @@ public class InternalVoiceDslLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24193:87: ( 'l' | 'L' | 'd' | 'D' | 'f' | 'F' )
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24306:87: ( 'l' | 'L' | 'd' | 'D' | 'f' | 'F' )
                     {
                     if ( input.LA(1)=='D'||input.LA(1)=='F'||input.LA(1)=='L'||input.LA(1)=='d'||input.LA(1)=='f'||input.LA(1)=='l' ) {
                         input.consume();
@@ -2511,10 +2511,10 @@ public class InternalVoiceDslLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24195:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '$' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '$' | '_' | '0' .. '9' )* )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24195:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '$' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '$' | '_' | '0' .. '9' )*
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24308:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '$' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '$' | '_' | '0' .. '9' )* )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24308:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '$' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '$' | '_' | '0' .. '9' )*
             {
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24195:11: ( '^' )?
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24308:11: ( '^' )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -2523,7 +2523,7 @@ public class InternalVoiceDslLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24195:11: '^'
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24308:11: '^'
                     {
                     match('^'); 
 
@@ -2541,7 +2541,7 @@ public class InternalVoiceDslLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24195:44: ( 'a' .. 'z' | 'A' .. 'Z' | '$' | '_' | '0' .. '9' )*
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24308:44: ( 'a' .. 'z' | 'A' .. 'Z' | '$' | '_' | '0' .. '9' )*
             loop10:
             do {
                 int alt10=2;
@@ -2590,10 +2590,10 @@ public class InternalVoiceDslLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -2611,10 +2611,10 @@ public class InternalVoiceDslLexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop11:
                     do {
                         int alt11=3;
@@ -2630,7 +2630,7 @@ public class InternalVoiceDslLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -2646,7 +2646,7 @@ public class InternalVoiceDslLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:66: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -2671,10 +2671,10 @@ public class InternalVoiceDslLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop12:
                     do {
                         int alt12=3;
@@ -2690,7 +2690,7 @@ public class InternalVoiceDslLexer extends Lexer {
 
                         switch (alt12) {
                     	case 1 :
-                    	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -2706,7 +2706,7 @@ public class InternalVoiceDslLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24197:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24310:137: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -2749,12 +2749,12 @@ public class InternalVoiceDslLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24199:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24199:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24312:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24312:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24199:24: ( options {greedy=false; } : . )*
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24312:24: ( options {greedy=false; } : . )*
             loop14:
             do {
                 int alt14=2;
@@ -2779,7 +2779,7 @@ public class InternalVoiceDslLexer extends Lexer {
 
                 switch (alt14) {
             	case 1 :
-            	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24199:52: .
+            	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24312:52: .
             	    {
             	    matchAny(); 
 
@@ -2809,12 +2809,12 @@ public class InternalVoiceDslLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24201:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24201:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24314:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24314:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24201:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24314:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop15:
             do {
                 int alt15=2;
@@ -2827,7 +2827,7 @@ public class InternalVoiceDslLexer extends Lexer {
 
                 switch (alt15) {
             	case 1 :
-            	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24201:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24314:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2847,7 +2847,7 @@ public class InternalVoiceDslLexer extends Lexer {
                 }
             } while (true);
 
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24201:40: ( ( '\\r' )? '\\n' )?
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24314:40: ( ( '\\r' )? '\\n' )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -2856,9 +2856,9 @@ public class InternalVoiceDslLexer extends Lexer {
             }
             switch (alt17) {
                 case 1 :
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24201:41: ( '\\r' )? '\\n'
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24314:41: ( '\\r' )? '\\n'
                     {
-                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24201:41: ( '\\r' )?
+                    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24314:41: ( '\\r' )?
                     int alt16=2;
                     int LA16_0 = input.LA(1);
 
@@ -2867,7 +2867,7 @@ public class InternalVoiceDslLexer extends Lexer {
                     }
                     switch (alt16) {
                         case 1 :
-                            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24201:41: '\\r'
+                            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24314:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2899,10 +2899,10 @@ public class InternalVoiceDslLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24203:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24203:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24316:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24316:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24203:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24316:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt18=0;
             loop18:
             do {
@@ -2956,8 +2956,8 @@ public class InternalVoiceDslLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24205:16: ( . )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24205:18: .
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24318:16: ( . )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:24318:18: .
             {
             matchAny(); 
 
@@ -3779,8 +3779,8 @@ public class InternalVoiceDslLexer extends Lexer {
         "\4\44\1\146\1\145\3\uffff\1\164\1\44\4\uffff\2\44\1\151\3\uffff"+
         "\1\157\1\156\1\44\1\uffff";
     static final String DFA19_maxS =
-        "\1\uffff\1\76\1\174\1\46\1\171\2\157\1\164\1\56\1\75\1\76\2\75"+
-        "\1\76\1\72\1\52\1\57\1\uffff\1\170\1\167\1\156\1\165\1\163\2\uffff"+
+        "\1\uffff\1\76\1\174\1\46\1\171\2\157\1\164\1\56\1\75\1\76\2\75\1"+
+        "\76\1\72\1\52\1\57\1\uffff\1\170\1\167\1\156\1\165\1\163\2\uffff"+
         "\1\51\1\uffff\1\162\1\165\1\72\1\165\1\157\1\165\1\uffff\1\157\5"+
         "\uffff\1\145\1\170\1\154\1\172\1\uffff\2\uffff\2\uffff\1\75\6\uffff"+
         "\1\171\1\160\1\162\1\uffff\1\154\1\162\1\156\1\151\1\162\1\155\1"+
@@ -4103,8 +4103,8 @@ public class InternalVoiceDslLexer extends Lexer {
             "\1\73\13\uffff\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32"+
             "\73",
             "\1\u0116",
-            "\1\73\13\uffff\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\3"+
-            "\73\1\u0117\26\73",
+            "\1\73\13\uffff\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\3\73"+
+            "\1\u0117\26\73",
             "\1\u0119",
             "",
             "\1\u011a",
