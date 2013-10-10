@@ -18,39 +18,34 @@ import com.vectorsf.jvoice.model.operations.OperationsFactory;
 
 public class InitialStatePattern extends StatePattern {
 
+	private static final String INITIAL = "Initial";
 	private static final int MIN_WIDTH = 60;
 	private static final int MIN_HEIGHT = 60;
-	private static final String ID_INITIAL_PREFIX = "initialState_";
-	private static final String ID_MAIN_CIRCLE = ID_INITIAL_PREFIX
-			+ "mainCircle";
 
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
 		InitialState addedDomainObject = (InitialState) context.getNewObject();
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
-		final int width = MIN_WIDTH;
-		final int height = MIN_HEIGHT;
+
 		ContainerShape outerContainerShape = peCreateService
 				.createContainerShape(getDiagram(), true);
-		Ellipse circle;
-		{
 
-			circle = gaService.createEllipse(outerContainerShape);
-			gaService.setLocationAndSize(circle, context.getX(),
-					context.getY(), width, height);
-		}
+		Ellipse circle = gaService.createEllipse(outerContainerShape);
+
 		gaService.setRenderingStyle(circle,
 				StatePredefinedColoredAreas.getRedWhiteAdaptions());
-		setId(circle, ID_MAIN_CIRCLE);
+		setId(circle, ID_MAIN_FIGURE);
+		circle.setFilled(true);
+		gaService.setLocationAndSize(circle, context.getX(), context.getY(),
+				Math.max(MIN_WIDTH, context.getWidth()),
+				Math.max(MIN_HEIGHT, context.getHeight()));
 
 		Text text = gaService.createText(circle, addedDomainObject.getName());
 		setId(text, ID_NAME_TEXT);
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
-		gaService.setRenderingStyle(text,
-				StatePredefinedColoredAreas.getRedWhiteAdaptions());
-		gaService.setLocationAndSize(text, 0, 0, width, height);
+
 		peCreateService.createChopboxAnchor(outerContainerShape);
 
 		link(outerContainerShape, addedDomainObject);
@@ -62,7 +57,7 @@ public class InitialStatePattern extends StatePattern {
 	public Object[] create(ICreateContext context) {
 
 		InitialState is = OperationsFactory.eINSTANCE.createInitialState();
-		is.setName("Initial");
+		is.setName(INITIAL);
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		flow.getStates().add(is);
 
@@ -73,7 +68,7 @@ public class InitialStatePattern extends StatePattern {
 
 	@Override
 	public String getCreateName() {
-		return "Initial";
+		return INITIAL;
 	}
 
 	@Override
