@@ -51,6 +51,9 @@
                   isRoot="false"
                   pattern="com.vectorsf.jvoice.base.maven.navigatorContent">
             </contentExtension>
+            <contentExtension
+                  pattern="com.vectorsf.jvoice.ui.navigator.emptyPackagesFilter">
+            </contentExtension>
          </includes>
       </viewerContentBinding>
       <viewer
@@ -338,6 +341,13 @@
             </with>
          </enablement>
       </actionProvider>
+      <commonFilter
+            activeByDefault="true"
+            class="com.vectorsf.jvoice.ui.navigator.filter.EmptyPackagesFilter"
+            id="com.vectorsf.jvoice.ui.navigator.emptyPackagesFilter"
+            name="Empty packages filter"
+            visibleInUI="true">
+      </commonFilter>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
