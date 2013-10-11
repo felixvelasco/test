@@ -12,6 +12,7 @@ import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -48,7 +49,8 @@ import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResour
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class IVRNavigatorTest {
 
-	private static final int SMALL_SLEEP = 200;
+	private static final int SMALL_SLEEP = 300;
+	private static final int MEDIUM_SLEEP = 1000;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
@@ -151,11 +153,34 @@ public class IVRNavigatorTest {
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
-				hasItemInArray(hasProperty("text", is("several"))));
-		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
-				hasItemInArray(hasProperty("text", is("several.packages"))));
-		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
 				hasItemInArray(hasProperty("text", is("several.packages.inside"))));
+
+	}
+
+	@Test
+	public void testFilterFolders() throws Exception {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+
+		IProject project = createProject("testNavigator");
+		createFolders(project, BaseModel.JV_PATH + "/several/packages/inside");
+
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		SWTBotTreeItem[] items = view.bot().tree().getTreeItem("testNavigator").expand().getItems();
+		assertThat(items, hasItemInArray(hasProperty("text", is("several.packages.inside"))));
+		assertThat(items, not(hasItemInArray(hasProperty("text", is("several.packages")))));
+		assertThat(items, not(hasItemInArray(hasProperty("text", is("several")))));
+
+		createFile(project, BaseModel.JV_PATH + "/several/packages/one.jvflow",
+				getInputStreamResource(bundle, "one.jvflow"));
+
+		bot.sleep(MEDIUM_SLEEP);
+
+		items = view.bot().tree().getTreeItem("testNavigator").expand().getItems();
+		assertThat(items, hasItemInArray(hasProperty("text", is("several.packages.inside"))));
+		assertThat(items, hasItemInArray(hasProperty("text", is("several.packages"))));
+		assertThat(items, not(hasItemInArray(hasProperty("text", is("several")))));
 
 	}
 
@@ -169,10 +194,6 @@ public class IVRNavigatorTest {
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
-				hasItemInArray(hasProperty("text", is("several"))));
-		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
-				hasItemInArray(hasProperty("text", is("several.packages"))));
-		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
 				hasItemInArray(hasProperty("text", is("several.packages.inside"))));
 
 		createFolders(project, BaseModel.JV_PATH + "/otros/nuevos");
@@ -180,8 +201,6 @@ public class IVRNavigatorTest {
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
-		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
-				hasItemInArray(hasProperty("text", is("otros"))));
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
 				hasItemInArray(hasProperty("text", is("otros.nuevos"))));
 
@@ -191,16 +210,12 @@ public class IVRNavigatorTest {
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
-				hasItemInArray(hasProperty("text", is("several"))));
-		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
-				hasItemInArray(hasProperty("text", is("several.packages"))));
-		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
 				hasItemInArray(hasProperty("text", is("several.packages.inside"))));
 
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
-				hasItemInArray(hasProperty("text", is(not("otros.nuevos")))));
+				not(hasItemInArray(hasProperty("text", is("otros.nuevos")))));
 		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(),
-				hasItemInArray(hasProperty("text", is(not("otros")))));
+				hasItemInArray(hasProperty("text", is("otros"))));
 
 	}
 
