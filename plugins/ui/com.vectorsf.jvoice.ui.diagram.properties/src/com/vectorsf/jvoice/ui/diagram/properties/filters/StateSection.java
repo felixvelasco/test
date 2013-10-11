@@ -14,6 +14,7 @@ import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -50,6 +51,7 @@ import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
+import com.vectorsf.jvoice.ui.diagram.properties.Activator;
 import com.vectorsf.jvoice.ui.diagram.properties.editting.ConditionEditingSupport;
 import com.vectorsf.jvoice.ui.diagram.properties.editting.EventNameEditingSupport;
 
@@ -195,7 +197,8 @@ ITabbedPropertyConstants {
 	    tableViewer.setCellModifier(new CaseCellModifier(tableViewer));
 	    tableViewer.setCellEditors(editors);
 	    
-	    Button btAdd = factory.createButton(composite, "Add", SWT.PUSH);
+	    Button btAdd = factory.createButton(composite, "", SWT.PUSH);
+	    btAdd.setImage(Activator.getDefault().getImageRegistry().get("imageAdd"));
 	    data = new FormData();
 	    data.left = new FormAttachment(table, 5);
 	    data.top =  new FormAttachment(table, 0,SWT.TOP);
@@ -238,11 +241,12 @@ ITabbedPropertyConstants {
 		        }
 			}
 		});
-	    
-	    Button btRemove = factory.createButton(composite, "Remove", SWT.PUSH);
+	    Button btRemove = factory.createButton(composite, "", SWT.PUSH);
+	    btRemove.setImage(Activator.getDefault().getImageRegistry().get("imageRemove"));
 	    data = new FormData();
-	    data.left = new FormAttachment(btAdd, 5);
-	    data.top =  new FormAttachment(table, 0,SWT.TOP);
+	    data.left = new FormAttachment(btAdd,0,SWT.LEFT);
+	    data.right = new FormAttachment(btAdd,0,SWT.RIGHT);
+	    data.top =  new FormAttachment(btAdd, 10);
 	    btRemove.setLayoutData(data);
 	    btRemove.addListener(SWT.Selection, new Listener() {
 			@Override
@@ -263,12 +267,11 @@ ITabbedPropertyConstants {
             	});
 			}
 	    });
-	    
-	    Button btUp = factory.createButton(composite, "Up", SWT.ARROW);
+	    Button btUp = factory.createButton(composite, "",SWT.PUSH);
+	    btUp.setImage(Activator.getDefault().getImageRegistry().get("imageUp"));
 	    data = new FormData();
-	    data.left = new FormAttachment(btAdd,0,SWT.LEFT);
-	    data.right = new FormAttachment(btAdd,0,SWT.RIGHT);
-	    data.top =  new FormAttachment(btAdd, 10);
+	    data.left = new FormAttachment(btAdd, 5);
+	    data.top =  new FormAttachment(table, 0,SWT.TOP);
 	    btUp.setLayoutData(data);
 	    btUp.addListener(SWT.Selection, new Listener() {
 	    	@Override
@@ -296,12 +299,13 @@ ITabbedPropertyConstants {
             	});
 	    	}
 	    });
-	    
-	    Button btDown = factory.createButton(composite, "Down", SWT.ARROW | SWT.DOWN);
+
+	    Button btDown = factory.createButton(composite, "", SWT.PUSH);
+	    btDown.setImage(Activator.getDefault().getImageRegistry().get("imageDown"));
 	    data = new FormData();
-	    data.left = new FormAttachment(btRemove,0,SWT.LEFT);
-	    data.right = new FormAttachment(btRemove,0,SWT.RIGHT);
-	    data.top =  new FormAttachment(btRemove, 10);
+	    data.left = new FormAttachment(btUp,0,SWT.LEFT);
+	    data.right = new FormAttachment(btUp,0,SWT.RIGHT);
+	    data.top =  new FormAttachment(btUp, 10);
 	    btDown.setLayoutData(data);
 	    btDown.addListener(SWT.Selection, new Listener() {
 	    	@Override
