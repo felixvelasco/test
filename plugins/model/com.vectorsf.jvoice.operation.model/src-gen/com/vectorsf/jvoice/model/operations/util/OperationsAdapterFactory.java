@@ -120,6 +120,10 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 				return createMenuStateAdapter();
 			}
 			@Override
+			public Adapter caseLocutionState(LocutionState object) {
+				return createLocutionStateAdapter();
+			}
+			@Override
 			public Adapter caseJVElement(JVElement object) {
 				return createJVElementAdapter();
 			}
@@ -316,6 +320,20 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMenuStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.operations.LocutionState <em>Locution State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.operations.LocutionState
+	 * @generated
+	 */
+	public Adapter createLocutionStateAdapter() {
 		return null;
 	}
 

@@ -148,6 +148,7 @@ public class OperationsSwitch<T> extends Switch<T> {
 			case OperationsPackage.PROMPT_STATE: {
 				PromptState promptState = (PromptState)theEObject;
 				T result = casePromptState(promptState);
+				if (result == null) result = caseLocutionState(promptState);
 				if (result == null) result = caseState(promptState);
 				if (result == null) result = caseNamedElement(promptState);
 				if (result == null) result = caseJVElement(promptState);
@@ -157,6 +158,7 @@ public class OperationsSwitch<T> extends Switch<T> {
 			case OperationsPackage.INPUT_STATE: {
 				InputState inputState = (InputState)theEObject;
 				T result = caseInputState(inputState);
+				if (result == null) result = caseLocutionState(inputState);
 				if (result == null) result = caseState(inputState);
 				if (result == null) result = caseNamedElement(inputState);
 				if (result == null) result = caseJVElement(inputState);
@@ -166,9 +168,19 @@ public class OperationsSwitch<T> extends Switch<T> {
 			case OperationsPackage.MENU_STATE: {
 				MenuState menuState = (MenuState)theEObject;
 				T result = caseMenuState(menuState);
+				if (result == null) result = caseLocutionState(menuState);
 				if (result == null) result = caseState(menuState);
 				if (result == null) result = caseNamedElement(menuState);
 				if (result == null) result = caseJVElement(menuState);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case OperationsPackage.LOCUTION_STATE: {
+				LocutionState locutionState = (LocutionState)theEObject;
+				T result = caseLocutionState(locutionState);
+				if (result == null) result = caseState(locutionState);
+				if (result == null) result = caseNamedElement(locutionState);
+				if (result == null) result = caseJVElement(locutionState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -353,6 +365,21 @@ public class OperationsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseMenuState(MenuState object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Locution State</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Locution State</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLocutionState(LocutionState object) {
 		return null;
 	}
 

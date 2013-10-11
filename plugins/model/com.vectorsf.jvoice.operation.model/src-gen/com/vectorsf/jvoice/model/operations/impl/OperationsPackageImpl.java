@@ -11,6 +11,7 @@ import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.InputState;
+import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
@@ -118,6 +119,13 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * @generated
 	 */
 	private EClass menuStateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass locutionStateEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -377,26 +385,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPromptState_Locution() {
-		return (EReference)promptStateEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getInputState() {
 		return inputStateEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getInputState_Locution() {
-		return (EReference)inputStateEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -413,8 +403,17 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMenuState_Locution() {
-		return (EReference)menuStateEClass.getEStructuralFeatures().get(0);
+	public EClass getLocutionState() {
+		return locutionStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getLocutionState_Locution() {
+		return (EReference)locutionStateEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -475,13 +474,13 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEReference(callFlowStateEClass, CALL_FLOW_STATE__SUBFLOW);
 
 		promptStateEClass = createEClass(PROMPT_STATE);
-		createEReference(promptStateEClass, PROMPT_STATE__LOCUTION);
 
 		inputStateEClass = createEClass(INPUT_STATE);
-		createEReference(inputStateEClass, INPUT_STATE__LOCUTION);
 
 		menuStateEClass = createEClass(MENU_STATE);
-		createEReference(menuStateEClass, MENU_STATE__LOCUTION);
+
+		locutionStateEClass = createEClass(LOCUTION_STATE);
+		createEReference(locutionStateEClass, LOCUTION_STATE__LOCUTION);
 	}
 
 	/**
@@ -524,9 +523,10 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		switchStateEClass.getESuperTypes().add(this.getState());
 		callStateEClass.getESuperTypes().add(this.getState());
 		callFlowStateEClass.getESuperTypes().add(this.getState());
-		promptStateEClass.getESuperTypes().add(this.getState());
-		inputStateEClass.getESuperTypes().add(this.getState());
-		menuStateEClass.getESuperTypes().add(this.getState());
+		promptStateEClass.getESuperTypes().add(this.getLocutionState());
+		inputStateEClass.getESuperTypes().add(this.getLocutionState());
+		menuStateEClass.getESuperTypes().add(this.getLocutionState());
+		locutionStateEClass.getESuperTypes().add(this.getState());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(stateEClass, State.class, "State", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -559,13 +559,13 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEReference(getCallFlowState_Subflow(), this.getFlow(), null, "subflow", null, 0, 1, CallFlowState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(promptStateEClass, PromptState.class, "PromptState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getPromptState_Locution(), theVoiceDslPackage.getVoiceDsl(), null, "locution", null, 0, 1, PromptState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(inputStateEClass, InputState.class, "InputState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getInputState_Locution(), theVoiceDslPackage.getVoiceDsl(), null, "locution", null, 0, 1, InputState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(menuStateEClass, MenuState.class, "MenuState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getMenuState_Locution(), theVoiceDslPackage.getVoiceDsl(), null, "locution", null, 0, 1, MenuState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(locutionStateEClass, LocutionState.class, "LocutionState", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getLocutionState_Locution(), theVoiceDslPackage.getVoiceDsl(), null, "locution", null, 0, 1, LocutionState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
