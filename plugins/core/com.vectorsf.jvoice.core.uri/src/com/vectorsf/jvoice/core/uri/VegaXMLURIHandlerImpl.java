@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.xmi.XMLResource.URIHandler;
 import org.eclipse.m2e.core.MavenPlugin;
@@ -55,19 +56,19 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		}
 
 		URI uri = null;
-		if (mproject.getMavenProject() != null
-				&& vegaURI.toString().startsWith(VEGA_URI)) {
-			String uriPath = vegaURI.path();
-			if (uriPath != null) {
-				String fileNameToSearch = uriPath.substring(uriPath
-						.lastIndexOf(SEPARATOR) + 1);
-				try {
+		if (vegaURI.toString().startsWith(VEGA_URI)) {
+			try {
+				mproject.getMavenProject(new NullProgressMonitor());
+				String uriPath = vegaURI.path();
+				if (uriPath != null) {
+					String fileNameToSearch = uriPath.substring(uriPath.lastIndexOf(SEPARATOR) + 1);
 					uri = searchURIs(vegaURI, uri, fileNameToSearch, mproject);
-				} catch (IOException | CoreException e) {
-					throw new RuntimeException(e);
 				}
+			} catch (IOException | CoreException e) {
+				throw new RuntimeException(e);
 			}
 		}
+
 		if (uri != null) {
 			return uri;
 		} else {
@@ -103,12 +104,11 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			uriG = URI.createURI(uriG.toPlatformString(true));
 		}
 		IResource resource = ws.getRoot().findMember(uriG.toString());
-		mproject = MavenPlugin.getMavenProjectRegistry().getProject(
-				resource.getProject());
+		mproject = MavenPlugin.getMavenProjectRegistry().getProject(resource.getProject());
 	}
 
-	private URI searchURIs(URI uri, URI vegaURI, String fileNameToSearch,
-			IMavenProjectFacade project) throws IOException, CoreException {
+	private URI searchURIs(URI uri, URI vegaURI, String fileNameToSearch, IMavenProjectFacade project)
+			throws IOException, CoreException {
 		List<Artifact> lArti = getProjectArtifacts(project);
 		for (int i = 0; i < lArti.size(); i++) {
 			Artifact artifacti = lArti.get(i);
@@ -116,8 +116,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 				File artifactJarFile = artifacti.getFile();
 				// jar file
 				if (artifactJarFile != null && artifactJarFile.isFile()) {
-					vegaURI = findInJarDependency(vegaURI, artifacti,
-							fileNameToSearch, artifactJarFile);
+					vegaURI = findInJarDependency(vegaURI, artifacti, fileNameToSearch, artifactJarFile);
 				}
 				// existing project
 				else {
@@ -131,18 +130,16 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		return vegaURI;
 	}
 
-	private URI findInJarDependency(URI vegaURI, Artifact artifacti,
-			String fileNameToSearch, File artifactJarFile) throws IOException {
+	private URI findInJarDependency(URI vegaURI, Artifact artifacti, String fileNameToSearch, File artifactJarFile)
+			throws IOException {
 		String sFullPathSearch = findFullPath(fileNameToSearch, artifactJarFile);
 		if (sFullPathSearch != null) {
-			vegaURI = URI.createURI(JAR_FILE + artifacti.getFile()
-					+ ARCHIVE_SEPARATOR + sFullPathSearch + FRAGMENT0);
+			vegaURI = URI.createURI(JAR_FILE + artifacti.getFile() + ARCHIVE_SEPARATOR + sFullPathSearch + FRAGMENT0);
 		}
 		return vegaURI;
 	}
 
-	private URI findInExistingProject(URI uri, String fileNameToSearch)
-			throws CoreException {
+	private URI findInExistingProject(URI uri, String fileNameToSearch) throws CoreException {
 		URI vegaURI;
 		IResource resourceBaseURI = getBaseURIResource();
 		vegaURI = getVegaURI(fileNameToSearch, resourceBaseURI, uri.authority());
@@ -159,8 +156,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		return resource;
 	}
 
-	private URI getVegaURI(String fileNameToSearch, IResource resourceBaseURI,
-			String projectName) throws CoreException {
+	private URI getVegaURI(String fileNameToSearch, IResource resourceBaseURI, String projectName) throws CoreException {
 		URI vegaURI = null;
 		if (resourceBaseURI != null) {
 			IProject project = resourceBaseURI.getProject();
@@ -175,24 +171,20 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			}
 
 			if (resource != null) {
-				vegaURI = URI.createURI(PLATFORM_RESOURCE
-						+ resource.getFullPath().toString() + FRAGMENT0);
+				vegaURI = URI.createURI(PLATFORM_RESOURCE + resource.getFullPath().toString() + FRAGMENT0);
 			}
 		}
 		return vegaURI;
 	}
 
-	private IResource searchProject(String fileNameToSearch,
-			String projectName, IProject projectDependency)
+	private IResource searchProject(String fileNameToSearch, String projectName, IProject projectDependency)
 			throws CoreException {
 		IResource resource = null;
 		if (projectName.equals(projectDependency.getName())) {
-			List<IResource> fileList = findAllFilesInProjectWithName(
-					projectDependency, fileNameToSearch);
+			List<IResource> fileList = findAllFilesInProjectWithName(projectDependency, fileNameToSearch);
 			if (fileList.size() > 0) {
 				for (IResource iResource : fileList) {
-					if (iResource.getProjectRelativePath().toString()
-							.contains(BaseModel.JV_PATH)) {
+					if (iResource.getProjectRelativePath().toString().contains(BaseModel.JV_PATH)) {
 						resource = iResource;
 						break;
 					}
@@ -203,15 +195,13 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		return resource;
 	}
 
-	private List<IResource> findAllFilesInProjectWithName(IProject project,
-			String sNameToFind) throws CoreException {
-		List<IResource> allCFiles = recursiveFindAllFiles(project, sNameToFind,
-				EMPTY);
+	private List<IResource> findAllFilesInProjectWithName(IProject project, String sNameToFind) throws CoreException {
+		List<IResource> allCFiles = recursiveFindAllFiles(project, sNameToFind, EMPTY);
 		return allCFiles;
 	}
 
-	private List<IResource> recursiveFindAllFiles(IContainer container,
-			String sNameToFind, String sCurrentPath) throws CoreException {
+	private List<IResource> recursiveFindAllFiles(IContainer container, String sNameToFind, String sCurrentPath)
+			throws CoreException {
 		List<IResource> resources = new ArrayList<>();
 		for (IResource iR : container.members()) {
 			switch (iR.getType()) {
@@ -226,16 +216,15 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 				}
 				break;
 			case IResource.FOLDER:
-				resources.addAll(recursiveFindAllFiles((IContainer) iR,
-						sNameToFind, sCurrentPath + DOT + iR.getName()));
+				resources
+						.addAll(recursiveFindAllFiles((IContainer) iR, sNameToFind, sCurrentPath + DOT + iR.getName()));
 				break;
 			}
 		}
 		return resources;
 	}
 
-	private String findFullPath(String fileNameToSearch, File file)
-			throws IOException {
+	private String findFullPath(String fileNameToSearch, File file) throws IOException {
 		ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
 		ZipEntry ze = null;
 		String ret = null;
@@ -243,8 +232,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			String entryName = ze.getName();
 			int index = entryName.lastIndexOf(DOT);
 			if (index != -1) {
-				String entryNameDots = entryName.substring(0, index).replace(
-						SEPARATOR, DOT);
+				String entryNameDots = entryName.substring(0, index).replace(SEPARATOR, DOT);
 				if (entryNameDots.endsWith(fileNameToSearch)) {
 					ret = entryName;
 					break;
@@ -255,14 +243,10 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		return ret;
 	}
 
-	private List<Artifact> getProjectArtifacts(
-			IMavenProjectFacade mavenProjectFacade) {
-		Set<Artifact> unorderedArtifacts = mavenProjectFacade.getMavenProject()
-				.getArtifacts();
-		unorderedArtifacts.add(mavenProjectFacade.getMavenProject()
-				.getArtifact());
-		List<Artifact> orderedArtifacts = new ArrayList<Artifact>(
-				unorderedArtifacts.size());
+	private List<Artifact> getProjectArtifacts(IMavenProjectFacade mavenProjectFacade) {
+		Set<Artifact> unorderedArtifacts = mavenProjectFacade.getMavenProject().getArtifacts();
+		unorderedArtifacts.add(mavenProjectFacade.getMavenProject().getArtifact());
+		List<Artifact> orderedArtifacts = new ArrayList<Artifact>(unorderedArtifacts.size());
 		for (Artifact artifact : unorderedArtifacts) {
 			orderedArtifacts.add(artifact);
 		}
@@ -272,8 +256,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 	private URI getURIJar(URI uri) {
 		String[] segList = uri.segments();
 		String sAuthority = uri.authority();
-		String sProjectName = sAuthority.substring(sAuthority
-				.lastIndexOf(SEPARATOR2) + 1);
+		String sProjectName = sAuthority.substring(sAuthority.lastIndexOf(SEPARATOR2) + 1);
 		boolean bFinJV_PATH = false;
 		sProjectName = sProjectName.substring(0, sProjectName.indexOf(GUION));
 		StringBuilder flujos = new StringBuilder();
@@ -294,8 +277,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			}
 		}
 		if (sProjectName != null && flujos.length() > 0) {
-			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR
-					+ sProjectName + SEPARATOR + flujos + FRAGMENT0);
+			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR + sProjectName + SEPARATOR + flujos + FRAGMENT0);
 		} else {
 			return null;
 		}
@@ -331,8 +313,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			}
 		}
 		if (sProjectName != null && flujos.length() > 0) {
-			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR
-					+ sProjectName + SEPARATOR + flujos + FRAGMENT0);
+			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR + sProjectName + SEPARATOR + flujos + FRAGMENT0);
 		} else {
 			return null;
 		}
