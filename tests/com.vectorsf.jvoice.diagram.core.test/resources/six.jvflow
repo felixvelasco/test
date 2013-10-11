@@ -722,13 +722,13 @@
     </states>
     <states xsi:type="operations:SwitchState" name="Switch" incomingTransitions="/1/@transitions.7" outgoingTransitions="/1/@transitions.2 /1/@transitions.3 /1/@transitions.8 /1/@transitions.9 /1/@transitions.13 /1/@transitions.14"/>
     <states xsi:type="operations:PromptState" name="Prompt" incomingTransitions="/1/@transitions.10" outgoingTransitions="/1/@transitions.11">
-      <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Prompt#/1"/>
+      <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Prompt#/0"/>
     </states>
     <states xsi:type="operations:InputState" name="Input" incomingTransitions="/1/@transitions.8" outgoingTransitions="/1/@transitions.10">
-      <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Input#/1"/>
+      <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Input#/0"/>
     </states>
     <states xsi:type="operations:MenuState" name="Menu" incomingTransitions="/1/@transitions.14" outgoingTransitions="/1/@transitions.15">
-      <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Menu#/1"/>
+      <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Menu#/0"/>
     </states>
     <states xsi:type="operations:InitialState" name="Initial"/>
     <transitions target="/1/@states.1" eventName="Transition"/>
