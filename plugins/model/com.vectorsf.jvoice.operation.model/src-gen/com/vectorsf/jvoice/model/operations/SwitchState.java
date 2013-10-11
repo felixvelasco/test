@@ -37,4 +37,12 @@ public interface SwitchState extends State {
 	 */
 	EList<Case> getCase();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='for (Case switchCase: getCase()) {\r\n\tif (switchCase.getEventName().equals(name)) {\r\n\t\treturn switchCase;\r\n\t}\r\n}\r\n\t\t\r\nreturn null;'"
+	 * @generated
+	 */
+	Case getCase(String name);
+
 } // SwitchState

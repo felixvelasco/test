@@ -6,6 +6,7 @@ import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -71,6 +72,21 @@ public class SwitchStateImpl extends StateImpl implements SwitchState {
 			case_ = new EObjectContainmentEList<Case>(Case.class, this, OperationsPackage.SWITCH_STATE__CASE);
 		}
 		return case_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Case getCase(final String name) {
+		for (Case switchCase: getCase()) {
+			if (switchCase.getEventName().equals(name)) {
+				return switchCase;
+			}
+		}
+				
+		return null;
 	}
 
 	/**
@@ -145,6 +161,20 @@ public class SwitchStateImpl extends StateImpl implements SwitchState {
 				return case_ != null && !case_.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OperationsPackage.SWITCH_STATE___GET_CASE__STRING:
+				return getCase((String)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //SwitchStateImpl

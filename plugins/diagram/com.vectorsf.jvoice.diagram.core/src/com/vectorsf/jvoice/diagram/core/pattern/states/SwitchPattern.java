@@ -15,6 +15,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
+import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.SwitchState;
@@ -30,6 +31,9 @@ public class SwitchPattern extends StatePattern {
 	protected PictogramElement doAdd(IAddContext context) {
 
 		SwitchState addedDomainObject = (SwitchState) context.getNewObject();
+		Case caseDefault = OperationsFactory.eINSTANCE.createCase();
+		caseDefault.setEventName("default");
+		addedDomainObject.getCase().add(caseDefault);
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
 

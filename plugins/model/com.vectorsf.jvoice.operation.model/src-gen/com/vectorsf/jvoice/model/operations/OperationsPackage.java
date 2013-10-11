@@ -6,6 +6,7 @@ import com.vectorsf.jvoice.model.base.BasePackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -497,13 +498,22 @@ public interface OperationsPackage extends EPackage {
 	int SWITCH_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Get Case</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_STATE___GET_CASE__STRING = STATE_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Switch State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SWITCH_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+	int SWITCH_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CaseImpl <em>Case</em>}' class.
@@ -1184,6 +1194,16 @@ public interface OperationsPackage extends EPackage {
 	EReference getSwitchState_Case();
 
 	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.SwitchState#getCase(java.lang.String) <em>Get Case</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Case</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.SwitchState#getCase(java.lang.String)
+	 * @generated
+	 */
+	EOperation getSwitchState__GetCase__String();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Case <em>Case</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1443,6 +1463,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SWITCH_STATE__CASE = eINSTANCE.getSwitchState_Case();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Case</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SWITCH_STATE___GET_CASE__STRING = eINSTANCE.getSwitchState__GetCase__String();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.CaseImpl <em>Case</em>}' class.
