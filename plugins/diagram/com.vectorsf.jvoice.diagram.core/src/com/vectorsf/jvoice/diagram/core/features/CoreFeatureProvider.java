@@ -5,15 +5,23 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.log.Logger;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
+import org.eclipse.graphiti.features.ICopyFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
+import org.eclipse.graphiti.features.IPasteFeature;
+import org.eclipse.graphiti.features.context.ICopyContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
+import org.eclipse.graphiti.features.context.IPasteContext;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.DefaultFeatureProviderWithPatterns;
 import org.eclipse.graphiti.pattern.IPattern;
+import org.eclipse.graphiti.ui.features.AbstractCopyFeature;
+import org.eclipse.graphiti.ui.features.AbstractPasteFeature;
 import org.osgi.service.log.LogService;
 
 import com.vectorsf.jvoice.diagram.core.Activator;
+import com.vectorsf.jvoice.diagram.core.features.editing.StatesCopyFeature;
+import com.vectorsf.jvoice.diagram.core.features.editing.StatesPasteFeature;
 import com.vectorsf.jvoice.diagram.core.features.editing.TextEventDirectEditFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
@@ -60,4 +68,45 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 		return super.getDirectEditingFeature(context);
 	}
 
+	@Override
+	public ICopyFeature getCopyFeature(ICopyContext context) {
+		return new AbstractCopyFeature(this) {
+
+			@Override
+			public void copy(ICopyContext context) {
+
+				StatesCopyFeature statesCopyFeature = new StatesCopyFeature(
+						this.getFeatureProvider());
+				statesCopyFeature.copy(context);
+
+			}
+
+			@Override
+			public boolean canCopy(ICopyContext context) {
+
+				return true;
+			}
+		};
+	}
+
+	@Override
+	public IPasteFeature getPasteFeature(IPasteContext context) {
+		return new AbstractPasteFeature(this) {
+
+			@Override
+			public void paste(IPasteContext context) {
+
+				StatesPasteFeature statesPasteFeature = new StatesPasteFeature(
+						this.getFeatureProvider());
+				statesPasteFeature.paste(context);
+
+			}
+
+			@Override
+			public boolean canPaste(IPasteContext context) {
+
+				return true;
+			}
+		};
+	}
 }
