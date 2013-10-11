@@ -13,7 +13,16 @@ public class EmptyPackagesFilter extends ViewerFilter {
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 		if (element instanceof JVPackage) {
-			return !((JVPackage) element).getBeans().isEmpty();
+			JVPackage jvPackage = (JVPackage) element;
+			if (!jvPackage.getBeans().isEmpty()) {
+				return true;
+			}
+			String name = jvPackage.getName();
+			for (JVPackage pck : jvPackage.getOwnerProject().getPackages()) {
+				if (pck != jvPackage && pck.getName().startsWith(name)) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}
