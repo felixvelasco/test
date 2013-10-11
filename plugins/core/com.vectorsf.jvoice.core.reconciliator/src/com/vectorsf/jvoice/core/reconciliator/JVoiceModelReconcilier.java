@@ -1,6 +1,7 @@
 package com.vectorsf.jvoice.core.reconciliator;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
@@ -98,8 +99,8 @@ public class JVoiceModelReconcilier {
 	public void reloadConfigurationProperties(IFile file, Configuration configuration) throws CoreException {
 		configuration.getParameters().clear();
 		Properties pr = new Properties();
-		try {
-			pr.load(file.getContents());
+		try (InputStream contents = file.getContents()) {
+			pr.load(contents);
 		} catch (IOException e) {
 			throw new CoreException(null);
 		}
