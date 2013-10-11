@@ -229,6 +229,7 @@ ITabbedPropertyConstants {
 				            		}
 				            	}
 				            	estadoSelection.getCase().add(casoNuevo);
+				            	estadoSelection.getCase().move(estadoSelection.getCase().size()-2, casoNuevo);
 				            	casos = estadoSelection.getCase();
 				            	tableViewer.setInput(casos);
 		            		}
@@ -269,6 +270,32 @@ ITabbedPropertyConstants {
 	    data.right = new FormAttachment(btAdd,0,SWT.RIGHT);
 	    data.top =  new FormAttachment(btAdd, 10);
 	    btUp.setLayoutData(data);
+	    btUp.addListener(SWT.Selection, new Listener() {
+	    	@Override
+			public void handleEvent(Event event) {
+	    		TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(estadoSelection);
+            	dominio.getCommandStack().execute(new RecordingCommand(dominio) {
+            		protected void doExecute() {
+            			TableItem[] item = tableViewer.getTable().getSelection();
+            			if (item.length>0){
+            				Case caso = (Case)item[0].getData();
+            				if (!caso.getEventName().equals("default")){
+            					for (int i=0; i< estadoSelection.getCase().size(); i++){
+            						if (estadoSelection.getCase().get(i).equals(caso)){
+            							if (i>0){
+            								estadoSelection.getCase().move(i-1, caso);
+                        					casos = estadoSelection.getCase();
+                			            	tableViewer.setInput(casos);
+                			            	break;
+            							}
+            						}
+            					}
+            				}
+            			}
+            		}
+            	});
+	    	}
+	    });
 	    
 	    Button btDown = factory.createButton(composite, "Down", SWT.ARROW | SWT.DOWN);
 	    data = new FormData();
@@ -276,6 +303,32 @@ ITabbedPropertyConstants {
 	    data.right = new FormAttachment(btRemove,0,SWT.RIGHT);
 	    data.top =  new FormAttachment(btRemove, 10);
 	    btDown.setLayoutData(data);
+	    btDown.addListener(SWT.Selection, new Listener() {
+	    	@Override
+			public void handleEvent(Event event) {
+	    		TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(estadoSelection);
+            	dominio.getCommandStack().execute(new RecordingCommand(dominio) {
+            		protected void doExecute() {
+            			TableItem[] item = tableViewer.getTable().getSelection();
+            			if (item.length>0){
+            				Case caso = (Case)item[0].getData();
+            				if (!caso.getEventName().equals("default")){
+            					for (int i=0; i< estadoSelection.getCase().size(); i++){
+            						if (estadoSelection.getCase().get(i).equals(caso)){
+            							if (i<estadoSelection.getCase().size()-2){
+            								estadoSelection.getCase().move(i+1, caso);
+                        					casos = estadoSelection.getCase();
+                			            	tableViewer.setInput(casos);
+                			            	break;
+            							}
+            						}
+            					}
+            				}
+            			}
+            		}
+            	});
+	    	}
+	    });
 	}
 
 	/**
