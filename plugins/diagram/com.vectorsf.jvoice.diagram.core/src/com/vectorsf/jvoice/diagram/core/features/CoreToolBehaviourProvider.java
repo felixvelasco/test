@@ -27,7 +27,7 @@ import org.eclipse.graphiti.tb.IContextMenuEntry;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
-import com.vectorsf.jvoice.diagram.core.pattern.states.OpenEditor;
+import com.vectorsf.jvoice.diagram.core.pattern.states.OpenEditorFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.CreateTransitionFromPad;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionMenuPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
@@ -89,13 +89,11 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 		// create a menu-entry in the sub-menu for each custom feature
 		context.putProperty(CONTEXT_MENU_ENTRY, true);
-		ICustomFeature[] customFeatures = getFeatureProvider()
-				.getCustomFeatures(context);
+		ICustomFeature[] customFeatures = getFeatureProvider().getCustomFeatures(context);
 		for (int i = 0; i < customFeatures.length; i++) {
 			ICustomFeature customFeature = customFeatures[i];
 			if (customFeature.isAvailable(context)) {
-				ContextMenuEntry menuEntry = new ContextMenuEntry(
-						customFeature, context);
+				ContextMenuEntry menuEntry = new ContextMenuEntry(customFeature, context);
 				subMenu.add(menuEntry);
 			}
 		}
@@ -104,8 +102,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	}
 
 	@Override
-	public IConnectionSelectionInfo getSelectionInfoForConnection(
-			Connection connection) {
+	public IConnectionSelectionInfo getSelectionInfoForConnection(Connection connection) {
 		IColorConstant lineColor = new ColorConstant("191c26"); //$NON-NLS-1$
 		IConnectionSelectionInfo si = new ConnectionSelectionInfoImpl();
 		si.setColor(lineColor);
@@ -116,12 +113,10 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	}
 
 	@Override
-	public IContextButtonPadData getContextButtonPad(
-			IPictogramElementContext context) {
+	public IContextButtonPadData getContextButtonPad(IPictogramElementContext context) {
 		IContextButtonPadData data = super.getContextButtonPad(context);
 		PictogramElement pe = context.getPictogramElement();
-		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(
-				pe);
+		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
 
 		State sta = (State) bo;
 		if (!(sta instanceof FinalState)) {
@@ -129,8 +124,8 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 			ICreateConnectionFeature feature = null;
 			if (sta instanceof SwitchState) {
 
-				feature = new CreateTransitionFromPad(getFeatureProvider(),
-						new TransitionSwitchPattern(getFeatureProvider()));
+				feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionSwitchPattern(
+						getFeatureProvider()));
 				button.setText(feature.getCreateName());
 				button.setDescription(feature.getCreateDescription());
 				button.setIconId(getImageFor(sta, feature));
@@ -142,19 +137,15 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 				List<Output> outputs = new ArrayList<Output>();
 				VoiceDsl locution = menuState.getLocution();
 				if (locution != null) {
-					Outputs locutionOutputs = menuState.getLocution()
-							.getOutputs();
+					Outputs locutionOutputs = menuState.getLocution().getOutputs();
 					if (locutionOutputs != null) {
 						outputs = locutionOutputs.getOutput();
-						ContextButtonEntry menuButton = new ContextButtonEntry(
-								null, context);
+						ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
 						menuButton.setText("Transition");
 
 						for (Output output : outputs) {
-							feature = new CreateTransitionFromPad(
-									getFeatureProvider(),
-									new TransitionMenuPattern(output,
-											getFeatureProvider()));
+							feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionMenuPattern(
+									output, getFeatureProvider()));
 							menuButton.setIconId(getImageFor(sta, feature));
 							menuButton.addDragAndDropFeature(feature);
 						}
@@ -163,8 +154,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 				}
 
 			} else {
-				feature = new CreateTransitionFromPad(getFeatureProvider(),
-						new TransitionPattern(getFeatureProvider()));
+				feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionPattern(getFeatureProvider()));
 				button.setText(feature.getCreateName());
 				button.setDescription(feature.getCreateDescription());
 				button.setIconId(getImageFor(sta, feature));
@@ -183,25 +173,18 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		return feature.getCreateImageId();
 	}
 
-	public IDirectEditingFeature getDirectEditingFeature(
-			IDirectEditingContext context) {
+	public IDirectEditingFeature getDirectEditingFeature(IDirectEditingContext context) {
 		return null;
 	}
 
 	@Override
 	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
-		if (getFeatureProvider().getBusinessObjectForPictogramElement(
-				context.getInnerPictogramElement()) instanceof CallFlowState
-				|| getFeatureProvider().getBusinessObjectForPictogramElement(
-						context.getInnerPictogramElement()) instanceof InputState
-				|| getFeatureProvider().getBusinessObjectForPictogramElement(
-						context.getInnerPictogramElement()) instanceof MenuState
-				|| getFeatureProvider().getBusinessObjectForPictogramElement(
-						context.getInnerPictogramElement()) instanceof PromptState) {
+		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(context.getInnerPictogramElement());
 
-			OpenEditor oe = new OpenEditor(getFeatureProvider());
+		if (bo instanceof CallFlowState || bo instanceof InputState || bo instanceof MenuState
+				|| bo instanceof PromptState) {
 
-			return oe;
+			return new OpenEditorFeature(getFeatureProvider());
 		}
 
 		return super.getDoubleClickFeature(context);
