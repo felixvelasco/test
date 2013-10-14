@@ -607,5 +607,57 @@ public class PropertiesDiagramTest {
 		bot.sleep(LARGE_SLEEP);
 		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("otroCase"));
 		assertThat(viewProperties.bot().clabel(0).getText(), not(equalToIgnoringCase("")));
+		
+		viewProperties.bot().table().click(0, 1);
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.bot().text("otroCase").setText("nuevo_intento");
+		viewProperties.bot().table().click(0, 0);
+		bot.sleep(LARGE_SLEEP);
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("nuevo_intento"));
+		assertThat(viewProperties.bot().clabel(0).getText(), equalToIgnoringCase(""));
+		
+		viewProperties.bot().table().click(0, 1);
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.bot().text("nuevo_intento").setText("nuevo_intento/");
+		viewProperties.bot().table().click(0, 0);
+		bot.sleep(LARGE_SLEEP);
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("nuevo_intento"));
+		assertThat(viewProperties.bot().clabel(0).getText(), not(equalToIgnoringCase("")));
+		
+		viewProperties.bot().table().click(0, 1);
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.bot().text("nuevo_intento").setText("otraMas");
+		viewProperties.bot().table().click(0, 0);
+		bot.sleep(LARGE_SLEEP);
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("otraMas"));
+		assertThat(viewProperties.bot().clabel(0).getText(), equalToIgnoringCase(""));
+		
+		viewProperties.bot().table().click(0, 1);
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.bot().text("otraMas").setText("");
+		viewProperties.bot().table().click(0, 0);
+		bot.sleep(LARGE_SLEEP);
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("otraMas"));
+		assertThat(viewProperties.bot().clabel(0).getText(), not(equalToIgnoringCase("")));
+		
+		viewProperties.bot().table().click(0, 1);
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.bot().text("otraMas").setText("laUltima");
+		viewProperties.bot().table().click(0, 0);
+		bot.sleep(LARGE_SLEEP);
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("laUltima"));
+		assertThat(viewProperties.bot().clabel(0).getText(), equalToIgnoringCase(""));
+		
+		viewProperties.bot().button(0).click();
+		bot.sleep(LARGE_SLEEP);
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_1"));
+		
+		viewProperties.bot().table().click(0, 1);
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.bot().text("laUltima").setText("Case_1");
+		viewProperties.bot().table().click(0, 0);
+		bot.sleep(LARGE_SLEEP);
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("laUltima"));
+		assertThat(viewProperties.bot().clabel(0).getText(), not(equalToIgnoringCase("")));
 	}
 }
