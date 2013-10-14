@@ -31,23 +31,20 @@ public class JVoicePersistencyBehavior extends DefaultPersistencyBehavior {
 	}
 
 	@Override
-	protected Set<Resource> save(
-			final TransactionalEditingDomain editingDomain,
+	protected Set<Resource> save(final TransactionalEditingDomain editingDomain,
 			final Map<Resource, Map<?, ?>> saveOptions, IProgressMonitor monitor) {
 		final Map<URI, Throwable> failedSaves = new HashMap<URI, Throwable>();
 		final Set<Resource> savedResources = new HashSet<Resource>();
 		final IWorkspaceRunnable wsRunnable = new IWorkspaceRunnable() {
 			@Override
-			public void run(final IProgressMonitor monitor)
-					throws CoreException {
+			public void run(final IProgressMonitor monitor) throws CoreException {
 
 				final Runnable runnable = new Runnable() {
 					@Override
 					public void run() {
 						Transaction parentTx;
 						if (editingDomain != null
-								&& (parentTx = ((TransactionalEditingDomainImpl) editingDomain)
-										.getActiveTransaction()) != null) {
+								&& (parentTx = ((TransactionalEditingDomainImpl) editingDomain).getActiveTransaction()) != null) {
 							do {
 								if (!parentTx.isReadOnly()) {
 									throw new IllegalStateException(
@@ -57,13 +54,11 @@ public class JVoicePersistencyBehavior extends DefaultPersistencyBehavior {
 									.getActiveTransaction().getParent()) != null);
 						}
 
-						final EList<Resource> resources = editingDomain
-								.getResourceSet().getResources();
+						final EList<Resource> resources = editingDomain.getResourceSet().getResources();
 						// Copy list to an array to prevent
 						// ConcurrentModificationExceptions
 						// during the saving of the dirty resources
-						Resource[] resourcesArray = new Resource[resources
-								.size()];
+						Resource[] resourcesArray = new Resource[resources.size()];
 						resourcesArray = resources.toArray(resourcesArray);
 						for (int i = 0; i < resourcesArray.length; i++) {
 							// In case resource modification tracking is
@@ -74,22 +69,17 @@ public class JVoicePersistencyBehavior extends DefaultPersistencyBehavior {
 							// save all resources in the set
 							final Resource resource = resourcesArray[i];
 							/*
-							 * Bug 371513 - Added check for isLoaded(): a
-							 * resource that has not yet been loaded (possibly
-							 * after a reload triggered by a change in another
-							 * editor) has no content yet; saving such a
-							 * resource will simply erase _all_ content from the
-							 * resource on the disk (including the diagram). -->
-							 * a not yet loaded resource must not be saved
+							 * Bug 371513 - Added check for isLoaded(): a resource that has not yet been loaded
+							 * (possibly after a reload triggered by a change in another editor) has no content yet;
+							 * saving such a resource will simply erase _all_ content from the resource on the disk
+							 * (including the diagram). --> a not yet loaded resource must not be saved
 							 */
-							if ((!resource.isTrackingModification() || resource
-									.isModified())
-									&& resource.isLoaded()
+							if ((!resource.isTrackingModification() || resource.isModified()) && resource.isLoaded()
 									&& resource instanceof XMLResource) {
 								try {
 									resource.save(saveOptions.get(resource));
 									savedResources.add(resource);
-								} catch (final Throwable t) {
+								} catch (final RuntimeException | IOException t) {
 									failedSaves.put(resource.getURI(), t);
 								}
 							}
@@ -107,8 +97,7 @@ public class JVoicePersistencyBehavior extends DefaultPersistencyBehavior {
 		try {
 			ResourcesPlugin.getWorkspace().run(wsRunnable, null);
 			if (!failedSaves.isEmpty()) {
-				throw new WrappedException(createMessage(failedSaves),
-						new RuntimeException());
+				throw new WrappedException(createMessage(failedSaves), new RuntimeException());
 			}
 		} catch (final CoreException e) {
 			final Throwable cause = e.getStatus().getException();
@@ -122,8 +111,7 @@ public class JVoicePersistencyBehavior extends DefaultPersistencyBehavior {
 	}
 
 	private String createMessage(Map<URI, Throwable> failedSaves) {
-		final StringBuilder buf = new StringBuilder(
-				"The following resources could not be saved:"); //$NON-NLS-1$
+		final StringBuilder buf = new StringBuilder("The following resources could not be saved:"); //$NON-NLS-1$
 		for (final Entry<URI, Throwable> entry : failedSaves.entrySet()) {
 			buf.append("\nURI: ").append(entry.getKey().toString()).append(", cause: \n").append(getExceptionAsString(entry.getValue())); //$NON-NLS-1$ //$NON-NLS-2$
 		}
