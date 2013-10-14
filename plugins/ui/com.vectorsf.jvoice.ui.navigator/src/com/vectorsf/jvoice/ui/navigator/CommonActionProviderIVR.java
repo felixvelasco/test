@@ -7,6 +7,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -14,9 +15,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.actions.OpenFileAction;
 import org.eclipse.ui.actions.OpenWithMenu;
-import org.eclipse.ui.internal.navigator.AdaptabilityUtility;
-import org.eclipse.ui.internal.navigator.resources.actions.OpenActionProvider;
-import org.eclipse.ui.internal.navigator.resources.plugin.WorkbenchNavigatorMessages;
+import org.eclipse.ui.navigator.CommonActionProvider;
 import org.eclipse.ui.navigator.ICommonActionConstants;
 import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 import org.eclipse.ui.navigator.ICommonMenuConstants;
@@ -28,7 +27,7 @@ import com.vectorsf.jvoice.model.base.JVBean;
  * @author xIS14487
  * 
  */
-public class CommonActionProviderIVR extends OpenActionProvider {
+public class CommonActionProviderIVR extends CommonActionProvider {
 
 	private OpenFileAction openFileAction;
 
@@ -50,8 +49,7 @@ public class CommonActionProviderIVR extends OpenActionProvider {
 			return;
 		}
 
-		IStructuredSelection selection = (IStructuredSelection) getContext()
-				.getSelection();
+		IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
 
 		openFileAction.selectionChanged(selection);
 		if (openFileAction.isEnabled()) {
@@ -65,21 +63,17 @@ public class CommonActionProviderIVR extends OpenActionProvider {
 		if (!contribute) {
 			return;
 		}
-		IStructuredSelection selection = (IStructuredSelection) getContext()
-				.getSelection();
+		IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
 		if (selection.size() == 1
-				&& (selection.getFirstElement() instanceof IFile || selection
-						.getFirstElement() instanceof JVBean)) {
+				&& (selection.getFirstElement() instanceof IFile || selection.getFirstElement() instanceof JVBean)) {
 			openFileAction.selectionChanged(selection);
-			theActionBars.setGlobalActionHandler(ICommonActionConstants.OPEN,
-					openFileAction);
+			theActionBars.setGlobalActionHandler(ICommonActionConstants.OPEN, openFileAction);
 		}
 
 	}
 
 	private void addOpenWithMenu(IMenuManager aMenu) {
-		IStructuredSelection ss = (IStructuredSelection) getContext()
-				.getSelection();
+		IStructuredSelection ss = (IStructuredSelection) getContext().getSelection();
 
 		if (ss == null || ss.size() != 1) {
 			return;
@@ -88,20 +82,19 @@ public class CommonActionProviderIVR extends OpenActionProvider {
 		Object o = ss.getFirstElement();
 
 		// first try IResource
-		IAdaptable openable = (IAdaptable) AdaptabilityUtility.getAdapter(o,
-				IResource.class);
+		IAdaptable openable = (IAdaptable) Platform.getAdapterManager().getAdapter(o, IResource.class);
 		// otherwise try ResourceMapping
 		if (openable == null) {
-			openable = (IAdaptable) AdaptabilityUtility.getAdapter(o,
-					ResourceMapping.class);
+			openable = (IAdaptable) Platform.getAdapterManager().getAdapter(o, ResourceMapping.class);
 		} else if (((IResource) openable).getType() != IResource.FILE) {
 			openable = null;
 		}
 
 		if (openable != null) {
 			// Create a menu flyout.
+			@SuppressWarnings("restriction")
 			IMenuManager submenu = new MenuManager(
-					WorkbenchNavigatorMessages.OpenActionProvider_OpenWithMenu_label,
+					org.eclipse.ui.internal.navigator.resources.plugin.WorkbenchNavigatorMessages.OpenActionProvider_OpenWithMenu_label,
 					ICommonMenuConstants.GROUP_OPEN_WITH);
 			submenu.add(new GroupMarker(ICommonMenuConstants.GROUP_TOP));
 			submenu.add(new OpenWithMenu(viewSite.getPage(), openable));
@@ -109,8 +102,7 @@ public class CommonActionProviderIVR extends OpenActionProvider {
 
 			// Add the submenu.
 			if (submenu.getItems().length > 2 && submenu.isEnabled()) {
-				aMenu.appendToGroup(ICommonMenuConstants.GROUP_OPEN_WITH,
-						submenu);
+				aMenu.appendToGroup(ICommonMenuConstants.GROUP_OPEN_WITH, submenu);
 			}
 		}
 	}
