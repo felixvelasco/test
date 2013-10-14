@@ -14,9 +14,7 @@ import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -35,7 +33,6 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -169,7 +166,6 @@ ITabbedPropertyConstants {
 		table = factory.createTable(composite, 0);
 		data = new FormData();
 		data.left = new FormAttachment(nameText, 0,SWT.LEFT);
-//		data.right = new FormAttachment(50, 0);
 		data.right = new FormAttachment(nameText,-120,SWT.RIGHT);
         data.top = new FormAttachment(OutTransitions, 10);
         table.setLayoutData(data);
@@ -179,9 +175,9 @@ ITabbedPropertyConstants {
 		tableViewer = new TableViewer(table);
 	    tableViewer.setUseHashlookup(true);
 	    
-	    TableViewerColumn condition = createTableViewerColumn(CONDITION, 400, 0);
+	    TableViewerColumn condition = createTableViewerColumn(CONDITION, 400);
 	    condition.setEditingSupport(new ConditionEditingSupport(tableViewer));
-	    TableViewerColumn eventName = createTableViewerColumn(NAME, 120, 0);
+	    TableViewerColumn eventName = createTableViewerColumn(NAME, 120);
 	    eventName.setEditingSupport(new EventNameEditingSupport(tableViewer, error));
 	    
 	    
@@ -194,7 +190,6 @@ ITabbedPropertyConstants {
 	    editors[1] = new TextCellEditor(table);
 
 	    tableViewer.setColumnProperties(PROPS);
-	    tableViewer.setCellModifier(new CaseCellModifier(tableViewer));
 	    tableViewer.setCellEditors(editors);
 	    
 	    Button btAdd = factory.createButton(composite, "", SWT.PUSH);
@@ -513,40 +508,6 @@ ITabbedPropertyConstants {
 		String path = (((State) bo).eResource()).getURI().path().substring(9).toString();
 		pathText.setText(path == null ? "" : path);
 	}
-
-
-	class CaseCellModifier implements ICellModifier {
-		  private Viewer viewer;
-
-		  public CaseCellModifier(Viewer viewer) {
-		    this.viewer = viewer;
-		  }
-
-		  public boolean canModify(Object element, String property) {
-		    return true;
-		  }
-
-		  public Object getValue(Object element, String property) {
-		    Case p = (Case) element;
-		    if (StateSection.NAME.equals(property))
-		      return p.getEventName();
-		    else if (StateSection.CONDITION.equals(property))
-		    	return p.getCondition();
-		    else
-		      return null;
-		  }
-
-		  public void modify(Object element, String property, Object value) {
-		    if (element instanceof Item) element = ((Item) element).getData();
-
-		    Case p = (Case) element;
-		    if (StateSection.NAME.equals(property))
-		      p.setEventName((String) value);
-		    else if (StateSection.CONDITION.equals(property))
-		    	 p.setCondition((String) value);
-		    viewer.refresh();
-		  }
-		}
 	
 	class CaseContentProvider implements IStructuredContentProvider {
 		  public Object[] getElements(Object inputElement) {
@@ -590,8 +551,7 @@ ITabbedPropertyConstants {
 		public void removeListener(ILabelProviderListener listener) {}
 		}
 	
-	private TableViewerColumn createTableViewerColumn(String title, int bound,
-		      final int colNumber) {
+	private TableViewerColumn createTableViewerColumn(String title, int bound) {
 		    final TableViewerColumn viewerColumn = new TableViewerColumn(tableViewer,
 		        SWT.NONE);
 		    final TableColumn column = viewerColumn.getColumn();
