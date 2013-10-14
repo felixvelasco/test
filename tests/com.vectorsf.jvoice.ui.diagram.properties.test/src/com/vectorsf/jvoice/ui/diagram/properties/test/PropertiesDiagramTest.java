@@ -24,11 +24,10 @@ import org.junit.Test;
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-
+import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-
 import static org.junit.Assert.fail;
 
 /**
@@ -469,4 +468,140 @@ public class PropertiesDiagramTest {
 		gefViewer.click("inputDSL");
 		assertThat(viewProperties.bot().text("otro"), is(not(nullValue())));
 	}
+	
+	private void comunPropertiesSwitch()throws CoreException {
+		IProject project = SWTBotHelper.createProject("testNavigator");
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/several/packages/inside/Swicth_Flow.jvflow",
+				SWTBotHelper.getInputStreamResource("Swicth_Flow.jvflow"));
+
+		bot.sleep(LARGE_SLEEP);
+
+		SWTBotHelper.openFile(file);
+		bot.sleep(LARGE_SLEEP);
+
+		editor = SWTBotHelper.getGefEditor(bot);
+		gefViewer = editor.getSWTBotGefViewer();
+
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.setFocus();
+
+		gefViewer.click("Switch");
+
+		bot.sleep(LARGE_SLEEP);
+		
+		assertThat(viewProperties.bot().table().columns().get(0).toString(), equalToIgnoringCase("Condition"));
+		assertThat(viewProperties.bot().table().columns().get(1).toString(), equalToIgnoringCase("EventName"));
+		assertThat(viewProperties.bot().table().columnCount(), is(2));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("default"));
+		viewProperties.bot().button(0).click();
+	}
+	
+	@Test
+	public void testPropertiesSwitchCaseAdd() throws CoreException {
+		comunPropertiesSwitch();
+		
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
+	}
+	
+	@Test
+	public void testPropertiesSwitchCaseRemove() throws CoreException {
+		comunPropertiesSwitch();
+		
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
+		viewProperties.bot().table().getTableItem(0).select();
+		viewProperties.bot().button(1).click();
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("default"));
+	}
+	
+	@Test
+	public void testPropertiesSwitchCaseUp() throws CoreException {
+		comunPropertiesSwitch();
+		viewProperties.bot().button(0).click();
+		
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_2"));
+		assertThat(viewProperties.bot().table().cell(2, 1).toString(), equalToIgnoringCase("default"));
+		viewProperties.bot().table().getTableItem(1).select();
+		viewProperties.bot().button(2).click();
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_2"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_1"));
+	}
+	
+	@Test
+	public void testPropertiesSwitchCaseDown() throws CoreException {
+		comunPropertiesSwitch();
+		viewProperties.bot().button(0).click();
+		
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_2"));
+		assertThat(viewProperties.bot().table().cell(2, 1).toString(), equalToIgnoringCase("default"));
+		viewProperties.bot().table().getTableItem(0).select();
+		viewProperties.bot().button(3).click();
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_2"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_1"));
+	}
+	
+	@Test
+	public void testPropertiesSwitchCaseNotRemove() throws CoreException {
+		comunPropertiesSwitch();
+		
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
+		viewProperties.bot().table().getTableItem(1).select();
+		viewProperties.bot().button(1).click();
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
+	}
+	
+	@Test
+	public void testPropertiesSwitchCaseNotUp() throws CoreException {
+		comunPropertiesSwitch();
+		
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
+		viewProperties.bot().table().getTableItem(1).select();
+		viewProperties.bot().button(2).click();
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
+	}
+	
+	@Test
+	public void testPropertiesSwitchCaseNotDown() throws CoreException {
+		comunPropertiesSwitch();
+		
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
+		viewProperties.bot().table().getTableItem(0).select();
+		viewProperties.bot().button(3).click();
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
+	}
+	
+//	@Test
+//	public void testPropertiesSwitchCaseRename() throws CoreException {
+//		comunPropertiesSwitch();
+//		
+//		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+//		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
+//		viewProperties.bot().table().getTableItem(0).select();
+//		viewProperties.bot().table().getTableItem(0).click();
+//		Display.getDefault().syncExec(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				TableItem tableItem = viewProperties.bot().table().widget.getSelection()[0];
+//				final Case caso = (Case)tableItem.getData();
+//				TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(caso);
+//				dominio.getCommandStack().execute(new RecordingCommand(dominio) {
+//					protected void doExecute() {
+//						caso.setCondition("prueba condition 1");
+//					}
+//				});
+//			}
+//		});
+//		
+//		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+//		assertThat(viewProperties.bot().table().cell(0, 0).toString(), equalToIgnoringCase("prueba condition 1"));
+//	}
 }
