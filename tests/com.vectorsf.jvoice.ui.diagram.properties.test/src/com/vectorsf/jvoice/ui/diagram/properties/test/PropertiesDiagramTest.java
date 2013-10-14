@@ -578,30 +578,34 @@ public class PropertiesDiagramTest {
 		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
 	}
 	
-//	@Test
-//	public void testPropertiesSwitchCaseRename() throws CoreException {
-//		comunPropertiesSwitch();
-//		
-//		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
-//		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
-//		viewProperties.bot().table().getTableItem(0).select();
-//		viewProperties.bot().table().getTableItem(0).click();
-//		Display.getDefault().syncExec(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				TableItem tableItem = viewProperties.bot().table().widget.getSelection()[0];
-//				final Case caso = (Case)tableItem.getData();
-//				TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(caso);
-//				dominio.getCommandStack().execute(new RecordingCommand(dominio) {
-//					protected void doExecute() {
-//						caso.setCondition("prueba condition 1");
-//					}
-//				});
-//			}
-//		});
-//		
-//		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
-//		assertThat(viewProperties.bot().table().cell(0, 0).toString(), equalToIgnoringCase("prueba condition 1"));
-//	}
+	@Test
+	public void testPropertiesSwitchCaseRename() throws CoreException {
+		comunPropertiesSwitch();
+		
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
+		viewProperties.bot().table().click(0, 0);
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.bot().text("").setText("holaaaaa");
+		viewProperties.bot().table().click(0, 1);
+		bot.sleep(LARGE_SLEEP);
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(0, 0).toString(), equalToIgnoringCase("holaaaaa"));
+		
+		viewProperties.bot().table().click(0, 1);
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.bot().text("Case_1").setText("otroCase");
+		viewProperties.bot().table().click(0, 0);
+		bot.sleep(LARGE_SLEEP);
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("otroCase"));
+		assertThat(viewProperties.bot().clabel(0).getText(), equalToIgnoringCase(""));
+		
+		viewProperties.bot().table().click(0, 1);
+		bot.sleep(LARGE_SLEEP);
+		viewProperties.bot().text("otroCase").setText("prueba Case");
+		viewProperties.bot().table().click(0, 0);
+		bot.sleep(LARGE_SLEEP);
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("otroCase"));
+		assertThat(viewProperties.bot().clabel(0).getText(), not(equalToIgnoringCase("")));
+	}
 }
