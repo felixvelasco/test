@@ -13,8 +13,6 @@ import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
-import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.graphiti.services.IPeService;
 import org.eclipse.graphiti.ui.features.AbstractPasteFeature;
 
 import com.vectorsf.jvoice.model.operations.CallFlowState;
@@ -61,7 +59,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			if (copy instanceof Transition) {
 
 				Transition transition = (Transition) copy;
-				IPeService peService = Graphiti.getPeService();
 
 				State sourceState = transition.getSource();
 				State targetState = transition.getTarget();
@@ -69,20 +66,16 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 				flow.getTransitions().add(transition);
 				PictogramElement[] pes = context.getPictogramElements();
 				if (pes[0] instanceof Diagram) {
-					Diagram dia = (Diagram) pes[0];
 					PictogramElement peSource = hm.get(sourceState);
 					ContainerShape csSource = (ContainerShape) peSource;
 					PictogramElement peTarget = hm.get(targetState);
 					ContainerShape csTarget = (ContainerShape) peTarget;
-					AddConnectionContext addContextInicial = new AddConnectionContext(
-							csSource.getAnchors().get(0), csTarget.getAnchors()
-									.get(0));
+					AddConnectionContext addContextInicial = new AddConnectionContext(csSource.getAnchors().get(0),
+							csTarget.getAnchors().get(0));
 					addContextInicial.setNewObject(transition);
-					addContextInicial
-							.setTargetContainer((ContainerShape) peSource);
+					addContextInicial.setTargetContainer((ContainerShape) peSource);
 
-					Connection connection = (Connection) getFeatureProvider()
-							.addIfPossible(addContextInicial);
+					Connection connection = (Connection) getFeatureProvider().addIfPossible(addContextInicial);
 					layoutPictogramElement(connection);
 				}
 
@@ -95,8 +88,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	public boolean canPaste(IPasteContext context) {
 		PictogramElement[] pes = context.getPictogramElements();
 		if (pes.length != 1
-				|| !(pes[0] instanceof Diagram
-						|| pes[0] instanceof ContainerShape || pes[0] instanceof Transition)) {
+				|| !(pes[0] instanceof Diagram || pes[0] instanceof ContainerShape || pes[0] instanceof Transition)) {
 			return false;
 		}
 
@@ -113,12 +105,9 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	}
 
 	private boolean isState(Object object) {
-		if (object instanceof CallFlowState || object instanceof CallState
-				|| object instanceof FinalState
-				|| object instanceof InitialState
-				|| object instanceof InputState || object instanceof MenuState
-				|| object instanceof PromptState
-				|| object instanceof SwitchState) {
+		if (object instanceof CallFlowState || object instanceof CallState || object instanceof FinalState
+				|| object instanceof InitialState || object instanceof InputState || object instanceof MenuState
+				|| object instanceof PromptState || object instanceof SwitchState) {
 			return true;
 		}
 		return false;
@@ -148,8 +137,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 				String name = "CopyOf" + stateName;
 				int repeated = 0;
 				for (int i = 0; i < pes.length; i++) {
-					if (pes[i] instanceof Shape
-							&& !(pes[i] instanceof ConnectionDecorator)) {
+					if (pes[i] instanceof Shape && !(pes[i] instanceof ConnectionDecorator)) {
 						Shape shape = (Shape) pes[i];
 						State state = (State) getBusinessObjectForPictogramElement(shape);
 						if (state != null) {

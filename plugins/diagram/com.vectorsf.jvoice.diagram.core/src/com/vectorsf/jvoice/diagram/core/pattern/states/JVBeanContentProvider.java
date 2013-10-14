@@ -7,7 +7,6 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVProject;
-import com.vectorsf.jvoice.model.operations.Flow;
 
 public class JVBeanContentProvider extends AdapterFactoryContentProvider {
 
@@ -17,6 +16,7 @@ public class JVBeanContentProvider extends AdapterFactoryContentProvider {
 
 	@Override
 	public Object[] getElements(Object object) {
+		@SuppressWarnings("unchecked")
 		List<JVProject> projects = (List<JVProject>) object;
 
 		Object[] os = projects.toArray();

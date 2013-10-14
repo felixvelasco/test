@@ -16,7 +16,7 @@ public final class JVoiceProjectConfigurator {
 	private JVoiceProjectConfigurator() {
 	}
 
-	private static void configureProject(final IProject project) throws CoreException {
+	public static void configureProject(final IProject project) throws CoreException {
 		assert project.exists();
 
 		ResourcesPlugin.getWorkspace()
