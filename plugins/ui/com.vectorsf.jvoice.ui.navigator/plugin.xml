@@ -122,6 +122,7 @@
                </or></possibleDropTargets>
          </dropAssistant>
          <commonWizard
+               menuGroupId="ActionsIVR"
                type="new"
                wizardId="com.vectorsf.jvoice.ui.package.wizard">
             <enablement>
@@ -143,6 +144,7 @@
             </enablement>
          </commonWizard>
          <commonWizard
+               menuGroupId="ActionsIVR"
                type="new"
                wizardId="com.vectorsf.jvoice.ui.project.wizard">
             <enablement>
@@ -164,6 +166,7 @@
             </enablement>
          </commonWizard>
          <commonWizard
+               menuGroupId="ActionsIVR"
                type="new"
                wizardId="com.vectorsf.jvoice.ui.wizard.DiagramJVoice">
             <enablement>
@@ -180,6 +183,7 @@
             </enablement>
          </commonWizard>
          <commonWizard
+               menuGroupId="ActionsIVR"
                type="new"
                wizardId="com.vectorsf.jvoice.ui.wizard.wizardDSL">
             <enablement>
