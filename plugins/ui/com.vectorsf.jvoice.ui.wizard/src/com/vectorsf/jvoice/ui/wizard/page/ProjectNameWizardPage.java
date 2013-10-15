@@ -25,8 +25,8 @@ import org.eclipse.swt.widgets.Text;
  */
 public class ProjectNameWizardPage extends AbstractWizardPage {
 
-	private static final String PAGE_DESC = "Enter a Project name";
-	private static final String PAGE_TITLE = "New JVoice Project";
+	private static final String PAGE_DESC = "Enter a project name";
+	private static final String PAGE_TITLE = "Create a Project";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
@@ -83,7 +83,7 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 		String text = getTextFieldValue();
 		if (text.equals("")) { //$NON-NLS-1$
 			setErrorMessage(null);
-			setMessage("Project name empty");
+			setMessage("Enter a project name");
 			return false;
 		}
 

@@ -10,8 +10,8 @@ import com.vectorsf.jvoice.ui.wizard.page.DslNameWizardPage;
 
 public class CreateDslJVoice extends BasicNewResourceWizard {
 	
-	private static final String PAGE_NAME_DSL_NAME = "JVoice DSL Name";
-	private static final String WIZARD_WINDOW_TITLE = "New JVoice DSL";
+	private static final String PAGE_NAME_DSL_NAME = "Locution Name";
+	private static final String WIZARD_WINDOW_TITLE = "New Locution";
 	
 	@Override
 	public void addPages() {

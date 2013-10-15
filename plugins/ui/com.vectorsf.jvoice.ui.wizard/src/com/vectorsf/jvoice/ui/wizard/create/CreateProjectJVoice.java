@@ -17,8 +17,8 @@ import com.vectorsf.jvoice.ui.wizard.page.ProjectNameWizardPage;
  */
 public class CreateProjectJVoice extends BasicNewResourceWizard {
 	
-	private static final String PAGE_NAME_PROJECT_NAME = "JVoice Project Name";
-	private static final String WIZARD_WINDOW_TITLE = "New JVoice Project";
+	private static final String PAGE_NAME_PROJECT_NAME = "Project Name";
+	private static final String WIZARD_WINDOW_TITLE = "New Project";
 
 	
 	@Override

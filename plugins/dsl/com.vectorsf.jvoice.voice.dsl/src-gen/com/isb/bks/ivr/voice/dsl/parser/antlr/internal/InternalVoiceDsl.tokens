@@ -112,7 +112,6 @@ RULE_WS=12
 '/'=76
 '=='=58
 'switch'=87
-'promptname'=14
 'say'=44
 '>'=65
 'grammars'=24
@@ -142,6 +141,7 @@ RULE_WS=12
 '+='=54
 '{'=18
 'nomatch'=29
+'outputname'=14
 'as'=79
 '?'=108
 'try'=105

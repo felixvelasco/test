@@ -40,8 +40,8 @@ import com.vectorsf.jvoice.model.base.JVProject;
 
 public class PackageNameWizardPage extends AbstractWizardPage {
 
-	private static final String PAGE_DESC = "Package name";
-	private static final String PAGE_TITLE = "New JVoice package";
+	private static final String PAGE_DESC = "Enter a package name";
+	private static final String PAGE_TITLE = "Create a Package";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
@@ -76,7 +76,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		String projectName = getProjectFieldValue();
 		if (projectName.equals("")) { //$NON-NLS-1$
 			setErrorMessage(null);
-			setMessage("project name empty");
+			setMessage("Enter a project name");
 			return false;
 		}
 
@@ -92,7 +92,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		
 		//verificamos que el proyecto es de tipo jvoice
 		if(proyecto == null){
-			setErrorMessage("Project does not jvoice project");
+			setErrorMessage("Project is not jvoice project");
 			return false;
 		}
 
@@ -101,7 +101,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		for (String path : packageName.split("\\.")) {
 			IStatus status = doWorkspaceValidation(workspace, path);
 			if (!status.isOK()) {
-				setErrorMessage(status.getMessage());
+				setErrorMessage("Enter a package name");
 				return false;
 			}
 		}

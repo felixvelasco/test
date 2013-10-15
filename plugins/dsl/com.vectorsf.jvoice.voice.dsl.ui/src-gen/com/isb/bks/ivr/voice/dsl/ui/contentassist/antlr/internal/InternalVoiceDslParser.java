@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalVoiceDslParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_FLOAT", "RULE_HEX", "RULE_INT", "RULE_DECIMAL", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'='", "'||'", "'&&'", "'true'", "'false'", "'voice'", "'dtmf'", "'voicedtmf'", "'.'", "'+='", "'-='", "'=='", "'!='", "'==='", "'!=='", "'>='", "'<='", "'>'", "'<'", "'->'", "'..<'", "'..'", "'=>'", "'<>'", "'?:'", "'<=>'", "'+'", "'-'", "'*'", "'**'", "'/'", "'%'", "'!'", "'val'", "'extends'", "'static'", "'import'", "'extension'", "'super'", "'promptname'", "'menuname'", "'inputname'", "'variables'", "'{'", "'}'", "'()'", "';'", "'grammars'", "'audios'", "'main'", "':'", "'match'", "'nomatch'", "'noinput'", "'configuration'", "'ms'", "'property'", "'condition'", "'outputs'", "','", "'say'", "'src'", "'wording'", "'when'", "'('", "')'", "'public'", "'@'", "'instanceof'", "'as'", "'#'", "'['", "']'", "'if'", "'else'", "'switch'", "'default'", "'case'", "'for'", "'while'", "'do'", "'new'", "'null'", "'typeof'", "'throw'", "'return'", "'try'", "'finally'", "'catch'", "'?'", "'&'", "'expr'", "'::'", "'?.'", "'|'", "'var'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_FLOAT", "RULE_HEX", "RULE_INT", "RULE_DECIMAL", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'='", "'||'", "'&&'", "'true'", "'false'", "'voice'", "'dtmf'", "'voicedtmf'", "'.'", "'+='", "'-='", "'=='", "'!='", "'==='", "'!=='", "'>='", "'<='", "'>'", "'<'", "'->'", "'..<'", "'..'", "'=>'", "'<>'", "'?:'", "'<=>'", "'+'", "'-'", "'*'", "'**'", "'/'", "'%'", "'!'", "'val'", "'extends'", "'static'", "'import'", "'extension'", "'super'", "'outputname'", "'menuname'", "'inputname'", "'variables'", "'{'", "'}'", "'()'", "';'", "'grammars'", "'audios'", "'main'", "':'", "'match'", "'nomatch'", "'noinput'", "'configuration'", "'ms'", "'property'", "'condition'", "'outputs'", "','", "'say'", "'src'", "'wording'", "'when'", "'('", "')'", "'public'", "'@'", "'instanceof'", "'as'", "'#'", "'['", "']'", "'if'", "'else'", "'switch'", "'default'", "'case'", "'for'", "'while'", "'do'", "'new'", "'null'", "'typeof'", "'throw'", "'return'", "'try'", "'finally'", "'catch'", "'?'", "'&'", "'expr'", "'::'", "'?.'", "'|'", "'var'"
     };
     public static final int RULE_ID=4;
     public static final int T__29=29;
@@ -13878,24 +13878,24 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
 
 
     // $ANTLR start "rule__PromptDsl__Group__0__Impl"
-    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:4142:1: rule__PromptDsl__Group__0__Impl : ( 'promptname' ) ;
+    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:4142:1: rule__PromptDsl__Group__0__Impl : ( 'outputname' ) ;
     public final void rule__PromptDsl__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:4146:1: ( ( 'promptname' ) )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:4147:1: ( 'promptname' )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:4146:1: ( ( 'outputname' ) )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:4147:1: ( 'outputname' )
             {
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:4147:1: ( 'promptname' )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:4148:1: 'promptname'
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:4147:1: ( 'outputname' )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:4148:1: 'outputname'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPromptDslAccess().getPromptnameKeyword_0()); 
+               before(grammarAccess.getPromptDslAccess().getOutputnameKeyword_0()); 
             }
             match(input,53,FollowSets000.FOLLOW_53_in_rule__PromptDsl__Group__0__Impl9068); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPromptDslAccess().getPromptnameKeyword_0()); 
+               after(grammarAccess.getPromptDslAccess().getOutputnameKeyword_0()); 
             }
 
             }
@@ -74325,8 +74325,8 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
     static final String DFA116_specialS =
         "\1\uffff\1\0\112\uffff}>";
     static final String[] DFA116_transitionS = {
-            "\1\2\1\uffff\4\2\5\uffff\4\2\3\uffff\12\2\1\1\24\2\4\uffff\2"+
-            "\2\1\uffff\1\2\3\uffff\1\2\10\uffff\1\2\4\uffff\31\2\3\uffff"+
+            "\1\2\1\uffff\4\2\5\uffff\4\2\3\uffff\12\2\1\1\24\2\4\uffff"+
+            "\2\2\1\uffff\1\2\3\uffff\1\2\10\uffff\1\2\4\uffff\31\2\3\uffff"+
             "\2\2\1\uffff\1\2",
             "\1\uffff",
             "",
@@ -74779,9 +74779,9 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
     static final String DFA123_acceptS =
         "\40\uffff\1\2\52\uffff\1\1";
     static final String DFA123_specialS =
-        "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14"+
-        "\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\30\1\31"+
-        "\1\32\1\33\1\34\1\35\1\36\54\uffff}>";
+        "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1"+
+        "\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\30"+
+        "\1\31\1\32\1\33\1\34\1\35\1\36\54\uffff}>";
     static final String[] DFA123_transitionS = {
             "\1\1\1\uffff\1\22\1\23\1\24\1\26\5\uffff\2\40\1\21\1\20\3\uffff"+
             "\12\40\1\14\7\40\1\10\1\7\4\40\1\6\1\40\1\2\1\3\1\4\1\5\1\15"+
@@ -75388,8 +75388,8 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
     static final String DFA132_specialS =
         "\1\uffff\1\0\112\uffff}>";
     static final String[] DFA132_transitionS = {
-            "\1\2\1\uffff\4\2\5\uffff\4\2\3\uffff\12\2\1\1\24\2\4\uffff\2"+
-            "\2\1\uffff\1\2\3\uffff\1\2\10\uffff\1\2\4\uffff\31\2\3\uffff"+
+            "\1\2\1\uffff\4\2\5\uffff\4\2\3\uffff\12\2\1\1\24\2\4\uffff"+
+            "\2\2\1\uffff\1\2\3\uffff\1\2\10\uffff\1\2\4\uffff\31\2\3\uffff"+
             "\2\2\1\uffff\1\2",
             "\1\uffff",
             "",
@@ -75779,9 +75779,9 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
     static final String DFA161_eofS =
         "\1\6\127\uffff";
     static final String DFA161_minS =
-        "\1\66\1\71\3\100\1\0\1\uffff\1\0\3\112\1\uffff\1\116\1\0\1\116\1"+
-        "\0\1\116\1\72\5\11\1\116\1\72\3\117\2\72\3\11\3\71\1\117\2\72\3"+
-        "\112\1\71\3\72\1\112\2\11\1\72\1\0\2\11\1\72\1\0\2\11\5\72\2\11"+
+        "\1\66\1\71\3\100\1\0\1\uffff\1\0\3\112\1\uffff\1\116\1\0\1\116"+
+        "\1\0\1\116\1\72\5\11\1\116\1\72\3\117\2\72\3\11\3\71\1\117\2\72"+
+        "\3\112\1\71\3\72\1\112\2\11\1\72\1\0\2\11\1\72\1\0\2\11\5\72\2\11"+
         "\2\72\2\11\2\72\4\11\12\72\2\11\2\72";
     static final String DFA161_maxS =
         "\1\110\1\71\3\100\1\0\1\uffff\1\0\3\115\1\uffff\1\116\1\0\1\116"+
@@ -75796,7 +75796,8 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
         "\5\uffff\1\5\1\uffff\1\1\5\uffff\1\2\1\uffff\1\0\42\uffff\1\4\3"+
         "\uffff\1\3\41\uffff}>";
     static final String[] DFA161_transitionS = {
-            "\1\6\3\uffff\1\5\3\uffff\1\1\2\uffff\1\2\1\3\1\4\4\uffff\1\6",
+            "\1\6\3\uffff\1\5\3\uffff\1\1\2\uffff\1\2\1\3\1\4\4\uffff\1"+
+            "\6",
             "\1\7",
             "\1\10",
             "\1\11",
@@ -76025,9 +76026,9 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
     static final String DFA162_eofS =
         "\1\6\127\uffff";
     static final String DFA162_minS =
-        "\1\66\1\71\3\100\1\0\1\uffff\1\0\3\112\1\uffff\1\116\1\0\1\116\1"+
-        "\0\1\116\1\72\5\11\1\116\1\72\3\117\2\72\3\11\3\71\1\117\2\72\3"+
-        "\112\1\71\3\72\1\112\2\11\1\72\1\0\2\11\1\72\1\0\2\11\5\72\2\11"+
+        "\1\66\1\71\3\100\1\0\1\uffff\1\0\3\112\1\uffff\1\116\1\0\1\116"+
+        "\1\0\1\116\1\72\5\11\1\116\1\72\3\117\2\72\3\11\3\71\1\117\2\72"+
+        "\3\112\1\71\3\72\1\112\2\11\1\72\1\0\2\11\1\72\1\0\2\11\5\72\2\11"+
         "\2\72\2\11\2\72\4\11\12\72\2\11\2\72";
     static final String DFA162_maxS =
         "\1\110\1\71\3\100\1\0\1\uffff\1\0\3\115\1\uffff\1\116\1\0\1\116"+
@@ -76042,7 +76043,8 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
         "\5\uffff\1\0\1\uffff\1\5\5\uffff\1\4\1\uffff\1\1\42\uffff\1\3\3"+
         "\uffff\1\2\41\uffff}>";
     static final String[] DFA162_transitionS = {
-            "\1\6\3\uffff\1\5\3\uffff\1\1\2\uffff\1\2\1\3\1\4\4\uffff\1\6",
+            "\1\6\3\uffff\1\5\3\uffff\1\1\2\uffff\1\2\1\3\1\4\4\uffff\1"+
+            "\6",
             "\1\7",
             "\1\10",
             "\1\11",
@@ -76271,9 +76273,9 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
     static final String DFA163_eofS =
         "\1\6\127\uffff";
     static final String DFA163_minS =
-        "\1\66\1\71\3\100\1\0\1\uffff\1\0\3\112\1\uffff\1\116\1\0\1\116\1"+
-        "\0\1\116\1\72\5\11\1\116\1\72\3\117\2\72\3\11\3\71\1\117\2\72\3"+
-        "\112\1\71\3\72\1\112\2\11\1\72\1\0\2\11\1\72\1\0\2\11\5\72\2\11"+
+        "\1\66\1\71\3\100\1\0\1\uffff\1\0\3\112\1\uffff\1\116\1\0\1\116"+
+        "\1\0\1\116\1\72\5\11\1\116\1\72\3\117\2\72\3\11\3\71\1\117\2\72"+
+        "\3\112\1\71\3\72\1\112\2\11\1\72\1\0\2\11\1\72\1\0\2\11\5\72\2\11"+
         "\2\72\2\11\2\72\4\11\12\72\2\11\2\72";
     static final String DFA163_maxS =
         "\1\110\1\71\3\100\1\0\1\uffff\1\0\3\115\1\uffff\1\116\1\0\1\116"+
@@ -76288,7 +76290,8 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
         "\5\uffff\1\0\1\uffff\1\4\5\uffff\1\1\1\uffff\1\2\42\uffff\1\3\3"+
         "\uffff\1\5\41\uffff}>";
     static final String[] DFA163_transitionS = {
-            "\1\6\3\uffff\1\5\3\uffff\1\1\2\uffff\1\2\1\3\1\4\4\uffff\1\6",
+            "\1\6\3\uffff\1\5\3\uffff\1\1\2\uffff\1\2\1\3\1\4\4\uffff\1"+
+            "\6",
             "\1\7",
             "\1\10",
             "\1\11",

@@ -6,29 +6,33 @@
       <wizard
             category="com.vectorsf.jvoice.diagram.core.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateProjectJVoice"
+            icon="res/JVProject.png"
             id="com.vectorsf.jvoice.ui.project.wizard"
-            name="jVoice project"
+            name="Project"
             project="true">
       </wizard>
-     <wizard
-            category="com.vectorsf.jvoice.diagram.core.category"
-            class="com.vectorsf.jvoice.ui.wizard.create.CreateDiagramJVoice"
-            id="com.vectorsf.jvoice.ui.wizard.DiagramJVoice"
-            name="jVoice flow"
-            project="false">
+      <wizard
+         category="com.vectorsf.jvoice.diagram.core.category"
+         class="com.vectorsf.jvoice.ui.wizard.create.CreateJVPackageWizard"
+         icon="res/JVPackage.png"
+         id="com.vectorsf.jvoice.ui.package.wizard"
+         name="Package"
+         project="false">
       </wizard>
- 		<wizard
-            category="com.vectorsf.jvoice.diagram.core.category"
-            class="com.vectorsf.jvoice.ui.wizard.create.CreateJVPackageWizard"
-            id="com.vectorsf.jvoice.ui.package.wizard"
-            name="jVoice package"
-            project="false">
+     <wizard
+           category="com.vectorsf.jvoice.diagram.core.category"
+           class="com.vectorsf.jvoice.ui.wizard.create.CreateDiagramJVoice"
+           icon="res/Flow.png"
+           id="com.vectorsf.jvoice.ui.wizard.DiagramJVoice"
+           name="Flow"
+           project="false">
       </wizard>
       <wizard
             category="com.vectorsf.jvoice.diagram.core.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice"
+            icon="res/VoiceDsl.png"
             id="com.vectorsf.jvoice.ui.wizard.wizardDSL"
-            name="jVoice Dsl"
+            name="Locution"
             project="false">
       </wizard>
 

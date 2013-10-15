@@ -4145,11 +4145,11 @@ rule__PromptDsl__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getPromptDslAccess().getPromptnameKeyword_0()); }
+{ before(grammarAccess.getPromptDslAccess().getOutputnameKeyword_0()); }
 
-	'promptname' 
+	'outputname' 
 
-{ after(grammarAccess.getPromptDslAccess().getPromptnameKeyword_0()); }
+{ after(grammarAccess.getPromptDslAccess().getOutputnameKeyword_0()); }
 )
 
 ;

@@ -11,7 +11,7 @@ VoiceDsl:
 ;
 
 PromptDsl:
-	('promptname'  name = ID 
+	('outputname'  name = ID 
        ((properties += Property*)&
        	((variables = Variables)?)& 
 	    (conditions += Condition*))

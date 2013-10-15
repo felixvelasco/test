@@ -146,9 +146,9 @@ rulePromptDsl returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='promptname' 
+(	otherlv_0='outputname' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getPromptDslAccess().getPromptnameKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getPromptDslAccess().getOutputnameKeyword_0());
     }
 (
 (

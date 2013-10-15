@@ -44,8 +44,8 @@ import com.vectorsf.jvoice.model.base.JVProject;
 
 public class DslNameWizardPage extends AbstractWizardPage {
 	
-	private static final String PAGE_DESC = "Enter a VoiceDSL name";
-	private static final String PAGE_TITLE = "New JVoice DSL";
+	private static final String PAGE_DESC = "Enter a locution name";
+	private static final String PAGE_TITLE = "Create a Locution";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
@@ -120,13 +120,13 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		String text = getTextFieldValue();
 		if (text.isEmpty()) {
 			setErrorMessage(null);
-			setMessage("DSL name empty");
+			setMessage("Enter a locution name");
 			return false;
 		}
 
 		String projectName = getProjectFieldValue();
 		if (projectName.isEmpty()) {
-			setErrorMessage("Project name empty");
+			setErrorMessage("Enter a project name");
 			browsePackage.setEnabled(false);
 			return false;
 		}
@@ -143,7 +143,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		JVProject proyecto = BaseModel.getInstance().getModel()
 				.getProject(projectName);
 		if (proyecto == null) {
-			setErrorMessage("Project does not jvoice project");
+			setErrorMessage("Project is not jvoice project");
 			browsePackage.setEnabled(false);
 			return false;
 		}
@@ -158,7 +158,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		browsePackage.setEnabled(true);
 
 		if (packageName.isEmpty()) {
-			setErrorMessage("Package name empty");
+			setErrorMessage("Enter a package name");
 			return false;
 		}
 
@@ -172,7 +172,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		JVBean voiceDsl = paquete.getBean(text);
 
 		if (voiceDsl != null) {
-			setErrorMessage("DSL already exists");
+			setErrorMessage("Locution already exists");
 			return false;
 		}
 
@@ -334,7 +334,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		box = new Combo(projectGroup, SWT.READ_ONLY);
 		box.add("Menu");
 		box.add("Input");
-		box.add("Prompt");
+		box.add("Output");
 		box.select(0);
 		
 
@@ -362,7 +362,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	}
 
 	private String getInitialTextFieldValue() {
-		return "newVoiceDsl"; //$NON-NLS-1$
+		return "newLocution"; //$NON-NLS-1$
 	}
 
 	private String getInitialTextFolderFieldValue() {
@@ -479,6 +479,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 					contents="menuname "+DslName+ "\n\n"
 							+configuration
 							+grammars
+							+audios
 							+outputs;
 					
 					
@@ -489,8 +490,8 @@ public class DslNameWizardPage extends AbstractWizardPage {
 							+grammars
 							+audios;
 					
-				}else if(seleccion.equals("Prompt")){
-					contents="promptname "+DslName+"\n\n"
+				}else if(seleccion.equals("Output")){
+					contents="outputname "+DslName+"\n\n"
 							+variables
 							+audios;
 					

@@ -22,7 +22,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalVoiceDslParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_STRING", "RULE_HEX", "RULE_DECIMAL", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'promptname'", "'menuname'", "'inputname'", "'variables'", "'{'", "'}'", "'='", "'.'", "'()'", "';'", "'grammars'", "'audios'", "'main'", "':'", "'match'", "'nomatch'", "'noinput'", "'configuration'", "'ms'", "'true'", "'false'", "'voice'", "'dtmf'", "'voicedtmf'", "'expr'", "'property'", "'condition'", "'outputs'", "','", "'*'", "'say'", "'src'", "'wording'", "'when'", "'('", "')'", "'public'", "'@'", "'+'", "'::'", "'+='", "'-='", "'||'", "'&&'", "'=='", "'!='", "'==='", "'!=='", "'instanceof'", "'>='", "'<='", "'>'", "'<'", "'->'", "'..<'", "'..'", "'=>'", "'<>'", "'?:'", "'<=>'", "'-'", "'**'", "'/'", "'%'", "'!'", "'as'", "'?.'", "'#'", "'['", "']'", "'|'", "'if'", "'else'", "'switch'", "'default'", "'case'", "'for'", "'while'", "'do'", "'var'", "'val'", "'extends'", "'static'", "'import'", "'extension'", "'super'", "'new'", "'null'", "'typeof'", "'throw'", "'return'", "'try'", "'finally'", "'catch'", "'?'", "'&'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_STRING", "RULE_HEX", "RULE_DECIMAL", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'outputname'", "'menuname'", "'inputname'", "'variables'", "'{'", "'}'", "'='", "'.'", "'()'", "';'", "'grammars'", "'audios'", "'main'", "':'", "'match'", "'nomatch'", "'noinput'", "'configuration'", "'ms'", "'true'", "'false'", "'voice'", "'dtmf'", "'voicedtmf'", "'expr'", "'property'", "'condition'", "'outputs'", "','", "'*'", "'say'", "'src'", "'wording'", "'when'", "'('", "')'", "'public'", "'@'", "'+'", "'::'", "'+='", "'-='", "'||'", "'&&'", "'=='", "'!='", "'==='", "'!=='", "'instanceof'", "'>='", "'<='", "'>'", "'<'", "'->'", "'..<'", "'..'", "'=>'", "'<>'", "'?:'", "'<=>'", "'-'", "'**'", "'/'", "'%'", "'!'", "'as'", "'?.'", "'#'", "'['", "']'", "'|'", "'if'", "'else'", "'switch'", "'default'", "'case'", "'for'", "'while'", "'do'", "'var'", "'val'", "'extends'", "'static'", "'import'", "'extension'", "'super'", "'new'", "'null'", "'typeof'", "'throw'", "'return'", "'try'", "'finally'", "'catch'", "'?'", "'&'"
     };
     public static final int RULE_ID=4;
     public static final int T__29=29;
@@ -458,7 +458,7 @@ public class InternalVoiceDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePromptDsl"
-    // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:145:1: rulePromptDsl returns [EObject current=null] : (otherlv_0= 'promptname' ( (lv_name_1_0= RULE_ID ) ) ( ( ( ( ({...}? => ( ({...}? => ( (lv_properties_3_0= ruleProperty ) ) )+ ) ) | ({...}? => ( ({...}? => ( (lv_variables_4_0= ruleVariables ) ) ) ) ) | ({...}? => ( ({...}? => ( (lv_conditions_5_0= ruleCondition ) ) )+ ) ) )* ) ) ) ( (lv_audios_6_0= ruleAudios ) ) ) ;
+    // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:145:1: rulePromptDsl returns [EObject current=null] : (otherlv_0= 'outputname' ( (lv_name_1_0= RULE_ID ) ) ( ( ( ( ({...}? => ( ({...}? => ( (lv_properties_3_0= ruleProperty ) ) )+ ) ) | ({...}? => ( ({...}? => ( (lv_variables_4_0= ruleVariables ) ) ) ) ) | ({...}? => ( ({...}? => ( (lv_conditions_5_0= ruleCondition ) ) )+ ) ) )* ) ) ) ( (lv_audios_6_0= ruleAudios ) ) ) ;
     public final EObject rulePromptDsl() throws RecognitionException {
         EObject current = null;
 
@@ -476,16 +476,16 @@ public class InternalVoiceDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:148:28: ( (otherlv_0= 'promptname' ( (lv_name_1_0= RULE_ID ) ) ( ( ( ( ({...}? => ( ({...}? => ( (lv_properties_3_0= ruleProperty ) ) )+ ) ) | ({...}? => ( ({...}? => ( (lv_variables_4_0= ruleVariables ) ) ) ) ) | ({...}? => ( ({...}? => ( (lv_conditions_5_0= ruleCondition ) ) )+ ) ) )* ) ) ) ( (lv_audios_6_0= ruleAudios ) ) ) )
-            // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:149:1: (otherlv_0= 'promptname' ( (lv_name_1_0= RULE_ID ) ) ( ( ( ( ({...}? => ( ({...}? => ( (lv_properties_3_0= ruleProperty ) ) )+ ) ) | ({...}? => ( ({...}? => ( (lv_variables_4_0= ruleVariables ) ) ) ) ) | ({...}? => ( ({...}? => ( (lv_conditions_5_0= ruleCondition ) ) )+ ) ) )* ) ) ) ( (lv_audios_6_0= ruleAudios ) ) )
+            // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:148:28: ( (otherlv_0= 'outputname' ( (lv_name_1_0= RULE_ID ) ) ( ( ( ( ({...}? => ( ({...}? => ( (lv_properties_3_0= ruleProperty ) ) )+ ) ) | ({...}? => ( ({...}? => ( (lv_variables_4_0= ruleVariables ) ) ) ) ) | ({...}? => ( ({...}? => ( (lv_conditions_5_0= ruleCondition ) ) )+ ) ) )* ) ) ) ( (lv_audios_6_0= ruleAudios ) ) ) )
+            // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:149:1: (otherlv_0= 'outputname' ( (lv_name_1_0= RULE_ID ) ) ( ( ( ( ({...}? => ( ({...}? => ( (lv_properties_3_0= ruleProperty ) ) )+ ) ) | ({...}? => ( ({...}? => ( (lv_variables_4_0= ruleVariables ) ) ) ) ) | ({...}? => ( ({...}? => ( (lv_conditions_5_0= ruleCondition ) ) )+ ) ) )* ) ) ) ( (lv_audios_6_0= ruleAudios ) ) )
             {
-            // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:149:1: (otherlv_0= 'promptname' ( (lv_name_1_0= RULE_ID ) ) ( ( ( ( ({...}? => ( ({...}? => ( (lv_properties_3_0= ruleProperty ) ) )+ ) ) | ({...}? => ( ({...}? => ( (lv_variables_4_0= ruleVariables ) ) ) ) ) | ({...}? => ( ({...}? => ( (lv_conditions_5_0= ruleCondition ) ) )+ ) ) )* ) ) ) ( (lv_audios_6_0= ruleAudios ) ) )
-            // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:149:3: otherlv_0= 'promptname' ( (lv_name_1_0= RULE_ID ) ) ( ( ( ( ({...}? => ( ({...}? => ( (lv_properties_3_0= ruleProperty ) ) )+ ) ) | ({...}? => ( ({...}? => ( (lv_variables_4_0= ruleVariables ) ) ) ) ) | ({...}? => ( ({...}? => ( (lv_conditions_5_0= ruleCondition ) ) )+ ) ) )* ) ) ) ( (lv_audios_6_0= ruleAudios ) )
+            // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:149:1: (otherlv_0= 'outputname' ( (lv_name_1_0= RULE_ID ) ) ( ( ( ( ({...}? => ( ({...}? => ( (lv_properties_3_0= ruleProperty ) ) )+ ) ) | ({...}? => ( ({...}? => ( (lv_variables_4_0= ruleVariables ) ) ) ) ) | ({...}? => ( ({...}? => ( (lv_conditions_5_0= ruleCondition ) ) )+ ) ) )* ) ) ) ( (lv_audios_6_0= ruleAudios ) ) )
+            // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:149:3: otherlv_0= 'outputname' ( (lv_name_1_0= RULE_ID ) ) ( ( ( ( ({...}? => ( ({...}? => ( (lv_properties_3_0= ruleProperty ) ) )+ ) ) | ({...}? => ( ({...}? => ( (lv_variables_4_0= ruleVariables ) ) ) ) ) | ({...}? => ( ({...}? => ( (lv_conditions_5_0= ruleCondition ) ) )+ ) ) )* ) ) ) ( (lv_audios_6_0= ruleAudios ) )
             {
             otherlv_0=(Token)match(input,14,FollowSets000.FOLLOW_14_in_rulePromptDsl296); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getPromptDslAccess().getPromptnameKeyword_0());
+                  	newLeafNode(otherlv_0, grammarAccess.getPromptDslAccess().getOutputnameKeyword_0());
                   
             }
             // ../com.vectorsf.jvoice.voice.dsl/src-gen/com/isb/bks/ivr/voice/dsl/parser/antlr/internal/InternalVoiceDsl.g:153:1: ( (lv_name_1_0= RULE_ID ) )
@@ -27208,9 +27208,9 @@ public class InternalVoiceDslParser extends AbstractInternalAntlrParser {
     static final String DFA120_acceptS =
         "\40\uffff\1\2\52\uffff\1\1";
     static final String DFA120_specialS =
-        "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14"+
-        "\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\30\1\31"+
-        "\1\32\1\33\1\34\1\35\1\36\54\uffff}>";
+        "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1"+
+        "\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\30"+
+        "\1\31\1\32\1\33\1\34\1\35\1\36\54\uffff}>";
     static final String[] DFA120_transitionS = {
             "\1\1\1\23\1\uffff\1\26\1\22\1\24\10\uffff\1\12\1\40\1\uffff"+
             "\1\40\1\uffff\1\40\3\uffff\1\40\5\uffff\1\21\1\20\7\uffff\2"+

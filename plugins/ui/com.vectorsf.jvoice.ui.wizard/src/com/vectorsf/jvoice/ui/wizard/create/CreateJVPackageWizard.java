@@ -10,8 +10,8 @@ import com.vectorsf.jvoice.ui.wizard.page.PackageNameWizardPage;
 
 public class CreateJVPackageWizard extends BasicNewResourceWizard {
 
-	private static final String PAGE_NAME_PROJECT_NAME = "JVoice package Name";
-	private static final String WIZARD_WINDOW_TITLE = "New JVoice package";
+	private static final String PAGE_NAME_PROJECT_NAME = "Package Name";
+	private static final String WIZARD_WINDOW_TITLE = "New Package";
 
 	@Override
 	public void addPages() {

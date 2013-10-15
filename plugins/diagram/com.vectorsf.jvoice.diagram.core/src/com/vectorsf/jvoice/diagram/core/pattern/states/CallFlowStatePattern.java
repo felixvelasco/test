@@ -39,7 +39,7 @@ import com.vectorsf.jvoice.model.operations.OperationsFactory;
 public class CallFlowStatePattern extends StatePattern implements
 		ISelectionStatusValidator {
 
-	private static final String CALL_FLOW = "CallFlow";
+	private static final String CALL_FLOW = "SubFlow";
 	private static int MIN_WIDTH = 120;
 	private static int MIN_HEIGHT = 60;
 

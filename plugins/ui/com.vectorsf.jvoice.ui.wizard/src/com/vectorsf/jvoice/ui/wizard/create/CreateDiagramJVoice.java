@@ -29,8 +29,8 @@ import com.vectorsf.jvoice.ui.wizard.page.DiagramNameWizardPage;
  */
 public class CreateDiagramJVoice extends BasicNewResourceWizard {
 
-	private static final String PAGE_NAME_DIAGRAM_NAME = "JVoice Diagram Name";
-	private static final String WIZARD_WINDOW_TITLE = "New JVoice Diagram";
+	private static final String PAGE_NAME_DIAGRAM_NAME = "Flow Name";
+	private static final String WIZARD_WINDOW_TITLE = "New Flow";
 
 	@Override
 	public void addPages() {

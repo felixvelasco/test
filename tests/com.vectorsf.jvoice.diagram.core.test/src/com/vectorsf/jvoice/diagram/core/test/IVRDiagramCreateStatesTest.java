@@ -165,7 +165,7 @@ public class IVRDiagramCreateStatesTest {
 		editor = getGefEditor();
 		gefViewer = editor.getSWTBotGefViewer();
 
-		gefViewer.activateTool("CallFlow");
+		gefViewer.activateTool("SubFlow");
 		gefViewer.drag(55, 55, 150, 100);
 
 		bot.waitUntil(Conditions.shellIsActive("Flow Selection"));
@@ -253,7 +253,7 @@ public class IVRDiagramCreateStatesTest {
 
 	@Test
 	public void testCreatePromptState() throws Exception {
-		createLocutionState("Prompt");
+		createLocutionState("Output");
 	}
 
 	@Test
@@ -268,7 +268,7 @@ public class IVRDiagramCreateStatesTest {
 
 	@Test
 	public void testCancelCreatePromptState() throws Exception {
-		cancelCreateLocutionState("Prompt");
+		cancelCreateLocutionState("Output");
 	}
 
 	@Test

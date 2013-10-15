@@ -40,7 +40,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 public class PromptStatePattern extends StatePattern implements
 		ISelectionStatusValidator {
 
-	private static final String PROMPT = "Prompt";
+	private static final String PROMPT = "Output";
 	private static int MIN_WIDTH = 120;
 	private static int MIN_HEIGHT = 60;
 
@@ -125,8 +125,8 @@ public class PromptStatePattern extends StatePattern implements
 		};
 
 		dialog.addFilter(vfilter);
-		dialog.setTitle("Prompt Selection");
-		dialog.setMessage("Select a prompt:");
+		dialog.setTitle("Output Selection");
+		dialog.setMessage("Select an output:");
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		URI res = flow.eResource().getURI();
 		String projectName = res.segment(1);
@@ -181,12 +181,12 @@ public class PromptStatePattern extends StatePattern implements
 				return Status.OK_STATUS;
 			} else {
 				return new Status(IStatus.ERROR,
-						"com.vectorsf.jvoice.diagram.core", "Select a prompt");
+						"com.vectorsf.jvoice.diagram.core", "Select an output");
 			}
 
 		} else {
 			return new Status(IStatus.ERROR,
-					"com.vectorsf.jvoice.diagram.core", "Select a prompt");
+					"com.vectorsf.jvoice.diagram.core", "Select an output");
 		}
 	}
 }

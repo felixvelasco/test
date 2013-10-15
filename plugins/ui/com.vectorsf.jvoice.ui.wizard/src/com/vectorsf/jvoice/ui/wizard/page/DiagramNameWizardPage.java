@@ -55,8 +55,8 @@ import com.vectorsf.jvoice.model.operations.OperationsFactory;
 
 public class DiagramNameWizardPage extends AbstractWizardPage {
 
-	private static final String PAGE_DESC = "Enter a diagram name";
-	private static final String PAGE_TITLE = "New JVoice Diagram";
+	private static final String PAGE_DESC = "Enter a flow name";
+	private static final String PAGE_TITLE = "Create a Flow";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
@@ -121,13 +121,13 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		String text = getTextFieldValue();
 		if (text.isEmpty()) {
 			setErrorMessage(null);
-			setMessage("Diagram name empty");
+			setMessage("Enter a flow name");
 			return false;
 		}
 
 		String projectName = getProjectFieldValue();
 		if (projectName.isEmpty()) {
-			setErrorMessage("Project name empty");
+			setErrorMessage("Enter a project name");
 			browsePackage.setEnabled(false);
 			return false;
 		}
@@ -143,7 +143,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 		JVProject proyecto = BaseModel.getInstance().getModel().getProject(projectName);
 		if (proyecto == null) {
-			setErrorMessage("Project does not jvoice project");
+			setErrorMessage("Project is not jvoice project");
 			browsePackage.setEnabled(false);
 			return false;
 		}
@@ -158,7 +158,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		browsePackage.setEnabled(true);
 
 		if (packageName.isEmpty()) {
-			setErrorMessage("Package name empty");
+			setErrorMessage("Enter a package name");
 			return false;
 		}
 
@@ -172,7 +172,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		JVBean diagrama = paquete.getBean(text);
 
 		if (diagrama != null) {
-			setErrorMessage("Diagram already exists");
+			setErrorMessage("Flow already exists");
 			return false;
 		}
 
@@ -229,7 +229,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 		// new project label
 		Label projectLabel = new Label(projectGroup, SWT.NONE);
-		projectLabel.setText("Diagram name:");
+		projectLabel.setText("Flow name:");
 		projectLabel.setFont(parent.getFont());
 
 		// new project name entry field
@@ -242,7 +242,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 		// new project label
 		Label projectLabel2 = new Label(projectGroup, SWT.NONE);
-		projectLabel2.setText("project:");
+		projectLabel2.setText("Project name:");
 		projectLabel2.setFont(parent.getFont());
 
 		textFieldProject = new Text(projectGroup, SWT.BORDER);
@@ -280,7 +280,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 		// new project label
 		Label projectLabel3 = new Label(projectGroup, SWT.NONE);
-		projectLabel3.setText("folder:");
+		projectLabel3.setText("Package name:");
 		projectLabel3.setFont(parent.getFont());
 
 		textFieldPackage = new Text(projectGroup, SWT.BORDER);
