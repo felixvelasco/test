@@ -45,27 +45,50 @@ public class PasteHandler extends AbstractHandler {
 	private boolean rename;
 
 	@Override
+	public void setEnabled(Object evaluationContext) {
+
+		Clipboard clip = new Clipboard(Display.getCurrent());
+		Object contents = clip.getContents(LocalSelectionTransfer.getTransfer());
+		clip.dispose();
+		if (contents == null) {
+			setBaseEnabled(false);
+		} else {
+			Object target = getValidTarget(evaluationContext);
+			if (target instanceof JVPackage) {
+				boolean state = getListFromClipboard(contents, JVBean.class) != null;
+				setBaseEnabled(state);
+			} else if (target instanceof JVProject) {
+				boolean state = getListFromClipboard(contents, JVPackage.class) != null;
+				setBaseEnabled(state);
+			} else {
+				setBaseEnabled(false);
+			}
+		}
+	}
+
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		rename = false;
 		Clipboard clip = new Clipboard(Display.getCurrent());
 		Object contents = clip.getContents(LocalSelectionTransfer.getTransfer());
+		clip.dispose();
 		if (contents == null) {
 			return null;
 		}
 
-		Object Objtarget = getValidTarget(((IEvaluationContext) event.getApplicationContext()).getDefaultVariable());
+		Object objtarget = getValidTarget(event.getApplicationContext());
 
-		if (Objtarget == null) {
+		if (objtarget == null) {
 			return null;
 		}
 		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		// Distinguimos si lo que hemos seleccionado es un paquete o un
 		// proyecto.
-		if (Objtarget instanceof JVPackage) {
-			JVPackage target = (JVPackage) Objtarget;
+		if (objtarget instanceof JVPackage) {
+			JVPackage target = (JVPackage) objtarget;
 
-			List<JVBean> beans = getJVBeanFromClipboard(contents);
+			List<JVBean> beans = getListFromClipboard(contents, JVBean.class);
 			if (beans == null) {
 				return null;
 			}
@@ -134,10 +157,10 @@ public class PasteHandler extends AbstractHandler {
 				}
 			}
 
-		} else if (Objtarget instanceof JVProject) {
-			JVProject target = (JVProject) Objtarget;
+		} else if (objtarget instanceof JVProject) {
+			JVProject target = (JVProject) objtarget;
 
-			List<JVPackage> packs = getJVPackFromClipboard(contents);
+			List<JVPackage> packs = getListFromClipboard(contents, JVPackage.class);
 			if (packs == null) {
 				return null;
 			}
@@ -193,7 +216,7 @@ public class PasteHandler extends AbstractHandler {
 				try {
 					miPack.copy(targetPath, true, null);
 				} catch (CoreException e) {
-					e.printStackTrace();
+					throw new ExecutionException(e.getMessage(), e);
 				}
 			}
 
@@ -202,46 +225,40 @@ public class PasteHandler extends AbstractHandler {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	private Object getValidTarget(Object target) {
-		if (!(target instanceof Collection<?>) || ((Collection<Object>) target).size() != 1) {
-			return null;
-		}
+		Object def = ((IEvaluationContext) target).getDefaultVariable();
+		if (def instanceof Collection<?> && ((Collection<?>) def).size() == 1) {
 
-		Object o = ((Collection<Object>) target).iterator().next();
+			Object o = ((Collection<?>) def).iterator().next();
 
-		if (o instanceof JVPackage || o instanceof JVProject) {
-			return o;
-		} else {
-			return null;
-		}
-
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private List<JVBean> getJVBeanFromClipboard(Object contents) {
-
-		// Todos los elementos deben ser navegaciones
-		List toPaste = ((IStructuredSelection) contents).toList();
-		for (Object o : toPaste) {
-			if (!(o instanceof JVBean)) {
+			if (o instanceof JVPackage || o instanceof JVProject) {
+				return o;
+			} else {
 				return null;
 			}
 		}
-		return toPaste;
+		return null;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private List<JVPackage> getJVPackFromClipboard(Object contents) {
+	private <T> List<T> getListFromClipboard(Object contents, Class<T> clazz) {
 
 		// Todos los elementos deben ser navegaciones
-		List toPaste = ((IStructuredSelection) contents).toList();
-		for (Object o : toPaste) {
-			if (!(o instanceof JVPackage)) {
+		if (contents instanceof IStructuredSelection) {
+			IStructuredSelection selection = (IStructuredSelection) contents;
+			if (selection.isEmpty()) {
 				return null;
 			}
+			List<?> toPaste = selection.toList();
+			for (Object o : toPaste) {
+				if (!clazz.isInstance(o)) {
+					return null;
+				}
+			}
+			@SuppressWarnings("unchecked")
+			List<T> ret = (List<T>) toPaste;
+			return ret;
 		}
-		return toPaste;
+		return null;
 	}
 
 	private String getNewName(Object beanPackage, String name) {
