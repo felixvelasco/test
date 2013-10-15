@@ -68,16 +68,18 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 							(IFile) resource));
 					final List<JVBean> beans = currentPackage.getBeans();
 					if (delta.getKind() == IResourceDelta.ADDED) {
-						if (bean == null) {
-							JVBean createBean = JVoiceModelReconcilier.getInstance().createBean((IFile) resource);
-							beans.add(createBean);
+						if (bean == null || resource.getFileExtension().equals("voiceDsl")) {
+							beans.add(JVoiceModelReconcilier.getInstance().createBean((IFile) resource));
 						}
 
 					} else if (delta.getKind() == IResourceDelta.CHANGED) {
 						int index = beans.indexOf(bean);
 						if (index!= -1) {
-							beans.remove(index);
-							beans.add(index, JVoiceModelReconcilier.getInstance().createBean((IFile) resource));
+							
+							if(!(resource.getFileExtension().equals("voiceDsl"))){
+								beans.remove(index);
+								beans.add(index, JVoiceModelReconcilier.getInstance().createBean((IFile) resource));
+							}
 						} else 
 						{
 							beans.add(JVoiceModelReconcilier.getInstance().createBean((IFile) resource));  
