@@ -50,7 +50,7 @@ import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResour
 public class IVRNavigatorTest {
 
 	private static final int SMALL_SLEEP = 300;
-	private static final int MEDIUM_SLEEP = 1000;
+	private static final int MEDIUM_SLEEP = 2000;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
