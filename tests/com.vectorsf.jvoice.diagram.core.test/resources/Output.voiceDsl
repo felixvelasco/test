@@ -1,4 +1,4 @@
-promptname Prompt
+outputname Output
 
 variables{
  // User's variables 
