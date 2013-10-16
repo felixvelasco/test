@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<operations:Flow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:operations="http://jvoice.vectorsf.com/operations/1.0" name="qwe" description="desc de qwe">
-  <states xsi:type="operations:CallFlowState" name="ju89">
-    <subflow href="vega://uuu/jv/tr/ju89#/1"/>
-  </states>
-</operations:Flow>
