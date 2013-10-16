@@ -250,6 +250,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		data2.widthHint = SIZING_TEXT_FIELD_WIDTH;
 		textFieldProject.setLayoutData(data2);
 		textFieldProject.setFont(parent.getFont());
+		textFieldProject.setEditable(false);
 
 		// browse button on right
 		Button browse = new Button(projectGroup, SWT.PUSH);
@@ -288,6 +289,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		data3.widthHint = SIZING_TEXT_FIELD_WIDTH;
 		textFieldPackage.setLayoutData(data3);
 		textFieldPackage.setFont(parent.getFont());
+		textFieldPackage.setEditable(false);
 
 		// browse button on right
 		browsePackage = new Button(projectGroup, SWT.PUSH);

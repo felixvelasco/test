@@ -246,7 +246,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		
 		// new project label
 		Label projectLabel2 = new Label(projectGroup, SWT.NONE);
-		projectLabel2.setText("project:");
+		projectLabel2.setText("Project:");
 		projectLabel2.setFont(parent.getFont());
 
 		textFieldProject = new Text(projectGroup, SWT.BORDER);
@@ -254,6 +254,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		data2.widthHint = SIZING_TEXT_FIELD_WIDTH;
 		textFieldProject.setLayoutData(data2);
 		textFieldProject.setFont(parent.getFont());
+		textFieldProject.setEditable(false);
 
 		// browse button on right
 		Button browse = new Button(projectGroup, SWT.PUSH);
@@ -286,7 +287,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		// new project label
 		Label projectLabel3 = new Label(projectGroup, SWT.NONE);
-		projectLabel3.setText("folder:");
+		projectLabel3.setText("Package:");
 		projectLabel3.setFont(parent.getFont());
 
 		textFieldPackage = new Text(projectGroup, SWT.BORDER);
@@ -294,6 +295,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		data3.widthHint = SIZING_TEXT_FIELD_WIDTH;
 		textFieldPackage.setLayoutData(data3);
 		textFieldPackage.setFont(parent.getFont());
+		textFieldPackage.setEditable(false);
 
 		// browse button on right
 		browsePackage = new Button(projectGroup, SWT.PUSH);

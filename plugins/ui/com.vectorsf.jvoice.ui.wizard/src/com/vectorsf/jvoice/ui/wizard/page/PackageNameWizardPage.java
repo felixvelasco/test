@@ -137,6 +137,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		data.widthHint = SIZING_TEXT_FIELD_WIDTH;
 		textField.setLayoutData(data);
 		textField.setFont(parent.getFont());
+		textField.setEditable(false);
 		
 		// browse button on right
 		Button browse = new Button(projectGroup, SWT.PUSH);
