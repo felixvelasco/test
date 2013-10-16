@@ -23,14 +23,14 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.resource.XtextResourceSet;
+import org.eclipse.graphiti.mm.algorithms.AlgorithmsPackage;
+import org.eclipse.graphiti.mm.algorithms.styles.StylesPackage;
+import org.eclipse.graphiti.mm.pictograms.PictogramsPackage;
 
-import com.google.inject.Injector;
-import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.State;
+
 
 /**
  * Goal which touches a timestamp file.
@@ -90,18 +90,19 @@ public class MyMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException {
 
 		File f = outputDirectory;
-		getLog().info("ENTRA");
 		if (!f.exists()) {
 			f.mkdirs();
 		}
-
 		try {
 
 			EPackage.Registry.INSTANCE.put(OperationsPackage.eNS_URI, OperationsPackage.eINSTANCE);
+			EPackage.Registry.INSTANCE.put(PictogramsPackage.eNS_URI, PictogramsPackage.eINSTANCE);
+			EPackage.Registry.INSTANCE.put(AlgorithmsPackage.eNS_URI, AlgorithmsPackage.eINSTANCE);
+			EPackage.Registry.INSTANCE.put(StylesPackage.eNS_URI, StylesPackage.eINSTANCE);
+
 
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("jvflow", new XMIResourceFactoryImpl());
 
-			
 			processFlowFiles();
 		} catch (Exception e) {
 			throw new MojoExecutionException("", e);
@@ -110,9 +111,10 @@ public class MyMojo extends AbstractMojo {
 		if (project != null) {
 			projectHelper.addResource(project, sourceDirectory.getAbsolutePath(),
 					Collections.singletonList("**/**.jvflow"), Collections.emptyList());
-			// project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
+			 getLog().info("ruta "+outputDirectory.getAbsolutePath().toString());
 
 		}
+
 	}
 
 
@@ -188,6 +190,7 @@ public class MyMojo extends AbstractMojo {
 
 	private boolean processFlowFile(File flowFile) throws IOException {
 		File targetFile = new File(outputDirectory, getTargetFlowName(flowFile.getName()));
+		
 		if (buildRequired(flowFile, Collections.singletonList(targetFile))) {
 			targetFile.createNewFile();
 
@@ -197,30 +200,11 @@ public class MyMojo extends AbstractMojo {
 			rSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 			URI uri = URI.createFileURI(flowFile.getCanonicalPath().toString());
 			Resource res = rSet.getResource(uri, true);
+			
+			Resource diagrama = res.getContents().get(0).eResource();
 
-			Flow flow = (Flow) res.getContents().get(0);
+			SpringWebFlowGenerator.compile(targetFile, diagrama);
 
-			for (State state : flow.getStates()) {
-
-			}
-			// deresolve test
-			URI uri2 = URI.createFileURI("C:/Users/xIS02462/git/test/maven/test/testMavenResolveDeresolveProject/src/main/resources/jv/qwe.jvflow");
-
-			ResourceSet rSet2 = new ResourceSetImpl();
-			rSet2.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
-			Resource res2 = rSet2.getResource(uri2, true);
-
-			if (res2 instanceof XMLResource) {
-
-				((XMLResource) res2).getDefaultSaveOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
-			}
-
-			try {
-				res2.save(Collections.EMPTY_MAP);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
 			return true;
 		} else {

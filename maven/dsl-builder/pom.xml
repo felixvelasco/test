@@ -9,38 +9,15 @@
 	<url>http://maven.apache.org</url>
 	<repositories>
 		<repository>
-			<id>maven.eclipse.org</id>
-			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/public/</url>
-		</repository>
-		<repository>
-			<id>central</id>
-			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/central/</url>
-		</repository>
-		<repository>
 			<id>ivr</id>
 			<name>jVoice test repository</name>
 			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/ivr/</url>
-		</repository>
-		<repository>
-			<id>xtend</id>
-			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/xtend/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>xtend</id>
 			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/xtend/</url>
-		</pluginRepository>
-		<pluginRepository>
-			<releases>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>central</id>
-			<name>Central Repository</name>
-			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/central/</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -132,15 +109,10 @@
 			<artifactId>maven-project</artifactId>
 			<version>3.0-alpha-2</version>
 		</dependency>
-				<dependency>
-		  <groupId>com.vectorsf.jvoice.core</groupId>
-		  <artifactId>com.vectorsf.jvoice.operation.model</artifactId>
-		  <version>0.1.0</version>
-		</dependency>
 		<dependency>
   <groupId>com.vectorsf.jvoice.core</groupId>
   <artifactId>com.vectorsf.jvoice.prompt.model</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.0</version> 
 </dependency>
 <dependency>
   <groupId>com.vectorsf.jvoice.core</groupId>
@@ -158,6 +130,18 @@
 					<artifactId>uuu</artifactId>
 					<version>1.0.0</version>
 				</dependency>
+				<dependency>
+					<groupId>com.vectorsf.jvoice.core</groupId>
+					<artifactId>
+						com.vectorsf.jvoice.operation.model
+					</artifactId>
+					<version>0.1.0</version>
+				</dependency>
+				<dependency>
+					<groupId>org.eclipse.graphiti</groupId>
+					<artifactId>org.eclipse.graphiti.mm</artifactId>
+					<version>0.10.0.v20130612-0936</version>
+				</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -168,6 +152,17 @@
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
