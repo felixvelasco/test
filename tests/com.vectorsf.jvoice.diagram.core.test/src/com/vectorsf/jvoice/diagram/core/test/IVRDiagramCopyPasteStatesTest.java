@@ -11,6 +11,7 @@ import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -182,11 +183,6 @@ public class IVRDiagramCopyPasteStatesTest {
 	}
 
 	@Test
-	public void test7CopyPasteInitial() throws Exception {
-		copyPasteState(7, "Initial", 135, 81);
-	}
-
-	@Test
 	public void testCopyPasteCall() throws Exception {
 		copyPasteState(1, "Call", 225, 79);
 	}
@@ -283,7 +279,11 @@ public class IVRDiagramCopyPasteStatesTest {
 				hasItemWithNameStateName = hasStateNamed("Copy" + (i + 1)
 						+ "Of" + stateName);
 			}
-			assertThat(flow.getStates(), hasItemWithNameStateName);
+			if (stateName.equals("Initial")) {
+				assertThat(flow.getStates(), not(hasItemWithNameStateName));
+			} else {
+				assertThat(flow.getStates(), hasItemWithNameStateName);
+			}
 		}
 	}
 
@@ -293,8 +293,8 @@ public class IVRDiagramCopyPasteStatesTest {
 
 		IProject project = createProject("testNavigator");
 		IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/seven.jvflow",
-				getInputStreamResource(bundle, "seven.jvflow"));
+				+ "/several/packages/inside/eight.jvflow",
+				getInputStreamResource(bundle, "eight.jvflow"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/empty.jvflow",
 				getInputStreamResource(bundle, "empty.jvflow"));
@@ -313,9 +313,9 @@ public class IVRDiagramCopyPasteStatesTest {
 		editor = getGefEditor();
 		gefViewer = editor.getSWTBotGefViewer();
 
-		SWTBotGefEditPart entity = editor.getEditPart("Initial");
+		SWTBotGefEditPart entity = editor.getEditPart("Final");
 		final List<SWTBotGefEditPart> elements = new ArrayList<SWTBotGefEditPart>();
-		elements.add(editor.getEditPart("Initial"));
+
 		elements.add(editor.getEditPart("Final"));
 		elements.add(editor.getEditPart("Call"));
 		elements.add(editor.getEditPart("empty"));
@@ -349,8 +349,6 @@ public class IVRDiagramCopyPasteStatesTest {
 				.getBusinessObjectForLinkedPictogramElement(diagram);
 		Matcher<Iterable<? super State>> hasItemWithNameStateName = null;
 
-		hasItemWithNameStateName = hasStateNamed("CopyOfInitial");
-		assertThat(flow.getStates(), hasItemWithNameStateName);
 		hasItemWithNameStateName = hasStateNamed("CopyOfFinal");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
 		hasItemWithNameStateName = hasStateNamed("CopyOfempty");
@@ -366,9 +364,7 @@ public class IVRDiagramCopyPasteStatesTest {
 		hasItemWithNameStateName = hasStateNamed("CopyOfInput");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
 		Matcher<Iterable<? super Transition>> hasTransition = hasTransition(
-				"CopyOfInitial", "CopyOfCall");
-		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfCall", "CopyOfempty");
+				"CopyOfCall", "CopyOfempty");
 		assertThat(flow.getTransitions(), hasTransition);
 		hasTransition = hasTransition("CopyOfempty", "CopyOfSwitch");
 		assertThat(flow.getTransitions(), hasTransition);
