@@ -15,7 +15,7 @@
 		<repository>
 			<id>ivr</id>
 			<name>jVoice test repository</name>
-			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/ivr/</url>
+			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/groups/jvoiceGroup/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -116,12 +116,12 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.prompt.model</artifactId>
-			<version>0.1.0</version>
+			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.base.model</artifactId>
-			<version>0.1.0</version>
+			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>

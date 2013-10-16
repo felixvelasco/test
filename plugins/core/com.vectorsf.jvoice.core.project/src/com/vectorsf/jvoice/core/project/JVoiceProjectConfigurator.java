@@ -80,7 +80,7 @@ public final class JVoiceProjectConfigurator {
 		Repository repository = new Repository();
 		repository.setId("jvoice");
 		repository.setName("JVoice repository");
-		repository.setUrl("http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/ivr/");
+		repository.setUrl("http://isbks208510504s.scisb.isban.corp/nexus/content/groups/jvoiceGroup/");
 
 		model.addPluginRepository(repository);
 
