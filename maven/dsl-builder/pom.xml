@@ -24,7 +24,9 @@
 			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/xtend/</url>
 		</pluginRepository>
 	</pluginRepositories>
-
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>

@@ -6,9 +6,9 @@ class CallFlowStateCodeXML {
 
 	
 	def static doGenerateCallFlowState(State state) '''
-        <subflow-state id="«state.name»" subflow="«state.name»">
+        <subflow-state id="Â«state.nameÂ»" subflow="Â«state.nameÂ»">
 
-              <transition to="«NombreTranSalida.Nombre(state)»"/> 
+              <transition to="Â«NombreTranSalida.Nombre(state)Â»"/> 
 	</subflow-state>
    '''
 }

@@ -6,10 +6,10 @@ class FinalStateCodeXML {
 
 	
 	def static doGenerateFinalState(State state) '''
-		<action-state id="«state.name»">
+		<action-state id="Â«state.nameÂ»">
 		     <on-entry>
 		          <evaluate expression="end" result="flowScope.endState"></evaluate>
-		          <set name="flowScope.endState.name" value="«state.name»"></set>                
+		          <set name="flowScope.endState.name" value="Â«state.nameÂ»"></set>                
 		     </on-entry>                
 		     <evaluate expression="flowProcessor.process(flowScope.endState)"></evaluate>
 		     <transition to="end-call"/>       

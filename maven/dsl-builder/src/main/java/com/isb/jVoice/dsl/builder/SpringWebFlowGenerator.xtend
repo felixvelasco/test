@@ -38,15 +38,15 @@ class SpringWebFlowGenerator {
 	}
 	
 	def doGenerate(State state, int position, int positionFin) '''
-	«IF position==0 »
-	«doGenerateHeader(state)»
-	«ELSE»		
-		«doGenerateCallFlowState(state)»		
-		«doGenerateFinalState(state)»
-		«IF positionIni==positionFin»
-			«doGenerateFooter(state)»
-		«ENDIF»
-	«ENDIF»
+	Â«IF position==0 Â»
+	Â«doGenerateHeader(state)Â»
+	Â«ELSEÂ»		
+		Â«doGenerateCallFlowState(state)Â»		
+		Â«doGenerateFinalState(state)Â»
+		Â«IF positionIni==positionFinÂ»
+			Â«doGenerateFooter(state)Â»
+		Â«ENDIFÂ»
+	Â«ENDIFÂ»
 	
 	'''
 	
@@ -55,19 +55,19 @@ class SpringWebFlowGenerator {
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow        				
 	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
-	start-state= "«NombreTranSalida.Nombre(state)»" >
+	start-state= "Â«NombreTranSalida.Nombre(state)Â»" >
 	'''
 	
 	def doGenerateFinalState(State state) '''
-		«IF state instanceof FinalState »
-			«FinalStateCodeXML.doGenerateFinalState(state)»
-		«ENDIF»	
+		Â«IF state instanceof FinalState Â»
+			Â«FinalStateCodeXML.doGenerateFinalState(state)Â»
+		Â«ENDIFÂ»	
 	'''
 
 	def doGenerateCallFlowState(State state) '''
-		«IF state instanceof CallFlowState »
-			«CallFlowStateCodeXML.doGenerateCallFlowState(state)»
-		«ENDIF»			
+		Â«IF state instanceof CallFlowState Â»
+			Â«CallFlowStateCodeXML.doGenerateCallFlowState(state)Â»
+		Â«ENDIFÂ»			
 		
 	'''
 
