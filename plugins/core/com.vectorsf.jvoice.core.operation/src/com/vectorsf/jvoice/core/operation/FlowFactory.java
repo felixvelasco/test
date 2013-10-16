@@ -5,6 +5,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.factory.JVBeanFactory;
@@ -17,12 +18,14 @@ public class FlowFactory implements JVBeanFactory {
 
 	@Override
 	public Flow loadBeanFromFile(IFile file) {
-		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(),
+				true);
 		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
-		Resource resource = resourceSet.getResource(uri, false);
-		if (resource == null) {
-			resource = resourceSet.getResource(uri, true);
-		}
+		return loadFlow(uri, resourceSet);
+	}
+
+	private Flow loadFlow(URI uri, ResourceSet resourceSet) {
+		Resource resource = resourceSet.getResource(uri, true);
 
 		for (EObject eobject : resource.getContents()) {
 			if (eobject instanceof Flow) {
@@ -34,7 +37,14 @@ public class FlowFactory implements JVBeanFactory {
 
 	@Override
 	public String getNameFromFile(IFile file) {
-		return file.getName().replace(".jvflow", "");
+		if (file.exists()) {
+			ResourceSet rset = new ResourceSetImpl();
+			URI uri = URI.createPlatformResourceURI(file.getFullPath()
+					.toString(), true);
+			return loadFlow(uri, rset).getName();
+		} else {
+			return file.getName().replace(".jvflow", "");
+		}
 	}
 
 }

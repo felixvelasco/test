@@ -1,7 +1,5 @@
 package com.vectorsf.jvoice.core.prompt;
 
-import java.io.IOException;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -22,18 +20,7 @@ public class PromptFactory implements JVBeanFactory {
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(),
 				true);
 		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
-		Resource resource = resourceSet.getResource(uri, false);
-		if (resource == null) {
-			resource = resourceSet.getResource(uri, true);
-		} else {
-			resource.unload();
-			try {
-				resource.load(null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		Resource resource = resourceSet.getResource(uri, true);
 
 		for (EObject eobject : resource.getContents()) {
 			if (eobject instanceof VoiceDsl) {

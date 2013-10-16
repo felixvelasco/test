@@ -51,7 +51,8 @@ public class PasteHandler extends AbstractHandler {
 	public void setEnabled(Object evaluationContext) {
 
 		Clipboard clip = new Clipboard(Display.getCurrent());
-		Object contents = clip.getContents(LocalSelectionTransfer.getTransfer());
+		Object contents = clip
+				.getContents(LocalSelectionTransfer.getTransfer());
 		clip.dispose();
 		if (contents == null) {
 			setBaseEnabled(false);
@@ -74,7 +75,8 @@ public class PasteHandler extends AbstractHandler {
 
 		rename = false;
 		Clipboard clip = new Clipboard(Display.getCurrent());
-		Object contents = clip.getContents(LocalSelectionTransfer.getTransfer());
+		Object contents = clip
+				.getContents(LocalSelectionTransfer.getTransfer());
 		clip.dispose();
 		if (contents == null) {
 			return null;
@@ -116,8 +118,8 @@ public class PasteHandler extends AbstractHandler {
 					// Proponemos al usuario un nombre valido para el fichero.
 					InputDialog ventana = new InputDialog(
 							HandlerUtil.getActiveShell(event),
-							"Conflicto de nombre", nombre + " "
-									+ "Ya existe un recurso llamado " + nombre,
+							"Conflicto de nombre",
+							"Ya existe un recurso llamado " + miBean.getName(),
 							nombre, new IInputValidator() {
 
 								@Override
@@ -129,10 +131,13 @@ public class PasteHandler extends AbstractHandler {
 									if (!validateName.isOK()) {
 										return validateName.getMessage();
 									}
+									// targetPath = targetRes.getFullPath()
+									// .append(miBean.getParent()
+									// .getProjectRelativePath()
+									// .append(input));
+
 									targetPath = targetRes.getFullPath()
-											.append(miBean.getParent()
-													.getProjectRelativePath()
-													.append(input));
+											.append(input);
 									if (root.getFile(targetPath).exists()) {
 										return "Ya existe un recurso con ese nombre";
 									}
@@ -174,7 +179,8 @@ public class PasteHandler extends AbstractHandler {
 		} else if (objtarget instanceof JVProject) {
 			JVProject target = (JVProject) objtarget;
 
-			List<JVPackage> packs = getListFromClipboard(contents, JVPackage.class);
+			List<JVPackage> packs = getListFromClipboard(contents,
+					JVPackage.class);
 			if (packs == null) {
 				return null;
 			}
@@ -201,8 +207,8 @@ public class PasteHandler extends AbstractHandler {
 					// Proponemos al usuario un nombre valido para la carpeta.
 					InputDialog ventana = new InputDialog(
 							HandlerUtil.getActiveShell(event),
-							"Conflicto de nombre", nombre + " "
-									+ "Ya existe un recurso llamado " + nombre,
+							"Conflicto de nombre",
+							"Ya existe un recurso llamado " + miPack.getName(),
 							nombre, new IInputValidator() {
 
 								@Override
@@ -287,40 +293,6 @@ public class PasteHandler extends AbstractHandler {
 		return null;
 	}
 
-	private String getNewName(Object beanPackage, String name) {
-		if (beanPackage instanceof JVPackage) {
-			JVPackage proPack = (JVPackage) beanPackage;
-			for (EObject o : proPack.eContents()) {
-				if (o instanceof JVBean) {
-					String navName = ((JVBean) o).getName();
-					if (navName != null && navName.equals(name)) {
-						// Se vuelve a llamar a s� mismo para comprobar que el
-						// nombre creado tampoco existe.
-						return getNewName(beanPackage, "Copy of " + name);
-					}
-				}
-			}
-			return name;
-
-		} else if (beanPackage instanceof JVProject) {
-			JVProject proPack = (JVProject) beanPackage;
-			for (EObject o : proPack.eContents()) {
-				if (o instanceof JVPackage) {
-					String navName = ((JVPackage) o).getName();
-					if (navName != null && navName.equals(name)) {
-						// Se vuelve a llamar a s� mismo para comprobar que el
-						// nombre creado tampoco existe.
-						return getNewName(beanPackage, "Copy of " + name);
-					}
-				}
-			}
-			return name;
-		} else {
-			return null;
-		}
-
-	}
-
 	// Metodo para recuperar un nombre valido para el fichero o la carpeta que
 	// se quiere copiar en caso de que haya uno en el destino con el mismo
 	// nombre.
@@ -333,8 +305,7 @@ public class PasteHandler extends AbstractHandler {
 
 			if (root.getFolder(targetPath).exists()) {
 
-				String newName = getNewName(target,
-						"CopyOf" + mipackage.getName());
+				String newName = "CopyOf" + NameUser;
 
 				targetPath = targetRes.getFullPath().append(
 						mipackage.getParent().getProjectRelativePath()
@@ -352,12 +323,13 @@ public class PasteHandler extends AbstractHandler {
 
 			if (root.getFile(targetPath).exists()) {
 
-				String newName = getNewName(target,
-						"CopyOf" + mipackage.getName());
+				String newName = "CopyOf" + NameUser;
 
-				targetPath = targetRes.getFullPath().append(
-						mipackage.getParent().getProjectRelativePath()
-								.append(newName));
+				// targetPath = targetRes.getFullPath().append(
+				// mipackage.getParent().getProjectRelativePath()
+				// .append(newName));
+
+				targetPath = targetRes.getFullPath().append(newName);
 
 				return nombreValido(root, targetPath, target, mipackage,
 						targetRes, newName);

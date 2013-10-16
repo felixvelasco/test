@@ -26,6 +26,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.vectorsf.jvoice.ui.navigator.util.RenameIVRResourceWizard;
 
+@SuppressWarnings("restriction")
 public class RenameHandler extends AbstractHandler {
 
 	@Override
@@ -59,8 +60,8 @@ public class RenameHandler extends AbstractHandler {
 	}
 
 	protected IResource[] getSelectedResources(IStructuredSelection sel) {
-		List resources = new ArrayList(sel.size());
-		for (Iterator e = sel.iterator(); e.hasNext();) {
+		List<Object> resources = new ArrayList<Object>(sel.size());
+		for (Iterator<?> e = sel.iterator(); e.hasNext();) {
 			Object next = e.next();
 			if (next instanceof IResource) {
 				resources.add(next);
@@ -102,6 +103,6 @@ public class RenameHandler extends AbstractHandler {
 				}// if
 			}
 		}
-		return (IResource[]) resources.toArray(new IResource[resources.size()]);
+		return resources.toArray(new IResource[resources.size()]);
 	}
 }
