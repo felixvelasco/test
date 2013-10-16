@@ -1,11 +1,14 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
+import java.util.List;
+
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
@@ -16,6 +19,7 @@ import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
+import com.vectorsf.jvoice.model.operations.State;
 
 public class InitialStatePattern extends StatePattern {
 
@@ -79,6 +83,21 @@ public class InitialStatePattern extends StatePattern {
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
 		return mainBusinessObject instanceof InitialState;
+	}
+
+	@Override
+	public boolean canCreate(ICreateContext context) {
+		if (context.getTargetContainer() instanceof Diagram) {
+			Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+			List<State> states = flow.getStates();
+			for (State sta : states) {
+				if (sta instanceof InitialState) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 
 }

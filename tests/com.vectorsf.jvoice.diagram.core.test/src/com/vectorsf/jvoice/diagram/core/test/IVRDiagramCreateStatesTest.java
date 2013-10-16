@@ -55,6 +55,7 @@ import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.base.test.SWTBotHelper;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.State;
 
 /**
@@ -248,6 +249,48 @@ public class IVRDiagramCreateStatesTest {
 		gefViewer.drag(55, 55, 150, 100);
 		editor.save();
 		assertThat(flow.getStates(), hasItemWithNameStateName);
+
+		if (stateName.equals("Initial")) {
+			Display.getDefault().syncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					IWorkbenchPage activePage = PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage();
+					try {
+						IDE.openEditor(activePage, file);
+					} catch (PartInitException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			});
+			bot.sleep(LARGE_SLEEP);
+
+			editor = getGefEditor();
+			gefViewer = editor.getSWTBotGefViewer();
+
+			diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
+			diagram = diaEditor.getDiagramTypeProvider().getDiagram();
+			flow = (Flow) Graphiti.getLinkService()
+					.getBusinessObjectForLinkedPictogramElement(diagram);
+
+			hasItemWithNameStateName = hasStateNamed(stateName);
+			assertThat(flow.getStates(), hasItemWithNameStateName);
+
+			gefViewer.activateTool(stateName);
+			gefViewer.drag(55, 55, 150, 100);
+			editor.save();
+			boolean exists = false;
+			boolean exists2Initial = false;
+			for (State state : flow.getStates()) {
+				if (state instanceof InitialState) {
+					if (exists == true) {
+						exists2Initial = true;
+					}
+				}
+			}
+			assertThat(exists2Initial, is(false));
+		}
 
 	}
 

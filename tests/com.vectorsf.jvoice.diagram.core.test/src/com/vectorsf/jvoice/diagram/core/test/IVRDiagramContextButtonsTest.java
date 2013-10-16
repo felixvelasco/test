@@ -10,6 +10,7 @@ import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.both;
+import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.instanceOf;
@@ -445,10 +446,20 @@ public class IVRDiagramContextButtonsTest {
 
 		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed(stateName);
 		assertThat(flow.getStates(), not(hasItemWithNameStateName));
+		Matcher<Iterable<? super Transition>> hasTransitionWithState = hasTransitionWithState(stateName);
+		assertThat(flow.getTransitions(), not(hasTransitionWithState));
 
 	}
 
+	private Matcher<Iterable<? super Transition>> hasTransitionWithState(
+			String stateName) {
+		return Matchers.<Transition> hasItem(either(
+				hasProperty("source", hasProperty("name", is(stateName)))).or(
+				hasProperty("target", hasProperty("name", is(stateName)))));
+	}
+
 	public void cancelDeleteState(String stateName) throws Exception {
+
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
 		IProject project = createProject("testNavigator");
@@ -473,6 +484,19 @@ public class IVRDiagramContextButtonsTest {
 
 		editor = getGefEditor();
 		gefViewer = editor.getSWTBotGefViewer();
+
+		boolean checkTransitions = false;
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
+				.getEditor(true);
+		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
+		Flow flow = (Flow) Graphiti.getLinkService()
+				.getBusinessObjectForLinkedPictogramElement(diagram);
+		for (State state : flow.getStates()) {
+			if (state.getIncomingTransitions() != null
+					|| state.getOutgoingTransitions() != null) {
+				checkTransitions = true;
+			}
+		}
 
 		SWTBotGefEditPart entity = editor.getEditPart(stateName);
 		entity.click();
@@ -488,18 +512,21 @@ public class IVRDiagramContextButtonsTest {
 		assertThat(entity, notNullValue());
 
 		editor.save();
-		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
-		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		Flow flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
 
+		diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
+		diagram = diaEditor.getDiagramTypeProvider().getDiagram();
+		flow = (Flow) Graphiti.getLinkService()
+				.getBusinessObjectForLinkedPictogramElement(diagram);
 		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed(stateName);
 		assertThat(flow.getStates(), hasItemWithNameStateName);
-
+		if (checkTransitions) {
+			Matcher<Iterable<? super Transition>> hasTransitionWithState = hasTransitionWithState(stateName);
+			assertThat(flow.getTransitions(), hasTransitionWithState);
+		}
 	}
 
 	public void removeState(String stateName) throws Exception {
+
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
 		IProject project = createProject("testNavigator");
@@ -525,6 +552,19 @@ public class IVRDiagramContextButtonsTest {
 		editor = getGefEditor();
 		gefViewer = editor.getSWTBotGefViewer();
 
+		boolean checkTransitions = false;
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
+				.getEditor(true);
+		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
+		Flow flow = (Flow) Graphiti.getLinkService()
+				.getBusinessObjectForLinkedPictogramElement(diagram);
+		for (State state : flow.getStates()) {
+			if (state.getIncomingTransitions() != null
+					|| state.getOutgoingTransitions() != null) {
+				checkTransitions = true;
+			}
+		}
+
 		SWTBotGefEditPart entity = editor.getEditPart(stateName);
 		entity.click();
 		pressEntityContextButton(entity, "Remove");
@@ -534,15 +574,17 @@ public class IVRDiagramContextButtonsTest {
 
 		assertThat(entity, nullValue());
 		editor.save();
-		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
-		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		Flow flow = (Flow) Graphiti.getLinkService()
+		diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
+		diagram = diaEditor.getDiagramTypeProvider().getDiagram();
+		flow = (Flow) Graphiti.getLinkService()
 				.getBusinessObjectForLinkedPictogramElement(diagram);
 
 		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed(stateName);
 		assertThat(flow.getStates(), hasItemWithNameStateName);
-
+		if (checkTransitions) {
+			Matcher<Iterable<? super Transition>> hasTransitionWithState = hasTransitionWithState(stateName);
+			assertThat(flow.getTransitions(), hasTransitionWithState);
+		}
 	}
 
 	public void pressEntityContextButton(SWTBotGefEditPart part,

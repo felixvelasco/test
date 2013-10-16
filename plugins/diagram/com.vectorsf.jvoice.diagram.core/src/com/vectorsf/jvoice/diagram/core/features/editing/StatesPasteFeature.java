@@ -1,6 +1,7 @@
 package com.vectorsf.jvoice.diagram.core.features.editing;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -104,7 +105,19 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			if (!isState(object) && !(object instanceof Transition)) {
 				return false;
 			}
+			if (object instanceof InitialState) {
+				// Check if exists any InitialState
+				Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+				List<State> states = flow.getStates();
+				for (State sta : states) {
+					if (sta instanceof InitialState) {
+						return false;
+					}
+				}
+				return true;
+			}
 		}
+
 		return true;
 	}
 

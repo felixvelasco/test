@@ -6,9 +6,11 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.log.Logger;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICopyFeature;
+import org.eclipse.graphiti.features.IDeleteFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.IPasteFeature;
 import org.eclipse.graphiti.features.context.ICopyContext;
+import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.IPasteContext;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
@@ -21,6 +23,7 @@ import com.vectorsf.jvoice.diagram.core.Activator;
 import com.vectorsf.jvoice.diagram.core.features.editing.StatesCopyFeature;
 import com.vectorsf.jvoice.diagram.core.features.editing.StatesPasteFeature;
 import com.vectorsf.jvoice.diagram.core.features.editing.TextEventDirectEditFeature;
+import com.vectorsf.jvoice.diagram.core.features.editing.TransitionsDeleteFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
 
@@ -75,5 +78,10 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 	@Override
 	public IPasteFeature getPasteFeature(IPasteContext context) {
 		return new StatesPasteFeature(this);
+	}
+
+	@Override
+	public IDeleteFeature getDeleteFeature(IDeleteContext context) {
+		return new TransitionsDeleteFeature(this);
 	}
 }
