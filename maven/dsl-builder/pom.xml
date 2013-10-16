@@ -1,7 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.isb.jVoice</groupId>
+	<parent>
+		<groupId>com.vectorsf.jvoice</groupId>
+		<artifactId>maven</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</parent>
 	<artifactId>dsl-builder</artifactId>
 	<packaging>maven-plugin</packaging>
 	<version>0.0.2-SNAPSHOT</version>
@@ -110,38 +114,32 @@
 			<version>3.0-alpha-2</version>
 		</dependency>
 		<dependency>
-  <groupId>com.vectorsf.jvoice.core</groupId>
-  <artifactId>com.vectorsf.jvoice.prompt.model</artifactId>
-  <version>0.1.0</version> 
-</dependency>
-<dependency>
-  <groupId>com.vectorsf.jvoice.core</groupId>
-  <artifactId>com.vectorsf.jvoice.base.model</artifactId>
-  <version>0.1.0</version>
-</dependency>
-				<dependency>
+			<groupId>com.vectorsf.jvoice.core</groupId>
+			<artifactId>com.vectorsf.jvoice.prompt.model</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vectorsf.jvoice.core</groupId>
+			<artifactId>com.vectorsf.jvoice.base.model</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext.xbase</artifactId>
 			<version>2.4.2.v201306120542</version>
 		</dependency>
-
-				<dependency>
-					<groupId>uuu</groupId>
-					<artifactId>uuu</artifactId>
-					<version>1.0.0</version>
-				</dependency>
-				<dependency>
-					<groupId>com.vectorsf.jvoice.core</groupId>
-					<artifactId>
+		<dependency>
+			<groupId>com.vectorsf.jvoice.core</groupId>
+			<artifactId>
 						com.vectorsf.jvoice.operation.model
 					</artifactId>
-					<version>0.1.0</version>
-				</dependency>
-				<dependency>
-					<groupId>org.eclipse.graphiti</groupId>
-					<artifactId>org.eclipse.graphiti.mm</artifactId>
-					<version>0.10.0.v20130612-0936</version>
-				</dependency>
+			<version>0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.graphiti</groupId>
+			<artifactId>org.eclipse.graphiti.mm</artifactId>
+			<version>0.10.0.v20130612-0936</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
