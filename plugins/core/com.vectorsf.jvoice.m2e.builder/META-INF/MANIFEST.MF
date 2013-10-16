@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Builder
-Bundle-SymbolicName: com.isb.bks.ivr.voice.m2e.builder;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: com.vectorsf.jvoice.m2e.builder;singleton:=true
+Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: ISB
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.m2e.jdt;bundle-version="1.4.0",

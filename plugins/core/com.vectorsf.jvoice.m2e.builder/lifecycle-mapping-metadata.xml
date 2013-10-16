@@ -3,7 +3,7 @@
   <pluginExecutions>
     <pluginExecution>
       <pluginExecutionFilter>
-        <groupId>com.isb.jVoice</groupId>
+        <groupId>com.vectorsf.jvoice</groupId>
         <artifactId>dsl-builder</artifactId>
         <versionRange>[0.0.1,)</versionRange>
         <goals>
