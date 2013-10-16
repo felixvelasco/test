@@ -10,13 +10,15 @@ import com.vectorsf.jvoice.model.operations.Flow
 import com.vectorsf.jvoice.model.operations.State
 import com.vectorsf.jvoice.model.operations.FinalState
 import com.vectorsf.jvoice.model.operations.InitialState
+import com.vectorsf.jvoice.model.operations.CallFlowState
 
 class SpringWebFlowGenerator {
 	
 	Resource res
 	Flow element
 
-	int position
+	int positionIni;
+	int positionFin;
 	
 	new(Resource resource) {
 		res = resource;
@@ -26,92 +28,54 @@ class SpringWebFlowGenerator {
 	def generate(File file) {
 		var fw = new FileWriter(file)
 		for (State state : element.getStates()) {
-			position =element.getStates().indexOf(state);
-			fw.append(doGenerate(state, position));
+			positionIni =element.getStates().indexOf(state);
+			positionFin =element.getStates().length-1;
+			fw.append(doGenerate(state, positionIni,positionFin));
 		}
 		
 		
 		fw.close()
 	}
 	
-	def doGenerate(State state, int position) '''
-	«IF state instanceof InitialState »
-	«doGenerateHeader()»
-	«ELSE»
-		«IF position==1 »
-			«doGenerateCompleteHeader(state)»
-		«ENDIF»
-			«doGenerateFinalState(state)»
-«««		«doGenerateNoMatch(element.audios.noMatchAudios)»
-		«IF state instanceof FinalState »
+	def doGenerate(State state, int position, int positionFin) '''
+	«IF position==0 »
+	«doGenerateHeader(state)»
+	«ELSE»		
+		«doGenerateCallFlowState(state)»		
+		«doGenerateFinalState(state)»
+		«IF positionIni==positionFin»
 			«doGenerateFooter(state)»
 		«ENDIF»
 	«ENDIF»
 	
 	'''
 	
-	def doGenerateHeader() '''
+	def doGenerateHeader(State state) '''
 	<flow xmlns="http://www.springframework.org/schema/webflow"	
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow        				
 	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	start-state= "«NombreTranSalida.Nombre(state)»" >
 	'''
-	
-	def doGenerateCompleteHeader(State state) '''
-		start-state= "«state.name»" >
-	'''
-	
 	
 	def doGenerateFinalState(State state) '''
-		<action-state id="«state.name»">
-		     <on-entry>
-		          <evaluate expression="end" result="flowScope.endState"></evaluate>
-		          <set name="flowScope.endState.name" value="«state.name»"></set>                
-		     </on-entry>                
-		     <evaluate expression="flowProcessor.process(flowScope.endState)"></evaluate>
-		     <transition to="end"/>       
-		 </action-state>
+		«IF state instanceof FinalState »
+			«FinalStateCodeXML.doGenerateFinalState(state)»
+		«ENDIF»	
+	'''
+
+	def doGenerateCallFlowState(State state) '''
+		«IF state instanceof CallFlowState »
+			«CallFlowStateCodeXML.doGenerateCallFlowState(state)»
+		«ENDIF»			
+		
 	'''
 
 	def doGenerateFooter(State state) '''
 		
-		<end-state id="end"/>
+		<end-state id="end-call"/>
 		</flow> 
 	'''
-	
-//	def doGenerateInitial(List<Audio> initial) '''
-//		<div class='initial'>
-//		<h1>Saludo inicial</h1>
-//			«FOR Audio audio: initial»
-//				«printAudio(audio)»
-//			«ENDFOR»
-//		</div>
-//		
-//	'''
-	
-//	def doGenerateNoMatch(List<Audio> match) '''
-//		<div class='nomatch'>
-//		<h1>No match</h1>
-//			«FOR Audio audio: match»
-//				«printAudio(audio)»
-//			«ENDFOR»
-//		</div>
-//		
-//	'''
-
-
-	
-//	def printAudio(Audio audio) '''
-//		<p>
-//		«IF audio.tts != null »
-//			<h2>»audio.tts»</h2>
-//		«ENDIF»
-//		&nbsp;
-//		«IF audio.src != null »
-//			<h2><b>«audio.src»</b></h2>
-//		«ENDIF»
-//		</p>
-//	'''
 	
 	def setResource(Resource resource) {
 		res = resource;

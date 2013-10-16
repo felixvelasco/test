@@ -27,9 +27,8 @@ import org.eclipse.graphiti.mm.algorithms.AlgorithmsPackage;
 import org.eclipse.graphiti.mm.algorithms.styles.StylesPackage;
 import org.eclipse.graphiti.mm.pictograms.PictogramsPackage;
 
-import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
-import com.vectorsf.jvoice.model.operations.State;
+
 
 
 /**
