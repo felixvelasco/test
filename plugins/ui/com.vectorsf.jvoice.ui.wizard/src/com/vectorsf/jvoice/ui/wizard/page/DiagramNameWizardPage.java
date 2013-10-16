@@ -65,6 +65,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	Text textFieldPackage;
 
 	private Button browsePackage;
+	private int primeraVez;
 
 	private Listener nameModifyListener = new Listener() {
 		@Override
@@ -80,12 +81,14 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	public DiagramNameWizardPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
+		primeraVez = 0;
 	}
 
 	public DiagramNameWizardPage(String pageName) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
+		primeraVez = 0;
 	}
 
 	@Override
@@ -172,10 +175,14 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		JVBean diagrama = paquete.getBean(text);
 
 		if (diagrama != null) {
+			if (primeraVez==0){
+				primeraVez ++;
+				return false;
+			}
 			setErrorMessage("Flow already exists");
 			return false;
 		}
-
+		primeraVez ++;
 		setSelection(paquete);
 		setErrorMessage(null);
 		setMessage(null);

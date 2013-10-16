@@ -56,6 +56,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 	private Button browsePackage;
 	private Combo box;
+	private int primeraVez;
 	
 	private Listener nameModifyListener = new Listener() {
 		@Override
@@ -79,12 +80,14 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	public DslNameWizardPage(String pageName, String title,
 			ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
+		primeraVez = 0;
 	}
 
 	public DslNameWizardPage(String pageName) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
+		primeraVez = 0;
 	}
 	
 	@Override
@@ -172,10 +175,15 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		JVBean voiceDsl = paquete.getBean(text);
 
 		if (voiceDsl != null) {
+			if (primeraVez ==0){
+				primeraVez ++;
+				return false;
+			}
 			setErrorMessage("Locution already exists");
 			return false;
 		}
 
+		primeraVez++;
 		setSelection(paquete);
 		setErrorMessage(null);
 		setMessage(null);
