@@ -1,6 +1,10 @@
 package com.vectorsf.jvoice.core.project;
 
+import org.apache.maven.model.Build;
 import org.apache.maven.model.Model;
+import org.apache.maven.model.Plugin;
+import org.apache.maven.model.PluginExecution;
+import org.apache.maven.model.Repository;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspace;
@@ -57,6 +61,28 @@ public final class JVoiceProjectConfigurator {
 		model.setPackaging("jar");
 
 		model.setName(projectName);
+
+		Plugin dsl_builder = new Plugin();
+		dsl_builder.setGroupId("com.vectorsf.jvoice");
+		dsl_builder.setArtifactId("dsl-builder");
+		dsl_builder.setVersion("0.0.2-SNAPSHOT");
+		PluginExecution voiceDSL = new PluginExecution();
+		voiceDSL.setPhase("generate-sources");
+		voiceDSL.addGoal("voiceDSL");
+
+		dsl_builder.addExecution(voiceDSL);
+
+		Build build = new Build();
+		build.addPlugin(dsl_builder);
+
+		model.setBuild(build);
+
+		Repository repository = new Repository();
+		repository.setId("jvoice");
+		repository.setName("JVoice repository");
+		repository.setUrl("http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/ivr/");
+
+		model.addPluginRepository(repository);
 
 		return model;
 	}
