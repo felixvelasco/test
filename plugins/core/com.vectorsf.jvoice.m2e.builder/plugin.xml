@@ -6,7 +6,7 @@
       <configurator
             class="com.isb.bks.ivr.voice.m2e.builder.internal.JVoiceProjectConfigurator"
             id="com.isb.bks.ivr.voice.m2e.jVoiceConfigurator"
-            name="jVoice Project Configurator">
+            name="%configurator.name">
       </configurator>
    </extension>
    <extension

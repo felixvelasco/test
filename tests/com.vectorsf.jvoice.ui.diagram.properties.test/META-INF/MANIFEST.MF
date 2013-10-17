@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: com.vectorsf.jvoice.ui.diagram.properties.test
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.vectorsf.jvoice.ui.diagram.properties.test;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-ActivationPolicy: lazy
-Bundle-Vendor: 
+Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.swtbot.go,
  org.junit;bundle-version="4.11.0",

@@ -29,7 +29,7 @@
          point="org.eclipse.ui.contexts">
       <context
             id="com.isb.jvoice.diagram.core.diagramEditor"
-            name="jVoice diagram context"
+            name="%context.name"
             parentId="org.eclipse.graphiti.ui.diagramEditor">
       </context>
    </extension>
@@ -77,7 +77,7 @@
           extensions="jvflow"
           id="org.eclipse.graphiti.ui.editor.DiagramEditorJVoice"
           matchingStrategy="org.eclipse.graphiti.ui.editor.DiagramEditorMatchingStrategy"
-          name="JVoice Editor">
+          name="%editor.name">
        <contentTypeBinding
              contentTypeId="org.eclipse.graphiti.content.diagram">
        </contentTypeBinding>

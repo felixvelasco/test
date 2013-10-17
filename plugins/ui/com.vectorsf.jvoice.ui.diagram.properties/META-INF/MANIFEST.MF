@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Properties
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.vectorsf.jvoice.ui.diagram.properties;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: com.vectorsf.jvoice.ui.diagram.properties.Activator
-Bundle-Vendor: VECTORSF
+Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.0",
  org.eclipse.graphiti.ui;bundle-version="0.10.0",
  org.eclipse.graphiti;bundle-version="0.10.0",

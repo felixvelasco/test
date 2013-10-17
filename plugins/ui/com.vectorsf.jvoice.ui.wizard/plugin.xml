@@ -8,7 +8,7 @@
             class="com.vectorsf.jvoice.ui.wizard.create.CreateProjectJVoice"
             icon="res/JVProject.png"
             id="com.vectorsf.jvoice.ui.project.wizard"
-            name="Project"
+            name="%wizard.project.name"
             project="true">
       </wizard>
       <wizard
@@ -16,7 +16,7 @@
          class="com.vectorsf.jvoice.ui.wizard.create.CreateJVPackageWizard"
          icon="res/JVPackage.png"
          id="com.vectorsf.jvoice.ui.package.wizard"
-         name="Package"
+         name="%wizard.package.name"
          project="false">
       </wizard>
      <wizard
@@ -24,7 +24,7 @@
            class="com.vectorsf.jvoice.ui.wizard.create.CreateDiagramJVoice"
            icon="res/Flow.png"
            id="com.vectorsf.jvoice.ui.wizard.DiagramJVoice"
-           name="Flow"
+           name="%wizard.flow.name"
            project="false">
       </wizard>
       <wizard
@@ -32,7 +32,7 @@
             class="com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice"
             icon="res/VoiceDsl.png"
             id="com.vectorsf.jvoice.ui.wizard.wizardDSL"
-            name="Locution"
+            name="%wizard.locution.name"
             project="false">
       </wizard>
 

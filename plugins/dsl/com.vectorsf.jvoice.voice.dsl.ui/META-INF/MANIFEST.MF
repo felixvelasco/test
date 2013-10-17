@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: com.vectorsf.jvoice.voice.dsl.ui
-Bundle-Vendor: Vector SF
+Bundle-Name: %Bundle-Name
+Bundle-Vendor: %Bundle-Vendor
 Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: com.vectorsf.jvoice.voice.dsl.ui; singleton:=true
 Bundle-ActivationPolicy: lazy

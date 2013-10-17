@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Reconciliator
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.vectorsf.jvoice.core.reconciliator;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Vendor: VECTORSF
+Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.core.resources;bundle-version="3.8.100",
  com.vectorsf.jvoice.base.model;bundle-version="0.1.0",

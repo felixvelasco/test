@@ -5,7 +5,7 @@
 -->
 
 <plugin>
-   <extension-point id="listener" name="Model lifecycle listener" schema="schema/listener.exsd"/>
+   <extension-point id="listener" name="%extension-point.name" schema="schema/listener.exsd"/>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated Base -->

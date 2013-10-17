@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Project
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.vectorsf.jvoice.core.project;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Vendor: VECTORSF
+Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.9.0",
  org.eclipse.core.resources;bundle-version="3.8.100",

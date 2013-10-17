@@ -18,55 +18,55 @@
                class="com.vectorsf.jvoice.ui.diagram.properties.filters.CallStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.CallStateFilter"
                id="graphiti.main.tab.emfclass.callState"
-               tab="graphiti.main.tab.callState">
+               tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
                class="com.vectorsf.jvoice.ui.diagram.properties.filters.CallFlowStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.CallFlowStateFilter"
                id="graphiti.main.tab.emfclass.callFlowState"
-               tab="graphiti.main.tab.callFlowState">
+               tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
                class="com.vectorsf.jvoice.ui.diagram.properties.filters.PromptStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.PromptStateFilter"
                id="graphiti.main.tab.emfclass.prompState"
-               tab="graphiti.main.tab.prompState">
+               tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
                class="com.vectorsf.jvoice.ui.diagram.properties.filters.InputStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.InputStateFilter"
                id="graphiti.main.tab.emfclass.inputState"
-               tab="graphiti.main.tab.inputState">
+               tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
                class="com.vectorsf.jvoice.ui.diagram.properties.filters.MenuStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.MenuStateFilter"
                id="graphiti.main.tab.emfclass.menuState"
-               tab="graphiti.main.tab.menuState">
+               tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
                class="com.vectorsf.jvoice.ui.diagram.properties.filters.InitialStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.InitialStateFilter"
                id="graphiti.main.tab.emfclass.initialState"
-               tab="graphiti.main.tab.initialState">
+               tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
                class="com.vectorsf.jvoice.ui.diagram.properties.filters.FinalStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.FinalStateFilter"
                id="graphiti.main.tab.emfclass.finalState"
-               tab="graphiti.main.tab.final">
+               tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
                class="com.vectorsf.jvoice.ui.diagram.properties.filters.SwitchStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.SwitchStateFilter"
                id="graphiti.main.tab.emfclass.switchState"
-               tab="graphiti.main.tab.switchState">
+               tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
                class="com.vectorsf.jvoice.ui.diagram.properties.filters.TransitionSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.TransitionFilter"
                id="graphiti.main.tab.emfclass.transition"
-               tab="graphiti.main.tab.arrow">
+               tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
       </propertySections>
    </extension>
@@ -76,48 +76,8 @@
             contributorId="jVoiceDiagram.PropertyContributor">
          <propertyTab
                category="Graphiti"
-               id="graphiti.main.tab.final"
-               label="Main">
-         </propertyTab>
-         <propertyTab
-               category="Graphiti"
-               id="graphiti.main.tab.callState"
-               label="Main">
-         </propertyTab>
-         <propertyTab
-               category="Graphiti"
-               id="graphiti.main.tab.switchState"
-               label="Main">
-         </propertyTab>
-         <propertyTab
-               category="Graphiti"
-               id="graphiti.main.tab.menuState"
-               label="Main">
-         </propertyTab>
-         <propertyTab
-               category="Graphiti"
-               id="graphiti.main.tab.initialState"
-               label="Main">
-         </propertyTab>
-         <propertyTab
-               category="Graphiti"
-               id="graphiti.main.tab.inputState"
-               label="Main">
-         </propertyTab>
-         <propertyTab
-               category="Graphiti"
-               id="graphiti.main.tab.prompState"
-               label="Main">
-         </propertyTab>
-         <propertyTab
-               category="Graphiti"
-               id="graphiti.main.tab.callFlowState"
-               label="Main">
-         </propertyTab>
-         <propertyTab
-               category="Graphiti"
-               id="graphiti.main.tab.arrow"
-               label="Main">
+               id="graphiti.main.tab.jvoice.operation.state.main"
+               label="%propertyTab.label">
          </propertyTab>
       </propertyTabs>
    </extension>

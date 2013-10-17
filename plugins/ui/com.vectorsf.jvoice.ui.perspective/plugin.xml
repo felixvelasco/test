@@ -7,7 +7,7 @@
             class="com.vectorsf.jvoice.ui.perspective.ivr.PerspectiveFactory"
             icon="res/perspective.png"
             id="com.vectorsf.jvoice.ui.perspective.perspective"
-            name="JVoice">
+            name="%perspective.name">
       </perspective>
    </extension>
    <extension

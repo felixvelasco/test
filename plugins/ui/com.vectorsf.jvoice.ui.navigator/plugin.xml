@@ -8,11 +8,11 @@
             class="com.vectorsf.jvoice.ui.navigator.IVRNavigator"
             icon="res/navigator.png"
             id="com.vectorsf.jvoice.ui.navigator.ViewIVR"
-            name="Navigator IVR">
+            name="%view.name">
       </view>
       <category
             id="com.vectorsf.jvoice.ui.navigator.category"
-            name="IVR">
+            name="%category.name">
       </category>
    </extension>
    <extension
@@ -104,7 +104,7 @@
             icon="res/navigator.png"
             id="com.vectorsf.jvoice.ui.navigator.navigatorContent"
             labelProvider="com.vectorsf.jvoice.ui.navigator.ivr.LabelProvider"
-            name="IVR Navigator"
+            name="%navigatorContent.name.main"
             priority="normal">
          <triggerPoints>
             <instanceof
@@ -204,7 +204,7 @@
             contentProvider="com.vectorsf.jvoice.ui.navigator.ivr.MavenContentProvider"
             id="com.vectorsf.jvoice.base.maven.navigatorContent"
             labelProvider="org.eclipse.jdt.internal.ui.navigator.JavaNavigatorLabelProvider"
-            name="Maven navigator content"
+            name="%navigatorContent.name.maven"
             priority="low">
          <triggerPoints>
             <or>
@@ -349,7 +349,7 @@
             activeByDefault="true"
             class="com.vectorsf.jvoice.ui.navigator.filter.EmptyPackagesFilter"
             id="com.vectorsf.jvoice.ui.navigator.emptyPackagesFilter"
-            name="Empty packages filter"
+            name="%commonFilter.name"
             visibleInUI="true">
       </commonFilter>
    </extension>
@@ -360,7 +360,7 @@
             locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=group.edit">
          <command
                commandId="org.eclipse.ui.edit.copy"
-               label="Copy"
+               label="%command.label"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -386,7 +386,7 @@
          </command>
          <command
                commandId="org.eclipse.ui.edit.paste"
-               label="Paste"
+               label="%command.label.0"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -412,7 +412,7 @@
          </command>
          <command
                commandId="org.eclipse.ui.edit.delete"
-               label="Delete"
+               label="%command.label.1"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -568,27 +568,6 @@
             </with>
          </activeWhen>
       </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <command
-            description="Rename"
-            id="org.eclipse.ui.edit.rename"
-            name="Rename">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="org.eclipse.ui.edit.rename"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="com.vectorsf.jvoice.ui.navigator.scheme"
-            sequence="F2">
-      </key>
-      <scheme
-            id="com.vectorsf.jvoice.ui.navigator.scheme"
-            name="schemeIVR">
-      </scheme>
    </extension>
 
 </plugin>

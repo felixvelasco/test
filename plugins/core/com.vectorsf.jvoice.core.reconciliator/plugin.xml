@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="factory" name="JVBean Factory" schema="schema/factory.exsd"/>
+   <extension-point id="factory" name="%extension-point.name" schema="schema/factory.exsd"/>
    <extension
          point="com.vectorsf.jvoice.base.model.listener">
       <listener
