@@ -11,6 +11,7 @@
             default="true"
             extensions="voiceDsl"
             id="com.isb.bks.ivr.voice.dsl.VoiceDsl"
+            icon="resources/locution.png"
             name="VoiceDsl Editor">
         </editor>
     </extension>

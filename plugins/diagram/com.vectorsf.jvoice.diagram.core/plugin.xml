@@ -77,6 +77,7 @@
           extensions="jvflow"
           id="org.eclipse.graphiti.ui.editor.DiagramEditorJVoice"
           matchingStrategy="org.eclipse.graphiti.ui.editor.DiagramEditorMatchingStrategy"
+          icon="icons/flow.png"
           name="%editor.name">
        <contentTypeBinding
              contentTypeId="org.eclipse.graphiti.content.diagram">
