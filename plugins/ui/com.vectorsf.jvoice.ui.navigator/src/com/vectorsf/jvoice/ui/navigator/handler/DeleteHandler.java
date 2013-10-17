@@ -42,13 +42,13 @@ public class DeleteHandler extends AbstractHandler {
 	private boolean delete(final IResource[] resources) {
 		DeleteResourcesWizard refactoringWizard = new DeleteResourcesWizard(
 				resources);
-		refactoringWizard.setDefaultPageTitle("Borrar");
+		refactoringWizard.setDefaultPageTitle("Delete");
 		RefactoringWizardOpenOperation op = new RefactoringWizardOpenOperation(
 				refactoringWizard);
 		try {
 			Shell activeShell = PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow().getShell();
-			op.run(activeShell, "Se va a borrar eh?");
+			op.run(activeShell, "");
 		} catch (InterruptedException e) {
 		}
 		return true;

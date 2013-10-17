@@ -361,6 +361,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		textFieldPackage.setText(getInitialTextFolderFieldValue());
 		textFieldPackage.addListener(SWT.Modify, nameModifyListener);
+		
 	}
 
 	private String getTextFieldValue() {

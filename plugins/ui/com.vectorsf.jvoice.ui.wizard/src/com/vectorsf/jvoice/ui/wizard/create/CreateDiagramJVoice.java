@@ -18,6 +18,8 @@ package com.vectorsf.jvoice.ui.wizard.create;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.IWizardContainer;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
@@ -34,6 +36,11 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 
 	@Override
 	public void addPages() {
+		IWizardContainer container = getContainer();
+		if (container instanceof WizardDialog)
+		{
+			((WizardDialog) container).setHelpAvailable(false);
+		}
 		super.addPages();
 		DiagramNameWizardPage pageName = new DiagramNameWizardPage(
 				PAGE_NAME_DIAGRAM_NAME);
