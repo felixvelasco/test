@@ -56,7 +56,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					if (delta.getKind() == IResourceDelta.REMOVED) {
 						jvProject.getPackages().remove(currentPackage);
 						removeResources(currentPackage);
-						return false;
+						return true;
 					}
 				} else {
 					currentPackage = JVoiceModelReconcilier.getInstance().createPackage((IFolder) resource);
