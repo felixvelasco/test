@@ -9,8 +9,9 @@ import org.eclipse.emf.ecore.resource.Resource
 import com.vectorsf.jvoice.model.operations.Flow
 import com.vectorsf.jvoice.model.operations.State
 import com.vectorsf.jvoice.model.operations.FinalState
-import com.vectorsf.jvoice.model.operations.InitialState
 import com.vectorsf.jvoice.model.operations.CallFlowState
+import com.vectorsf.jvoice.model.operations.CallState
+import com.vectorsf.jvoice.model.operations.PromptState
 
 class SpringWebFlowGenerator {
 	
@@ -41,7 +42,9 @@ class SpringWebFlowGenerator {
 	«IF position==0 »
 	«doGenerateHeader(state)»
 	«ELSE»		
-		«doGenerateCallFlowState(state)»		
+		«doGenerateCallFlowState(state)»
+		«doGenerateCallState(state)»
+		«doGenerateOutputState(state)»
 		«doGenerateFinalState(state)»
 		«IF positionIni==positionFin»
 			«doGenerateFooter(state)»
@@ -67,6 +70,18 @@ class SpringWebFlowGenerator {
 	def doGenerateCallFlowState(State state) '''
 		«IF state instanceof CallFlowState »
 			«CallFlowStateCodeXML.doGenerateCallFlowState(state)»
+		«ENDIF»		
+	'''
+	
+	def doGenerateOutputState(State state) '''
+		«IF state instanceof PromptState »
+			«OutputStateCodeXML.doGenerateOutputState(state)»
+		«ENDIF»		
+	'''
+	
+	def doGenerateCallState(State state) '''
+		«IF state instanceof CallState »
+			«CallStateCodeXML.doGenerateCallState(state)»
 		«ENDIF»			
 		
 	'''
