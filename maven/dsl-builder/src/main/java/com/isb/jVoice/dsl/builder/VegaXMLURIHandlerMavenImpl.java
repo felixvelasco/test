@@ -1,6 +1,7 @@
 package com.isb.jVoice.dsl.builder;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -13,24 +14,29 @@ import org.eclipse.emf.ecore.xmi.XMLResource.URIHandler;
 public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 
 	private static final String EXTENSION_JVFLOW = ".jvflow";
+	private static final String EXTENSION_VOICEDSL = ".voiceDsl";
 	private static final String JAR = "jar";
+	private static final String FILE = "file";
 	private static final String SEPARATOR2 = "\\";
 	private static final String VEGA_URI = "vega:";
 	private static final String SEPARATOR = "/";
 	private static final String DOT = ".";
 	private static final String JAR_FILE = "jar:";
-	private static final String FRAGMENT0 = "#/1";
 	private static final String JV = "jv";
+	private static final String INI_FRAGMENT = "#";
+
 	private URI baseUri;
-	MavenProject mavenProject;
+	private MavenProject mavenProject;
+	private ClassLoader mclassLoader;
 
 	public void setBaseURI(URI uri) {
 		this.baseUri = uri;
 	}
 	
-	public VegaXMLURIHandlerMavenImpl(MavenProject project)
+	public VegaXMLURIHandlerMavenImpl(MavenProject project, ClassLoader classLoader)
 	{
 		mavenProject = project;
+		mclassLoader=classLoader;
 	}
 
 	public URI deresolve(URI uri) {
@@ -39,12 +45,17 @@ public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 		if (JAR.equals(sScheme)) {
 			vegaURI = getURIJar(uri);
 		}
+		else if (FILE.equals(sScheme))
+		{
+			vegaURI = getURIFile(uri);
+		}
 		if (vegaURI != null) {
 			return vegaURI;
 		} else {
 			return uri.deresolve(baseUri);
 		}
 	}
+
 
 	public URI resolve(URI vegaURI) {
 		URI uri_ = null;
@@ -70,11 +81,29 @@ public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 			Artifact artifacti = lArti.get(i);
 			if (artifacti.getArtifactId().equals(vegaURI.authority())) 
 			{				
-				File artifactJarFile = new File (Thread.currentThread().getContextClassLoader().getResource(vegaURI.path().substring(1,vegaURI.path().length())+EXTENSION_JVFLOW).getFile());
-				String urijar = JAR_FILE+artifactJarFile.getPath()+FRAGMENT0;
-				uri_=URI.createURI(urijar.replace(SEPARATOR2, SEPARATOR));
-				if (uri_ != null) {
-					break;
+				String path = vegaURI.path();
+				URL resource = mclassLoader.getResource(JV+path+EXTENSION_JVFLOW);
+				URL resourceD = mclassLoader.getResource(JV+path+EXTENSION_VOICEDSL);
+				if (resource==null)
+				{
+					resource=resourceD;
+				}
+				if (resource!=null)
+				{
+					String sUri=null;
+					if (resource.getFile().contains("jar!"))
+					{
+						sUri = JAR_FILE+new File(resource.getFile()).getPath()+ INI_FRAGMENT
+							+ vegaURI.fragment();
+					}
+					else
+					{
+						sUri =resource+ INI_FRAGMENT + vegaURI.fragment();
+					}
+					uri_=URI.createURI(sUri.replace(SEPARATOR2, SEPARATOR));
+					if (uri_ != null) {
+						break;
+					}
 				}
 			}
 		}
@@ -96,6 +125,47 @@ public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 		return orderedArtifacts;
 	}
 
+	
+	private URI getURIFile(URI uri) {
+		String[] segList= uri.segments();	
+		String path = uri.path();
+		String subpath =path.substring(0, path.indexOf("/target"));
+		String sProjectName=subpath.substring(subpath.lastIndexOf("/")+1);
+		
+		boolean bFinJV_PATH = false;
+		String sFlujos="";
+		for (String segment : segList) 
+		{			
+			if(bFinJV_PATH)
+			{
+				if (segment.contains(DOT))
+				{
+					sFlujos+=segment.substring(0, segment.indexOf(DOT));
+				}
+				else
+				{
+					sFlujos+=segment+SEPARATOR;
+				}					
+			}
+			else if ((JV).equals(segment))
+			{
+				bFinJV_PATH=true;
+			}
+		}
+		if (sProjectName!=null && !sFlujos.equals(""))
+		{
+			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR + sProjectName+ SEPARATOR + sFlujos + INI_FRAGMENT
+					+ uri.fragment());
+		}
+		else
+		{
+			return null;
+		}
+
+	}
+
+	
+	
 	private URI getURIJar(URI uri) 
 	{
 		String[] segList= uri.segments();	
@@ -119,7 +189,6 @@ public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 			}
 			else if ((JV).equals(segment))
 			{
-				sFlujos+=segment+SEPARATOR;
 				bFinJV_PATH=true;
 			}
 			else
@@ -131,7 +200,8 @@ public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 		}
 		if (sProjectName!=null && !sFlujos.equals(""))
 		{
-			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR + sProjectName+ SEPARATOR + sFlujos + FRAGMENT0);
+			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR + sProjectName+ SEPARATOR + sFlujos + INI_FRAGMENT
+					+ uri.fragment());
 		}
 		else
 		{

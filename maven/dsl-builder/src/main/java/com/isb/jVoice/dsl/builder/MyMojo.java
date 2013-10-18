@@ -2,6 +2,10 @@ package com.isb.jVoice.dsl.builder;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +24,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.graphiti.mm.algorithms.AlgorithmsPackage;
@@ -41,6 +44,10 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
  * @goal voiceDSL
  * 
  * @phase generate-sources
+
+ * @configurator include-project-dependencies
+ * 
+ * @requiresDependencyResolution compile+runtime
  */
 public class MyMojo extends AbstractMojo {
 	/**
@@ -89,6 +96,36 @@ public class MyMojo extends AbstractMojo {
 	 */
 	private MavenProjectHelper projectHelper;
 
+	
+	 /** 
+     * @parameter expression="${project.runtimeClasspathElements}"  
+     */ 
+    private List<String> runtimeClasspathElements; 
+
+    
+     private URL[] buildURLs() { 
+        List<URL> urls = new ArrayList<URL>(runtimeClasspathElements.size()); 
+        for (String element : runtimeClasspathElements) { 
+
+                try {
+					urls.add(new File(element).toURI().toURL());
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+            
+        } 
+        return urls.toArray(new URL[urls.size()]); 
+    } 
+     
+     private ClassLoader createClassLoaderForProjectDependencies() { 
+         URL[] urls = buildURLs(); 
+         return new URLClassLoader(urls, this.getClass().getClassLoader()); 
+     } 
+
+	
+	
+	
 	@Override
 	public void execute() throws MojoExecutionException {
 
@@ -107,14 +144,17 @@ public class MyMojo extends AbstractMojo {
 
 
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("jvflow", new XMIResourceFactoryImpl());
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("voiceDsl", new XMIResourceFactoryImpl());
 
 			ResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
 			resourceSet.getLoadOptions().put(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
 
-			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project);
+			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project,createClassLoaderForProjectDependencies());
 			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 
 			processFlowFiles(resourceSet);
+						
+			
 		} catch (Exception e) {
 			throw new MojoExecutionException("", e);
 		}
@@ -129,11 +169,6 @@ public class MyMojo extends AbstractMojo {
 	}
 
 
-	private String getTargetDSLName(String name) {
-		String basename = name.substring(0, name.lastIndexOf('.'));
-
-		return basename + ".jsp";
-	}
 
 	private String getTargetFlowName(String name) {
 		String basename = name.substring(0, name.lastIndexOf('.'));
@@ -141,12 +176,6 @@ public class MyMojo extends AbstractMojo {
 		return basename + ".xml";
 	}
 
-	private Set<String> getDSLIncludesPatterns() {
-		if (includes == null || includes.isEmpty()) {
-			return Collections.singleton("**/*.voiceDsl");
-		}
-		return includes;
-	}
 
 	private Set<String> getFlowIncludesPatterns() {
 		if (includes == null || includes.isEmpty()) {
@@ -207,12 +236,9 @@ public class MyMojo extends AbstractMojo {
 
 			// resolve test
 			URI uri = URI.createFileURI(flowFile.getCanonicalPath().toString());
-			Resource res = resourceSet.getResource(uri, true);
-			
+			Resource res = resourceSet.getResource(uri, true);		
 			Resource diagrama = res.getContents().get(0).eResource();
-
 			SpringWebFlowGenerator.compile(targetFile, diagrama);
-
 
 			return true;
 		} else {
