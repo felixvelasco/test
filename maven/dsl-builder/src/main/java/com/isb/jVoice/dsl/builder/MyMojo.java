@@ -26,7 +26,11 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.graphiti.mm.algorithms.AlgorithmsPackage;
 import org.eclipse.graphiti.mm.algorithms.styles.StylesPackage;
 import org.eclipse.graphiti.mm.pictograms.PictogramsPackage;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.resource.XtextResourceSet;
 
+import com.google.inject.Injector;
+import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 
@@ -94,6 +98,8 @@ public class MyMojo extends AbstractMojo {
 		}
 		try {
 
+			Injector injector = new VoiceDslStandaloneSetup().createInjectorAndDoEMFRegistration();
+
 			EPackage.Registry.INSTANCE.put(OperationsPackage.eNS_URI, OperationsPackage.eINSTANCE);
 			EPackage.Registry.INSTANCE.put(PictogramsPackage.eNS_URI, PictogramsPackage.eINSTANCE);
 			EPackage.Registry.INSTANCE.put(AlgorithmsPackage.eNS_URI, AlgorithmsPackage.eINSTANCE);
@@ -102,7 +108,13 @@ public class MyMojo extends AbstractMojo {
 
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("jvflow", new XMIResourceFactoryImpl());
 
-			processFlowFiles();
+			ResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
+			resourceSet.getLoadOptions().put(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+
+			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project);
+			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
+
+			processFlowFiles(resourceSet);
 		} catch (Exception e) {
 			throw new MojoExecutionException("", e);
 		}
@@ -164,7 +176,7 @@ public class MyMojo extends AbstractMojo {
 		return false;
 	}
 
-	private void processFlowFiles() throws InclusionScanException, IOException {
+	private void processFlowFiles(ResourceSet resourceSet) throws InclusionScanException, IOException {
 		SourceMapping mapping = new SuffixMapping("jvflow", Collections.<String> emptySet());
 		Set<String> includes = getFlowIncludesPatterns();
 		SourceInclusionScanner scan = new SimpleSourceInclusionScanner(includes, excludes);
@@ -178,7 +190,7 @@ public class MyMojo extends AbstractMojo {
 		} else {
 			boolean built = false;
 			for (File flow : flowFiles) {
-				built |= processFlowFile(flow);
+				built |= processFlowFile(resourceSet, flow);
 			}
 			if (!built && getLog().isInfoEnabled()) {
 				getLog().info("No DSL processed; generated files are up to date");
@@ -187,18 +199,15 @@ public class MyMojo extends AbstractMojo {
 
 	}
 
-	private boolean processFlowFile(File flowFile) throws IOException {
+	private boolean processFlowFile(ResourceSet resourceSet, File flowFile) throws IOException {
 		File targetFile = new File(outputDirectory, getTargetFlowName(flowFile.getName()));
 		
 		if (buildRequired(flowFile, Collections.singletonList(targetFile))) {
 			targetFile.createNewFile();
 
 			// resolve test
-			ResourceSet rSet = new ResourceSetImpl();
-			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project);
-			rSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 			URI uri = URI.createFileURI(flowFile.getCanonicalPath().toString());
-			Resource res = rSet.getResource(uri, true);
+			Resource res = resourceSet.getResource(uri, true);
 			
 			Resource diagrama = res.getContents().get(0).eResource();
 
