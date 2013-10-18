@@ -73,6 +73,8 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 			return getArrayBracketsToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getOpSingleAssignRule())
 			return getOpSingleAssignToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getSTRINGRule())
+			return getSTRINGToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
@@ -96,6 +98,17 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 		if (node != null)
 			return getTokenText(node);
 		return "=";
+	}
+	
+	/**
+	 * terminal STRING: 
+	 * 			'"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
+	 * 			"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
+	 */
+	protected String getSTRINGToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "\"\"";
 	}
 	
 	@Override

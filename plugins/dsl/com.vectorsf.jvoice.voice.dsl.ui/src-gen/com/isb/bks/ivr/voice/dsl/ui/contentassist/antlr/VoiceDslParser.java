@@ -41,6 +41,7 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConfigValueValueAccess().getAlternatives(), "rule__ConfigValueValue__Alternatives");
 					put(grammarAccess.getGrammarAccess().getModeAlternatives_0_0(), "rule__Grammar__ModeAlternatives_0_0");
 					put(grammarAccess.getOutputValueAccess().getAlternatives(), "rule__OutputValue__Alternatives");
+					put(grammarAccess.getSimpleAudioAccess().getAlternatives_2_1(), "rule__SimpleAudio__Alternatives_2_1");
 					put(grammarAccess.getConditionalAudioAccess().getAlternatives(), "rule__ConditionalAudio__Alternatives");
 					put(grammarAccess.getMemberAccess().getAlternatives_2(), "rule__Member__Alternatives_2");
 					put(grammarAccess.getXAnnotationAccess().getAlternatives_3_1(), "rule__XAnnotation__Alternatives_3_1");
@@ -83,6 +84,7 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getJvmWildcardTypeReferenceAccess().getAlternatives_2(), "rule__JvmWildcardTypeReference__Alternatives_2");
 					put(grammarAccess.getJvmTypeParameterAccess().getAlternatives_1(), "rule__JvmTypeParameter__Alternatives_1");
 					put(grammarAccess.getXImportDeclarationAccess().getAlternatives_1(), "rule__XImportDeclaration__Alternatives_1");
+					put(grammarAccess.getInterpretationAccess().getAlternatives(), "rule__Interpretation__Alternatives");
 					put(grammarAccess.getPromptDslAccess().getGroup(), "rule__PromptDsl__Group__0");
 					put(grammarAccess.getMenuDslAccess().getGroup_0(), "rule__MenuDsl__Group_0__0");
 					put(grammarAccess.getInputDslAccess().getGroup(), "rule__InputDsl__Group__0");
@@ -107,7 +109,9 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSimpleAudioAccess().getGroup(), "rule__SimpleAudio__Group__0");
 					put(grammarAccess.getSimpleAudioAccess().getGroup_2(), "rule__SimpleAudio__Group_2__0");
 					put(grammarAccess.getSimpleAudioAccess().getGroup_2_0(), "rule__SimpleAudio__Group_2_0__0");
-					put(grammarAccess.getSimpleAudioAccess().getGroup_2_1(), "rule__SimpleAudio__Group_2_1__0");
+					put(grammarAccess.getSimpleAudioAccess().getGroup_2_1_0(), "rule__SimpleAudio__Group_2_1_0__0");
+					put(grammarAccess.getSimpleAudioAccess().getGroup_2_1_1(), "rule__SimpleAudio__Group_2_1_1__0");
+					put(grammarAccess.getSimpleAudioAccess().getGroup_2_1_1_2(), "rule__SimpleAudio__Group_2_1_1_2__0");
 					put(grammarAccess.getConditionalAudioAccess().getGroup_0(), "rule__ConditionalAudio__Group_0__0");
 					put(grammarAccess.getTypeAccess().getGroup(), "rule__Type__Group__0");
 					put(grammarAccess.getTypeAccess().getGroup_2(), "rule__Type__Group_2__0");
@@ -330,7 +334,10 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getOutputValueAccess().getValueAssignment_0(), "rule__OutputValue__ValueAssignment_0");
 					put(grammarAccess.getOutputValueAccess().getValueAssignment_1(), "rule__OutputValue__ValueAssignment_1");
 					put(grammarAccess.getSimpleAudioAccess().getSrcAssignment_2_0_1(), "rule__SimpleAudio__SrcAssignment_2_0_1");
-					put(grammarAccess.getSimpleAudioAccess().getTtsAssignment_2_1_1(), "rule__SimpleAudio__TtsAssignment_2_1_1");
+					put(grammarAccess.getSimpleAudioAccess().getTtsAssignment_2_1_0_1(), "rule__SimpleAudio__TtsAssignment_2_1_0_1");
+					put(grammarAccess.getSimpleAudioAccess().getInterpretationAssignment_2_1_1_1(), "rule__SimpleAudio__InterpretationAssignment_2_1_1_1");
+					put(grammarAccess.getSimpleAudioAccess().getFormatAssignment_2_1_1_2_0(), "rule__SimpleAudio__FormatAssignment_2_1_1_2_0");
+					put(grammarAccess.getSimpleAudioAccess().getTtsAssignment_2_1_1_3(), "rule__SimpleAudio__TtsAssignment_2_1_1_3");
 					put(grammarAccess.getConditionalAudioAccess().getConditAssignment_0_3(), "rule__ConditionalAudio__ConditAssignment_0_3");
 					put(grammarAccess.getConditionalAudioAccess().getSimpleAAssignment_0_6(), "rule__ConditionalAudio__SimpleAAssignment_0_6");
 					put(grammarAccess.getTypeAccess().getAnnotationsAssignment_1(), "rule__Type__AnnotationsAssignment_1");

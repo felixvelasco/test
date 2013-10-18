@@ -3,6 +3,7 @@
 package com.vectorsf.jvoice.prompt.model.voiceDsl.impl;
 
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -22,6 +23,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.AudioImpl#isDontBargeIn <em>Dont Barge In</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.AudioImpl#getTts <em>Tts</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.AudioImpl#getSrc <em>Src</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.AudioImpl#getInterpretation <em>Interpretation</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.AudioImpl#getFormat <em>Format</em>}</li>
  * </ul>
  * </p>
  *
@@ -87,6 +90,46 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 	 * @ordered
 	 */
 	protected String src = SRC_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getInterpretation() <em>Interpretation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInterpretation()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Interpretation INTERPRETATION_EDEFAULT = Interpretation.STRING;
+
+	/**
+	 * The cached value of the '{@link #getInterpretation() <em>Interpretation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInterpretation()
+	 * @generated
+	 * @ordered
+	 */
+	protected Interpretation interpretation = INTERPRETATION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getFormat() <em>Format</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFormat()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FORMAT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getFormat() <em>Format</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFormat()
+	 * @generated
+	 * @ordered
+	 */
+	protected String format = FORMAT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -175,6 +218,48 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Interpretation getInterpretation() {
+		return interpretation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setInterpretation(Interpretation newInterpretation) {
+		Interpretation oldInterpretation = interpretation;
+		interpretation = newInterpretation == null ? INTERPRETATION_EDEFAULT : newInterpretation;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.AUDIO__INTERPRETATION, oldInterpretation, interpretation));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getFormat() {
+		return format;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFormat(String newFormat) {
+		String oldFormat = format;
+		format = newFormat;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.AUDIO__FORMAT, oldFormat, format));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -184,6 +269,10 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 				return getTts();
 			case VoiceDslPackage.AUDIO__SRC:
 				return getSrc();
+			case VoiceDslPackage.AUDIO__INTERPRETATION:
+				return getInterpretation();
+			case VoiceDslPackage.AUDIO__FORMAT:
+				return getFormat();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -204,6 +293,12 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 				return;
 			case VoiceDslPackage.AUDIO__SRC:
 				setSrc((String)newValue);
+				return;
+			case VoiceDslPackage.AUDIO__INTERPRETATION:
+				setInterpretation((Interpretation)newValue);
+				return;
+			case VoiceDslPackage.AUDIO__FORMAT:
+				setFormat((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -226,6 +321,12 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 			case VoiceDslPackage.AUDIO__SRC:
 				setSrc(SRC_EDEFAULT);
 				return;
+			case VoiceDslPackage.AUDIO__INTERPRETATION:
+				setInterpretation(INTERPRETATION_EDEFAULT);
+				return;
+			case VoiceDslPackage.AUDIO__FORMAT:
+				setFormat(FORMAT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -244,6 +345,10 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 				return TTS_EDEFAULT == null ? tts != null : !TTS_EDEFAULT.equals(tts);
 			case VoiceDslPackage.AUDIO__SRC:
 				return SRC_EDEFAULT == null ? src != null : !SRC_EDEFAULT.equals(src);
+			case VoiceDslPackage.AUDIO__INTERPRETATION:
+				return interpretation != INTERPRETATION_EDEFAULT;
+			case VoiceDslPackage.AUDIO__FORMAT:
+				return FORMAT_EDEFAULT == null ? format != null : !FORMAT_EDEFAULT.equals(format);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -264,6 +369,10 @@ public class AudioImpl extends MinimalEObjectImpl.Container implements Audio {
 		result.append(tts);
 		result.append(", src: ");
 		result.append(src);
+		result.append(", interpretation: ");
+		result.append(interpretation);
+		result.append(", format: ");
+		result.append(format);
 		result.append(')');
 		return result.toString();
 	}

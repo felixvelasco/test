@@ -6,6 +6,8 @@ import com.vectorsf.jvoice.model.base.BasePackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -250,13 +252,22 @@ public interface VoiceDslPackage extends EPackage {
 	int CONFIGURATION_FEATURE_COUNT = 1;
 
 	/**
+	 * The operation id for the '<em>Get Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONFIGURATION___GET_VALUE__STRING = 0;
+
+	/**
 	 * The number of operations of the '<em>Configuration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONFIGURATION_OPERATION_COUNT = 0;
+	int CONFIGURATION_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConfigValueImpl <em>Config Value</em>}' class.
@@ -553,13 +564,31 @@ public interface VoiceDslPackage extends EPackage {
 	int AUDIO__SRC = 2;
 
 	/**
+	 * The feature id for the '<em><b>Interpretation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUDIO__INTERPRETATION = 3;
+
+	/**
+	 * The feature id for the '<em><b>Format</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUDIO__FORMAT = 4;
+
+	/**
 	 * The number of structural features of the '<em>Audio</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int AUDIO_FEATURE_COUNT = 3;
+	int AUDIO_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Audio</em>' class.
@@ -606,6 +635,24 @@ public interface VoiceDslPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONDITIONAL_AUDIO__SRC = AUDIO__SRC;
+
+	/**
+	 * The feature id for the '<em><b>Interpretation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITIONAL_AUDIO__INTERPRETATION = AUDIO__INTERPRETATION;
+
+	/**
+	 * The feature id for the '<em><b>Format</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITIONAL_AUDIO__FORMAT = AUDIO__FORMAT;
 
 	/**
 	 * The feature id for the '<em><b>Simple A</b></em>' containment reference.
@@ -1785,6 +1832,17 @@ public interface VoiceDslPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getInterpretation()
+	 * @generated
+	 */
+	int INTERPRETATION = 23;
+
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl <em>Voice Dsl</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1935,6 +1993,16 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getConfiguration_ConfigValue();
+
+	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration#getValue(java.lang.String) <em>Get Value</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Value</em>' operation.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration#getValue(java.lang.String)
+	 * @generated
+	 */
+	EOperation getConfiguration__GetValue__String();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConfigValue <em>Config Value</em>}'.
@@ -2171,6 +2239,28 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAudio_Src();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#getInterpretation <em>Interpretation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Interpretation</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#getInterpretation()
+	 * @see #getAudio()
+	 * @generated
+	 */
+	EAttribute getAudio_Interpretation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#getFormat <em>Format</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Format</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#getFormat()
+	 * @see #getAudio()
+	 * @generated
+	 */
+	EAttribute getAudio_Format();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio <em>Conditional Audio</em>}'.
@@ -2708,6 +2798,16 @@ public interface VoiceDslPackage extends EPackage {
 	EClass getPromptDsl();
 
 	/**
+	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Interpretation</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation
+	 * @generated
+	 */
+	EEnum getInterpretation();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2845,6 +2945,14 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CONFIGURATION__CONFIG_VALUE = eINSTANCE.getConfiguration_ConfigValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Value</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONFIGURATION___GET_VALUE__STRING = eINSTANCE.getConfiguration__GetValue__String();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConfigValueImpl <em>Config Value</em>}' class.
@@ -3033,6 +3141,22 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute AUDIO__SRC = eINSTANCE.getAudio_Src();
+
+		/**
+		 * The meta object literal for the '<em><b>Interpretation</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute AUDIO__INTERPRETATION = eINSTANCE.getAudio_Interpretation();
+
+		/**
+		 * The meta object literal for the '<em><b>Format</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute AUDIO__FORMAT = eINSTANCE.getAudio_Format();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConditionalAudioImpl <em>Conditional Audio</em>}' class.
@@ -3463,6 +3587,16 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EClass PROMPT_DSL = eINSTANCE.getPromptDsl();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getInterpretation()
+		 * @generated
+		 */
+		EEnum INTERPRETATION = eINSTANCE.getInterpretation();
 
 	}
 

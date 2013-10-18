@@ -24,6 +24,7 @@ import org.eclipse.xtext.parser.*;
 import org.eclipse.xtext.parser.impl.*;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.xtext.parser.antlr.AbstractInternalAntlrParser;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
@@ -1862,15 +1863,15 @@ ruleSimpleAudio returns [EObject current=null]
 	    }
 
 )
-))?(	otherlv_4='wording' 
+))?((	otherlv_4='wording' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getSimpleAudioAccess().getWordingKeyword_2_1_0());
+    	newLeafNode(otherlv_4, grammarAccess.getSimpleAudioAccess().getWordingKeyword_2_1_0_0());
     }
 (
 (
 		lv_tts_5_0=RULE_STRING
 		{
-			newLeafNode(lv_tts_5_0, grammarAccess.getSimpleAudioAccess().getTtsSTRINGTerminalRuleCall_2_1_1_0()); 
+			newLeafNode(lv_tts_5_0, grammarAccess.getSimpleAudioAccess().getTtsSTRINGTerminalRuleCall_2_1_0_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1884,7 +1885,71 @@ ruleSimpleAudio returns [EObject current=null]
 	    }
 
 )
-))?))
+))
+    |(	otherlv_6='as' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getSimpleAudioAccess().getAsKeyword_2_1_1_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getSimpleAudioAccess().getInterpretationInterpretationEnumRuleCall_2_1_1_1_0()); 
+	    }
+		lv_interpretation_7_0=ruleInterpretation		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSimpleAudioRule());
+	        }
+       		set(
+       			$current, 
+       			"interpretation",
+        		lv_interpretation_7_0, 
+        		"Interpretation");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)((
+(
+		lv_format_8_0=	'(' 
+    {
+        newLeafNode(lv_format_8_0, grammarAccess.getSimpleAudioAccess().getFormatLeftParenthesisKeyword_2_1_1_2_0_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSimpleAudioRule());
+	        }
+       		setWithLastConsumed($current, "format", lv_format_8_0, "(");
+	    }
+
+)
+)this_STRING_9=RULE_STRING
+    { 
+    newLeafNode(this_STRING_9, grammarAccess.getSimpleAudioAccess().getSTRINGTerminalRuleCall_2_1_1_2_1()); 
+    }
+	otherlv_10=')' 
+    {
+    	newLeafNode(otherlv_10, grammarAccess.getSimpleAudioAccess().getRightParenthesisKeyword_2_1_1_2_2());
+    }
+)?(
+(
+		lv_tts_11_0=RULE_STRING
+		{
+			newLeafNode(lv_tts_11_0, grammarAccess.getSimpleAudioAccess().getTtsSTRINGTerminalRuleCall_2_1_1_3_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSimpleAudioRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"tts",
+        		lv_tts_11_0, 
+        		"STRING");
+	    }
+
+)
+)))?))
 ;
 
 
@@ -7952,6 +8017,55 @@ ruleXImportDeclaration returns [EObject current=null]
 ;
 
 
+
+
+
+// Rule Interpretation
+ruleInterpretation returns [Enumerator current=null] 
+    @init { enterRule(); }
+    @after { leaveRule(); }:
+((	enumLiteral_0='number' 
+	{
+        $current = grammarAccess.getInterpretationAccess().getNumberEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_0, grammarAccess.getInterpretationAccess().getNumberEnumLiteralDeclaration_0()); 
+    }
+)
+    |(	enumLiteral_1='boolean' 
+	{
+        $current = grammarAccess.getInterpretationAccess().getBooleanEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_1, grammarAccess.getInterpretationAccess().getBooleanEnumLiteralDeclaration_1()); 
+    }
+)
+    |(	enumLiteral_2='currency' 
+	{
+        $current = grammarAccess.getInterpretationAccess().getCurrencyEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_2, grammarAccess.getInterpretationAccess().getCurrencyEnumLiteralDeclaration_2()); 
+    }
+)
+    |(	enumLiteral_3='date' 
+	{
+        $current = grammarAccess.getInterpretationAccess().getDateEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_3, grammarAccess.getInterpretationAccess().getDateEnumLiteralDeclaration_3()); 
+    }
+)
+    |(	enumLiteral_4='digits' 
+	{
+        $current = grammarAccess.getInterpretationAccess().getDigitsEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_4, grammarAccess.getInterpretationAccess().getDigitsEnumLiteralDeclaration_4()); 
+    }
+)
+    |(	enumLiteral_5='phone' 
+	{
+        $current = grammarAccess.getInterpretationAccess().getPhoneEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_5, grammarAccess.getInterpretationAccess().getPhoneEnumLiteralDeclaration_5()); 
+    }
+)
+    |(	enumLiteral_6='time' 
+	{
+        $current = grammarAccess.getInterpretationAccess().getTimeEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_6, grammarAccess.getInterpretationAccess().getTimeEnumLiteralDeclaration_6()); 
+    }
+));
 
 
 

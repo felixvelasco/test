@@ -39,4 +39,12 @@ public interface Configuration extends EObject {
 	 */
 	EList<ConfigValue> getConfigValue();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='for (ConfigValue cv : getConfigValue()) {\n\tif (cv.getName().equals(key)) {\n\t\treturn cv.getValue();\n\t}\n}\n\nreturn null;'"
+	 * @generated
+	 */
+	String getValue(String key);
+
 } // Configuration

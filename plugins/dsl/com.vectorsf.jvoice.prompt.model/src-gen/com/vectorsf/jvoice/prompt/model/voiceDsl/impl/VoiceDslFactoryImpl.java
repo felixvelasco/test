@@ -13,6 +13,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Function;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Member;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
@@ -28,6 +29,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslFactory;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -104,6 +106,36 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 			case VoiceDslPackage.PROMPT_DSL: return createPromptDsl();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+			case VoiceDslPackage.INTERPRETATION:
+				return createInterpretationFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+			case VoiceDslPackage.INTERPRETATION:
+				return convertInterpretationToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -335,6 +367,26 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 	public PromptDsl createPromptDsl() {
 		PromptDslImpl promptDsl = new PromptDslImpl();
 		return promptDsl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Interpretation createInterpretationFromString(EDataType eDataType, String initialValue) {
+		Interpretation result = Interpretation.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertInterpretationToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

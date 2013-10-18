@@ -15,6 +15,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Function;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Member;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
@@ -31,6 +32,8 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -209,6 +212,13 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	private EClass promptDslEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum interpretationEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -407,6 +417,15 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getConfiguration__GetValue__String() {
+		return configurationEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getConfigValue() {
 		return configValueEClass;
 	}
@@ -598,6 +617,24 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 */
 	public EAttribute getAudio_Src() {
 		return (EAttribute)audioEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAudio_Interpretation() {
+		return (EAttribute)audioEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAudio_Format() {
+		return (EAttribute)audioEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -1055,6 +1092,15 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getInterpretation() {
+		return interpretationEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public VoiceDslFactory getVoiceDslFactory() {
 		return (VoiceDslFactory)getEFactoryInstance();
 	}
@@ -1093,6 +1139,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 
 		configurationEClass = createEClass(CONFIGURATION);
 		createEReference(configurationEClass, CONFIGURATION__CONFIG_VALUE);
+		createEOperation(configurationEClass, CONFIGURATION___GET_VALUE__STRING);
 
 		configValueEClass = createEClass(CONFIG_VALUE);
 		createEAttribute(configValueEClass, CONFIG_VALUE__NAME);
@@ -1121,6 +1168,8 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		createEAttribute(audioEClass, AUDIO__DONT_BARGE_IN);
 		createEAttribute(audioEClass, AUDIO__TTS);
 		createEAttribute(audioEClass, AUDIO__SRC);
+		createEAttribute(audioEClass, AUDIO__INTERPRETATION);
+		createEAttribute(audioEClass, AUDIO__FORMAT);
 
 		conditionalAudioEClass = createEClass(CONDITIONAL_AUDIO);
 		createEReference(conditionalAudioEClass, CONDITIONAL_AUDIO__SIMPLE_A);
@@ -1186,6 +1235,9 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		menuDslEClass = createEClass(MENU_DSL);
 
 		promptDslEClass = createEClass(PROMPT_DSL);
+
+		// Create enums
+		interpretationEEnum = createEEnum(INTERPRETATION);
 	}
 
 	/**
@@ -1248,6 +1300,9 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getConfiguration_ConfigValue(), this.getConfigValue(), null, "configValue", null, 0, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		EOperation op = initEOperation(getConfiguration__GetValue__String(), ecorePackage.getEString(), "getValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "key", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(configValueEClass, ConfigValue.class, "ConfigValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getConfigValue_Name(), ecorePackage.getEString(), "name", null, 0, 1, ConfigValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getConfigValue_Value(), ecorePackage.getEString(), "value", null, 0, 1, ConfigValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1275,6 +1330,8 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEAttribute(getAudio_DontBargeIn(), ecorePackage.getEBoolean(), "dontBargeIn", null, 0, 1, Audio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAudio_Tts(), ecorePackage.getEString(), "tts", null, 0, 1, Audio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAudio_Src(), ecorePackage.getEString(), "src", null, 0, 1, Audio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAudio_Interpretation(), this.getInterpretation(), "interpretation", null, 0, 1, Audio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAudio_Format(), ecorePackage.getEString(), "format", null, 0, 1, Audio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(conditionalAudioEClass, ConditionalAudio.class, "ConditionalAudio", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getConditionalAudio_SimpleA(), this.getAudio(), null, "simpleA", null, 0, 1, ConditionalAudio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1340,6 +1397,17 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEClass(menuDslEClass, MenuDsl.class, "MenuDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(promptDslEClass, PromptDsl.class, "PromptDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		// Initialize enums and add enum literals
+		initEEnum(interpretationEEnum, Interpretation.class, "Interpretation");
+		addEEnumLiteral(interpretationEEnum, Interpretation.STRING);
+		addEEnumLiteral(interpretationEEnum, Interpretation.DATE);
+		addEEnumLiteral(interpretationEEnum, Interpretation.DIGITS);
+		addEEnumLiteral(interpretationEEnum, Interpretation.CURRENCY);
+		addEEnumLiteral(interpretationEEnum, Interpretation.NUMBER);
+		addEEnumLiteral(interpretationEEnum, Interpretation.PHONE);
+		addEEnumLiteral(interpretationEEnum, Interpretation.TIME);
+		addEEnumLiteral(interpretationEEnum, Interpretation.BOOLEAN);
 
 		// Create resource
 		createResource(eNS_URI);

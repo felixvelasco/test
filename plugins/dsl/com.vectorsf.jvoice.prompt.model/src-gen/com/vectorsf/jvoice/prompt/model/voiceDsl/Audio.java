@@ -15,6 +15,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#isDontBargeIn <em>Dont Barge In</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#getTts <em>Tts</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#getSrc <em>Src</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#getInterpretation <em>Interpretation</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#getFormat <em>Format</em>}</li>
  * </ul>
  * </p>
  *
@@ -100,5 +102,60 @@ public interface Audio extends EObject {
 	 * @generated
 	 */
 	void setSrc(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Interpretation</b></em>' attribute.
+	 * The literals are from the enumeration {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Interpretation</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Interpretation</em>' attribute.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation
+	 * @see #setInterpretation(Interpretation)
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getAudio_Interpretation()
+	 * @model
+	 * @generated
+	 */
+	Interpretation getInterpretation();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#getInterpretation <em>Interpretation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Interpretation</em>' attribute.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation
+	 * @see #getInterpretation()
+	 * @generated
+	 */
+	void setInterpretation(Interpretation value);
+
+	/**
+	 * Returns the value of the '<em><b>Format</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Format</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Format</em>' attribute.
+	 * @see #setFormat(String)
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getAudio_Format()
+	 * @model
+	 * @generated
+	 */
+	String getFormat();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Audio#getFormat <em>Format</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Format</em>' attribute.
+	 * @see #getFormat()
+	 * @generated
+	 */
+	void setFormat(String value);
 
 } // Audio

@@ -853,16 +853,30 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSrcKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
 		private final Assignment cSrcAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
 		private final RuleCall cSrcSTRINGTerminalRuleCall_2_0_1_0 = (RuleCall)cSrcAssignment_2_0_1.eContents().get(0);
-		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
-		private final Keyword cWordingKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
-		private final Assignment cTtsAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
-		private final RuleCall cTtsSTRINGTerminalRuleCall_2_1_1_0 = (RuleCall)cTtsAssignment_2_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_2_1 = (Alternatives)cGroup_2.eContents().get(1);
+		private final Group cGroup_2_1_0 = (Group)cAlternatives_2_1.eContents().get(0);
+		private final Keyword cWordingKeyword_2_1_0_0 = (Keyword)cGroup_2_1_0.eContents().get(0);
+		private final Assignment cTtsAssignment_2_1_0_1 = (Assignment)cGroup_2_1_0.eContents().get(1);
+		private final RuleCall cTtsSTRINGTerminalRuleCall_2_1_0_1_0 = (RuleCall)cTtsAssignment_2_1_0_1.eContents().get(0);
+		private final Group cGroup_2_1_1 = (Group)cAlternatives_2_1.eContents().get(1);
+		private final Keyword cAsKeyword_2_1_1_0 = (Keyword)cGroup_2_1_1.eContents().get(0);
+		private final Assignment cInterpretationAssignment_2_1_1_1 = (Assignment)cGroup_2_1_1.eContents().get(1);
+		private final RuleCall cInterpretationInterpretationEnumRuleCall_2_1_1_1_0 = (RuleCall)cInterpretationAssignment_2_1_1_1.eContents().get(0);
+		private final Group cGroup_2_1_1_2 = (Group)cGroup_2_1_1.eContents().get(2);
+		private final Assignment cFormatAssignment_2_1_1_2_0 = (Assignment)cGroup_2_1_1_2.eContents().get(0);
+		private final Keyword cFormatLeftParenthesisKeyword_2_1_1_2_0_0 = (Keyword)cFormatAssignment_2_1_1_2_0.eContents().get(0);
+		private final RuleCall cSTRINGTerminalRuleCall_2_1_1_2_1 = (RuleCall)cGroup_2_1_1_2.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2_1_1_2_2 = (Keyword)cGroup_2_1_1_2.eContents().get(2);
+		private final Assignment cTtsAssignment_2_1_1_3 = (Assignment)cGroup_2_1_1.eContents().get(3);
+		private final RuleCall cTtsSTRINGTerminalRuleCall_2_1_1_3_0 = (RuleCall)cTtsAssignment_2_1_1_3.eContents().get(0);
 		
 		//SimpleAudio returns Audio:
-		//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING)?);
+		//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation (format="(" STRING ")")?
+		//	tts=STRING)?);
 		public ParserRule getRule() { return rule; }
 
-		//{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING)?)
+		//{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation (format="(" STRING ")")?
+		//tts=STRING)?)
 		public Group getGroup() { return cGroup; }
 
 		//{Audio}
@@ -871,7 +885,7 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//"say"
 		public Keyword getSayKeyword_1() { return cSayKeyword_1; }
 
-		//("src" src=STRING)? ("wording" tts=STRING)?
+		//("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation (format="(" STRING ")")? tts=STRING)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//("src" src=STRING)?
@@ -886,17 +900,53 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getSrcSTRINGTerminalRuleCall_2_0_1_0() { return cSrcSTRINGTerminalRuleCall_2_0_1_0; }
 
-		//("wording" tts=STRING)?
-		public Group getGroup_2_1() { return cGroup_2_1; }
+		//("wording" tts=STRING | "as" interpretation=Interpretation (format="(" STRING ")")? tts=STRING)?
+		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
+
+		//"wording" tts=STRING
+		public Group getGroup_2_1_0() { return cGroup_2_1_0; }
 
 		//"wording"
-		public Keyword getWordingKeyword_2_1_0() { return cWordingKeyword_2_1_0; }
+		public Keyword getWordingKeyword_2_1_0_0() { return cWordingKeyword_2_1_0_0; }
 
 		//tts=STRING
-		public Assignment getTtsAssignment_2_1_1() { return cTtsAssignment_2_1_1; }
+		public Assignment getTtsAssignment_2_1_0_1() { return cTtsAssignment_2_1_0_1; }
 
 		//STRING
-		public RuleCall getTtsSTRINGTerminalRuleCall_2_1_1_0() { return cTtsSTRINGTerminalRuleCall_2_1_1_0; }
+		public RuleCall getTtsSTRINGTerminalRuleCall_2_1_0_1_0() { return cTtsSTRINGTerminalRuleCall_2_1_0_1_0; }
+
+		//"as" interpretation=Interpretation (format="(" STRING ")")? tts=STRING
+		public Group getGroup_2_1_1() { return cGroup_2_1_1; }
+
+		//"as"
+		public Keyword getAsKeyword_2_1_1_0() { return cAsKeyword_2_1_1_0; }
+
+		//interpretation=Interpretation
+		public Assignment getInterpretationAssignment_2_1_1_1() { return cInterpretationAssignment_2_1_1_1; }
+
+		//Interpretation
+		public RuleCall getInterpretationInterpretationEnumRuleCall_2_1_1_1_0() { return cInterpretationInterpretationEnumRuleCall_2_1_1_1_0; }
+
+		//(format="(" STRING ")")?
+		public Group getGroup_2_1_1_2() { return cGroup_2_1_1_2; }
+
+		//format="("
+		public Assignment getFormatAssignment_2_1_1_2_0() { return cFormatAssignment_2_1_1_2_0; }
+
+		//"("
+		public Keyword getFormatLeftParenthesisKeyword_2_1_1_2_0_0() { return cFormatLeftParenthesisKeyword_2_1_1_2_0_0; }
+
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall_2_1_1_2_1() { return cSTRINGTerminalRuleCall_2_1_1_2_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2_1_1_2_2() { return cRightParenthesisKeyword_2_1_1_2_2; }
+
+		//tts=STRING
+		public Assignment getTtsAssignment_2_1_1_3() { return cTtsAssignment_2_1_1_3; }
+
+		//STRING
+		public RuleCall getTtsSTRINGTerminalRuleCall_2_1_1_3_0() { return cTtsSTRINGTerminalRuleCall_2_1_1_3_0; }
 	}
 
 	public class ConditionalAudioElements extends AbstractParserRuleElementFinder {
@@ -1141,6 +1191,74 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
+	public class InterpretationElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "Interpretation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cNumberEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cNumberNumberKeyword_0_0 = (Keyword)cNumberEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cBooleanEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cBooleanBooleanKeyword_1_0 = (Keyword)cBooleanEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cCurrencyEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cCurrencyCurrencyKeyword_2_0 = (Keyword)cCurrencyEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cDateEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cDateDateKeyword_3_0 = (Keyword)cDateEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cDigitsEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cDigitsDigitsKeyword_4_0 = (Keyword)cDigitsEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cPhoneEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cPhonePhoneKeyword_5_0 = (Keyword)cPhoneEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cTimeEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cTimeTimeKeyword_6_0 = (Keyword)cTimeEnumLiteralDeclaration_6.eContents().get(0);
+		
+		//enum Interpretation:
+		//	number | boolean | currency | date | digits | phone | time;
+		public EnumRule getRule() { return rule; }
+
+		//number | boolean | currency | date | digits | phone | time
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//number
+		public EnumLiteralDeclaration getNumberEnumLiteralDeclaration_0() { return cNumberEnumLiteralDeclaration_0; }
+
+		//"number"
+		public Keyword getNumberNumberKeyword_0_0() { return cNumberNumberKeyword_0_0; }
+
+		//boolean
+		public EnumLiteralDeclaration getBooleanEnumLiteralDeclaration_1() { return cBooleanEnumLiteralDeclaration_1; }
+
+		//"boolean"
+		public Keyword getBooleanBooleanKeyword_1_0() { return cBooleanBooleanKeyword_1_0; }
+
+		//currency
+		public EnumLiteralDeclaration getCurrencyEnumLiteralDeclaration_2() { return cCurrencyEnumLiteralDeclaration_2; }
+
+		//"currency"
+		public Keyword getCurrencyCurrencyKeyword_2_0() { return cCurrencyCurrencyKeyword_2_0; }
+
+		//date
+		public EnumLiteralDeclaration getDateEnumLiteralDeclaration_3() { return cDateEnumLiteralDeclaration_3; }
+
+		//"date"
+		public Keyword getDateDateKeyword_3_0() { return cDateDateKeyword_3_0; }
+
+		//digits
+		public EnumLiteralDeclaration getDigitsEnumLiteralDeclaration_4() { return cDigitsEnumLiteralDeclaration_4; }
+
+		//"digits"
+		public Keyword getDigitsDigitsKeyword_4_0() { return cDigitsDigitsKeyword_4_0; }
+
+		//phone
+		public EnumLiteralDeclaration getPhoneEnumLiteralDeclaration_5() { return cPhoneEnumLiteralDeclaration_5; }
+
+		//"phone"
+		public Keyword getPhonePhoneKeyword_5_0() { return cPhonePhoneKeyword_5_0; }
+
+		//time
+		public EnumLiteralDeclaration getTimeEnumLiteralDeclaration_6() { return cTimeEnumLiteralDeclaration_6; }
+
+		//"time"
+		public Keyword getTimeTimeKeyword_6_0() { return cTimeTimeKeyword_6_0; }
+	}
+	
 	private VoiceDslElements pVoiceDsl;
 	private PromptDslElements pPromptDsl;
 	private MenuDslElements pMenuDsl;
@@ -1159,6 +1277,7 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	private OutputElements pOutput;
 	private OutputValueElements pOutputValue;
 	private SimpleAudioElements pSimpleAudio;
+	private InterpretationElements unknownRuleInterpretation;
 	private ConditionalAudioElements pConditionalAudio;
 	private TerminalRule tFLOAT;
 	private TypeElements pType;
@@ -1376,13 +1495,24 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SimpleAudio returns Audio:
-	//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING)?);
+	//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation (format="(" STRING ")")?
+	//	tts=STRING)?);
 	public SimpleAudioElements getSimpleAudioAccess() {
 		return (pSimpleAudio != null) ? pSimpleAudio : (pSimpleAudio = new SimpleAudioElements());
 	}
 	
 	public ParserRule getSimpleAudioRule() {
 		return getSimpleAudioAccess().getRule();
+	}
+
+	//enum Interpretation:
+	//	number | boolean | currency | date | digits | phone | time;
+	public InterpretationElements getInterpretationAccess() {
+		return (unknownRuleInterpretation != null) ? unknownRuleInterpretation : (unknownRuleInterpretation = new InterpretationElements());
+	}
+	
+	public EnumRule getInterpretationRule() {
+		return getInterpretationAccess().getRule();
 	}
 
 	//ConditionalAudio returns Audio:
