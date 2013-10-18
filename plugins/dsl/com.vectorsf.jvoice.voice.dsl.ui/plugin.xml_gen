@@ -9,7 +9,7 @@
             class="com.isb.bks.ivr.voice.dsl.ui.VoiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
-            extensions="voicedsl"
+            extensions="voiceDsl"
             id="com.isb.bks.ivr.voice.dsl.VoiceDsl"
             matchingStrategy="com.isb.bks.ivr.voice.dsl.ui.VoiceDslExecutableExtensionFactory:org.eclipse.xtext.xbase.ui.editor.JavaEditorInputMatcher"
             name="VoiceDsl Editor">
@@ -214,13 +214,13 @@
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
 			class="com.isb.bks.ivr.voice.dsl.ui.VoiceDslExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="voicedsl">
+			type="voiceDsl">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
             class="com.isb.bks.ivr.voice.dsl.ui.VoiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-            uriExtension="voicedsl">
+            uriExtension="voiceDsl">
         </resourceServiceProvider>
     </extension>
 
@@ -505,19 +505,19 @@
   <extension point="org.eclipse.compare.contentViewers">
     <viewer id="com.isb.bks.ivr.voice.dsl.VoiceDsl.compare.contentViewers"
             class="com.isb.bks.ivr.voice.dsl.ui.VoiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="voicedsl">
+            extensions="voiceDsl">
     </viewer>
   </extension>
   <extension point="org.eclipse.compare.contentMergeViewers">
     <viewer id="com.isb.bks.ivr.voice.dsl.VoiceDsl.compare.contentMergeViewers"
             class="com.isb.bks.ivr.voice.dsl.ui.VoiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="voicedsl" label="VoiceDsl Compare">
+            extensions="voiceDsl" label="VoiceDsl Compare">
      </viewer>
   </extension>
   <extension point="org.eclipse.ui.editors.documentProviders">
     <provider id="com.isb.bks.ivr.voice.dsl.VoiceDsl.editors.documentProviders"
             class="com.isb.bks.ivr.voice.dsl.ui.VoiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="voicedsl">
+            extensions="voiceDsl">
     </provider>
   </extension>
 

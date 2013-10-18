@@ -3726,9 +3726,9 @@ public class InternalVoiceDslLexer extends Lexer {
 
     protected DFA19 dfa19 = new DFA19(this);
     static final String DFA19_eotS =
-        "\1\uffff\4\62\2\uffff\1\77\1\101\1\103\1\uffff\2\62\1\111\7\62"+
-        "\1\uffff\1\136\2\62\2\uffff\1\151\1\154\1\156\1\160\1\162\1\164"+
-        "\1\167\1\172\1\175\4\uffff\1\62\2\u0085\1\60\1\uffff\2\60\2\uffff"+
+        "\1\uffff\4\62\2\uffff\1\77\1\101\1\103\1\uffff\2\62\1\111\7\62\1"+
+        "\uffff\1\136\2\62\2\uffff\1\151\1\154\1\156\1\160\1\162\1\164\1"+
+        "\167\1\172\1\175\4\uffff\1\62\2\u0085\1\60\1\uffff\2\60\2\uffff"+
         "\1\62\1\uffff\2\62\1\u008e\1\62\1\u0091\3\62\2\uffff\1\u0097\2\uffff"+
         "\1\u0099\4\uffff\2\62\1\u009c\2\uffff\15\62\1\u00ad\4\62\3\uffff"+
         "\7\62\13\uffff\1\u00bc\3\uffff\1\u00be\14\uffff\1\62\1\uffff\1\u0085"+
@@ -4106,8 +4106,8 @@ public class InternalVoiceDslLexer extends Lexer {
             "\1\u0115",
             "\1\u0116",
             "\1\u0117",
-            "\1\62\13\uffff\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\3"+
-            "\62\1\u0118\26\62",
+            "\1\62\13\uffff\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\3\62"+
+            "\1\u0118\26\62",
             "\1\u011a",
             "\1\u011b",
             "\1\u011c",
