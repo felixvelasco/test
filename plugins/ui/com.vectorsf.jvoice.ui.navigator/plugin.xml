@@ -54,6 +54,9 @@
             <contentExtension
                   pattern="com.vectorsf.jvoice.ui.navigator.emptyPackagesFilter">
             </contentExtension>
+            <contentExtension
+                  pattern="com.vectorsf.jvoice.ui.navigator.linkHelper">
+            </contentExtension>
          </includes>
       </viewerContentBinding>
       <viewer
@@ -568,6 +571,18 @@
             </with>
          </activeWhen>
       </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.linkHelper">
+      <linkHelper
+            class="com.vectorsf.jvoice.ui.navigator.LinkHelper"
+            id="com.vectorsf.jvoice.ui.navigator.linkHelper">
+         <editorInputEnablement></editorInputEnablement>
+         <selectionEnablement>
+            <instanceof
+                  value="com.vectorsf.jvoice.model.base.JVBean">
+            </instanceof></selectionEnablement>
+      </linkHelper>
    </extension>
 
 </plugin>
