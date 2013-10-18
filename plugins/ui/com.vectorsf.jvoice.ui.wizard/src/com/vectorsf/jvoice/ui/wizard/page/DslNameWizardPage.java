@@ -254,7 +254,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		
 		// new project label
 		Label projectLabel2 = new Label(projectGroup, SWT.NONE);
-		projectLabel2.setText("Project:");
+		projectLabel2.setText("Project name:");
 		projectLabel2.setFont(parent.getFont());
 
 		textFieldProject = new Text(projectGroup, SWT.BORDER);
@@ -295,7 +295,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		// new project label
 		Label projectLabel3 = new Label(projectGroup, SWT.NONE);
-		projectLabel3.setText("Package:");
+		projectLabel3.setText("Package name:");
 		projectLabel3.setFont(parent.getFont());
 
 		textFieldPackage = new Text(projectGroup, SWT.BORDER);
