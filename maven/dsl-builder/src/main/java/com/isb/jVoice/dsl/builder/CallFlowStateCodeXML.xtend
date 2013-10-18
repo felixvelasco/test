@@ -11,11 +11,11 @@ class CallFlowStateCodeXML {
 	def static doGenerateCallFlowState(State state){
 		var EList<Transition> TranSalida =state.getOutgoingTransitions()
 '''
-       <subflow-state id="«state.name»" subflow="«state.name»">
-        «FOR trans : TranSalida»        	
-        		<transition on="«trans.eventName»" to="«trans.target.name»"/>
-        «ENDFOR»
-        </subflow-state>
+		<subflow-state id="«state.name»" subflow="«state.name»">
+			«FOR trans : TranSalida»
+			<transition on="«trans.eventName»" to="«trans.target.name»"/>
+       		«ENDFOR»
+		</subflow-state>
     	'''
 	}
 }
