@@ -7,5 +7,6 @@ grammars{
  // User's grammar 
  }
 outputs{
+ cuentas: "cuentas"
  otros: * 
 }
