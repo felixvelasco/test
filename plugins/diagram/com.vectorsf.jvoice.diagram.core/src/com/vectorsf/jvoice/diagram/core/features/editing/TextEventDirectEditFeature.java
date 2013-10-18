@@ -19,10 +19,6 @@ public class TextEventDirectEditFeature extends AbstractDirectEditingFeature {
 
 	@Override
 	public boolean canDirectEdit(IDirectEditingContext context) {
-		GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
-		if (ga instanceof Text) {
-			return true;
-		}
 		return false;
 	}
 
