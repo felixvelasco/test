@@ -14,6 +14,7 @@ import com.vectorsf.jvoice.model.operations.CallState
 import com.vectorsf.jvoice.model.operations.PromptState
 import com.vectorsf.jvoice.model.operations.SwitchState
 import com.vectorsf.jvoice.model.operations.InputState
+import com.vectorsf.jvoice.model.operations.MenuState
 
 class SpringWebFlowGenerator {
 	
@@ -46,10 +47,11 @@ class SpringWebFlowGenerator {
 	«ELSE»		
 		«doGenerateCallFlowState(state)»
 		«doGenerateCallState(state)»
-		«doGenerateOutputState(state)»
-		«doGenerateFinalState(state)»
+		«doGenerateOutputState(state)»		
 		«doGenerateSwitchState(state)»
 		«doGenerateInputState(state)»
+		«doGenerateMenuState(state)»
+		«doGenerateFinalState(state)»
 		«IF positionIni==positionFin»
 			«doGenerateFooter(state)»
 		«ENDIF»
@@ -98,6 +100,12 @@ class SpringWebFlowGenerator {
 	def doGenerateCallState(State state) '''
 		«IF state instanceof CallState »
 			«CallStateCodeXML.doGenerateCallState(state)»
+		«ENDIF»	
+	'''
+	
+	def doGenerateMenuState(State state) '''
+		«IF state instanceof MenuState »
+			«MenuStateCodeXML.doGenerateMenuState(state)»
 		«ENDIF»	
 	'''
 

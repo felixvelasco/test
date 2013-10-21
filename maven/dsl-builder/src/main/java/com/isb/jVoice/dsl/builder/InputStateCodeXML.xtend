@@ -26,10 +26,10 @@ class InputStateCodeXML {
 			<on-entry>
 				<evaluate expression="output" result="flowScope.«state.name»"></evaluate>
 				<set name="flowScope.setLanguageInput.name" value="'«audioIn.name»'" />
-				<set name="flowScope.setLanguageInput.bargein" value="«»" />
-				<set name="flowScope.setLanguageInput.maxAttempts" value="«»" />			
+				<set name="flowScope.setLanguageInput.bargein" value="«configuration.getValue("bargein")»" />
+				<set name="flowScope.setLanguageInput.maxAttempts" value="«configuration.getValue("maxAttempts")»" />			
 				«/*Obtenemos las gramaticas de la locucion  */»
-				«IF grammars != null || grammars.size>0» 
+				«IF grammars != null || grammars.size>0» 				
 				«FOR grammar : grammars »
 				<evaluate expression="grammar" result="flowScope.grammar«i=i+1»" />
 				<set name="flowScope.grammar«i».type" value="'«grammar.expr.booleanValue»'"/>
@@ -38,34 +38,11 @@ class InputStateCodeXML {
 				<evaluate expression="flowScope.«state.name».grammars.add(flowScope.grammar«i»)" />
 				
 				«ENDFOR»
-				«i=0»
         		«ENDIF»
-				«FOR mainAudio : mainAudios »	
-				<evaluate expression="audioItem" result="flowScope.«state.name»«i=i+1»"/>
-				«IF mainAudio instanceof ConditionalAudio»
-					«var ConditionalAudio condition = mainAudio as ConditionalAudio» 
-					<set name="flowScope.«state.name».bargein" value="«condition.simpleA.dontBargeIn.booleanValue»"/>
-					«IF condition.simpleA.src != null» 
-					<set name="flowScope.flowScope.«state.name»«i».src" value="«condition.simpleA.src»"/>
-					«ENDIF»
-					«IF condition.simpleA.tts != null» 
-					<set name="flowScope.«state.name»«i».wording" value="«condition.simpleA.tts»"/>
-					«ENDIF»
-					«IF condition.condit != null» 
-					<set name="flowScope.«state.name»«i».condition" value="«condition.condit»"/>
-					«ENDIF»
-				«ELSE»
-					<set name="flowScope.«state.name».bargein" value="«mainAudio.dontBargeIn.booleanValue»"/>
-					«IF mainAudio.src != null» 
-					<set name="flowScope.flowScope.«state.name»«i».src" value="«mainAudio.src»"/>
-					«ENDIF»
-					«IF mainAudio.tts != null» 
-					<set name="flowScope.«state.name»«i».wording" value="«mainAudio.tts»"/>
-					«ENDIF»		   
-				«ENDIF»		  	
-				<evaluate expression="flowScope.«state.name».mainAudios.add(flowScope.«state.name»«i»)"/>
-					
-				«ENDFOR»			 
+        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios")»
+       	«GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios")»
+      	«GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios")»
+      	«GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios")»
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flowScope.«state.name»)"/>
 			«IF TranSalida != null && TranSalida.size>0»  
