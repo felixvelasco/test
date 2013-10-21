@@ -9,35 +9,26 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import com.vectorsf.jvoice.core.uri.VegaXMLURIHandlerImpl;
 
 /**
- * <!-- begin-user-doc --> The <b>Resource Factory</b> associated with the
- * package. <!-- end-user-doc -->
+ * The <b>Resource Factory</b> associated with the package.
  * 
  * @see com.vectorsf.jvoice.model.operations.util.OperationsResourceImpl
- * @generated
  */
-public class OperationsResourceFactoryJVoiceImpl extends
-		OperationsResourceFactoryImpl {
+public class OperationsResourceFactoryJVoiceImpl extends OperationsResourceFactoryImpl {
 	/**
-	 * Creates an instance of the resource factory. <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * Creates an instance of the resource factory.
 	 * 
-	 * @generated
 	 */
 	public OperationsResourceFactoryJVoiceImpl() {
 		super();
 	}
 
 	/**
-	 * Creates an instance of the resource. <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * 
-	 * @generated
+	 * Creates an instance of the resource.
 	 */
 	@Override
 	public Resource createResource(URI uri) {
 		Resource result = new OperationsResourceImpl(uri);
-		((XMLResource) result).getDefaultSaveOptions().put(
-				XMLResource.OPTION_URI_HANDLER, new VegaXMLURIHandlerImpl());
+		((XMLResource) result).getDefaultSaveOptions().put(XMLResource.OPTION_URI_HANDLER, new VegaXMLURIHandlerImpl());
 		return result;
 	}
-} // OperationsResourceFactoryImpl
+}

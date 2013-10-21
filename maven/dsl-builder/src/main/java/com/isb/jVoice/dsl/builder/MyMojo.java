@@ -36,15 +36,13 @@ import com.google.inject.Injector;
 import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
-
-
 /**
  * Goal which touches a timestamp file.
  * 
  * @goal voiceDSL
  * 
  * @phase generate-sources
-
+ * 
  * @configurator include-project-dependencies
  * 
  * @requiresDependencyResolution compile+runtime
@@ -96,36 +94,31 @@ public class MyMojo extends AbstractMojo {
 	 */
 	private MavenProjectHelper projectHelper;
 
-	
-	 /** 
-     * @parameter expression="${project.runtimeClasspathElements}"  
-     */ 
-    private List<String> runtimeClasspathElements; 
+	/**
+	 * @parameter expression="${project.runtimeClasspathElements}"
+	 */
+	private List<String> runtimeClasspathElements;
 
-    
-     private URL[] buildURLs() { 
-        List<URL> urls = new ArrayList<URL>(runtimeClasspathElements.size()); 
-        for (String element : runtimeClasspathElements) { 
+	private URL[] buildURLs() {
+		List<URL> urls = new ArrayList<URL>(runtimeClasspathElements.size());
+		for (String element : runtimeClasspathElements) {
 
-                try {
-					urls.add(new File(element).toURI().toURL());
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-            
-        } 
-        return urls.toArray(new URL[urls.size()]); 
-    } 
-     
-     private ClassLoader createClassLoaderForProjectDependencies() { 
-         URL[] urls = buildURLs(); 
-         return new URLClassLoader(urls, this.getClass().getClassLoader()); 
-     } 
+			try {
+				urls.add(new File(element).toURI().toURL());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-	
-	
-	
+		}
+		return urls.toArray(new URL[urls.size()]);
+	}
+
+	private ClassLoader createClassLoaderForProjectDependencies() {
+		URL[] urls = buildURLs();
+		return new URLClassLoader(urls, this.getClass().getClassLoader());
+	}
+
 	@Override
 	public void execute() throws MojoExecutionException {
 
@@ -142,19 +135,17 @@ public class MyMojo extends AbstractMojo {
 			EPackage.Registry.INSTANCE.put(AlgorithmsPackage.eNS_URI, AlgorithmsPackage.eINSTANCE);
 			EPackage.Registry.INSTANCE.put(StylesPackage.eNS_URI, StylesPackage.eINSTANCE);
 
-
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("jvflow", new XMIResourceFactoryImpl());
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("voiceDsl", new XMIResourceFactoryImpl());
 
 			ResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
 			resourceSet.getLoadOptions().put(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
 
-			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project,createClassLoaderForProjectDependencies());
+			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project,
+					createClassLoaderForProjectDependencies());
 			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 
 			processFlowFiles(resourceSet);
-						
-			
+
 		} catch (Exception e) {
 			throw new MojoExecutionException("", e);
 		}
@@ -162,13 +153,11 @@ public class MyMojo extends AbstractMojo {
 		if (project != null) {
 			projectHelper.addResource(project, sourceDirectory.getAbsolutePath(),
 					Collections.singletonList("**/**.jvflow"), Collections.emptyList());
-			 getLog().info("ruta "+outputDirectory.getAbsolutePath().toString());
+			getLog().info("ruta " + outputDirectory.getAbsolutePath().toString());
 
 		}
 
 	}
-
-
 
 	private String getTargetFlowName(String name) {
 		String basename = name.substring(0, name.lastIndexOf('.'));
@@ -176,6 +165,12 @@ public class MyMojo extends AbstractMojo {
 		return basename + ".xml";
 	}
 
+	private Set<String> getDSLIncludesPatterns() {
+		if (includes == null || includes.isEmpty()) {
+			return Collections.singleton("**/*.voiceDsl");
+		}
+		return includes;
+	}
 
 	private Set<String> getFlowIncludesPatterns() {
 		if (includes == null || includes.isEmpty()) {
@@ -230,13 +225,13 @@ public class MyMojo extends AbstractMojo {
 
 	private boolean processFlowFile(ResourceSet resourceSet, File flowFile) throws IOException {
 		File targetFile = new File(outputDirectory, getTargetFlowName(flowFile.getName()));
-		
+
 		if (buildRequired(flowFile, Collections.singletonList(targetFile))) {
 			targetFile.createNewFile();
 
 			// resolve test
 			URI uri = URI.createFileURI(flowFile.getCanonicalPath().toString());
-			Resource res = resourceSet.getResource(uri, true);		
+			Resource res = resourceSet.getResource(uri, true);
 			Resource diagrama = res.getContents().get(0).eResource();
 			SpringWebFlowGenerator.compile(targetFile, diagrama);
 
