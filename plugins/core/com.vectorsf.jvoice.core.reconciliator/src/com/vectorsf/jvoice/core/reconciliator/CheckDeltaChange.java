@@ -65,9 +65,11 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 				}
 			}
 			return true;
-		case IResource.FILE:
+		case IResource.FILE:	
 			if (isInterestingDelta(delta)) {
 				IPath relPath = getRelativePath(resource.getParent());
+				if (relPath == null)
+					return false;
 				JVPackage pkg = jvProject.getPackage(relPath.toString().replace("/", "."));
 				if (pkg != null) {
 					URI uri = URI.createPlatformResourceURI(resource.getFullPath().toString(),
