@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.project.ProjectImportConfiguration;
+import org.eclipse.xtext.ui.XtextProjectHelper;
 
 public final class JVoiceProjectConfigurator {
 
@@ -99,10 +100,12 @@ public final class JVoiceProjectConfigurator {
 			IProjectDescription description = project.getDescription();
 			String[] natureIds = description.getNatureIds();
 
-			String[] newNatureIds = new String[natureIds.length + 1];
+			String[] newNatureIds = new String[natureIds.length + 2];
 			System.arraycopy(natureIds, 0, newNatureIds, 1, natureIds.length);
 			newNatureIds[0] = JVoiceProjectNature.NATURE_ID;
+			newNatureIds[newNatureIds.length-1] = XtextProjectHelper.NATURE_ID;
 			description.setNatureIds(newNatureIds);
+			
 
 			this.project.setDescription(description, null);
 		}

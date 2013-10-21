@@ -13,11 +13,11 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
-
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.ui.PlatformUI;
@@ -315,53 +315,482 @@ public class WizardsTest {
 		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("segundoPaquete").getItems(), is(arrayWithSize(1)));
 	}
 	
-//	@Test
-//	public void testMenuSimple() throws CoreException {
-//		UnProjectOnePack();
-//		
-//		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Locution").click();
-//		bot.shell("New Locution").activate();
-//		final SWTBotShell shellCreate = bot.shell("New Locution"); //$NON-NLS-1$
-//		final SWTBot dialogBot = bot.shell("New Locution").bot();
-//		assertThat(dialogBot.label("DSL name:"), is(not(nullValue())));
-//		assertThat(dialogBot.text(0).getText(), is("newLocution"));
-//		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
-//		assertThat(dialogBot.text(1).getText(), is("baseNavigator"));
-//		assertThat(dialogBot.label("Package name:"), is(not(nullValue())));
-//		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
-//		assertThat(dialogBot.comboBox().items(), is(arrayWithSize(3)));
-//		assertThat(dialogBot.comboBox().selection(), is("Menu"));
-//		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
-//		SWTBotText text = dialogBot.text(0);
-//		text.setText("");
-//		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
-//		text.setText("menuPrueba/");
-//		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
-//		text.setText("menuPrueba");
-//		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
-//		dialogBot.button("Finish").click();
-//		
-//		bot.sleep(LARGE_SLEEP);
-//		
-//		//TODO esto está mal
-//		bot.shell("Add Xtext Nature").activate();
-//		SWTBot selectBot = bot.shell("Add Xtext Nature").bot();
-//		selectBot.button(0).click();
-//		//TODO esto está mal
-//		
-//		bot.waitUntil(new DefaultCondition() {
-//			public boolean test() throws Exception {
-//				if (!shellCreate.isOpen()) {
-//					return true;
-//				}
-//				return false;
-//			}
-//			public String getFailureMessage() {
-//				return "Was expecting the 'Create' dialog to close itself";
-//			}
-//		}, 5 * 60 * 1000);
-//		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
-//	}
+	@Test
+	public void testMenuSimple() throws CoreException {
+		UnProjectOnePack();
+		
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Locution").click();
+		bot.shell("New Locution").activate();
+		final SWTBotShell shellCreate = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Locution").bot();
+		assertThat(dialogBot.label("DSL name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator"));
+		assertThat(dialogBot.label("Package name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
+		assertThat(dialogBot.comboBox().items(), is(arrayWithSize(3)));
+		assertThat(dialogBot.comboBox().selection(), is("Menu"));
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		SWTBotText text = dialogBot.text(0);
+		text.setText("");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("menuPrueba/");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("menuPrueba");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		dialogBot.button("Finish").click();
+		
+		bot.sleep(LARGE_SLEEP);
+		
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 60 * 60 * 1000);
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").expand().getItems()[0].getText(), is("menuPrueba"));
+	}
+	
+	@Test
+	public void testMenuOneBrowse() throws CoreException {
+		DosProjectOnePack();
+		
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Locution").click();
+		bot.shell("New Locution").activate();
+		final SWTBotShell shellCreate = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Locution").bot();
+		assertThat(dialogBot.label("DSL name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator"));
+		assertThat(dialogBot.label("Package name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
+		assertThat(dialogBot.comboBox().items(), is(arrayWithSize(3)));
+		assertThat(dialogBot.comboBox().selection(), is("Menu"));
+		
+		dialogBot.button(0).click();
+		openBrowseProject();
+		
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator2"));
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		SWTBotText text = dialogBot.text(0);
+		text.setText("");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("menuPrueba/");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("menuPrueba");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		
+		dialogBot.button("Finish").click();
+		
+		bot.sleep(LARGE_SLEEP);
+		
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 60 * 60 * 1000);
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(0)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("paquetePrueba").expand().getItems()[0].getText(), is("menuPrueba"));
+
+	}
+	
+	@Test
+	public void testMenuTwoBrowse() throws CoreException {
+
+		DosProjectTwoPack();
+		
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Locution").click();
+		bot.shell("New Locution").activate();
+		final SWTBotShell shellCreate = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Locution").bot();
+		assertThat(dialogBot.label("DSL name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator"));
+		assertThat(dialogBot.label("Package name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
+		assertThat(dialogBot.comboBox().items(), is(arrayWithSize(3)));
+		assertThat(dialogBot.comboBox().selection(), is("Menu"));
+		dialogBot.button(0).click();
+		
+		openBrowseProject();
+		
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator2"));
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		
+		dialogBot.button(1).click();
+
+		openBrowsePackage();
+		
+		assertThat(dialogBot.text(2).getText(), is("segundoPaquete"));
+		
+		SWTBotText text = dialogBot.text(0);
+		text.setText("");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("menuPrueba/");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("menuPrueba");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		
+		
+		dialogBot.button("Finish").click();
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 5 * 60 * 1000);
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(0)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("otroPaquete").getItems(), is(arrayWithSize(0)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("segundoPaquete").getItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("segundoPaquete").expand().getItems()[0].getText(), is("menuPrueba"));
+	}
+	
+	@Test
+	public void testInputSimple() throws CoreException {
+		UnProjectOnePack();
+		
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Locution").click();
+		bot.shell("New Locution").activate();
+		final SWTBotShell shellCreate = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Locution").bot();
+		assertThat(dialogBot.label("DSL name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator"));
+		assertThat(dialogBot.label("Package name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
+		assertThat(dialogBot.comboBox().items(), is(arrayWithSize(3)));
+		assertThat(dialogBot.comboBox().selection(), is("Menu"));
+		SWTBotCombo combo = dialogBot.comboBox();
+		combo.setSelection(1);
+		assertThat(dialogBot.comboBox().selection(), is("Input"));
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		SWTBotText text = dialogBot.text(0);
+		text.setText("");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("inputPrueba/");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("inputPrueba");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		dialogBot.button("Finish").click();
+		
+		bot.sleep(LARGE_SLEEP);
+		
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 60 * 60 * 1000);
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").expand().getItems()[0].getText(), is("inputPrueba"));
+	}
+	
+	@Test
+	public void testInputOneBrowse() throws CoreException {
+		DosProjectOnePack();
+		
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Locution").click();
+		bot.shell("New Locution").activate();
+		final SWTBotShell shellCreate = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Locution").bot();
+		assertThat(dialogBot.label("DSL name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator"));
+		assertThat(dialogBot.label("Package name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
+		assertThat(dialogBot.comboBox().items(), is(arrayWithSize(3)));
+		assertThat(dialogBot.comboBox().selection(), is("Menu"));
+		
+		SWTBotCombo combo = dialogBot.comboBox();
+		combo.setSelection(1);
+		assertThat(dialogBot.comboBox().selection(), is("Input"));
+		
+		dialogBot.button(0).click();
+		openBrowseProject();
+		
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator2"));
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		SWTBotText text = dialogBot.text(0);
+		text.setText("");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("inputPrueba/");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("inputPrueba");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		
+		dialogBot.button("Finish").click();
+		
+		bot.sleep(LARGE_SLEEP);
+		
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 60 * 60 * 1000);
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(0)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("paquetePrueba").expand().getItems()[0].getText(), is("inputPrueba"));
+
+	}
+	
+	@Test
+	public void testInputTwoBrowse() throws CoreException {
+
+		DosProjectTwoPack();
+		
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Locution").click();
+		bot.shell("New Locution").activate();
+		final SWTBotShell shellCreate = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Locution").bot();
+		assertThat(dialogBot.label("DSL name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator"));
+		assertThat(dialogBot.label("Package name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
+		assertThat(dialogBot.comboBox().items(), is(arrayWithSize(3)));
+		assertThat(dialogBot.comboBox().selection(), is("Menu"));
+		
+		SWTBotCombo combo = dialogBot.comboBox();
+		combo.setSelection(1);
+		assertThat(dialogBot.comboBox().selection(), is("Input"));
+		
+		dialogBot.button(0).click();
+		
+		openBrowseProject();
+		
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator2"));
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		
+		dialogBot.button(1).click();
+
+		openBrowsePackage();
+		
+		assertThat(dialogBot.text(2).getText(), is("segundoPaquete"));
+		
+		SWTBotText text = dialogBot.text(0);
+		text.setText("");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("inputPrueba/");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("inputPrueba");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		
+		
+		dialogBot.button("Finish").click();
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 5 * 60 * 1000);
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(0)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("otroPaquete").getItems(), is(arrayWithSize(0)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("segundoPaquete").getItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("segundoPaquete").expand().getItems()[0].getText(), is("inputPrueba"));
+	}
+	
+	@Test
+	public void testOutputSimple() throws CoreException {
+		UnProjectOnePack();
+		
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Locution").click();
+		bot.shell("New Locution").activate();
+		final SWTBotShell shellCreate = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Locution").bot();
+		assertThat(dialogBot.label("DSL name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator"));
+		assertThat(dialogBot.label("Package name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
+		assertThat(dialogBot.comboBox().items(), is(arrayWithSize(3)));
+		assertThat(dialogBot.comboBox().selection(), is("Menu"));
+		SWTBotCombo combo = dialogBot.comboBox();
+		combo.setSelection(2);
+		assertThat(dialogBot.comboBox().selection(), is("Output"));
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		SWTBotText text = dialogBot.text(0);
+		text.setText("");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("outputPrueba/");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("outputPrueba");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		dialogBot.button("Finish").click();
+		
+		bot.sleep(LARGE_SLEEP);
+		
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 60 * 60 * 1000);
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").expand().getItems()[0].getText(), is("outputPrueba"));
+	}
+	
+	@Test
+	public void testOutputOneBrowse() throws CoreException {
+		DosProjectOnePack();
+		
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Locution").click();
+		bot.shell("New Locution").activate();
+		final SWTBotShell shellCreate = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Locution").bot();
+		assertThat(dialogBot.label("DSL name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator"));
+		assertThat(dialogBot.label("Package name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
+		assertThat(dialogBot.comboBox().items(), is(arrayWithSize(3)));
+		assertThat(dialogBot.comboBox().selection(), is("Menu"));
+		
+		SWTBotCombo combo = dialogBot.comboBox();
+		combo.setSelection(2);
+		assertThat(dialogBot.comboBox().selection(), is("Output"));
+		
+		dialogBot.button(0).click();
+		openBrowseProject();
+		
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator2"));
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		SWTBotText text = dialogBot.text(0);
+		text.setText("");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("outputPrueba/");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("outputPrueba");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		
+		dialogBot.button("Finish").click();
+		
+		bot.sleep(LARGE_SLEEP);
+		
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 60 * 60 * 1000);
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(0)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("paquetePrueba").expand().getItems()[0].getText(), is("outputPrueba"));
+
+	}
+	
+	@Test
+	public void testOutputTwoBrowse() throws CoreException {
+
+		DosProjectTwoPack();
+		
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Locution").click();
+		bot.shell("New Locution").activate();
+		final SWTBotShell shellCreate = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Locution").bot();
+		assertThat(dialogBot.label("DSL name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator"));
+		assertThat(dialogBot.label("Package name:"), is(not(nullValue())));
+		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
+		assertThat(dialogBot.comboBox().items(), is(arrayWithSize(3)));
+		assertThat(dialogBot.comboBox().selection(), is("Menu"));
+		
+		SWTBotCombo combo = dialogBot.comboBox();
+		combo.setSelection(2);
+		assertThat(dialogBot.comboBox().selection(), is("Output"));
+		
+		dialogBot.button(0).click();
+		
+		openBrowseProject();
+		
+		assertThat(dialogBot.text(1).getText(), is("baseNavigator2"));
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		
+		dialogBot.button(1).click();
+
+		openBrowsePackage();
+		
+		assertThat(dialogBot.text(2).getText(), is("segundoPaquete"));
+		
+		SWTBotText text = dialogBot.text(0);
+		text.setText("");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("outputPrueba/");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("outputPrueba");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		
+		
+		dialogBot.button("Finish").click();
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 5 * 60 * 1000);
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(0)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("otroPaquete").getItems(), is(arrayWithSize(0)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("segundoPaquete").getItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("segundoPaquete").expand().getItems()[0].getText(), is("outputPrueba"));
+	}
 	
 	private void openBrowseProject(){
 		bot.shell("Container Selection").activate();
