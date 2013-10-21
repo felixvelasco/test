@@ -18,6 +18,7 @@
     <module>com.vectorsf.jvoice.core.reconciliator.test</module>
     <module>com.vectorsf.jvoice.diagram.core.test</module>
     <module>com.vectorsf.jvoice.ui.diagram.properties.test</module>
+    <module>com.vectorsf.jvoice.ui.wizard.test</module>
   </modules>
   <properties>
       <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
@@ -45,6 +46,14 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+           <groupId>org.eclipse.tycho</groupId>
+           <artifactId>tycho-surefire-plugin</artifactId>
+           <version>${tycho-version}</version>
+           <configuration>
+              <skipTests>true</skipTests> 
+           </configuration>
       </plugin>
     </plugins>
   </build>
