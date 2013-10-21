@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.ui.diagram.properties.editting;
 
-import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jface.viewers.CellEditor;
@@ -10,6 +9,7 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.custom.CLabel;
 
 import com.vectorsf.jvoice.model.operations.Case;
+import com.vectorsf.jvoice.model.operations.SwitchState;
 
 public class EventNameEditingSupport extends EditingSupport {
 
@@ -55,13 +55,9 @@ private CLabel error;
 	protected void setValue(Object element, Object value) {
 		caso = (Case) element;
 		eventName = String.valueOf(value).trim();
-		TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(caso);
-		dominio.getCommandStack().execute(new RecordingCommand(dominio) {
-    		protected void doExecute() {
-        		caso.setEventName(eventName.trim());
-        		viewer.update(caso, null);
-    		}
-		});
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(caso);
+    	domain.getCommandStack().execute(new RenameTransitionCommand(domain, 
+				(SwitchState) caso.eContainer(), caso, eventName,viewer));
 	}
 
 }

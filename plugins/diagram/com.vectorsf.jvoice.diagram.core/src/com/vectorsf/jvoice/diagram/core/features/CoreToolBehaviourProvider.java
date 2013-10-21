@@ -123,68 +123,70 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		PictogramElement pe = context.getPictogramElement();
 		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(
 				pe);
-
-		State sta = (State) bo;
-		if (!(sta instanceof FinalState)) {
-			ContextButtonEntry button = new ContextButtonEntry(null, context);
-			ICreateConnectionFeature feature = null;
-			if (sta instanceof SwitchState) {
-				SwitchState switchState = (SwitchState) sta;
-				List<Case> cases = switchState.getCase();
-				if (cases != null) {
-					ContextButtonEntry menuButton = new ContextButtonEntry(
-							null, context);
-					menuButton.setText("Transition");
-
-					for (Case cas : cases) {
-						feature = new CreateTransitionFromPad(
-								getFeatureProvider(),
-								new TransitionSwitchPattern(cas,
-										getFeatureProvider()));
-						menuButton.setIconId(getImageFor(sta, feature));
-						menuButton.addDragAndDropFeature(feature);
-					}
-					data.getDomainSpecificContextButtons().add(menuButton);
-				}
-
-			} else if (sta instanceof MenuState) {
-				MenuState menuState = (MenuState) sta;
-				List<Output> outputs = new ArrayList<Output>();
-				VoiceDsl locution = menuState.getLocution();
-				if (locution != null) {
-					Outputs locutionOutputs = menuState.getLocution()
-							.getOutputs();
-					if (locutionOutputs != null) {
-						outputs = locutionOutputs.getOutput();
+		if (bo instanceof State) {
+			State sta = (State) bo;
+			if (!(sta instanceof FinalState)) {
+				ContextButtonEntry button = new ContextButtonEntry(null,
+						context);
+				ICreateConnectionFeature feature = null;
+				if (sta instanceof SwitchState) {
+					SwitchState switchState = (SwitchState) sta;
+					List<Case> cases = switchState.getCase();
+					if (cases != null) {
 						ContextButtonEntry menuButton = new ContextButtonEntry(
 								null, context);
 						menuButton.setText("Transition");
 
-						for (Output output : outputs) {
+						for (Case cas : cases) {
 							feature = new CreateTransitionFromPad(
 									getFeatureProvider(),
-									new TransitionMenuPattern(output,
+									new TransitionSwitchPattern(cas,
 											getFeatureProvider()));
 							menuButton.setIconId(getImageFor(sta, feature));
 							menuButton.addDragAndDropFeature(feature);
 						}
 						data.getDomainSpecificContextButtons().add(menuButton);
 					}
+
+				} else if (sta instanceof MenuState) {
+					MenuState menuState = (MenuState) sta;
+					List<Output> outputs = new ArrayList<Output>();
+					VoiceDsl locution = menuState.getLocution();
+					if (locution != null) {
+						Outputs locutionOutputs = menuState.getLocution()
+								.getOutputs();
+						if (locutionOutputs != null) {
+							outputs = locutionOutputs.getOutput();
+							ContextButtonEntry menuButton = new ContextButtonEntry(
+									null, context);
+							menuButton.setText("Transition");
+
+							for (Output output : outputs) {
+								feature = new CreateTransitionFromPad(
+										getFeatureProvider(),
+										new TransitionMenuPattern(output,
+												getFeatureProvider()));
+								menuButton.setIconId(getImageFor(sta, feature));
+								menuButton.addDragAndDropFeature(feature);
+							}
+							data.getDomainSpecificContextButtons().add(
+									menuButton);
+						}
+					}
+
+				} else {
+					feature = new CreateTransitionFromPad(getFeatureProvider(),
+							new TransitionPattern(getFeatureProvider()));
+					button.setText(feature.getCreateName());
+					button.setDescription(feature.getCreateDescription());
+					button.setIconId(getImageFor(sta, feature));
+					button.addDragAndDropFeature(feature);
+
+					data.getDomainSpecificContextButtons().add(button);
 				}
 
-			} else {
-				feature = new CreateTransitionFromPad(getFeatureProvider(),
-						new TransitionPattern(getFeatureProvider()));
-				button.setText(feature.getCreateName());
-				button.setDescription(feature.getCreateDescription());
-				button.setIconId(getImageFor(sta, feature));
-				button.addDragAndDropFeature(feature);
-
-				data.getDomainSpecificContextButtons().add(button);
 			}
-
 		}
-
 		return data;
 	}
 

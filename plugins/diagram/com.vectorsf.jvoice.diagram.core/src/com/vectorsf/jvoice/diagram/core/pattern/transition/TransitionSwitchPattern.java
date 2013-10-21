@@ -118,6 +118,8 @@ public class TransitionSwitchPattern extends TransitionPattern {
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
 
+		link(cdEvent, cas);
+
 	}
 
 	@Override
@@ -162,8 +164,7 @@ public class TransitionSwitchPattern extends TransitionPattern {
 		addContextInicial.setTargetContainer((ContainerShape) context
 				.getSourcePictogramElement());
 
-		Connection connection = (Connection) getFeatureProvider()
-				.addIfPossible(addContextInicial);
+		Connection connection = (Connection) add(addContextInicial);
 		layoutPictogramElement(connection);
 		return connection;
 
