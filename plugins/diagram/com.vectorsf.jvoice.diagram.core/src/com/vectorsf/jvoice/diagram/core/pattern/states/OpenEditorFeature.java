@@ -3,6 +3,7 @@ package com.vectorsf.jvoice.diagram.core.pattern.states;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -13,8 +14,11 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 
+import com.isb.bks.ivr.voice.dsl.ui.internal.VoiceDslActivator;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
+import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.LocutionState;
 
 public class OpenEditorFeature extends AbstractCustomFeature {
@@ -45,16 +49,26 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 
 	private void openContainerFile(EObject eObject) {
 		URI locutionUri = EcoreUtil.getURI(eObject);
-
-		String fileString = locutionUri.toPlatformString(true);
-		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileString));
-
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 
+		String fileString = locutionUri.toPlatformString(true);
 		try {
-			IDE.openEditor(page, file);
-		} catch (PartInitException e) {
+			if (fileString != null) {
+				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileString));
 
+				IDE.openEditor(page, file);
+			} else {
+				URIEditorInput input = new URIEditorInput(locutionUri);
+				if (eObject instanceof Flow) {
+					IDE.openEditor(page, input, "org.eclipse.graphiti.ui.editor.DiagramEditorJVoice");
+				} else { // Locution
+					IURIEditorOpener instance = VoiceDslActivator.getInstance()
+							.getInjector(VoiceDslActivator.COM_ISB_BKS_IVR_VOICE_DSL_VOICEDSL)
+							.getInstance(IURIEditorOpener.class);
+					instance.open(locutionUri, false);
+				}
+			}
+		} catch (PartInitException e) {
 		}
 	}
 
