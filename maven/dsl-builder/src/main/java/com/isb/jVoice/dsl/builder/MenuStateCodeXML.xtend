@@ -1,18 +1,16 @@
 package com.isb.jVoice.dsl.builder
 
 import com.vectorsf.jvoice.model.operations.State
-import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio
-import com.vectorsf.jvoice.model.operations.InputState
+import com.vectorsf.jvoice.model.operations.MenuState
 
-class InputStateCodeXML {
+class MenuStateCodeXML {
 	
-	def static doGenerateInputState(State state){
+	def static doGenerateMenuState(State state){
 			
 		var TranSalida =state.getOutgoingTransitions()
-		var InputState audioIn = state as InputState
+		var MenuState audioIn = state as MenuState
 		
 		var grammars = audioIn.locution.grammars.grammatics
-		var configuration = audioIn.locution.configuration
 		
 		var mainAudios = audioIn.locution.audios.mainAudios
 		var noMatchAudios = audioIn.locution.audios.noMatchAudios
@@ -26,9 +24,7 @@ class InputStateCodeXML {
 			<on-entry>
 				<evaluate expression="output" result="flowScope.«state.name»"></evaluate>
 				<set name="flowScope.«state.name».name" value="'«audioIn.name»'" />
-				<set name="flowScope.«state.name».bargein" value="«configuration.getValue("bargein")»" />
-				<set name="flowScope.«state.name».maxAttempts" value="«configuration.getValue("maxAttempts")»" />			
-				«/*Obtenemos las gramaticas de la locucion  */»
+				«/*Obtenemos las gramaticas del menu */»
 				«IF grammars != null || grammars.size>0» 				
 				«FOR grammar : grammars »
 				<evaluate expression="grammar" result="flowScope.grammar«i=i+1»" />
