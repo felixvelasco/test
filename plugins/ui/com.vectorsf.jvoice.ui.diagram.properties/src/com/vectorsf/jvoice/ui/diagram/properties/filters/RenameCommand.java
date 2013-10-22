@@ -8,7 +8,7 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 
 import com.vectorsf.jvoice.model.operations.State;
 
-final class RenameCommand extends RecordingCommand {
+public final class RenameCommand extends RecordingCommand {
 	private final PictogramElement pe;
 	private final State bimElement;
 	private IFeatureProvider fp;

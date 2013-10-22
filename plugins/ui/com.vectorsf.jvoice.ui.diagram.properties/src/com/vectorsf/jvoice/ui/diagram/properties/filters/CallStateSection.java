@@ -16,5 +16,4 @@ public class CallStateSection extends StateSection {
 		super.createControls(parent, tabbedPropertySheetPage);
 		
 	}
-
 }

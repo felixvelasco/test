@@ -63,6 +63,8 @@ public class AudioItemProvider
 			addDontBargeInPropertyDescriptor(object);
 			addTtsPropertyDescriptor(object);
 			addSrcPropertyDescriptor(object);
+			addInterpretationPropertyDescriptor(object);
+			addFormatPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -134,6 +136,50 @@ public class AudioItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Interpretation feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addInterpretationPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Audio_interpretation_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Audio_interpretation_feature", "_UI_Audio_type"),
+				 VoiceDslPackage.Literals.AUDIO__INTERPRETATION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Format feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addFormatPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Audio_format_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Audio_format_feature", "_UI_Audio_type"),
+				 VoiceDslPackage.Literals.AUDIO__FORMAT,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns Audio.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -171,6 +217,8 @@ public class AudioItemProvider
 			case VoiceDslPackage.AUDIO__DONT_BARGE_IN:
 			case VoiceDslPackage.AUDIO__TTS:
 			case VoiceDslPackage.AUDIO__SRC:
+			case VoiceDslPackage.AUDIO__INTERPRETATION:
+			case VoiceDslPackage.AUDIO__FORMAT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

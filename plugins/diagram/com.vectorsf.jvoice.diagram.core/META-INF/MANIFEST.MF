@@ -20,3 +20,4 @@ Require-Bundle: org.eclipse.emf.transaction;bundle-version="1.4.0",
  com.vectorsf.jvoice.voice.dsl.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
+Export-Package: com.vectorsf.jvoice.diagram.core.pattern.states

@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.transaction.RecordingCommand;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Connection;
@@ -15,79 +12,68 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
+import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Case;
+import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InitialState;
-import com.vectorsf.jvoice.model.operations.OperationsFactory;
+import com.vectorsf.jvoice.model.operations.InputState;
+import com.vectorsf.jvoice.model.operations.MenuState;
+import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 import com.vectorsf.jvoice.ui.diagram.properties.Activator;
 import com.vectorsf.jvoice.ui.diagram.properties.editting.ConditionEditingSupport;
 import com.vectorsf.jvoice.ui.diagram.properties.editting.EventNameEditingSupport;
+import com.vectorsf.jvoice.ui.diagram.properties.listeners.ListenerIntentionName;
+import com.vectorsf.jvoice.ui.diagram.properties.listeners.PropertiesListener;
+import com.vectorsf.jvoice.ui.diagram.properties.provider.CaseContentProvider;
+import com.vectorsf.jvoice.ui.diagram.properties.provider.CaseLabelProvider;
 
 public class StateSection  extends  GFPropertySection implements
 ITabbedPropertyConstants {
+	
+	private static StateSection instance = new StateSection();
 	private Text nameText;
 	private Text pathText;
+	private Text nameSubFlow;
 	private CCombo InTransitions;
 	private CCombo OutTransitions;
 	private FormData data;
 	private Table table;
 	private TableViewer tableViewer;
 	private org.eclipse.graphiti.mm.algorithms.Text nameArrow;
-	private List<Case> casos = new ArrayList<Case>();
+	private static List<Case> casos = new ArrayList<Case>();
 	private static final String CONDITION = "Condition";
 	private static final String NAME = "EventName";
 	private static final String[] PROPS = { CONDITION, NAME};
-	private SwitchState estadoSelection;
+	private static SwitchState estadoSelection;
 	private CLabel error;
+	private static PictogramElement cacheElement;
+	private static IFeatureProvider fp;
 
 	public StateSection() {}
 	
-	protected FocusListener listenerIntentionName = new FocusListener(){
-		@Override
-		public void focusLost(FocusEvent e) {
-			PictogramElement pe = getSelectedPictogramElement();
-			final State bimElement = (State) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
-
-			TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
-
-			IFeatureProvider fp =getDiagramTypeProvider().getFeatureProvider();
-			
-			editingDomain.getCommandStack().execute(new RenameCommand(editingDomain, pe, bimElement, nameText.getText(), fp));
-
-			}
-
-		@Override
-		public void focusGained(FocusEvent e) {}
-	};
+	public static StateSection getInstance() {
+		return instance;
+	}
 	
 	@Override
     public void createControls(Composite parent,
@@ -101,10 +87,7 @@ ITabbedPropertyConstants {
         
         comboTransaIn(factory, composite);
 
-        comboTransaOut(factory, composite);
-        	
-
-        
+        comboTransaOut(factory, composite); 
     }
 
 	/**
@@ -193,141 +176,42 @@ ITabbedPropertyConstants {
 	    tableViewer.setCellEditors(editors);
 	    
 	    Button btAdd = factory.createButton(composite, "", SWT.PUSH);
+	    btAdd.setData("add");
 	    btAdd.setImage(Activator.getDefault().getImageRegistry().get("imageAdd"));
 	    data = new FormData();
 	    data.left = new FormAttachment(table, 5);
 	    data.top =  new FormAttachment(table, 0,SWT.TOP);
 	    btAdd.setLayoutData(data);
-	    btAdd.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				PictogramElement pe = getSelectedPictogramElement();
-		        if (pe != null) {
-		            Object bo = Graphiti.getLinkService()
-		                 .getBusinessObjectForLinkedPictogramElement(pe);
-		            // the filter assured, that it is a EClass
-		            if (bo == null)
-		            	return;
-		            
-		            if(bo instanceof SwitchState){
-		            	estadoSelection = (SwitchState)bo;
-		            	TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(estadoSelection);
-		            	dominio.getCommandStack().execute(new RecordingCommand(dominio) {
-		            		protected void doExecute() {
-		            			Case casoNuevo = OperationsFactory.eINSTANCE.createCase();
-				            	boolean repetido = true;
-				            	int i = 1;
-				            	while (repetido){
-				            		if (estadoSelection.getCase("Case_" + i) == null){
-				            			casoNuevo.setEventName("Case_" + i);
-				            			casoNuevo.setCondition("");
-				            			repetido = false;
-				            		}else{
-				            			i++;
-				            		}
-				            	}
-				            	estadoSelection.getCase().add(casoNuevo);
-				            	estadoSelection.getCase().move(estadoSelection.getCase().size()-2, casoNuevo);
-				            	casos = estadoSelection.getCase();
-				            	tableViewer.setInput(casos);
-		            		}
-		            	});
-		            }
-		        }
-			}
-		});
+	    btAdd.addListener(SWT.Selection, new PropertiesListener(tableViewer));
+
 	    Button btRemove = factory.createButton(composite, "", SWT.PUSH);
+	    btRemove.setData("remove");
 	    btRemove.setImage(Activator.getDefault().getImageRegistry().get("imageRemove"));
 	    data = new FormData();
 	    data.left = new FormAttachment(btAdd,0,SWT.LEFT);
 	    data.right = new FormAttachment(btAdd,0,SWT.RIGHT);
 	    data.top =  new FormAttachment(btAdd, 10);
 	    btRemove.setLayoutData(data);
-	    btRemove.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(estadoSelection);
-            	dominio.getCommandStack().execute(new RecordingCommand(dominio) {
-            		protected void doExecute() {
-            			TableItem[] item = tableViewer.getTable().getSelection();
-            			if (item.length>0){
-            				Case caso = (Case)item[0].getData();
-            				if (estadoSelection.getCase(caso.getEventName()) !=null && !caso.getEventName().equals("default")){
-            					estadoSelection.getCase().remove(caso);
-            					casos = estadoSelection.getCase();
-    			            	tableViewer.setInput(casos);
-            				}
-            			}
-            		}
-            	});
-			}
-	    });
+	    btRemove.addListener(SWT.Selection, new PropertiesListener(tableViewer));
+	    
 	    Button btUp = factory.createButton(composite, "",SWT.PUSH);
+	    btUp.setData("up");
 	    btUp.setImage(Activator.getDefault().getImageRegistry().get("imageUp"));
 	    data = new FormData();
 	    data.left = new FormAttachment(btAdd, 5);
 	    data.top =  new FormAttachment(table, 0,SWT.TOP);
 	    btUp.setLayoutData(data);
-	    btUp.addListener(SWT.Selection, new Listener() {
-	    	@Override
-			public void handleEvent(Event event) {
-	    		TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(estadoSelection);
-            	dominio.getCommandStack().execute(new RecordingCommand(dominio) {
-            		protected void doExecute() {
-            			TableItem[] item = tableViewer.getTable().getSelection();
-            			if (item.length>0){
-            				Case caso = (Case)item[0].getData();
-            				if (!caso.getEventName().equals("default")){
-            					for (int i=0; i< estadoSelection.getCase().size(); i++){
-            						if (estadoSelection.getCase().get(i).equals(caso)){
-            							if (i>0){
-            								estadoSelection.getCase().move(i-1, caso);
-                        					casos = estadoSelection.getCase();
-                			            	tableViewer.setInput(casos);
-                			            	break;
-            							}
-            						}
-            					}
-            				}
-            			}
-            		}
-            	});
-	    	}
-	    });
+	    btUp.addListener(SWT.Selection, new PropertiesListener(tableViewer));
 
 	    Button btDown = factory.createButton(composite, "", SWT.PUSH);
+	    btDown.setData("down");
 	    btDown.setImage(Activator.getDefault().getImageRegistry().get("imageDown"));
 	    data = new FormData();
 	    data.left = new FormAttachment(btUp,0,SWT.LEFT);
 	    data.right = new FormAttachment(btUp,0,SWT.RIGHT);
 	    data.top =  new FormAttachment(btUp, 10);
 	    btDown.setLayoutData(data);
-	    btDown.addListener(SWT.Selection, new Listener() {
-	    	@Override
-			public void handleEvent(Event event) {
-	    		TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(estadoSelection);
-            	dominio.getCommandStack().execute(new RecordingCommand(dominio) {
-            		protected void doExecute() {
-            			TableItem[] item = tableViewer.getTable().getSelection();
-            			if (item.length>0){
-            				Case caso = (Case)item[0].getData();
-            				if (!caso.getEventName().equals("default")){
-            					for (int i=0; i< estadoSelection.getCase().size(); i++){
-            						if (estadoSelection.getCase().get(i).equals(caso)){
-            							if (i<estadoSelection.getCase().size()-2){
-            								estadoSelection.getCase().move(i+1, caso);
-                        					casos = estadoSelection.getCase();
-                			            	tableViewer.setInput(casos);
-                			            	break;
-            							}
-            						}
-            					}
-            				}
-            			}
-            		}
-            	});
-	    	}
-	    });
+	    btDown.addListener(SWT.Selection, new PropertiesListener(tableViewer));
 	}
 
 	/**
@@ -349,7 +233,7 @@ ITabbedPropertyConstants {
 		    data.right = new FormAttachment(error,0,SWT.RIGHT);
 		    data.top = new FormAttachment(error, 10);
 		    nameText.setLayoutData(data);
-		    nameText.addFocusListener(listenerIntentionName);
+		    nameText.addFocusListener(new ListenerIntentionName(nameText));
 		 
 		    CLabel LabelName = factory.createCLabel(composite, "Name:");
 		    data = new FormData();
@@ -375,12 +259,44 @@ ITabbedPropertyConstants {
 	        data.top = new FormAttachment(pathText, 0, SWT.CENTER);
 	        LabelPath.setLayoutData(data);
 	}
- 
+	
+	protected void subFlowPath(TabbedPropertySheetWidgetFactory factory,
+			Composite composite, String nameLabel) {
+		//Nombre del elemento
+
+		nameSubFlow = factory.createText(composite, "");
+	    data = new FormData();
+	    data.left = new FormAttachment(nameText, 0,SWT.LEFT);
+		data.right = new FormAttachment(nameText,-120,SWT.RIGHT);
+        data.top = new FormAttachment(OutTransitions, 10);
+	    nameSubFlow.setLayoutData(data);
+	    nameSubFlow.setEditable(false);
+	    nameSubFlow.setEnabled(false);
+	 
+	    CLabel LabelName = factory.createCLabel(composite, nameLabel);
+	    data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(nameSubFlow, -HSPACE);
+	    data.top = new FormAttachment(nameSubFlow, 0, SWT.CENTER);
+	    LabelName.setLayoutData(data);
+	    
+	    Button btEditFlow = factory.createButton(composite, "",SWT.PUSH);
+	    btEditFlow.setImage(Activator.getDefault().getImageRegistry().get("imageModify"));
+	    data = new FormData();
+	    data.left = new FormAttachment(nameSubFlow, 5);
+	    data.top =  new FormAttachment(nameSubFlow, 0,SWT.CENTER);
+	    btEditFlow.setLayoutData(data);
+	    btEditFlow.addListener(SWT.Selection, new PropertiesListener(nameSubFlow));
+	}
+	
     @Override
     public void refresh() {
     	removelistener();
     	PictogramElement pe = getSelectedPictogramElement();
         if (pe != null) {
+        	cacheElement = pe;
+        	fp =getDiagramTypeProvider().getFeatureProvider();
+        	
             Object bo = Graphiti.getLinkService()
                  .getBusinessObjectForLinkedPictogramElement(pe);
             // the filter assured, that it is a EClass
@@ -391,22 +307,47 @@ ITabbedPropertyConstants {
             if(!(bo instanceof InitialState))
             	transactionIncoming(bo);
             
-            transactionOut(bo);
+            if(!(bo instanceof FinalState))
+            	transactionOut(bo);
             
             if(bo instanceof SwitchState){
             	estadoSelection = (SwitchState)bo;
             	casos = estadoSelection.getCase();
             	tableViewer.setInput(casos);
+            	
+            }else if(bo instanceof CallFlowState){
+            	CallFlowState subFlow = (CallFlowState)bo;
+            	if (subFlow.getSubflow().getName()!=null){
+            		nameSubFlow.setText(subFlow.getSubflow().getName());
+            	}
+            }else if(bo instanceof MenuState){
+            	MenuState menuLocution = (MenuState)bo;
+            	if (menuLocution.getLocution().getName()!=null){
+            		nameSubFlow.setText(menuLocution.getLocution().getName());
+            	}
+            }else if(bo instanceof InputState){
+            	InputState inputLocution = (InputState)bo;
+            	if (inputLocution.getLocution().getName()!=null){
+            		nameSubFlow.setText(inputLocution.getLocution().getName());
+            	}
+            }else if(bo instanceof PromptState){
+            	PromptState outputLocution = (PromptState)bo;
+            	if (outputLocution.getLocution().getName()!=null){
+            		nameSubFlow.setText(outputLocution.getLocution().getName());
+            	}
             }
-
         }
+    }
+    
+    public PictogramElement obtenerPe(){
+    	return cacheElement;
     }
 
 	/**
 	 * Eliminamos el listener
 	 */
 	protected void removelistener() {
-		nameText.removeFocusListener(listenerIntentionName);
+		nameText.removeFocusListener(new ListenerIntentionName(nameText));
 	}
 
 	/**
@@ -504,52 +445,10 @@ ITabbedPropertyConstants {
 		String name = null;
 		name = ((State) bo).getName();            
 		nameText.setText(name == null ? "" : name);
-		nameText.addFocusListener(listenerIntentionName);
+		nameText.addFocusListener(new ListenerIntentionName(nameText));
 		String path = (((State) bo).eResource()).getURI().path().substring(9).toString();
 		pathText.setText(path == null ? "" : path);
 	}
-	
-	class CaseContentProvider implements IStructuredContentProvider {
-		  public Object[] getElements(Object inputElement) {
-		    return ((List<?>) inputElement).toArray();
-		  }
-
-		  public void dispose() {
-		  }
-
-		  public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		  }
-		}
-	
-	class CaseLabelProvider implements ITableLabelProvider {
-		  public Image getColumnImage(Object element, int columnIndex) {
-		    return null;
-		  }
-
-		  public String getColumnText(Object element, int columnIndex) {
-		    Case caso = (Case) element;
-		    switch (columnIndex) {
-		    case 0:
-		      return caso.getCondition();
-		    case 1:
-		      return caso.getEventName();
-		    }
-		    return null;
-		  }
-
-		  public void dispose() {
-		  }
-
-		  public boolean isLabelProperty(Object element, String property) {
-		    return false;
-		  }
-
-		@Override
-		public void addListener(ILabelProviderListener listener) {}
-
-		@Override
-		public void removeListener(ILabelProviderListener listener) {}
-		}
 	
 	private TableViewerColumn createTableViewerColumn(String title, int bound) {
 		    final TableViewerColumn viewerColumn = new TableViewerColumn(tableViewer,
@@ -560,6 +459,17 @@ ITabbedPropertyConstants {
 		    column.setResizable(true);
 		    column.setMoveable(true);
 		    return viewerColumn;
-		  }
+	}
+	
+	public IFeatureProvider obtenerFeatureProvider (){
+		return fp;
+	}
 
+	public SwitchState obtenerSwitch(){
+		return estadoSelection;
+	}
+	
+	public List<Case> obtenerCases(){
+		return casos;
+	}
 }

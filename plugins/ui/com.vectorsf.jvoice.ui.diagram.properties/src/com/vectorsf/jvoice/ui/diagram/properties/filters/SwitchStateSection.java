@@ -23,8 +23,4 @@ public class SwitchStateSection extends StateSection {
         super.comboTransaOut(factory, composite);
         super.tableSwitchCase(factory, composite);
     }
-
- 
-
-
 }

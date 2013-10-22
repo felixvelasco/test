@@ -19,6 +19,5 @@ public class InitialStateSection extends StateSection {
         Composite composite = factory.createFlatFormComposite(parent);
         super.nombre_path(factory, composite);
         super.comboTransaOut(factory, composite);
-       
 	}
 }

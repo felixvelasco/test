@@ -36,6 +36,8 @@ public class Activator extends AbstractUIPlugin {
 	    Activator.getDefault().getImageRegistry().put("imageAdd", imageAdd);
 	    ImageDescriptor imageRemove = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,  "/resources/Remove.ico");
 	    Activator.getDefault().getImageRegistry().put("imageRemove", imageRemove);
+	    ImageDescriptor imageModify = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,  "/resources/Modify.ico");
+	    Activator.getDefault().getImageRegistry().put("imageModify", imageModify);
 	}
 
 	/*
