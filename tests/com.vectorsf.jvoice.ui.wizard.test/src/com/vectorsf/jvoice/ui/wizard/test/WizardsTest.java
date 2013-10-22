@@ -79,11 +79,47 @@ public class WizardsTest {
 	public void testCreateProject() throws CoreException {
 		SWTBotHelper.createProject("baseNavigator");
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
-		view.bot().tree().getTreeItem("baseNavigator").contextMenu("New").menu("Project").click();
+		view.bot().tree().getTreeItem("baseNavigator").contextMenu("New").menu("Module Project").click();
 
-		bot.shell("New Project").activate();
-		final SWTBotShell shellCreate = bot.shell("New Project"); //$NON-NLS-1$
-		final SWTBot dialogBot = bot.shell("New Project").bot();
+		bot.shell("New Module Project").activate();
+		final SWTBotShell shellCreate = bot.shell("New Module Project"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Module Project").bot();
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		assertThat(dialogBot.text(0).getText(), is(""));
+		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));
+		SWTBotText text = dialogBot.text(0);
+		text.setText("proyectoSWTBOT");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
+		text.setText("baseNavigator");
+		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
+		text.setText("proyectoSWTBOT");
+		dialogBot.button("Finish").click();
+		// Esperamos a que el wizard de creación se cierre
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+						if (!shellCreate.isOpen()) {
+							return true;
+						}
+						return false;
+					}
+
+					public String getFailureMessage() {
+						return "Was expecting the 'Create' dialog to close itself";
+					}
+				}, 5 * 60 * 1000);
+		bot.sleep(LARGE_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
+	}
+	
+	@Test
+	public void testCreateApplicationProject() throws CoreException {
+		SWTBotHelper.createProject("baseNavigator");
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
+		view.bot().tree().getTreeItem("baseNavigator").contextMenu("New").menu("Application Project").click();
+
+		bot.shell("New Application Project").activate();
+		final SWTBotShell shellCreate = bot.shell("New Application Project"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("New Application Project").bot();
 		assertThat(dialogBot.button("Finish").isEnabled(), is(false));
 		assertThat(dialogBot.text(0).getText(), is(""));
 		assertThat(dialogBot.label("Project name:"), is(not(nullValue())));

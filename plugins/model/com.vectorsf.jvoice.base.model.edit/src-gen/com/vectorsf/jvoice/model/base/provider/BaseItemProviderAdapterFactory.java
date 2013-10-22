@@ -233,6 +233,52 @@ public class BaseItemProviderAdapterFactory extends BaseAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.base.JVApplication} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected JVApplicationItemProvider jvApplicationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.base.JVApplication}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createJVApplicationAdapter() {
+		if (jvApplicationItemProvider == null) {
+			jvApplicationItemProvider = new JVApplicationItemProvider(this);
+		}
+
+		return jvApplicationItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.base.JVModule} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected JVModuleItemProvider jvModuleItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.base.JVModule}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createJVModuleAdapter() {
+		if (jvModuleItemProvider == null) {
+			jvModuleItemProvider = new JVModuleItemProvider(this);
+		}
+
+		return jvModuleItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -338,6 +384,8 @@ public class BaseItemProviderAdapterFactory extends BaseAdapterFactory implement
 		if (jvProjectItemProvider != null) jvProjectItemProvider.dispose();
 		if (stringToStringMapItemProvider != null) stringToStringMapItemProvider.dispose();
 		if (configurationItemProvider != null) configurationItemProvider.dispose();
+		if (jvApplicationItemProvider != null) jvApplicationItemProvider.dispose();
+		if (jvModuleItemProvider != null) jvModuleItemProvider.dispose();
 	}
 
 }

@@ -151,6 +151,16 @@ public class JVModelItemProvider
 			(createChildParameter
 				(BasePackage.Literals.JV_MODEL__PROJECTS,
 				 BaseFactory.eINSTANCE.createJVProject()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(BasePackage.Literals.JV_MODEL__PROJECTS,
+				 BaseFactory.eINSTANCE.createJVApplication()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(BasePackage.Literals.JV_MODEL__PROJECTS,
+				 BaseFactory.eINSTANCE.createJVModule()));
 	}
 
 	/**
