@@ -65,6 +65,8 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory {
 			case BasePackage.JV_PROJECT: return createJVProject();
 			case BasePackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
 			case BasePackage.CONFIGURATION: return createConfiguration();
+			case BasePackage.JV_APPLICATION: return createJVApplication();
+			case BasePackage.JV_MODULE: return createJVModule();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -138,6 +140,26 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory {
 	public Configuration createConfiguration() {
 		ConfigurationImpl configuration = new ConfigurationImpl();
 		return configuration;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JVApplication createJVApplication() {
+		JVApplicationImpl jvApplication = new JVApplicationImpl();
+		return jvApplication;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JVModule createJVModule() {
+		JVModuleImpl jvModule = new JVModuleImpl();
+		return jvModule;
 	}
 
 	/**

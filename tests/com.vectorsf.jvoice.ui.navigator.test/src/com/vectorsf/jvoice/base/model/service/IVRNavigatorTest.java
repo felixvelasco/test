@@ -38,9 +38,11 @@ import static org.hamcrest.Matchers.nullValue;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFolders;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createApplicationProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFile;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFolder;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteApplicationProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
 
 /**
@@ -136,6 +138,51 @@ public class IVRNavigatorTest {
 		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
 
 		deleteProject(project1);
+
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(0)));
+
+	}
+	
+	@Test
+	public void testCreateApplicationProjects() throws CoreException {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+
+		createApplicationProject("testNavigator");
+
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(), is(arrayWithSize(1)));
+
+		createApplicationProject("testNavigator2");
+
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().getTreeItem("testNavigator").expand().getItems(), is(arrayWithSize(1)));
+
+		assertThat(view.bot().tree().getTreeItem("testNavigator2"), is(not(nullValue())));
+		assertThat(view.bot().tree().getTreeItem("testNavigator2").expand().getItems(), is(arrayWithSize(1)));
+	}
+
+	@Test
+	public void testDeleteApplicationProjects() throws CoreException {
+		assertThat(view.bot().tree().rowCount(), is(0));
+
+		final IProject project1 = createProject("testNavigator");
+		final IProject project2 = createProject("testNavigator2");
+
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
+
+		deleteApplicationProject(project2);
+
+		bot.sleep(SMALL_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+
+		deleteApplicationProject(project1);
 
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(0)));

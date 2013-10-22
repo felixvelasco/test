@@ -125,6 +125,24 @@ public class BaseSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case BasePackage.JV_APPLICATION: {
+				JVApplication jvApplication = (JVApplication)theEObject;
+				T result = caseJVApplication(jvApplication);
+				if (result == null) result = caseJVProject(jvApplication);
+				if (result == null) result = caseNamedElement(jvApplication);
+				if (result == null) result = caseJVElement(jvApplication);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BasePackage.JV_MODULE: {
+				JVModule jvModule = (JVModule)theEObject;
+				T result = caseJVModule(jvModule);
+				if (result == null) result = caseJVProject(jvModule);
+				if (result == null) result = caseNamedElement(jvModule);
+				if (result == null) result = caseJVElement(jvModule);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -246,6 +264,36 @@ public class BaseSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseConfiguration(Configuration object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>JV Application</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>JV Application</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseJVApplication(JVApplication object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>JV Module</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>JV Module</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseJVModule(JVModule object) {
 		return null;
 	}
 

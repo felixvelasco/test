@@ -8,19 +8,16 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
+import com.vectorsf.jvoice.core.project.JVoiceApplicationConfigurator;
 import com.vectorsf.jvoice.core.project.JVoiceProjectConfigurator;
 import com.vectorsf.jvoice.ui.wizard.page.ProjectNameWizardPage;
 
 
 
-/**
- * @author xIS14487
- *
- */
-public class CreateProjectJVoice extends BasicNewResourceWizard {
+public class CreateJVoiceApplicationWizard extends BasicNewResourceWizard {
 	
-	private static final String PAGE_NAME_PROJECT_NAME = "Module Project Name";
-	private static final String WIZARD_WINDOW_TITLE = "New Module Project";
+	private static final String PAGE_NAME_APPLICATION_NAME = "Application Project Name";
+	private static final String WIZARD_WINDOW_TITLE = "New Application Project";
 
 	
 	@Override
@@ -32,7 +29,7 @@ public class CreateProjectJVoice extends BasicNewResourceWizard {
 		}
 		super.addPages();
 		ProjectNameWizardPage pageName = new ProjectNameWizardPage(
-				PAGE_NAME_PROJECT_NAME);
+				PAGE_NAME_APPLICATION_NAME);
 		addPage(pageName);
 	}
 
@@ -50,11 +47,11 @@ public class CreateProjectJVoice extends BasicNewResourceWizard {
 	@Override
 	public boolean performFinish() {
 		
-		final String ProjectName = ((ProjectNameWizardPage) getPage(PAGE_NAME_PROJECT_NAME))
+		final String ApplicationName = ((ProjectNameWizardPage) getPage(PAGE_NAME_APPLICATION_NAME))
 				.getText();
 		
 		try {
-			JVoiceProjectConfigurator.createProject(ProjectName, ProjectName, ProjectName);
+			JVoiceApplicationConfigurator.createApplication(ApplicationName, ApplicationName, ApplicationName);
 		} catch (CoreException e) {
 			return false;
 		}

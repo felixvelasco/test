@@ -76,6 +76,24 @@ public interface BaseFactory extends EFactory {
 	Configuration createConfiguration();
 
 	/**
+	 * Returns a new object of class '<em>JV Application</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>JV Application</em>'.
+	 * @generated
+	 */
+	JVApplication createJVApplication();
+
+	/**
+	 * Returns a new object of class '<em>JV Module</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>JV Module</em>'.
+	 * @generated
+	 */
+	JVModule createJVModule();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -562,6 +562,234 @@ public interface BasePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.base.impl.JVApplicationImpl <em>JV Application</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.base.impl.JVApplicationImpl
+	 * @see com.vectorsf.jvoice.model.base.impl.BasePackageImpl#getJVApplication()
+	 * @generated
+	 */
+	int JV_APPLICATION = 8;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION__ID = JV_PROJECT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION__NAME = JV_PROJECT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION__DESCRIPTION = JV_PROJECT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION__PACKAGES = JV_PROJECT__PACKAGES;
+
+	/**
+	 * The feature id for the '<em><b>Model</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION__MODEL = JV_PROJECT__MODEL;
+
+	/**
+	 * The feature id for the '<em><b>Configuration</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION__CONFIGURATION = JV_PROJECT__CONFIGURATION;
+
+	/**
+	 * The feature id for the '<em><b>Module</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION__MODULE = JV_PROJECT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>JV Application</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION_FEATURE_COUNT = JV_PROJECT_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Package</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION___GET_PACKAGE__STRING = JV_PROJECT___GET_PACKAGE__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Configuration</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION___GET_CONFIGURATION__STRING = JV_PROJECT___GET_CONFIGURATION__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Projects</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION___GET_REFERENCED_PROJECTS = JV_PROJECT___GET_REFERENCED_PROJECTS;
+
+	/**
+	 * The number of operations of the '<em>JV Application</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION_OPERATION_COUNT = JV_PROJECT_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.base.impl.JVModuleImpl <em>JV Module</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.base.impl.JVModuleImpl
+	 * @see com.vectorsf.jvoice.model.base.impl.BasePackageImpl#getJVModule()
+	 * @generated
+	 */
+	int JV_MODULE = 9;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE__ID = JV_PROJECT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE__NAME = JV_PROJECT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE__DESCRIPTION = JV_PROJECT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE__PACKAGES = JV_PROJECT__PACKAGES;
+
+	/**
+	 * The feature id for the '<em><b>Model</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE__MODEL = JV_PROJECT__MODEL;
+
+	/**
+	 * The feature id for the '<em><b>Configuration</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE__CONFIGURATION = JV_PROJECT__CONFIGURATION;
+
+	/**
+	 * The number of structural features of the '<em>JV Module</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE_FEATURE_COUNT = JV_PROJECT_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Package</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE___GET_PACKAGE__STRING = JV_PROJECT___GET_PACKAGE__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Configuration</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE___GET_CONFIGURATION__STRING = JV_PROJECT___GET_CONFIGURATION__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Projects</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE___GET_REFERENCED_PROJECTS = JV_PROJECT___GET_REFERENCED_PROJECTS;
+
+	/**
+	 * The number of operations of the '<em>JV Module</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE_OPERATION_COUNT = JV_PROJECT_OPERATION_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.base.NamedElement <em>Named Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -837,6 +1065,37 @@ public interface BasePackage extends EPackage {
 	EReference getConfiguration_Parameters();
 
 	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.base.JVApplication <em>JV Application</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>JV Application</em>'.
+	 * @see com.vectorsf.jvoice.model.base.JVApplication
+	 * @generated
+	 */
+	EClass getJVApplication();
+
+	/**
+	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.base.JVApplication#getModule <em>Module</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Module</em>'.
+	 * @see com.vectorsf.jvoice.model.base.JVApplication#getModule()
+	 * @see #getJVApplication()
+	 * @generated
+	 */
+	EReference getJVApplication_Module();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.base.JVModule <em>JV Module</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>JV Module</em>'.
+	 * @see com.vectorsf.jvoice.model.base.JVModule
+	 * @generated
+	 */
+	EClass getJVModule();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1082,6 +1341,34 @@ public interface BasePackage extends EPackage {
 		 * @generated
 		 */
 		EReference CONFIGURATION__PARAMETERS = eINSTANCE.getConfiguration_Parameters();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.base.impl.JVApplicationImpl <em>JV Application</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.base.impl.JVApplicationImpl
+		 * @see com.vectorsf.jvoice.model.base.impl.BasePackageImpl#getJVApplication()
+		 * @generated
+		 */
+		EClass JV_APPLICATION = eINSTANCE.getJVApplication();
+
+		/**
+		 * The meta object literal for the '<em><b>Module</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference JV_APPLICATION__MODULE = eINSTANCE.getJVApplication_Module();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.base.impl.JVModuleImpl <em>JV Module</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.base.impl.JVModuleImpl
+		 * @see com.vectorsf.jvoice.model.base.impl.BasePackageImpl#getJVModule()
+		 * @generated
+		 */
+		EClass JV_MODULE = eINSTANCE.getJVModule();
 
 	}
 

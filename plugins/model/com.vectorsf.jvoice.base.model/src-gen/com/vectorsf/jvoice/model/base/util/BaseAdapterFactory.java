@@ -102,6 +102,14 @@ public class BaseAdapterFactory extends AdapterFactoryImpl {
 				return createConfigurationAdapter();
 			}
 			@Override
+			public Adapter caseJVApplication(JVApplication object) {
+				return createJVApplicationAdapter();
+			}
+			@Override
+			public Adapter caseJVModule(JVModule object) {
+				return createJVModuleAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -230,6 +238,34 @@ public class BaseAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createConfigurationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.base.JVApplication <em>JV Application</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.base.JVApplication
+	 * @generated
+	 */
+	public Adapter createJVApplicationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.base.JVModule <em>JV Module</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.base.JVModule
+	 * @generated
+	 */
+	public Adapter createJVModuleAdapter() {
 		return null;
 	}
 

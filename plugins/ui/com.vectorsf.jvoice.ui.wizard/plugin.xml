@@ -35,6 +35,14 @@
             name="%wizard.locution.name"
             project="false">
       </wizard>
+      <wizard
+            category="com.vectorsf.jvoice.diagram.core.category"
+            class="com.vectorsf.jvoice.ui.wizard.create.CreateJVoiceApplicationWizard"
+            icon="res/JVProject.png"
+            id="com.vectorsf.jvoice.ui.application.wizard"
+            name="%wizard.application.name"
+            project="true">
+      </wizard>
 
    </extension>
 </plugin>

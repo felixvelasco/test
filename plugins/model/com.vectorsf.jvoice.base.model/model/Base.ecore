@@ -68,4 +68,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
         eType="#//StringToStringMap" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JVApplication" eSuperTypes="#//JVProject">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//JVModule"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JVModule" eSuperTypes="#//JVProject"/>
 </ecore:EPackage>

@@ -5,9 +5,11 @@ package com.vectorsf.jvoice.model.base.impl;
 import com.vectorsf.jvoice.model.base.BaseFactory;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.Configuration;
+import com.vectorsf.jvoice.model.base.JVApplication;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVElement;
 import com.vectorsf.jvoice.model.base.JVModel;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.base.NamedElement;
@@ -84,6 +86,20 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * @generated
 	 */
 	private EClass configurationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass jvApplicationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass jvModuleEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -385,6 +401,33 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getJVApplication() {
+		return jvApplicationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJVApplication_Module() {
+		return (EReference)jvApplicationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getJVModule() {
+		return jvModuleEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public BaseFactory getBaseFactory() {
 		return (BaseFactory)getEFactoryInstance();
 	}
@@ -441,6 +484,11 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 
 		configurationEClass = createEClass(CONFIGURATION);
 		createEReference(configurationEClass, CONFIGURATION__PARAMETERS);
+
+		jvApplicationEClass = createEClass(JV_APPLICATION);
+		createEReference(jvApplicationEClass, JV_APPLICATION__MODULE);
+
+		jvModuleEClass = createEClass(JV_MODULE);
 	}
 
 	/**
@@ -476,6 +524,8 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		jvPackageEClass.getESuperTypes().add(this.getNamedElement());
 		jvProjectEClass.getESuperTypes().add(this.getNamedElement());
 		configurationEClass.getESuperTypes().add(this.getNamedElement());
+		jvApplicationEClass.getESuperTypes().add(this.getJVProject());
+		jvModuleEClass.getESuperTypes().add(this.getJVProject());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(namedElementEClass, NamedElement.class, "NamedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -520,6 +570,11 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 
 		initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getConfiguration_Parameters(), this.getStringToStringMap(), null, "parameters", null, 0, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(jvApplicationEClass, JVApplication.class, "JVApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getJVApplication_Module(), this.getJVModule(), null, "module", null, 0, 1, JVApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(jvModuleEClass, JVModule.class, "JVModule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -202,6 +202,28 @@
                </with>
             </enablement>
          </commonWizard>
+         <commonWizard
+               menuGroupId="ActionsIVR"
+               type="new"
+               wizardId="com.vectorsf.jvoice.ui.application.wizard">
+            <enablement>
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="true"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </with>
+            </enablement>
+         </commonWizard>
       </navigatorContent>
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.navigator.ivr.MavenContentProvider"

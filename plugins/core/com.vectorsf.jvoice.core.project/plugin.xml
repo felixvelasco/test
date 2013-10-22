@@ -9,5 +9,13 @@
          </run>
       </runtime>
    </extension>
+   <extension id="jVoiceApplicationNature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+          <run
+               class="com.vectorsf.jvoice.core.project.JVoiceApplicationNature">
+         </run>
+      </runtime>
+   </extension>
 
 </plugin>

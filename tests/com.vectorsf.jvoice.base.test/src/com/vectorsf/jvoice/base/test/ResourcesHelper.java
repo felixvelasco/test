@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.osgi.framework.Bundle;
 
+import com.vectorsf.jvoice.core.project.JVoiceApplicationConfigurator;
 import com.vectorsf.jvoice.core.project.JVoiceProjectConfigurator;
 
 public class ResourcesHelper {
@@ -67,6 +68,10 @@ public class ResourcesHelper {
 
 	public static IProject createProject(final String name) throws CoreException {
 		return JVoiceProjectConfigurator.createProject(name, name, name);
+	}
+	
+	public static IProject createApplicationProject(final String name) throws CoreException {
+		return JVoiceApplicationConfigurator.createApplication(name, name, name);
 	}
 
 	public static IFolder createFolders(final IProject project, final String ruta) throws CoreException {
@@ -139,6 +144,16 @@ public class ResourcesHelper {
 	}
 
 	public static void deleteProject(final IProject project) throws CoreException {
+		safelyRetry(new IWorkspaceRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				project.delete(true, true, monitor);
+			}
+		});
+	}
+	
+	public static void deleteApplicationProject(final IProject project) throws CoreException {
 		safelyRetry(new IWorkspaceRunnable() {
 
 			@Override
