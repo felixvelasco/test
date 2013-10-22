@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.xmi.XMLResource.URIHandler;
 import org.eclipse.m2e.core.MavenPlugin;
@@ -57,7 +58,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		URI uri = null;
 		if (vegaURI.toString().startsWith(VEGA_URI)) {
 			try {
-				// mproject.getMavenProject(new NullProgressMonitor());
+				mproject.getMavenProject(new NullProgressMonitor());
 				String uriPath = vegaURI.path();
 				if (uriPath != null) {
 					String fileNameToSearch = uriPath.substring(uriPath
