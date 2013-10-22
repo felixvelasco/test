@@ -15,16 +15,13 @@ public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 
 	private static final String EXTENSION_JVFLOW = ".jvflow";
 	private static final String EXTENSION_VOICEDSL = ".voiceDsl";
-	private static final String JAR = "jar";
-	private static final String FILE = "file";
 	private static final String SEPARATOR2 = "\\";
 	private static final String VEGA_URI = "vega:";
 	private static final String SEPARATOR = "/";
-	private static final String DOT = ".";
-	private static final String JAR_FILE = "jar:";
 	private static final String JV = "jv";
 	private static final String INI_FRAGMENT = "#";
-
+	private static final String ARCHIVE_FILE = "archive:";
+	
 	private URI baseUri;
 	private MavenProject mavenProject;
 	private ClassLoader mclassLoader;
@@ -40,20 +37,7 @@ public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 	}
 
 	public URI deresolve(URI uri) {
-		URI vegaURI = null;
-		String sScheme = uri.scheme();
-		if (JAR.equals(sScheme)) {
-			vegaURI = getURIJar(uri);
-		}
-		else if (FILE.equals(sScheme))
-		{
-			vegaURI = getURIFile(uri);
-		}
-		if (vegaURI != null) {
-			return vegaURI;
-		} else {
-			return uri.deresolve(baseUri);
-		}
+		return uri.deresolve(baseUri);
 	}
 
 
@@ -93,7 +77,7 @@ public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 					String sUri=null;
 					if (resource.getFile().contains("jar!"))
 					{
-						sUri = JAR_FILE+new File(resource.getFile()).getPath()+ INI_FRAGMENT
+						sUri = ARCHIVE_FILE +new File(resource.getFile()).getPath()+ INI_FRAGMENT
 							+ vegaURI.fragment();
 					}
 					else
@@ -123,91 +107,5 @@ public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 			orderedArtifacts.add(artifact);
 		}
 		return orderedArtifacts;
-	}
-
-	
-	private URI getURIFile(URI uri) {
-		String[] segList= uri.segments();	
-		String path = uri.path();
-		String subpath =path.substring(0, path.indexOf("/target"));
-		String sProjectName=subpath.substring(subpath.lastIndexOf("/")+1);
-		
-		boolean bFinJV_PATH = false;
-		String sFlujos="";
-		for (String segment : segList) 
-		{			
-			if(bFinJV_PATH)
-			{
-				if (segment.contains(DOT))
-				{
-					sFlujos+=segment.substring(0, segment.indexOf(DOT));
-				}
-				else
-				{
-					sFlujos+=segment+SEPARATOR;
-				}					
-			}
-			else if ((JV).equals(segment))
-			{
-				bFinJV_PATH=true;
-			}
-		}
-		if (sProjectName!=null && !sFlujos.equals(""))
-		{
-			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR + sProjectName+ SEPARATOR + sFlujos + INI_FRAGMENT
-					+ uri.fragment());
-		}
-		else
-		{
-			return null;
-		}
-
-	}
-
-	
-	
-	private URI getURIJar(URI uri) 
-	{
-		String[] segList= uri.segments();	
-		String sAuthority = uri.authority();
-		String sProjectName=sAuthority.substring(sAuthority.lastIndexOf(SEPARATOR)+1,sAuthority.indexOf("-"));
-		
-		boolean bFinJV_PATH = false;
-		String sFlujos="";
-		for (String segment : segList) 
-		{			
-			if(bFinJV_PATH)
-			{
-				if (segment.contains(DOT))
-				{
-					sFlujos+=segment.substring(0, segment.indexOf(DOT));
-				}
-				else
-				{
-					sFlujos+=segment+SEPARATOR;
-				}					
-			}
-			else if ((JV).equals(segment))
-			{
-				bFinJV_PATH=true;
-			}
-			else
-			{
-				// malformed URI
-				sProjectName=null;
-				break;
-			}
-		}
-		if (sProjectName!=null && !sFlujos.equals(""))
-		{
-			return URI.createURI(VEGA_URI + SEPARATOR + SEPARATOR + sProjectName+ SEPARATOR + sFlujos + INI_FRAGMENT
-					+ uri.fragment());
-		}
-		else
-		{
-			return null;
-		}
-
-		
 	}
 }

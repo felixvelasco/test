@@ -17,7 +17,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.xmi.XMLResource.URIHandler;
 import org.eclipse.m2e.core.MavenPlugin;
@@ -27,7 +26,8 @@ import com.vectorsf.jvoice.base.model.service.BaseModel;
 
 public class VegaXMLURIHandlerImpl implements URIHandler {
 
-	private static final String JAR = "jar";
+	private static final String ARCHIVE_FILE = "archive:file:/";
+	private static final String ARCHIVE = "archive";
 	private static final String SEPARATOR2 = "\\";
 	private static final String GUION = "-";
 	private static final String RESOURCE = "resource";
@@ -37,7 +37,6 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 	private static final String SEPARATOR = "/";
 	private static final String DOT = ".";
 	private static final String PLATFORM_RESOURCE = "platform:/resource";
-	private static final String JAR_FILE = "jar:file:/";
 	private static final String ARCHIVE_SEPARATOR = "!/";
 	private static final String INI_FRAGMENT = "#";
 	private static final String JV = "jv";
@@ -58,7 +57,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		URI uri = null;
 		if (vegaURI.toString().startsWith(VEGA_URI)) {
 			try {
-				mproject.getMavenProject(new NullProgressMonitor());
+				// mproject.getMavenProject(new NullProgressMonitor());
 				String uriPath = vegaURI.path();
 				if (uriPath != null) {
 					String fileNameToSearch = uriPath.substring(uriPath
@@ -87,8 +86,8 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			String sScheme = uri.scheme();
 			if (PLATFORM.equals(sScheme)) {
 				vegaURI = getURIPlatform(uri);
-			} else if (JAR.equals(sScheme)) {
-				vegaURI = getURIJar(uri);
+			} else if (ARCHIVE.equals(sScheme)) {
+				vegaURI = getURIArchive(uri);
 			}
 		}
 		if (vegaURI != null) {
@@ -138,9 +137,10 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			throws IOException {
 		String sFullPathSearch = findFullPath(fileNameToSearch, artifactJarFile);
 		if (sFullPathSearch != null) {
-			vegaURI = URI.createURI(JAR_FILE + artifacti.getFile()
-					+ ARCHIVE_SEPARATOR + sFullPathSearch + INI_FRAGMENT
-					+ uri.fragment());
+			vegaURI = URI.createURI(ARCHIVE_FILE
+					+ artifacti.getFile().getAbsolutePath()
+							.replace(SEPARATOR2, SEPARATOR) + ARCHIVE_SEPARATOR
+					+ sFullPathSearch + INI_FRAGMENT + uri.fragment());
 		}
 		return vegaURI;
 	}
@@ -251,7 +251,8 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			if (index != -1) {
 				String entryNameDots = entryName.substring(0, index).replace(
 						SEPARATOR, DOT);
-				if (entryNameDots.endsWith(fileNameToSearch)) {
+				if (entryNameDots.endsWith(fileNameToSearch)
+						&& entryNameDots.contains(JV + DOT)) {
 					ret = entryName;
 					break;
 				}
@@ -275,11 +276,11 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		return orderedArtifacts;
 	}
 
-	private URI getURIJar(URI uri) {
+	private URI getURIArchive(URI uri) {
 		String[] segList = uri.segments();
 		String sAuthority = uri.authority();
 		String sProjectName = sAuthority.substring(sAuthority
-				.lastIndexOf(SEPARATOR2) + 1);
+				.lastIndexOf(SEPARATOR) + 1);
 		boolean bFinJV_PATH = false;
 		sProjectName = sProjectName.substring(0, sProjectName.indexOf(GUION));
 		StringBuilder flujos = new StringBuilder();
@@ -291,7 +292,6 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 					flujos.append(segment).append(SEPARATOR);
 				}
 			} else if (JV.equals(segment)) {
-				flujos.append(segment).append(SEPARATOR);
 				bFinJV_PATH = true;
 			} else {
 				// malformed URI
@@ -330,7 +330,6 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 				bProjectName = true;
 				lJV_PATH = divideJVPATHInSegments();
 			} else if (lJV_PATH.get(index_LJV_PATH).equals(segment)) {
-				flujos.append(segment).append(SEPARATOR);
 				index_LJV_PATH++;
 				if (index_LJV_PATH == lJV_PATH.size()) {
 					bFinJV_PATH = true;

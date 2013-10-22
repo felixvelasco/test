@@ -149,7 +149,6 @@ public class MyMojo extends AbstractMojo {
 		} catch (Exception e) {
 			throw new MojoExecutionException("", e);
 		}
-		project.getArtifacts();
 		if (project != null) {
 			projectHelper.addResource(project, sourceDirectory.getAbsolutePath(),
 					Collections.singletonList("**/**.jvflow"), Collections.emptyList());
