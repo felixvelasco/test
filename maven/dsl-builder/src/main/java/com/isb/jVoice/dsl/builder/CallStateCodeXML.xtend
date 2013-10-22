@@ -11,7 +11,7 @@ class CallStateCodeXML {
 '''
 		<action-state id="«state.name»">
 			«FOR trans : TranSalida»
-			<transition on="«trans.eventName»" to="«trans.target.name»"/>
+				<transition on="«trans.eventName»" to="«trans.target.name»"/>
 			«ENDFOR»
 		</action-state>
     	'''

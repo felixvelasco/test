@@ -13,7 +13,7 @@ class CallFlowStateCodeXML {
 '''
 		<subflow-state id="«state.name»" subflow="«state.name»">
 			«FOR trans : TranSalida»
-			<transition on="«trans.eventName»" to="«trans.target.name»"/>
+				<transition on="«trans.eventName»" to="«trans.target.name»"/>
        		«ENDFOR»
 		</subflow-state>
     	'''
