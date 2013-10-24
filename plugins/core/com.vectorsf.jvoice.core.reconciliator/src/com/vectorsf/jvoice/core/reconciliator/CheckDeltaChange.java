@@ -137,7 +137,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 
 				return false;
 			}
-			if (delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() == IResourceDelta.DESCRIPTION) {
+			if (delta.getKind() == IResourceDelta.CHANGED && (delta.getFlags() == IResourceDelta.DESCRIPTION || delta.getFlags() == 147456)) {
 				IProject project = (IProject) resource;
 				if (!project.isOpen() || !project.hasNature(JVoiceProjectNature.NATURE_ID)) {
 					jvProject.getModel().getProjects().remove(jvProject);
