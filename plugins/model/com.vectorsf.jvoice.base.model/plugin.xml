@@ -6,6 +6,7 @@
 
 <plugin>
    <extension-point id="listener" name="%extension-point.name" schema="schema/listener.exsd"/>
+   <extension-point id="createProject" name="%extension-point.create" schema="schema/createProject.exsd"/>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated Base -->

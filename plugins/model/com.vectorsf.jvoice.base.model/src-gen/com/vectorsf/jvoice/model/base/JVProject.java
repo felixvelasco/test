@@ -19,7 +19,7 @@ import java.util.List;
  * </p>
  *
  * @see com.vectorsf.jvoice.model.base.BasePackage#getJVProject()
- * @model
+ * @model abstract="true"
  * @generated
  */
 public interface JVProject extends NamedElement {

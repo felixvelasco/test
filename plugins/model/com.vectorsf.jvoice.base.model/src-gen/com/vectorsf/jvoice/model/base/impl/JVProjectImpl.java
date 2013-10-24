@@ -2,33 +2,27 @@
  */
 package com.vectorsf.jvoice.model.base.impl;
 
-import com.vectorsf.jvoice.base.model.service.BaseModel;
-
-import com.vectorsf.jvoice.model.base.BasePackage;
-import com.vectorsf.jvoice.model.base.Configuration;
-import com.vectorsf.jvoice.model.base.JVModel;
-import com.vectorsf.jvoice.model.base.JVPackage;
-import com.vectorsf.jvoice.model.base.JVProject;
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.model.base.BasePackage;
+import com.vectorsf.jvoice.model.base.Configuration;
+import com.vectorsf.jvoice.model.base.JVModel;
+import com.vectorsf.jvoice.model.base.JVPackage;
+import com.vectorsf.jvoice.model.base.JVProject;
 
 /**
  * <!-- begin-user-doc -->
@@ -45,7 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class JVProjectImpl extends NamedElementImpl implements JVProject {
+public abstract class JVProjectImpl extends NamedElementImpl implements JVProject {
 	/**
 	 * The cached value of the '{@link #getPackages() <em>Packages</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

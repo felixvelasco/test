@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import com.vectorsf.jvoice.base.model.internal.service.BaseModelEclipseHelper;
+import com.vectorsf.jvoice.base.model.internal.service.ListenersManager;
 import com.vectorsf.jvoice.model.base.BaseFactory;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVProject;
@@ -21,7 +22,7 @@ public class BaseModel {
 
 	static {
 		baseModel = new BaseModel();
-		BaseModelEclipseHelper.init();
+		ListenersManager.init();
 	}
 
 	private JVModel model;

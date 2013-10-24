@@ -14,6 +14,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.factory.JVBeanFactory;
@@ -161,12 +162,19 @@ public class JVoiceModelReconcilier {
 	}
 
 	public JVBean createBean(IFile file) {
-		JVBeanFactory factory = JVBeanFactoryManager.getInstance().getFactory(file);
-		return factory != null ? factory.loadBeanFromFile(file) : null;
+		JVBeanFactory factory = JVBeanFactoryManager.getInstance().getFactory(file.getFileExtension());
+		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(),
+				true);
+		return factory != null ? factory.loadBeanFromFile(uri) : null;
+	}
+
+	public JVBean createBean(URI uri) {
+		JVBeanFactory factory = JVBeanFactoryManager.getInstance().getFactory(uri.fileExtension());
+		return factory != null ? factory.loadBeanFromFile(uri) : null;
 	}
 
 	public String getBeanName(IFile file) {
-		JVBeanFactory factory = JVBeanFactoryManager.getInstance().getFactory(file);
+		JVBeanFactory factory = JVBeanFactoryManager.getInstance().getFactory(file.getFileExtension());
 		return factory != null ? factory.getNameFromFile(file) : null;
 	}
 

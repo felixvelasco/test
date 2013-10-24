@@ -58,15 +58,6 @@ public interface BaseFactory extends EFactory {
 	JVPackage createJVPackage();
 
 	/**
-	 * Returns a new object of class '<em>JV Project</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>JV Project</em>'.
-	 * @generated
-	 */
-	JVProject createJVProject();
-
-	/**
 	 * Returns a new object of class '<em>Configuration</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

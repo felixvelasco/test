@@ -2,17 +2,23 @@
  */
 package com.vectorsf.jvoice.model.base.impl;
 
-import com.vectorsf.jvoice.model.base.*;
-
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import com.vectorsf.jvoice.model.base.BaseFactory;
+import com.vectorsf.jvoice.model.base.BasePackage;
+import com.vectorsf.jvoice.model.base.Configuration;
+import com.vectorsf.jvoice.model.base.JVApplication;
+import com.vectorsf.jvoice.model.base.JVElement;
+import com.vectorsf.jvoice.model.base.JVModel;
+import com.vectorsf.jvoice.model.base.JVModule;
+import com.vectorsf.jvoice.model.base.JVPackage;
+import com.vectorsf.jvoice.model.base.NamedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -62,7 +68,6 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory {
 			case BasePackage.JV_ELEMENT: return createJVElement();
 			case BasePackage.JV_MODEL: return createJVModel();
 			case BasePackage.JV_PACKAGE: return createJVPackage();
-			case BasePackage.JV_PROJECT: return createJVProject();
 			case BasePackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
 			case BasePackage.CONFIGURATION: return createConfiguration();
 			case BasePackage.JV_APPLICATION: return createJVApplication();
@@ -110,16 +115,6 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory {
 	public JVPackage createJVPackage() {
 		JVPackageImpl jvPackage = new JVPackageImpl();
 		return jvPackage;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public JVProject createJVProject() {
-		JVProjectImpl jvProject = new JVProjectImpl();
-		return jvProject;
 	}
 
 	/**

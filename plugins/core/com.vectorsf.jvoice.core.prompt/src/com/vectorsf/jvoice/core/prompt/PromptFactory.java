@@ -16,9 +16,7 @@ public class PromptFactory implements JVBeanFactory {
 	}
 
 	@Override
-	public VoiceDsl loadBeanFromFile(IFile file) {
-		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(),
-				true);
+	public VoiceDsl loadBeanFromFile(URI uri) {
 		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
 		Resource resource = resourceSet.getResource(uri, true);
 

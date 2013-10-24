@@ -2,16 +2,23 @@
  */
 package com.vectorsf.jvoice.model.base.util;
 
-import com.vectorsf.jvoice.model.base.*;
-
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
+
+import com.vectorsf.jvoice.model.base.BasePackage;
+import com.vectorsf.jvoice.model.base.Configuration;
+import com.vectorsf.jvoice.model.base.JVApplication;
+import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVElement;
+import com.vectorsf.jvoice.model.base.JVModel;
+import com.vectorsf.jvoice.model.base.JVModule;
+import com.vectorsf.jvoice.model.base.JVPackage;
+import com.vectorsf.jvoice.model.base.JVProject;
+import com.vectorsf.jvoice.model.base.NamedElement;
 
 /**
  * <!-- begin-user-doc -->

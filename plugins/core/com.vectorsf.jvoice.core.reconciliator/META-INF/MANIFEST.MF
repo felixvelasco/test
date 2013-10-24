@@ -11,4 +11,5 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.8.100",
  com.google.guava;bundle-version="[12.0.0,13.0.0)",
  com.vectorsf.jvoice.core.project;bundle-version="0.1.0",
  com.vectorsf.jvoice.prompt.model
-Export-Package: com.vectorsf.jvoice.core.factory
+Export-Package: com.vectorsf.jvoice.core.factory,
+ com.vectorsf.jvoice.core.reconciliator

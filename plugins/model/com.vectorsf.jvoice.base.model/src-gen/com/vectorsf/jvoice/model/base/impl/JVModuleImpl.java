@@ -2,10 +2,10 @@
  */
 package com.vectorsf.jvoice.model.base.impl;
 
+import org.eclipse.emf.ecore.EClass;
+
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.JVModule;
-
-import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->

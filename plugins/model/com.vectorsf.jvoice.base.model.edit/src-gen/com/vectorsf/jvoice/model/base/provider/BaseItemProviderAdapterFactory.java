@@ -164,29 +164,6 @@ public class BaseItemProviderAdapterFactory extends BaseAdapterFactory implement
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.base.JVProject} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected JVProjectItemProvider jvProjectItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.base.JVProject}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createJVProjectAdapter() {
-		if (jvProjectItemProvider == null) {
-			jvProjectItemProvider = new JVProjectItemProvider(this);
-		}
-
-		return jvProjectItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -381,7 +358,6 @@ public class BaseItemProviderAdapterFactory extends BaseAdapterFactory implement
 		if (jvElementItemProvider != null) jvElementItemProvider.dispose();
 		if (jvModelItemProvider != null) jvModelItemProvider.dispose();
 		if (jvPackageItemProvider != null) jvPackageItemProvider.dispose();
-		if (jvProjectItemProvider != null) jvProjectItemProvider.dispose();
 		if (stringToStringMapItemProvider != null) stringToStringMapItemProvider.dispose();
 		if (configurationItemProvider != null) configurationItemProvider.dispose();
 		if (jvApplicationItemProvider != null) jvApplicationItemProvider.dispose();

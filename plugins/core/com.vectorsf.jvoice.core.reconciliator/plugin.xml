@@ -9,5 +9,12 @@
             priority="500">
       </listener>
    </extension>
+   <extension
+         point="com.vectorsf.jvoice.base.model.createProject">
+           <listener
+            class="com.vectorsf.jvoice.core.reconciliator.MavenProjectCreator"
+            priority="500">
+      </listener>
+   </extension>
 
 </plugin>

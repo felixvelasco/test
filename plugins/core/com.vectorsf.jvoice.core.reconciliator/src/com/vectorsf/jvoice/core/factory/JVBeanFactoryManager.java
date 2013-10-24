@@ -32,9 +32,9 @@ public class JVBeanFactoryManager {
 		return INSTANCE;
 	}
 
-	public JVBeanFactory getFactory(IFile file) {
+	public JVBeanFactory getFactory(String extension) {
 		try {
-			return extension2factory.get(file.getFileExtension());
+			return extension2factory.get(extension);
 		} catch (ExecutionException e) {
 			e.getCause().printStackTrace();
 		}

@@ -17,9 +17,7 @@ public class FlowFactory implements JVBeanFactory {
 	}
 
 	@Override
-	public Flow loadBeanFromFile(IFile file) {
-		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(),
-				true);
+	public Flow loadBeanFromFile(URI uri) {
 		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
 		return loadFlow(uri, resourceSet);
 	}
