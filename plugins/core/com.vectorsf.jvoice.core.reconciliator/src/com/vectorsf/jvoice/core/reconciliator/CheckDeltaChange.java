@@ -65,15 +65,15 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 				}
 			}
 			return true;
-		case IResource.FILE:	
+		case IResource.FILE:
 			if (isInterestingDelta(delta)) {
 				IPath relPath = getRelativePath(resource.getParent());
-				if (relPath == null)
+				if (relPath == null) {
 					return false;
+				}
 				JVPackage pkg = jvProject.getPackage(relPath.toString().replace("/", "."));
 				if (pkg != null) {
-					URI uri = URI.createPlatformResourceURI(resource.getFullPath().toString(),
-							true);
+					URI uri = URI.createPlatformResourceURI(resource.getFullPath().toString(), true);
 
 					final List<JVBean> beans = pkg.getBeans();
 					if (delta.getKind() == IResourceDelta.ADDED) {
@@ -82,12 +82,11 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					} else if (delta.getKind() == IResourceDelta.CHANGED) {
 						ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
 						Resource eResource = resourceSet.getResource(uri, false);
-						
-						if (eResource != null)
-						{
+
+						if (eResource != null) {
 							JVBean bean = getBeanFromResource(eResource);
 							int index = beans.indexOf(bean);
-							if (index!= -1) {
+							if (index != -1) {
 								beans.remove(index);
 								eResource.unload();
 								beans.add(index, JVoiceModelReconcilier.getInstance().createBean((IFile) resource));
@@ -98,8 +97,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 						// se busca el elemento en el paquete y se elimina
 						ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
 						Resource eResource = resourceSet.getResource(uri, false);
-						if (eResource != null)
-						{
+						if (eResource != null) {
 							beans.remove(getBeanFromResource(eResource));
 							resourceSet.getResources().remove(eResource);
 						}
@@ -107,7 +105,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 					}
 					// Se trata de un archivo de configuración
 				} else if (resource.getFileExtension().equalsIgnoreCase("properties")) {
-					if (!isConfigurationFolder(resource.getParent())){
+					if (!isConfigurationFolder(resource.getParent())) {
 						return false;
 					}
 					String name = resource.getName().substring(0, resource.getName().lastIndexOf('.'));
@@ -137,7 +135,8 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 
 				return false;
 			}
-			if (delta.getKind() == IResourceDelta.CHANGED && (delta.getFlags() == IResourceDelta.DESCRIPTION || delta.getFlags() == 147456)) {
+			if (delta.getKind() == IResourceDelta.CHANGED
+					&& ((delta.getFlags() & IResourceDelta.DESCRIPTION) != 0 || (delta.getFlags() & IResourceDelta.OPEN) != 0)) {
 				IProject project = (IProject) resource;
 				if (!project.isOpen() || !project.hasNature(JVoiceProjectNature.NATURE_ID)) {
 					jvProject.getModel().getProjects().remove(jvProject);
@@ -151,8 +150,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 	}
 
 	private JVBean getBeanFromResource(Resource eResource) {
-		for(EObject e: eResource.getContents())
-		{
+		for (EObject e : eResource.getContents()) {
 			if (e instanceof JVBean) {
 				return (JVBean) e;
 			}
