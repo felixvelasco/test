@@ -48,11 +48,11 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
  * @requiresDependencyResolution compile+runtime
  */
 public class MyMojo extends AbstractMojo {
+	
 	/**
 	 * Location of the target directory.
 	 * 
-	 * @parameter expression="${project.build.directory}/generated-sources/jVoice"
-	 * @required
+	 * @parameter expression="${project.build.directory}"
 	 */
 	private File outputDirectory;
 
@@ -60,9 +60,9 @@ public class MyMojo extends AbstractMojo {
 	 * Location of the source directory.
 	 * 
 	 * @parameter expression="${basedir}/src/main/resources/jv"
-	 * @required
 	 */
 	private File sourceDirectory;
+
 	/**
 	 * A set of patterns matching files from the sourceDirectory that should be processed as grammars.
 	 * 
@@ -122,7 +122,7 @@ public class MyMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 
-		File f = outputDirectory;
+		File f = new File(outputDirectory,"jVoice");
 		if (!f.exists()) {
 			f.mkdirs();
 		}
@@ -144,16 +144,14 @@ public class MyMojo extends AbstractMojo {
 					createClassLoaderForProjectDependencies());
 			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 
-			processFlowFiles(resourceSet);
+			processFlowFiles(resourceSet, f);
 
 		} catch (Exception e) {
 			throw new MojoExecutionException("", e);
 		}
 		if (project != null) {
-			projectHelper.addResource(project, sourceDirectory.getAbsolutePath(),
-					Collections.singletonList("**/**.jvflow"), Collections.emptyList());
-			getLog().info("ruta " + outputDirectory.getAbsolutePath().toString());
-
+			projectHelper.addResource(project, outputDirectory.getAbsolutePath(),
+					Collections.singletonList("jVoice/**/*.xml"), Collections.emptyList());
 		}
 
 	}
@@ -199,7 +197,7 @@ public class MyMojo extends AbstractMojo {
 		return false;
 	}
 
-	private void processFlowFiles(ResourceSet resourceSet) throws InclusionScanException, IOException {
+	private void processFlowFiles(ResourceSet resourceSet, File folder) throws InclusionScanException, IOException {
 		SourceMapping mapping = new SuffixMapping("jvflow", Collections.<String> emptySet());
 		Set<String> includes = getFlowIncludesPatterns();
 		SourceInclusionScanner scan = new SimpleSourceInclusionScanner(includes, excludes);
@@ -213,7 +211,7 @@ public class MyMojo extends AbstractMojo {
 		} else {
 			boolean built = false;
 			for (File flow : flowFiles) {
-				built |= processFlowFile(resourceSet, flow);
+				built |= processFlowFile(resourceSet, flow, folder);
 			}
 			if (!built && getLog().isInfoEnabled()) {
 				getLog().info("No DSL processed; generated files are up to date");
@@ -222,14 +220,22 @@ public class MyMojo extends AbstractMojo {
 
 	}
 
-	private boolean processFlowFile(ResourceSet resourceSet, File flowFile) throws IOException {
-		File targetFile = new File(outputDirectory, getTargetFlowName(flowFile.getName()));
-
-		if (buildRequired(flowFile, Collections.singletonList(targetFile))) {
+	private boolean processFlowFile(ResourceSet resourceSet, File origFile, File targetFolder) throws IOException {
+		//Obtenemos los paquetes en los que se encuentra el archivo.
+		String rutafile = origFile.getAbsolutePath().toString().replace(sourceDirectory.toString(),"").trim();
+		//Copiamos la estrucutra de paquetes.		
+		targetFolder = new File(targetFolder,rutafile.replace(origFile.getName(), "").trim());
+		if (!targetFolder.exists()) {
+			targetFolder.mkdirs();
+		}
+		
+		File targetFile = new File(targetFolder, getTargetFlowName(origFile.getName()));
+		
+		if (buildRequired(origFile, Collections.singletonList(targetFile))) {
 			targetFile.createNewFile();
 
 			// resolve test
-			URI uri = URI.createFileURI(flowFile.getCanonicalPath().toString());
+			URI uri = URI.createFileURI(origFile.getCanonicalPath().toString());
 			Resource res = resourceSet.getResource(uri, true);
 			Resource diagrama = res.getContents().get(0).eResource();
 			SpringWebFlowGenerator.compile(targetFile, diagrama);
