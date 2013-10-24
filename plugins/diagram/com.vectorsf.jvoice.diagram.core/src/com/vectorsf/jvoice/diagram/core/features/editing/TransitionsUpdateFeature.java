@@ -32,15 +32,12 @@ public class TransitionsUpdateFeature extends AbstractUpdateFeature {
 		if (pictogramElement instanceof ConnectionDecorator) {
 			ConnectionDecorator connDecorator = (ConnectionDecorator) pictogramElement;
 			if (connDecorator.getGraphicsAlgorithm() instanceof Text) {
-				PictogramLink pl = connDecorator.getLink();
-				if (pl.getBusinessObjects() != null) {
-					List<EObject> bos = pl.getBusinessObjects();
-					if (bos.get(0) instanceof Case) {
-						String eventName = ((Case) bos.get(0)).getEventName();
-						Text text = (Text) connDecorator.getGraphicsAlgorithm();
-						if (!eventName.equals(text.getValue())) {
-							return new Reason(true, "");
-						}
+				Object bo = getBusinessObjectForPictogramElement(connDecorator);
+				if (bo instanceof Case) {
+					String eventName = ((Case) bo).getEventName();
+					Text text = (Text) connDecorator.getGraphicsAlgorithm();
+					if (!eventName.equals(text.getValue())) {
+						return new Reason(true, "");
 					}
 				}
 			}
