@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
@@ -57,6 +58,9 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private Button browsePackage;
 	private Combo box;
 	private int primeraVez;
+	private static URI miURI;
+	private boolean projectEnable = true;
+	private String tipo = null;
 	
 	private Listener nameModifyListener = new Listener() {
 		@Override
@@ -88,6 +92,15 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
 		primeraVez = 0;
+	}
+	
+	public DslNameWizardPage(String pageName, boolean projectEnable, String tipo) {
+		super(pageName);
+		setTitle(PAGE_TITLE);
+		setDescription(PAGE_DESC);
+		primeraVez = 0;
+		this.projectEnable = projectEnable;
+		this.tipo = tipo;
 	}
 	
 	@Override
@@ -267,6 +280,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		// browse button on right
 		Button browse = new Button(projectGroup, SWT.PUSH);
 		browse.setText("Browse...");
+		browse.setEnabled(projectEnable);
 		browse.addListener(SWT.Selection, new Listener() {
 
 			@Override
@@ -345,8 +359,19 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		box.add("Menu");
 		box.add("Input");
 		box.add("Output");
-		box.select(0);
 		
+		if (tipo!=null){
+			if (tipo.equalsIgnoreCase("Menu"))
+				box.select(0);
+			if (tipo.equalsIgnoreCase("Input"))
+				box.select(1);
+			if (tipo.equalsIgnoreCase("Output"))
+				box.select(2);
+			
+			box.setEnabled(false);
+		}else{
+			box.select(0);
+		}	
 
 
 		// Set the initial value first before listener
@@ -517,6 +542,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		IFile file = (IFile) Platform.getAdapterManager().getAdapter(DslFile, IFile.class);
+		miURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true).appendFragment("/0");
 
 
 		try {
@@ -529,4 +555,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		}
 	}
 
+	public URI returnURI(){
+		return miURI;
+	}
 }

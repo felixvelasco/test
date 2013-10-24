@@ -1,6 +1,8 @@
 package com.vectorsf.jvoice.ui.wizard.create;
 
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -14,6 +16,16 @@ public class CreateDslJVoice extends BasicNewResourceWizard {
 	
 	private static final String PAGE_NAME_DSL_NAME = "Locution Name";
 	private static final String WIZARD_WINDOW_TITLE = "New Locution";
+	private IFolder myPackage;
+	private String tipoDSL;
+	DslNameWizardPage pageName;
+	
+	public CreateDslJVoice(){}
+	
+	public CreateDslJVoice(IFolder ownerPackage, String tipo) {
+		this.myPackage = ownerPackage;
+		this.tipoDSL = tipo;
+	}
 	
 	@Override
 	public void addPages() {
@@ -24,10 +36,18 @@ public class CreateDslJVoice extends BasicNewResourceWizard {
 		}
 		
 		super.addPages();
-		DslNameWizardPage pageName = new DslNameWizardPage(
-				PAGE_NAME_DSL_NAME);
-		pageName.setSelection(getSelection().getFirstElement());
-		addPage(pageName);
+		if (myPackage == null){
+			pageName = new DslNameWizardPage(
+					PAGE_NAME_DSL_NAME);
+			pageName.setSelection(getSelection().getFirstElement());
+			addPage(pageName);
+		}else{
+			pageName = new DslNameWizardPage(
+					PAGE_NAME_DSL_NAME, false, tipoDSL);
+			pageName.setSelection(myPackage);
+			addPage(pageName);
+		}
+
 	}
 	
 	@Override
@@ -49,6 +69,9 @@ public class CreateDslJVoice extends BasicNewResourceWizard {
 
 		return true;
 
+	}
+	public URI getURI(){
+		return pageName.returnURI();
 	}
 
 }

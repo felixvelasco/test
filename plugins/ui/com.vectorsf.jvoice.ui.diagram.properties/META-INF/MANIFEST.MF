@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.0",
  com.vectorsf.jvoice.operation.model;bundle-version="0.1.0",
  org.eclipse.emf.transaction;bundle-version="1.4.0",
  org.eclipse.emf.edit.ui,
- com.vectorsf.jvoice.diagram.core,
- org.eclipse.graphiti.pattern;bundle-version="0.10.0"
+ org.eclipse.graphiti.pattern;bundle-version="0.10.0",
+ com.vectorsf.jvoice.ui.navigator;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

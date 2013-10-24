@@ -13,8 +13,10 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.CommandStack;
@@ -57,6 +59,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	private static final String PAGE_DESC = "Enter a flow name";
 	private static final String PAGE_TITLE = "Create a Flow";
+	private static final Path PACKAGES_PATH = new Path(BaseModel.JV_PATH);
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
@@ -66,6 +69,8 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	private Button browsePackage;
 	private int primeraVez;
+	private boolean projectEnable = true;
+	private static Flow  myFlow;
 
 	private Listener nameModifyListener = new Listener() {
 		@Override
@@ -89,6 +94,14 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
 		primeraVez = 0;
+	}
+	
+	public DiagramNameWizardPage(String pageName, boolean projectEnable) {
+		super(pageName);
+		setTitle(PAGE_TITLE);
+		setDescription(PAGE_DESC);
+		primeraVez = 0;
+		this.projectEnable = projectEnable;
 	}
 
 	@Override
@@ -203,6 +216,8 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			project = BaseModel.getInstance().getModel().getProject(iProject.getName());
 		} else if (selection instanceof IFolder) {
 			IFolder folder = (IFolder) selection;
+			IPath relativePath = folder.getProjectRelativePath().makeRelativeTo(PACKAGES_PATH);
+			String nameFolder = relativePath.toString().replace("/", ".");
 			IProject iProject = folder.getProject();
 			project = BaseModel.getInstance().getModel().getProject(iProject.getName());
 
@@ -210,7 +225,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			// crear el flujo no
 			// es un proyecto jvoice
 			if (project != null) {
-				diagramFolder = project.getPackage(folder.getName());
+				diagramFolder = project.getPackage(nameFolder);
 			}
 		} else if (selection instanceof JVProject) {
 			project = (JVProject) selection;
@@ -262,6 +277,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		// browse button on right
 		Button browse = new Button(projectGroup, SWT.PUSH);
 		browse.setText("Browse...");
+		browse.setEnabled(projectEnable);
 		browse.addListener(SWT.Selection, new Listener() {
 
 			@Override
@@ -479,18 +495,18 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			protected void doExecute() {
 				resource.setTrackingModification(true);
 				resource.getContents().add(diagram);
-				Flow nFlow = OperationsFactory.eINSTANCE.createFlow();
-				nFlow.setDescription(diagramName);
-				nFlow.setName(diagramName);
+				myFlow = OperationsFactory.eINSTANCE.createFlow();
+				myFlow.setDescription(diagramName);
+				myFlow.setName(diagramName);
 
-				resource.getContents().add(nFlow);
+				resource.getContents().add(myFlow);
 
 				// create new link
 				PictogramLink link = PictogramsFactory.eINSTANCE.createPictogramLink();
 				link.setPictogramElement(diagram);
 				// add new link to diagram
 				diagram.getPictogramLinks().add(link);
-				link.getBusinessObjects().add(nFlow);
+				link.getBusinessObjects().add(myFlow);
 			}
 		});
 
@@ -526,6 +542,10 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			throw new RuntimeException(e);
 		}
 		editingDomain.dispose();
+	}
+	
+	public Flow returnFlow(){
+		return myFlow;
 	}
 
 }

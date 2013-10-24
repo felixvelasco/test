@@ -16,6 +16,7 @@
  *******************************************************************************/
 package com.vectorsf.jvoice.ui.wizard.create;
 
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardContainer;
@@ -23,6 +24,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
+import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.ui.wizard.page.AbstractWizardPage;
 import com.vectorsf.jvoice.ui.wizard.page.DiagramNameWizardPage;
 
@@ -33,6 +35,15 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 
 	private static final String PAGE_NAME_DIAGRAM_NAME = "Flow Name";
 	private static final String WIZARD_WINDOW_TITLE = "New Flow";
+	private static IFolder myPackage;
+	DiagramNameWizardPage pageName;
+
+	public CreateDiagramJVoice() {
+	}
+	
+	public CreateDiagramJVoice(IFolder ownerPackage) {
+		myPackage = ownerPackage;
+	}
 
 	@Override
 	public void addPages() {
@@ -42,10 +53,17 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 			((WizardDialog) container).setHelpAvailable(false);
 		}
 		super.addPages();
-		DiagramNameWizardPage pageName = new DiagramNameWizardPage(
-				PAGE_NAME_DIAGRAM_NAME);
-		pageName.setSelection(getSelection().getFirstElement());
-		addPage(pageName);
+		if (myPackage == null){
+			pageName = new DiagramNameWizardPage(
+					PAGE_NAME_DIAGRAM_NAME);
+			pageName.setSelection(getSelection().getFirstElement());
+			addPage(pageName);
+		}else{
+			pageName = new DiagramNameWizardPage(
+					PAGE_NAME_DIAGRAM_NAME, false);
+			pageName.setSelection(myPackage);
+			addPage(pageName);
+		}
 	}
 
 	@Override
@@ -66,6 +84,9 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 		}
 
 		return true;
-
+	}
+	
+	public Flow getReturnFlow(){
+		return pageName.returnFlow();
 	}
 }

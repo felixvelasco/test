@@ -3,6 +3,7 @@ package com.vectorsf.jvoice.ui.diagram.properties.util;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.transaction.RecordingCommand;
@@ -12,13 +13,13 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
-import com.vectorsf.jvoice.diagram.core.pattern.states.JVBeanContentProvider;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.ui.diagram.properties.dialogs.DialogSubFlow;
-import com.vectorsf.jvoice.ui.diagram.properties.dialogs.FilterDialogSubFlow;
-import com.vectorsf.jvoice.ui.diagram.properties.dialogs.ValidatorSubFlow;
+import com.vectorsf.jvoice.ui.edit.dialogs.DialogSubFlow;
+import com.vectorsf.jvoice.ui.edit.filters.FilterDialogSubFlow;
+import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
+import com.vectorsf.jvoice.ui.edit.validators.ValidatorSubFlow;
 
 public class EditarDominioSubFlow extends RecordingCommand {
 
@@ -53,15 +54,10 @@ public class EditarDominioSubFlow extends RecordingCommand {
     					callFlowContentProvider);
         		
         dialog.setAllowMultiple(false);
-    			
-    	ValidatorSubFlow validator = new ValidatorSubFlow();
-    			
-    	dialog.setValidator(validator);
-
-    	FilterDialogSubFlow vfilter = new FilterDialogSubFlow();
-    			
-
-    	dialog.addFilter(vfilter);
+        dialog.setHelpAvailable(false);
+        dialog.setIsButtonCreatevailable(false);		
+    	dialog.setValidator(new ValidatorSubFlow());
+    	dialog.addFilter(new FilterDialogSubFlow());
     	dialog.setTitle("Flow Selection");
     	dialog.setMessage("Select a flow:");
     	dialog.setInput(proj);
@@ -72,6 +68,10 @@ public class EditarDominioSubFlow extends RecordingCommand {
 
     	if (results != null && results[0] instanceof Flow) {
     		result = (Flow) results[0];
+    		URI flowURI = EcoreUtil.getURI(result);
+    		result = (Flow) subFlow.eResource().getResourceSet()
+    				.getEObject(flowURI, true);
+
     		subFlow.setSubflow(result);
     		nameSubFlow.setText(subFlow.getSubflow().getName());
     	}

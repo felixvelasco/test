@@ -2,11 +2,17 @@ package com.vectorsf.jvoice.diagram.core.pattern.states;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
@@ -20,21 +26,25 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
-import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
-import org.eclipse.ui.dialogs.PatternFilter;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
-import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
+import com.vectorsf.jvoice.ui.edit.dialogs.DialogSubFlow;
+import com.vectorsf.jvoice.ui.edit.filters.FilterDialogSubFlow;
+import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
+import com.vectorsf.jvoice.ui.edit.validators.ValidatorSubFlow;
+import com.vectorsf.jvoice.ui.wizard.create.CreateDiagramJVoice;
 
 public class CallFlowStatePattern extends StatePattern implements
 		ISelectionStatusValidator {
@@ -88,39 +98,17 @@ public class CallFlowStatePattern extends StatePattern implements
 		JVBeanContentProvider callFlowContentProvider = new JVBeanContentProvider(
 				new ComposedAdapterFactory(
 						ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
-		ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(
-				shell,
+		DialogSubFlow dialog = new DialogSubFlow(shell,
 				new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
 						ComposedAdapterFactory.Descriptor.Registry.INSTANCE)),
-				callFlowContentProvider) {
+				callFlowContentProvider);
 
-			@Override
-			protected org.eclipse.jface.viewers.TreeViewer doCreateTreeViewer(
-					org.eclipse.swt.widgets.Composite parent, int style) {
-				PatternFilter filter = new PatternFilter();
-				FilteredTree filteredTree = new FilteredTree(parent, style,
-						filter, true);
-				return filteredTree.getViewer();
-
-			};
-		};
 		dialog.setAllowMultiple(false);
-		dialog.setValidator(this);
+		dialog.setHelpAvailable(false);
+		dialog.setIsButtonCreatevailable(true);
+		dialog.setValidator(new ValidatorSubFlow());
 
-		ViewerFilter vfilter = new ViewerFilter() {
-			@Override
-			public boolean select(Viewer viewer, Object parentElement,
-					Object element) {
-				if (element instanceof JVProject
-						|| element instanceof JVPackage
-						|| element instanceof Flow) {
-					return true;
-				}
-				return false;
-			}
-		};
-
-		dialog.addFilter(vfilter);
+		dialog.addFilter(new FilterDialogSubFlow());
 		dialog.setTitle("Flow Selection");
 		dialog.setMessage("Select a flow:");
 
@@ -133,21 +121,46 @@ public class CallFlowStatePattern extends StatePattern implements
 		dialog.setInput(proj);
 
 		dialog.open();
-
-		Object[] results = dialog.getResult();
-		String callFlowName = null;
 		Flow result = null;
+		String callFlowName = null;
+		switch (dialog.getReturnCode()) {
+		case Dialog.OK:
+			Object[] results = dialog.getResult();
 
-		if (results != null && results[0] instanceof Flow) {
 			result = (Flow) results[0];
 			callFlowName = result.getName();
 
-		} else {
+			break;
+		case IDialogConstants.PROCEED_ID:
+			IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow,
+					IFile.class);
+
+			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+			IProject projectRoot = root.getProject(projectName);
+
+			IFolder folder = projectRoot.getFolder(file.getParent()
+					.getProjectRelativePath());
+			CreateDiagramJVoice newWizard = new CreateDiagramJVoice(folder);
+			WizardDialog wizardDialog = new WizardDialog(PlatformUI
+					.getWorkbench().getActiveWorkbenchWindow().getShell(),
+					newWizard);
+
+			if (wizardDialog.open() == Window.OK) {
+				result = newWizard.getReturnFlow();
+				callFlowName = result.getName();
+
+			} else {
+				System.out.println("Cancel pressed");
+			}
+			break;
+		case Dialog.CANCEL:
 			throw new OperationCanceledException();
+
+		default:
+			break;
 		}
-		Resource eResource = result.eResource();
-		URI flowURI = eResource.getURI().appendFragment(
-				eResource.getURIFragment(result));
+
+		URI flowURI = EcoreUtil.getURI(result);
 		result = (Flow) flow.eResource().getResourceSet()
 				.getEObject(flowURI, true);
 

@@ -15,4 +15,5 @@ Require-Bundle: org.eclipse.ui.ide;bundle-version="3.9.0",
  com.vectorsf.jvoice.operation.model;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: com.vectorsf.jvoice.ui.wizard.create
+Export-Package: com.vectorsf.jvoice.ui.wizard.create,
+ com.vectorsf.jvoice.ui.wizard.page

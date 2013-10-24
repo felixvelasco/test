@@ -103,10 +103,10 @@
          point="org.eclipse.ui.navigator.navigatorContent">
       <navigatorContent
             activeByDefault="true"
-            contentProvider="com.vectorsf.jvoice.ui.navigator.ivr.ContentProvider"
+            contentProvider="com.vectorsf.jvoice.ui.edit.provider.NavigatorContentProvider"
             icon="res/navigator.png"
             id="com.vectorsf.jvoice.ui.navigator.navigatorContent"
-            labelProvider="com.vectorsf.jvoice.ui.navigator.ivr.LabelProvider"
+            labelProvider="com.vectorsf.jvoice.ui.edit.provider.NavigatorLabelProvider"
             name="%navigatorContent.name.main"
             priority="normal">
          <triggerPoints>
@@ -226,7 +226,7 @@
          </commonWizard>
       </navigatorContent>
       <navigatorContent
-            contentProvider="com.vectorsf.jvoice.ui.navigator.ivr.MavenContentProvider"
+            contentProvider="com.vectorsf.jvoice.ui.edit.provider.MavenContentProvider"
             id="com.vectorsf.jvoice.base.maven.navigatorContent"
             labelProvider="org.eclipse.jdt.internal.ui.navigator.JavaNavigatorLabelProvider"
             name="%navigatorContent.name.maven"

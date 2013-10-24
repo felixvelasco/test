@@ -3,6 +3,7 @@ package com.vectorsf.jvoice.ui.diagram.properties.util;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.transaction.RecordingCommand;
@@ -14,7 +15,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
-import com.vectorsf.jvoice.diagram.core.pattern.states.JVBeanContentProvider;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
@@ -22,13 +22,14 @@ import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
-import com.vectorsf.jvoice.ui.diagram.properties.dialogs.DialogSubFlow;
-import com.vectorsf.jvoice.ui.diagram.properties.dialogs.FilterDialogInput;
-import com.vectorsf.jvoice.ui.diagram.properties.dialogs.FilterDialogMenu;
-import com.vectorsf.jvoice.ui.diagram.properties.dialogs.FilterDialogOutput;
-import com.vectorsf.jvoice.ui.diagram.properties.dialogs.ValidatorInput;
-import com.vectorsf.jvoice.ui.diagram.properties.dialogs.ValidatorMenu;
-import com.vectorsf.jvoice.ui.diagram.properties.dialogs.ValidatorOutput;
+import com.vectorsf.jvoice.ui.edit.dialogs.DialogSubFlow;
+import com.vectorsf.jvoice.ui.edit.filters.FilterDialogInput;
+import com.vectorsf.jvoice.ui.edit.filters.FilterDialogMenu;
+import com.vectorsf.jvoice.ui.edit.filters.FilterDialogOutput;
+import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
+import com.vectorsf.jvoice.ui.edit.validators.ValidatorInput;
+import com.vectorsf.jvoice.ui.edit.validators.ValidatorMenu;
+import com.vectorsf.jvoice.ui.edit.validators.ValidatorOutput;
 
 public class EditMenuStateLocution extends RecordingCommand {
 
@@ -79,7 +80,9 @@ public class EditMenuStateLocution extends RecordingCommand {
     					ComposedAdapterFactory.Descriptor.Registry.INSTANCE)),
     					locutionCP);
 		
-		dialog.setAllowMultiple(false);		
+		dialog.setAllowMultiple(false);
+		dialog.setHelpAvailable(false);
+		dialog.setIsButtonCreatevailable(false);
     	dialog.setValidator(getValidator());
     	dialog.addFilter(getFilter());
 
@@ -140,16 +143,29 @@ public class EditMenuStateLocution extends RecordingCommand {
 		if (results != null){
 			if (results[0] instanceof MenuDsl){
 				MenuDsl result = (MenuDsl) results[0];
+				URI menuURI = EcoreUtil.getURI(result);
+				result = (MenuDsl) menuLocution.eResource().getResourceSet()
+	    				.getEObject(menuURI, true);
+				
 	    		menuLocution.setLocution(result);
 	    		nameSubFlow.setText(menuLocution.getLocution().getName());
 	    		
 			}else if (results[0] instanceof InputDsl){
 				InputDsl result = (InputDsl) results[0];
+				URI inputURI = EcoreUtil.getURI(result);
+				result = (InputDsl) inputLocution.eResource().getResourceSet()
+	    				.getEObject(inputURI, true);
+				
 				inputLocution.setLocution(result);
 	    		nameSubFlow.setText(inputLocution.getLocution().getName());
 	    		
 			}else if (results[0] instanceof PromptDsl){
 				PromptDsl result = (PromptDsl) results[0];
+				
+				URI outputURI = EcoreUtil.getURI(result);
+				result = (PromptDsl) outputLocution.eResource().getResourceSet()
+	    				.getEObject(outputURI, true);
+				
 				outputLocution.setLocution(result);
 	    		nameSubFlow.setText(outputLocution.getLocution().getName());
 			}
