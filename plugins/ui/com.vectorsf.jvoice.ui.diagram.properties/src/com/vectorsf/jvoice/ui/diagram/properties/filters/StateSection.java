@@ -50,7 +50,6 @@ import com.vectorsf.jvoice.ui.diagram.properties.provider.CaseLabelProvider;
 public class StateSection  extends  GFPropertySection implements
 ITabbedPropertyConstants {
 	
-	private static StateSection instance = new StateSection();
 	private Text nameText;
 	private Text pathText;
 	private Text nameSubFlow;
@@ -60,20 +59,17 @@ ITabbedPropertyConstants {
 	private Table table;
 	private TableViewer tableViewer;
 	private org.eclipse.graphiti.mm.algorithms.Text nameArrow;
-	private static List<Case> casos = new ArrayList<Case>();
+	private List<Case> casos = new ArrayList<Case>();
 	private static final String CONDITION = "Condition";
 	private static final String NAME = "EventName";
 	private static final String[] PROPS = { CONDITION, NAME};
 	private static SwitchState estadoSelection;
 	private CLabel error;
-	private static PictogramElement cacheElement;
 	private static IFeatureProvider fp;
+	private PictogramElement pe;
 
 	public StateSection() {}
 	
-	public static StateSection getInstance() {
-		return instance;
-	}
 	
 	@Override
     public void createControls(Composite parent,
@@ -174,7 +170,9 @@ ITabbedPropertyConstants {
 
 	    tableViewer.setColumnProperties(PROPS);
 	    tableViewer.setCellEditors(editors);
-	    
+
+	    PropertiesListener listener = new PropertiesListener(this, tableViewer);
+
 	    Button btAdd = factory.createButton(composite, "", SWT.PUSH);
 	    btAdd.setData("add");
 	    btAdd.setImage(Activator.getDefault().getImageRegistry().get("imageAdd"));
@@ -182,7 +180,7 @@ ITabbedPropertyConstants {
 	    data.left = new FormAttachment(table, 5);
 	    data.top =  new FormAttachment(table, 0,SWT.TOP);
 	    btAdd.setLayoutData(data);
-	    btAdd.addListener(SWT.Selection, new PropertiesListener(tableViewer));
+		btAdd.addListener(SWT.Selection, listener);
 
 	    Button btRemove = factory.createButton(composite, "", SWT.PUSH);
 	    btRemove.setData("remove");
@@ -192,7 +190,7 @@ ITabbedPropertyConstants {
 	    data.right = new FormAttachment(btAdd,0,SWT.RIGHT);
 	    data.top =  new FormAttachment(btAdd, 10);
 	    btRemove.setLayoutData(data);
-	    btRemove.addListener(SWT.Selection, new PropertiesListener(tableViewer));
+	    btRemove.addListener(SWT.Selection, listener);
 	    
 	    Button btUp = factory.createButton(composite, "",SWT.PUSH);
 	    btUp.setData("up");
@@ -201,7 +199,7 @@ ITabbedPropertyConstants {
 	    data.left = new FormAttachment(btAdd, 5);
 	    data.top =  new FormAttachment(table, 0,SWT.TOP);
 	    btUp.setLayoutData(data);
-	    btUp.addListener(SWT.Selection, new PropertiesListener(tableViewer));
+	    btUp.addListener(SWT.Selection, listener);
 
 	    Button btDown = factory.createButton(composite, "", SWT.PUSH);
 	    btDown.setData("down");
@@ -211,7 +209,7 @@ ITabbedPropertyConstants {
 	    data.right = new FormAttachment(btUp,0,SWT.RIGHT);
 	    data.top =  new FormAttachment(btUp, 10);
 	    btDown.setLayoutData(data);
-	    btDown.addListener(SWT.Selection, new PropertiesListener(tableViewer));
+	    btDown.addListener(SWT.Selection, listener);
 	}
 
 	/**
@@ -233,7 +231,7 @@ ITabbedPropertyConstants {
 		    data.right = new FormAttachment(error,0,SWT.RIGHT);
 		    data.top = new FormAttachment(error, 10);
 		    nameText.setLayoutData(data);
-		    nameText.addFocusListener(new ListenerIntentionName(nameText));
+		    nameText.addFocusListener(new ListenerIntentionName(this, nameText));
 		 
 		    CLabel LabelName = factory.createCLabel(composite, "Name:");
 		    data = new FormData();
@@ -292,9 +290,8 @@ ITabbedPropertyConstants {
     @Override
     public void refresh() {
     	removelistener();
-    	PictogramElement pe = getSelectedPictogramElement();
+    	pe = getSelectedPictogramElement();
         if (pe != null) {
-        	cacheElement = pe;
         	fp =getDiagramTypeProvider().getFeatureProvider();
         	
             Object bo = Graphiti.getLinkService()
@@ -340,14 +337,14 @@ ITabbedPropertyConstants {
     }
     
     public PictogramElement obtenerPe(){
-    	return cacheElement;
+    	return pe;
     }
 
 	/**
 	 * Eliminamos el listener
 	 */
 	protected void removelistener() {
-		nameText.removeFocusListener(new ListenerIntentionName(nameText));
+		nameText.removeFocusListener(new ListenerIntentionName(this, nameText));
 	}
 
 	/**
@@ -362,28 +359,26 @@ ITabbedPropertyConstants {
 			for (Object trans : OUTtransaction){            		
 				Transition tr = (Transition)trans;
 		    	//Cogemos el Pictogram Elements a la transacion.
-		    	List<?> li = Graphiti.getLinkService().getPictogramElements(getDiagramTypeProvider().getDiagram(), tr);
-		    	for (Object object : li) {            		
-		    		if(object instanceof Connection){
-		    		Connection connection = (Connection) object;
-		    				//Obtenemos la conexion de nuestra transacion y la recorremos.
-		                	EList<ConnectionDecorator> liCD = connection.getConnectionDecorators();
-		                	for (ConnectionDecorator connectionDecorator : liCD) 
-		                	{
-		                		/**Obtenemos los Graphics Algorithms, que en este caso son dos, 
-		                		 * el texto y el arrow.
-		                		 * Para obtener el nombre, comprobamos que el Graphics Algorithm sea Text,
-		                		 * de ser asi obtenemos el nombre.
-		                		**/
-		                		GraphicsAlgorithm ga= connectionDecorator.getGraphicsAlgorithm();
-		                		if (ga instanceof org.eclipse.graphiti.mm.algorithms.Text)
-		                		{
-		                			nameArrow = (org.eclipse.graphiti.mm.algorithms.Text)ga;
-		                			OutTransitions.add(nameArrow.getValue().toString());
-		                		}
-		                		
-		    				}
-		    		}
+				PictogramElement obj =  obtenerFeatureProvider().getPictogramElementForBusinessObject(tr);
+	    		if(obj instanceof Connection){
+		    		Connection connection = (Connection) obj;
+    				//Obtenemos la conexion de nuestra transacion y la recorremos.
+                	EList<ConnectionDecorator> liCD = connection.getConnectionDecorators();
+                	for (ConnectionDecorator connectionDecorator : liCD) 
+                	{
+                		/**Obtenemos los Graphics Algorithms, que en este caso son dos, 
+                		 * el texto y el arrow.
+                		 * Para obtener el nombre, comprobamos que el Graphics Algorithm sea Text,
+                		 * de ser asi obtenemos el nombre.
+                		**/
+                		GraphicsAlgorithm ga= connectionDecorator.getGraphicsAlgorithm();
+                		if (ga instanceof org.eclipse.graphiti.mm.algorithms.Text)
+                		{
+                			nameArrow = (org.eclipse.graphiti.mm.algorithms.Text)ga;
+                			OutTransitions.add(nameArrow.getValue().toString());
+                		}
+                		
+    				}
 				}//Fin del for.   
 			} 
 			
@@ -445,7 +440,7 @@ ITabbedPropertyConstants {
 		String name = null;
 		name = ((State) bo).getName();            
 		nameText.setText(name == null ? "" : name);
-		nameText.addFocusListener(new ListenerIntentionName(nameText));
+		nameText.addFocusListener(new ListenerIntentionName(this, nameText));
 		String path = (((State) bo).eResource()).getURI().path().substring(9).toString();
 		pathText.setText(path == null ? "" : path);
 	}

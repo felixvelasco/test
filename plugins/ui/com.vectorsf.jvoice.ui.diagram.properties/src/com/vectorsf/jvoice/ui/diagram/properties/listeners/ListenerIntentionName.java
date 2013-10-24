@@ -16,18 +16,20 @@ import com.vectorsf.jvoice.ui.diagram.properties.util.RenameCommand;
 public class ListenerIntentionName implements FocusListener {
 	
 	private Text nameText;
+	private StateSection stateSection;
 	
-	public ListenerIntentionName(Text nameText) {
+	public ListenerIntentionName(StateSection stateSection,Text nameText) {
 		this.nameText = nameText;
+		this.stateSection = stateSection;
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
-		PictogramElement pe = StateSection.getInstance().obtenerPe();
+		PictogramElement pe = stateSection.obtenerPe();
 		State bimElement = (State) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bimElement);
 
-		IFeatureProvider fp = StateSection.getInstance().obtenerFeatureProvider();
+		IFeatureProvider fp = stateSection.obtenerFeatureProvider();
 		editingDomain.getCommandStack().execute(new RenameCommand(editingDomain, pe, bimElement, nameText.getText(), fp));
 	}
 

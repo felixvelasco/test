@@ -24,8 +24,15 @@ import org.eclipse.graphiti.ui.features.DefaultDeleteFeature;
 
 public class TransitionsDeleteFeature extends DefaultDeleteFeature {
 
+	private boolean dialog = true;
+
 	public TransitionsDeleteFeature(IFeatureProvider fp) {
 		super(fp);
+	}
+
+	public TransitionsDeleteFeature(IFeatureProvider fp, boolean dialog) {
+		super(fp);
+		this.dialog = dialog;
 	}
 
 	@Override
@@ -53,8 +60,10 @@ public class TransitionsDeleteFeature extends DefaultDeleteFeature {
 		if (businessObjectsForPictogramElement != null
 				&& businessObjectsForPictogramElement.length > 0) {
 			if (multiDeleteInfo == null) {
-				if (!getUserDecision(context)) {
-					return;
+				if (dialog) {
+					if (!getUserDecision(context)) {
+						return;
+					}
 				}
 			} else {
 				if (multiDeleteInfo.isShowDialog()) {

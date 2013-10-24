@@ -29,18 +29,20 @@ public class PropertiesListener implements Listener {
 
 	private Text nameSubFlow;
 	private TableViewer tableViewer;
+	private StateSection stateSection;
 	
 	public PropertiesListener(Text nameSubFlow) {
 		this.nameSubFlow = nameSubFlow;
 	}
 	
-	public PropertiesListener(TableViewer tableViewer) {
+	public PropertiesListener(StateSection stateSection, TableViewer tableViewer) {
+		this.stateSection = stateSection;
 		this.tableViewer = tableViewer;
 	}
 	
 	@Override
 	public void handleEvent(Event event) {
-		PictogramElement pe = StateSection.getInstance().obtenerPe();
+		PictogramElement pe = stateSection.obtenerPe();
         if (pe != null) {
             Object bo = Graphiti.getLinkService()
                  .getBusinessObjectForLinkedPictogramElement(pe);
@@ -66,13 +68,13 @@ public class PropertiesListener implements Listener {
             	dominio.getCommandStack().execute(new EditMenuStateLocution(dominio, outputLocution, nameSubFlow));
             }else if(bo instanceof SwitchState){
             	SwitchState estadoSelection = (SwitchState)bo;
-            	List<Case> casos = StateSection.getInstance().obtenerCases();
+            	List<Case> casos = stateSection.obtenerCases();
             	TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(estadoSelection);
             	
             	if (event.widget.getData().equals("add"))
             		dominio.getCommandStack().execute(new AddCaseSwitch(dominio, estadoSelection, casos, tableViewer));
             	else if (event.widget.getData().equals("remove"))
-            		dominio.getCommandStack().execute(new RemoveCaseSwitch(dominio, estadoSelection, casos, tableViewer));
+            		dominio.getCommandStack().execute(new RemoveCaseSwitch(stateSection.obtenerFeatureProvider(), dominio, estadoSelection, casos, tableViewer));
             	else if (event.widget.getData().equals("up"))
             		dominio.getCommandStack().execute(new UpCaseSwitch(dominio, estadoSelection, casos, tableViewer));
             	else if (event.widget.getData().equals("down"))
