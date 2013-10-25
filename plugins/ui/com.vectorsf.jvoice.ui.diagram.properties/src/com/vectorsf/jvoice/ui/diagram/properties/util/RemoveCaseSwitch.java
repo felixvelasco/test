@@ -49,9 +49,9 @@ public class RemoveCaseSwitch extends RecordingCommand {
 					Shell activeShell = PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow().getShell();
 					MessageBox dialog = 
-							  new MessageBox(activeShell, SWT.ICON_QUESTION | SWT.OK| SWT.CANCEL);
-							dialog.setText("Information");
-							dialog.setMessage("The transiction is active, Really you want to remove it?");
+							  new MessageBox(activeShell, SWT.ICON_WARNING | SWT.OK| SWT.CANCEL);
+							dialog.setText("Warning");
+							dialog.setMessage("The transition is active. Do you want to remove it?");
 
 					int returnCode = dialog.open();
 							

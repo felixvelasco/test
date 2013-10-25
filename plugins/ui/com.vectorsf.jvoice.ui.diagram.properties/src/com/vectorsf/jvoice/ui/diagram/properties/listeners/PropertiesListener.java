@@ -80,6 +80,7 @@ public class PropertiesListener implements Listener {
             	else if (event.widget.getData().equals("down"))
             		dominio.getCommandStack().execute(new DownCaseSwitch(dominio, estadoSelection, casos, tableViewer));
             }
+            stateSection.refresh();
         }
 	}
 }
