@@ -2,14 +2,14 @@
  */
 package com.vectorsf.jvoice.model.base.impl;
 
-import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.JVApplication;
 import com.vectorsf.jvoice.model.base.JVModule;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,14 +26,14 @@ import com.vectorsf.jvoice.model.base.JVModule;
  */
 public class JVApplicationImpl extends JVProjectImpl implements JVApplication {
 	/**
-	 * The cached value of the '{@link #getModule() <em>Module</em>}' reference.
+	 * The cached value of the '{@link #getModule() <em>Module</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getModule()
 	 * @generated
 	 * @ordered
 	 */
-	protected JVModule module;
+	protected EList<JVModule> module;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -59,37 +59,11 @@ public class JVApplicationImpl extends JVProjectImpl implements JVApplication {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public JVModule getModule() {
-		if (module != null && module.eIsProxy()) {
-			InternalEObject oldModule = (InternalEObject)module;
-			module = (JVModule)eResolveProxy(oldModule);
-			if (module != oldModule) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BasePackage.JV_APPLICATION__MODULE, oldModule, module));
-			}
+	public List<JVModule> getModule() {
+		if (module == null) {
+			module = new EObjectResolvingEList<JVModule>(JVModule.class, this, BasePackage.JV_APPLICATION__MODULE);
 		}
 		return module;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public JVModule basicGetModule() {
-		return module;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setModule(JVModule newModule) {
-		JVModule oldModule = module;
-		module = newModule;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BasePackage.JV_APPLICATION__MODULE, oldModule, module));
 	}
 
 	/**
@@ -101,8 +75,7 @@ public class JVApplicationImpl extends JVProjectImpl implements JVApplication {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case BasePackage.JV_APPLICATION__MODULE:
-				if (resolve) return getModule();
-				return basicGetModule();
+				return getModule();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -112,11 +85,13 @@ public class JVApplicationImpl extends JVProjectImpl implements JVApplication {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BasePackage.JV_APPLICATION__MODULE:
-				setModule((JVModule)newValue);
+				getModule().clear();
+				getModule().addAll((Collection<? extends JVModule>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -131,7 +106,7 @@ public class JVApplicationImpl extends JVProjectImpl implements JVApplication {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case BasePackage.JV_APPLICATION__MODULE:
-				setModule((JVModule)null);
+				getModule().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -146,7 +121,7 @@ public class JVApplicationImpl extends JVProjectImpl implements JVApplication {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case BasePackage.JV_APPLICATION__MODULE:
-				return module != null;
+				return module != null && !module.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

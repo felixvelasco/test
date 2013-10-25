@@ -626,7 +626,7 @@ public interface BasePackage extends EPackage {
 	int JV_APPLICATION__CONFIGURATION = JV_PROJECT__CONFIGURATION;
 
 	/**
-	 * The feature id for the '<em><b>Module</b></em>' reference.
+	 * The feature id for the '<em><b>Module</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1075,10 +1075,10 @@ public interface BasePackage extends EPackage {
 	EClass getJVApplication();
 
 	/**
-	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.base.JVApplication#getModule <em>Module</em>}'.
+	 * Returns the meta object for the reference list '{@link com.vectorsf.jvoice.model.base.JVApplication#getModule <em>Module</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Module</em>'.
+	 * @return the meta object for the reference list '<em>Module</em>'.
 	 * @see com.vectorsf.jvoice.model.base.JVApplication#getModule()
 	 * @see #getJVApplication()
 	 * @generated
@@ -1353,7 +1353,7 @@ public interface BasePackage extends EPackage {
 		EClass JV_APPLICATION = eINSTANCE.getJVApplication();
 
 		/**
-		 * The meta object literal for the '<em><b>Module</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Module</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

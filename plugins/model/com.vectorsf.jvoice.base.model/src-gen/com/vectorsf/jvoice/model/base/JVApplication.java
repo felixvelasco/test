@@ -2,6 +2,7 @@
  */
 package com.vectorsf.jvoice.model.base;
 
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,29 +22,19 @@ package com.vectorsf.jvoice.model.base;
  */
 public interface JVApplication extends JVProject {
 	/**
-	 * Returns the value of the '<em><b>Module</b></em>' reference.
+	 * Returns the value of the '<em><b>Module</b></em>' reference list.
+	 * The list contents are of type {@link com.vectorsf.jvoice.model.base.JVModule}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Module</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Module</em>' reference.
-	 * @see #setModule(JVModule)
+	 * @return the value of the '<em>Module</em>' reference list.
 	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVApplication_Module()
 	 * @model
 	 * @generated
 	 */
-	JVModule getModule();
-
-	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.model.base.JVApplication#getModule <em>Module</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Module</em>' reference.
-	 * @see #getModule()
-	 * @generated
-	 */
-	void setModule(JVModule value);
+	List<JVModule> getModule();
 
 } // JVApplication

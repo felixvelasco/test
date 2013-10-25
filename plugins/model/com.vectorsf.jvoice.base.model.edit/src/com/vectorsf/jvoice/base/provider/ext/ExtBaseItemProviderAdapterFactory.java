@@ -3,7 +3,6 @@ package com.vectorsf.jvoice.base.provider.ext;
 import org.eclipse.emf.common.notify.Adapter;
 
 import com.vectorsf.jvoice.model.base.provider.BaseItemProviderAdapterFactory;
-import com.vectorsf.jvoice.model.base.provider.JVApplicationItemProvider;
 import com.vectorsf.jvoice.model.base.provider.JVModuleItemProvider;
 
 public class ExtBaseItemProviderAdapterFactory extends
@@ -11,15 +10,15 @@ public class ExtBaseItemProviderAdapterFactory extends
 
 	@Override
 	public Adapter createJVProjectAdapter() {
-		Adapter jvProjectItemProvider = null;
+		Adapter jvModuleItemProvider = null;
 		if (jvModuleItemProvider == null) {
 			jvModuleItemProvider = new JVModuleItemProvider(this);
 		}
-		if (jvApplicationItemProvider == null) {
-			jvApplicationItemProvider = new JVApplicationItemProvider(this);
-		}
+		// if (jvApplicationItemProvider == null) {
+		// jvApplicationItemProvider = new JVApplicationItemProvider(this);
+		// }
 
-		return jvProjectItemProvider;
+		return jvModuleItemProvider;
 	}
 
 	@Override
