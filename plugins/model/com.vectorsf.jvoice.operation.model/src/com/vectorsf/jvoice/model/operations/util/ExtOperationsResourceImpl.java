@@ -22,7 +22,11 @@ public class ExtOperationsResourceImpl extends OperationsResourceImpl implements
 
 	@Override
 	public String getID(EObject eObject) {
-		return super.getID(eObject);
+		if (eObject instanceof JVElement) {
+			return ((JVElement) eObject).getId();
+		} else {
+			return null;
+		}
 	}
 
 	@Override
