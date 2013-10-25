@@ -31,24 +31,14 @@ import org.apache.maven.project.MavenProjectHelper;
  */
 public class CopyMojo extends AbstractMojo {
 	
+	private File f;
+	private File targetFile;
 	private static final String SEPARATOR = "/";
 	private static final String DOT = ".";
 	private static final String JVOICES = "jVoice";
 	private static final String DESTINO = "/src/main/webapp/WEB-INF/flows";
-	
-	/**
-	 * Location of the target directory.
-	 * 
-	 * @parameter expression="${project.build.directory}"
-	 */
-	private File outputDirectory;
-
-	/**
-	 * Location of the source directory.
-	 * 
-	 * @parameter expression="${basedir}/src/main/resources/jv"
-	 */
-	private File sourceDirectory;
+	private static final String WEBINF = "/src/main/webapp/WEB-INF";
+	private static final String APPSERVLET="spring/appServlet";
 
 	/**
 	 * A set of patterns matching files from the sourceDirectory that should be processed as grammars.
@@ -86,7 +76,7 @@ public class CopyMojo extends AbstractMojo {
 	 */
 	private List<String> runtimeClasspathElements;
 
-	private String findFullPath(String fileNameToSearch, File file)
+	private void findFullPath(String fileNameToSearch, File file)
 			throws IOException {
 		ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
 		ZipEntry ze = null;
@@ -108,27 +98,75 @@ public class CopyMojo extends AbstractMojo {
 			}
 		}
 		zip.close();
-		return ret;
 	}
 	
 	@Override
 	public void execute() throws MojoExecutionException {
+		System.out.println("hola!!!");
 		
 		for (String element : runtimeClasspathElements) {
 
 				if (new File(element).toURI().toString().endsWith(".jar")) {
 					File file = new File(element);
 					try {
-						findFullPath(".xml",file);
+						findFullPath(".xml",file);						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					 
 				}
-		}	   
+		}	
+		//Creamos la carpeta estatica spring/appServlet
+		String appServlet = project.getBasedir()+ WEBINF+SEPARATOR+APPSERVLET;
+		getDir(appServlet);
+		//Generamos el XML servlet-context.xml de la carpeta spring
+		generateXML(appServlet, "servlet-context");
+		
+		//Creamos el web.xml en dentro de la carpeta WEB-INF
+		String spring = project.getBasedir()+WEBINF+SEPARATOR+"spring";
+		generateXML(spring, "app-context");
+		
+		//Creamos el web.xml en dentro de la carpeta WEB-INF
+		String webInf = project.getBasedir()+WEBINF;
+		generateXML(webInf, "web");
 	}
 
+	/**
+	 * @param appServlet
+	 * @param name 
+	 */
+	protected void generateXML(String ruta, String nameXML) {
+		targetFile = new File(ruta, nameXML+".xml");
+		if (!targetFile.exists()){
+			try {
+				targetFile.createNewFile();
+				if (nameXML.equals("web")) {
+					XMLGeneratorWeb.generate(targetFile);
+				}else if (nameXML.equals("servlet-context")) {
+					XMLGeneratorServlet.generate(targetFile);
+					}else {
+						XMLGeneratorAPP.generate(targetFile);
+					}
+		
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		}
+	}
+
+	/**
+	 * @param pathname 
+	 * 
+	 */
+	protected void getDir(String pathname) {
+		f = new File(pathname);
+		if (!f.exists()) {
+			f.mkdirs();
+		}
+	}
+	
 	/**
 	 * @param name 
 	 * 
@@ -139,10 +177,7 @@ public class CopyMojo extends AbstractMojo {
 		/*Comprobamos que exista el directorio base donde vamos a crear los XML
 		 *Si no existe, se crea.
 		 */
-		File f = new File(pathname);
-		if (!f.exists()) {
-			f.mkdirs();
-		}
+		getDir(pathname);
 
 		File destino = new File(pathname+ruta.getName());
 
