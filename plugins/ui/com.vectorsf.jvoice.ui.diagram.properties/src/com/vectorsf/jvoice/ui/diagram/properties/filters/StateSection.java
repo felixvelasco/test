@@ -142,7 +142,7 @@ ITabbedPropertyConstants {
 	protected void tableSwitchCase(TabbedPropertySheetWidgetFactory factory,
 			Composite composite) {
 		//Tabla con los Case de un Switch
-		table = factory.createTable(composite, 0);
+		table = factory.createTable(composite, SWT.SINGLE|SWT.FULL_SELECTION);
 		data = new FormData();
 		data.left = new FormAttachment(nameText, 0,SWT.LEFT);
 		data.right = new FormAttachment(nameText,-120,SWT.RIGHT);
