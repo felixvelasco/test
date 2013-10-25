@@ -3,22 +3,25 @@ package com.vectorsf.jvoice.base.provider.ext;
 import org.eclipse.emf.common.notify.Adapter;
 
 import com.vectorsf.jvoice.model.base.provider.BaseItemProviderAdapterFactory;
-import com.vectorsf.jvoice.model.base.provider.JVModuleItemProvider;
 
-public class ExtBaseItemProviderAdapterFactory extends
-		BaseItemProviderAdapterFactory {
+public class ExtBaseItemProviderAdapterFactory extends BaseItemProviderAdapterFactory {
 
 	@Override
-	public Adapter createJVProjectAdapter() {
-		Adapter jvModuleItemProvider = null;
+	public Adapter createJVModuleAdapter() {
 		if (jvModuleItemProvider == null) {
-			jvModuleItemProvider = new JVModuleItemProvider(this);
+			jvModuleItemProvider = new ExtJVModuleItemProvider(this);
 		}
-		// if (jvApplicationItemProvider == null) {
-		// jvApplicationItemProvider = new JVApplicationItemProvider(this);
-		// }
 
 		return jvModuleItemProvider;
+	}
+
+	@Override
+	public Adapter createJVApplicationAdapter() {
+		if (jvApplicationItemProvider == null) {
+			jvApplicationItemProvider = new ExtJVApplicationItemProvider(this);
+		}
+
+		return jvApplicationItemProvider;
 	}
 
 	@Override
