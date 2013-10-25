@@ -2,7 +2,9 @@ package com.vectorsf.jvoice.model.operations.util;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 
 import com.vectorsf.jvoice.core.uri.VegaXMLURIHandlerImpl;
 import com.vectorsf.jvoice.model.base.JVElement;
@@ -34,5 +36,15 @@ public class ExtOperationsResourceImpl extends OperationsResourceImpl implements
 		if (eObject instanceof JVElement) {
 			((JVElement) eObject).setId(id);
 		}
+	}
+
+	@Override
+	protected XMLHelper createXMLHelper() {
+		return new XMIHelperImpl(this) {
+			@Override
+			public String getID(EObject obj) {
+				return null;
+			}
+		};
 	}
 }
