@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
@@ -29,6 +30,7 @@ import org.eclipse.graphiti.util.IColorConstant;
 
 import com.vectorsf.jvoice.diagram.core.pattern.states.OpenEditorFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.CreateTransitionFromPad;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionCallFlowPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionMenuPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
@@ -172,6 +174,30 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 							data.getDomainSpecificContextButtons().add(
 									menuButton);
 						}
+					}
+
+				} else if (sta instanceof CallFlowState) {
+					CallFlowState callFlowState = (CallFlowState) sta;
+					EList<State> states = callFlowState.getSubflow()
+							.getStates();
+
+					if (states != null) {
+
+						ContextButtonEntry menuButton = new ContextButtonEntry(
+								null, context);
+						menuButton.setText("Transition");
+
+						for (State state : states) {
+							if (state instanceof FinalState) {
+								feature = new CreateTransitionFromPad(
+										getFeatureProvider(),
+										new TransitionCallFlowPattern(state,
+												getFeatureProvider()));
+								menuButton.setIconId(getImageFor(sta, feature));
+								menuButton.addDragAndDropFeature(feature);
+							}
+						}
+						data.getDomainSpecificContextButtons().add(menuButton);
 					}
 
 				} else {
