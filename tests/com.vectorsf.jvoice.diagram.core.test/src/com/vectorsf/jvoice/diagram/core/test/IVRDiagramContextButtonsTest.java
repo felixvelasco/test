@@ -178,6 +178,11 @@ public class IVRDiagramContextButtonsTest {
 	}
 
 	@Test
+	public void testCreateTransitionCallFlowFinal() throws Exception {
+		createTransition("flow2", "Final", 225, 150, 300, 150);
+	}
+
+	@Test
 	public void testRemoveFinalState() throws Exception {
 		removeState("Final");
 
@@ -299,22 +304,32 @@ public class IVRDiagramContextButtonsTest {
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
 		IProject project = createProject("testNavigator");
-		IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/six.jvflow",
-				getInputStreamResource(bundle, "six.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "empty.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Menu.voiceDsl",
-				getInputStreamResource(bundle, "Menu.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Input.voiceDsl",
-				getInputStreamResource(bundle, "Input.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Prompt.voiceDsl",
-				getInputStreamResource(bundle, "Prompt.voiceDsl"));
+		IFile file;
+		if (sourceName.equals("flow2")) {
+			file = createFile(project, BaseModel.JV_PATH
+					+ "/several/packages/inside/callflow.jvflow",
+					getInputStreamResource(bundle, "callflow.jvflow"));
+			createFile(project, BaseModel.JV_PATH
+					+ "/several/packages/inside/flow2.jvflow",
+					getInputStreamResource(bundle, "flow2.jvflow"));
 
+		} else {
+			file = createFile(project, BaseModel.JV_PATH
+					+ "/several/packages/inside/six.jvflow",
+					getInputStreamResource(bundle, "six.jvflow"));
+			createFile(project, BaseModel.JV_PATH
+					+ "/several/packages/inside/empty.jvflow",
+					getInputStreamResource(bundle, "empty.jvflow"));
+			createFile(project, BaseModel.JV_PATH
+					+ "/several/packages/inside/Menu.voiceDsl",
+					getInputStreamResource(bundle, "Menu.voiceDsl"));
+			createFile(project, BaseModel.JV_PATH
+					+ "/several/packages/inside/Input.voiceDsl",
+					getInputStreamResource(bundle, "Input.voiceDsl"));
+			createFile(project, BaseModel.JV_PATH
+					+ "/several/packages/inside/Prompt.voiceDsl",
+					getInputStreamResource(bundle, "Prompt.voiceDsl"));
+		}
 		openFile(file);
 		bot.sleep(LARGE_SLEEP);
 
