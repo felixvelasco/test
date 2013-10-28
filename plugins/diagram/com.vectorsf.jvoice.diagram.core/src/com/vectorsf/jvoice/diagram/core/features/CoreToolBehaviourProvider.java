@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
@@ -178,8 +177,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 				} else if (sta instanceof CallFlowState) {
 					CallFlowState callFlowState = (CallFlowState) sta;
-					EList<State> states = callFlowState.getSubflow()
-							.getStates();
+					List<State> states = callFlowState.getSubflow().getStates();
 
 					if (states != null) {
 
