@@ -19,9 +19,11 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
 import org.eclipse.graphiti.tb.ConnectionSelectionInfoImpl;
 import org.eclipse.graphiti.tb.ContextButtonEntry;
+import org.eclipse.graphiti.tb.ContextEntryHelper;
 import org.eclipse.graphiti.tb.ContextMenuEntry;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
 import org.eclipse.graphiti.tb.IConnectionSelectionInfo;
+import org.eclipse.graphiti.tb.IContextButtonEntry;
 import org.eclipse.graphiti.tb.IContextButtonPadData;
 import org.eclipse.graphiti.tb.IContextMenuEntry;
 import org.eclipse.graphiti.util.ColorConstant;
@@ -87,7 +89,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		ContextMenuEntry subMenu = new ContextMenuEntry(null, context);
 		subMenu.setText(null);
 		// display sub-menu hierarchical or flat
-		subMenu.setSubmenu(false);
+		subMenu.setSubmenu(true);
 
 		// create a menu-entry in the sub-menu for each custom feature
 		context.putProperty(CONTEXT_MENU_ENTRY, true);
@@ -103,6 +105,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		}
 
 		return new IContextMenuEntry[] { subMenu };
+
 	}
 
 	@Override
@@ -115,6 +118,34 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		si.setHoverColorParentSelected(lineColor);
 		si.setLineStyle(connection.getGraphicsAlgorithm().getLineStyle());
 		return si;
+	}
+
+	@Override
+	protected void setGenericContextButtons(IContextButtonPadData data,
+			PictogramElement pe, int identifiers) {
+		data.getGenericContextButtons().clear();
+
+		// update button
+		if ((identifiers & CONTEXT_BUTTON_UPDATE) != 0) {
+			IContextButtonEntry updateButton = ContextEntryHelper
+					.createDefaultUpdateContextButton(getFeatureProvider(), pe);
+			if (updateButton != null) {
+				data.getGenericContextButtons().add(updateButton);
+			}
+		}
+
+		// remove button
+		// Se elimina el remove para que no se muestre en los elementos del
+		// diagrama.
+
+		// delete button
+		if ((identifiers & CONTEXT_BUTTON_DELETE) != 0) {
+			IContextButtonEntry deleteButton = ContextEntryHelper
+					.createDefaultDeleteContextButton(getFeatureProvider(), pe);
+			if (deleteButton != null) {
+				data.getGenericContextButtons().add(deleteButton);
+			}
+		}
 	}
 
 	@Override
