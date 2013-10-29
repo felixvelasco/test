@@ -19,7 +19,6 @@ import org.eclipse.graphiti.features.context.IPasteContext;
 import org.eclipse.graphiti.features.context.IReconnectionContext;
 import org.eclipse.graphiti.features.context.IRemoveContext;
 import org.eclipse.graphiti.features.context.IUpdateContext;
-import org.eclipse.graphiti.features.context.impl.ReconnectionContext;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.DefaultFeatureProviderWithPatterns;
@@ -102,10 +101,6 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 	@Override
 	public IReconnectionFeature getReconnectionFeature(
 			IReconnectionContext context) {
-		if (context.getReconnectType().equals(
-				ReconnectionContext.RECONNECT_SOURCE)) {
-			return null;
-		}
 
 		return new ReconnectTransitionFeature(this);
 	}
