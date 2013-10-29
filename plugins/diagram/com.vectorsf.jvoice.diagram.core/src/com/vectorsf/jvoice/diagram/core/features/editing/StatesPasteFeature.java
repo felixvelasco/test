@@ -8,6 +8,7 @@ import java.util.Map;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -19,6 +20,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IPasteContext;
 import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
@@ -55,7 +57,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	private IPath targetPath;
 	private IResource targetRes;
 	private boolean rename;
-	private String nombreUsuario;
 
 	public StatesPasteFeature(IFeatureProvider fp) {
 		super(fp);
@@ -65,54 +66,29 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	public void paste(IPasteContext context) {
 		Object[] copies = getCopiesFromClipBoard(context);
 		Map<State, PictogramElement> hm = new HashMap<State, PictogramElement>();
-		VoiceDsl voiceDsl = null;
-		LocutionState locution = null;
 		for (Object copy : copies) {
 			AddContext ac = new AddContext();
 			if (copy != null) {
 				if (isState(copy)) {
 					State state = (State) copy;
 
-					state.setName(generateName(((State) copy).getName(),
-							context));
+					state.setName(generateName(((State) copy).getName(), context));
 					Flow targetFlow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 					// Si es una locution hay que copiar el voiceDsl al que
 					// apunta
 					if (isLocution(copy)) {
-						locution = (LocutionState) state;
-						voiceDsl = locution.getLocution();
-						// voiceDsl.setName(locution.getName());
-						List<JVProject> projects = BaseModel.getInstance()
-								.getModel().getProjects();
-						for (JVProject project : projects) {
-							for (JVPackage packag : project.getPackages()) {
-								for (JVBean bean : packag.getBeans()) {
-									if (bean.getName().equals(
-											targetFlow.getName())) {
+						LocutionState locution = (LocutionState) state;
+						VoiceDsl voiceDsl = locution.getLocution();
 
-										pasteVoiceDsl(packag, bean, voiceDsl,
-												locution, state);
-										break;
-									}
-								}
-							}
-						}
+						URI uri = EcoreUtil.getURI(targetFlow);
+						Flow connectedFlow = (Flow) BaseModel.getInstance().getResourceSet().getEObject(uri, true);
+
+						JVPackage targetPackage = connectedFlow.getOwnerPackage();
+						pasteVoiceDsl(targetPackage, voiceDsl, state);
 
 						// Redireccionamos el nuevo estado al
 						// voiceDsl que hemos copiado
-						List<JVProject> projectss = BaseModel.getInstance()
-								.getModel().getProjects();
-						for (JVProject projec : projectss) {
-							for (JVPackage packa : projec.getPackages()) {
-								for (JVBean bea : packa.getBeans()) {
-									if (bea.getName()
-											.equals(voiceDsl.getName())) {
-										bea.setName(voiceDsl.getName());
-										locution.setLocution((VoiceDsl) bea);
-									}
-								}
-							}
-						}
+						locution.setLocution((VoiceDsl) targetPackage.getBean(voiceDsl.getName()));
 						state = locution;
 					}
 					targetFlow.getStates().add(state);
@@ -141,15 +117,12 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 					ContainerShape csSource = (ContainerShape) peSource;
 					PictogramElement peTarget = hm.get(targetState);
 					ContainerShape csTarget = (ContainerShape) peTarget;
-					AddConnectionContext addContextInicial = new AddConnectionContext(
-							csSource.getAnchors().get(0), csTarget.getAnchors()
-									.get(0));
+					AddConnectionContext addContextInicial = new AddConnectionContext(csSource.getAnchors().get(0),
+							csTarget.getAnchors().get(0));
 					addContextInicial.setNewObject(transition);
-					addContextInicial
-							.setTargetContainer((ContainerShape) peSource);
+					addContextInicial.setTargetContainer((ContainerShape) peSource);
 
-					Connection connection = (Connection) getFeatureProvider()
-							.addIfPossible(addContextInicial);
+					Connection connection = (Connection) getFeatureProvider().addIfPossible(addContextInicial);
 					layoutPictogramElement(connection);
 				}
 
@@ -157,16 +130,12 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		}
 	}
 
-	protected void pasteVoiceDsl(JVPackage pack, JVBean targetFlow,
-			VoiceDsl voiceDsl, LocutionState locution, State state) {
-		final IFile voiceDslFile = (IFile) Platform.getAdapterManager()
-				.getAdapter(voiceDsl, IFile.class);
-		rename = false;
+	protected void pasteVoiceDsl(JVPackage targetPackage, VoiceDsl voiceDsl, State state) {
+		final IFile voiceDslFile = (IFile) Platform.getAdapterManager().getAdapter(voiceDsl, IFile.class);
 
-		targetRes = (IResource) Platform.getAdapterManager().getAdapter(pack,
-				IResource.class);
-		targetPath = targetRes.getFullPath().append(
-				state.getName() + ".voiceDsl");
+		rename = false;
+		targetRes = (IResource) Platform.getAdapterManager().getAdapter(targetPackage, IResource.class);
+		targetPath = targetRes.getFullPath().append(state.getName() + ".voiceDsl");
 
 		// Realizamos la copia del fichero al destino.
 		try {
@@ -183,7 +152,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 				}
 			};
-			ResourcesPlugin.getWorkspace().run(runnable, null);
+			ResourcesPlugin.getWorkspace().run(runnable, targetRes.getProject(), IWorkspace.AVOID_UPDATE, null);
 
 		} catch (CoreException e) {
 			e.printStackTrace();
@@ -194,8 +163,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	public boolean canPaste(IPasteContext context) {
 		PictogramElement[] pes = context.getPictogramElements();
 		if (pes.length != 1
-				|| !(pes[0] instanceof Diagram
-						|| pes[0] instanceof ContainerShape || pes[0] instanceof Transition)) {
+				|| !(pes[0] instanceof Diagram || pes[0] instanceof ContainerShape || pes[0] instanceof Transition)) {
 			return false;
 		}
 
@@ -224,17 +192,13 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	}
 
 	private boolean isState(Object object) {
-		return object instanceof CallFlowState || object instanceof CallState
-				|| object instanceof FinalState
-				|| object instanceof InitialState
-				|| object instanceof InputState || object instanceof MenuState
-				|| object instanceof PromptState
-				|| object instanceof SwitchState;
+		return object instanceof CallFlowState || object instanceof CallState || object instanceof FinalState
+				|| object instanceof InitialState || object instanceof InputState || object instanceof MenuState
+				|| object instanceof PromptState || object instanceof SwitchState;
 	}
 
 	private boolean isLocution(Object object) {
-		return object instanceof InputState || object instanceof MenuState
-				|| object instanceof PromptState;
+		return object instanceof InputState || object instanceof MenuState || object instanceof PromptState;
 	}
 
 	private String generateName(String stateName, IPasteContext context) {
@@ -261,8 +225,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 				String name = "CopyOf" + stateName;
 				int repeated = 0;
 				for (int i = 0; i < pes.length; i++) {
-					if (pes[i] instanceof Shape
-							&& !(pes[i] instanceof ConnectionDecorator)) {
+					if (pes[i] instanceof Shape && !(pes[i] instanceof ConnectionDecorator)) {
 						Shape shape = (Shape) pes[i];
 						State state = (State) getBusinessObjectForPictogramElement(shape);
 						if (state != null) {
@@ -286,8 +249,8 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	// Metodo para recuperar un nombre valido para el fichero que
 	// se quiere copiar en caso de que haya uno en el destino con el mismo
 	// nombre.
-	private String checkName(IWorkspaceRoot root, IPath targetPath,
-			Object targets, Object o, IResource targetRes, String NameUser) {
+	private String checkName(IWorkspaceRoot root, IPath targetPath, Object targets, Object o, IResource targetRes,
+			String NameUser) {
 		if (targets instanceof JVProject) {
 			JVProject target = (JVProject) targets;
 			IFolder mipackage = (IFolder) o;
@@ -297,11 +260,9 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 				String newName = "CopyOf" + NameUser;
 
 				targetPath = targetRes.getFullPath().append(
-						mipackage.getParent().getProjectRelativePath()
-								.append(newName));
+						mipackage.getParent().getProjectRelativePath().append(newName));
 
-				return checkName(root, targetPath, target, mipackage,
-						targetRes, newName);
+				return checkName(root, targetPath, target, mipackage, targetRes, newName);
 
 			} else {
 				return NameUser;
@@ -316,8 +277,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 				targetPath = targetRes.getFullPath().append(newName);
 
-				return checkName(root, targetPath, target, mipackage,
-						targetRes, newName);
+				return checkName(root, targetPath, target, mipackage, targetRes, newName);
 
 			} else {
 				return NameUser;
@@ -332,8 +292,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		String newName = targetPath.lastSegment();
 		newName = newName.substring(0, newName.lastIndexOf('.'));
 		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
-		Resource emfRes = resourceSetImpl.createResource(URI
-				.createPlatformResourceURI(targetPath.toString(), true));
+		Resource emfRes = resourceSetImpl.createResource(URI.createPlatformResourceURI(targetPath.toString(), true));
 		try {
 			emfRes.load(null);
 
@@ -344,8 +303,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 				} else if (obj instanceof JVBean) {
 					((JVBean) obj).setName(newName);
 					((JVBean) obj).setDescription(newName);
-					List<EObject> listaObjetos = ((Flow) obj).eResource()
-							.getContents();
+					List<EObject> listaObjetos = ((Flow) obj).eResource().getContents();
 					for (int i = 0; i < listaObjetos.size(); i++) {
 						EObject objeto = listaObjetos.get(i);
 						if (objeto instanceof Diagram) {
@@ -355,8 +313,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 				}
 			}
 			try {
-				emfRes.save(SaveOptions.newBuilder().noValidation()
-						.getOptions().toOptionsMap());
+				emfRes.save(SaveOptions.newBuilder().noValidation().getOptions().toOptionsMap());
 			} catch (RuntimeException re) {
 				re.printStackTrace();
 			}
