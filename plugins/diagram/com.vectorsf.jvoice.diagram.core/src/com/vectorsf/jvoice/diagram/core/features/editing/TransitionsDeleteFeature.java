@@ -50,6 +50,13 @@ public class TransitionsDeleteFeature extends DefaultDeleteFeature {
 
 	}
 
+	@Override
+	public boolean canDelete(IDeleteContext context) {
+
+		return true;
+
+	}
+
 	public void deleteConnection(IDeleteContext context) {
 		IMultiDeleteInfo multiDeleteInfo = context.getMultiDeleteInfo();
 		if (multiDeleteInfo != null && multiDeleteInfo.isDeleteCanceled()) {
