@@ -97,22 +97,24 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 								}
 							}
 						}
-					}
-					// Redireccionamos el nuevo estado al
-					// voiceDsl que hemos copiado
-					List<JVProject> projectss = BaseModel.getInstance()
-							.getModel().getProjects();
-					for (JVProject projec : projectss) {
-						for (JVPackage packa : projec.getPackages()) {
-							for (JVBean bea : packa.getBeans()) {
-								if (bea.getName().equals(voiceDsl.getName())) {
-									bea.setName(voiceDsl.getName());
-									locution.setLocution((VoiceDsl) bea);
+
+						// Redireccionamos el nuevo estado al
+						// voiceDsl que hemos copiado
+						List<JVProject> projectss = BaseModel.getInstance()
+								.getModel().getProjects();
+						for (JVProject projec : projectss) {
+							for (JVPackage packa : projec.getPackages()) {
+								for (JVBean bea : packa.getBeans()) {
+									if (bea.getName()
+											.equals(voiceDsl.getName())) {
+										bea.setName(voiceDsl.getName());
+										locution.setLocution((VoiceDsl) bea);
+									}
 								}
 							}
 						}
+						state = locution;
 					}
-					state = locution;
 					targetFlow.getStates().add(state);
 					ac.setLocation(context.getX(), context.getY());
 					ac.setTargetContainer(getDiagram());
