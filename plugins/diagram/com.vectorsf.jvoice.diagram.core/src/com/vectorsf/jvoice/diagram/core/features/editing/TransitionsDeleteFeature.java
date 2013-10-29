@@ -191,6 +191,7 @@ public class TransitionsDeleteFeature extends DefaultDeleteFeature {
 		IRemoveFeature removeFeature = featureProvider.getRemoveFeature(rc);
 		if (removeFeature != null) {
 			removeFeature.remove(rc);
+
 			// Bug 347421: Set hasDoneChanges flag only after first modification
 			setDoneChanges(true);
 		}
@@ -213,4 +214,5 @@ public class TransitionsDeleteFeature extends DefaultDeleteFeature {
 		}
 		return result;
 	}
+
 }
