@@ -63,8 +63,7 @@ public class PasteHandler extends AbstractHandler {
 			if (target instanceof JVPackage) {
 				boolean state = getListFromClipboard(contents, JVBean.class) != null;
 				setBaseEnabled(state);
-			} else if (target instanceof JVProject
-					&& !(target instanceof JVApplication)) {
+			} else if (target instanceof JVProject) {
 				boolean state = getListFromClipboard(contents, JVPackage.class) != null;
 				setBaseEnabled(state);
 			} else {
