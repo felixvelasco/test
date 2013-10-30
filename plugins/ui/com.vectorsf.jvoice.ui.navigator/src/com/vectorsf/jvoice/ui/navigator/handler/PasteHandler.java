@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -246,6 +247,20 @@ public class PasteHandler extends AbstractHandler {
 
 				// Realizamos la copia del paquete al destino.
 				try {
+					String path = "";
+					int size = targetPath.segmentCount() - 1;
+					for (int i = 0; i < size; i++) {
+						path += "/" + targetPath.segment(i);
+						if (i > 0) {
+							IPath ipath = new Path(path);
+							if (!root.getFolder(ipath).exists()) {
+								IProgressMonitor monitor = null;
+								root.getFolder(ipath).create(true, true,
+										monitor);
+							}
+						}
+
+					}
 					miPack.copy(targetPath, true, null);
 				} catch (CoreException e) {
 					throw new ExecutionException(e.getMessage(), e);
