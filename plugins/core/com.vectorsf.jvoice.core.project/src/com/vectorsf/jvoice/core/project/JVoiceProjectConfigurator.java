@@ -63,20 +63,20 @@ public final class JVoiceProjectConfigurator {
 
 		model.setName(projectName);
 
-		Plugin dsl_builder = new Plugin();
-		dsl_builder.setGroupId("com.vectorsf.jvoice");
-		dsl_builder.setArtifactId("dsl-builder");
-		dsl_builder.setVersion("0.0.2-SNAPSHOT");
-		PluginExecution voiceDSL = new PluginExecution();
-		voiceDSL.setPhase("generate-sources");
-		voiceDSL.addGoal("voiceDSL");
-
-		dsl_builder.addExecution(voiceDSL);
-
-		Build build = new Build();
-		build.addPlugin(dsl_builder);
-
-		model.setBuild(build);
+//		Plugin dsl_builder = new Plugin();
+//		dsl_builder.setGroupId("com.vectorsf.jvoice");
+//		dsl_builder.setArtifactId("dsl-builder");
+//		dsl_builder.setVersion("0.0.2-SNAPSHOT");
+//		PluginExecution voiceDSL = new PluginExecution();
+//		voiceDSL.setPhase("generate-sources");
+//		voiceDSL.addGoal("voiceDSL");
+//
+//		dsl_builder.addExecution(voiceDSL);
+//
+//		Build build = new Build();
+//		build.addPlugin(dsl_builder);
+//
+//		model.setBuild(build);
 
 		Repository repository = new Repository();
 		repository.setId("jvoice");

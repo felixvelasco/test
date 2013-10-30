@@ -1,7 +1,5 @@
 package com.vectorsf.jvoice.diagram.core.pattern.transition;
 
-import java.util.List;
-
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddConnectionContext;
 import org.eclipse.graphiti.features.context.IAddContext;
@@ -199,12 +197,15 @@ public class TransitionSwitchPattern extends TransitionPattern {
 	public boolean canCreate(ICreateConnectionContext context) {
 
 		if (cas != null) {
-			Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
-			List<Transition> transitions = flow.getTransitions();
-			for (Transition transition : transitions) {
+			Object boSource = featureProvider
+					.getBusinessObjectForPictogramElement(context
+							.getSourcePictogramElement());
+
+			State stateOrigen = (State) boSource;
+
+			for (Transition transition : stateOrigen.getOutgoingTransitions()) {
 				if (transition.getEventName().equals(cas.getEventName())) {
 					return false;
-
 				}
 			}
 		}
