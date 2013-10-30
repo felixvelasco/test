@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.resource.SaveOptions;
 
+import com.vectorsf.jvoice.model.base.JVApplication;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
@@ -62,7 +63,8 @@ public class PasteHandler extends AbstractHandler {
 			if (target instanceof JVPackage) {
 				boolean state = getListFromClipboard(contents, JVBean.class) != null;
 				setBaseEnabled(state);
-			} else if (target instanceof JVProject) {
+			} else if (target instanceof JVProject
+					&& !(target instanceof JVApplication)) {
 				boolean state = getListFromClipboard(contents, JVPackage.class) != null;
 				setBaseEnabled(state);
 			} else {
@@ -177,7 +179,8 @@ public class PasteHandler extends AbstractHandler {
 				}
 			}
 
-		} else if (objtarget instanceof JVProject) {
+		} else if (objtarget instanceof JVProject
+				&& !(objtarget instanceof JVApplication)) {
 			JVProject target = (JVProject) objtarget;
 
 			List<JVPackage> packs = getListFromClipboard(contents,
