@@ -7,13 +7,17 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.util.LocalSelectionTransfer;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
+import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
+import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.finders.ContextMenuHelper;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.hamcrest.Matcher;
@@ -31,7 +35,6 @@ import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.hasItem;
@@ -39,7 +42,8 @@ import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-
+import static org.hamcrest.Matchers.nullValue;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createApplicationProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
@@ -57,6 +61,7 @@ public class NavigatorActionsTest {
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
 	public static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.ui.navigator");
+	private SWTBotGefEditor editor;
 
 	/**
 	 * @throws java.lang.Exception
@@ -72,16 +77,18 @@ public class NavigatorActionsTest {
 	@Before
 	public void setUp() throws Exception {
 		final IProject project1 = createProject("testNavigator");
-
+		
 		createFile(project1, BaseModel.JV_PATH + "/several/packages/inside/one.jvflow",
 				getInputStreamResource(bundle, "one.jvflow"));
 		createFile(project1, BaseModel.JV_PATH + "/several/packages/inside/two.jvflow",
 				getInputStreamResource(bundle, "two.jvflow"));
+		createFile(project1, BaseModel.JV_PATH + "/several/packages/inside/newLocution.voiceDsl",
+				getInputStreamResource(bundle, "newLocution.voiceDsl"));
 		createFile(project1, BaseModel.JV_PATH + "/several/packages/inside/here/three.jvflow",
 				getInputStreamResource(bundle, "three.jvflow"));
 		createFile(project1, BaseModel.JV_PATH + "/several/packages/inside/here/four.jvflow",
-				getInputStreamResource(bundle, "four.jvflow"));
-
+				getInputStreamResource(bundle, "four.jvflow"));		
+		
 		UIThreadRunnable.syncExec(new VoidResult() {
 			@Override
 			public void run() {
@@ -115,7 +122,7 @@ public class NavigatorActionsTest {
 	@Test
 	public void testCopyPackage() throws Exception {
 
-		createProject("testNavigator2");
+		createProject("testNavigator2");	
 		bot.sleep(SMALL_SLEEP);
 
 		JVProject project1 = BaseModel.getInstance().getModel().getProject("testNavigator");
@@ -124,12 +131,15 @@ public class NavigatorActionsTest {
 
 		SWTBotTreeItem project1Item = view.bot().tree().getTreeItem("testNavigator");
 		SWTBotTreeItem project2Item = view.bot().tree().getTreeItem("testNavigator2");
+		assertThat(project1Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
 		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
 
-		project1Item.expand().getNode("several.packages.inside.here").contextMenu("Copy").click();
-
+		
+		project1Item.getNode("several.packages.inside.here").select().contextMenu("Copy").click();
+	
 		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(true)));
-		project2Item.contextMenu("Paste").click();
+		
+		project2Item.select().contextMenu("Paste").click();
 
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(project1.getPackage("several.packages.inside.here").getBeans(),
@@ -145,7 +155,7 @@ public class NavigatorActionsTest {
 				both(hasInArrayNamed("three")).and(hasInArrayNamed("four")));
 		assertThat(view.bot().tree().expandNode("testNavigator2", "several.packages.inside.here").getItems(),
 				both(hasInArrayNamed("three")).and(hasInArrayNamed("four")));
-
+		
 	}
 
 	@Test
@@ -245,6 +255,74 @@ public class NavigatorActionsTest {
 		assertThat(two.contextMenu("Delete"), hasProperty("enabled", is(true)));
 		assertThat(two.contextMenu("Copy"), hasProperty("enabled", is(true)));
 	}
+	
+	@Test
+	public void testOpenBean() throws Exception {
+
+		SWTBotTreeItem here = view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("one").select();
+		assertThat(here.contextMenu("Open"), hasProperty("enabled", is(true)));
+
+		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("one").select().contextMenu("Open").click();
+
+		bot.sleep(MEDIUM_SLEEP);
+		editor = getGefEditor();
+		assertThat(editor, is(not(nullValue())));
+		editor.close();
+	//	assertThat(editor, is(nullValue()));
+		
+		here = view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("Input Dsl newLocution").select();
+		assertThat(here.contextMenu("Open"), hasProperty("enabled", is(true)));
+		
+		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("Input Dsl newLocution").select().contextMenu("Open").click();
+		
+		bot.sleep(MEDIUM_SLEEP);
+		
+		SWTBotEditor editor2=bot.activeEditor();
+		
+		assertThat(editor2, is(not(nullValue())));
+		assertThat(editor2, hasProperty("title", is("newLocution.voiceDsl")));
+		
+		
+	}
+	
+	@Test
+	public void testCopyPackageToApplication() throws Exception {
+
+		createApplicationProject("testNavigatorApplication");	
+		bot.sleep(SMALL_SLEEP);
+
+		JVProject project1 = BaseModel.getInstance().getModel().getProject("testNavigator");
+		JVProject project2 = BaseModel.getInstance().getModel().getProject("testNavigatorApplication");
+		assertThat(project2.getPackages(), not(hasPackageNamed("several.packages.inside")));
+
+		SWTBotTreeItem project1Item = view.bot().tree().getTreeItem("testNavigator");
+		SWTBotTreeItem project2Item = view.bot().tree().getTreeItem("testNavigatorApplication application");
+		assertThat(project1Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
+		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
+		
+		project1Item.getNode("several.packages.inside").select().contextMenu("Copy").click();
+	
+		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(true)));
+		
+		project2Item.select().contextMenu("Paste").click();
+
+		bot.sleep(MEDIUM_SLEEP);
+		assertThat(project1.getPackage("several.packages.inside").getBeans(),
+				both(hasBeanNamed("one")).and(hasBeanNamed("two")));
+		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside").getItems(),
+				both(hasInArrayNamed("one")).and(hasInArrayNamed("two")));
+		assertThat(project2.getPackages(), not(hasPackageNamed("several.packages.inside")));
+		
+	}
+	
+	
+	public SWTBotGefEditor getGefEditor() {
+		SWTBotEditor activeEditor = bot.activeEditor();
+		String title = activeEditor.getTitle();
+		SWTBotGefEditor ed = bot.gefEditor(title);
+		return ed;
+	}
+	
 
 	private Matcher<Iterable<? super JVBean>> hasBeanNamed(String name) {
 		Matcher<Iterable<? super JVBean>> hasItem = hasItem(Matchers.<JVBean> hasProperty("name", is(name)));
