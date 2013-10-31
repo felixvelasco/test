@@ -12,11 +12,14 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
+import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.finders.ContextMenuHelper;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
+import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.PlatformUI;
@@ -35,10 +38,12 @@ import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItemInArray;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -62,6 +67,7 @@ public class NavigatorActionsTest {
 	private SWTBotView view;
 	public static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.ui.navigator");
 	private SWTBotGefEditor editor;
+
 
 	/**
 	 * @throws java.lang.Exception
@@ -87,7 +93,7 @@ public class NavigatorActionsTest {
 		createFile(project1, BaseModel.JV_PATH + "/several/packages/inside/here/three.jvflow",
 				getInputStreamResource(bundle, "three.jvflow"));
 		createFile(project1, BaseModel.JV_PATH + "/several/packages/inside/here/four.jvflow",
-				getInputStreamResource(bundle, "four.jvflow"));		
+				getInputStreamResource(bundle, "four.jvflow"));	
 		
 		UIThreadRunnable.syncExec(new VoidResult() {
 			@Override
@@ -268,7 +274,6 @@ public class NavigatorActionsTest {
 		editor = getGefEditor();
 		assertThat(editor, is(not(nullValue())));
 		editor.close();
-	//	assertThat(editor, is(nullValue()));
 		
 		here = view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("Input Dsl newLocution").select();
 		assertThat(here.contextMenu("Open"), hasProperty("enabled", is(true)));
@@ -281,8 +286,7 @@ public class NavigatorActionsTest {
 		
 		assertThat(editor2, is(not(nullValue())));
 		assertThat(editor2, hasProperty("title", is("newLocution.voiceDsl")));
-		
-		
+
 	}
 	
 	@Test
@@ -314,6 +318,115 @@ public class NavigatorActionsTest {
 		assertThat(project2.getPackages(), not(hasPackageNamed("several.packages.inside")));
 		
 	}
+	
+	@Test
+	public void testDeleteBean() throws Exception {
+				
+		JVProject project1 = BaseModel.getInstance().getModel().getProject("testNavigator");
+		assertThat(project1.getPackages(), hasPackageNamed("several.packages.inside"));
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("one"));
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("two"));
+		
+		SWTBotTreeItem project1Item = view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("two").select();
+		
+		assertThat(project1Item.contextMenu("Delete"), hasProperty("enabled", is(true)));
+
+		project1Item.contextMenu("Delete").click();
+
+		bot.sleep(MEDIUM_SLEEP);
+		
+		SWTBot dialogBot=null;
+		bot.shell("Delete").activate();
+		dialogBot = bot.shell("Delete").bot();
+		assertThat(dialogBot.button("OK").isEnabled(), is(true));
+		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
+		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
+		dialogBot.button("Cancel").click();
+		
+		assertThat(project1.getPackage("several.packages.inside").getBeans(),
+				both(hasBeanNamed("one")).and(hasBeanNamed("two")));
+		
+		project1Item.contextMenu("Delete").click();
+		bot.shell("Delete").activate();
+		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
+		dialogBot = bot.shell("Delete").bot();
+		assertThat(dialogBot.button("OK").isEnabled(), is(true));
+		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
+		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
+		dialogBot.button("OK").click();
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+						if (!shellCreate.isOpen()) {
+							return true;
+						}
+						return false;
+					}
+
+					public String getFailureMessage() {
+						return "Was expecting the 'Create' dialog to close itself";
+					}
+				}, 5 * 60 * 1000);
+		
+		bot.sleep(MEDIUM_SLEEP);
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("two")));
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("one"));
+
+	}
+	
+	@Test
+	public void testDeleteTwoBean() throws Exception {
+		
+		JVProject project1 = BaseModel.getInstance().getModel().getProject("testNavigator");
+		assertThat(project1.getPackages(), hasPackageNamed("several.packages.inside.here"));
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("one"));
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("two"));
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("newLocution"));
+		
+		bot.sleep(MEDIUM_SLEEP);
+		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").select("one", "two");
+		new SWTBotMenu(ContextMenuHelper.contextMenu(view.bot().tree(), "Delete")).click();
+		
+		SWTBot dialogBot=null;
+		bot.shell("Delete").activate();
+		dialogBot = bot.shell("Delete").bot();
+		assertThat(dialogBot.button("OK").isEnabled(), is(true));
+		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
+		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
+		dialogBot.button("Cancel").click();
+		
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("two"));
+		
+		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").select("one", "two");
+		new SWTBotMenu(ContextMenuHelper.contextMenu(view.bot().tree(), "Delete")).click();
+		
+		bot.shell("Delete").activate();
+		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
+		dialogBot = bot.shell("Delete").bot();
+		assertThat(dialogBot.button("OK").isEnabled(), is(true));
+		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
+		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
+		dialogBot.button("OK").click();
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+						if (!shellCreate.isOpen()) {
+							return true;
+						}
+						return false;
+					}
+
+					public String getFailureMessage() {
+						return "Was expecting the 'Create' dialog to close itself";
+					}
+				}, 5 * 60 * 1000);
+		
+		bot.sleep(MEDIUM_SLEEP);
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("one")));
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("two")));
+		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("newLocution"));
+	
+
+	}
+	
 	
 	
 	public SWTBotGefEditor getGefEditor() {
