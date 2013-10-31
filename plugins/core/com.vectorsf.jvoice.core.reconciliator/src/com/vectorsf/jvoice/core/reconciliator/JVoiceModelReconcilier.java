@@ -63,16 +63,24 @@ public class JVoiceModelReconcilier {
 	}
 
 	public JVProject createProject(IProject project) {
-		JVProject jvProject = BaseFactory.eINSTANCE.createJVModule();
-		jvProject.setName(project.getName());
-		jvProject.setDescription(project.getName());
+//		JVProject jvProject = BaseFactory.eINSTANCE.createJVModule();
+//		jvProject.setName(project.getName());
+//		jvProject.setDescription(project.getName());
 
+		JVProject jvProject=null;
 		IFolder packageFolder = (IFolder) project.findMember(BaseModel.JV_PATH);
 		if (packageFolder != null) {
 			try {
+				jvProject = BaseFactory.eINSTANCE.createJVModule();
+				jvProject.setName(project.getName());
+				jvProject.setDescription(project.getName());
 				packageFolder.accept(new ResourceVisitor(jvProject, baseModel));
 			} catch (CoreException e) {
 			}
+		}else{
+			jvProject = BaseFactory.eINSTANCE.createJVApplication();
+			jvProject.setName(project.getName());
+			jvProject.setDescription(project.getName());
 		}
 
 		IFolder configurationsFolder = (IFolder) project.findMember(BaseModel.PROPERTIES_PATH);
@@ -91,6 +99,7 @@ public class JVoiceModelReconcilier {
 		return jvProject;
 	}
 	
+	//Este metodo no se esta usando.
 	public JVProject createApplication(IProject project) {
 		JVProject jvApplication = BaseFactory.eINSTANCE.createJVApplication();
 		jvApplication.setName(project.getName());
