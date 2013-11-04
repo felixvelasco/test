@@ -36,15 +36,13 @@ public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
 	@Override
 	public boolean canReconnect(IReconnectionContext context) {
 
-		PictogramElement targetPictogramElement = context
-				.getTargetPictogramElement();
+		PictogramElement targetPictogramElement = context.getTargetPictogramElement();
 
 		Connection connection = context.getConnection();
 		transition = (Transition) getBusinessObjectForPictogramElement(connection);
 		oldTargetState = transition.getSource();
 
-		if (context.getReconnectType().equals(
-				ReconnectionContext.RECONNECT_SOURCE)) {
+		if (context.getReconnectType().equals(ReconnectionContext.RECONNECT_SOURCE)) {
 
 			if (!(targetPictogramElement instanceof ContainerShape)) {
 				return false;
@@ -54,20 +52,21 @@ public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
 
 			State finalState = transition.getTarget();
 
+			if (!(targetBO instanceof State)) {
+				return false;
+			}
+
 			if (((State) targetBO).getId().equals(finalState.getId())) {
 				return false;
 			}
 
 			if (targetBO instanceof MenuState) {
 				return false;
-			} else if (oldTargetState instanceof InputState
-					|| targetBO instanceof InputState) {
+			} else if (oldTargetState instanceof InputState || targetBO instanceof InputState) {
 				return false;
-			} else if (oldTargetState instanceof PromptState
-					|| targetBO instanceof PromptState) {
+			} else if (oldTargetState instanceof PromptState || targetBO instanceof PromptState) {
 				return false;
-			} else if (oldTargetState instanceof SwitchState
-					|| targetBO instanceof SwitchState) {
+			} else if (oldTargetState instanceof SwitchState || targetBO instanceof SwitchState) {
 				return false;
 			} else if (targetBO instanceof FinalState) {
 				return false;
@@ -81,6 +80,7 @@ public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
 			} else {
 				return super.canReconnect(context);
 			}
+
 		}
 
 		if (!(targetPictogramElement instanceof ContainerShape)) {
@@ -88,6 +88,10 @@ public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
 		}
 
 		Object targetBO = getBusinessObjectForPictogramElement(targetPictogramElement);
+
+		if (!(targetBO instanceof State)) {
+			return false;
+		}
 
 		if (targetBO instanceof InitialState) {
 			return false;
@@ -101,8 +105,7 @@ public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
 	}
 
 	private boolean verificaInitial(IReconnectionContext context) {
-		PictogramElement targetPictogramElement = context
-				.getTargetPictogramElement();
+		PictogramElement targetPictogramElement = context.getTargetPictogramElement();
 
 		State targetState = (State) getBusinessObjectForPictogramElement(targetPictogramElement);
 
@@ -116,14 +119,12 @@ public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
 	@Override
 	public void preReconnect(IReconnectionContext context) {
 		Connection connection = context.getConnection();
-		PictogramElement targetPictogramElement = context
-				.getTargetPictogramElement();
+		PictogramElement targetPictogramElement = context.getTargetPictogramElement();
 
 		transition = (Transition) getBusinessObjectForPictogramElement(connection);
 		State targetState = (State) getBusinessObjectForPictogramElement(targetPictogramElement);
 
-		if (context.getReconnectType().equals(
-				ReconnectionContext.RECONNECT_SOURCE)) {
+		if (context.getReconnectType().equals(ReconnectionContext.RECONNECT_SOURCE)) {
 			oldTargetState = transition.getSource();
 			oldTargetState.getOutgoingTransitions().remove(transition);
 			targetState.getOutgoingTransitions().add(transition);
