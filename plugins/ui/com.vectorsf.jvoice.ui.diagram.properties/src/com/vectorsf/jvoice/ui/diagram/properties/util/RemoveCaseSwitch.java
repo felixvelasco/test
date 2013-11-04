@@ -9,9 +9,9 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.features.context.impl.DeleteContext;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.ui.internal.Messages;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.PlatformUI;
@@ -21,6 +21,7 @@ import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
+@SuppressWarnings("restriction")
 public class RemoveCaseSwitch extends RecordingCommand {
 
 	private SwitchState estadoSelection;
@@ -48,14 +49,11 @@ public class RemoveCaseSwitch extends RecordingCommand {
 				}else{
 					Shell activeShell = PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow().getShell();
-					MessageBox dialog = 
-							  new MessageBox(activeShell, SWT.ICON_WARNING | SWT.OK| SWT.CANCEL);
-							dialog.setText("Warning");
-							dialog.setMessage("The transition is active. Do you want to remove it?");
-
-					int returnCode = dialog.open();
 							
-					if (returnCode == SWT.OK){
+					boolean borrado = MessageDialog.openQuestion(activeShell,
+								Messages.DefaultDeleteFeature_5_xfld, "The transition is active. Do you want to remove it?");
+							
+					if (borrado){
 								
 						boolean noBorrado = true;
 						

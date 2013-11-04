@@ -1,0 +1,13 @@
+menuname menuVoice
+
+configuration{
+ //setting variables 
+}
+grammars{
+ // User's grammar 
+ }
+audios{
+ //Code 
+}outputs{
+ patata : "1"
+}

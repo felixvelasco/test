@@ -1,0 +1,13 @@
+menuname otroMenuVoice
+
+configuration{
+ //setting variables 
+}
+grammars{
+ // User's grammar 
+ }
+audios{
+ //Code 
+}outputs{
+ lechuga : "1"
+}

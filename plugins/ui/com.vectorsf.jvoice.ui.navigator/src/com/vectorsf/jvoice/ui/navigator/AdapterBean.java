@@ -36,8 +36,13 @@ public class AdapterBean implements IAdapterFactory {
 
 	private IFile adaptarElemento(Object adaptableObject) {
 		JVBean bean = (JVBean) adaptableObject;
-		IPath path = new Path(bean.eResource().getURI().toPlatformString(true));
-		return ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		if (bean.eResource() != null) {
+			IPath path = new Path(bean.eResource().getURI()
+					.toPlatformString(true));
+			return ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		} else {
+			return null;
+		}
 	}
 
 	@Override

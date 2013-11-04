@@ -31,8 +31,9 @@ public class PropertiesListener implements Listener {
 	private TableViewer tableViewer;
 	private StateSection stateSection;
 	
-	public PropertiesListener(Text nameSubFlow) {
+	public PropertiesListener(StateSection stateSection, Text nameSubFlow) {
 		this.nameSubFlow = nameSubFlow;
+		this.stateSection = stateSection;
 	}
 	
 	public PropertiesListener(StateSection stateSection, TableViewer tableViewer) {

@@ -284,7 +284,7 @@ ITabbedPropertyConstants {
 	    data.left = new FormAttachment(nameSubFlow, 5);
 	    data.top =  new FormAttachment(nameSubFlow, 0,SWT.CENTER);
 	    btEditFlow.setLayoutData(data);
-	    btEditFlow.addListener(SWT.Selection, new PropertiesListener(nameSubFlow));
+	    btEditFlow.addListener(SWT.Selection, new PropertiesListener(this, nameSubFlow));
 	}
 	
     @Override
