@@ -13,7 +13,7 @@ public class JVoiceProjectConfigurator extends AbstractProjectConfigurator
 	public AbstractBuildParticipant getBuildParticipant(IMavenProjectFacade projectFacade, MojoExecution execution,
 		IPluginExecutionMetadata executionMetadata)
 	{
-		return new JVoiceBuildParticipant(execution);
+		return new JVoiceModuleBuildParticipant(execution);
 	}
 
 	@Override

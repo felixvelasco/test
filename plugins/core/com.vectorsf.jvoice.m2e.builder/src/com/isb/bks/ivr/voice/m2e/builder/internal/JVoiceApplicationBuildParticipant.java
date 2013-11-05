@@ -12,9 +12,9 @@ import org.eclipse.m2e.core.embedder.IMaven;
 import org.eclipse.m2e.core.project.configurator.MojoExecutionBuildParticipant;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
-public class JVoiceBuildParticipant extends MojoExecutionBuildParticipant {
+public class JVoiceApplicationBuildParticipant extends MojoExecutionBuildParticipant {
 
-	public JVoiceBuildParticipant(MojoExecution execution) {
+	public JVoiceApplicationBuildParticipant(MojoExecution execution) {
 		super(execution, true);
 	}
 

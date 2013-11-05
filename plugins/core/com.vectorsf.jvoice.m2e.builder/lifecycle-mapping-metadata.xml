@@ -16,5 +16,20 @@
         </configurator>
       </action>
     </pluginExecution>
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>com.vectorsf.jvoice</groupId>
+        <artifactId>application-builder</artifactId>
+        <versionRange>[0.0.1,)</versionRange>
+        <goals>
+          <goal>copyXML</goal>
+        </goals>
+      </pluginExecutionFilter>
+      <action>
+        <configurator>
+          <id>com.isb.bks.ivr.voice.m2e.jVoiceConfigurator</id>
+        </configurator>
+      </action>
+    </pluginExecution>
   </pluginExecutions>
 </lifecycleMappingMetadata>
