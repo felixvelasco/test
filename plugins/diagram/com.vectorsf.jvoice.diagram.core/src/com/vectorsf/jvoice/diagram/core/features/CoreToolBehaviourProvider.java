@@ -29,6 +29,8 @@ import org.eclipse.graphiti.tb.IContextMenuEntry;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
+import com.vectorsf.jvoice.diagram.core.pattern.note.CreateRelationFromPad;
+import com.vectorsf.jvoice.diagram.core.pattern.note.RelationPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.states.OpenEditorFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.CreateTransitionFromPad;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionCallFlowPattern;
@@ -40,9 +42,11 @@ import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
+import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
+import com.vectorsf.jvoice.model.operations.impl.NoteImpl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
@@ -93,13 +97,11 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 		// create a menu-entry in the sub-menu for each custom feature
 		context.putProperty(CONTEXT_MENU_ENTRY, true);
-		ICustomFeature[] customFeatures = getFeatureProvider()
-				.getCustomFeatures(context);
+		ICustomFeature[] customFeatures = getFeatureProvider().getCustomFeatures(context);
 		for (int i = 0; i < customFeatures.length; i++) {
 			ICustomFeature customFeature = customFeatures[i];
 			if (customFeature.isAvailable(context)) {
-				ContextMenuEntry menuEntry = new ContextMenuEntry(
-						customFeature, context);
+				ContextMenuEntry menuEntry = new ContextMenuEntry(customFeature, context);
 				subMenu.add(menuEntry);
 			}
 		}
@@ -109,8 +111,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	}
 
 	@Override
-	public IConnectionSelectionInfo getSelectionInfoForConnection(
-			Connection connection) {
+	public IConnectionSelectionInfo getSelectionInfoForConnection(Connection connection) {
 		IColorConstant lineColor = new ColorConstant("191c26"); //$NON-NLS-1$
 		IConnectionSelectionInfo si = new ConnectionSelectionInfoImpl();
 		si.setColor(lineColor);
@@ -121,14 +122,13 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	}
 
 	@Override
-	protected void setGenericContextButtons(IContextButtonPadData data,
-			PictogramElement pe, int identifiers) {
+	protected void setGenericContextButtons(IContextButtonPadData data, PictogramElement pe, int identifiers) {
 		data.getGenericContextButtons().clear();
 
 		// update button
 		if ((identifiers & CONTEXT_BUTTON_UPDATE) != 0) {
-			IContextButtonEntry updateButton = ContextEntryHelper
-					.createDefaultUpdateContextButton(getFeatureProvider(), pe);
+			IContextButtonEntry updateButton = ContextEntryHelper.createDefaultUpdateContextButton(
+					getFeatureProvider(), pe);
 			if (updateButton != null) {
 				data.getGenericContextButtons().add(updateButton);
 			}
@@ -140,8 +140,8 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 		// delete button
 		if ((identifiers & CONTEXT_BUTTON_DELETE) != 0) {
-			IContextButtonEntry deleteButton = ContextEntryHelper
-					.createDefaultDeleteContextButton(getFeatureProvider(), pe);
+			IContextButtonEntry deleteButton = ContextEntryHelper.createDefaultDeleteContextButton(
+					getFeatureProvider(), pe);
 			if (deleteButton != null) {
 				data.getGenericContextButtons().add(deleteButton);
 			}
@@ -149,31 +149,25 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	}
 
 	@Override
-	public IContextButtonPadData getContextButtonPad(
-			IPictogramElementContext context) {
+	public IContextButtonPadData getContextButtonPad(IPictogramElementContext context) {
 		IContextButtonPadData data = super.getContextButtonPad(context);
 		PictogramElement pe = context.getPictogramElement();
-		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(
-				pe);
+		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
+		ContextButtonEntry button = new ContextButtonEntry(null, context);
 		if (bo instanceof State) {
 			State sta = (State) bo;
 			if (!(sta instanceof FinalState)) {
-				ContextButtonEntry button = new ContextButtonEntry(null,
-						context);
 				ICreateConnectionFeature feature = null;
 				if (sta instanceof SwitchState) {
 					SwitchState switchState = (SwitchState) sta;
 					List<Case> cases = switchState.getCase();
 					if (cases != null) {
-						ContextButtonEntry menuButton = new ContextButtonEntry(
-								null, context);
+						ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
 						menuButton.setText("Transition");
 
 						for (Case cas : cases) {
-							feature = new CreateTransitionFromPad(
-									getFeatureProvider(),
-									new TransitionSwitchPattern(cas,
-											getFeatureProvider()));
+							feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionSwitchPattern(
+									cas, getFeatureProvider()));
 							menuButton.setIconId(getImageFor(sta, feature));
 							menuButton.addDragAndDropFeature(feature);
 						}
@@ -185,24 +179,19 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 					List<Output> outputs = new ArrayList<Output>();
 					VoiceDsl locution = menuState.getLocution();
 					if (locution != null) {
-						Outputs locutionOutputs = menuState.getLocution()
-								.getOutputs();
+						Outputs locutionOutputs = menuState.getLocution().getOutputs();
 						if (locutionOutputs != null) {
 							outputs = locutionOutputs.getOutput();
-							ContextButtonEntry menuButton = new ContextButtonEntry(
-									null, context);
+							ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
 							menuButton.setText("Transition");
 
 							for (Output output : outputs) {
-								feature = new CreateTransitionFromPad(
-										getFeatureProvider(),
-										new TransitionMenuPattern(output,
-												getFeatureProvider()));
+								feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionMenuPattern(
+										output, getFeatureProvider()));
 								menuButton.setIconId(getImageFor(sta, feature));
 								menuButton.addDragAndDropFeature(feature);
 							}
-							data.getDomainSpecificContextButtons().add(
-									menuButton);
+							data.getDomainSpecificContextButtons().add(menuButton);
 						}
 					}
 
@@ -212,16 +201,13 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 					if (states != null) {
 
-						ContextButtonEntry menuButton = new ContextButtonEntry(
-								null, context);
+						ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
 						menuButton.setText("Transition");
 
 						for (State state : states) {
 							if (state instanceof FinalState) {
-								feature = new CreateTransitionFromPad(
-										getFeatureProvider(),
-										new TransitionCallFlowPattern(state,
-												getFeatureProvider()));
+								feature = new CreateTransitionFromPad(getFeatureProvider(),
+										new TransitionCallFlowPattern(state, getFeatureProvider()));
 								menuButton.setIconId(getImageFor(sta, feature));
 								menuButton.addDragAndDropFeature(feature);
 							}
@@ -230,8 +216,8 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 					}
 
 				} else {
-					feature = new CreateTransitionFromPad(getFeatureProvider(),
-							new TransitionPattern(getFeatureProvider()));
+					feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionPattern(
+							getFeatureProvider()));
 					button.setText(feature.getCreateName());
 					button.setDescription(feature.getCreateDescription());
 					button.setIconId(getImageFor(sta, feature));
@@ -241,7 +227,20 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 				}
 
 			}
+
+		} else if (bo instanceof NoteImpl) {
+			Note note = (Note) bo;
+			ICreateConnectionFeature feature = null;
+			feature = new CreateRelationFromPad(getFeatureProvider(), new RelationPattern(getFeatureProvider()));
+			button.setText(feature.getCreateName());
+			button.setDescription(feature.getCreateDescription());
+			button.setIconId(feature.getCreateImageId());
+			button.addDragAndDropFeature(feature);
+
+			data.getDomainSpecificContextButtons().add(button);
+
 		}
+
 		return data;
 	}
 
@@ -250,18 +249,16 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		return feature.getCreateImageId();
 	}
 
-	public IDirectEditingFeature getDirectEditingFeature(
-			IDirectEditingContext context) {
+	public IDirectEditingFeature getDirectEditingFeature(IDirectEditingContext context) {
 		return null;
 	}
 
 	@Override
 	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
-		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(
-				context.getInnerPictogramElement());
+		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(context.getInnerPictogramElement());
 
-		if (bo instanceof CallFlowState || bo instanceof InputState
-				|| bo instanceof MenuState || bo instanceof PromptState) {
+		if (bo instanceof CallFlowState || bo instanceof InputState || bo instanceof MenuState
+				|| bo instanceof PromptState) {
 
 			return new OpenEditorFeature(getFeatureProvider());
 		}

@@ -13,6 +13,7 @@ import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.MenuState;
+import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.PromptState;
@@ -151,6 +152,13 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass noteEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum typeTransferEEnum = null;
 
 	/**
@@ -249,6 +257,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getState_Notes() {
+		return (EReference)stateEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTransition() {
 		return transitionEClass;
 	}
@@ -305,6 +322,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 */
 	public EReference getFlow_Transitions() {
 		return (EReference)flowEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFlow_Notes() {
+		return (EReference)flowEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -519,6 +545,42 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getNote() {
+		return noteEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNote_Description() {
+		return (EAttribute)noteEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNote_ReferencedStates() {
+		return (EReference)noteEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNote_Name() {
+		return (EAttribute)noteEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getTypeTransfer() {
 		return typeTransferEEnum;
 	}
@@ -554,6 +616,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		stateEClass = createEClass(STATE);
 		createEReference(stateEClass, STATE__INCOMING_TRANSITIONS);
 		createEReference(stateEClass, STATE__OUTGOING_TRANSITIONS);
+		createEReference(stateEClass, STATE__NOTES);
 
 		transitionEClass = createEClass(TRANSITION);
 		createEReference(transitionEClass, TRANSITION__SOURCE);
@@ -563,6 +626,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		flowEClass = createEClass(FLOW);
 		createEReference(flowEClass, FLOW__STATES);
 		createEReference(flowEClass, FLOW__TRANSITIONS);
+		createEReference(flowEClass, FLOW__NOTES);
 
 		initialStateEClass = createEClass(INITIAL_STATE);
 
@@ -598,6 +662,11 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEAttribute(transferStateEClass, TRANSFER_STATE__TYPE_TRANSFER);
 
 		recordStateEClass = createEClass(RECORD_STATE);
+
+		noteEClass = createEClass(NOTE);
+		createEAttribute(noteEClass, NOTE__DESCRIPTION);
+		createEReference(noteEClass, NOTE__REFERENCED_STATES);
+		createEAttribute(noteEClass, NOTE__NAME);
 
 		// Create enums
 		typeTransferEEnum = createEEnum(TYPE_TRANSFER);
@@ -649,11 +718,13 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		locutionStateEClass.getESuperTypes().add(this.getState());
 		transferStateEClass.getESuperTypes().add(this.getState());
 		recordStateEClass.getESuperTypes().add(this.getState());
+		noteEClass.getESuperTypes().add(theBasePackage.getJVElement());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(stateEClass, State.class, "State", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getState_IncomingTransitions(), this.getTransition(), this.getTransition_Target(), "incomingTransitions", null, 1, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getState_OutgoingTransitions(), this.getTransition(), this.getTransition_Source(), "outgoingTransitions", null, 1, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getState_Notes(), this.getNote(), this.getNote_ReferencedStates(), "notes", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTransition_Source(), this.getState(), this.getState_OutgoingTransitions(), "source", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -663,6 +734,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEClass(flowEClass, Flow.class, "Flow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFlow_States(), this.getState(), null, "states", null, 1, -1, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFlow_Transitions(), this.getTransition(), null, "transitions", null, 1, 4, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFlow_Notes(), this.getNote(), null, "notes", null, 0, -1, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(initialStateEClass, InitialState.class, "InitialState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -700,6 +772,11 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEAttribute(getTransferState_TypeTransfer(), this.getTypeTransfer(), "typeTransfer", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(recordStateEClass, RecordState.class, "RecordState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(noteEClass, Note.class, "Note", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getNote_Description(), ecorePackage.getEString(), "description", null, 0, 1, Note.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNote_ReferencedStates(), this.getState(), this.getState_Notes(), "referencedStates", null, 0, -1, Note.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNote_Name(), ecorePackage.getEString(), "name", null, 0, 1, Note.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(typeTransferEEnum, TypeTransfer.class, "TypeTransfer");

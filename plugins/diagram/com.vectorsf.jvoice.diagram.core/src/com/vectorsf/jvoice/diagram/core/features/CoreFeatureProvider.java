@@ -29,6 +29,7 @@ import com.vectorsf.jvoice.diagram.core.features.editing.StatesPasteFeature;
 import com.vectorsf.jvoice.diagram.core.features.editing.TextEventDirectEditFeature;
 import com.vectorsf.jvoice.diagram.core.features.editing.TransitionsDeleteFeature;
 import com.vectorsf.jvoice.diagram.core.features.editing.TransitionsUpdateFeature;
+import com.vectorsf.jvoice.diagram.core.pattern.note.RelationPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.ReconnectTransitionFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
@@ -38,14 +39,13 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 
 	public CoreFeatureProvider(IDiagramTypeProvider dtp) {
 		super(dtp);
-		IConfigurationElement[] config = Platform.getExtensionRegistry()
-				.getConfigurationElementsFor(PATTERN_EXTENSIONS_ID);
+		IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(
+				PATTERN_EXTENSIONS_ID);
 
 		try {
 			for (IConfigurationElement configEl : config) {
 				Object o;
-				o = configEl
-						.createExecutableExtension("patternContributorClass");
+				o = configEl.createExecutableExtension("patternContributorClass");
 				if (o instanceof IPattern) {
 					IPattern patternContributor = (IPattern) o;
 					addPattern(patternContributor);
@@ -54,20 +54,18 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 		} catch (CoreException e) {
 			Logger logger = Activator.getLogger();
 			if (logger != null) {
-				logger.log(
-						LogService.LOG_ERROR,
-						"CoreFeatureProvider::CoreFeatureProvider, Error adding patterns",
-						e);
+				logger.log(LogService.LOG_ERROR, "CoreFeatureProvider::CoreFeatureProvider, Error adding patterns", e);
 			}
 		}
+
+		addConnectionPattern(new RelationPattern(this));
 		addConnectionPattern(new TransitionPattern(this));
 		addConnectionPattern(new TransitionSwitchPattern(this));
 
 	}
 
 	@Override
-	public IDirectEditingFeature getDirectEditingFeature(
-			IDirectEditingContext context) {
+	public IDirectEditingFeature getDirectEditingFeature(IDirectEditingContext context) {
 		PictogramElement pe = context.getPictogramElement();
 		if (pe instanceof ConnectionDecorator) {
 			return new TextEventDirectEditFeature(this);
@@ -97,8 +95,7 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 	}
 
 	@Override
-	public IReconnectionFeature getReconnectionFeature(
-			IReconnectionContext context) {
+	public IReconnectionFeature getReconnectionFeature(IReconnectionContext context) {
 
 		return new ReconnectTransitionFeature(this);
 	}

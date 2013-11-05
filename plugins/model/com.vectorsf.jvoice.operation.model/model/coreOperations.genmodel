@@ -11,6 +11,7 @@
     <genClasses image="false" ecoreClass="coreOperations.ecore#//State">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//State/incomingTransitions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//State/outgoingTransitions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//State/notes"/>
     </genClasses>
     <genClasses ecoreClass="coreOperations.ecore#//Transition">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Transition/source"/>
@@ -20,11 +21,15 @@
     <genClasses ecoreClass="coreOperations.ecore#//Flow">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Flow/states"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Flow/transitions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Flow/notes"/>
     </genClasses>
     <genClasses ecoreClass="coreOperations.ecore#//InitialState"/>
     <genClasses ecoreClass="coreOperations.ecore#//FinalState"/>
     <genClasses ecoreClass="coreOperations.ecore#//SwitchState">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference coreOperations.ecore#//SwitchState/case"/>
+      <genOperations ecoreOperation="coreOperations.ecore#//SwitchState/getCase">
+        <genParameters ecoreParameter="coreOperations.ecore#//SwitchState/getCase/name"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="coreOperations.ecore#//Case">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//Case/condition"/>
@@ -34,14 +39,16 @@
     <genClasses ecoreClass="coreOperations.ecore#//CallFlowState">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//CallFlowState/subflow"/>
     </genClasses>
-    <genClasses ecoreClass="coreOperations.ecore#//PromptState">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//PromptState/locution"/>
+    <genClasses ecoreClass="coreOperations.ecore#//PromptState"/>
+    <genClasses ecoreClass="coreOperations.ecore#//InputState"/>
+    <genClasses ecoreClass="coreOperations.ecore#//MenuState"/>
+    <genClasses image="false" ecoreClass="coreOperations.ecore#//LocutionState">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//LocutionState/locution"/>
     </genClasses>
-    <genClasses ecoreClass="coreOperations.ecore#//InputState">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//InputState/locution"/>
-    </genClasses>
-    <genClasses ecoreClass="coreOperations.ecore#//MenuState">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//MenuState/locution"/>
+    <genClasses ecoreClass="coreOperations.ecore#//Note">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//Note/description"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Note/referencedStates"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//Note/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

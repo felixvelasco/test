@@ -4,8 +4,8 @@ package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.TransferState;
-
 import com.vectorsf.jvoice.model.operations.TypeTransfer;
+
 import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;

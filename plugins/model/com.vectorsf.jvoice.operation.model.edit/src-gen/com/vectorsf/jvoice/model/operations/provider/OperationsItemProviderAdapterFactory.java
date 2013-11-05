@@ -371,6 +371,29 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.Note} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NoteItemProvider noteItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.Note}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNoteAdapter() {
+		if (noteItemProvider == null) {
+			noteItemProvider = new NoteItemProvider(this);
+		}
+
+		return noteItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -482,6 +505,7 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 		if (menuStateItemProvider != null) menuStateItemProvider.dispose();
 		if (transferStateItemProvider != null) transferStateItemProvider.dispose();
 		if (recordStateItemProvider != null) recordStateItemProvider.dispose();
+		if (noteItemProvider != null) noteItemProvider.dispose();
 	}
 
 }

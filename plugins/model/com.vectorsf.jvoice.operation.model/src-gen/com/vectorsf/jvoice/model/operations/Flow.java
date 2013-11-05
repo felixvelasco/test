@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getStates <em>States</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getTransitions <em>Transitions</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getNotes <em>Notes</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,5 +56,21 @@ public interface Flow extends JVBean {
 	 * @generated
 	 */
 	EList<Transition> getTransitions();
+
+	/**
+	 * Returns the value of the '<em><b>Notes</b></em>' containment reference list.
+	 * The list contents are of type {@link com.vectorsf.jvoice.model.operations.Note}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Notes</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Notes</em>' containment reference list.
+	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getFlow_Notes()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Note> getNotes();
 
 } // Flow

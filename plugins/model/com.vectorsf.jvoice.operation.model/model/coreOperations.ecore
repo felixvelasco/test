@@ -7,6 +7,8 @@
         upperBound="-1" eType="#//Transition" eOpposite="#//Transition/target"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" lowerBound="1"
         upperBound="-1" eType="#//Transition" eOpposite="#//Transition/source"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="notes" eType="#//Note"
+        eOpposite="#//Note/referencedStates"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//JVElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
@@ -20,6 +22,8 @@
         upperBound="-1" eType="#//State" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" lowerBound="1"
         upperBound="4" eType="#//Transition" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="notes" upperBound="-1"
+        eType="#//Note" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InitialState" eSuperTypes="#//State"/>
   <eClassifiers xsi:type="ecore:EClass" name="FinalState" eSuperTypes="#//State"/>
@@ -59,5 +63,11 @@
     <eLiterals name="blind"/>
     <eLiterals name="consultation" value="1"/>
     <eLiterals name="bridge" value="2" literal="bridge"/>
+  </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Note" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//JVElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedStates" upperBound="-1"
+        eType="#//State" containment="true" eOpposite="#//State/notes"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

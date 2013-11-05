@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.State#getIncomingTransitions <em>Incoming Transitions</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.State#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.State#getNotes <em>Notes</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,5 +60,33 @@ public interface State extends NamedElement {
 	 * @generated
 	 */
 	EList<Transition> getOutgoingTransitions();
+
+	/**
+	 * Returns the value of the '<em><b>Notes</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.model.operations.Note#getReferencedStates <em>Referenced States</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Notes</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Notes</em>' container reference.
+	 * @see #setNotes(Note)
+	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getState_Notes()
+	 * @see com.vectorsf.jvoice.model.operations.Note#getReferencedStates
+	 * @model opposite="referencedStates" transient="false"
+	 * @generated
+	 */
+	Note getNotes();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.model.operations.State#getNotes <em>Notes</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Notes</em>' container reference.
+	 * @see #getNotes()
+	 * @generated
+	 */
+	void setNotes(Note value);
 
 } // State

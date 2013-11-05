@@ -116,13 +116,22 @@ public interface OperationsPackage extends EPackage {
 	int STATE__OUTGOING_TRANSITIONS = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE__NOTES = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATE_FEATURE_COUNT = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 2;
+	int STATE_FEATURE_COUNT = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>State</em>' class.
@@ -262,13 +271,22 @@ public interface OperationsPackage extends EPackage {
 	int FLOW__TRANSITIONS = BasePackage.JV_BEAN_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Notes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLOW__NOTES = BasePackage.JV_BEAN_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Flow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FLOW_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 2;
+	int FLOW_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Flow</em>' class.
@@ -333,6 +351,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int INITIAL_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INITIAL_STATE__NOTES = STATE__NOTES;
 
 	/**
 	 * The number of structural features of the '<em>Initial State</em>' class.
@@ -408,6 +435,15 @@ public interface OperationsPackage extends EPackage {
 	int FINAL_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
 
 	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FINAL_STATE__NOTES = STATE__NOTES;
+
+	/**
 	 * The number of structural features of the '<em>Final State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -479,6 +515,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int SWITCH_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_STATE__NOTES = STATE__NOTES;
 
 	/**
 	 * The feature id for the '<em><b>Case</b></em>' containment reference list.
@@ -618,6 +663,15 @@ public interface OperationsPackage extends EPackage {
 	int CALL_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
 
 	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_STATE__NOTES = STATE__NOTES;
+
+	/**
 	 * The number of structural features of the '<em>Call State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -689,6 +743,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int CALL_FLOW_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE__NOTES = STATE__NOTES;
 
 	/**
 	 * The feature id for the '<em><b>Subflow</b></em>' reference.
@@ -773,6 +836,15 @@ public interface OperationsPackage extends EPackage {
 	int LOCUTION_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
 
 	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCUTION_STATE__NOTES = STATE__NOTES;
+
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -853,6 +925,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROMPT_STATE__OUTGOING_TRANSITIONS = LOCUTION_STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE__NOTES = LOCUTION_STATE__NOTES;
 
 	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
@@ -937,6 +1018,15 @@ public interface OperationsPackage extends EPackage {
 	int INPUT_STATE__OUTGOING_TRANSITIONS = LOCUTION_STATE__OUTGOING_TRANSITIONS;
 
 	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE__NOTES = LOCUTION_STATE__NOTES;
+
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1019,6 +1109,15 @@ public interface OperationsPackage extends EPackage {
 	int MENU_STATE__OUTGOING_TRANSITIONS = LOCUTION_STATE__OUTGOING_TRANSITIONS;
 
 	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__NOTES = LOCUTION_STATE__NOTES;
+
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1099,6 +1198,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRANSFER_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE__NOTES = STATE__NOTES;
 
 	/**
 	 * The feature id for the '<em><b>Destination</b></em>' attribute.
@@ -1219,6 +1327,15 @@ public interface OperationsPackage extends EPackage {
 	int RECORD_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
 
 	/**
+	 * The feature id for the '<em><b>Notes</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE__NOTES = STATE__NOTES;
+
+	/**
 	 * The number of structural features of the '<em>Record State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1237,6 +1354,70 @@ public interface OperationsPackage extends EPackage {
 	int RECORD_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.NoteImpl <em>Note</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.impl.NoteImpl
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getNote()
+	 * @generated
+	 */
+	int NOTE = 15;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTE__ID = BasePackage.JV_ELEMENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTE__DESCRIPTION = BasePackage.JV_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Referenced States</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTE__REFERENCED_STATES = BasePackage.JV_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTE__NAME = BasePackage.JV_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Note</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTE_FEATURE_COUNT = BasePackage.JV_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Note</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOTE_OPERATION_COUNT = BasePackage.JV_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1244,7 +1425,7 @@ public interface OperationsPackage extends EPackage {
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTypeTransfer()
 	 * @generated
 	 */
-	int TYPE_TRANSFER = 15;
+	int TYPE_TRANSFER = 16;
 
 
 	/**
@@ -1278,6 +1459,17 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getState_OutgoingTransitions();
+
+	/**
+	 * Returns the meta object for the container reference '{@link com.vectorsf.jvoice.model.operations.State#getNotes <em>Notes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Notes</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.State#getNotes()
+	 * @see #getState()
+	 * @generated
+	 */
+	EReference getState_Notes();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Transition <em>Transition</em>}'.
@@ -1353,6 +1545,17 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getFlow_Transitions();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.operations.Flow#getNotes <em>Notes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Notes</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.Flow#getNotes()
+	 * @see #getFlow()
+	 * @generated
+	 */
+	EReference getFlow_Notes();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.InitialState <em>Initial State</em>}'.
@@ -1595,6 +1798,49 @@ public interface OperationsPackage extends EPackage {
 	EClass getRecordState();
 
 	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Note <em>Note</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Note</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.Note
+	 * @generated
+	 */
+	EClass getNote();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.Note#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.Note#getDescription()
+	 * @see #getNote()
+	 * @generated
+	 */
+	EAttribute getNote_Description();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.operations.Note#getReferencedStates <em>Referenced States</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Referenced States</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.Note#getReferencedStates()
+	 * @see #getNote()
+	 * @generated
+	 */
+	EReference getNote_ReferencedStates();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.Note#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.Note#getName()
+	 * @see #getNote()
+	 * @generated
+	 */
+	EAttribute getNote_Name();
+
+	/**
 	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1652,6 +1898,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STATE__OUTGOING_TRANSITIONS = eINSTANCE.getState_OutgoingTransitions();
+
+		/**
+		 * The meta object literal for the '<em><b>Notes</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STATE__NOTES = eINSTANCE.getState_Notes();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.TransitionImpl <em>Transition</em>}' class.
@@ -1712,6 +1966,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference FLOW__TRANSITIONS = eINSTANCE.getFlow_Transitions();
+
+		/**
+		 * The meta object literal for the '<em><b>Notes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FLOW__NOTES = eINSTANCE.getFlow_Notes();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.InitialStateImpl <em>Initial State</em>}' class.
@@ -1920,6 +2182,40 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass RECORD_STATE = eINSTANCE.getRecordState();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.NoteImpl <em>Note</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.impl.NoteImpl
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getNote()
+		 * @generated
+		 */
+		EClass NOTE = eINSTANCE.getNote();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTE__DESCRIPTION = eINSTANCE.getNote_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Referenced States</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NOTE__REFERENCED_STATES = eINSTANCE.getNote_ReferencedStates();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NOTE__NAME = eINSTANCE.getNote_Name();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}' enum.

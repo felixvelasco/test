@@ -61,6 +61,7 @@ public class StateItemProvider
 
 			addIncomingTransitionsPropertyDescriptor(object);
 			addOutgoingTransitionsPropertyDescriptor(object);
+			addNotesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -101,6 +102,28 @@ public class StateItemProvider
 				 getString("_UI_State_outgoingTransitions_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_State_outgoingTransitions_feature", "_UI_State_type"),
 				 OperationsPackage.Literals.STATE__OUTGOING_TRANSITIONS,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Notes feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNotesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_State_notes_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_State_notes_feature", "_UI_State_type"),
+				 OperationsPackage.Literals.STATE__NOTES,
 				 true,
 				 false,
 				 true,

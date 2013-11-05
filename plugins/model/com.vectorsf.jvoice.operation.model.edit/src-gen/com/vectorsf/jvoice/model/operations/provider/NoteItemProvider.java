@@ -3,7 +3,9 @@
 package com.vectorsf.jvoice.model.operations.provider;
 
 
-import com.vectorsf.jvoice.model.operations.Case;
+import com.vectorsf.jvoice.model.base.provider.JVElementItemProvider;
+
+import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 import java.util.Collection;
@@ -22,17 +24,16 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link com.vectorsf.jvoice.model.operations.Case} object.
+ * This is the item provider adapter for a {@link com.vectorsf.jvoice.model.operations.Note} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class CaseItemProvider
-	extends ItemProviderAdapter
+public class NoteItemProvider
+	extends JVElementItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -45,7 +46,7 @@ public class CaseItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CaseItemProvider(AdapterFactory adapterFactory) {
+	public NoteItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,26 +61,27 @@ public class CaseItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addConditionPropertyDescriptor(object);
-			addEventNamePropertyDescriptor(object);
+			addDescriptionPropertyDescriptor(object);
+			addReferencedStatesPropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Condition feature.
+	 * This adds a property descriptor for the Description feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addConditionPropertyDescriptor(Object object) {
+	protected void addDescriptionPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Case_condition_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Case_condition_feature", "_UI_Case_type"),
-				 OperationsPackage.Literals.CASE__CONDITION,
+				 getString("_UI_Note_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Note_description_feature", "_UI_Note_type"),
+				 OperationsPackage.Literals.NOTE__DESCRIPTION,
 				 true,
 				 false,
 				 false,
@@ -89,19 +91,41 @@ public class CaseItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Event Name feature.
+	 * This adds a property descriptor for the Referenced States feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addEventNamePropertyDescriptor(Object object) {
+	protected void addReferencedStatesPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Case_eventName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Case_eventName_feature", "_UI_Case_type"),
-				 OperationsPackage.Literals.CASE__EVENT_NAME,
+				 getString("_UI_Note_referencedStates_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Note_referencedStates_feature", "_UI_Note_type"),
+				 OperationsPackage.Literals.NOTE__REFERENCED_STATES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Note_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Note_name_feature", "_UI_Note_type"),
+				 OperationsPackage.Literals.NOTE__NAME,
 				 true,
 				 false,
 				 false,
@@ -111,14 +135,14 @@ public class CaseItemProvider
 	}
 
 	/**
-	 * This returns Case.gif.
+	 * This returns Note.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Case"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Note"));
 	}
 
 	/**
@@ -129,10 +153,10 @@ public class CaseItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Case)object).getEventName();
+		String label = ((Note)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Case_type") :
-			getString("_UI_Case_type") + " " + label;
+			getString("_UI_Note_type") :
+			getString("_UI_Note_type") + " " + label;
 	}
 
 	/**
@@ -146,9 +170,9 @@ public class CaseItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Case.class)) {
-			case OperationsPackage.CASE__CONDITION:
-			case OperationsPackage.CASE__EVENT_NAME:
+		switch (notification.getFeatureID(Note.class)) {
+			case OperationsPackage.NOTE__DESCRIPTION:
+			case OperationsPackage.NOTE__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

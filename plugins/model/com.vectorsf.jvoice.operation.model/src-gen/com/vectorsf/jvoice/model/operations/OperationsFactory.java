@@ -139,6 +139,15 @@ public interface OperationsFactory extends EFactory {
 	RecordState createRecordState();
 
 	/**
+	 * Returns a new object of class '<em>Note</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Note</em>'.
+	 * @generated
+	 */
+	Note createNote();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

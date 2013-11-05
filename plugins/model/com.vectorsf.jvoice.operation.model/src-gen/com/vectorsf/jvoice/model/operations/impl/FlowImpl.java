@@ -5,6 +5,7 @@ package com.vectorsf.jvoice.model.operations.impl;
 import com.vectorsf.jvoice.model.base.impl.JVBeanImpl;
 
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getStates <em>States</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getTransitions <em>Transitions</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getNotes <em>Notes</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,6 +57,16 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 	 * @ordered
 	 */
 	protected EList<Transition> transitions;
+
+	/**
+	 * The cached value of the '{@link #getNotes() <em>Notes</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNotes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Note> notes;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -104,6 +116,18 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Note> getNotes() {
+		if (notes == null) {
+			notes = new EObjectContainmentEList<Note>(Note.class, this, OperationsPackage.FLOW__NOTES);
+		}
+		return notes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -111,6 +135,8 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 				return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
 			case OperationsPackage.FLOW__TRANSITIONS:
 				return ((InternalEList<?>)getTransitions()).basicRemove(otherEnd, msgs);
+			case OperationsPackage.FLOW__NOTES:
+				return ((InternalEList<?>)getNotes()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -127,6 +153,8 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 				return getStates();
 			case OperationsPackage.FLOW__TRANSITIONS:
 				return getTransitions();
+			case OperationsPackage.FLOW__NOTES:
+				return getNotes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -148,6 +176,10 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 				getTransitions().clear();
 				getTransitions().addAll((Collection<? extends Transition>)newValue);
 				return;
+			case OperationsPackage.FLOW__NOTES:
+				getNotes().clear();
+				getNotes().addAll((Collection<? extends Note>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -166,6 +198,9 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 			case OperationsPackage.FLOW__TRANSITIONS:
 				getTransitions().clear();
 				return;
+			case OperationsPackage.FLOW__NOTES:
+				getNotes().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -182,6 +217,8 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 				return states != null && !states.isEmpty();
 			case OperationsPackage.FLOW__TRANSITIONS:
 				return transitions != null && !transitions.isEmpty();
+			case OperationsPackage.FLOW__NOTES:
+				return notes != null && !notes.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
