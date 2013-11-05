@@ -47,4 +47,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="LocutionState" abstract="true" eSuperTypes="#//State">
     <eStructuralFeatures xsi:type="ecore:EReference" name="locution" eType="ecore:EClass ../../com.vectorsf.jvoice.prompt.model/model/VoiceDsl.ecore#//VoiceDsl"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TransferState" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RecordState" eSuperTypes="#//State"/>
 </ecore:EPackage>

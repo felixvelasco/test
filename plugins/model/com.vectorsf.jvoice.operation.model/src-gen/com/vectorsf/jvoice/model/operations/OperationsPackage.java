@@ -1046,6 +1046,154 @@ public interface OperationsPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.TransferStateImpl <em>Transfer State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.impl.TransferStateImpl
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTransferState()
+	 * @generated
+	 */
+	int TRANSFER_STATE = 13;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE__ID = STATE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE__NAME = STATE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE__DESCRIPTION = STATE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The number of structural features of the '<em>Transfer State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Transfer State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.RecordStateImpl <em>Record State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.impl.RecordStateImpl
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getRecordState()
+	 * @generated
+	 */
+	int RECORD_STATE = 14;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE__ID = STATE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE__NAME = STATE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE__DESCRIPTION = STATE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The number of structural features of the '<em>Record State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Record State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.State <em>State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1318,6 +1466,26 @@ public interface OperationsPackage extends EPackage {
 	EReference getLocutionState_Locution();
 
 	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.TransferState <em>Transfer State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Transfer State</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.TransferState
+	 * @generated
+	 */
+	EClass getTransferState();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.RecordState <em>Record State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Record State</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.RecordState
+	 * @generated
+	 */
+	EClass getRecordState();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1573,6 +1741,26 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference LOCUTION_STATE__LOCUTION = eINSTANCE.getLocutionState_Locution();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.TransferStateImpl <em>Transfer State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.impl.TransferStateImpl
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTransferState()
+		 * @generated
+		 */
+		EClass TRANSFER_STATE = eINSTANCE.getTransferState();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.RecordStateImpl <em>Record State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.impl.RecordStateImpl
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getRecordState()
+		 * @generated
+		 */
+		EClass RECORD_STATE = eINSTANCE.getRecordState();
 
 	}
 

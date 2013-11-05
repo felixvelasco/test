@@ -121,6 +121,24 @@ public interface OperationsFactory extends EFactory {
 	MenuState createMenuState();
 
 	/**
+	 * Returns a new object of class '<em>Transfer State</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Transfer State</em>'.
+	 * @generated
+	 */
+	TransferState createTransferState();
+
+	/**
+	 * Returns a new object of class '<em>Record State</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Record State</em>'.
+	 * @generated
+	 */
+	RecordState createRecordState();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

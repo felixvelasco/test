@@ -16,8 +16,10 @@ import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.PromptState;
+import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
+import com.vectorsf.jvoice.model.operations.TransferState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
@@ -127,6 +129,20 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * @generated
 	 */
 	private EClass locutionStateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass transferStateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass recordStateEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -431,6 +447,24 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTransferState() {
+		return transferStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRecordState() {
+		return recordStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public OperationsFactory getOperationsFactory() {
 		return (OperationsFactory)getEFactoryInstance();
 	}
@@ -492,6 +526,10 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		locutionStateEClass = createEClass(LOCUTION_STATE);
 		createEReference(locutionStateEClass, LOCUTION_STATE__LOCUTION);
+
+		transferStateEClass = createEClass(TRANSFER_STATE);
+
+		recordStateEClass = createEClass(RECORD_STATE);
 	}
 
 	/**
@@ -538,6 +576,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		inputStateEClass.getESuperTypes().add(this.getLocutionState());
 		menuStateEClass.getESuperTypes().add(this.getLocutionState());
 		locutionStateEClass.getESuperTypes().add(this.getState());
+		transferStateEClass.getESuperTypes().add(this.getState());
+		recordStateEClass.getESuperTypes().add(this.getState());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(stateEClass, State.class, "State", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -580,6 +620,10 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		initEClass(locutionStateEClass, LocutionState.class, "LocutionState", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getLocutionState_Locution(), theVoiceDslPackage.getVoiceDsl(), null, "locution", null, 0, 1, LocutionState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(transferStateEClass, TransferState.class, "TransferState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(recordStateEClass, RecordState.class, "RecordState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

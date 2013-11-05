@@ -124,6 +124,14 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 				return createLocutionStateAdapter();
 			}
 			@Override
+			public Adapter caseTransferState(TransferState object) {
+				return createTransferStateAdapter();
+			}
+			@Override
+			public Adapter caseRecordState(RecordState object) {
+				return createRecordStateAdapter();
+			}
+			@Override
 			public Adapter caseJVElement(JVElement object) {
 				return createJVElementAdapter();
 			}
@@ -334,6 +342,34 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createLocutionStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.operations.TransferState <em>Transfer State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.operations.TransferState
+	 * @generated
+	 */
+	public Adapter createTransferStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.operations.RecordState <em>Record State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.operations.RecordState
+	 * @generated
+	 */
+	public Adapter createRecordStateAdapter() {
 		return null;
 	}
 

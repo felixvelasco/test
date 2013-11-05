@@ -68,6 +68,18 @@
                id="graphiti.main.tab.emfclass.transition"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.TransferStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.TransferStateFilter"
+               id="graphiti.main.tab.emfclass.transferState"
+               tab="graphiti.main.tab.jvoice.operation.state.main">
+         </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.RecordStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.RecordStateFilter"
+               id="graphiti.main.tab.emfclass.recordState"
+               tab="graphiti.main.tab.jvoice.operation.state.main">
+         </propertySection>
       </propertySections>
    </extension>
    <extension

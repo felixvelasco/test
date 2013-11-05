@@ -67,6 +67,8 @@ public class OperationsFactoryImpl extends EFactoryImpl implements OperationsFac
 			case OperationsPackage.PROMPT_STATE: return createPromptState();
 			case OperationsPackage.INPUT_STATE: return createInputState();
 			case OperationsPackage.MENU_STATE: return createMenuState();
+			case OperationsPackage.TRANSFER_STATE: return createTransferState();
+			case OperationsPackage.RECORD_STATE: return createRecordState();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -180,6 +182,26 @@ public class OperationsFactoryImpl extends EFactoryImpl implements OperationsFac
 	public MenuState createMenuState() {
 		MenuStateImpl menuState = new MenuStateImpl();
 		return menuState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TransferState createTransferState() {
+		TransferStateImpl transferState = new TransferStateImpl();
+		return transferState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RecordState createRecordState() {
+		RecordStateImpl recordState = new RecordStateImpl();
+		return recordState;
 	}
 
 	/**

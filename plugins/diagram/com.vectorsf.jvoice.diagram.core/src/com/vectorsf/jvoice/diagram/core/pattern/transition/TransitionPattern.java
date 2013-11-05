@@ -164,7 +164,7 @@ public class TransitionPattern extends AbstractConnectionPattern {
 			State initialSource = (State) boSource;
 			if (!(finalTarget instanceof InitialState)) {
 				if (!(initialSource instanceof InitialState && initialSource.getOutgoingTransitions().size() > 0)) {
-					if (!initialSource.getId().equals(finalTarget.getId())) {
+					if (initialSource != finalTarget) {
 						return true;
 					} else {
 						return false;

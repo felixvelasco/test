@@ -59,6 +59,12 @@
      <patternContributor
            patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.MenuStatePattern">
      </patternContributor>
+     <patternContributor
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.TransferStatePattern">
+     </patternContributor>
+     <patternContributor
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.RecordStatePattern">
+     </patternContributor>
  </extension>
  <extension
        point="org.eclipse.graphiti.ui.imageProviders">

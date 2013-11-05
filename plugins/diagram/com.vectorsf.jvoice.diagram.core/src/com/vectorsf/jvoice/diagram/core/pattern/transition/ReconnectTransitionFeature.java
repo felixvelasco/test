@@ -56,7 +56,7 @@ public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
 				return false;
 			}
 
-			if (((State) targetBO).getId().equals(finalState.getId())) {
+			if ((State) targetBO == finalState) {
 				return false;
 			}
 
@@ -97,7 +97,7 @@ public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
 			return false;
 		}
 
-		if (((State) targetBO).getId().equals(oldTargetState.getId())) {
+		if ((State) targetBO == oldTargetState) {
 			return false;
 		}
 

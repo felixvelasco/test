@@ -195,6 +195,16 @@ public class FlowItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
+				(OperationsPackage.Literals.FLOW__STATES,
+				 OperationsFactory.eINSTANCE.createTransferState()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(OperationsPackage.Literals.FLOW__STATES,
+				 OperationsFactory.eINSTANCE.createRecordState()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(OperationsPackage.Literals.FLOW__TRANSITIONS,
 				 OperationsFactory.eINSTANCE.createTransition()));
 	}

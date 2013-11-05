@@ -325,6 +325,52 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.TransferState} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected TransferStateItemProvider transferStateItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.TransferState}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createTransferStateAdapter() {
+		if (transferStateItemProvider == null) {
+			transferStateItemProvider = new TransferStateItemProvider(this);
+		}
+
+		return transferStateItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.RecordState} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RecordStateItemProvider recordStateItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.RecordState}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRecordStateAdapter() {
+		if (recordStateItemProvider == null) {
+			recordStateItemProvider = new RecordStateItemProvider(this);
+		}
+
+		return recordStateItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -434,6 +480,8 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 		if (promptStateItemProvider != null) promptStateItemProvider.dispose();
 		if (inputStateItemProvider != null) inputStateItemProvider.dispose();
 		if (menuStateItemProvider != null) menuStateItemProvider.dispose();
+		if (transferStateItemProvider != null) transferStateItemProvider.dispose();
+		if (recordStateItemProvider != null) recordStateItemProvider.dispose();
 	}
 
 }
