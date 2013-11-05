@@ -1,8 +1,5 @@
 package com.isb.jVoice.dsl.builder
 
-//import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio
-//import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl
-
 import java.io.File
 import java.io.FileWriter
 import org.eclipse.emf.ecore.resource.Resource
@@ -15,6 +12,7 @@ import com.vectorsf.jvoice.model.operations.PromptState
 import com.vectorsf.jvoice.model.operations.SwitchState
 import com.vectorsf.jvoice.model.operations.InputState
 import com.vectorsf.jvoice.model.operations.MenuState
+import com.vectorsf.jvoice.model.operations.InitialState
 
 class SpringWebFlowGenerator {
 	
@@ -22,7 +20,6 @@ class SpringWebFlowGenerator {
 	Flow element
 
 	int positionIni;
-	int positionFin;
 	
 	new(Resource resource) {
 		res = resource;
@@ -30,21 +27,30 @@ class SpringWebFlowGenerator {
 	}
 		
 	def generate(File file) {
+		var initial = false;
+		var positionFin =element.getStates().length-1;
 		var fw = new FileWriter(file)
+		//Obtenemos el estado inicial para escribri la cabecera.
 		for (State state : element.getStates()) {
-			positionIni =element.getStates().indexOf(state);
-			positionFin =element.getStates().length-1;
-			fw.append(doGenerate(state, positionIni,positionFin));
+			if (state instanceof InitialState){
+				fw.append(doGenerateHeader(state));	
+				initial = true;			
+			}			
 		}
-		
-		
+		//En el caso de que no haya estados iniciales y haya otros estados en el diagrama se coge cualquiera
+		if (!initial && element.getStates().length>0){
+			fw.append(doGenerateHeader(element.getStates().get(0)));	
+		}
+		// Se recorre de nuevo todo el array para escribir el resto de estados del diagrama 
+		for (State state : element.getStates()) {
+				positionIni =element.getStates().indexOf(state);				
+				fw.append(doGenerate(state, positionIni,positionFin));	
+		}
+
 		fw.close()
 	}
 	
 	def doGenerate(State state, int position, int positionFin) '''
-	«IF position==0 »
-	«doGenerateHeader(state)»
-	«ELSE»		
 		«doGenerateCallFlowState(state)»
 		«doGenerateCallState(state)»
 		«doGenerateOutputState(state)»		
@@ -52,9 +58,8 @@ class SpringWebFlowGenerator {
 		«doGenerateInputState(state)»
 		«doGenerateMenuState(state)»
 		«doGenerateFinalState(state)»
-		«IF positionIni==positionFin»
-			«doGenerateFooter(state)»
-		«ENDIF»
+	«IF positionIni==positionFin»
+			«doGenerateFooter()»
 	«ENDIF»
 	
 	'''
@@ -64,7 +69,7 @@ class SpringWebFlowGenerator {
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow        				
 	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
-	start-state= "«NombreTranSalida.Nombre(state)»" >
+	start-state= "«GetNameTransOut.Name(state)»" >
 	'''
 	
 	def doGenerateFinalState(State state) '''
@@ -109,7 +114,7 @@ class SpringWebFlowGenerator {
 		«ENDIF»	
 	'''
 
-	def doGenerateFooter(State state) '''
+	def doGenerateFooter() '''
 		<end-state id="end-call"/>
 		</flow> 
 	'''
