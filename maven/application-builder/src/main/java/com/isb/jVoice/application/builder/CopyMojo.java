@@ -150,7 +150,7 @@ public class CopyMojo extends AbstractMojo {
 		 */
 		getDir(pathname);
 
-		File destino = new File(pathname, name);
+		File destino = new File(pathname, ruta.getName());
 
 		try {
 			OutputStream out = new FileOutputStream(destino);
