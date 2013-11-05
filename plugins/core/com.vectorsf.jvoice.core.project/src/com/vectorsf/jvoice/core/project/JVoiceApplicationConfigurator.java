@@ -1,5 +1,8 @@
 package com.vectorsf.jvoice.core.project;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.maven.model.*;
 import org.apache.maven.model.Plugin;
 import org.eclipse.core.resources.*;
@@ -53,7 +56,15 @@ public final class JVoiceApplicationConfigurator {
 		model.setPackaging("war");
 
 		model.setName(projectName);
-
+		
+		List<Dependency> dependencies = new ArrayList<Dependency>();		
+		Dependency dep2 = new Dependency();
+		dep2.setGroupId("com.vectorsf");
+		dep2.setArtifactId("jvoiceframework-flow");
+		dep2.setVersion("1.0-SNAPSHOT");
+		dependencies.add(dep2);
+		model.setDependencies(dependencies);
+		
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");
 		dsl_builder.setArtifactId("application-builder");
@@ -75,6 +86,7 @@ public final class JVoiceApplicationConfigurator {
 		repository.setUrl("http://isbks208510504s.scisb.isban.corp/nexus/content/groups/jvoiceGroup/");
 
 		model.addPluginRepository(repository);
+		model.addRepository(repository);
 
 		return model;
 	}
