@@ -10,6 +10,7 @@ class GeneralStateCodeXML {
 	def static doGenerateGeneralState(State state, List mainAudios, String type){
 		var i=0		
 '''
+		«IF (mainAudios!=null && mainAudios.size>0)»
 				«FOR mainAudio : mainAudios »	
 					<evaluate expression="audioItem" result="flowScope.«state.name»«type»«i=i+1»"/>				
 					«IF mainAudio instanceof ConditionalAudio»
@@ -52,7 +53,8 @@ class GeneralStateCodeXML {
 					«ENDIF»
 					<evaluate expression="flowScope.«state.name».«type».add(flowScope.«state.name»«type»«i»)"/>
 					
-				«ENDFOR»			 
+				«ENDFOR»	
+			«ENDIF»		 
 '''
 	}
 }

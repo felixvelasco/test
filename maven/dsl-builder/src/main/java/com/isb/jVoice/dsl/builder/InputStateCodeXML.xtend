@@ -11,13 +11,10 @@ class InputStateCodeXML {
 		var tranSalidaS =state.getOutgoingTransitions()
 		var InputState audioIn = state as InputState
 		
-		var grammars = audioIn.locution.grammars.grammatics
+		var grammars = audioIn.locution.grammars
 		var configuration = audioIn.locution.configuration
 		
-		var mainAudios = audioIn.locution.audios.mainAudios
-		var noMatchAudios = audioIn.locution.audios.noMatchAudios
-		var noInputAudios = audioIn.locution.audios.noInputAudios
-		var matchAudios = audioIn.locution.audios.matchAudios
+		var audios = audioIn.locution.audios
 		
 		var i=0
 		
@@ -26,23 +23,38 @@ class InputStateCodeXML {
 			<on-entry>
 				<evaluate expression="output" result="flowScope.«state.name»"></evaluate>
 				<set name="flowScope.«state.name».name" value="'«audioIn.name»'" />
-				<set name="flowScope.«state.name».bargein" value="«configuration.getValue("bargein")»" />
-				<set name="flowScope.«state.name».maxAttempts" value="«configuration.getValue("maxAttempts")»" />			
+				«IF configuration != null»
+					«IF configuration.getValue("bargein") != null && !configuration.getValue("bargein").equals("")»
+						<set name="flowScope.«state.name».bargein" value="«configuration.getValue("bargein")»" />
+					«ENDIF»	
+					«IF configuration.getValue("maxAttempts") != null && !configuration.getValue("maxAttempts").equals("")»
+					<set name="flowScope.«state.name».maxAttempts" value="«configuration.getValue("maxAttempts")»" />
+					«ENDIF»
+				«ENDIF»			
 				«/*Obtenemos las gramaticas de la locucion  */»
-				«IF grammars != null || grammars.size>0» 				
-					«FOR grammar : grammars »
-						<evaluate expression="grammar" result="flowScope.grammar«i=i+1»" />
-						<set name="flowScope.grammar«i».type" value="'«grammar.expr.booleanValue»'"/>
-						<set name="flowScope.grammar«i».src" value="'«grammar.src»'"/>
-						<set name="flowScope.grammar«i».mode" value="'«grammar.mode»'"/>
-						<evaluate expression="flowScope.«state.name».grammars.add(flowScope.grammar«i»)" />
-						
-					«ENDFOR»
+				«IF grammars != null»
+					«var grammatics = audioIn.locution.grammars.grammatics»
+					«IF grammatics != null && grammatics.size>0» 				
+						«FOR grammatic : grammatics »
+							<evaluate expression="grammar" result="flowScope.grammar«i=i+1»" />
+							<set name="flowScope.grammar«i».type" value="'«grammatic.expr.booleanValue»'"/>
+							<set name="flowScope.grammar«i».src" value="'«grammatic.src»'"/>
+							<set name="flowScope.grammar«i».mode" value="'«grammatic.mode»'"/>
+							<evaluate expression="flowScope.«state.name».grammars.add(flowScope.grammar«i»)" />
+							
+						«ENDFOR»
+	        		«ENDIF»
         		«ENDIF»
-		        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios")»
-		       	«GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios")»
-		      	«GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios")»
-		      	«GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios")»
+        		«IF audios != null»
+	        		«var mainAudios = audioIn.locution.audios.mainAudios»
+	        		«var noMatchAudios = audioIn.locution.audios.noMatchAudios»
+	        		«var noInputAudios = audioIn.locution.audios.noInputAudios»
+	        		«var matchAudios = audioIn.locution.audios.matchAudios»		      	
+			        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios")»
+			       	«GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios")»
+			      	«GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios")»
+			      	«GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios")»
+		      	«ENDIF»
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flowScope.«state.name»)"/>			
 			<transition to="render_«state.name»"/>

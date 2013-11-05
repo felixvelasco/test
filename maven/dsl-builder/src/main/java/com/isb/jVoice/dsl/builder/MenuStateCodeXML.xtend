@@ -10,13 +10,11 @@ class MenuStateCodeXML {
 		var tranSalidaS =state.getOutgoingTransitions()
 		var MenuState audioIn = state as MenuState
 		
-		var grammars = audioIn.locution.grammars.grammatics
+		var grammars = audioIn.locution.grammars
 		
-		var mainAudios = audioIn.locution.audios.mainAudios
-		var noMatchAudios = audioIn.locution.audios.noMatchAudios
-		var noInputAudios = audioIn.locution.audios.noInputAudios
-		var matchAudios = audioIn.locution.audios.matchAudios
-		var outputs = audioIn.locution.outputs.output
+		var Audios = audioIn.locution.audios
+
+		var outputs = audioIn.locution.outputs
 		
 		var i=0
 		
@@ -26,19 +24,28 @@ class MenuStateCodeXML {
 				<evaluate expression="output" result="flowScope.«state.name»"></evaluate>
 				<set name="flowScope.«state.name».name" value="'«audioIn.name»'" />
 				«/*Obtenemos las gramaticas del menu */»
-				«IF grammars != null || grammars.size>0» 				
-					«FOR grammar : grammars »
-						<evaluate expression="grammar" result="flowScope.grammar«i=i+1»" />
-						<set name="flowScope.grammar«i».type" value="'«grammar.expr.booleanValue»'"/>
-						<set name="flowScope.grammar«i».src" value="'«grammar.src»'"/>
-						<set name="flowScope.grammar«i».mode" value="'«grammar.mode»'"/>
-						<evaluate expression="flowScope.«state.name».grammars.add(flowScope.grammar«i»)" />
-					«ENDFOR»
+				«IF grammars != null»
+					«var grammatics = audioIn.locution.grammars.grammatics»
+					«IF grammatics != null && grammatics.size>0» 				
+						«FOR grammatic : grammatics »
+							<evaluate expression="grammar" result="flowScope.grammar«i=i+1»" />
+							<set name="flowScope.grammar«i».type" value="'«grammatic.expr.booleanValue»'"/>
+							<set name="flowScope.grammar«i».src" value="'«grammatic.src»'"/>
+							<set name="flowScope.grammar«i».mode" value="'«grammatic.mode»'"/>
+							<evaluate expression="flowScope.«state.name».grammars.add(flowScope.grammar«i»)" />
+						«ENDFOR»
+	        		«ENDIF»
         		«ENDIF»
-		        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios")»
-		       	«GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios")»
-		      	«GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios")»
-		      	«GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios")»
+        		«IF Audios != null» 
+        			«var mainAudios = audioIn.locution.audios.mainAudios»
+	        		«var noMatchAudios = audioIn.locution.audios.noMatchAudios»
+	        		«var noInputAudios = audioIn.locution.audios.noInputAudios»
+	        		«var matchAudios = audioIn.locution.audios.matchAudios»		   	
+			        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios")»
+			       	«GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios")»
+			      	«GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios")»
+			      	«GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios")»
+		      	«ENDIF»
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flowScope.«state.name»)"/>
 			<transition to="render_«state.name»"></transition>				
@@ -50,16 +57,19 @@ class MenuStateCodeXML {
 			
 		<action-state id="render_decision_«state.name»">
 			<evaluate expression="flowScope.menuOption"></evaluate>
-			«IF tranSalidaS != null && outputs !=null && outputs.size>0 && tranSalidaS.size>0»
-			   		«FOR output :outputs»
-			   			«FOR tranSalida : tranSalidaS»
-			   				«IF output.name.equals(tranSalida.eventName)»	
-			   					«FOR outputValue : output.outputValue»
-			   						<transition on="«outputValue.value»" to="«tranSalida.target.name»"/>
-			   					«ENDFOR»
-			   				«ENDIF»
-			   			«ENDFOR»
-			   		«ENDFOR»
+			«IF outputs != null» 
+				«var output = audioIn.locution.outputs.output» 
+				«IF tranSalidaS != null && output !=null && output.size>0 && tranSalidaS.size>0»
+				   		«FOR out :output»
+				   			«FOR tranSalida : tranSalidaS»
+				   				«IF out.name.equals(tranSalida.eventName)»	
+				   					«FOR outputValue : out.outputValue»
+				   						<transition on="«outputValue.value»" to="«tranSalida.target.name»"/>
+				   					«ENDFOR»
+				   				«ENDIF»
+				   			«ENDFOR»
+				   		«ENDFOR»
+				«ENDIF»
 			«ENDIF»
 		</action-state>
 '''
