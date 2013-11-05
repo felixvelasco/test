@@ -7,6 +7,7 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 
 import java.lang.reflect.InvocationTargetException;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;

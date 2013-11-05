@@ -47,6 +47,17 @@
   <eClassifiers xsi:type="ecore:EClass" name="LocutionState" abstract="true" eSuperTypes="#//State">
     <eStructuralFeatures xsi:type="ecore:EReference" name="locution" eType="ecore:EClass ../../com.vectorsf.jvoice.prompt.model/model/VoiceDsl.ecore#//VoiceDsl"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TransferState" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TransferState" eSuperTypes="#//State">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="destination" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="audioTransfer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeout" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeTransfer" eType="#//TypeTransfer"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RecordState" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="TypeTransfer">
+    <eLiterals name="blind"/>
+    <eLiterals name="consultation" value="1"/>
+    <eLiterals name="bridge" value="2" literal="bridge"/>
+  </eClassifiers>
 </ecore:EPackage>

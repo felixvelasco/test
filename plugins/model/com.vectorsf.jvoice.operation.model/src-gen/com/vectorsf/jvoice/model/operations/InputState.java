@@ -14,5 +14,4 @@ package com.vectorsf.jvoice.model.operations;
  * @generated
  */
 public interface InputState extends LocutionState {
-
 } // InputState

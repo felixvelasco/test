@@ -4,6 +4,7 @@ package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.PromptState;
+
 import org.eclipse.emf.ecore.EClass;
 
 /**
