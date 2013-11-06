@@ -60,6 +60,7 @@ class SpringWebFlowGenerator {
 		«doGenerateMenuState(state)»
 		«doGenerateFinalState(state)»
 		«doGenerateCustomState(state)»
+		«doGenerateTransferState(state)»
 	«IF positionIni==positionFin»
 			«doGenerateFooter()»
 	«ENDIF»
@@ -119,6 +120,12 @@ class SpringWebFlowGenerator {
 	def doGenerateCustomState(State state) '''
 		«IF state instanceof CustomState»
 			«CustomStateCodeXML.doGenerateCustomState(state)»
+		«ENDIF»		
+	'''
+	
+		def doGenerateTransferState(State state) '''
+		«IF state instanceof CustomState»
+			«TransferStateCodeXML.doGenerateTransferState(state)»
 		«ENDIF»		
 	'''
 
