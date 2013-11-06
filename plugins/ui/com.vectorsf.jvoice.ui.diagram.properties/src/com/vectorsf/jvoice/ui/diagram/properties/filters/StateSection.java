@@ -445,32 +445,32 @@ ITabbedPropertyConstants {
             	estadoSelection = (SwitchState)bo;
             	casos = estadoSelection.getCase();
             	tableViewer.setInput(casos);
-            	añadirListenerSwtich();
+            	addListenerSwtich();
             	
             }else if(bo instanceof CallFlowState){
             	CallFlowState subFlow = (CallFlowState)bo;
             	if (subFlow.getSubflow().getName()!=null){
             		nameSubFlow.setText(subFlow.getSubflow().getName());
             	}
-            	añadirListenerSubflujos();
+            	addListenerSubflujos();
             }else if(bo instanceof MenuState){
             	MenuState menuLocution = (MenuState)bo;
             	if (menuLocution.getLocution().getName()!=null){
             		nameSubFlow.setText(menuLocution.getLocution().getName());
             	}
-            	añadirListenerSubflujos();
+            	addListenerSubflujos();
             }else if(bo instanceof InputState){
             	InputState inputLocution = (InputState)bo;
             	if (inputLocution.getLocution().getName()!=null){
             		nameSubFlow.setText(inputLocution.getLocution().getName());
             	}
-            	añadirListenerSubflujos();
+            	addListenerSubflujos();
             }else if(bo instanceof PromptState){
             	PromptState outputLocution = (PromptState)bo;
             	if (outputLocution.getLocution().getName()!=null){
             		nameSubFlow.setText(outputLocution.getLocution().getName());
             	}
-            	añadirListenerSubflujos();
+            	addListenerSubflujos();
             }else if (bo instanceof TransferState){
             	TransferState transfer = (TransferState)bo;
             	if (transfer.getDestination()!=null){
@@ -498,13 +498,13 @@ ITabbedPropertyConstants {
             	maxTimeText.setText("");
             	
             	seleccionarTipo(transfer);
-            	añadirListenerTransfer();
+            	addListenerTransfer();
             	
             }
         }
     }
     
-    private void añadirListenerTransfer() {
+    private void addListenerTransfer() {
     	destinationListener = new ListenerIntentionName(this, destinationText, 1);
     	audioListener = new ListenerIntentionName(this, transferAudioText, 2);
     	maxTimeListener = new ListenerIntentionName(this, maxTimeText, 4);
@@ -519,13 +519,13 @@ ITabbedPropertyConstants {
 	}
 
 
-	private void añadirListenerSubflujos() {
+	private void addListenerSubflujos() {
     	propertielistener = new PropertiesListener(this, nameSubFlow);
     	btEditFlow.addListener(SWT.Selection, propertielistener);
 	}
 
 
-	private void añadirListenerSwtich() {
+	private void addListenerSwtich() {
     	propertielistener = new PropertiesListener(this, tableViewer);
 		btAdd.addListener(SWT.Selection, propertielistener);
 		btRemove.addListener(SWT.Selection, propertielistener);
