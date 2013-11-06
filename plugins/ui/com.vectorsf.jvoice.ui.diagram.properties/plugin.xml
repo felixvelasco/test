@@ -80,6 +80,12 @@
                id="graphiti.main.tab.emfclass.recordState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
+         <propertySection
+               class="com.vectorsf.jvoice.ui.diagram.properties.filters.CustomStateSection"
+               filter="com.vectorsf.jvoice.ui.diagram.properties.filters.CustomStateFilter"
+               id="graphiti.main.tab.emfclass.customState"
+               tab="graphiti.main.tab.jvoice.operation.state.main">
+         </propertySection>
       </propertySections>
    </extension>
    <extension

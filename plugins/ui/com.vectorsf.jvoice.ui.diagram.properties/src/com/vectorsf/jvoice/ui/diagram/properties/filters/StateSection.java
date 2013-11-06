@@ -31,6 +31,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Case;
+import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.InputState;
@@ -282,6 +283,39 @@ ITabbedPropertyConstants {
 	        LabelPath.setLayoutData(data);
 	}
 	
+	/**
+	 * @param factory
+	 * @param composite
+	 */
+	protected void drawName(TabbedPropertySheetWidgetFactory factory,
+			Composite composite) {
+			error = factory.createCLabel(composite, "", SWT.CENTER);
+			data = new FormData();
+		    data.left = new FormAttachment(0, 0);
+		    data.right = new FormAttachment(100, 0);
+		    error.setLayoutData(data);
+		
+			//Nombre del elemento
+		    nameText = factory.createText(composite, "");
+		    data = new FormData();
+		    data.left = new FormAttachment(0, STANDARD_LABEL_WIDTH+50);
+		    data.right = new FormAttachment(error,0,SWT.RIGHT);
+		    data.top = new FormAttachment(error, 10);
+		    nameText.setLayoutData(data);
+		    
+		    nameStateListener = new ListenerIntentionName(this, nameText);
+		    
+		    nameText.addFocusListener(nameStateListener);
+		 
+		    CLabel LabelName = factory.createCLabel(composite, "Name:");
+		    data = new FormData();
+		    data.left = new FormAttachment(0, 0);
+		    data.right = new FormAttachment(nameText, -HSPACE);
+		    data.top = new FormAttachment(nameText, 0, SWT.CENTER);
+		    LabelName.setLayoutData(data);
+		    
+	}
+	
 	protected void subFlowPath(TabbedPropertySheetWidgetFactory factory,
 			Composite composite, String nameLabel) {
 		//Nombre del elemento
@@ -420,6 +454,38 @@ ITabbedPropertyConstants {
 	    
 	}
 	
+	protected void drawCustomStatePath(TabbedPropertySheetWidgetFactory factory,
+			Composite composite, String nameLabel) {
+
+
+		nameSubFlow = factory.createText(composite, "");
+		data = new FormData();
+	    data.left = new FormAttachment(nameText, 0,SWT.LEFT);
+		data.right = new FormAttachment(nameText,-120,SWT.RIGHT);
+        data.top = new FormAttachment(nameText, 10);
+	    nameSubFlow.setLayoutData(data);
+	    nameSubFlow.setEditable(false);
+	    nameSubFlow.setEnabled(false);
+	 
+	    CLabel LabelName = factory.createCLabel(composite, nameLabel);
+        data = new FormData();
+	    data.left = new FormAttachment(0, 0);
+	    data.right = new FormAttachment(nameSubFlow, -HSPACE);
+	    data.top = new FormAttachment(nameSubFlow, 0, SWT.CENTER);
+	    LabelName.setLayoutData(data);
+	    
+	    btEditFlow = factory.createButton(composite, "",SWT.PUSH);
+	    btEditFlow.setText("...");
+	    data = new FormData();
+	    data.left = new FormAttachment(nameSubFlow, 5);
+	    data.top =  new FormAttachment(nameSubFlow, 0, SWT.CENTER);
+	    btEditFlow.setLayoutData(data);
+	    
+	    propertielistener = new PropertiesListener(this, nameSubFlow);
+	    
+	    btEditFlow.addListener(SWT.Selection, propertielistener);
+	}
+	
     @Override
     public void refresh() {
     	pe = getSelectedPictogramElement();
@@ -433,13 +499,22 @@ ITabbedPropertyConstants {
                 return;
             
             removelistener(bo);
-            textnompath(bo);
+            if (pathText!=null){
+            	textnompath(bo);
+            }else{
+            	refreshName(bo);
+            }
 
-            if(!(bo instanceof InitialState))
-            	transactionIncoming(bo);
+            if(!(bo instanceof InitialState)){
+            	if(InTransitions!=null){
+            		transactionIncoming(bo);
+            	}
+            }
             
             if(!(bo instanceof FinalState))
+            	if(OutTransitions!=null){
             	transactionOut(bo);
+            	}
             
             if(bo instanceof SwitchState){
             	estadoSelection = (SwitchState)bo;
@@ -469,6 +544,12 @@ ITabbedPropertyConstants {
             	PromptState outputLocution = (PromptState)bo;
             	if (outputLocution.getLocution().getName()!=null){
             		nameSubFlow.setText(outputLocution.getLocution().getName());
+            	}
+            	addListenerSubflujos();
+            }else if(bo instanceof CustomState){
+            	CustomState custom = (CustomState)bo;
+            	if (custom.getPath()!=null){
+            		nameSubFlow.setText(custom.getPath());
             	}
             	addListenerSubflujos();
             }else if (bo instanceof TransferState){
@@ -559,7 +640,8 @@ ITabbedPropertyConstants {
 			maxTimeText.removeFocusListener(maxTimeListener);
 			timeOutText.removeFocusListener(timeOutListener);
 			typeTranferCombo.removeSelectionListener(typeTransferListener);
-		}else if ((bo instanceof MenuState) || (bo instanceof InputState) || (bo instanceof PromptState) || (bo instanceof CallFlowState)){
+		}else if ((bo instanceof MenuState) || (bo instanceof InputState) || (bo instanceof PromptState) || (bo instanceof CallFlowState)
+				|| (bo instanceof CustomState)){
 			
 			btEditFlow.removeListener(SWT.Selection, propertielistener);
 		}else if(bo instanceof SwitchState){
@@ -669,6 +751,16 @@ ITabbedPropertyConstants {
 		nameText.addFocusListener(nameStateListener);
 		String path = (((State) bo).eResource()).getURI().path().substring(9).toString();
 		pathText.setText(path == null ? "" : path);
+	}
+	
+	/**
+	 * @param bo
+	 */
+	protected void refreshName(Object bo) {
+		String name = null;
+		name = ((State) bo).getName();            
+		nameText.setText(name == null ? "" : name);
+		nameText.addFocusListener(new ListenerIntentionName(this, nameText));
 	}
 	
 	private TableViewerColumn createTableViewerColumn(String title, int bound) {
