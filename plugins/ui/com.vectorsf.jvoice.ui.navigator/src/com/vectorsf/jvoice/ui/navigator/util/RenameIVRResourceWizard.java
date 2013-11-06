@@ -39,7 +39,6 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 public class RenameIVRResourceWizard extends RefactoringWizard {
 
 	private static IResource resource;
-	private static final String[] extensions = { "jvflow", "voiceDsl" };
 	private static String nombre;
 	private static String textoExtension;
 
