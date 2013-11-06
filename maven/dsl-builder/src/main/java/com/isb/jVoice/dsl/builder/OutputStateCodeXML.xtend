@@ -3,6 +3,7 @@ package com.isb.jVoice.dsl.builder
 import com.vectorsf.jvoice.model.operations.State
 import com.vectorsf.jvoice.model.operations.PromptState
 import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio
+import com.vectorsf.jvoice.model.operations.CustomState
 
 class OutputStateCodeXML {
 	
@@ -30,7 +31,11 @@ class OutputStateCodeXML {
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flowScope.«state.name»)"/>
 			«IF tranSalida != null && tranSalida.size>0»
-				<transition to="«tranSalida.get(0).target.name»"/>
+				«IF tranSalida.get(0).target instanceof CustomState»
+					<transition to="render_«tranSalida.get(0).target.name»"/>
+				«ELSE»
+					<transition to="«tranSalida.get(0).target.name»"/>
+				«ENDIF»
 			«ENDIF» 		
 		</action-state>
 		«/*Falta ver que pasaria con view-state para las vbles catchHangup y flush  */»

@@ -3,6 +3,7 @@ package com.isb.jVoice.dsl.builder
 import com.vectorsf.jvoice.model.operations.State
 import com.vectorsf.jvoice.model.operations.Transition
 import org.eclipse.emf.common.util.EList
+import com.vectorsf.jvoice.model.operations.CustomState
 
 class CallStateCodeXML {
 	
@@ -11,7 +12,11 @@ class CallStateCodeXML {
 '''
 		<action-state id="«state.name»">
 			«FOR trans : TranSalida»
-				<transition on="«trans.eventName»" to="«trans.target.name»"/>
+				«IF trans.target instanceof CustomState»
+					<transition on="«trans.eventName»" to="render_«trans.target.name»"/>
+				«ELSE»
+					<transition on="«trans.eventName»" to="«trans.target.name»"/>
+				«ENDIF»
 			«ENDFOR»
 		</action-state>
     	'''

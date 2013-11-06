@@ -3,6 +3,7 @@ package com.isb.jVoice.dsl.builder
 import com.vectorsf.jvoice.model.operations.State
 import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio
 import com.vectorsf.jvoice.model.operations.InputState
+import com.vectorsf.jvoice.model.operations.CustomState
 
 class InputStateCodeXML {
 	
@@ -62,8 +63,12 @@ class InputStateCodeXML {
 		
 		<view-state id="render_«state.name»" view="#{flowProcessor.getRenderer().getView()}" model="lastInputResult">
 			«IF tranSalidaS != null && tranSalidaS.size>0»
-			    «FOR tranSalida : tranSalidaS»  
-			    	<transition on="match" to="«tranSalida.target.name»"/>
+			    «FOR tranSalida : tranSalidaS» 
+			    	«IF tranSalida.target instanceof CustomState» 
+			    		<transition on="match" to="render_«tranSalida.target.name»"/>
+			    	«ELSE»
+			    		<transition on="match" to="«tranSalida.target.name»"/>
+			    	«ENDIF»
 			    «ENDFOR»
 			«ENDIF»	
 		</view-state>

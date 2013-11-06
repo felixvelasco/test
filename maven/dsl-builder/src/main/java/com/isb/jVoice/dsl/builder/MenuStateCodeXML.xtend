@@ -2,6 +2,7 @@ package com.isb.jVoice.dsl.builder
 
 import com.vectorsf.jvoice.model.operations.State
 import com.vectorsf.jvoice.model.operations.MenuState
+import com.vectorsf.jvoice.model.operations.CustomState
 
 class MenuStateCodeXML {
 	
@@ -64,7 +65,11 @@ class MenuStateCodeXML {
 				   			«FOR tranSalida : tranSalidaS»
 				   				«IF out.name.equals(tranSalida.eventName)»	
 				   					«FOR outputValue : out.outputValue»
-				   						<transition on="«outputValue.value»" to="«tranSalida.target.name»"/>
+				   						«IF tranSalida.target instanceof CustomState» 
+				   							<transition on="«outputValue.value»" to="render_«tranSalida.target.name»"/>
+				   						«ELSE»
+				   							<transition on="«outputValue.value»" to="«tranSalida.target.name»"/>
+				   						«ENDIF»
 				   					«ENDFOR»
 				   				«ENDIF»
 				   			«ENDFOR»

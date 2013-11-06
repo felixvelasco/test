@@ -3,6 +3,7 @@ package com.isb.jVoice.dsl.builder
 import com.vectorsf.jvoice.model.operations.State
 import com.vectorsf.jvoice.model.operations.SwitchState
 import com.vectorsf.jvoice.model.operations.Transition
+import com.vectorsf.jvoice.model.operations.CustomState
 
 class SwitchStateCodeXML {
 
@@ -20,7 +21,11 @@ class SwitchStateCodeXML {
 <evaluate expression="«state.^case.get(i).condition»" />
 	     «FOR Transition transition: state.outgoingTransitions»
 	       «IF transition.eventName.equals(state.^case.get(i).eventName)»
+	       		 «IF transition.target instanceof CustomState»
+<transition on="yes" to="render_«transition.target.name»"/>
+				«ELSE» 
 <transition on="yes" to="«transition.target.name»"/>
+				«ENDIF» 
 	       «ENDIF» 
 	     «ENDFOR»    
 	     «IF state.^case.size > i »
@@ -31,7 +36,11 @@ class SwitchStateCodeXML {
       «IF state.^case.get(i).eventName.equals("default")»
         «FOR Transition transition: state.outgoingTransitions»
 	      «IF transition.eventName.equals("default")»
+	      «IF transition.target instanceof CustomState»
+<transition on="yes" to="render_«transition.target.name»"/>
+		  «ELSE» 
 <transition on="yes" to="«transition.target.name»"/>
+		  «ENDIF»
 	      «ENDIF»
 	    «ENDFOR»   
 	    </action-state>	 
