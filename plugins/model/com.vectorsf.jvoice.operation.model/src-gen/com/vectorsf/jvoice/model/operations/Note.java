@@ -52,7 +52,7 @@ public interface Note extends JVElement {
 	void setDescription(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Referenced States</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Referenced States</b></em>' reference list.
 	 * The list contents are of type {@link com.vectorsf.jvoice.model.operations.State}.
 	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.model.operations.State#getNotes <em>Notes</em>}'.
 	 * <!-- begin-user-doc -->
@@ -61,10 +61,10 @@ public interface Note extends JVElement {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Referenced States</em>' containment reference list.
+	 * @return the value of the '<em>Referenced States</em>' reference list.
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getNote_ReferencedStates()
 	 * @see com.vectorsf.jvoice.model.operations.State#getNotes
-	 * @model opposite="notes" containment="true"
+	 * @model opposite="notes"
 	 * @generated
 	 */
 	EList<State> getReferencedStates();

@@ -64,10 +64,10 @@
     <eLiterals name="consultation" value="1"/>
     <eLiterals name="bridge" value="2" literal="bridge"/>
   </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Note" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//JVElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Note" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//JVElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referencedStates" upperBound="-1"
-        eType="#//State" containment="true" eOpposite="#//State/notes"/>
+        eType="#//State" eOpposite="#//State/notes"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

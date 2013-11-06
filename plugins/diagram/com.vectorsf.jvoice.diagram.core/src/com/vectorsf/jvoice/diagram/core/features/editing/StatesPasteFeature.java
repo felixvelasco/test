@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -33,11 +31,12 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.ui.features.AbstractPasteFeature;
 import org.eclipse.xtext.resource.SaveOptions;
+import org.eclipse.xtext.util.Arrays;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVElement;
 import com.vectorsf.jvoice.model.base.JVPackage;
-import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.FinalState;
@@ -46,6 +45,7 @@ import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.MenuState;
+import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
@@ -67,7 +67,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	@Override
 	public void paste(IPasteContext context) {
 		Object[] copies = getCopiesFromClipBoard(context);
-		Map<State, PictogramElement> hm = new HashMap<State, PictogramElement>();
+		Map<JVElement, PictogramElement> hm = new HashMap<>();
 		for (Object copy : copies) {
 			AddContext ac = new AddContext();
 			if (copy != null) {
@@ -99,16 +99,23 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 					PictogramElement pe = addGraphicalRepresentation(ac, copy);
 					hm.put(state, pe);
 
+				} else if (copy instanceof Note) {
+					Note note = (Note) copy;
+
+					Flow targetFlow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+
+					targetFlow.getNotes().add(note);
+					ac.setLocation(context.getX(), context.getY());
+					ac.setTargetContainer(getDiagram());
+					PictogramElement pe = addGraphicalRepresentation(ac, copy);
+					hm.put(note, pe);
 				}
 			}
 
 		}
 		for (Object copy : copies) {
-
 			if (copy instanceof Transition) {
-
 				Transition transition = (Transition) copy;
-
 				State sourceState = transition.getSource();
 				State targetState = transition.getTarget();
 				Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
@@ -123,11 +130,32 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 							csTarget.getAnchors().get(0));
 					addContextInicial.setNewObject(transition);
 					addContextInicial.setTargetContainer((ContainerShape) peSource);
-
 					Connection connection = (Connection) getFeatureProvider().addIfPossible(addContextInicial);
 					layoutPictogramElement(connection);
 				}
 
+			}
+		}
+		for (Object copy : copies) {
+			if (copy instanceof Note) {
+				Note note = (Note) copy;
+				List<State> refStates = note.getReferencedStates();
+				// Comprobamos si alguno de los estados referidos por la nota tambien esta siendo copiado
+				for (State sta : refStates) {
+					if (Arrays.contains(copies, sta)) {
+						PictogramElement peSource = hm.get(note);
+						ContainerShape csSource = (ContainerShape) peSource;
+						PictogramElement peTarget = hm.get(sta);
+						ContainerShape csTarget = (ContainerShape) peTarget;
+						AddConnectionContext addContextInicial = new AddConnectionContext(csSource.getAnchors().get(0),
+								csTarget.getAnchors().get(0));
+						// addContextInicial.setNewObject(relation);
+						addContextInicial.setTargetContainer((ContainerShape) peSource);
+						Connection connection = (Connection) getFeatureProvider().addIfPossible(addContextInicial);
+						layoutPictogramElement(connection);
+
+					}
+				}
 			}
 		}
 	}
@@ -174,7 +202,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			return false;
 		}
 		for (Object object : fromClipboard) {
-			if (!isState(object) && !(object instanceof Transition)) {
+			if (!isState(object) && !(object instanceof Transition) && !(object instanceof Note)) {
 				return false;
 			}
 			if (object instanceof InitialState) {
@@ -196,8 +224,8 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	private boolean isState(Object object) {
 		return object instanceof CallFlowState || object instanceof CallState || object instanceof FinalState
 				|| object instanceof InitialState || object instanceof InputState || object instanceof MenuState
-				|| object instanceof PromptState || object instanceof SwitchState || object instanceof TransferState
-				|| object instanceof RecordState;
+				|| object instanceof PromptState || object instanceof SwitchState || object instanceof RecordState
+				|| object instanceof TransferState;
 	}
 
 	private boolean isLocution(Object object) {
@@ -214,12 +242,14 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 				int repeated = 0;
 				for (int i = 0; i < diagram.getChildren().size(); i++) {
 					Shape shape = diagram.getChildren().get(i);
-					State state = (State) getBusinessObjectForPictogramElement(shape);
-					if (state.getName().equals(name)) {
-						int k = repeated + 2;
-						name = "Copy" + k + "Of" + stateName;
-						repeated++;
-						i = 0;
+					if (getBusinessObjectForPictogramElement(shape) instanceof State) {
+						State state = (State) getBusinessObjectForPictogramElement(shape);
+						if (state.getName().equals(name)) {
+							int k = repeated + 2;
+							name = "Copy" + k + "Of" + stateName;
+							repeated++;
+							i = 0;
+						}
 					}
 
 				}
@@ -247,48 +277,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			}
 		}
 		return "CopyOf";
-	}
-
-	// Metodo para recuperar un nombre valido para el fichero que
-	// se quiere copiar en caso de que haya uno en el destino con el mismo
-	// nombre.
-	private String checkName(IWorkspaceRoot root, IPath targetPath, Object targets, Object o, IResource targetRes,
-			String NameUser) {
-		if (targets instanceof JVProject) {
-			JVProject target = (JVProject) targets;
-			IFolder mipackage = (IFolder) o;
-
-			if (root.getFolder(targetPath).exists()) {
-
-				String newName = "CopyOf" + NameUser;
-
-				targetPath = targetRes.getFullPath().append(
-						mipackage.getParent().getProjectRelativePath().append(newName));
-
-				return checkName(root, targetPath, target, mipackage, targetRes, newName);
-
-			} else {
-				return NameUser;
-			}
-		} else if (targets instanceof JVPackage) {
-			JVPackage target = (JVPackage) targets;
-			IFile mipackage = (IFile) o;
-
-			if (root.getFile(targetPath).exists()) {
-
-				String newName = "CopyOf" + NameUser;
-
-				targetPath = targetRes.getFullPath().append(newName);
-
-				return checkName(root, targetPath, target, mipackage, targetRes, newName);
-
-			} else {
-				return NameUser;
-			}
-
-		} else {
-			return null;
-		}
 	}
 
 	private void renameBean(IPath targetPath) {

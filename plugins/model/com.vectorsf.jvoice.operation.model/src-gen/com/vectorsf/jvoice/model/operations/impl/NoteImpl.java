@@ -3,24 +3,17 @@
 package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.base.impl.JVElementImpl;
-
 import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.State;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -60,7 +53,7 @@ public class NoteImpl extends JVElementImpl implements Note {
 	protected String description = DESCRIPTION_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getReferencedStates() <em>Referenced States</em>}' containment reference list.
+	 * The cached value of the '{@link #getReferencedStates() <em>Referenced States</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getReferencedStates()
@@ -136,7 +129,7 @@ public class NoteImpl extends JVElementImpl implements Note {
 	 */
 	public EList<State> getReferencedStates() {
 		if (referencedStates == null) {
-			referencedStates = new EObjectContainmentWithInverseEList<State>(State.class, this, OperationsPackage.NOTE__REFERENCED_STATES, OperationsPackage.STATE__NOTES);
+			referencedStates = new EObjectWithInverseResolvingEList<State>(State.class, this, OperationsPackage.NOTE__REFERENCED_STATES, OperationsPackage.STATE__NOTES);
 		}
 		return referencedStates;
 	}

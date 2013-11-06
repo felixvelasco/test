@@ -18,10 +18,8 @@ import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
-import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
-import com.vectorsf.jvoice.model.operations.TransferState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 public class StatesCopyFeature extends AbstractCopyFeature {
@@ -36,6 +34,7 @@ public class StatesCopyFeature extends AbstractCopyFeature {
 		PictogramElement[] pes = context.getPictogramElements();
 		Collection<EObject> copies = new ArrayList<EObject>();
 		Collection<EObject> copiesTrans = new ArrayList<EObject>();
+		// Copiamos todos los objetos de negocio de los pictogram elements
 		for (PictogramElement pe : pes) {
 
 			if (pe instanceof ContainerShape) {
@@ -44,6 +43,7 @@ public class StatesCopyFeature extends AbstractCopyFeature {
 			}
 
 		}
+		// Comprobamos si hay alguna transicion entre dos estados que se hayan copiado
 		for (EObject copy : copies) {
 			if (isState(copy)) {
 				State state = (State) copy;
@@ -60,6 +60,7 @@ public class StatesCopyFeature extends AbstractCopyFeature {
 				}
 			}
 		}
+
 		copies.addAll(copiesTrans);
 		putToClipboard(copies.toArray());
 	}
@@ -72,8 +73,7 @@ public class StatesCopyFeature extends AbstractCopyFeature {
 	private boolean isState(Object object) {
 		if (object instanceof CallFlowState || object instanceof CallState || object instanceof FinalState
 				|| object instanceof InitialState || object instanceof InputState || object instanceof MenuState
-				|| object instanceof PromptState || object instanceof SwitchState || object instanceof TransferState
-				|| object instanceof RecordState) {
+				|| object instanceof PromptState || object instanceof SwitchState) {
 			return true;
 		}
 		return false;

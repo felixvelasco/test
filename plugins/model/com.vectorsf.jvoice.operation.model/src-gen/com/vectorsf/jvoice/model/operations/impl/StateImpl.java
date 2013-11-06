@@ -3,26 +3,18 @@
 package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.base.impl.NamedElementImpl;
-
 import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -60,6 +52,16 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 	 * @ordered
 	 */
 	protected EList<Transition> outgoingTransitions;
+
+	/**
+	 * The cached value of the '{@link #getNotes() <em>Notes</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNotes()
+	 * @generated
+	 * @ordered
+	 */
+	protected Note notes;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -110,8 +112,24 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 	 * @generated
 	 */
 	public Note getNotes() {
-		if (eContainerFeatureID() != OperationsPackage.STATE__NOTES) return null;
-		return (Note)eInternalContainer();
+		if (notes != null && notes.eIsProxy()) {
+			InternalEObject oldNotes = (InternalEObject)notes;
+			notes = (Note)eResolveProxy(oldNotes);
+			if (notes != oldNotes) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationsPackage.STATE__NOTES, oldNotes, notes));
+			}
+		}
+		return notes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Note basicGetNotes() {
+		return notes;
 	}
 
 	/**
@@ -120,7 +138,12 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 	 * @generated
 	 */
 	public NotificationChain basicSetNotes(Note newNotes, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newNotes, OperationsPackage.STATE__NOTES, msgs);
+		Note oldNotes = notes;
+		notes = newNotes;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OperationsPackage.STATE__NOTES, oldNotes, newNotes);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
 		return msgs;
 	}
 
@@ -130,12 +153,10 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 	 * @generated
 	 */
 	public void setNotes(Note newNotes) {
-		if (newNotes != eInternalContainer() || (eContainerFeatureID() != OperationsPackage.STATE__NOTES && newNotes != null)) {
-			if (EcoreUtil.isAncestor(this, newNotes))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+		if (newNotes != notes) {
 			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
+			if (notes != null)
+				msgs = ((InternalEObject)notes).eInverseRemove(this, OperationsPackage.NOTE__REFERENCED_STATES, Note.class, msgs);
 			if (newNotes != null)
 				msgs = ((InternalEObject)newNotes).eInverseAdd(this, OperationsPackage.NOTE__REFERENCED_STATES, Note.class, msgs);
 			msgs = basicSetNotes(newNotes, msgs);
@@ -159,8 +180,8 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 			case OperationsPackage.STATE__OUTGOING_TRANSITIONS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingTransitions()).basicAdd(otherEnd, msgs);
 			case OperationsPackage.STATE__NOTES:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
+				if (notes != null)
+					msgs = ((InternalEObject)notes).eInverseRemove(this, OperationsPackage.NOTE__REFERENCED_STATES, Note.class, msgs);
 				return basicSetNotes((Note)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -190,20 +211,6 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case OperationsPackage.STATE__NOTES:
-				return eInternalContainer().eInverseRemove(this, OperationsPackage.NOTE__REFERENCED_STATES, Note.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case OperationsPackage.STATE__INCOMING_TRANSITIONS:
@@ -211,7 +218,8 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 			case OperationsPackage.STATE__OUTGOING_TRANSITIONS:
 				return getOutgoingTransitions();
 			case OperationsPackage.STATE__NOTES:
-				return getNotes();
+				if (resolve) return getNotes();
+				return basicGetNotes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -274,7 +282,7 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 			case OperationsPackage.STATE__OUTGOING_TRANSITIONS:
 				return outgoingTransitions != null && !outgoingTransitions.isEmpty();
 			case OperationsPackage.STATE__NOTES:
-				return getNotes() != null;
+				return notes != null;
 		}
 		return super.eIsSet(featureID);
 	}
