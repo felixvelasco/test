@@ -56,6 +56,7 @@ public class CreateProjectJVoice extends BasicNewResourceWizard {
 		try {
 			JVoiceProjectConfigurator.createProject(ProjectName, ProjectName, ProjectName);
 		} catch (CoreException e) {
+			e.printStackTrace();
 			return false;
 		}
 		
