@@ -40,6 +40,8 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 
 	private static IResource resource;
 	private static final String[] extensions = { "jvflow", "voiceDsl" };
+	private static String nombre;
+	private static String textoExtension;
 
 	@SuppressWarnings("static-access")
 	public RenameIVRResourceWizard(IResource resource) {
@@ -90,8 +92,17 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 			label.setText(RefactoringUIMessages.RenameResourceWizard_name_field_label);
 			label.setLayoutData(new GridData());
 
+			if (resource instanceof IFile) {
+				nombre = fRefactoringProcessor.getNewResourceName();
+				if (nombre.contains(".")
+						&& nombre.substring(nombre.indexOf(".")).length() > 1) {
+					textoExtension = nombre.substring(nombre.indexOf(".") + 1);
+					nombre = nombre.substring(0, nombre.indexOf("."));
+				}
+			}
+
 			fNameField = new Text(composite, SWT.BORDER);
-			fNameField.setText(fRefactoringProcessor.getNewResourceName());
+			fNameField.setText(nombre);
 			fNameField.setFont(composite.getFont());
 			fNameField.setLayoutData(new GridData(GridData.FILL,
 					GridData.BEGINNING, true, false));
@@ -115,31 +126,12 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 			super.setVisible(visible);
 		}
 
-		@SuppressWarnings("static-access")
 		protected final void validatePage() {
 			String text = fNameField.getText();
 
 			RefactoringStatus status = fRefactoringProcessor
-					.validateNewElementName(text);
-			if (resource instanceof IFile) {
-				boolean extensionBien = false;
-				if (text.contains(".")
-						&& text.substring(text.indexOf(".")).length() > 1) {
+					.validateNewElementName(text + "." + textoExtension);
 
-					String textoExtension = text
-							.substring(text.indexOf(".") + 1);
-					for (int i = 0; i < extensions.length; i++) {
-						if (extensions[i].equals(textoExtension)) {
-							extensionBien = true;
-							break;
-						}
-					}
-				}
-
-				if (!extensionBien) {
-					status = status.createFatalErrorStatus("muy mal");
-				}
-			}
 			setPageComplete(status);
 		}
 
@@ -191,12 +183,12 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 		}
 
 		private void initializeRefactoring() {
-			fRefactoringProcessor.setNewResourceName(fNameField.getText());
+			fRefactoringProcessor.setNewResourceName(fNameField.getText() + "."
+					+ textoExtension);
 		}
 
 		private boolean renameBean() {
-			String newName = fNameField.getText().substring(0,
-					fNameField.getText().lastIndexOf('.'));
+			String newName = fNameField.getText();
 			ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
 			Resource emfRes = resourceSetImpl.createResource(URI
 					.createPlatformResourceURI(resource.getFullPath()
