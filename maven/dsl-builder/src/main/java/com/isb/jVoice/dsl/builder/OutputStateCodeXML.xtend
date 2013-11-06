@@ -17,19 +17,19 @@ class OutputStateCodeXML {
 '''
 		<action-state id="«state.name»">
 			<on-entry>
-				<evaluate expression="output" result="flowScope.«state.name»"></evaluate>
+				<evaluate expression="jVoiceArchOutput" result="flashScope.«state.name»"></evaluate>
 			«/*Falta especificar el bargein del propmp general  */»
 				«IF audio != null» 
 					«var audios = audioOut.locution.audios.mainAudios»
 					«GeneralStateCodeXML.doGenerateGeneralState(state, audios,"audioItems")»
 					«IF properties != null && properties.size>0 » 
 						«FOR property : properties »
-							<evaluate expression="flowScope.«state.name».properties.put('«property.name»','«property.value»')"/>
+							<evaluate expression="flashScope.«state.name».properties.put('«property.name»','«property.value»')"/>
 						«ENDFOR»
 	        		«ENDIF» 
         		«ENDIF»     
 			</on-entry>
-			<evaluate expression="flowProcessor.process(flowScope.«state.name»)"/>
+			<evaluate expression="flowProcessor.process(flashScope.«state.name»)"/>
 			«IF tranSalida != null && tranSalida.size>0»
 				«IF tranSalida.get(0).target instanceof CustomState»
 					<transition to="render_«tranSalida.get(0).target.name»"/>

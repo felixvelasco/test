@@ -94,35 +94,62 @@ public class CopyMojo extends AbstractMojo {
 		File appServlet = new File(outputDirectory, APPSERVLET);
 		getDir(appServlet);
 		// Generamos el XML servlet-context.xml de la carpeta spring
-		generateXML(appServlet, "servlet-context");
-
-		// Creamos el web.xml en dentro de la carpeta WEB-INF
+		generateFile(appServlet, "servlet-context.xml");
+		
+		
+		// Creamos el app-context.xml en dentro de la carpeta WEB-INF
 		File spring = new File(outputDirectory, "spring");
-		generateXML(spring, "app-context");
+		generateFile(spring, "app-context.xml");
+		generateFile(spring, "jvoiceframework-context.xml");
+		generateFile(spring, "root-context.xml");
 
 		// Creamos el web.xml en dentro de la carpeta WEB-INF
-		generateXML(outputDirectory, "web");
+		generateFile(outputDirectory, "web.xml");
+		
+		// Creamos la carpeta estatica views
+		File views = new File(outputDirectory, "views");
+		getDir(views);
+		generateFile(views, "renderHTML.jsp");
+		generateFile(views, "renderVXI.jsp");
+
+		
 	}
 
 	/**
 	 * @param appServlet
 	 * @param name
 	 */
-	protected void generateXML(File ruta, String nameXML) {
-		File targetFile = new File(ruta, nameXML + ".xml");
+	protected void generateFile(File ruta, String inFileName) {
+		File targetFile = new File(ruta, inFileName);
 		if (!targetFile.exists()) {
 			try {
 				targetFile.createNewFile();
-				if (nameXML.equals("web")) {
+				if (inFileName.equals("web.xml")) {
 					XMLGeneratorWeb.generate(targetFile);
-				} else if (nameXML.equals("servlet-context")) {
+				} else if (inFileName.equals("servlet-context.xml")) {
 					XMLGeneratorServlet.generate(targetFile);
-				} else {
+				} else if (inFileName.equals("app-context.xml")){
 					XMLGeneratorAPP.generate(targetFile);
 				}
+				else if (inFileName.equals("renderHTML.jsp"))
+				{
+					XMLGeneratorRHTML.generate(targetFile);
+				}
+				else if (inFileName.equals("renderVXI.jsp"))
+				{
+					XMLGeneratorRVXI.generate(targetFile);
+				}
+				else if (inFileName.equals("jvoiceframework-context.xml"))
+				{
+					XMLGeneratorJFC.generate(targetFile);
+				}
+				else if (inFileName.equals("root-context.xml"))
+				{
+					XMLGeneratorRC.generate(targetFile);
+				}
 
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (IOException e) 
+			{
 				e.printStackTrace();
 			}
 		}

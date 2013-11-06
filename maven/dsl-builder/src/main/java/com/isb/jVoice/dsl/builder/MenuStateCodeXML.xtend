@@ -22,18 +22,18 @@ class MenuStateCodeXML {
 '''
 		<action-state id="«state.name»">
 			<on-entry>
-				<evaluate expression="output" result="flowScope.«state.name»"></evaluate>
-				<set name="flowScope.«state.name».name" value="'«audioIn.name»'" />
+				<evaluate expression="jVoiceArchOutput" result="flashScope.«state.name»"></evaluate>
+				<set name="flashScope.«state.name».name" value="'«audioIn.name»'" />
 				«/*Obtenemos las gramaticas del menu */»
 				«IF grammars != null»
 					«var grammatics = audioIn.locution.grammars.grammatics»
 					«IF grammatics != null && grammatics.size>0» 				
 						«FOR grammatic : grammatics »
-							<evaluate expression="grammar" result="flowScope.grammar«i=i+1»" />
-							<set name="flowScope.grammar«i».type" value="'«grammatic.expr.booleanValue»'"/>
-							<set name="flowScope.grammar«i».src" value="'«grammatic.src»'"/>
-							<set name="flowScope.grammar«i».mode" value="'«grammatic.mode»'"/>
-							<evaluate expression="flowScope.«state.name».grammars.add(flowScope.grammar«i»)" />
+							<evaluate expression="jVoiceArchGrammar" result="flashScope.grammar«i=i+1»" />
+							<set name="flashScope.grammar«i».type" value="'«grammatic.expr.booleanValue»'"/>
+							<set name="flashScope.grammar«i».src" value="'«grammatic.src»'"/>
+							<set name="flashScope.grammar«i».mode" value="'«grammatic.mode»'"/>
+							<evaluate expression="flashScope.«state.name».grammars.add(flashScope.grammar«i»)" />
 						«ENDFOR»
 	        		«ENDIF»
         		«ENDIF»
@@ -48,7 +48,7 @@ class MenuStateCodeXML {
 			      	«GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios")»
 		      	«ENDIF»
 			</on-entry>
-			<evaluate expression="flowProcessor.process(flowScope.«state.name»)"/>
+			<evaluate expression="flowProcessor.process(flashScope.«state.name»)"/>
 			<transition to="render_«state.name»"></transition>				
 		</action-state>
 		
@@ -57,7 +57,7 @@ class MenuStateCodeXML {
 		</view-state>
 			
 		<action-state id="render_decision_«state.name»">
-			<evaluate expression="flowScope.menuOption"></evaluate>
+			<evaluate expression="flashScope.menuOption"></evaluate>
 			«IF outputs != null» 
 				«var output = audioIn.locution.outputs.output» 
 				«IF tranSalidaS != null && output !=null && output.size>0 && tranSalidaS.size>0»
