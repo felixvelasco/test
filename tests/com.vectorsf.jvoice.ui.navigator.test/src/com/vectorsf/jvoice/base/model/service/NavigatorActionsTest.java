@@ -592,6 +592,103 @@ public class NavigatorActionsTest {
 
 	}
 	
+	@Test
+	public void testDeleteTwoProject() throws Exception {
+				
+		createProject("testNavigator3");	
+		bot.sleep(MEDIUM_SLEEP);
+		
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().getTreeItem("testNavigator3"), is(not(nullValue())));
+		
+		
+		view.bot().tree().select("testNavigator", "testNavigator3");
+		
+		new SWTBotMenu(ContextMenuHelper.contextMenu(view.bot().tree(), "Delete")).click();
+		
+		SWTBot dialogBot=null;
+		bot.shell("Delete").activate();
+		dialogBot = bot.shell("Delete").bot();
+		assertThat(dialogBot.button("OK").isEnabled(), is(true));
+		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
+		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
+		dialogBot.button("Cancel").click();
+		
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().getTreeItem("testNavigator3"), is(not(nullValue())));
+		
+		new SWTBotMenu(ContextMenuHelper.contextMenu(view.bot().tree(), "Delete")).click();
+		bot.shell("Delete").activate();
+		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
+		dialogBot = bot.shell("Delete").bot();
+		assertThat(dialogBot.button("OK").isEnabled(), is(true));
+		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
+		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
+		assertThat(dialogBot.checkBox().isEnabled(), is(true));
+		dialogBot.checkBox().click();
+		dialogBot.button("OK").click();
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+						if (!shellCreate.isOpen()) {
+							return true;
+						}
+						return false;
+					}
+
+					public String getFailureMessage() {
+						return "Was expecting the 'Create' dialog to close itself";
+					}
+				}, 5 * 60 * 1000);
+		
+		bot.sleep(MEDIUM_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(0)));
+
+	}
+	
+	@Test
+	public void testCopyTwoPackage() throws Exception {
+
+		createProject("testNavigator2");	
+		bot.sleep(SMALL_SLEEP);
+
+		JVProject project1 = BaseModel.getInstance().getModel().getProject("testNavigator");
+		JVProject project2 = BaseModel.getInstance().getModel().getProject("testNavigator2");
+		assertThat(project2.getPackages(), not(hasPackageNamed("several.packages.inside.here")));
+		assertThat(project2.getPackages(), not(hasPackageNamed("other.packages.inside")));
+
+		SWTBotTreeItem project1Item = view.bot().tree().getTreeItem("testNavigator");
+		SWTBotTreeItem project2Item = view.bot().tree().getTreeItem("testNavigator2");
+		assertThat(project1Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
+		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
+
+
+		project1Item.select("several.packages.inside.here", "other.packages.inside");
+				
+		new SWTBotMenu(ContextMenuHelper.contextMenu(view.bot().tree(), "Copy")).click();
+		
+		assertThat(project1.getPackages(), hasPackageNamed("several.packages.inside"));
+		assertThat(project1.getPackages(), hasPackageNamed("other.packages.inside"));
+		assertThat(project2.getPackages(), not(hasPackageNamed("several.packages.inside")));
+		assertThat(project2.getPackages(), not(hasPackageNamed("other.packages.inside")));
+
+		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(true)));
+		project2Item.contextMenu("Paste").click();
+
+		bot.sleep(MEDIUM_SLEEP);
+		assertThat(project1.getPackages(), hasPackageNamed("several.packages.inside"));
+		assertThat(project1.getPackages(), hasPackageNamed("other.packages.inside"));
+
+		bot.sleep(MEDIUM_SLEEP);
+		SWTBotTreeItem[] itemsAtTesNavigator = view.bot().tree().expandNode("testNavigator").getItems();
+		assertThat(itemsAtTesNavigator, hasInArrayNamed("several.packages.inside"));
+		assertThat(itemsAtTesNavigator, hasInArrayNamed("other.packages.inside"));
+		assertThat(project2.getPackages(), hasPackageNamed("several.packages.inside"));
+		assertThat(project2.getPackages(), hasPackageNamed("other.packages.inside"));
+		
+	}
+	
 	
 	
 	public SWTBotGefEditor getGefEditor() {
