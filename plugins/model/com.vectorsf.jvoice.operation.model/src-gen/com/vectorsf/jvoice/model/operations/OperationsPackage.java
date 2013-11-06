@@ -1418,6 +1418,97 @@ public interface OperationsPackage extends EPackage {
 	int NOTE_OPERATION_COUNT = BasePackage.JV_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CustomStateImpl <em>Custom State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.impl.CustomStateImpl
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCustomState()
+	 * @generated
+	 */
+	int CUSTOM_STATE = 16;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE__ID = STATE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE__NAME = STATE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE__DESCRIPTION = STATE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Notes</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE__NOTES = STATE__NOTES;
+
+	/**
+	 * The feature id for the '<em><b>Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE__PATH = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Custom State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Custom State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1425,7 +1516,7 @@ public interface OperationsPackage extends EPackage {
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTypeTransfer()
 	 * @generated
 	 */
-	int TYPE_TRANSFER = 16;
+	int TYPE_TRANSFER = 17;
 
 
 	/**
@@ -1841,6 +1932,27 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getNote_Name();
 
 	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.CustomState <em>Custom State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Custom State</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.CustomState
+	 * @generated
+	 */
+	EClass getCustomState();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.CustomState#getPath <em>Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Path</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.CustomState#getPath()
+	 * @see #getCustomState()
+	 * @generated
+	 */
+	EAttribute getCustomState_Path();
+
+	/**
 	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2216,6 +2328,24 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NOTE__NAME = eINSTANCE.getNote_Name();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.CustomStateImpl <em>Custom State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.impl.CustomStateImpl
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCustomState()
+		 * @generated
+		 */
+		EClass CUSTOM_STATE = eINSTANCE.getCustomState();
+
+		/**
+		 * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CUSTOM_STATE__PATH = eINSTANCE.getCustomState_Path();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}' enum.

@@ -39,6 +39,7 @@ import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Case;
+import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
@@ -215,6 +216,17 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 						data.getDomainSpecificContextButtons().add(menuButton);
 					}
 
+				} else if (sta instanceof CustomState) {
+					CustomState customState = (CustomState) sta;
+					if (customState.getOutgoingTransitions().isEmpty()) {
+						ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
+						menuButton.setText("Transition");
+						feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionCallFlowPattern(
+								customState, getFeatureProvider()));
+						menuButton.setIconId(getImageFor(sta, feature));
+						menuButton.addDragAndDropFeature(feature);
+						data.getDomainSpecificContextButtons().add(menuButton);
+					}
 				} else {
 					feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionPattern(
 							getFeatureProvider()));

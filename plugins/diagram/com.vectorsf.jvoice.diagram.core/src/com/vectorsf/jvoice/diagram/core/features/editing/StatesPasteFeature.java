@@ -39,6 +39,7 @@ import com.vectorsf.jvoice.model.base.JVElement;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.CallState;
+import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
@@ -225,7 +226,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		return object instanceof CallFlowState || object instanceof CallState || object instanceof FinalState
 				|| object instanceof InitialState || object instanceof InputState || object instanceof MenuState
 				|| object instanceof PromptState || object instanceof SwitchState || object instanceof RecordState
-				|| object instanceof TransferState;
+				|| object instanceof TransferState || object instanceof CustomState;
 	}
 
 	private boolean isLocution(Object object) {

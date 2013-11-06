@@ -7,6 +7,7 @@ import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.Case;
+import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
@@ -153,6 +154,13 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * @generated
 	 */
 	private EClass noteEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass customStateEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -581,6 +589,24 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getCustomState() {
+		return customStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCustomState_Path() {
+		return (EAttribute)customStateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getTypeTransfer() {
 		return typeTransferEEnum;
 	}
@@ -668,6 +694,9 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEReference(noteEClass, NOTE__REFERENCED_STATES);
 		createEAttribute(noteEClass, NOTE__NAME);
 
+		customStateEClass = createEClass(CUSTOM_STATE);
+		createEAttribute(customStateEClass, CUSTOM_STATE__PATH);
+
 		// Create enums
 		typeTransferEEnum = createEEnum(TYPE_TRANSFER);
 	}
@@ -719,6 +748,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		transferStateEClass.getESuperTypes().add(this.getState());
 		recordStateEClass.getESuperTypes().add(this.getState());
 		noteEClass.getESuperTypes().add(theBasePackage.getJVElement());
+		customStateEClass.getESuperTypes().add(this.getState());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(stateEClass, State.class, "State", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -777,6 +807,9 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEAttribute(getNote_Description(), ecorePackage.getEString(), "description", null, 0, 1, Note.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNote_ReferencedStates(), this.getState(), this.getState_Notes(), "referencedStates", null, 0, -1, Note.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNote_Name(), ecorePackage.getEString(), "name", null, 0, 1, Note.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(customStateEClass, CustomState.class, "CustomState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCustomState_Path(), ecorePackage.getEString(), "path", null, 0, 1, CustomState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(typeTransferEEnum, TypeTransfer.class, "TypeTransfer");

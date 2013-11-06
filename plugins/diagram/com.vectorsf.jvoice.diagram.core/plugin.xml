@@ -68,6 +68,9 @@
      <patternContributor
            patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.note.NotePattern">
      </patternContributor>
+     <patternContributor
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CustomStatePattern">
+     </patternContributor>
  </extension>
  <extension
        point="org.eclipse.graphiti.ui.imageProviders">

@@ -394,6 +394,29 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.CustomState} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CustomStateItemProvider customStateItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.CustomState}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCustomStateAdapter() {
+		if (customStateItemProvider == null) {
+			customStateItemProvider = new CustomStateItemProvider(this);
+		}
+
+		return customStateItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -506,6 +529,7 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 		if (transferStateItemProvider != null) transferStateItemProvider.dispose();
 		if (recordStateItemProvider != null) recordStateItemProvider.dispose();
 		if (noteItemProvider != null) noteItemProvider.dispose();
+		if (customStateItemProvider != null) customStateItemProvider.dispose();
 	}
 
 }

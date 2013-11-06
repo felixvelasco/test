@@ -13,6 +13,7 @@ import org.eclipse.graphiti.ui.features.AbstractCopyFeature;
 
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.CallState;
+import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.InputState;
@@ -73,7 +74,7 @@ public class StatesCopyFeature extends AbstractCopyFeature {
 	private boolean isState(Object object) {
 		if (object instanceof CallFlowState || object instanceof CallState || object instanceof FinalState
 				|| object instanceof InitialState || object instanceof InputState || object instanceof MenuState
-				|| object instanceof PromptState || object instanceof SwitchState) {
+				|| object instanceof PromptState || object instanceof SwitchState || object instanceof CustomState) {
 			return true;
 		}
 		return false;

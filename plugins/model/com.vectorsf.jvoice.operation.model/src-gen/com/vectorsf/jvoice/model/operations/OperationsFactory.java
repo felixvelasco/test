@@ -148,6 +148,15 @@ public interface OperationsFactory extends EFactory {
 	Note createNote();
 
 	/**
+	 * Returns a new object of class '<em>Custom State</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Custom State</em>'.
+	 * @generated
+	 */
+	CustomState createCustomState();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
