@@ -87,6 +87,11 @@
 			<artifactId>org.eclipse.xtext.xbase</artifactId>
 			<version>2.4.2.v201306120542</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>13.0</version>
+		</dependency>
 </dependencies>
   <build>
     <plugins>
