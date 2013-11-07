@@ -47,8 +47,7 @@ import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
 import com.vectorsf.jvoice.ui.edit.validators.ValidatorInput;
 import com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice;
 
-public class InputStatePattern extends StatePattern implements
-		ISelectionStatusValidator {
+public class InputStatePattern extends StatePattern implements ISelectionStatusValidator {
 
 	private static final String INPUT = "Input";
 	private static int MIN_WIDTH = 120;
@@ -61,24 +60,17 @@ public class InputStatePattern extends StatePattern implements
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
 
-		ContainerShape outerContainerShape = peCreateService
-				.createContainerShape(getDiagram(), true);
+		ContainerShape outerContainerShape = peCreateService.createContainerShape(getDiagram(), true);
 
-		RoundedRectangle mainRectangle = gaService.createRoundedRectangle(
-				outerContainerShape, 25, 25);
+		RoundedRectangle mainRectangle = gaService.createRoundedRectangle(outerContainerShape, 25, 25);
 		setId(mainRectangle, ID_MAIN_FIGURE);
 		mainRectangle.setFilled(true);
-		gaService
-				.setRenderingStyle(
-						mainRectangle,
-						StatePredefinedColoredAreas
-								.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.SILVER_WHITE_GLOSS_ID));
-		gaService.setLocationAndSize(mainRectangle, context.getX(),
-				context.getY(), Math.max(MIN_WIDTH, context.getWidth()),
-				Math.max(MIN_HEIGHT, context.getHeight()));
+		gaService.setRenderingStyle(mainRectangle, StatePredefinedColoredAreas
+				.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.SILVER_WHITE_GLOSS_ID));
+		gaService.setLocationAndSize(mainRectangle, context.getX(), context.getY(),
+				Math.max(MIN_WIDTH, context.getWidth()), Math.max(MIN_HEIGHT, context.getHeight()));
 
-		Text text = gaService.createText(mainRectangle,
-				addedDomainObject.getName());
+		Text text = gaService.createText(mainRectangle, addedDomainObject.getName());
 		setId(text, ID_NAME_TEXT);
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
@@ -94,15 +86,12 @@ public class InputStatePattern extends StatePattern implements
 	@Override
 	public Object[] create(ICreateContext context) {
 
-		Shell shell = new Shell();
+		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
-		JVBeanContentProvider locutionCP = new JVBeanContentProvider(
-				new ComposedAdapterFactory(
-						ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
-		DialogSubFlow dialog = new DialogSubFlow(shell,
-				new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-						ComposedAdapterFactory.Descriptor.Registry.INSTANCE)),
-				locutionCP);
+		JVBeanContentProvider locutionCP = new JVBeanContentProvider(new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+		DialogSubFlow dialog = new DialogSubFlow(shell, new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE)), locutionCP);
 
 		dialog.setAllowMultiple(false);
 		dialog.setHelpAvailable(false);
@@ -116,8 +105,7 @@ public class InputStatePattern extends StatePattern implements
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		URI res = flow.eResource().getURI();
 		String projectName = res.segment(1);
-		JVProject project = BaseModel.getInstance().getModel()
-				.getProject(projectName);
+		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
 		List<JVProject> proj = project.getReferencedProjects();
 		dialog.setInput(proj);
 		dialog.open();
@@ -136,23 +124,19 @@ public class InputStatePattern extends StatePattern implements
 
 			inputState.setName(inputStateName);
 			Resource eResource = result.eResource();
-			flowURI = eResource.getURI().appendFragment(
-					eResource.getURIFragment(result));
+			flowURI = eResource.getURI().appendFragment(eResource.getURIFragment(result));
 
 			break;
 		case IDialogConstants.PROCEED_ID:
-			IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow,
-					IFile.class);
+			IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
 
 			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 			IProject projectRoot = root.getProject(projectName);
 
-			IFolder folder = projectRoot.getFolder(file.getParent()
-					.getProjectRelativePath());
+			IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath());
 			CreateDslJVoice newWizard = new CreateDslJVoice(folder, "Input");
-			WizardDialog wizardDialog = new WizardDialog(PlatformUI
-					.getWorkbench().getActiveWorkbenchWindow().getShell(),
-					newWizard);
+			WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getShell(), newWizard);
 			if (wizardDialog.open() == Window.OK) {
 				flowURI = newWizard.getURI();
 
@@ -167,8 +151,7 @@ public class InputStatePattern extends StatePattern implements
 			break;
 		}
 
-		result = (InputDsl) flow.eResource().getResourceSet()
-				.getEObject(flowURI, true);
+		result = (InputDsl) flow.eResource().getResourceSet().getEObject(flowURI, true);
 		inputState.setLocution(result);
 		inputState.setName(result.getName());
 
@@ -195,13 +178,11 @@ public class InputStatePattern extends StatePattern implements
 			if (selection[0] instanceof InputDsl) {
 				return Status.OK_STATUS;
 			} else {
-				return new Status(IStatus.ERROR,
-						"com.vectorsf.jvoice.diagram.core", "Select an input");
+				return new Status(IStatus.ERROR, "com.vectorsf.jvoice.diagram.core", "Select an input");
 			}
 
 		} else {
-			return new Status(IStatus.ERROR,
-					"com.vectorsf.jvoice.diagram.core", "Select an input");
+			return new Status(IStatus.ERROR, "com.vectorsf.jvoice.diagram.core", "Select an input");
 		}
 	}
 

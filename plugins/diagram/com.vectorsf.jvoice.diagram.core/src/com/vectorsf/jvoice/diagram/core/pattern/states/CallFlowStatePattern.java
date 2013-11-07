@@ -46,8 +46,7 @@ import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
 import com.vectorsf.jvoice.ui.edit.validators.ValidatorSubFlow;
 import com.vectorsf.jvoice.ui.wizard.create.CreateDiagramJVoice;
 
-public class CallFlowStatePattern extends StatePattern implements
-		ISelectionStatusValidator {
+public class CallFlowStatePattern extends StatePattern implements ISelectionStatusValidator {
 
 	private static final String CALL_FLOW = "SubFlow";
 	private static int MIN_WIDTH = 120;
@@ -55,29 +54,21 @@ public class CallFlowStatePattern extends StatePattern implements
 
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
-		CallFlowState addedDomainObject = (CallFlowState) context
-				.getNewObject();
+		CallFlowState addedDomainObject = (CallFlowState) context.getNewObject();
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
 
-		ContainerShape outerContainerShape = peCreateService
-				.createContainerShape(getDiagram(), true);
+		ContainerShape outerContainerShape = peCreateService.createContainerShape(getDiagram(), true);
 
-		RoundedRectangle mainRectangle = gaService.createRoundedRectangle(
-				outerContainerShape, 25, 25);
+		RoundedRectangle mainRectangle = gaService.createRoundedRectangle(outerContainerShape, 25, 25);
 		setId(mainRectangle, ID_MAIN_FIGURE);
 		// mainRectangle.setFilled(true);
-		gaService
-				.setRenderingStyle(
-						mainRectangle,
-						StatePredefinedColoredAreas
-								.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.COPPER_WHITE_GLOSS_ID));
-		gaService.setLocationAndSize(mainRectangle, context.getX(),
-				context.getY(), Math.max(MIN_WIDTH, context.getWidth()),
-				Math.max(MIN_HEIGHT, context.getHeight()));
+		gaService.setRenderingStyle(mainRectangle, StatePredefinedColoredAreas
+				.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.COPPER_WHITE_GLOSS_ID));
+		gaService.setLocationAndSize(mainRectangle, context.getX(), context.getY(),
+				Math.max(MIN_WIDTH, context.getWidth()), Math.max(MIN_HEIGHT, context.getHeight()));
 
-		Text text = gaService.createText(mainRectangle,
-				addedDomainObject.getName());
+		Text text = gaService.createText(mainRectangle, addedDomainObject.getName());
 		setId(text, ID_NAME_TEXT);
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
@@ -93,15 +84,12 @@ public class CallFlowStatePattern extends StatePattern implements
 	@Override
 	public Object[] create(ICreateContext context) {
 
-		Shell shell = new Shell();
+		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
-		JVBeanContentProvider callFlowContentProvider = new JVBeanContentProvider(
-				new ComposedAdapterFactory(
-						ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
-		DialogSubFlow dialog = new DialogSubFlow(shell,
-				new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-						ComposedAdapterFactory.Descriptor.Registry.INSTANCE)),
-				callFlowContentProvider);
+		JVBeanContentProvider callFlowContentProvider = new JVBeanContentProvider(new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+		DialogSubFlow dialog = new DialogSubFlow(shell, new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE)), callFlowContentProvider);
 
 		dialog.setAllowMultiple(false);
 		dialog.setHelpAvailable(false);
@@ -115,8 +103,7 @@ public class CallFlowStatePattern extends StatePattern implements
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		URI res = flow.eResource().getURI();
 		String projectName = res.segment(1);
-		JVProject project = BaseModel.getInstance().getModel()
-				.getProject(projectName);
+		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
 		List<JVProject> proj = project.getReferencedProjects();
 		dialog.setInput(proj);
 
@@ -132,18 +119,15 @@ public class CallFlowStatePattern extends StatePattern implements
 
 			break;
 		case IDialogConstants.PROCEED_ID:
-			IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow,
-					IFile.class);
+			IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
 
 			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 			IProject projectRoot = root.getProject(projectName);
 
-			IFolder folder = projectRoot.getFolder(file.getParent()
-					.getProjectRelativePath());
+			IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath());
 			CreateDiagramJVoice newWizard = new CreateDiagramJVoice(folder);
-			WizardDialog wizardDialog = new WizardDialog(PlatformUI
-					.getWorkbench().getActiveWorkbenchWindow().getShell(),
-					newWizard);
+			WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getShell(), newWizard);
 
 			if (wizardDialog.open() == Window.OK) {
 				result = newWizard.getReturnFlow();
@@ -161,11 +145,9 @@ public class CallFlowStatePattern extends StatePattern implements
 		}
 
 		URI flowURI = EcoreUtil.getURI(result);
-		result = (Flow) flow.eResource().getResourceSet()
-				.getEObject(flowURI, true);
+		result = (Flow) flow.eResource().getResourceSet().getEObject(flowURI, true);
 
-		CallFlowState callFlowState = OperationsFactory.eINSTANCE
-				.createCallFlowState();
+		CallFlowState callFlowState = OperationsFactory.eINSTANCE.createCallFlowState();
 
 		callFlowState.setName(callFlowName);
 		callFlowState.setSubflow(result);
@@ -191,14 +173,12 @@ public class CallFlowStatePattern extends StatePattern implements
 	public IStatus validate(Object[] selection) {
 		if (selection.length > 0) {
 			if (!(selection[0] instanceof Flow)) {
-				return new Status(IStatus.ERROR,
-						"com.vectorsf.jvoice.diagram.core", "Select a flow");
+				return new Status(IStatus.ERROR, "com.vectorsf.jvoice.diagram.core", "Select a flow");
 			} else {
 				return Status.OK_STATUS;
 			}
 		} else {
-			return new Status(IStatus.ERROR,
-					"com.vectorsf.jvoice.diagram.core", "Select a flow");
+			return new Status(IStatus.ERROR, "com.vectorsf.jvoice.diagram.core", "Select a flow");
 		}
 	}
 }
