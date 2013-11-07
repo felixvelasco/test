@@ -48,6 +48,7 @@ import com.vectorsf.jvoice.ui.diagram.properties.editting.EventNameEditingSuppor
 import com.vectorsf.jvoice.ui.diagram.properties.listeners.ListenerIntentionName;
 import com.vectorsf.jvoice.ui.diagram.properties.listeners.ListenerTypeTransfer;
 import com.vectorsf.jvoice.ui.diagram.properties.listeners.PropertiesListener;
+import com.vectorsf.jvoice.ui.diagram.properties.listeners.VerifyNumericListener;
 import com.vectorsf.jvoice.ui.diagram.properties.provider.CaseContentProvider;
 import com.vectorsf.jvoice.ui.diagram.properties.provider.CaseLabelProvider;
 
@@ -88,6 +89,8 @@ ITabbedPropertyConstants {
 	private ListenerIntentionName maxTimeListener;
 	private ListenerTypeTransfer typeTransferListener;
 	private PropertiesListener propertielistener;
+	private VerifyNumericListener timeOutVerifyListener;
+	private VerifyNumericListener maxTimeVerifyListener;
 	
 
 	public StateSection() {}
@@ -420,6 +423,10 @@ ITabbedPropertyConstants {
         
         timeOutText.addFocusListener(timeOutListener);
         
+        timeOutVerifyListener = new VerifyNumericListener();
+        
+        timeOutText.addVerifyListener(timeOutVerifyListener);
+        
 	    CLabel labelTimeOut = factory.createCLabel(composite, "TimeOut:");
 	    data = new FormData();
 	    data.left = new FormAttachment(0, 0);
@@ -438,6 +445,10 @@ ITabbedPropertyConstants {
         maxTimeListener = new ListenerIntentionName(this, maxTimeText, 4);
         
         maxTimeText.addFocusListener(maxTimeListener);
+        
+        maxTimeVerifyListener = new VerifyNumericListener();
+        
+        maxTimeText.addVerifyListener(maxTimeVerifyListener);
         
 	    CLabel labelTimeMax = factory.createCLabel(composite, "Max Time:");
 	    data = new FormData();
@@ -564,6 +575,8 @@ ITabbedPropertyConstants {
             	if (transfer.getTypeTransfer().getValue() == 0){
             		timeOutText.setEnabled(false);
             		maxTimeText.setEnabled(false);
+            		timeOutText.setText(Integer.toString(transfer.getTimeout()));
+                	maxTimeText.setText(Integer.toString(transfer.getMaxTime()));
             	}else if(transfer.getTypeTransfer().getValue() == 1){
             		timeOutText.setEnabled(true);
             		maxTimeText.setEnabled(false);
@@ -575,8 +588,7 @@ ITabbedPropertyConstants {
                 	timeOutText.setText(Integer.toString(transfer.getTimeout()));
                 	maxTimeText.setText(Integer.toString(transfer.getMaxTime()));
             	}
-            	timeOutText.setText("");
-            	maxTimeText.setText("");
+
             	
             	seleccionarTipo(transfer);
             	addListenerTransfer();
@@ -590,12 +602,16 @@ ITabbedPropertyConstants {
     	audioListener = new ListenerIntentionName(this, transferAudioText, 2);
     	maxTimeListener = new ListenerIntentionName(this, maxTimeText, 4);
     	timeOutListener = new ListenerIntentionName(this, timeOutText, 3);
+    	timeOutVerifyListener = new VerifyNumericListener();
+    	maxTimeVerifyListener = new VerifyNumericListener();
     	
 		destinationText.addFocusListener(destinationListener);
 		transferAudioText.addFocusListener(audioListener);
 		maxTimeText.addFocusListener(maxTimeListener);
 		timeOutText.addFocusListener(timeOutListener);
 		typeTranferCombo.addSelectionListener(typeTransferListener);
+		timeOutText.addVerifyListener(timeOutVerifyListener);
+		maxTimeText.addVerifyListener(maxTimeVerifyListener);
 		
 	}
 
@@ -640,6 +656,8 @@ ITabbedPropertyConstants {
 			maxTimeText.removeFocusListener(maxTimeListener);
 			timeOutText.removeFocusListener(timeOutListener);
 			typeTranferCombo.removeSelectionListener(typeTransferListener);
+			timeOutText.removeVerifyListener(timeOutVerifyListener);
+			maxTimeText.removeVerifyListener(maxTimeVerifyListener);
 		}else if ((bo instanceof MenuState) || (bo instanceof InputState) || (bo instanceof PromptState) || (bo instanceof CallFlowState)
 				|| (bo instanceof CustomState)){
 			
