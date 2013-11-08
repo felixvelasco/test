@@ -1,7 +1,9 @@
 package com.isb.jVoice.application.builder
 
+import java.io.BufferedWriter
 import java.io.File
-import java.io.FileWriter
+import java.io.FileOutputStream
+import java.io.OutputStreamWriter
 
 class XMLGeneratorWeb {
 	
@@ -10,9 +12,10 @@ class XMLGeneratorWeb {
 	}
 	
 	def generateXML(File file) {
-	var fw = new FileWriter(file)
-	fw.append(doGenerate());
-	fw.close()
+		var out = new BufferedWriter
+			    (new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
+		out.append(doGenerate());
+		out.close();	
 	}
 	
 	def doGenerate() '''
