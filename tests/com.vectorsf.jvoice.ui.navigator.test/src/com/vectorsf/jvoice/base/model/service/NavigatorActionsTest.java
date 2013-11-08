@@ -3,10 +3,24 @@
  */
 package com.vectorsf.jvoice.base.model.service;
 
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.util.LocalSelectionTransfer;
+import org.eclipse.m2e.core.internal.builder.BuildDebugHook;
+import org.eclipse.m2e.core.internal.builder.MavenBuilder;
+import org.eclipse.m2e.core.project.IMavenProjectFacade;
+import org.eclipse.m2e.core.project.configurator.AbstractBuildParticipant;
+import org.eclipse.m2e.core.project.configurator.MojoExecutionKey;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
@@ -26,6 +40,7 @@ import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
@@ -57,7 +72,8 @@ import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResour
 public class NavigatorActionsTest {
 
 	private static final int SMALL_SLEEP = 300;
-	private static final int MEDIUM_SLEEP = 1500;
+	private static final int MEDIUM_SLEEP = 2000;
+	private static final int LARGE_SLEEP = 5000;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
@@ -101,9 +117,9 @@ public class NavigatorActionsTest {
 		});
 
 		SWTBotHelper.openView(bot, "IVR", "Navigator IVR");
-
+		
 		view = bot.viewById(NAVIGATOR_ID);
-
+		
 		view.bot().tree().expandNode("testNavigator", "several.packages.inside");
 		view.bot().tree().expandNode("testNavigator", "several.packages.inside.here");
 		view.bot().tree().expandNode("testNavigator", "other.packages.inside");
@@ -117,10 +133,29 @@ public class NavigatorActionsTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		
 		bot.viewById(NAVIGATOR_ID).close();
-
+		
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-			deleteProject(project);
+			while (true) {
+				if (project.isSynchronized(2)) {
+					try {
+					deleteProject(project);
+					} catch (ResourceException re)
+					{
+						IStatus status = re.getStatus();
+						System.err.println(status);
+						if(status.getException()!=null){
+							status.getException().printStackTrace();
+						}
+						throw re;
+					}
+					break;
+				} else {
+					project.refreshLocal(2, null);
+					Thread.sleep(3000);
+				}
+			}
 		}
 	}
 
@@ -128,7 +163,7 @@ public class NavigatorActionsTest {
 	public void testCopyPackage() throws Exception {
 
 		createProject("testNavigator2");	
-		bot.sleep(SMALL_SLEEP);
+		bot.sleep(MEDIUM_SLEEP);
 
 		JVProject project1 = BaseModel.getInstance().getModel().getProject("testNavigator");
 		JVProject project2 = BaseModel.getInstance().getModel().getProject("testNavigator2");
@@ -139,12 +174,11 @@ public class NavigatorActionsTest {
 		assertThat(project1Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
 		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
 
-		
-		project1Item.getNode("several.packages.inside.here").select().contextMenu("Copy").click();
+		project1Item.expand().getNode("several.packages.inside.here").contextMenu("Copy").click();
 	
 		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(true)));
 		
-		project2Item.select().contextMenu("Paste").click();
+		project2Item.contextMenu("Paste").click();
 
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(project1.getPackage("several.packages.inside.here").getBeans(),
@@ -155,7 +189,7 @@ public class NavigatorActionsTest {
 
 		assertThat(view.bot().tree().expandNode("testNavigator2").getItems(),
 				hasInArrayNamed("several.packages.inside.here"));
-
+		
 		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside.here").getItems(),
 				both(hasInArrayNamed("three")).and(hasInArrayNamed("four")));
 		assertThat(view.bot().tree().expandNode("testNavigator2", "several.packages.inside.here").getItems(),
@@ -190,9 +224,10 @@ public class NavigatorActionsTest {
 				hasInArrayNamed("one"));
 		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside.here").getItems(),
 				hasInArrayNamed("one"));
-
+		
 	}
 
+	
 	@Test
 	public void testCopyTwoBeans() throws Exception {
 
@@ -201,6 +236,7 @@ public class NavigatorActionsTest {
 		assertThat(here.contextMenu("Paste"), hasProperty("enabled", is(false)));
 
 		JVProject project = BaseModel.getInstance().getModel().getProject("testNavigator");
+		bot.sleep(MEDIUM_SLEEP);
 		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").select("one", "two");
 		// Workaround for e4 (see http://www.eclipse.org/forums/index.php/t/11863/)
 		new SWTBotMenu(ContextMenuHelper.contextMenu(view.bot().tree(), "Copy")).click();
@@ -237,8 +273,10 @@ public class NavigatorActionsTest {
 		assertThat(itemsAtSeveralPackagesInsideHere, hasInArrayNamed("two"));
 		assertThat(itemsAtSeveralPackagesInsideHere, hasInArrayNamed("three"));
 		assertThat(itemsAtSeveralPackagesInsideHere, hasInArrayNamed("four"));
+		
 	}
 
+		
 	@Test
 	public void testMenuItems() throws Exception {
 
@@ -261,6 +299,7 @@ public class NavigatorActionsTest {
 		assertThat(two.contextMenu("Copy"), hasProperty("enabled", is(true)));
 	}
 	
+		
 	@Test
 	public void testOpenBean() throws Exception {
 
@@ -274,10 +313,10 @@ public class NavigatorActionsTest {
 		assertThat(editor, is(not(nullValue())));
 		editor.close();
 		
-		here = view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("Input Dsl newLocution").select();
+		here = view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("newLocution").select();
 		assertThat(here.contextMenu("Open"), hasProperty("enabled", is(true)));
 		
-		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("Input Dsl newLocution").select().contextMenu("Open").click();
+		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("newLocution").select().contextMenu("Open").click();
 		
 		bot.sleep(MEDIUM_SLEEP);
 		
@@ -288,6 +327,7 @@ public class NavigatorActionsTest {
 
 	}
 	
+		
 	@Test
 	public void testCopyPackageToApplication() throws Exception {
 
@@ -317,6 +357,7 @@ public class NavigatorActionsTest {
 		assertThat(project2.getPackages(), not(hasPackageNamed("several.packages.inside")));
 		
 	}
+	
 	
 	@Test
 	public void testDeleteBean() throws Exception {
@@ -372,6 +413,7 @@ public class NavigatorActionsTest {
 
 	}
 	
+	
 	@Test
 	public void testDeleteTwoBean() throws Exception {
 		
@@ -424,6 +466,7 @@ public class NavigatorActionsTest {
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("newLocution"));
 
 	}
+	
 	
 	@Test
 	public void testDeletePackage() throws Exception {
@@ -481,6 +524,7 @@ public class NavigatorActionsTest {
 
 	}
 	
+	
 	@Test
 	public void testDeleteTwoPackages() throws Exception {
 		
@@ -533,6 +577,7 @@ public class NavigatorActionsTest {
 		assertThat(project1.getPackages(), not(hasPackageNamed("other.packages.inside")));
 		assertThat(project1.getPackages(), hasPackageNamed("several.packages.inside"));
 	}
+	
 	
 	@Test
 	public void testDeleteProject() throws Exception {
@@ -592,6 +637,7 @@ public class NavigatorActionsTest {
 
 	}
 	
+	
 	@Test
 	public void testDeleteTwoProject() throws Exception {
 				
@@ -646,6 +692,7 @@ public class NavigatorActionsTest {
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(0)));
 
 	}
+	
 	
 	@Test
 	public void testCopyTwoPackage() throws Exception {
