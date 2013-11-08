@@ -1,6 +1,8 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.ui.URIEditorInput;
@@ -56,7 +58,11 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 			if (fileString != null) {
 				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileString));
 
-				IDE.openEditor(page, file);
+				IWorkspace workspace = ResourcesPlugin.getWorkspace();
+				IWorkspaceRoot root = workspace.getRoot();
+				if (root.getFile(file.getFullPath()).exists()) {
+					IDE.openEditor(page, file);
+				}
 			} else {
 				URIEditorInput input = new URIEditorInput(locutionUri);
 				if (eObject instanceof Flow) {
