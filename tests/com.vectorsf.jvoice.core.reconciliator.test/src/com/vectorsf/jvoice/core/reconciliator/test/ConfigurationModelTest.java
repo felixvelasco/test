@@ -3,14 +3,36 @@
  */
 package com.vectorsf.jvoice.core.reconciliator.test;
 
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.CONFIG_PATH;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.JV_PATH;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFolders;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.executeWksRunnable;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.moveFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.updateFile;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+
 import java.util.List;
 
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -23,28 +45,6 @@ import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVProject;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.CONFIG_PATH;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.JV_PATH;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFolders;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFile;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.executeWksRunnable;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.moveFile;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.updateFile;
 
 /**
  * 
@@ -69,8 +69,26 @@ public class ConfigurationModelTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-			deleteProject(project);
+		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects()) {
+			while (true) {
+				if (project.isSynchronized(2)) {
+					try {
+						deleteProject(project);
+					} catch (ResourceException re) {
+						IStatus status = re.getStatus();
+						System.err.println(status);
+						if (status.getException() != null) {
+							status.getException().printStackTrace();
+						}
+						throw re;
+					}
+					break;
+				} else {
+					project.refreshLocal(2, null);
+					Thread.sleep(3000);
+				}
+			}
 		}
 	}
 
@@ -82,7 +100,8 @@ public class ConfigurationModelTest {
 		List<Configuration> configurations = jvProject.getConfiguration();
 		assertThat(configurations, is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		executeWksRunnable(new IWorkspaceRunnable() {
 
 			@Override
@@ -93,11 +112,14 @@ public class ConfigurationModelTest {
 		}, project);
 
 		assertThat(configurations, hasSize(1));
-		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+		assertThat(
+				configurations,
+				Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
 		Configuration test = configurations.get(0);
 
 		assertThat(test.getParameters().keySet(), hasSize(4));
-		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+		assertThat(test.getParameters().keySet(),
+				containsInAnyOrder("uno", "dos", "tres", "cuatro"));
 	}
 
 	@Test
@@ -108,7 +130,8 @@ public class ConfigurationModelTest {
 		List<Configuration> configurations = jvProject.getConfiguration();
 		assertThat(configurations, is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		executeWksRunnable(new IWorkspaceRunnable() {
 
 			@Override
@@ -140,7 +163,8 @@ public class ConfigurationModelTest {
 		List<Configuration> configurations = jvProject.getConfiguration();
 		assertThat(configurations, is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		executeWksRunnable(new IWorkspaceRunnable() {
 
 			@Override
@@ -153,11 +177,14 @@ public class ConfigurationModelTest {
 		}, project);
 
 		assertThat(configurations, hasSize(1));
-		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+		assertThat(
+				configurations,
+				Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
 		Configuration test = configurations.get(0);
 
 		assertThat(test.getParameters().keySet(), hasSize(4));
-		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+		assertThat(test.getParameters().keySet(),
+				containsInAnyOrder("uno", "dos", "tres", "cuatro"));
 	}
 
 	@Test
@@ -191,11 +218,13 @@ public class ConfigurationModelTest {
 
 		Configuration test = project.getConfiguration("test");
 		assertThat(test.getParameters().keySet(), hasSize(4));
-		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+		assertThat(test.getParameters().keySet(),
+				containsInAnyOrder("uno", "dos", "tres", "cuatro"));
 
 		Configuration otherTest = project.getConfiguration("otherTest");
 		assertThat(otherTest.getParameters().keySet(), hasSize(4));
-		assertThat(otherTest.getParameters().keySet(), containsInAnyOrder("one", "two", "three", "four"));
+		assertThat(otherTest.getParameters().keySet(),
+				containsInAnyOrder("one", "two", "three", "four"));
 	}
 
 	@Test
@@ -206,7 +235,8 @@ public class ConfigurationModelTest {
 		List<Configuration> configurations = jvProject.getConfiguration();
 		assertThat(configurations, is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		executeWksRunnable(new IWorkspaceRunnable() {
 
 			@Override
@@ -219,12 +249,17 @@ public class ConfigurationModelTest {
 		}, project);
 
 		assertThat(configurations, hasSize(2));
-		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
-		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test2"))));
+		assertThat(
+				configurations,
+				Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+		assertThat(configurations,
+				Matchers.<Configuration> hasItem(hasProperty("name",
+						is("test2"))));
 		Configuration test = configurations.get(0);
 
 		assertThat(test.getParameters().keySet(), hasSize(4));
-		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+		assertThat(test.getParameters().keySet(),
+				containsInAnyOrder("uno", "dos", "tres", "cuatro"));
 
 		executeWksRunnable(new IWorkspaceRunnable() {
 
@@ -235,7 +270,9 @@ public class ConfigurationModelTest {
 		});
 
 		assertThat(configurations, hasSize(1));
-		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+		assertThat(
+				configurations,
+				Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
 
 		executeWksRunnable(new IWorkspaceRunnable() {
 
@@ -256,7 +293,8 @@ public class ConfigurationModelTest {
 		List<Configuration> configurations = jvProject.getConfiguration();
 		assertThat(configurations, is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		executeWksRunnable(new IWorkspaceRunnable() {
 
 			@Override
@@ -269,12 +307,17 @@ public class ConfigurationModelTest {
 		}, project);
 
 		assertThat(configurations, hasSize(2));
-		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
-		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test2"))));
+		assertThat(
+				configurations,
+				Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+		assertThat(configurations,
+				Matchers.<Configuration> hasItem(hasProperty("name",
+						is("test2"))));
 		Configuration test = configurations.get(0);
 
 		assertThat(test.getParameters().keySet(), hasSize(4));
-		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+		assertThat(test.getParameters().keySet(),
+				containsInAnyOrder("uno", "dos", "tres", "cuatro"));
 
 		executeWksRunnable(new IWorkspaceRunnable() {
 
@@ -296,13 +339,15 @@ public class ConfigurationModelTest {
 		List<Configuration> configurations = jvProject.getConfiguration();
 		assertThat(configurations, is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		executeWksRunnable(new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				for (int i = 0; i < 100; i++) {
-					createFile(project, CONFIG_PATH + "/test" + i + ".properties",
+					createFile(project, CONFIG_PATH + "/test" + i
+							+ ".properties",
 							"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
 				}
 			}
@@ -319,7 +364,8 @@ public class ConfigurationModelTest {
 		List<Configuration> configurations = jvProject.getConfiguration();
 		assertThat(configurations, is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		final IFile[] file = new IFile[1];
 		executeWksRunnable(new IWorkspaceRunnable() {
 
@@ -330,23 +376,28 @@ public class ConfigurationModelTest {
 			}
 		}, project);
 		assertThat(configurations, hasSize(1));
-		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+		assertThat(
+				configurations,
+				Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
 		Configuration test = configurations.get(0);
 
 		assertThat(test.getParameters().keySet(), hasSize(4));
-		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+		assertThat(test.getParameters().keySet(),
+				containsInAnyOrder("uno", "dos", "tres", "cuatro"));
 
 		executeWksRunnable(new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				updateFile(file[0], "one=prueba\ntwo=test\nthree=ejemplo\nfour=example\n");
+				updateFile(file[0],
+						"one=prueba\ntwo=test\nthree=ejemplo\nfour=example\n");
 			}
 		});
 
 		assertThat(configurations, contains(test));
 		assertThat(test.getParameters().keySet(), hasSize(4));
-		assertThat(test.getParameters().keySet(), containsInAnyOrder("one", "two", "three", "four"));
+		assertThat(test.getParameters().keySet(),
+				containsInAnyOrder("one", "two", "three", "four"));
 
 	}
 
@@ -358,7 +409,8 @@ public class ConfigurationModelTest {
 		List<Configuration> configurations = jvProject.getConfiguration();
 		assertThat(configurations, is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		final IFile[] file = new IFile[1];
 		executeWksRunnable(new IWorkspaceRunnable() {
 
@@ -370,26 +422,35 @@ public class ConfigurationModelTest {
 		}, project);
 
 		assertThat(configurations, hasSize(1));
-		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
+		assertThat(
+				configurations,
+				Matchers.<Configuration> hasItem(hasProperty("name", is("test"))));
 		Configuration test = configurations.get(0);
 
 		assertThat(test.getParameters().keySet(), hasSize(4));
-		assertThat(test.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+		assertThat(test.getParameters().keySet(),
+				containsInAnyOrder("uno", "dos", "tres", "cuatro"));
 
 		executeWksRunnable(new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				moveFile(file[0], file[0].getParent().getFullPath().append("test2.properties"));
+				moveFile(
+						file[0],
+						file[0].getParent().getFullPath()
+								.append("test2.properties"));
 			}
 		});
 
 		assertThat(configurations, hasSize(1));
-		assertThat(configurations, Matchers.<Configuration> hasItem(hasProperty("name", is("test2"))));
+		assertThat(configurations,
+				Matchers.<Configuration> hasItem(hasProperty("name",
+						is("test2"))));
 		Configuration test2 = configurations.get(0);
 
 		assertThat(test2.getParameters().keySet(), hasSize(4));
-		assertThat(test2.getParameters().keySet(), containsInAnyOrder("uno", "dos", "tres", "cuatro"));
+		assertThat(test2.getParameters().keySet(),
+				containsInAnyOrder("uno", "dos", "tres", "cuatro"));
 
 	}
 }

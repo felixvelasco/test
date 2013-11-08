@@ -20,10 +20,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -83,7 +85,24 @@ public class MavenProjectCreatorTest {
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects()) {
 			try {
-				deleteProject(project);
+				while (true) {
+					if (project.isSynchronized(2)) {
+						try {
+							deleteProject(project);
+						} catch (ResourceException re) {
+							IStatus status = re.getStatus();
+							System.err.println(status);
+							if (status.getException() != null) {
+								status.getException().printStackTrace();
+							}
+							throw re;
+						}
+						break;
+					} else {
+						project.refreshLocal(2, null);
+						Thread.sleep(3000);
+					}
+				}
 			} catch (CoreException ce) {
 				fail(ce.getMessage());
 			}
