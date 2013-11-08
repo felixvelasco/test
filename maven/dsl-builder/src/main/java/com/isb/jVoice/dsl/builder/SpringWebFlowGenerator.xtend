@@ -16,7 +16,7 @@ import com.vectorsf.jvoice.model.operations.InitialState
 import com.vectorsf.jvoice.model.operations.CustomState
 
 import static com.isb.jVoice.dsl.builder.Using.*
-
+import com.vectorsf.jvoice.model.operations.TransferState
 
 class SpringWebFlowGenerator {
 	
@@ -127,7 +127,7 @@ class SpringWebFlowGenerator {
 	'''
 	
 		def doGenerateTransferState(State state) '''
-		«IF state instanceof CustomState»
+		«IF state instanceof TransferState»
 			«TransferStateCodeXML.doGenerateTransferState(state)»
 		«ENDIF»		
 	'''
