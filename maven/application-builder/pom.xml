@@ -119,7 +119,7 @@
 		<artifactId>xtend-maven-plugin</artifactId>
 		<version>2.4.2</version>
 		<configuration>
-			<outputDirectory>src/main/xtend-gen</outputDirectory>
+			<outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
 		</configuration>
 		<executions>
 			<execution>
