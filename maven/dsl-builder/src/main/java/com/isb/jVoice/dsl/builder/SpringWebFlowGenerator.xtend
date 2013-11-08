@@ -15,6 +15,9 @@ import com.vectorsf.jvoice.model.operations.MenuState
 import com.vectorsf.jvoice.model.operations.InitialState
 import com.vectorsf.jvoice.model.operations.CustomState
 
+import static com.isb.jVoice.dsl.builder.Using.*
+
+
 class SpringWebFlowGenerator {
 	
 	Resource res
@@ -28,27 +31,27 @@ class SpringWebFlowGenerator {
 	}
 		
 	def generate(File file) {
-		var initial = false;
-		var positionFin =element.getStates().length-1;
-		var fw = new FileWriter(file)
-		//Obtenemos el estado inicial para escribri la cabecera.
-		for (State state : element.getStates()) {
-			if (state instanceof InitialState){
-				fw.append(doGenerateHeader(state));	
-				initial = true;			
-			}			
-		}
-		//En el caso de que no haya estados iniciales y haya otros estados en el diagrama se coge cualquiera
-		if (!initial && element.getStates().length>0){
-			fw.append(doGenerateHeader(element.getStates().get(0)));	
-		}
-		// Se recorre de nuevo todo el array para escribir el resto de estados del diagrama 
-		for (State state : element.getStates()) {
-				positionIni =element.getStates().indexOf(state);				
-				fw.append(doGenerate(state, positionIni,positionFin));	
-		}
-
-		fw.close()
+		using(new FileWriter(file)) [
+			var initial = false;
+			var positionFin =element.getStates().length-1;
+			//Obtenemos el estado inicial para escribri la cabecera.
+			for (State state : element.getStates()) {
+				if (state instanceof InitialState){
+					it.append(doGenerateHeader(state));	
+					initial = true;			
+				}			
+			}
+			//En el caso de que no haya estados iniciales y haya otros estados en el diagrama se coge cualquiera
+			if (!initial && element.getStates().length>0){
+				it.append(doGenerateHeader(element.getStates().get(0)));	
+			}
+			// Se recorre de nuevo todo el array para escribir el resto de estados del diagrama 
+			for (State state : element.getStates()) {
+					positionIni =element.getStates().indexOf(state);				
+					it.append(doGenerate(state, positionIni,positionFin));	
+			}
+			initial
+		]
 	}
 	
 	def doGenerate(State state, int position, int positionFin) '''
