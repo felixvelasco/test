@@ -4,6 +4,7 @@ import java.io.File
 import java.io.BufferedWriter
 import java.io.OutputStreamWriter
 import java.io.FileOutputStream
+import static com.isb.jVoice.application.builder.Using.*
 
 class XMLGeneratorJFC {
 	
@@ -12,10 +13,9 @@ class XMLGeneratorJFC {
 	}
 	
 	def generateXML(File file) {
-		var out = new BufferedWriter
-			    (new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
-		out.append(doGenerate());
-		out.close();	
+		using(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8")))[
+			it.append(doGenerate());
+		]	
 	}
 	
 	def doGenerate() '''
