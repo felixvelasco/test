@@ -12,10 +12,12 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.services.Graphiti;
@@ -127,7 +129,24 @@ public class IVRDiagramDirectEditionTest {
 				.getProjects()) {
 
 			try {
-				deleteProject(project);
+				while (true) {
+					if (project.isSynchronized(2)) {
+						try {
+							deleteProject(project);
+						} catch (ResourceException re) {
+							IStatus status = re.getStatus();
+							System.err.println(status);
+							if (status.getException() != null) {
+								status.getException().printStackTrace();
+							}
+							throw re;
+						}
+						break;
+					} else {
+						project.refreshLocal(2, null);
+						Thread.sleep(3000);
+					}
+				}
 			} catch (CoreException ce) {
 				ce.printStackTrace();
 				fail(ce.getMessage());

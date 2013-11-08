@@ -5,7 +5,6 @@ import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
 import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.syncExec;
-import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.emptyArray;
@@ -13,10 +12,12 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
 import org.eclipse.swt.widgets.Display;
@@ -111,7 +112,24 @@ public class IVRDiagramOpenStatesTest {
 				.getProjects()) {
 
 			try {
-				deleteProject(project);
+				while (true) {
+					if (project.isSynchronized(2)) {
+						try {
+							deleteProject(project);
+						} catch (ResourceException re) {
+							IStatus status = re.getStatus();
+							System.err.println(status);
+							if (status.getException() != null) {
+								status.getException().printStackTrace();
+							}
+							throw re;
+						}
+						break;
+					} else {
+						project.refreshLocal(2, null);
+						Thread.sleep(3000);
+					}
+				}
 			} catch (CoreException ce) {
 				ce.printStackTrace();
 				fail(ce.getMessage());
@@ -201,13 +219,13 @@ public class IVRDiagramOpenStatesTest {
 		});
 		bot.sleep(LARGE_SLEEP);
 		editor.doubleClick(stateName);
-		if (stateName != "empty") {
-			bot.waitUntil(shellIsActive("Add Xtext Nature"), 10000);
-			if (shellIsActive("Add Xtext Nature") != null) {
-				SWTBotShell shell = bot.shell("Add Xtext Nature");
-				shell.bot().button("Yes").click();
-			}
-		}
+		// if (stateName != "empty") {
+		// bot.waitUntil(shellIsActive("Add Xtext Nature"), 10000);
+		// if (shellIsActive("Add Xtext Nature") != null) {
+		// SWTBotShell shell = bot.shell("Add Xtext Nature");
+		// shell.bot().button("Yes").click();
+		// }
+		// }
 
 		editor.save();
 

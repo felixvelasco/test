@@ -24,10 +24,12 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.IFigure;
@@ -149,7 +151,24 @@ public class IVRDiagramContextButtonsTest {
 				.getProjects()) {
 
 			try {
-				deleteProject(project);
+				while (true) {
+					if (project.isSynchronized(2)) {
+						try {
+							deleteProject(project);
+						} catch (ResourceException re) {
+							IStatus status = re.getStatus();
+							System.err.println(status);
+							if (status.getException() != null) {
+								status.getException().printStackTrace();
+							}
+							throw re;
+						}
+						break;
+					} else {
+						project.refreshLocal(2, null);
+						Thread.sleep(3000);
+					}
+				}
 			} catch (CoreException ce) {
 				ce.printStackTrace();
 				fail(ce.getMessage());
@@ -180,33 +199,6 @@ public class IVRDiagramContextButtonsTest {
 	@Test
 	public void testCreateTransitionCallFlowFinal() throws Exception {
 		createTransition("flow2", "Final", 225, 150, 300, 150);
-	}
-
-	@Test
-	public void testRemoveFinalState() throws Exception {
-		removeState("Final");
-
-	}
-
-	@Test
-	public void testRemoveInitialState() throws Exception {
-		removeState("Initial");
-
-	}
-
-	@Test
-	public void testRemoveSwitchState() throws Exception {
-		removeState("Switch");
-	}
-
-	@Test
-	public void testRemoveCallState() throws Exception {
-		removeState("Call");
-	}
-
-	@Test
-	public void testRemoveCallFlowState() throws Exception {
-		removeState("empty");
 	}
 
 	@Test
@@ -532,68 +524,6 @@ public class IVRDiagramContextButtonsTest {
 		diagram = diaEditor.getDiagramTypeProvider().getDiagram();
 		flow = (Flow) Graphiti.getLinkService()
 				.getBusinessObjectForLinkedPictogramElement(diagram);
-		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed(stateName);
-		assertThat(flow.getStates(), hasItemWithNameStateName);
-		if (checkTransitions) {
-			Matcher<Iterable<? super Transition>> hasTransitionWithState = hasTransitionWithState(stateName);
-			assertThat(flow.getTransitions(), hasTransitionWithState);
-		}
-	}
-
-	public void removeState(String stateName) throws Exception {
-
-		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
-
-		IProject project = createProject("testNavigator");
-		IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "five.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "empty.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Menu.voiceDsl",
-				getInputStreamResource(bundle, "Menu.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Input.voiceDsl",
-				getInputStreamResource(bundle, "Input.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Prompt.voiceDsl",
-				getInputStreamResource(bundle, "Prompt.voiceDsl"));
-
-		openFile(file);
-		bot.sleep(LARGE_SLEEP);
-
-		editor = getGefEditor();
-		gefViewer = editor.getSWTBotGefViewer();
-
-		boolean checkTransitions = false;
-		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
-		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		Flow flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
-		for (State state : flow.getStates()) {
-			if (state.getIncomingTransitions() != null
-					|| state.getOutgoingTransitions() != null) {
-				checkTransitions = true;
-			}
-		}
-
-		SWTBotGefEditPart entity = editor.getEditPart(stateName);
-		entity.click();
-		pressEntityContextButton(entity, "Remove");
-
-		bot.sleep(SMALL_SLEEP);
-		entity = editor.getEditPart(stateName);
-
-		assertThat(entity, nullValue());
-		editor.save();
-		diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
-		diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
-
 		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed(stateName);
 		assertThat(flow.getStates(), hasItemWithNameStateName);
 		if (checkTransitions) {
