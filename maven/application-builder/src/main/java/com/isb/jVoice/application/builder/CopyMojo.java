@@ -171,7 +171,8 @@ public class CopyMojo extends AbstractMojo {
 	 */
 	protected void copyFile(InputStream in, String name) {
 		File ruta = new File(name);
-		File pathname = new File(outputDirectory, DESTINO + SEPARATOR + name.replace(ruta.getName(), "").trim());
+		File pathname = new File(outputDirectory, DESTINO + SEPARATOR + name.replace(ruta.getName(), "").trim() + 
+				 ruta.getName().substring(0,ruta.getName().indexOf(DOT)).trim());
 		/*
 		 * Comprobamos que exista el directorio base donde vamos a crear los XMLSi no existe, se crea.
 		 */
