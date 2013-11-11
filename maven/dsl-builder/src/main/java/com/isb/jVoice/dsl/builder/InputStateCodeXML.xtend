@@ -22,7 +22,7 @@ class InputStateCodeXML {
 '''
 		<action-state id="«state.name»">
 			<on-entry>
-				<evaluate expression="jVoiceArchOutput" result="flashScope.«state.name»"></evaluate>
+				<evaluate expression="jVoiceArchInput" result="flashScope.«state.name»"></evaluate>
 				<set name="flashScope.«state.name».name" value="'«audioIn.name»'" />
 				«IF configuration != null»
 					«IF configuration.getValue("bargein") != null && !configuration.getValue("bargein").equals("")»
@@ -46,16 +46,16 @@ class InputStateCodeXML {
 						«ENDFOR»
 	        		«ENDIF»
         		«ENDIF»
-        		«IF audios != null»
-	        		«var mainAudios = audioIn.locution.audios.mainAudios»
-	        		«var noMatchAudios = audioIn.locution.audios.noMatchAudios»
-	        		«var noInputAudios = audioIn.locution.audios.noInputAudios»
-	        		«var matchAudios = audioIn.locution.audios.matchAudios»		      	
-			        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios")»
-			       	«GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios")»
-			      	«GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios")»
-			      	«GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios")»
-		      	«ENDIF»
+        «IF audios != null»
+        «var mainAudios = audioIn.locution.audios.mainAudios»
+        «var noMatchAudios = audioIn.locution.audios.noMatchAudios»
+        «var noInputAudios = audioIn.locution.audios.noInputAudios»
+       	«var matchAudios = audioIn.locution.audios.matchAudios»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios")»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios")»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios")»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios")»
+		«ENDIF»
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flashScope.«state.name»)"/>			
 			<transition to="render_«state.name»"/>
