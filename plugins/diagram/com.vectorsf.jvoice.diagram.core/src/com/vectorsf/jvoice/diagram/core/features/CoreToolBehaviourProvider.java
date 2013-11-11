@@ -213,7 +213,9 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 								menuButton.addDragAndDropFeature(feature);
 							}
 						}
-						data.getDomainSpecificContextButtons().add(menuButton);
+						if (menuButton.getIconId() != null) {
+							data.getDomainSpecificContextButtons().add(menuButton);
+						}
 					}
 
 				} else if (sta instanceof CustomState) {
