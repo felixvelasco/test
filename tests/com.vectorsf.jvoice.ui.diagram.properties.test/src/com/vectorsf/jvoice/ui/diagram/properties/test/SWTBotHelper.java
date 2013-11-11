@@ -85,7 +85,7 @@ public class SWTBotHelper {
 	}
 
 	public static IProject createProject(final String name) throws CoreException {
-		return JVoiceProjectConfigurator.createProject(name, name, name);
+		return JVoiceProjectConfigurator.createProject(name, name, name, "test module");
 	}
 
 	public static IFolder createFolders(final IProject project, final String ruta) throws CoreException {

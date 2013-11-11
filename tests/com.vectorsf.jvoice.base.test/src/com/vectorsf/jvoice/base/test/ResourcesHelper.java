@@ -67,11 +67,11 @@ public class ResourcesHelper {
 	}
 
 	public static IProject createProject(final String name) throws CoreException {
-		return JVoiceProjectConfigurator.createProject(name, name, name);
+		return JVoiceProjectConfigurator.createProject(name, name, name, "test module");
 	}
 	
 	public static IProject createApplicationProject(final String name) throws CoreException {
-		return JVoiceApplicationConfigurator.createApplication(name, name, name);
+		return JVoiceApplicationConfigurator.createApplication(name, name, name, "test application");
 	}
 
 	public static IFolder createFolders(final IProject project, final String ruta) throws CoreException {

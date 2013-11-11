@@ -68,7 +68,7 @@ public class SWTBotHelper {
 	}
 	
 	public static IProject createProject(final String name) throws CoreException {
-		return JVoiceProjectConfigurator.createProject(name, name, name);
+		return JVoiceProjectConfigurator.createProject(name, name, name, "test module");
 	}
 	
 	public static SWTBotGefEditor getGefEditor(SWTBot dialogBot) {

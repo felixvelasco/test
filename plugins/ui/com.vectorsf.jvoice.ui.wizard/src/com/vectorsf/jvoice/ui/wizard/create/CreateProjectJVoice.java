@@ -53,8 +53,11 @@ public class CreateProjectJVoice extends BasicNewResourceWizard {
 		final String ProjectName = ((ProjectNameWizardPage) getPage(PAGE_NAME_PROJECT_NAME))
 				.getText();
 		
+		final String descriptionProject = ((ProjectNameWizardPage) getPage(PAGE_NAME_PROJECT_NAME))
+				.getDescription();
+		
 		try {
-			JVoiceProjectConfigurator.createProject(ProjectName, ProjectName, ProjectName);
+			JVoiceProjectConfigurator.createProject(ProjectName, ProjectName, ProjectName, descriptionProject);
 		} catch (CoreException e) {
 			e.printStackTrace();
 			return false;

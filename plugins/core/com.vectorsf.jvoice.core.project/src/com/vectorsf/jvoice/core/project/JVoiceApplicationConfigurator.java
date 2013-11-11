@@ -23,7 +23,7 @@ public final class JVoiceApplicationConfigurator {
 
 	}
 
-	public static IProject createApplication(final String groupId, final String artifactId, final String projectName)
+	public static IProject createApplication(final String groupId, final String artifactId, final String projectName, final String descProject)
 			throws CoreException {
 		final IProject result[] = new IProject[1];
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
@@ -32,7 +32,7 @@ public final class JVoiceApplicationConfigurator {
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
-						getModel(groupId, artifactId, projectName),
+						getModel(groupId, artifactId, projectName, descProject),
 						new String[] { "src/" }, new ProjectImportConfiguration(),
 						monitor);
 
@@ -46,7 +46,7 @@ public final class JVoiceApplicationConfigurator {
 		return result[0];
 	}
 
-	private static Model getModel(String groupId, String artifactId, String projectName) {
+	private static Model getModel(String groupId, String artifactId, String projectName, String descProject) {
 		Model model = new Model();
 		model.setModelVersion("4.0.0"); //$NON-NLS-1$
 
@@ -56,6 +56,7 @@ public final class JVoiceApplicationConfigurator {
 		model.setPackaging("war");
 
 		model.setName(projectName);
+		model.setDescription(descProject);
 		
 		List<Dependency> dependencies = new ArrayList<Dependency>();		
 		Dependency dep2 = new Dependency();

@@ -9,7 +9,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
 import com.vectorsf.jvoice.core.project.JVoiceApplicationConfigurator;
-import com.vectorsf.jvoice.core.project.JVoiceProjectConfigurator;
 import com.vectorsf.jvoice.ui.wizard.page.ProjectNameWizardPage;
 
 
@@ -47,11 +46,14 @@ public class CreateJVoiceApplicationWizard extends BasicNewResourceWizard {
 	@Override
 	public boolean performFinish() {
 		
-		final String ApplicationName = ((ProjectNameWizardPage) getPage(PAGE_NAME_APPLICATION_NAME))
+		final String applicationName = ((ProjectNameWizardPage) getPage(PAGE_NAME_APPLICATION_NAME))
 				.getText();
 		
+		final String descriptionProject = ((ProjectNameWizardPage) getPage(PAGE_NAME_APPLICATION_NAME))
+				.getDescription();
+		
 		try {
-			JVoiceApplicationConfigurator.createApplication(ApplicationName, ApplicationName, ApplicationName);
+			JVoiceApplicationConfigurator.createApplication(applicationName, applicationName, applicationName, descriptionProject);
 		} catch (CoreException e) {
 			return false;
 		}

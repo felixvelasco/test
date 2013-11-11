@@ -29,7 +29,7 @@ public final class JVoiceProjectConfigurator {
 
 	}
 
-	public static IProject createProject(final String groupId, final String artifactId, final String projectName)
+	public static IProject createProject(final String groupId, final String artifactId, final String projectName, final String descriptionProject)
 			throws CoreException {
 		final IProject result[] = new IProject[1];
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
@@ -38,7 +38,7 @@ public final class JVoiceProjectConfigurator {
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
-						getModel(groupId, artifactId, projectName),
+						getModel(groupId, artifactId, projectName, descriptionProject),
 						new String[] { "src/main/java", "src/main/resources/jv" }, new ProjectImportConfiguration(),
 						monitor);
 
@@ -52,7 +52,7 @@ public final class JVoiceProjectConfigurator {
 		return result[0];
 	}
 
-	private static Model getModel(String groupId, String artifactId, String projectName) {
+	private static Model getModel(String groupId, String artifactId, String projectName, String descriptionProject) {
 		Model model = new Model();
 		model.setModelVersion("4.0.0"); //$NON-NLS-1$
 
@@ -62,6 +62,7 @@ public final class JVoiceProjectConfigurator {
 		model.setPackaging("jar");
 
 		model.setName(projectName);
+		model.setDescription(descriptionProject);
 
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");
