@@ -68,7 +68,7 @@ class XMLGeneratorJFC {
 		<!-- Registro de flujos -->
 		<webflow:flow-registry id="flowRegistry"
 			flow-builder-services="flowBuilderServices">
-			<webflow:flow-location-pattern value="/WEB-INF/flows/*.xml" />
+			<webflow:flow-location-pattern value="/WEB-INF/flows/**/*.xml" />
 		</webflow:flow-registry>
 	
 		<!-- Asociamos el resolutor de vistas al flow Executor -->
