@@ -82,7 +82,7 @@ public class IVRNavigatorTest {
 				IResourceDelta delta, IProgressMonitor monitor) {
 
 			for (List<AbstractBuildParticipant> list : participants.values()) {
-				System.err.println("Subimos a " + count.addAndGet(list.size()));				
+			//	System.err.println("Subimos a " + count.addAndGet(list.size()));				
 			}
 		}
 
@@ -93,7 +93,7 @@ public class IVRNavigatorTest {
 				IProgressMonitor monitor) {
 			synchronized (this) {
 				int value = count.decrementAndGet();
-				System.out.println("Bajamos a " + value);				
+				//System.out.println("Bajamos a " + value);				
 				if (value == 0) {
 					notifyAll();
 				}
@@ -173,7 +173,7 @@ public class IVRNavigatorTest {
 						deleteProject(project);
 					} catch (ResourceException re) {
 						IStatus status = re.getStatus();
-						System.err.println(status);
+						//System.err.println(status);
 						if (status.getException() != null) {
 							status.getException().printStackTrace();
 						}

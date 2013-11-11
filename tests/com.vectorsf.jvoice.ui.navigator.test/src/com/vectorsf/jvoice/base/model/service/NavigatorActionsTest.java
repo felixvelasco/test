@@ -63,7 +63,7 @@ public class NavigatorActionsTest {
 	private static final int MEDIUM_SLEEP = 2000;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
 	protected static SWTGefBot bot = new SWTGefBot();
-	private SWTBotView view;
+	private static SWTBotView view;
 	public static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.ui.navigator");
 	private SWTBotGefEditor editor;
 
@@ -74,6 +74,9 @@ public class NavigatorActionsTest {
 	@BeforeClass
 	public static void setClassUp() throws Exception {
 		SWTBotHelper.closeWelcomeView(bot);
+		SWTBotHelper.openView(bot, "IVR", "Navigator IVR");
+		
+		view = bot.viewById(NAVIGATOR_ID);
 	}
 
 	/**
@@ -103,10 +106,7 @@ public class NavigatorActionsTest {
 			}
 		});
 
-		SWTBotHelper.openView(bot, "IVR", "Navigator IVR");
-		
-		view = bot.viewById(NAVIGATOR_ID);
-		
+	
 		view.bot().tree().expandNode("testNavigator", "several.packages.inside");
 		view.bot().tree().expandNode("testNavigator", "several.packages.inside.here");
 		view.bot().tree().expandNode("testNavigator", "other.packages.inside");
@@ -121,17 +121,17 @@ public class NavigatorActionsTest {
 	@After
 	public void tearDown() throws Exception {
 		
-		bot.viewById(NAVIGATOR_ID).close();
+	//	bot.viewById(NAVIGATOR_ID).close();
 		
 		SWTBotShell[] shells = bot.shells();
 		for (int i = 0; i < shells.length; i++) {
 			if (shells[i].isOpen()) {
 				SWTBotShell shell = shells[i];
 				if (shell.getText().contains("Delete")) {
+					System.out.println("entramos ***************************************");
 					bot.shell("Delete").activate();
 					final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
 					SWTBot dialogBot = bot.shell("Delete").bot();
-					assertThat(dialogBot.button("Continue").isEnabled(), is(true));
 					dialogBot.button("Continue").click();
 					bot.waitUntil(new DefaultCondition() {
 						public boolean test() throws Exception {
