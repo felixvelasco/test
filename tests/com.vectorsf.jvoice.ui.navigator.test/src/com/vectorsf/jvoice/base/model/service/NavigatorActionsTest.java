@@ -3,24 +3,12 @@
  */
 package com.vectorsf.jvoice.base.model.service;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.util.LocalSelectionTransfer;
-import org.eclipse.m2e.core.internal.builder.BuildDebugHook;
-import org.eclipse.m2e.core.internal.builder.MavenBuilder;
-import org.eclipse.m2e.core.project.IMavenProjectFacade;
-import org.eclipse.m2e.core.project.configurator.AbstractBuildParticipant;
-import org.eclipse.m2e.core.project.configurator.MojoExecutionKey;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
@@ -73,7 +61,6 @@ public class NavigatorActionsTest {
 
 	private static final int SMALL_SLEEP = 300;
 	private static final int MEDIUM_SLEEP = 2000;
-	private static final int LARGE_SLEEP = 5000;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
@@ -135,6 +122,34 @@ public class NavigatorActionsTest {
 	public void tearDown() throws Exception {
 		
 		bot.viewById(NAVIGATOR_ID).close();
+		
+		SWTBotShell[] shells = bot.shells();
+		for (int i = 0; i < shells.length; i++) {
+			if (shells[i].isOpen()) {
+				SWTBotShell shell = shells[i];
+				if (shell.getText().contains("Delete")) {
+					bot.shell("Delete").activate();
+					final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
+					SWTBot dialogBot = bot.shell("Delete").bot();
+					assertThat(dialogBot.button("Continue").isEnabled(), is(true));
+					dialogBot.button("Continue").click();
+					bot.waitUntil(new DefaultCondition() {
+						public boolean test() throws Exception {
+									if (!shellCreate.isOpen()) {
+										return true;
+									}
+									return false;
+								}
+
+								public String getFailureMessage() {
+									return "Was expecting the 'Create' dialog to close itself";
+								}
+							}, 5 * 60 * 1000);
+					shell.close();
+				}
+			}
+		}
+		
 		
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 			while (true) {
@@ -410,9 +425,9 @@ public class NavigatorActionsTest {
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("two")));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("one"));
-
+		
 	}
-	
+
 	
 	@Test
 	public void testDeleteTwoBean() throws Exception {
@@ -464,7 +479,7 @@ public class NavigatorActionsTest {
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("one")));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("two")));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("newLocution"));
-
+		
 	}
 	
 	
@@ -521,7 +536,7 @@ public class NavigatorActionsTest {
 		assertThat(project1.getPackages(), hasPackageNamed("several.packages.inside"));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("two"));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("one"));
-
+		
 	}
 	
 	
@@ -576,6 +591,7 @@ public class NavigatorActionsTest {
 		assertThat(project1.getPackages(), not(hasPackageNamed("several.packages.inside.here")));
 		assertThat(project1.getPackages(), not(hasPackageNamed("other.packages.inside")));
 		assertThat(project1.getPackages(), hasPackageNamed("several.packages.inside"));
+		
 	}
 	
 	
@@ -634,7 +650,7 @@ public class NavigatorActionsTest {
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator3"), is(not(nullValue())));
-
+		
 	}
 	
 	
@@ -690,7 +706,7 @@ public class NavigatorActionsTest {
 		
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(0)));
-
+		
 	}
 	
 	
@@ -760,4 +776,6 @@ public class NavigatorActionsTest {
 		Matcher<Object[]> hasItem = hasItemInArray(hasProperty("text", is(name)));
 		return hasItem;
 	}
+	
+
 }
