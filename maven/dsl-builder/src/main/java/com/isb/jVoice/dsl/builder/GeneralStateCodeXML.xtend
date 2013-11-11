@@ -12,21 +12,22 @@ class GeneralStateCodeXML {
 '''
 		«IF (mainAudios!=null && mainAudios.size>0)»
 				«FOR mainAudio : mainAudios »	
-					<evaluate expression="jVoiceArchAudioItem" result="flashScope.«state.name»«type»«i=i+1»"/>				
+					<evaluate expression="jVoiceArchAudioItem" result="flashScope.«state.name»«type»«i=i+1»"/>	
+					<evaluate expression="jVoiceArchWording" result="flashScope.«state.name»«type»«i».wording"/>			
 					«IF mainAudio instanceof ConditionalAudio»
 						«var ConditionalAudio condition = mainAudio as ConditionalAudio» 
 						<set name="flashScope.«state.name»«type»«i».bargein" value="«condition.simpleA.dontBargeIn.booleanValue»"/>
 						«IF condition.simpleA.src != null» 
-							<set name="flashScope.flashScope.«state.name»«type»«i».src" value="«condition.simpleA.src»"/>
+							<set name="flashScope.flashScope.«state.name»«type»«i».src" value="'«condition.simpleA.src»'"/>
 						«ENDIF»
 						«IF condition.simpleA.tts!=null»
 							«IF condition.simpleA.interpretation.name.equals("STRING")» 
-								<set name="flashScope.«state.name»«type»«i».wording.text" value="«condition.simpleA.tts»"/>
+								<set name="flashScope.«state.name»«type»«i».wording.text" value="'«condition.simpleA.tts»'"/>
 							«ELSEIF condition.simpleA.interpretation.name !=null»
 								<evaluate expression="jVoiceArchSayAs" result="flashScope.«state.name»«type»«i».wording.sayAs" />
 								<set name="flashScope.«state.name»«type»«i».wording.sayAs.interpretAs" value="«condition.simpleA.tts».«condition.simpleA.interpretation.name»"/>
 								«IF condition.simpleA.format!=null»
-									<set name="flashScope.«state.name»«type»«i».wording.sayAs.formatAs" value="«condition.simpleA.format»"/>
+									<set name="flashScope.«state.name»«type»«i».wording.sayAs.formatAs" value="'«condition.simpleA.format»'"/>
 								«ENDIF»
 							«ENDIF»
 						«ENDIF»
@@ -37,16 +38,16 @@ class GeneralStateCodeXML {
 						«var Audio audio = mainAudio as Audio»
 						<set name="flashScope.«state.name»«type»«i».bargein" value="«audio.dontBargeIn.booleanValue»"/>
 						«IF audio.src != null» 
-							<set name="flashScope.flashScope.«state.name»«type»«i».src" value="«audio.src»"/>
+							<set name="flashScope.flashScope.«state.name»«type»«i».src" value="'«audio.src»'"/>
 						«ENDIF»
 						«IF audio.tts!=null»
 							«IF audio.interpretation.name.equals("STRING")» 
-								<set name="flashScope.«state.name»«type»«i».wording.text" value="«audio.tts»"/>
+								<set name="flashScope.«state.name»«type»«i».wording.text" value="'«audio.tts»'"/>
 							«ELSEIF audio.interpretation.name !=null»
 								<evaluate expression="jVoiceArchSayAs" result="flashScope.«state.name»«type»«i».wording.sayAs" />
 								<set name="flashScope.«state.name»«type»«i».wording.sayAs.interpretAs" value="«audio.tts».«audio.interpretation.name»"/>
 								«IF audio.format!=null»
-									<set name="flashScope.«state.name»«type»«i».wording.sayAs.formatAs" value="«audio.format»"/>
+									<set name="flashScope.«state.name»«type»«i».wording.sayAs.formatAs" value="'«audio.format»'"/>
 								«ENDIF»					
 							«ENDIF»	
 						«ENDIF»		   
