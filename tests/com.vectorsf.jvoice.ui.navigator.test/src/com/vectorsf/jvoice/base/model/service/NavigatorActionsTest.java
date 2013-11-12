@@ -14,6 +14,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.finders.ContextMenuHelper;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -122,35 +123,7 @@ public class NavigatorActionsTest {
 	public void tearDown() throws Exception {
 		
 	//	bot.viewById(NAVIGATOR_ID).close();
-		
-		SWTBotShell[] shells = bot.shells();
-		for (int i = 0; i < shells.length; i++) {
-			if (shells[i].isOpen()) {
-				SWTBotShell shell = shells[i];
-				if (shell.getText().contains("Delete")) {
-					System.out.println("entramos ***************************************");
-					bot.shell("Delete").activate();
-					final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
-					SWTBot dialogBot = bot.shell("Delete").bot();
-					dialogBot.button("Continue").click();
-					bot.waitUntil(new DefaultCondition() {
-						public boolean test() throws Exception {
-									if (!shellCreate.isOpen()) {
-										return true;
-									}
-									return false;
-								}
 
-								public String getFailureMessage() {
-									return "Was expecting the 'Create' dialog to close itself";
-								}
-							}, 5 * 60 * 1000);
-					shell.close();
-				}
-			}
-		}
-		
-		
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 			while (true) {
 				if (project.isSynchronized(2)) {
@@ -425,10 +398,12 @@ public class NavigatorActionsTest {
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("two")));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("one"));
+	
+		deleteWindow();
 		
 	}
 
-	
+		
 	@Test
 	public void testDeleteTwoBean() throws Exception {
 		
@@ -479,6 +454,8 @@ public class NavigatorActionsTest {
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("one")));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("two")));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("newLocution"));
+		
+		deleteWindow();
 		
 	}
 	
@@ -537,6 +514,8 @@ public class NavigatorActionsTest {
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("two"));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("one"));
 		
+		deleteWindow();
+		
 	}
 	
 	
@@ -591,6 +570,8 @@ public class NavigatorActionsTest {
 		assertThat(project1.getPackages(), not(hasPackageNamed("several.packages.inside.here")));
 		assertThat(project1.getPackages(), not(hasPackageNamed("other.packages.inside")));
 		assertThat(project1.getPackages(), hasPackageNamed("several.packages.inside"));
+		
+		deleteWindow();
 		
 	}
 	
@@ -651,6 +632,8 @@ public class NavigatorActionsTest {
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().getTreeItem("testNavigator3"), is(not(nullValue())));
 		
+		deleteWindow();
+		
 	}
 	
 	
@@ -706,6 +689,8 @@ public class NavigatorActionsTest {
 		
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(0)));
+		
+		deleteWindow();
 		
 	}
 	
@@ -775,6 +760,38 @@ public class NavigatorActionsTest {
 	private Matcher<Object[]> hasInArrayNamed(String name) {
 		Matcher<Object[]> hasItem = hasItemInArray(hasProperty("text", is(name)));
 		return hasItem;
+	}
+	
+	/**
+	 * Metodo para borrar la ventana Delete en caso de que aparezca para eliminar la carpeta target.
+	 */
+	protected void deleteWindow() {
+		SWTBot dialogBot;
+		try {
+			bot.shell("Delete");
+			bot.shell("Delete").activate();
+			final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
+			dialogBot = bot.shell("Delete").bot();
+			assertThat(dialogBot.button("OK").isEnabled(), is(true));
+			assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
+			assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
+			dialogBot.button("OK").click();
+			bot.waitUntil(new DefaultCondition() {
+				public boolean test() throws Exception {
+							if (!shellCreate.isOpen()) {
+								return true;
+							}
+							return false;
+						}
+
+						public String getFailureMessage() {
+							return "Was expecting the 'Create' dialog to close itself";
+						}
+					}, 5 * 60 * 1000);
+			
+		} catch(WidgetNotFoundException wnfe) {
+			// Ignorada
+		}
 	}
 	
 
