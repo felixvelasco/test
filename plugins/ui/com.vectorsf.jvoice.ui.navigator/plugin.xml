@@ -196,7 +196,7 @@
                         ifEmpty="false"
                         operator="and">
                      <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVPackage">
+                           value="com.vectorsf.jvoice.model.base.JVBean">
                      </instanceof>
                   </iterate>
                </with>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -469,6 +470,23 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		URI uri = URI.createPlatformResourceURI(diagramFile.getFullPath().toString(), true);
 
 		createFile(uri, diagram, diagramName);
+		
+		// Creamos la carpeta de recursos del flow
+		final IFolder packageFolder = project.getFolder(BaseModel.JV_PATH + "/" + toPath(getPackageFieldValue()));
+		String folderName = getFolderName(packageFolder, diagramName); 
+
+
+
+		final IFolder resourcesFolder = getFolder(folderName);
+		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				createRecursively(resourcesFolder, monitor);
+			}
+		};
+
+		ResourcesPlugin.getWorkspace().run(runnable, resourcesFolder.getProject(), IWorkspace.AVOID_UPDATE, null);
 
 		try {
 			IDE.openEditor(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage(), diagramFile);
@@ -546,6 +564,42 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	
 	public Flow returnFlow(){
 		return myFlow;
+	}
+	
+
+	private String getFolderName(IFolder packageFolder, String dslName){
+		String folderName = packageFolder+"/"+dslName+".resources";
+		String newFolderName = "";
+		String[] folderNameSegments = folderName.split("/");
+		for (int i=2;i<folderNameSegments.length;i++){
+			newFolderName = newFolderName.concat("/"+folderNameSegments[i]);
+		}
+		return newFolderName;
+	}
+	
+	private void createRecursively(IFolder container, IProgressMonitor monitor) throws CoreException {
+		IContainer parent = container.getParent();
+		if (parent instanceof IFolder && !parent.exists()) {
+			createRecursively((IFolder) parent, monitor);
+		}
+
+		if (!container.exists()) {
+			container.create(true, true, monitor);
+		}
+
+	}
+	
+	public IFolder getFolder(String folderName) {
+		IProject project = getProject();
+		return project.getFolder(folderName);
+	}
+	
+	private IProject getProject() {
+		return ResourcesPlugin.getWorkspace().getRoot().getProject(getProjectFieldValue());
+	}
+	
+	private String toPath(String packageFieldValue) {
+		return packageFieldValue.replace('.', '/');
 	}
 
 }
