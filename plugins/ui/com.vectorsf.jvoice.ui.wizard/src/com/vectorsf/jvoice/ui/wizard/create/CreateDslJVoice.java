@@ -16,14 +16,14 @@ public class CreateDslJVoice extends BasicNewResourceWizard {
 	
 	private static final String PAGE_NAME_DSL_NAME = "Locution Name";
 	private static final String WIZARD_WINDOW_TITLE = "New Locution";
-	private IFolder myPackage;
+	private IFolder myDiagram;
 	private String tipoDSL;
 	DslNameWizardPage pageName;
 	
 	public CreateDslJVoice(){}
 	
-	public CreateDslJVoice(IFolder ownerPackage, String tipo) {
-		this.myPackage = ownerPackage;
+	public CreateDslJVoice(IFolder ownerDiagram, String tipo) {
+		this.myDiagram = ownerDiagram;
 		this.tipoDSL = tipo;
 	}
 	
@@ -36,7 +36,7 @@ public class CreateDslJVoice extends BasicNewResourceWizard {
 		}
 		
 		super.addPages();
-		if (myPackage == null){
+		if (myDiagram == null){
 			pageName = new DslNameWizardPage(
 					PAGE_NAME_DSL_NAME);
 			pageName.setSelection(getSelection().getFirstElement());
@@ -44,7 +44,7 @@ public class CreateDslJVoice extends BasicNewResourceWizard {
 		}else{
 			pageName = new DslNameWizardPage(
 					PAGE_NAME_DSL_NAME, false, tipoDSL);
-			pageName.setSelection(myPackage);
+			pageName.setSelection(myDiagram);
 			addPage(pageName);
 		}
 

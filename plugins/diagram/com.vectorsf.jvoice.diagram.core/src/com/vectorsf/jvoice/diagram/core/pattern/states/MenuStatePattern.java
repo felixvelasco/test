@@ -131,7 +131,8 @@ public class MenuStatePattern extends StatePattern implements ISelectionStatusVa
 			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 			IProject projectRoot = root.getProject(projectName);
 
-			IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath());
+			IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath() + "/" + flow.getName()
+					+ ".resources");
 			CreateDslJVoice newWizard = new CreateDslJVoice(folder, "Menu");
 			WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 					.getShell(), newWizard);

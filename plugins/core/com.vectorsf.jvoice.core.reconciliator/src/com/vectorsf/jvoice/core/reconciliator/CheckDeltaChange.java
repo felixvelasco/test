@@ -59,8 +59,10 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 						return true;
 					}
 				} else {
-					currentPackage = JVoiceModelReconcilier.getInstance().createPackage((IFolder) resource);
-					jvProject.getPackages().add(currentPackage);
+					if (!((IFolder) resource).getName().endsWith("resources")){
+						currentPackage = JVoiceModelReconcilier.getInstance().createPackage((IFolder) resource);
+						jvProject.getPackages().add(currentPackage);
+					}
 					return true;
 				}
 			}

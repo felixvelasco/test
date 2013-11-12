@@ -131,7 +131,8 @@ public class PromptStatePattern extends StatePattern implements ISelectionStatus
 			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 			IProject projectRoot = root.getProject(projectName);
 
-			IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath());
+			IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath() + "/" + flow.getName()
+					+ ".resources");
 			CreateDslJVoice newWizard = new CreateDslJVoice(folder, "Output");
 			WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 					.getShell(), newWizard);
