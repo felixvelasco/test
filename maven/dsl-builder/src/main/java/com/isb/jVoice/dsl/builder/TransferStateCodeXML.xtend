@@ -19,14 +19,14 @@ class TransferStateCodeXML {
 				<evaluate expression="jVoiceArchBlindTransfer" result = "flashScope.«transfer.name»"/>
 				<set name="flowScope.«transfer.name».dest" value="'«transfer.destination»'"/>
 				«IF transfer.audioTransfer!=null && !transfer.audioTransfer.trim.empty»
-					<set name="flowScope.«transfer.name».transferaudio" value="«transfer.audioTransfer»"/>
+					<set name="flowScope.«transfer.name».transferaudio" value="'«transfer.audioTransfer»'"/>
 				«ENDIF»
 				
 			«ELSEIF transfer.typeTransfer.value == 1»
 				<evaluate expression="jVoiceArchConsultationTransfer" result = "flashScope.«transfer.name»"/>
 				<set name="flowScope.«transfer.name».dest" value="'«transfer.destination»'"/>
 				«IF transfer.audioTransfer!=null && !transfer.audioTransfer.trim.empty»
-					<set name="flowScope.«transfer.name».transferaudio" value="«transfer.audioTransfer»"/>
+					<set name="flowScope.«transfer.name».transferaudio" value="'«transfer.audioTransfer»'"/>
 				«ENDIF»
 				<set name="flowScope.«transfer.name».timeout" value="'«transfer.timeout»'"/>
 				
@@ -34,7 +34,7 @@ class TransferStateCodeXML {
 				<evaluate expression="jVoiceArchBridgeTransfer" result = "flashScope.«transfer.name»"/>
 				<set name="flowScope.«transfer.name».dest" value="'«transfer.destination»'"/>
 				«IF transfer.audioTransfer!=null && !transfer.audioTransfer.trim.empty»
-					<set name="flowScope.«transfer.name».transferaudio" value="«transfer.audioTransfer»"/>
+					<set name="flowScope.«transfer.name».transferaudio" value="'«transfer.audioTransfer»'"/>
 				«ENDIF»
 				<set name="flowScope.«transfer.name».timeout" value="'«transfer.timeout»'"/>
 				<set name="flowScope.«transfer.name».maxtime" value="'«transfer.maxTime»'"/>
