@@ -197,7 +197,7 @@ public class JVoiceModelReconcilier {
 
 		@Override
 		public boolean visit(IResource resource) throws CoreException {
-			if (resource instanceof IFolder && !resource.getProjectRelativePath().toString().equals(BaseModel.JV_PATH)) {
+			if (resource instanceof IFolder && !resource.getProjectRelativePath().toString().equals(BaseModel.JV_PATH)&&!((IFolder) resource).getName().endsWith("resources")) {
 				project.getPackages().add(createPackage((IFolder) resource));
 			}
 			return true;
