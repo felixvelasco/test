@@ -282,7 +282,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getJVPackage_OwnerProject() {
+	public EReference getJVPackage_OwnerModule() {
 		return (EReference)jvPackageEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -309,7 +309,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getJVProject_Packages() {
+	public EReference getJVProject_Model() {
 		return (EReference)jvProjectEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -318,7 +318,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getJVProject_Model() {
+	public EReference getJVProject_Configuration() {
 		return (EReference)jvProjectEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -327,7 +327,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getJVProject_Configuration() {
+	public EReference getJVProject_Handlers() {
 		return (EReference)jvProjectEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -336,16 +336,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getJVProject_Handlers() {
-		return (EReference)jvProjectEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getJVProject__GetPackage__String() {
+	public EOperation getJVProject__GetReferencedProjects() {
 		return jvProjectEClass.getEOperations().get(0);
 	}
 
@@ -356,15 +347,6 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 */
 	public EOperation getJVProject__GetConfiguration__String() {
 		return jvProjectEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getJVProject__GetReferencedProjects() {
-		return jvProjectEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -444,6 +426,24 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getJVModule_Packages() {
+		return (EReference)jvModuleEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getJVModule__GetPackage__String() {
+		return jvModuleEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getEventHandler() {
 		return eventHandlerEClass;
 	}
@@ -510,17 +510,15 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 
 		jvPackageEClass = createEClass(JV_PACKAGE);
 		createEReference(jvPackageEClass, JV_PACKAGE__BEANS);
-		createEReference(jvPackageEClass, JV_PACKAGE__OWNER_PROJECT);
+		createEReference(jvPackageEClass, JV_PACKAGE__OWNER_MODULE);
 		createEOperation(jvPackageEClass, JV_PACKAGE___GET_BEAN__STRING);
 
 		jvProjectEClass = createEClass(JV_PROJECT);
-		createEReference(jvProjectEClass, JV_PROJECT__PACKAGES);
 		createEReference(jvProjectEClass, JV_PROJECT__MODEL);
 		createEReference(jvProjectEClass, JV_PROJECT__CONFIGURATION);
 		createEReference(jvProjectEClass, JV_PROJECT__HANDLERS);
-		createEOperation(jvProjectEClass, JV_PROJECT___GET_PACKAGE__STRING);
-		createEOperation(jvProjectEClass, JV_PROJECT___GET_CONFIGURATION__STRING);
 		createEOperation(jvProjectEClass, JV_PROJECT___GET_REFERENCED_PROJECTS);
+		createEOperation(jvProjectEClass, JV_PROJECT___GET_CONFIGURATION__STRING);
 
 		stringToStringMapEClass = createEClass(STRING_TO_STRING_MAP);
 		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__KEY);
@@ -533,6 +531,8 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		createEReference(jvApplicationEClass, JV_APPLICATION__MODULE);
 
 		jvModuleEClass = createEClass(JV_MODULE);
+		createEReference(jvModuleEClass, JV_MODULE__PACKAGES);
+		createEOperation(jvModuleEClass, JV_MODULE___GET_PACKAGE__STRING);
 
 		eventHandlerEClass = createEClass(EVENT_HANDLER);
 		createEAttribute(eventHandlerEClass, EVENT_HANDLER__EVENT);
@@ -594,24 +594,20 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 
 		initEClass(jvPackageEClass, JVPackage.class, "JVPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVPackage_Beans(), this.getJVBean(), this.getJVBean_OwnerPackage(), "beans", null, 0, -1, JVPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJVPackage_OwnerProject(), this.getJVProject(), this.getJVProject_Packages(), "ownerProject", null, 0, 1, JVPackage.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJVPackage_OwnerModule(), this.getJVModule(), this.getJVModule_Packages(), "ownerModule", null, 0, 1, JVPackage.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getJVPackage__GetBean__String(), this.getJVBean(), "getBean", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(jvProjectEClass, JVProject.class, "JVProject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getJVProject_Packages(), this.getJVPackage(), this.getJVPackage_OwnerProject(), "packages", null, 0, -1, JVProject.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVProject_Model(), this.getJVModel(), this.getJVModel_Projects(), "model", null, 0, 1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVProject_Configuration(), this.getConfiguration(), null, "configuration", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJVProject_Handlers(), this.getEventHandler(), null, "handlers", null, 0, -1, JVProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = initEOperation(getJVProject__GetPackage__String(), this.getJVPackage(), "getPackage", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getJVProject__GetReferencedProjects(), this.getJVProject(), "getReferencedProjects", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getJVProject__GetConfiguration__String(), this.getConfiguration(), "getConfiguration", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getJVProject__GetReferencedProjects(), this.getJVProject(), "getReferencedProjects", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(stringToStringMapEClass, Map.Entry.class, "StringToStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToStringMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -624,6 +620,10 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		initEReference(getJVApplication_Module(), this.getJVModule(), null, "module", null, 0, -1, JVApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(jvModuleEClass, JVModule.class, "JVModule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getJVModule_Packages(), this.getJVPackage(), this.getJVPackage_OwnerModule(), "packages", null, 0, -1, JVModule.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		op = initEOperation(getJVModule__GetPackage__String(), this.getJVPackage(), "getPackage", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(eventHandlerEClass, EventHandler.class, "EventHandler", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEventHandler_Event(), ecorePackage.getEString(), "event", null, 0, 1, EventHandler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

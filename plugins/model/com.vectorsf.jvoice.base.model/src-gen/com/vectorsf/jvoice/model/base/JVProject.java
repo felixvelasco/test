@@ -12,7 +12,6 @@ import java.util.List;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getPackages <em>Packages</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getModel <em>Model</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getHandlers <em>Handlers</em>}</li>
@@ -24,24 +23,6 @@ import java.util.List;
  * @generated
  */
 public interface JVProject extends NamedElement {
-	/**
-	 * Returns the value of the '<em><b>Packages</b></em>' containment reference list.
-	 * The list contents are of type {@link com.vectorsf.jvoice.model.base.JVPackage}.
-	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.model.base.JVPackage#getOwnerProject <em>Owner Project</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Packages</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Packages</em>' containment reference list.
-	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVProject_Packages()
-	 * @see com.vectorsf.jvoice.model.base.JVPackage#getOwnerProject
-	 * @model opposite="ownerProject" containment="true" resolveProxies="true" transient="true"
-	 * @generated
-	 */
-	List<JVPackage> getPackages();
-
 	/**
 	 * Returns the value of the '<em><b>Model</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.model.base.JVModel#getProjects <em>Projects</em>}'.
@@ -105,10 +86,11 @@ public interface JVProject extends NamedElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='for (JVPackage pck: getPackages())\n{\n\tif (pck.getName().equals(name)) {\n\t\treturn pck;\n\t}\n}\n\nreturn null;'"
+	 * @model kind="operation"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%com.vectorsf.jvoice.base.model.service.BaseModel%>.getInstance().getVisibleProjects(this);'"
 	 * @generated
 	 */
-	JVPackage getPackage(String name);
+	List<JVProject> getReferencedProjects();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -117,14 +99,5 @@ public interface JVProject extends NamedElement {
 	 * @generated
 	 */
 	Configuration getConfiguration(String name);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%com.vectorsf.jvoice.base.model.service.BaseModel%>.getInstance().getVisibleProjects(this);'"
-	 * @generated
-	 */
-	List<JVProject> getReferencedProjects();
 
 } // JVProject

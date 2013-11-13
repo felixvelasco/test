@@ -14,17 +14,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.RegistryFactory;
-import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList.Listener;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 
-
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.base.model.service.JVModelCreateProject;
-import com.vectorsf.jvoice.base.model.service.JVModelLifecycleListener;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVProject;
 
@@ -35,11 +31,9 @@ public class BaseModelEclipseHelper {
 	private static final String CLASS_ATTRIBUTE = "class";
 	private static final String PRIORITY_ATTRIBUTE = "priority";
 	private static final String MAVEN2_CLASSPATH_CONTAINER = "org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER";
-	private static Set<IConfigurationElement> elements ;
-	
-	private static Map<IConfigurationElement, JVModelCreateProject> modelCreateProjectsCache;
+	private static Set<IConfigurationElement> elements;
 
-	
+	private static Map<IConfigurationElement, JVModelCreateProject> modelCreateProjectsCache;
 
 	public static List<JVProject> getVisibleProjects(JVProject jvproject) {
 		elements = new TreeSet<>(new Sorter());
@@ -53,11 +47,12 @@ public class BaseModelEclipseHelper {
 		IClasspathEntry[] resolvedClasspath = new IClasspathEntry[0];
 		try {
 			resolvedClasspath = javaProject.getRawClasspath();
-			for (IClasspathEntry entry: resolvedClasspath){
-				if (entry.getPath().toString().equals(MAVEN2_CLASSPATH_CONTAINER)){
-					IClasspathEntry prj=entry;
-					IClasspathEntry[] classPathEntries = JavaCore.getClasspathContainer(prj.getPath(), javaProject).getClasspathEntries();
-					for (IClasspathEntry classPathEntry: classPathEntries){
+			for (IClasspathEntry entry : resolvedClasspath) {
+				if (entry.getPath().toString().equals(MAVEN2_CLASSPATH_CONTAINER)) {
+					IClasspathEntry prj = entry;
+					IClasspathEntry[] classPathEntries = JavaCore.getClasspathContainer(prj.getPath(), javaProject)
+							.getClasspathEntries();
+					for (IClasspathEntry classPathEntry : classPathEntries) {
 						if (classPathEntry.getEntryKind() == IClasspathEntry.CPE_PROJECT) {
 							JVProject referencedProject = model.getProject(classPathEntry.getPath().lastSegment());
 							if (referencedProject != null) {
@@ -68,17 +63,18 @@ public class BaseModelEclipseHelper {
 							if (lastSegment.endsWith(".jar")) {
 								lastSegment = lastSegment.substring(0, lastSegment.length() - 4);
 							}
-							
+
 							for (IConfigurationElement element : elements) {
 								JVModelCreateProject modelCreateProject = getModelCreateProject(element);
 								if (modelCreateProject != null) {
-									JVProject referencedProject = modelCreateProject.createProject(classPathEntry.getPath());
+									JVProject referencedProject = modelCreateProject.createProject(classPathEntry
+											.getPath());
 									if (referencedProject != null) {
 										ret.add(referencedProject);
 									}
 								}
 							}
-														
+
 						}
 
 					}
@@ -87,7 +83,7 @@ public class BaseModelEclipseHelper {
 		} catch (JavaModelException e) {
 			// Should never be thrown, it fails silently
 		}
-		
+
 		return ret;
 	}
 
@@ -101,17 +97,14 @@ public class BaseModelEclipseHelper {
 
 		Collections.addAll(elements, configurationElements);
 	}
-	
-	
+
 	private static JVModelCreateProject getModelCreateProject(IConfigurationElement element) {
 		JVModelCreateProject modelCreateProject = modelCreateProjectsCache.get(element);
 		if (modelCreateProject == null) {
 			try {
-			
-			Object o = element.createExecutableExtension(CLASS_ATTRIBUTE);
-			
-				if ((element.createExecutableExtension(CLASS_ATTRIBUTE).toString().contains("MavenProjectCreator"))){
-				modelCreateProject = (JVModelCreateProject) element.createExecutableExtension(CLASS_ATTRIBUTE);
+				Object obj = element.createExecutableExtension(CLASS_ATTRIBUTE);
+				if (obj instanceof JVModelCreateProject) {
+					modelCreateProject = (JVModelCreateProject) obj;
 				}
 			} catch (CoreException e) {
 			}
@@ -119,7 +112,7 @@ public class BaseModelEclipseHelper {
 		}
 		return modelCreateProject;
 	}
-	
+
 	private static class Sorter implements Comparator<IConfigurationElement> {
 
 		@Override
@@ -147,6 +140,5 @@ public class BaseModelEclipseHelper {
 		}
 
 	}
-	
 
 }

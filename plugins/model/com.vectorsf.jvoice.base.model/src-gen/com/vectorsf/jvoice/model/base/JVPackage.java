@@ -13,7 +13,7 @@ import java.util.List;
  * The following features are supported:
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.base.JVPackage#getBeans <em>Beans</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.model.base.JVPackage#getOwnerProject <em>Owner Project</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.base.JVPackage#getOwnerModule <em>Owner Module</em>}</li>
  * </ul>
  * </p>
  *
@@ -41,32 +41,32 @@ public interface JVPackage extends NamedElement {
 	List<JVBean> getBeans();
 
 	/**
-	 * Returns the value of the '<em><b>Owner Project</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.model.base.JVProject#getPackages <em>Packages</em>}'.
+	 * Returns the value of the '<em><b>Owner Module</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.model.base.JVModule#getPackages <em>Packages</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Owner Project</em>' container reference isn't clear,
+	 * If the meaning of the '<em>Owner Module</em>' container reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owner Project</em>' container reference.
-	 * @see #setOwnerProject(JVProject)
-	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVPackage_OwnerProject()
-	 * @see com.vectorsf.jvoice.model.base.JVProject#getPackages
+	 * @return the value of the '<em>Owner Module</em>' container reference.
+	 * @see #setOwnerModule(JVModule)
+	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVPackage_OwnerModule()
+	 * @see com.vectorsf.jvoice.model.base.JVModule#getPackages
 	 * @model opposite="packages"
 	 * @generated
 	 */
-	JVProject getOwnerProject();
+	JVModule getOwnerModule();
 
 	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.model.base.JVPackage#getOwnerProject <em>Owner Project</em>}' container reference.
+	 * Sets the value of the '{@link com.vectorsf.jvoice.model.base.JVPackage#getOwnerModule <em>Owner Module</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owner Project</em>' container reference.
-	 * @see #getOwnerProject()
+	 * @param value the new value of the '<em>Owner Module</em>' container reference.
+	 * @see #getOwnerModule()
 	 * @generated
 	 */
-	void setOwnerProject(JVProject value);
+	void setOwnerModule(JVModule value);
 
 	/**
 	 * <!-- begin-user-doc -->

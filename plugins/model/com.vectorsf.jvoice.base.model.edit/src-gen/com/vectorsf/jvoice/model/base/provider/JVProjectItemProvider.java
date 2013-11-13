@@ -6,16 +6,11 @@ package com.vectorsf.jvoice.model.base.provider;
 import com.vectorsf.jvoice.model.base.BaseFactory;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.JVProject;
-
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -59,31 +54,8 @@ public class JVProjectItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addPackagesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Packages feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addPackagesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_JVProject_packages_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JVProject_packages_feature", "_UI_JVProject_type"),
-				 BasePackage.Literals.JV_PROJECT__PACKAGES,
-				 false,
-				 false,
-				 false,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**
@@ -98,7 +70,6 @@ public class JVProjectItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(BasePackage.Literals.JV_PROJECT__PACKAGES);
 			childrenFeatures.add(BasePackage.Literals.JV_PROJECT__CONFIGURATION);
 			childrenFeatures.add(BasePackage.Literals.JV_PROJECT__HANDLERS);
 		}
@@ -155,7 +126,6 @@ public class JVProjectItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(JVProject.class)) {
-			case BasePackage.JV_PROJECT__PACKAGES:
 			case BasePackage.JV_PROJECT__CONFIGURATION:
 			case BasePackage.JV_PROJECT__HANDLERS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
@@ -174,11 +144,6 @@ public class JVProjectItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(BasePackage.Literals.JV_PROJECT__PACKAGES,
-				 BaseFactory.eINSTANCE.createJVPackage()));
 
 		newChildDescriptors.add
 			(createChildParameter
