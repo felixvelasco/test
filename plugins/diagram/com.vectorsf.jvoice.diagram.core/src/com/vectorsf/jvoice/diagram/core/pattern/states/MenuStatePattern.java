@@ -1,5 +1,6 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -7,6 +8,7 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
@@ -33,6 +35,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
@@ -41,7 +44,11 @@ import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
+import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.impl.MenuStateImpl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogSubFlow;
 import com.vectorsf.jvoice.ui.edit.filters.FilterDialogMenu;
 import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
@@ -90,40 +97,48 @@ public class MenuStatePattern extends StatePattern implements ISelectionStatusVa
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		JVBeanContentProvider locutionCP = new JVBeanContentProvider(new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
-		DialogSubFlow dialog = new DialogSubFlow(shell, new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE)), locutionCP);
-
-		dialog.setAllowMultiple(false);
+		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+		
+				DialogLocution dialog = new DialogLocution(shell);
+		List<State> locutionStates = new ArrayList();
+		for (State state : flow.getStates()) {
+			if (state instanceof MenuState) {
+				locutionStates.add(state);
+			}
+		}
+		dialog.setInitialElementSelections(locutionStates);
+		try {
+			dialog.setResources(locutionStates);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
 		dialog.setHelpAvailable(false);
-		dialog.setIsButtonCreatevailable(true);
-		dialog.setValidator(new ValidatorMenu());
-
-		dialog.addFilter(new FilterDialogMenu());
-
+		dialog.setListLabelProvider(new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+		dialog.setInitialPattern("?", FilteredItemsSelectionDialog.FULL_SELECTION);
 		dialog.setTitle("Menu Selection");
 		dialog.setMessage("Select a menu:");
-		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+		
 		URI res = flow.eResource().getURI();
 		String projectName = res.segment(1);
 		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
 		List<JVProject> proj = project.getReferencedProjects();
-		dialog.setInput(proj);
-
 		dialog.open();
 
 		String menuStateName = null;
-		MenuDsl result = null;
+		VoiceDsl result = null;
 		URI flowURI = null;
 		MenuState menuState = OperationsFactory.eINSTANCE.createMenuState();
 		switch (dialog.getReturnCode()) {
 		case Dialog.OK:
 			Object[] results = dialog.getResult();
-			result = (MenuDsl) results[0];
+
+			result = ((MenuStateImpl) results[0]).getLocution();
 			menuStateName = result.getName();
+
 			menuState.setName(menuStateName);
 			Resource eResource = result.eResource();
 			flowURI = eResource.getURI().appendFragment(eResource.getURIFragment(result));
-
 			break;
 		case IDialogConstants.PROCEED_ID:
 			IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);

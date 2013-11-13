@@ -1,5 +1,6 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -7,6 +8,7 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
@@ -32,6 +34,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
@@ -40,11 +43,12 @@ import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
+import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.impl.InputStateImpl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
-import com.vectorsf.jvoice.ui.edit.dialogs.DialogSubFlow;
-import com.vectorsf.jvoice.ui.edit.filters.FilterDialogInput;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
 import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
-import com.vectorsf.jvoice.ui.edit.validators.ValidatorInput;
 import com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice;
 
 public class InputStatePattern extends StatePattern implements ISelectionStatusValidator {
@@ -87,31 +91,38 @@ public class InputStatePattern extends StatePattern implements ISelectionStatusV
 	public Object[] create(ICreateContext context) {
 
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-
 		JVBeanContentProvider locutionCP = new JVBeanContentProvider(new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
-		DialogSubFlow dialog = new DialogSubFlow(shell, new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE)), locutionCP);
+		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 
-		dialog.setAllowMultiple(false);
+		DialogLocution dialog = new DialogLocution(shell);
+		List<State> locutionStates = new ArrayList();
+		for (State state : flow.getStates()) {
+			if (state instanceof InputState) {
+				locutionStates.add(state);
+			}
+		}
+		dialog.setInitialElementSelections(locutionStates);
+		try {
+			dialog.setResources(locutionStates);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
 		dialog.setHelpAvailable(false);
-		dialog.setIsButtonCreatevailable(true);
-		dialog.setValidator(new ValidatorInput());
-
-		dialog.addFilter(new FilterDialogInput());
-
+		dialog.setListLabelProvider(new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+		dialog.setInitialPattern("?", FilteredItemsSelectionDialog.FULL_SELECTION);
 		dialog.setTitle("Input Selection");
 		dialog.setMessage("Select an input:");
-		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+
 		URI res = flow.eResource().getURI();
 		String projectName = res.segment(1);
 		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
 		List<JVProject> proj = project.getReferencedProjects();
-		dialog.setInput(proj);
 		dialog.open();
 
 		String inputStateName = null;
-		InputDsl result = null;
+		VoiceDsl result = null;
 		URI flowURI = null;
 		InputState inputState = OperationsFactory.eINSTANCE.createInputState();
 		switch (dialog.getReturnCode()) {
@@ -119,7 +130,7 @@ public class InputStatePattern extends StatePattern implements ISelectionStatusV
 
 			Object[] results = dialog.getResult();
 
-			result = (InputDsl) results[0];
+			result = ((InputStateImpl) results[0]).getLocution();
 			inputStateName = result.getName();
 
 			inputState.setName(inputStateName);
@@ -153,6 +164,7 @@ public class InputStatePattern extends StatePattern implements ISelectionStatusV
 		}
 
 		result = (InputDsl) flow.eResource().getResourceSet().getEObject(flowURI, true);
+	
 		inputState.setLocution(result);
 		inputState.setName(result.getName());
 
