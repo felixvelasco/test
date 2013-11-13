@@ -2,6 +2,7 @@
  */
 package com.vectorsf.jvoice.model.base.impl;
 
+import com.vectorsf.jvoice.model.base.*;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -72,6 +73,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory {
 			case BasePackage.CONFIGURATION: return createConfiguration();
 			case BasePackage.JV_APPLICATION: return createJVApplication();
 			case BasePackage.JV_MODULE: return createJVModule();
+			case BasePackage.EVENT_HANDLER: return createEventHandler();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -155,6 +157,16 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory {
 	public JVModule createJVModule() {
 		JVModuleImpl jvModule = new JVModuleImpl();
 		return jvModule;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EventHandler createEventHandler() {
+		EventHandlerImpl eventHandler = new EventHandlerImpl();
+		return eventHandler;
 	}
 
 	/**

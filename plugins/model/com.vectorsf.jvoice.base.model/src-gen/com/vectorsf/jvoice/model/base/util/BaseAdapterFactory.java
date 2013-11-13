@@ -2,6 +2,7 @@
  */
 package com.vectorsf.jvoice.model.base.util;
 
+import com.vectorsf.jvoice.model.base.*;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -115,6 +116,10 @@ public class BaseAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseJVModule(JVModule object) {
 				return createJVModuleAdapter();
+			}
+			@Override
+			public Adapter caseEventHandler(EventHandler object) {
+				return createEventHandlerAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -273,6 +278,20 @@ public class BaseAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createJVModuleAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.base.EventHandler <em>Event Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.base.EventHandler
+	 * @generated
+	 */
+	public Adapter createEventHandlerAdapter() {
 		return null;
 	}
 

@@ -15,6 +15,7 @@ import java.util.List;
  *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getPackages <em>Packages</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getModel <em>Model</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getConfiguration <em>Configuration</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getHandlers <em>Handlers</em>}</li>
  * </ul>
  * </p>
  *
@@ -36,7 +37,7 @@ public interface JVProject extends NamedElement {
 	 * @return the value of the '<em>Packages</em>' containment reference list.
 	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVProject_Packages()
 	 * @see com.vectorsf.jvoice.model.base.JVPackage#getOwnerProject
-	 * @model opposite="ownerProject" containment="true" resolveProxies="true"
+	 * @model opposite="ownerProject" containment="true" resolveProxies="true" transient="true"
 	 * @generated
 	 */
 	List<JVPackage> getPackages();
@@ -84,6 +85,22 @@ public interface JVProject extends NamedElement {
 	 * @generated
 	 */
 	List<Configuration> getConfiguration();
+
+	/**
+	 * Returns the value of the '<em><b>Handlers</b></em>' containment reference list.
+	 * The list contents are of type {@link com.vectorsf.jvoice.model.base.EventHandler}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Handlers</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Handlers</em>' containment reference list.
+	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVProject_Handlers()
+	 * @model containment="true" resolveProxies="true"
+	 * @generated
+	 */
+	List<EventHandler> getHandlers();
 
 	/**
 	 * <!-- begin-user-doc -->

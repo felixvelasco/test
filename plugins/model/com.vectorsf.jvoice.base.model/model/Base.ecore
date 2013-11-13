@@ -33,7 +33,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="beans" upperBound="-1"
         eType="#//JVBean" containment="true" eOpposite="#//JVBean/ownerPackage"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownerProject" eType="#//JVProject"
-        eOpposite="#//JVProject/packages"/>
+        transient="true" eOpposite="#//JVProject/packages"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JVProject" abstract="true" eSuperTypes="#//NamedElement">
     <eOperations name="getPackage" eType="#//JVPackage">
@@ -54,11 +54,13 @@
       </eAnnotations>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="packages" upperBound="-1"
-        eType="#//JVPackage" containment="true" eOpposite="#//JVPackage/ownerProject"/>
+        eType="#//JVPackage" transient="true" containment="true" eOpposite="#//JVPackage/ownerProject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//JVModel"
         eOpposite="#//JVModel/projects"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" upperBound="-1"
         eType="#//Configuration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="handlers" upperBound="-1"
+        eType="#//EventHandler" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StringToStringMap" instanceClassName="java.util.Map$Entry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -73,4 +75,8 @@
         eType="#//JVModule"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JVModule" eSuperTypes="#//JVProject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EventHandler">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="event" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="handler" eType="#//JVBean"/>
+  </eClassifiers>
 </ecore:EPackage>

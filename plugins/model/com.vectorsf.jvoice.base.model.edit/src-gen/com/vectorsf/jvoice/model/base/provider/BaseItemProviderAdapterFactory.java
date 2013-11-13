@@ -256,6 +256,29 @@ public class BaseItemProviderAdapterFactory extends BaseAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.base.EventHandler} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected EventHandlerItemProvider eventHandlerItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.base.EventHandler}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createEventHandlerAdapter() {
+		if (eventHandlerItemProvider == null) {
+			eventHandlerItemProvider = new EventHandlerItemProvider(this);
+		}
+
+		return eventHandlerItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -362,6 +385,7 @@ public class BaseItemProviderAdapterFactory extends BaseAdapterFactory implement
 		if (configurationItemProvider != null) configurationItemProvider.dispose();
 		if (jvApplicationItemProvider != null) jvApplicationItemProvider.dispose();
 		if (jvModuleItemProvider != null) jvModuleItemProvider.dispose();
+		if (eventHandlerItemProvider != null) eventHandlerItemProvider.dispose();
 	}
 
 }

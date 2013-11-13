@@ -3,9 +3,8 @@
 package com.vectorsf.jvoice.model.base.provider;
 
 
-import com.vectorsf.jvoice.model.base.BaseFactory;
 import com.vectorsf.jvoice.model.base.BasePackage;
-import com.vectorsf.jvoice.model.base.JVProject;
+import com.vectorsf.jvoice.model.base.EventHandler;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -22,16 +21,18 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link com.vectorsf.jvoice.model.base.JVProject} object.
+ * This is the item provider adapter for a {@link com.vectorsf.jvoice.model.base.EventHandler} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class JVProjectItemProvider
-	extends NamedElementItemProvider
+public class EventHandlerItemProvider
+	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -44,7 +45,7 @@ public class JVProjectItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public JVProjectItemProvider(AdapterFactory adapterFactory) {
+	public EventHandlerItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -59,74 +60,65 @@ public class JVProjectItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addPackagesPropertyDescriptor(object);
+			addEventPropertyDescriptor(object);
+			addHandlerPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Packages feature.
+	 * This adds a property descriptor for the Event feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addPackagesPropertyDescriptor(Object object) {
+	protected void addEventPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JVProject_packages_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JVProject_packages_feature", "_UI_JVProject_type"),
-				 BasePackage.Literals.JV_PROJECT__PACKAGES,
+				 getString("_UI_EventHandler_event_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventHandler_event_feature", "_UI_EventHandler_type"),
+				 BasePackage.Literals.EVENT_HANDLER__EVENT,
+				 true,
 				 false,
 				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Handler feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addHandlerPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_EventHandler_handler_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EventHandler_handler_feature", "_UI_EventHandler_type"),
+				 BasePackage.Literals.EVENT_HANDLER__HANDLER,
+				 true,
 				 false,
+				 true,
 				 null,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(BasePackage.Literals.JV_PROJECT__PACKAGES);
-			childrenFeatures.add(BasePackage.Literals.JV_PROJECT__CONFIGURATION);
-			childrenFeatures.add(BasePackage.Literals.JV_PROJECT__HANDLERS);
-		}
-		return childrenFeatures;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
-	 * This returns JVProject.gif.
+	 * This returns EventHandler.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/JVProject"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EventHandler"));
 	}
 
 	/**
@@ -137,10 +129,10 @@ public class JVProjectItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((JVProject)object).getName();
+		String label = ((EventHandler)object).getEvent();
 		return label == null || label.length() == 0 ?
-			getString("_UI_JVProject_type") :
-			getString("_UI_JVProject_type") + " " + label;
+			getString("_UI_EventHandler_type") :
+			getString("_UI_EventHandler_type") + " " + label;
 	}
 
 	/**
@@ -154,11 +146,9 @@ public class JVProjectItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(JVProject.class)) {
-			case BasePackage.JV_PROJECT__PACKAGES:
-			case BasePackage.JV_PROJECT__CONFIGURATION:
-			case BasePackage.JV_PROJECT__HANDLERS:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+		switch (notification.getFeatureID(EventHandler.class)) {
+			case BasePackage.EVENT_HANDLER__EVENT:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -174,21 +164,17 @@ public class JVProjectItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+	}
 
-		newChildDescriptors.add
-			(createChildParameter
-				(BasePackage.Literals.JV_PROJECT__PACKAGES,
-				 BaseFactory.eINSTANCE.createJVPackage()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(BasePackage.Literals.JV_PROJECT__CONFIGURATION,
-				 BaseFactory.eINSTANCE.createConfiguration()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(BasePackage.Literals.JV_PROJECT__HANDLERS,
-				 BaseFactory.eINSTANCE.createEventHandler()));
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return BaseEditPlugin.INSTANCE;
 	}
 
 }

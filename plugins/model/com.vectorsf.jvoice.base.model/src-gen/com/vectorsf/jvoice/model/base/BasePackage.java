@@ -406,13 +406,22 @@ public interface BasePackage extends EPackage {
 	int JV_PROJECT__CONFIGURATION = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Handlers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_PROJECT__HANDLERS = NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>JV Project</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_PROJECT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
+	int JV_PROJECT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Package</em>' operation.
@@ -626,6 +635,15 @@ public interface BasePackage extends EPackage {
 	int JV_APPLICATION__CONFIGURATION = JV_PROJECT__CONFIGURATION;
 
 	/**
+	 * The feature id for the '<em><b>Handlers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION__HANDLERS = JV_PROJECT__HANDLERS;
+
+	/**
 	 * The feature id for the '<em><b>Module</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -744,6 +762,15 @@ public interface BasePackage extends EPackage {
 	int JV_MODULE__CONFIGURATION = JV_PROJECT__CONFIGURATION;
 
 	/**
+	 * The feature id for the '<em><b>Handlers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE__HANDLERS = JV_PROJECT__HANDLERS;
+
+	/**
 	 * The number of structural features of the '<em>JV Module</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -787,6 +814,53 @@ public interface BasePackage extends EPackage {
 	 * @ordered
 	 */
 	int JV_MODULE_OPERATION_COUNT = JV_PROJECT_OPERATION_COUNT + 0;
+
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.base.impl.EventHandlerImpl <em>Event Handler</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.base.impl.EventHandlerImpl
+	 * @see com.vectorsf.jvoice.model.base.impl.BasePackageImpl#getEventHandler()
+	 * @generated
+	 */
+	int EVENT_HANDLER = 10;
+
+	/**
+	 * The feature id for the '<em><b>Event</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_HANDLER__EVENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_HANDLER__HANDLER = 1;
+
+	/**
+	 * The number of structural features of the '<em>Event Handler</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_HANDLER_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Event Handler</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_HANDLER_OPERATION_COUNT = 0;
 
 
 	/**
@@ -980,6 +1054,17 @@ public interface BasePackage extends EPackage {
 	EReference getJVProject_Configuration();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.base.JVProject#getHandlers <em>Handlers</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Handlers</em>'.
+	 * @see com.vectorsf.jvoice.model.base.JVProject#getHandlers()
+	 * @see #getJVProject()
+	 * @generated
+	 */
+	EReference getJVProject_Handlers();
+
+	/**
 	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVProject#getPackage(java.lang.String) <em>Get Package</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1094,6 +1179,38 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getJVModule();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.base.EventHandler <em>Event Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Event Handler</em>'.
+	 * @see com.vectorsf.jvoice.model.base.EventHandler
+	 * @generated
+	 */
+	EClass getEventHandler();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.base.EventHandler#getEvent <em>Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Event</em>'.
+	 * @see com.vectorsf.jvoice.model.base.EventHandler#getEvent()
+	 * @see #getEventHandler()
+	 * @generated
+	 */
+	EAttribute getEventHandler_Event();
+
+	/**
+	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.base.EventHandler#getHandler <em>Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Handler</em>'.
+	 * @see com.vectorsf.jvoice.model.base.EventHandler#getHandler()
+	 * @see #getEventHandler()
+	 * @generated
+	 */
+	EReference getEventHandler_Handler();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1275,6 +1392,14 @@ public interface BasePackage extends EPackage {
 		EReference JV_PROJECT__CONFIGURATION = eINSTANCE.getJVProject_Configuration();
 
 		/**
+		 * The meta object literal for the '<em><b>Handlers</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference JV_PROJECT__HANDLERS = eINSTANCE.getJVProject_Handlers();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Package</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1369,6 +1494,32 @@ public interface BasePackage extends EPackage {
 		 * @generated
 		 */
 		EClass JV_MODULE = eINSTANCE.getJVModule();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.base.impl.EventHandlerImpl <em>Event Handler</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.base.impl.EventHandlerImpl
+		 * @see com.vectorsf.jvoice.model.base.impl.BasePackageImpl#getEventHandler()
+		 * @generated
+		 */
+		EClass EVENT_HANDLER = eINSTANCE.getEventHandler();
+
+		/**
+		 * The meta object literal for the '<em><b>Event</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVENT_HANDLER__EVENT = eINSTANCE.getEventHandler_Event();
+
+		/**
+		 * The meta object literal for the '<em><b>Handler</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EVENT_HANDLER__HANDLER = eINSTANCE.getEventHandler_Handler();
 
 	}
 

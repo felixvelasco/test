@@ -53,7 +53,7 @@ public interface JVPackage extends NamedElement {
 	 * @see #setOwnerProject(JVProject)
 	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVPackage_OwnerProject()
 	 * @see com.vectorsf.jvoice.model.base.JVProject#getPackages
-	 * @model opposite="packages" transient="false"
+	 * @model opposite="packages"
 	 * @generated
 	 */
 	JVProject getOwnerProject();
