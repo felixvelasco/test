@@ -12,11 +12,19 @@ class CallStateCodeXML {
 '''
 		<action-state id="«state.name»">
 			«FOR trans : TranSalida»
-				«IF trans.target instanceof CustomState»
-					<transition on="«trans.eventName»" to="render_«trans.target.name»"/>
-				«ELSE»
-					<transition on="«trans.eventName»" to="«trans.target.name»"/>
+				«IF TranSalida.length==1»
+					«IF trans.target instanceof CustomState»
+						<transition to="render_«trans.target.name»"/>
+					«ELSE»
+						<transition to="«trans.target.name»"/>
 				«ENDIF»
+				«ELSE»
+					«IF trans.target instanceof CustomState»
+						<transition on="«trans.eventName»" to="render_«trans.target.name»"/>
+					«ELSE»
+						<transition on="«trans.eventName»" to="«trans.target.name»"/>
+					«ENDIF»
+				«ENDIF»				
 			«ENDFOR»
 		</action-state>
     	'''
