@@ -83,7 +83,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			searchMavenProject();
 		}
 		URI vegaURI = null;
-		if (mproject.getMavenProject() != null) {
+		if (mproject.getMavenProject() != null && !isLocalUri(uri)) {
 			String sScheme = uri.scheme();
 			if (PLATFORM.equals(sScheme)) {
 				vegaURI = getURIPlatform(uri);
@@ -96,6 +96,11 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		} else {
 			return uri.deresolve(baseUri);
 		}
+	}
+
+	private boolean isLocalUri(URI uri) {
+		return uri.segmentCount() > 1 && baseUri.segmentCount() > 1
+				&& uri.segment(1).equals(baseUri.segment(1));
 	}
 
 	private void searchMavenProject() {
