@@ -39,15 +39,15 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
 /**
  * Goal which touches a timestamp file.
  * 
- * @goal voiceDSL
+ * @goal generateFlow
  * 
- * @phase generate-sources
+ * @phase compile
  * 
  * @configurator include-project-dependencies
  * 
  * @requiresDependencyResolution compile+runtime
  */
-public class MyMojo extends AbstractMojo {
+public class GenerateFlowMojo extends AbstractMojo {
 	
 	/**
 	 * Location of the target directory.
@@ -149,10 +149,6 @@ public class MyMojo extends AbstractMojo {
 		} catch (Exception e) {
 			throw new MojoExecutionException("", e);
 		}
-		if (project != null) {
-			projectHelper.addResource(project, outputDirectory.getAbsolutePath(),
-					Collections.singletonList("jVoice/**/*.xml"), Collections.emptyList());
-		}
 
 	}
 
@@ -160,13 +156,6 @@ public class MyMojo extends AbstractMojo {
 		String basename = name.substring(0, name.lastIndexOf('.'));
 
 		return basename + ".xml";
-	}
-
-	private Set<String> getDSLIncludesPatterns() {
-		if (includes == null || includes.isEmpty()) {
-			return Collections.singleton("**/*.voiceDsl");
-		}
-		return includes;
 	}
 
 	private Set<String> getFlowIncludesPatterns() {

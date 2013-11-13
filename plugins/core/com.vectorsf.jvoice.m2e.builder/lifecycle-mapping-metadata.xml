@@ -7,7 +7,7 @@
         <artifactId>dsl-builder</artifactId>
         <versionRange>[0.0.1,)</versionRange>
         <goals>
-          <goal>voiceDSL</goal>
+          <goal>generateFlow</goal>
         </goals>
       </pluginExecutionFilter>
       <action>
