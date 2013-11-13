@@ -41,7 +41,7 @@ class MenuStateCodeXML {
 					«IF configuration.getValue("confidence") != null && !configuration.getValue("confidence").equals("")»
 					<set name="flashScope.«state.name».confidence" value="'«configuration.getValue("confidence")»'" />
 					«ENDIF»
-					«IF configuration.getValue("maxNoInput ") != null »
+					«IF configuration.getValue("maxNoInput") != null »
 					<set name="flashScope.«state.name».maxNoInput" value="«configuration.getValue("maxNoInput")»" />
 					«ENDIF»
 					«IF configuration.getValue("maxNoMatch") != null»
