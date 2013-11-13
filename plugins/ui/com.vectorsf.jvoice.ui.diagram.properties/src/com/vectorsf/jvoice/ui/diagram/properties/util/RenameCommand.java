@@ -31,33 +31,37 @@ public final class RenameCommand extends RecordingCommand {
 		switch (option){
 			case 0:
 				bimElement.setName(newValue);
+
 				break;
 				
 			case 1:
 				//se trata de un transfer y queremos cambiar la URI a la que se transferirá la llamada
 				((TransferState) bimElement).setDestination(newValue);
+
 				break;
 				
 			case 2:
 				//se trata de un transfer y queremos cambiar el audio de espera
 				((TransferState) bimElement).setAudioTransfer(newValue);
+
 				break;
 				
 			case 3:
 				//se trata de un transfer y queremos cambiar el tiempo de timeout
 				((TransferState) bimElement).setTimeout(Integer.parseInt(newValue));
+
 				break;
 				
 			case 4:
 				//se trata de un transfer y queremos cambiar el tiempo máximo de espera
 				((TransferState) bimElement).setMaxTime(Integer.parseInt(newValue));
+
 				break;
 			
 			default:
 				break;
 		}
 		
-		fp.updateIfPossibleAndNeeded(new UpdateContext(pe));
-		
+		fp.updateIfPossibleAndNeeded(new UpdateContext(pe));	
 	}
 }
