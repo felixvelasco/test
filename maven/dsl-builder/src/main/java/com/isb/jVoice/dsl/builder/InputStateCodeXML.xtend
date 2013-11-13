@@ -40,11 +40,11 @@ class InputStateCodeXML {
 					«IF configuration.getValue("confidence") != null && !configuration.getValue("confidence").equals("")»
 					<set name="flashScope.«state.name».confidence" value="'«configuration.getValue("confidence")»'" />
 					«ENDIF»
-					«IF configuration.getValue("maxNoInput ") != null »
-					<set name="flashScope.«state.name».maxNoInput" value="«configuration.getValue("maxNoInput ")»" />
+					«IF configuration.getValue("maxNoInput") != null »
+					<set name="flashScope.«state.name».maxNoInput" value="«configuration.getValue("maxNoInput")»" />
 					«ENDIF»
 					«IF configuration.getValue("maxNoMatch") != null»
-					<set name="flashScope.«state.name».maxNoMatch" value="'«configuration.getValue("maxNoMatch")»'" />
+					<set name="flashScope.«state.name».maxNoMatch" value="«configuration.getValue("maxNoMatch")»" />
 					«ENDIF»
 				«ENDIF»			
 				«/*Obtenemos las gramaticas de la locucion  */»
