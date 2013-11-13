@@ -40,11 +40,12 @@ import org.eclipse.ui.ide.IDE;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 
 public class DslNameWizardPage extends AbstractWizardPage {
-	
+
 	private static final String PAGE_DESC = "Enter a locution name";
 	private static final String PAGE_TITLE = "Create a Locution";
 
@@ -53,7 +54,6 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	Text textFieldDSL;
 	Text textFieldProject;
 	Text textFieldPackage;
-	
 
 	private Button browsePackage;
 	private Combo box;
@@ -61,7 +61,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private static URI miURI;
 	private boolean projectEnable = true;
 	private String tipo = null;
-	
+
 	private Listener nameModifyListener = new Listener() {
 		@Override
 		public void handleEvent(Event e) {
@@ -73,16 +73,13 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private Object selection;
 	private String initialFolder = "";
 	private String initialProject = "";
-	private String configuration="configuration{\n //setting variables \n}\n";
-	private String grammars="grammars{\n // User's grammar \n }\n";
-	private String outputs="outputs{\n //Variables \n}";
-	private String audios="audios{\n //Code \n}";
-	private String variables="variables{\n // User's variables \n}\n";
-	
-	
+	private String configuration = "configuration{\n //setting variables \n}\n";
+	private String grammars = "grammars{\n // User's grammar \n }\n";
+	private String outputs = "outputs{\n //Variables \n}";
+	private String audios = "audios{\n //Code \n}";
+	private String variables = "variables{\n // User's variables \n}\n";
 
-	public DslNameWizardPage(String pageName, String title,
-			ImageDescriptor titleImage) {
+	public DslNameWizardPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 		primeraVez = 0;
 	}
@@ -93,7 +90,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		setDescription(PAGE_DESC);
 		primeraVez = 0;
 	}
-	
+
 	public DslNameWizardPage(String pageName, boolean projectEnable, String tipo) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
@@ -102,7 +99,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		this.projectEnable = projectEnable;
 		this.tipo = tipo;
 	}
-	
+
 	@Override
 	public void createControl(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NULL);
@@ -156,13 +153,13 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
-		JVProject proyecto = BaseModel.getInstance().getModel()
-				.getProject(projectName);
-		if (proyecto == null) {
-			setErrorMessage("Project is not jvoice project");
+		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
+		if (project instanceof JVModule) {
+			setErrorMessage("Project is not a module project");
 			browsePackage.setEnabled(false);
 			return false;
 		}
+		JVModule module = (JVModule) project;
 
 		IStatus status = doWorkspaceValidation(workspace, text);
 		if (!status.isOK()) {
@@ -178,7 +175,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
-		JVPackage paquete = proyecto.getPackage(packageName);
+		JVPackage paquete = module.getPackage(packageName);
 
 		if (paquete == null) {
 			setErrorMessage("Package does not exist");
@@ -188,8 +185,8 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		JVBean voiceDsl = paquete.getBean(text);
 
 		if (voiceDsl != null) {
-			if (primeraVez ==0){
-				primeraVez ++;
+			if (primeraVez == 0) {
+				primeraVez++;
 				return false;
 			}
 			setErrorMessage("Locution already exists");
@@ -214,32 +211,31 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		JVPackage DSLFolder = null;
 		if (selection instanceof IProject) {
 			IProject iProject = (IProject) selection;
-			project = BaseModel.getInstance().getModel()
-					.getProject(iProject.getName());
+			project = BaseModel.getInstance().getModel().getProject(iProject.getName());
 		} else if (selection instanceof IFolder) {
 			IFolder folder = (IFolder) selection;
 			IProject iProject = folder.getProject();
-			project = BaseModel.getInstance().getModel()
-					.getProject(iProject.getName());
+			project = BaseModel.getInstance().getModel().getProject(iProject.getName());
 
 			// si el proyecto es nulo es porque el proyecto donde se quiere
 			// crear el flujo no
 			// es un proyecto jvoice
-			if (project != null) {
-				DSLFolder = project.getPackage(folder.getName());
+			if (project instanceof JVModule) {
+				DSLFolder = ((JVModule) project).getPackage(folder.getName());
 			}
 		} else if (selection instanceof JVProject) {
 			project = (JVProject) selection;
 		} else if (selection instanceof JVPackage) {
 			DSLFolder = (JVPackage) selection;
-			project = DSLFolder.getOwnerProject();
+			project = DSLFolder.getOwnerModule();
 		} else if (selection instanceof IPackageFragmentRoot) {
 			IPackageFragmentRoot prueba = (IPackageFragmentRoot) selection;
 			IFolder folder = (IFolder) prueba.getResource();
 			IProject iProject = folder.getProject();
-			project = BaseModel.getInstance().getModel()
-					.getProject(iProject.getName());
-			DSLFolder = project.getPackage(folder.getName());
+			project = BaseModel.getInstance().getModel().getProject(iProject.getName());
+			if (project instanceof JVModule) {
+				DSLFolder = ((JVModule) project).getPackage(folder.getName());
+			}
 		}
 
 		initialFolder = DSLFolder != null ? DSLFolder.getName() : "";
@@ -264,7 +260,6 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		textFieldDSL.setLayoutData(data);
 		textFieldDSL.setFont(parent.getFont());
 
-		
 		// new project label
 		Label projectLabel2 = new Label(projectGroup, SWT.NONE);
 		projectLabel2.setText("Project name:");
@@ -285,11 +280,9 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 			@Override
 			public void handleEvent(Event event) {
-				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
-						getShell(),
-						new AdapterFactoryLabelProvider(
-								new ComposedAdapterFactory(
-										ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(),
+						new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+								ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 				dialog.setTitle("Container Selection");
 				dialog.setAllowDuplicates(false);
 				dialog.setMultipleSelection(false);
@@ -325,16 +318,14 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		browsePackage.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
-						getShell(),
-						new AdapterFactoryLabelProvider(
-								new ComposedAdapterFactory(
-										ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(),
+						new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+								ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 				dialog.setTitle("Container Selection");
 				dialog.setAllowDuplicates(false);
 				dialog.setMultipleSelection(false);
 
-				dialog.setElements(llenarPaquetes().toArray());
+				dialog.setElements(getPackages().toArray());
 				dialog.open();
 				Object[] result = dialog.getResult();
 				if (result != null && result.length == 1) {
@@ -348,31 +339,33 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		});
 
 		browsePackage.setEnabled(false);
-		
-		//Label del Combo
+
+		// Label del Combo
 		Label ComboLabel4 = new Label(projectGroup, SWT.NONE);
 		ComboLabel4.setText("Select an option:");
 		ComboLabel4.setFont(parent.getFont());
-		
-		//Combo para indicar que clase de DSL queremos crear.
+
+		// Combo para indicar que clase de DSL queremos crear.
 		box = new Combo(projectGroup, SWT.READ_ONLY);
 		box.add("Menu");
 		box.add("Input");
 		box.add("Output");
-		
-		if (tipo!=null){
-			if (tipo.equalsIgnoreCase("Menu"))
-				box.select(0);
-			if (tipo.equalsIgnoreCase("Input"))
-				box.select(1);
-			if (tipo.equalsIgnoreCase("Output"))
-				box.select(2);
-			
-			box.setEnabled(false);
-		}else{
-			box.select(0);
-		}	
 
+		if (tipo != null) {
+			if (tipo.equalsIgnoreCase("Menu")) {
+				box.select(0);
+			}
+			if (tipo.equalsIgnoreCase("Input")) {
+				box.select(1);
+			}
+			if (tipo.equalsIgnoreCase("Output")) {
+				box.select(2);
+			}
+
+			box.setEnabled(false);
+		} else {
+			box.select(0);
+		}
 
 		// Set the initial value first before listener
 		// to avoid handling an event during the creation.
@@ -386,7 +379,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		textFieldPackage.setText(getInitialTextFolderFieldValue());
 		textFieldPackage.addListener(SWT.Modify, nameModifyListener);
-		
+
 	}
 
 	private String getTextFieldValue() {
@@ -436,13 +429,10 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		List<JVProject> input = new ArrayList<JVProject>();
 
-		for (int i = 0; i < ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects().length; i++) {
-			IProject proyecto = ResourcesPlugin.getWorkspace().getRoot()
-					.getProjects()[i];
+		for (int i = 0; i < ResourcesPlugin.getWorkspace().getRoot().getProjects().length; i++) {
+			IProject proyecto = ResourcesPlugin.getWorkspace().getRoot().getProjects()[i];
 			String nombreProyecto = proyecto.getName();
-			JVProject project = BaseModel.getInstance().getModel()
-					.getProject(nombreProyecto);
+			JVProject project = BaseModel.getInstance().getModel().getProject(nombreProyecto);
 			if (project != null) {
 				input.add(project);
 			}
@@ -450,13 +440,9 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		return input;
 	}
 
-	private List<JVPackage> llenarPaquetes() {
-
-		IProject proyecto = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(textFieldProject.getText());
-
-		JVProject project = BaseModel.getInstance().getModel()
-				.getProject(proyecto.getName());
+	private List<JVPackage> getPackages() {
+		IProject iProject = ResourcesPlugin.getWorkspace().getRoot().getProject(textFieldProject.getText());
+		JVModule project = (JVModule) BaseModel.getInstance().getModel().getProject(iProject.getName());
 
 		return project.getPackages();
 	}
@@ -477,25 +463,22 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		return textFieldPackage.getText().trim();
 	}
 
-	
-	//Equivalente al performFinish
+	// Equivalente al performFinish
 	@Override
 	public void createResource() throws CoreException {
 		String DslName = getText();
 		IProject project = null;
 		IFolder DslFolder = null;
 		String editorExtension = "voiceDsl";
-		IFile DslFile =null;
-		String contents ="";
-		String seleccion= box.getText();
+		IFile DslFile = null;
+		String contents = "";
+		String seleccion = box.getText();
 
 		Object element = getSelection();
 		if (element instanceof JVProject) {
-			project = (IProject) Platform.getAdapterManager().getAdapter(
-					element, IProject.class);
+			project = (IProject) Platform.getAdapterManager().getAdapter(element, IProject.class);
 		} else if (element instanceof JVPackage) {
-			DslFolder = (IFolder) Platform.getAdapterManager().getAdapter(
-					element, IFolder.class);
+			DslFolder = (IFolder) Platform.getAdapterManager().getAdapter(element, IFolder.class);
 			project = DslFolder.getProject();
 		}
 
@@ -505,45 +488,31 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			ErrorDialog.openError(getShell(), error, null, status);
 			throw new CoreException(status);
 		}
-		
-		
-		if (DslFolder != null){
-			DslFile= DslFolder.getFile(DslName + "." + editorExtension);
-			
+
+		if (DslFolder != null) {
+			DslFile = DslFolder.getFile(DslName + "." + editorExtension);
+
 			if (!DslFile.exists()) {
-				if (seleccion.equals("Menu")){
-					contents="menuname "+DslName+ "\n\n"
-							+configuration
-							+grammars
-							+audios
-							+outputs;
-					
-					
-					
-				}else if(seleccion.equals("Input")){
-					contents="inputname "+DslName+"\n\n"
-							+configuration
-							+grammars
-							+audios;
-					
-				}else if(seleccion.equals("Output")){
-					contents="outputname "+DslName+"\n\n"
-							+variables
-							+audios;
-					
+				if (seleccion.equals("Menu")) {
+					contents = "menuname " + DslName + "\n\n" + configuration + grammars + audios + outputs;
+
+				} else if (seleccion.equals("Input")) {
+					contents = "inputname " + DslName + "\n\n" + configuration + grammars + audios;
+
+				} else if (seleccion.equals("Output")) {
+					contents = "outputname " + DslName + "\n\n" + variables + audios;
+
 				}
-				
-				
+
 				InputStream source = new ByteArrayInputStream(contents.getBytes());
 				DslFile.create(source, false, null);
 			}
 
 		}
-		
+
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		IFile file = (IFile) Platform.getAdapterManager().getAdapter(DslFile, IFile.class);
 		miURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true).appendFragment("/0");
-
 
 		try {
 			IDE.openEditor(page, file);
@@ -555,7 +524,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		}
 	}
 
-	public URI returnURI(){
+	public URI returnURI() {
 		return miURI;
 	}
 }

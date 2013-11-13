@@ -76,13 +76,13 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	}
 
 	protected boolean validatePage() {
-		
-		//si es la primera vez no validamos, pero devolvemos false para que no pueda continuar
-		if(primeraVez==0){
+
+		// si es la primera vez no validamos, pero devolvemos false para que no pueda continuar
+		if (primeraVez == 0) {
 			primeraVez++;
 			return false;
 		}
-		
+
 		String projectName = getProjectFieldValue();
 		if (projectName.equals("")) { //$NON-NLS-1$
 			setErrorMessage(null);
@@ -97,11 +97,11 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 			setErrorMessage("Project does not exist");
 			return false;
 		}
-		
+
 		JVProject proyecto = BaseModel.getInstance().getModel().getProject(projectName);
-		
-		//verificamos que el proyecto es de tipo jvoice
-		if(proyecto == null){
+
+		// verificamos que el proyecto es de tipo jvoice
+		if (proyecto == null) {
 			setErrorMessage("Project is not jvoice project");
 			return false;
 		}
@@ -116,8 +116,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 			}
 		}
 		IPath path = new Path(BaseModel.JV_PATH + "/" + toPath(packageName));
-		
-		
+
 		if (root.getProject(projectName).getFolder(path).exists()) {
 			setErrorMessage("Package already exists");
 			return false;
@@ -148,7 +147,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		textField.setLayoutData(data);
 		textField.setFont(parent.getFont());
 		textField.setEditable(false);
-		
+
 		// browse button on right
 		Button browse = new Button(projectGroup, SWT.PUSH);
 		browse.setText("Browse...");
@@ -156,29 +155,27 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 
 			@Override
 			public void handleEvent(Event event) {
-				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
-								getShell(),
-								new AdapterFactoryLabelProvider(
-										new ComposedAdapterFactory(
-												ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
-						dialog.setTitle("Container Selection");
-						dialog.setAllowDuplicates(false);
-						dialog.setMultipleSelection(false);
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(),
+						new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+								ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+				dialog.setTitle("Container Selection");
+				dialog.setAllowDuplicates(false);
+				dialog.setMultipleSelection(false);
 
-						dialog.setElements(llenarElementos().toArray());
-						dialog.open();
-						Object[] result = dialog.getResult();
-						if (result != null && result.length == 1) {
-							JVProject projecto = (JVProject) result[0];
-							setSelection(projecto);
-							textField.setText(projecto.getName());
-						} else {
-							textField.setText("");
-						}
-					}
-				});
-		
-		if (getInitialTextFieldValue()!=null){
+				dialog.setElements(llenarElementos().toArray());
+				dialog.open();
+				Object[] result = dialog.getResult();
+				if (result != null && result.length == 1) {
+					JVProject projecto = (JVProject) result[0];
+					setSelection(projecto);
+					textField.setText(projecto.getName());
+				} else {
+					textField.setText("");
+				}
+			}
+		});
+
+		if (getInitialTextFieldValue() != null) {
 			textField.setText(getInitialTextFieldValue());
 		}
 
@@ -268,48 +265,45 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		}
 
 	}
-	
+
 	public void setSelection(Object firstElement) {
 		selection = firstElement;
 
 	}
-	
+
 	private String getInitialTextFieldValue() {
-		if (selection instanceof JVProject){
-			return ((JVProject)selection).getName(); //$NON-NLS-1$ 
-		}else if (selection instanceof IProject){
-			IProject project = (IProject)selection;
+		if (selection instanceof JVProject) {
+			return ((JVProject) selection).getName();
+		} else if (selection instanceof IProject) {
+			IProject project = (IProject) selection;
 			JVProject jvProject = BaseModel.getInstance().getModel().getProject(project.getName());
-			if(jvProject!=null){
-				return ((IProject)selection).getName(); //$NON-NLS-1$
-			}else{
+			if (jvProject != null) {
+				return ((IProject) selection).getName();
+			} else {
 				return null;
 			}
-		}else if (selection instanceof IFolder){
-			return ((IFolder)selection).getProject().getName(); //$NON-NLS-1$
-		}else if (selection instanceof JVPackage){
-			return ((JVPackage)selection).getOwnerProject().getName(); //$NON-NLS-1$
-		}else if (selection instanceof IPackageFragmentRoot){
+		} else if (selection instanceof IFolder) {
+			return ((IFolder) selection).getProject().getName();
+		} else if (selection instanceof JVPackage) {
+			return ((JVPackage) selection).getOwnerModule().getName();
+		} else if (selection instanceof IPackageFragmentRoot) {
 			IPackageFragmentRoot iPackageFragmentRoot = (IPackageFragmentRoot) selection;
-			return ((IFolder)iPackageFragmentRoot.getResource()).getProject().getName();
-		}else{
+			return ((IFolder) iPackageFragmentRoot.getResource()).getProject().getName();
+		} else {
 			return null;
 		}
-		
+
 	}
-	
+
 	private List<JVProject> llenarElementos() {
-		
+
 		List<JVProject> input = new ArrayList<JVProject>();
-		for (int i = 0; i < ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects().length; i++) {
-			IProject proyecto = ResourcesPlugin.getWorkspace().getRoot()
-					.getProjects()[i];
+		for (int i = 0; i < ResourcesPlugin.getWorkspace().getRoot().getProjects().length; i++) {
+			IProject proyecto = ResourcesPlugin.getWorkspace().getRoot().getProjects()[i];
 			String nombreProyecto = proyecto.getName();
-			JVProject project = BaseModel.getInstance().getModel()
-					.getProject(nombreProyecto);
-			
-			if (project!=null){
+			JVProject project = BaseModel.getInstance().getModel().getProject(nombreProyecto);
+
+			if (project != null) {
 				input.add(project);
 			}
 		}

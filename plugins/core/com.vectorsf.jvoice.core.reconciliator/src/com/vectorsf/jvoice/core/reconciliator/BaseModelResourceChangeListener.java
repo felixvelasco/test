@@ -10,6 +10,7 @@ import org.eclipse.core.runtime.CoreException;
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.project.JVoiceProjectNature;
 import com.vectorsf.jvoice.model.base.JVModel;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVProject;
 
 public class BaseModelResourceChangeListener implements IResourceChangeListener {
@@ -30,8 +31,8 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener 
 				String name = res.getName();
 
 				JVProject prj = model.getProject(name);
-				if (prj != null) {
-					updatePackages(child, prj);
+				if (prj instanceof JVModule) {
+					updatePackages(child, (JVModule) prj);
 				} else {
 					try {
 						IProject project = (IProject) res;
@@ -50,7 +51,7 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener 
 
 	}
 
-	public void updatePackages(IResourceDelta delta, JVProject prj) {
+	public void updatePackages(IResourceDelta delta, JVModule prj) {
 		if (delta != null) {
 			CheckDeltaChange visitor = new CheckDeltaChange(prj, null);
 			try {

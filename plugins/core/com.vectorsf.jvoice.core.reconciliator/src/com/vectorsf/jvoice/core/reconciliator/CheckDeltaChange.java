@@ -20,18 +20,18 @@ import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.project.JVoiceProjectNature;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
-import com.vectorsf.jvoice.model.base.JVProject;
 
 public class CheckDeltaChange implements IResourceDeltaVisitor {
 
 	private final static IPath pkgPath = new Path(BaseModel.JV_PATH);
 	private final static IPath configPath = new Path(BaseModel.PROPERTIES_PATH);
 
-	private JVProject jvProject;
+	private JVModule jvProject;
 	private JVPackage currentPackage;
 
-	public CheckDeltaChange(JVProject prj, IFolder packageFolder) {
+	public CheckDeltaChange(JVModule prj, IFolder packageFolder) {
 		jvProject = prj;
 		currentPackage = null;
 	}
@@ -158,8 +158,8 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 		return null;
 	}
 
-	private void removeResources(JVProject jvProject) {
-		for (JVPackage pck : jvProject.getPackages()) {
+	private void removeResources(JVModule module) {
+		for (JVPackage pck : module.getPackages()) {
 			removeResources(pck);
 		}
 

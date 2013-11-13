@@ -50,6 +50,7 @@ import org.eclipse.ui.ide.IDE;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -70,7 +71,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	private Button browsePackage;
 	private int primeraVez;
 	private boolean projectEnable = true;
-	private static Flow  myFlow;
+	private static Flow myFlow;
 
 	private Listener nameModifyListener = new Listener() {
 		@Override
@@ -95,7 +96,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		setDescription(PAGE_DESC);
 		primeraVez = 0;
 	}
-	
+
 	public DiagramNameWizardPage(String pageName, boolean projectEnable) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
@@ -157,12 +158,13 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
-		JVProject proyecto = BaseModel.getInstance().getModel().getProject(projectName);
-		if (proyecto == null) {
-			setErrorMessage("Project is not jvoice project");
+		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
+		if (project instanceof JVModule) {
+			setErrorMessage("Project is not a module project");
 			browsePackage.setEnabled(false);
 			return false;
 		}
+		JVModule module = (JVModule) project;
 
 		IStatus status = doWorkspaceValidation(workspace, text);
 		if (!status.isOK()) {
@@ -178,7 +180,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
-		JVPackage paquete = proyecto.getPackage(packageName);
+		JVPackage paquete = module.getPackage(packageName);
 
 		if (paquete == null) {
 			setErrorMessage("Package does not exist");
@@ -188,14 +190,14 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		JVBean diagrama = paquete.getBean(text);
 
 		if (diagrama != null) {
-			if (primeraVez==0){
-				primeraVez ++;
+			if (primeraVez == 0) {
+				primeraVez++;
 				return false;
 			}
 			setErrorMessage("Flow already exists");
 			return false;
 		}
-		primeraVez ++;
+		primeraVez++;
 		setSelection(paquete);
 		setErrorMessage(null);
 		setMessage(null);
@@ -224,20 +226,22 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			// si el proyecto es nulo es porque el proyecto donde se quiere
 			// crear el flujo no
 			// es un proyecto jvoice
-			if (project != null) {
-				diagramFolder = project.getPackage(nameFolder);
+			if (project instanceof JVModule) {
+				diagramFolder = ((JVModule) project).getPackage(nameFolder);
 			}
 		} else if (selection instanceof JVProject) {
 			project = (JVProject) selection;
 		} else if (selection instanceof JVPackage) {
 			diagramFolder = (JVPackage) selection;
-			project = diagramFolder.getOwnerProject();
+			project = diagramFolder.getOwnerModule();
 		} else if (selection instanceof IPackageFragmentRoot) {
 			IPackageFragmentRoot prueba = (IPackageFragmentRoot) selection;
 			IFolder folder = (IFolder) prueba.getResource();
 			IProject iProject = folder.getProject();
 			project = BaseModel.getInstance().getModel().getProject(iProject.getName());
-			diagramFolder = project.getPackage(folder.getName());
+			if (project instanceof JVModule) {
+				diagramFolder = ((JVModule) project).getPackage(folder.getName());
+			}
 		}
 
 		initialFolder = diagramFolder != null ? diagramFolder.getName() : "";
@@ -327,7 +331,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 				dialog.setAllowDuplicates(false);
 				dialog.setMultipleSelection(false);
 
-				dialog.setElements(llenarPaquetes().toArray());
+				dialog.setElements(getPackages().toArray());
 				dialog.open();
 				Object[] result = dialog.getResult();
 				if (result != null && result.length == 1) {
@@ -414,11 +418,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		return input;
 	}
 
-	private List<JVPackage> llenarPaquetes() {
-
-		IProject proyecto = ResourcesPlugin.getWorkspace().getRoot().getProject(textFieldProject.getText());
-
-		JVProject project = BaseModel.getInstance().getModel().getProject(proyecto.getName());
+	private List<JVPackage> getPackages() {
+		IProject iProject = ResourcesPlugin.getWorkspace().getRoot().getProject(textFieldProject.getText());
+		JVModule project = (JVModule) BaseModel.getInstance().getModel().getProject(iProject.getName());
 
 		return project.getPackages();
 	}
@@ -543,8 +545,8 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		}
 		editingDomain.dispose();
 	}
-	
-	public Flow returnFlow(){
+
+	public Flow returnFlow() {
 		return myFlow;
 	}
 
