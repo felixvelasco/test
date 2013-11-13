@@ -31,6 +31,21 @@ class InputStateCodeXML {
 					«IF configuration.getValue("maxAttempts") != null && !configuration.getValue("maxAttempts").equals("")»
 					<set name="flashScope.«state.name».maxAttempts" value="«configuration.getValue("maxAttempts")»" />
 					«ENDIF»
+					«IF configuration.getValue("timeout") != null && !configuration.getValue("timeout").equals("")»
+					<set name="flashScope.«state.name».timeout" value="'«configuration.getValue("timeout")»'" />
+					«ENDIF»
+					«IF configuration.getValue("interdigittimeout") != null && !configuration.getValue("interdigittimeout").equals("")»
+					<set name="flashScope.«state.name».interdigittimeout" value="'«configuration.getValue("interdigittimeout")»'" />
+					«ENDIF»
+					«IF configuration.getValue("confidence") != null && !configuration.getValue("confidence").equals("")»
+					<set name="flashScope.«state.name».confidence" value="'«configuration.getValue("confidence")»'" />
+					«ENDIF»
+					«IF configuration.getValue("maxNoInput ") != null »
+					<set name="flashScope.«state.name».maxNoInput" value="«configuration.getValue("maxNoInput ")»" />
+					«ENDIF»
+					«IF configuration.getValue("maxNoMatch") != null»
+					<set name="flashScope.«state.name».maxNoMatch" value="'«configuration.getValue("maxNoMatch")»'" />
+					«ENDIF»
 				«ENDIF»			
 				«/*Obtenemos las gramaticas de la locucion  */»
 				«IF grammars != null»
@@ -38,7 +53,6 @@ class InputStateCodeXML {
 					«IF grammatics != null && grammatics.size>0» 				
 						«FOR grammatic : grammatics »
 							<evaluate expression="jVoiceArchGrammar" result="flashScope.grammar«i=i+1»" />
-							<set name="flashScope.grammar«i».type" value="'«grammatic.expr.booleanValue»'"/>
 							<set name="flashScope.grammar«i».src" value="'«grammatic.src»'"/>
 							<set name="flashScope.grammar«i».mode" value="'«grammatic.mode»'"/>
 							<evaluate expression="flashScope.«state.name».grammars.add(flashScope.grammar«i»)" />
