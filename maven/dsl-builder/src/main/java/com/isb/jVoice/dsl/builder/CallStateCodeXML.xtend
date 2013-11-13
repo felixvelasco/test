@@ -17,7 +17,7 @@ class CallStateCodeXML {
 						<transition to="render_«trans.target.name»"/>
 					«ELSE»
 						<transition to="«trans.target.name»"/>
-				«ENDIF»
+					«ENDIF»
 				«ELSE»
 					«IF trans.target instanceof CustomState»
 						<transition on="«trans.eventName»" to="render_«trans.target.name»"/>
