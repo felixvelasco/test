@@ -41,7 +41,7 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
  * 
  * @goal generateFlow
  * 
- * @phase compile
+ * @phase generate-sources
  * 
  * @configurator include-project-dependencies
  * 
@@ -145,6 +145,10 @@ public class GenerateFlowMojo extends AbstractMojo {
 			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 
 			processFlowFiles(resourceSet, f);
+			if (project != null) {
+				projectHelper.addResource(project, outputDirectory.getAbsolutePath(),
+						Collections.singletonList("jVoice/**/*.xml"), Collections.emptyList());
+			}
 
 		} catch (Exception e) {
 			throw new MojoExecutionException("", e);
