@@ -3,9 +3,11 @@ package com.vectorsf.jvoice.diagram.core.pattern.states;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -14,6 +16,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -38,21 +41,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
-import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
-import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
-import com.vectorsf.jvoice.model.operations.State;
-import com.vectorsf.jvoice.model.operations.impl.MenuStateImpl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
-import com.vectorsf.jvoice.ui.edit.dialogs.DialogSubFlow;
-import com.vectorsf.jvoice.ui.edit.filters.FilterDialogMenu;
-import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
-import com.vectorsf.jvoice.ui.edit.validators.ValidatorMenu;
 import com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice;
 
 public class MenuStatePattern extends StatePattern implements ISelectionStatusValidator {
@@ -95,20 +90,33 @@ public class MenuStatePattern extends StatePattern implements ISelectionStatusVa
 	public Object[] create(ICreateContext context) {
 
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-		JVBeanContentProvider locutionCP = new JVBeanContentProvider(new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
-		
-				DialogLocution dialog = new DialogLocution(shell);
-		List<State> locutionStates = new ArrayList();
-		for (State state : flow.getStates()) {
-			if (state instanceof MenuState) {
-				locutionStates.add(state);
-			}
-		}
-		dialog.setInitialElementSelections(locutionStates);
+
+		DialogLocution dialog = new DialogLocution(shell);
+		List<VoiceDsl> locutionResources = new ArrayList<VoiceDsl>();
+		String flowFolderPath = getFlowFolderPath(flow);
+
+		IFolder resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace().getRoot().findMember(flowFolderPath);
+
 		try {
-			dialog.setResources(locutionStates);
+			IResource[] resources = resourcesFolder.members();
+			for (IResource resource : resources) {
+				if (resource instanceof File) {
+					URI uri = URI.createPlatformResourceURI(resource.getFullPath().toString(), true);
+					EObject eObject = flow.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
+					if (eObject instanceof MenuDsl) {
+						locutionResources.add((MenuDsl) eObject);
+					}
+				}
+			}
+		} catch (CoreException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		dialog.setInitialElementSelections(locutionResources);
+		try {
+			dialog.setResources(locutionResources);
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
@@ -118,27 +126,21 @@ public class MenuStatePattern extends StatePattern implements ISelectionStatusVa
 		dialog.setInitialPattern("?", FilteredItemsSelectionDialog.FULL_SELECTION);
 		dialog.setTitle("Menu Selection");
 		dialog.setMessage("Select a menu:");
-		
+
 		URI res = flow.eResource().getURI();
 		String projectName = res.segment(1);
-		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
-		List<JVProject> proj = project.getReferencedProjects();
 		dialog.open();
 
-		String menuStateName = null;
 		VoiceDsl result = null;
 		URI flowURI = null;
 		MenuState menuState = OperationsFactory.eINSTANCE.createMenuState();
 		switch (dialog.getReturnCode()) {
 		case Dialog.OK:
 			Object[] results = dialog.getResult();
-
-			result = ((MenuStateImpl) results[0]).getLocution();
-			menuStateName = result.getName();
-
-			menuState.setName(menuStateName);
-			Resource eResource = result.eResource();
-			flowURI = eResource.getURI().appendFragment(eResource.getURIFragment(result));
+			MenuDsl menu = (MenuDsl) results[0];
+			menuState.setName(menu.getName());
+			Resource eResource = menu.eResource();
+			flowURI = eResource.getURI().appendFragment(eResource.getURIFragment(menu));
 			break;
 		case IDialogConstants.PROCEED_ID:
 			IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
@@ -178,6 +180,19 @@ public class MenuStatePattern extends StatePattern implements ISelectionStatusVa
 		return new Object[] { menuState };
 	}
 
+	private String getFlowFolderPath(Flow flow) {
+		String path = "";
+		String flowUri = flow.eResource().getURI().toString();
+		String[] flowUriSegments = flowUri.split("/");
+		for (int i = 2; i < flowUriSegments.length - 1; i++) {
+			if (!flowUriSegments[i].contains(".jvflow")) {
+				path = path.concat("/" + flowUriSegments[i]);
+			}
+
+		}
+		return path.concat("/" + flow.getName() + ".resources");
+	}
+
 	@Override
 	public String getCreateName() {
 		return MENU;
@@ -205,4 +220,5 @@ public class MenuStatePattern extends StatePattern implements ISelectionStatusVa
 			return new Status(IStatus.ERROR, "com.vectorsf.jvoice.diagram.core", "Select a menu");
 		}
 	}
+
 }

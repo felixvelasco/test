@@ -169,8 +169,6 @@ public class DslNameWizardPage extends AbstractWizardPage {
 				.getProject(projectName);
 		if (proyecto == null) {
 			setErrorMessage("Project is not jvoice project");
-//			browsePackage.setEnabled(false);
-//			browseDiagram.setEnabled(false);
 			return false;
 		}
 
@@ -231,17 +229,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		if (selection instanceof IFolder) {
 			// Si se crea desde el diagrama			
 			IFolder folder = (IFolder) selection;
-			IProject iProject = folder.getProject();
-			initialProject = iProject.getName();
-			IPath iPath = folder.getRawLocation();
-			String path = iPath.toString();
-			String[] pathSegments = path.split("/");
-			String diagramFolder = pathSegments[pathSegments.length-1]; 
-			if (diagramFolder.endsWith("resources")){
-				initialPackage = pathSegments[pathSegments.length-2];
-			String[] diagramNameSegments = diagramFolder.split("\\.");
-			initialFlow = diagramNameSegments[0];		
-			}
+			setNames(folder);
 		}else{
 			// Si se crea desde el navegador
 			fromNavigator = true;
@@ -651,6 +639,25 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		return project.getFolder(folderName);
 	}
 	
+	public String getProjectName(IFolder folderName) {
+		IProject iProject = folderName.getProject();
+		return iProject.getName();
+	}
+	
+	public void setNames(IFolder folder) {
+		IProject iProject = folder.getProject();
+		initialProject = iProject.getName();
+		IPath iPath = folder.getRawLocation();
+		String path = iPath.toString();
+		String[] pathSegments = path.split("/");
+		String diagramFolder = pathSegments[pathSegments.length-1]; 
+		if (diagramFolder.endsWith("resources")){
+			initialPackage = pathSegments[pathSegments.length-2];
+			String[] diagramNameSegments = diagramFolder.split("\\.");
+			initialFlow = diagramNameSegments[0];		
+		}
+	}
+
 	private String toPath(String packageFieldValue) {
 		return packageFieldValue.replace('.', '/');
 	}

@@ -3,9 +3,11 @@ package com.vectorsf.jvoice.diagram.core.pattern.states;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -14,6 +16,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -23,6 +26,7 @@ import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
@@ -43,12 +47,9 @@ import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.PromptState;
-import com.vectorsf.jvoice.model.operations.State;
-import com.vectorsf.jvoice.model.operations.impl.PromptStateImpl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
-import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
 import com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice;
 
 public class PromptStatePattern extends StatePattern implements ISelectionStatusValidator {
@@ -92,20 +93,33 @@ public class PromptStatePattern extends StatePattern implements ISelectionStatus
 
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
-		JVBeanContentProvider locutionCP = new JVBeanContentProvider(new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 
 		DialogLocution dialog = new DialogLocution(shell);
-		List<State> locutionStates = new ArrayList();
-		for (State state : flow.getStates()) {
-			if (state instanceof PromptState) {
-				locutionStates.add(state);
-			}
-		}
-		dialog.setInitialElementSelections(locutionStates);
+		List<VoiceDsl> locutionResources = new ArrayList<VoiceDsl>();
+		String flowFolderPath = getFlowFolderPath(flow);
+
+		IFolder resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace().getRoot().findMember(flowFolderPath);
+
 		try {
-			dialog.setResources(locutionStates);
+			IResource[] resources = resourcesFolder.members();
+			for (IResource resource : resources) {
+				if (resource instanceof File) {
+					URI uri = URI.createPlatformResourceURI(resource.getFullPath().toString(), true);
+					EObject eObject = flow.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
+					if (eObject instanceof PromptDsl) {
+						locutionResources.add((PromptDsl) eObject);
+					}
+				}
+			}
+		} catch (CoreException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		dialog.setInitialElementSelections(locutionResources);
+		try {
+			dialog.setResources(locutionResources);
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
@@ -116,32 +130,22 @@ public class PromptStatePattern extends StatePattern implements ISelectionStatus
 		dialog.setTitle("Output Selection");
 		dialog.setMessage("Select an output:");
 
-		dialog.setTitle("Output Selection");
-		dialog.setMessage("Select an output:");
-
 		URI res = flow.eResource().getURI();
 		String projectName = res.segment(1);
 		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
-		List<JVProject> proj = project.getReferencedProjects();
 		dialog.open();
 
-		String promptStateName = null;
 		VoiceDsl result = null;
 		URI flowURI = null;
 		PromptState promptState = OperationsFactory.eINSTANCE.createPromptState();
 
 		switch (dialog.getReturnCode()) {
 		case Dialog.OK:
-
 			Object[] results = dialog.getResult();
-
-			result = ((PromptStateImpl) results[0]).getLocution();
-			promptStateName = result.getName();
-
-			promptState.setName(promptStateName);
-			Resource eResource = result.eResource();
-			flowURI = eResource.getURI().appendFragment(eResource.getURIFragment(result));
-
+			PromptDsl prompt = (PromptDsl) results[0];
+			promptState.setName(prompt.getName());
+			Resource eResource = prompt.eResource();
+			flowURI = eResource.getURI().appendFragment(eResource.getURIFragment(prompt));
 			break;
 		case IDialogConstants.PROCEED_ID:
 			IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
@@ -181,6 +185,19 @@ public class PromptStatePattern extends StatePattern implements ISelectionStatus
 		return new Object[] { promptState };
 	}
 
+	private String getFlowFolderPath(Flow flow) {
+		String path = "";
+		String flowUri = flow.eResource().getURI().toString();
+		String[] flowUriSegments = flowUri.split("/");
+		for (int i = 2; i < flowUriSegments.length - 1; i++) {
+			if (!flowUriSegments[i].contains(".jvflow")) {
+				path = path.concat("/" + flowUriSegments[i]);
+			}
+
+		}
+		return path.concat("/" + flow.getName() + ".resources");
+	}
+
 	@Override
 	public String getCreateName() {
 		return PROMPT;
@@ -189,6 +206,11 @@ public class PromptStatePattern extends StatePattern implements ISelectionStatus
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
 		return mainBusinessObject instanceof PromptState;
+	}
+
+	@Override
+	public boolean canCreate(ICreateContext context) {
+		return context.getTargetContainer() instanceof Diagram;
 	}
 
 	@Override

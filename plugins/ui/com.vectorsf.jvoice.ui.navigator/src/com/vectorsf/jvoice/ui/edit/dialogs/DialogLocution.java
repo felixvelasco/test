@@ -16,13 +16,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 
-import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.navigator.activator.Activator;
 
 public class DialogLocution extends FilteredItemsSelectionDialog {
 
 	private static final String DIALOG_SETTINGS = "FilteredResourcesSelectionDialogExampleSettings";
-	private List<State> resources;
+	private List<VoiceDsl> resources;
 	private Button checkButton;
 
 	public DialogLocution(Shell shell) {
@@ -108,8 +108,9 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 
 	}
 
-	public void setResources(List<State> resou) throws CoreException {
-		resources = resou;
+	public void setResources(List<VoiceDsl> locutionResources)
+			throws CoreException {
+		resources = locutionResources;
 
 	}
 
