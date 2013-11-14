@@ -17,32 +17,32 @@ class TransferStateCodeXML {
 		<on-entry>
 			«IF transfer.typeTransfer.value == 0»
 				<evaluate expression="jVoiceArchBlindTransfer" result = "flashScope.«transfer.name»"/>
-				<set name="flowScope.«transfer.name».dest" value="'«transfer.destination»'"/>
+				<set name="flashScope.«transfer.name».dest" value="'«transfer.destination»'"/>
 				«IF transfer.audioTransfer!=null && !transfer.audioTransfer.trim.empty»
-					<set name="flowScope.«transfer.name».transferaudio" value="'«transfer.audioTransfer»'"/>
+					<set name="flashScope.«transfer.name».transferaudio" value="'«transfer.audioTransfer»'"/>
 				«ENDIF»
 				
 			«ELSEIF transfer.typeTransfer.value == 1»
 				<evaluate expression="jVoiceArchConsultationTransfer" result = "flashScope.«transfer.name»"/>
-				<set name="flowScope.«transfer.name».dest" value="'«transfer.destination»'"/>
+				<set name="flashScope.«transfer.name».dest" value="'«transfer.destination»'"/>
 				«IF transfer.audioTransfer!=null && !transfer.audioTransfer.trim.empty»
-					<set name="flowScope.«transfer.name».transferaudio" value="'«transfer.audioTransfer»'"/>
+					<set name="flashScope.«transfer.name».transferaudio" value="'«transfer.audioTransfer»'"/>
 				«ENDIF»
-				<set name="flowScope.«transfer.name».timeout" value="'«transfer.timeout»'"/>
+				<set name="flashScope.«transfer.name».timeout" value="'«transfer.timeout»'"/>
 				
 			«ELSEIF transfer.typeTransfer.value == 2»
 				<evaluate expression="jVoiceArchBridgeTransfer" result = "flashScope.«transfer.name»"/>
-				<set name="flowScope.«transfer.name».dest" value="'«transfer.destination»'"/>
+				<set name="flashScope.«transfer.name».dest" value="'«transfer.destination»'"/>
 				«IF transfer.audioTransfer!=null && !transfer.audioTransfer.trim.empty»
-					<set name="flowScope.«transfer.name».transferaudio" value="'«transfer.audioTransfer»'"/>
+					<set name="flashScope.«transfer.name».transferaudio" value="'«transfer.audioTransfer»'"/>
 				«ENDIF»
-				<set name="flowScope.«transfer.name».timeout" value="'«transfer.timeout»'"/>
-				<set name="flowScope.«transfer.name».maxtime" value="'«transfer.maxTime»'"/>
+				<set name="flashScope.«transfer.name».timeout" value="'«transfer.timeout»'"/>
+				<set name="flashScope.«transfer.name».maxtime" value="'«transfer.maxTime»'"/>
 			«ENDIF»	
 			
 			
 		</on-entry>
-		<evaluate expression="flowProcessor.process(flowScope.«transfer.name»)"/>
+		<evaluate expression="flowProcessor.process(flashScope.«transfer.name»)"/>
 		
 		<transition to="render_«transfer.name»" />
 		
