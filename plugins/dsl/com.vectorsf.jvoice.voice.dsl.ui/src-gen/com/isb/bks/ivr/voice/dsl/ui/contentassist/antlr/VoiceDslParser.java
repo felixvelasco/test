@@ -336,7 +336,7 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSimpleAudioAccess().getSrcAssignment_2_0_1(), "rule__SimpleAudio__SrcAssignment_2_0_1");
 					put(grammarAccess.getSimpleAudioAccess().getTtsAssignment_2_1_0_1(), "rule__SimpleAudio__TtsAssignment_2_1_0_1");
 					put(grammarAccess.getSimpleAudioAccess().getInterpretationAssignment_2_1_1_1(), "rule__SimpleAudio__InterpretationAssignment_2_1_1_1");
-					put(grammarAccess.getSimpleAudioAccess().getFormatAssignment_2_1_1_2_0(), "rule__SimpleAudio__FormatAssignment_2_1_1_2_0");
+					put(grammarAccess.getSimpleAudioAccess().getFormatAssignment_2_1_1_2_1(), "rule__SimpleAudio__FormatAssignment_2_1_1_2_1");
 					put(grammarAccess.getSimpleAudioAccess().getTtsAssignment_2_1_1_3(), "rule__SimpleAudio__TtsAssignment_2_1_1_3");
 					put(grammarAccess.getConditionalAudioAccess().getConditAssignment_0_3(), "rule__ConditionalAudio__ConditAssignment_0_3");
 					put(grammarAccess.getConditionalAudioAccess().getSimpleAAssignment_0_6(), "rule__ConditionalAudio__SimpleAAssignment_0_6");

@@ -121,7 +121,7 @@ SimpleAudio returns Audio:
 	{Audio}
 	'say' (('src' src=STRING)?
 		(('wording' tts=STRING ) |
-			('as' (interpretation=Interpretation) (format = '(' STRING ')')?  tts=STRING)
+			('as' (interpretation=Interpretation) ('(' format=STRING ')')?  tts=STRING)
 		)?
 	)
 ;
