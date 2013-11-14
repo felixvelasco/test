@@ -160,7 +160,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		}
 
 		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
-		if (project instanceof JVModule) {
+		if (!(project instanceof JVModule)) {
 			setErrorMessage("Project is not a module project");
 			browsePackage.setEnabled(false);
 			return false;
