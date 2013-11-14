@@ -1,21 +1,5 @@
 package com.vectorsf.jvoice.diagram.core.test;
 
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
-import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.emptyArray;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 
 import org.eclipse.core.internal.resources.ResourceException;
@@ -56,9 +40,29 @@ import org.osgi.framework.Bundle;
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.base.test.SWTBotHelper;
 import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.State;
+
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.emptyArray;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+
+import static org.junit.Assert.fail;
+
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
 
 /**
  * 
@@ -74,14 +78,11 @@ public class IVRDiagramCreateStatesTest {
 	private SWTBotGefEditor editor;
 	private SWTBotGefViewer gefViewer;
 	@SuppressWarnings("unchecked")
-	private final Matcher<Object[]> arrayContainingTextOne = arrayContaining(hasProperty(
-			"text", is("one")));
+	private final Matcher<Object[]> arrayContainingTextOne = arrayContaining(hasProperty("text", is("one")));
 	@SuppressWarnings("unchecked")
-	private final Matcher<Object[]> arrayContainingTextTwo = arrayContaining(hasProperty(
-			"text", is("two")));
+	private final Matcher<Object[]> arrayContainingTextTwo = arrayContaining(hasProperty("text", is("two")));
 
-	public static final Bundle bundle = Platform
-			.getBundle("com.vectorsf.jvoice.diagram.core.test");
+	public static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.diagram.core.test");
 
 	/**
 	 * @throws java.lang.Exception
@@ -99,8 +100,7 @@ public class IVRDiagramCreateStatesTest {
 		UIThreadRunnable.syncExec(new VoidResult() {
 			@Override
 			public void run() {
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
-						.forceActive();
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().forceActive();
 			}
 		});
 
@@ -124,17 +124,14 @@ public class IVRDiagramCreateStatesTest {
 		for (int i = 0; i < shells.length; i++) {
 			if (shells[i].isOpen()) {
 				SWTBotShell shell = shells[i];
-				if (shell.getText().contains("Input")
-						|| shell.getText().contains("Menu")
-						|| shell.getText().contains("Flow")
-						|| shell.getText().contains("Menu")) {
+				if (shell.getText().contains("Input") || shell.getText().contains("Menu")
+						|| shell.getText().contains("Flow") || shell.getText().contains("Menu")) {
 					shell.close();
 				}
 			}
 		}
 
-		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects()) {
+		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 
 			try {
 				while (true) {
@@ -169,11 +166,9 @@ public class IVRDiagramCreateStatesTest {
 		IProject project = createProject("testNavigator");
 		IFile file = null;
 		try {
-			createFile(project, BaseModel.JV_PATH
-					+ "/several/packages/inside/five.jvflow",
+			createFile(project, BaseModel.JV_PATH + "/several/packages/inside/five.jvflow",
 					getInputStreamResource(bundle, "five.jvflow"));
-			file = createFile(project, BaseModel.JV_PATH
-					+ "/several/packages/inside/empty.jvflow",
+			file = createFile(project, BaseModel.JV_PATH + "/several/packages/inside/empty.jvflow",
 					getInputStreamResource(bundle, "empty.jvflow"));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -190,17 +185,13 @@ public class IVRDiagramCreateStatesTest {
 
 		bot.waitUntil(Conditions.shellIsActive("Flow Selection"));
 		bot.sleep(LARGE_SLEEP);
-		SWTBotTreeItem selected = bot.tree()
-				.expandNode("testNavigator", "several.packages.inside", "five")
-				.select();
+		SWTBotTreeItem selected = bot.tree().expandNode("testNavigator", "several.packages.inside", "five").select();
 		selected.doubleClick();
 		editor.save();
 
-		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
 		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		Flow flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
+		Flow flow = (Flow) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
 
 		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed("five");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
@@ -231,8 +222,7 @@ public class IVRDiagramCreateStatesTest {
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
 		IProject project = createProject("testNavigator");
-		final IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/empty.jvflow",
+		final IFile file = createFile(project, BaseModel.JV_PATH + "/several/packages/inside/empty.jvflow",
 				getInputStreamResource(bundle, "empty.jvflow"));
 
 		bot.sleep(SMALL_SLEEP);
@@ -241,8 +231,7 @@ public class IVRDiagramCreateStatesTest {
 
 			@Override
 			public void run() {
-				IWorkbenchPage activePage = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getActivePage();
+				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				try {
 					IDE.openEditor(activePage, file);
 				} catch (PartInitException e) {
@@ -255,11 +244,9 @@ public class IVRDiagramCreateStatesTest {
 		editor = getGefEditor();
 		gefViewer = editor.getSWTBotGefViewer();
 
-		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
 		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		Flow flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
+		Flow flow = (Flow) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
 
 		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed(stateName);
 		assertThat(flow.getStates(), not(hasItemWithNameStateName));
@@ -274,8 +261,7 @@ public class IVRDiagramCreateStatesTest {
 
 				@Override
 				public void run() {
-					IWorkbenchPage activePage = PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getActivePage();
+					IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					try {
 						IDE.openEditor(activePage, file);
 					} catch (PartInitException e) {
@@ -290,8 +276,7 @@ public class IVRDiagramCreateStatesTest {
 
 			diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
 			diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-			flow = (Flow) Graphiti.getLinkService()
-					.getBusinessObjectForLinkedPictogramElement(diagram);
+			flow = (Flow) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
 
 			hasItemWithNameStateName = hasStateNamed(stateName);
 			assertThat(flow.getStates(), hasItemWithNameStateName);
@@ -346,24 +331,18 @@ public class IVRDiagramCreateStatesTest {
 	public void createLocutionState(String stateName) throws Exception {
 
 		IProject project = createProject("testNavigator");
-		final IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.jvflow",
+		final IFile file = createFile(project, BaseModel.JV_PATH + "/several/packages/inside/five.jvflow",
 				getInputStreamResource(bundle, "five.jvflow"));
-		createFile(project, BaseModel.JV_PATH + "/several/packages/inside/"
-				+ stateName + ".voiceDsl",
+		createFile(project, BaseModel.JV_PATH + "/several/packages/inside/" + stateName + ".voiceDsl",
 				getInputStreamResource(bundle, stateName + ".voiceDsl"));
 
 		bot.sleep(LARGE_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
-		assertThat(view.bot().tree().getTreeItem("testNavigator"),
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside").getItems(),
 				is(not(nullValue())));
-		assertThat(
-				view.bot().tree()
-						.expandNode("testNavigator", "several.packages.inside")
-						.getItems(), is(not(nullValue())));
-		JVBean bean = BaseModel.getInstance().getModel()
-				.getProject("testNavigator")
-				.getPackage("several.packages.inside").getBean("five");
+		JVBean bean = ((JVModule) BaseModel.getInstance().getModel().getProject("testNavigator")).getPackage(
+				"several.packages.inside").getBean("five");
 		assertThat(bean, is(instanceOf(Flow.class)));
 		Flow flow = (Flow) bean;
 
@@ -377,11 +356,9 @@ public class IVRDiagramCreateStatesTest {
 
 		SWTBotGefViewer gefViewer = editor.getSWTBotGefViewer();
 
-		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
 		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
+		flow = (Flow) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
 		assertThat(flow.getStates(), not(hasItemWithNameStateName));
 
 		gefViewer = editor.getSWTBotGefViewer();
@@ -393,9 +370,7 @@ public class IVRDiagramCreateStatesTest {
 		bot.waitUntil(shellIsActive(stateName + " Selection"), 10000);
 		SWTBotShell shell = bot.shell(stateName + " Selection");
 
-		shell.bot().tree()
-				.expandNode("testNavigator", "several.packages.inside")
-				.getNode(stateName).select();
+		shell.bot().tree().expandNode("testNavigator", "several.packages.inside").getNode(stateName).select();
 		shell.bot().button("OK").click();
 
 		editor.save();
@@ -407,24 +382,18 @@ public class IVRDiagramCreateStatesTest {
 	public void cancelCreateLocutionState(String stateName) throws Exception {
 
 		IProject project = createProject("testNavigator");
-		final IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.jvflow",
+		final IFile file = createFile(project, BaseModel.JV_PATH + "/several/packages/inside/five.jvflow",
 				getInputStreamResource(bundle, "five.jvflow"));
-		createFile(project, BaseModel.JV_PATH + "/several/packages/inside/"
-				+ stateName + ".voiceDsl",
+		createFile(project, BaseModel.JV_PATH + "/several/packages/inside/" + stateName + ".voiceDsl",
 				getInputStreamResource(bundle, stateName + ".voiceDsl"));
 
 		bot.sleep(LARGE_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
-		assertThat(view.bot().tree().getTreeItem("testNavigator"),
+		assertThat(view.bot().tree().getTreeItem("testNavigator"), is(not(nullValue())));
+		assertThat(view.bot().tree().expandNode("testNavigator", "several.packages.inside").getItems(),
 				is(not(nullValue())));
-		assertThat(
-				view.bot().tree()
-						.expandNode("testNavigator", "several.packages.inside")
-						.getItems(), is(not(nullValue())));
-		JVBean bean = BaseModel.getInstance().getModel()
-				.getProject("testNavigator")
-				.getPackage("several.packages.inside").getBean("five");
+		JVBean bean = ((JVModule) BaseModel.getInstance().getModel().getProject("testNavigator")).getPackage(
+				"several.packages.inside").getBean("five");
 		assertThat(bean, is(instanceOf(Flow.class)));
 		Flow flow = (Flow) bean;
 
@@ -438,11 +407,9 @@ public class IVRDiagramCreateStatesTest {
 
 		SWTBotGefViewer gefViewer = editor.getSWTBotGefViewer();
 
-		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
 		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
+		flow = (Flow) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
 		assertThat(flow.getStates(), not(hasItemWithNameStateName));
 
 		gefViewer = editor.getSWTBotGefViewer();
@@ -464,8 +431,7 @@ public class IVRDiagramCreateStatesTest {
 
 			@Override
 			public void run() {
-				IWorkbenchPage activePage = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getActivePage();
+				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				try {
 					IDE.openEditor(activePage, file);
 				} catch (PartInitException e) {

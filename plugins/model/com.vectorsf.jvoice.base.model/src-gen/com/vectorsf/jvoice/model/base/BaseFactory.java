@@ -85,6 +85,15 @@ public interface BaseFactory extends EFactory {
 	JVModule createJVModule();
 
 	/**
+	 * Returns a new object of class '<em>Event Handler</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Event Handler</em>'.
+	 * @generated
+	 */
+	EventHandler createEventHandler();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

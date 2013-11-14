@@ -32,6 +32,7 @@ public class CopyMojo extends AbstractMojo {
 	private static final String JVOICES = "jVoice";
 	private static final String DESTINO = "flows";
 	private static final String APPSERVLET = "spring/appServlet";
+	private static final String FLOW = "-flow";
 
 	/**
 	 * Location of the target directory.
@@ -178,7 +179,7 @@ public class CopyMojo extends AbstractMojo {
 		 */
 		getDir(pathname);
 
-		File destino = new File(pathname, ruta.getName());
+		File destino = new File(pathname, ruta.getName().substring(0, ruta.getName().indexOf(DOT)) + FLOW + ruta.getName().substring(ruta.getName().indexOf(DOT)));
 
 		try {
 			OutputStream out = new FileOutputStream(destino);

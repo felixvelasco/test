@@ -5,7 +5,6 @@ package com.vectorsf.jvoice.model.base.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -15,11 +14,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
-import com.vectorsf.jvoice.model.base.JVProject;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +27,7 @@ import com.vectorsf.jvoice.model.base.JVProject;
  * The following features are implemented:
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.base.impl.JVPackageImpl#getBeans <em>Beans</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.model.base.impl.JVPackageImpl#getOwnerProject <em>Owner Project</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.base.impl.JVPackageImpl#getOwnerModule <em>Owner Module</em>}</li>
  * </ul>
  * </p>
  *
@@ -82,9 +80,9 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public JVProject getOwnerProject() {
-		if (eContainerFeatureID() != BasePackage.JV_PACKAGE__OWNER_PROJECT) return null;
-		return (JVProject)eContainer();
+	public JVModule getOwnerModule() {
+		if (eContainerFeatureID() != BasePackage.JV_PACKAGE__OWNER_MODULE) return null;
+		return (JVModule)eContainer();
 	}
 
 	/**
@@ -92,9 +90,9 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public JVProject basicGetOwnerProject() {
-		if (eContainerFeatureID() != BasePackage.JV_PACKAGE__OWNER_PROJECT) return null;
-		return (JVProject)eInternalContainer();
+	public JVModule basicGetOwnerModule() {
+		if (eContainerFeatureID() != BasePackage.JV_PACKAGE__OWNER_MODULE) return null;
+		return (JVModule)eInternalContainer();
 	}
 
 	/**
@@ -102,8 +100,8 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetOwnerProject(JVProject newOwnerProject, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newOwnerProject, BasePackage.JV_PACKAGE__OWNER_PROJECT, msgs);
+	public NotificationChain basicSetOwnerModule(JVModule newOwnerModule, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newOwnerModule, BasePackage.JV_PACKAGE__OWNER_MODULE, msgs);
 		return msgs;
 	}
 
@@ -112,20 +110,20 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setOwnerProject(JVProject newOwnerProject) {
-		if (newOwnerProject != eInternalContainer() || (eContainerFeatureID() != BasePackage.JV_PACKAGE__OWNER_PROJECT && newOwnerProject != null)) {
-			if (EcoreUtil.isAncestor(this, newOwnerProject))
+	public void setOwnerModule(JVModule newOwnerModule) {
+		if (newOwnerModule != eInternalContainer() || (eContainerFeatureID() != BasePackage.JV_PACKAGE__OWNER_MODULE && newOwnerModule != null)) {
+			if (EcoreUtil.isAncestor(this, newOwnerModule))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
-			if (newOwnerProject != null)
-				msgs = ((InternalEObject)newOwnerProject).eInverseAdd(this, BasePackage.JV_PROJECT__PACKAGES, JVProject.class, msgs);
-			msgs = basicSetOwnerProject(newOwnerProject, msgs);
+			if (newOwnerModule != null)
+				msgs = ((InternalEObject)newOwnerModule).eInverseAdd(this, BasePackage.JV_MODULE__PACKAGES, JVModule.class, msgs);
+			msgs = basicSetOwnerModule(newOwnerModule, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BasePackage.JV_PACKAGE__OWNER_PROJECT, newOwnerProject, newOwnerProject));
+			eNotify(new ENotificationImpl(this, Notification.SET, BasePackage.JV_PACKAGE__OWNER_MODULE, newOwnerModule, newOwnerModule));
 	}
 
 	/**
@@ -154,10 +152,10 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 		switch (featureID) {
 			case BasePackage.JV_PACKAGE__BEANS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getBeans()).basicAdd(otherEnd, msgs);
-			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
+			case BasePackage.JV_PACKAGE__OWNER_MODULE:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetOwnerProject((JVProject)otherEnd, msgs);
+				return basicSetOwnerModule((JVModule)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -172,8 +170,8 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 		switch (featureID) {
 			case BasePackage.JV_PACKAGE__BEANS:
 				return ((InternalEList<?>)getBeans()).basicRemove(otherEnd, msgs);
-			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				return basicSetOwnerProject(null, msgs);
+			case BasePackage.JV_PACKAGE__OWNER_MODULE:
+				return basicSetOwnerModule(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -186,8 +184,8 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				return eInternalContainer().eInverseRemove(this, BasePackage.JV_PROJECT__PACKAGES, JVProject.class, msgs);
+			case BasePackage.JV_PACKAGE__OWNER_MODULE:
+				return eInternalContainer().eInverseRemove(this, BasePackage.JV_MODULE__PACKAGES, JVModule.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -202,9 +200,9 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 		switch (featureID) {
 			case BasePackage.JV_PACKAGE__BEANS:
 				return getBeans();
-			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				if (resolve) return getOwnerProject();
-				return basicGetOwnerProject();
+			case BasePackage.JV_PACKAGE__OWNER_MODULE:
+				if (resolve) return getOwnerModule();
+				return basicGetOwnerModule();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -222,8 +220,8 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 				getBeans().clear();
 				getBeans().addAll((Collection<? extends JVBean>)newValue);
 				return;
-			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				setOwnerProject((JVProject)newValue);
+			case BasePackage.JV_PACKAGE__OWNER_MODULE:
+				setOwnerModule((JVModule)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -240,8 +238,8 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 			case BasePackage.JV_PACKAGE__BEANS:
 				getBeans().clear();
 				return;
-			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				setOwnerProject((JVProject)null);
+			case BasePackage.JV_PACKAGE__OWNER_MODULE:
+				setOwnerModule((JVModule)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -257,8 +255,8 @@ public class JVPackageImpl extends NamedElementImpl implements JVPackage {
 		switch (featureID) {
 			case BasePackage.JV_PACKAGE__BEANS:
 				return beans != null && !beans.isEmpty();
-			case BasePackage.JV_PACKAGE__OWNER_PROJECT:
-				return basicGetOwnerProject() != null;
+			case BasePackage.JV_PACKAGE__OWNER_MODULE:
+				return basicGetOwnerModule() != null;
 		}
 		return super.eIsSet(featureID);
 	}

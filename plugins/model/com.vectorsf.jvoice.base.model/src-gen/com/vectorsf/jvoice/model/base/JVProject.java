@@ -12,9 +12,9 @@ import java.util.List;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getPackages <em>Packages</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getModel <em>Model</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getConfiguration <em>Configuration</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.base.JVProject#getHandlers <em>Handlers</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,24 +23,6 @@ import java.util.List;
  * @generated
  */
 public interface JVProject extends NamedElement {
-	/**
-	 * Returns the value of the '<em><b>Packages</b></em>' containment reference list.
-	 * The list contents are of type {@link com.vectorsf.jvoice.model.base.JVPackage}.
-	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.model.base.JVPackage#getOwnerProject <em>Owner Project</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Packages</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Packages</em>' containment reference list.
-	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVProject_Packages()
-	 * @see com.vectorsf.jvoice.model.base.JVPackage#getOwnerProject
-	 * @model opposite="ownerProject" containment="true" resolveProxies="true"
-	 * @generated
-	 */
-	List<JVPackage> getPackages();
-
 	/**
 	 * Returns the value of the '<em><b>Model</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.model.base.JVModel#getProjects <em>Projects</em>}'.
@@ -86,20 +68,20 @@ public interface JVProject extends NamedElement {
 	List<Configuration> getConfiguration();
 
 	/**
+	 * Returns the value of the '<em><b>Handlers</b></em>' containment reference list.
+	 * The list contents are of type {@link com.vectorsf.jvoice.model.base.EventHandler}.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Handlers</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='for (JVPackage pck: getPackages())\n{\n\tif (pck.getName().equals(name)) {\n\t\treturn pck;\n\t}\n}\n\nreturn null;'"
+	 * @return the value of the '<em>Handlers</em>' containment reference list.
+	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVProject_Handlers()
+	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
-	JVPackage getPackage(String name);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='for (Configuration conf: getConfiguration()) {\r\n\tif (conf.getName().equals(name)) {\r\n\t\treturn conf;\r\n\t}\r\n}\r\n\t\t\r\nreturn null;'"
-	 * @generated
-	 */
-	Configuration getConfiguration(String name);
+	List<EventHandler> getHandlers();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -109,5 +91,13 @@ public interface JVProject extends NamedElement {
 	 * @generated
 	 */
 	List<JVProject> getReferencedProjects();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='for (Configuration conf: getConfiguration()) {\r\n\tif (conf.getName().equals(name)) {\r\n\t\treturn conf;\r\n\t}\r\n}\r\n\t\t\r\nreturn null;'"
+	 * @generated
+	 */
+	Configuration getConfiguration(String name);
 
 } // JVProject

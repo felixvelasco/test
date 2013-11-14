@@ -12,8 +12,9 @@ class MenuStateCodeXML {
 		var MenuState audioIn = state as MenuState
 		
 		var grammars = audioIn.locution.grammars
+		var configuration = audioIn.locution.configuration
 		
-		var Audios = audioIn.locution.audios
+		var audios = audioIn.locution.audios
 
 		var outputs = audioIn.locution.outputs
 		
@@ -22,22 +23,44 @@ class MenuStateCodeXML {
 '''
 		<action-state id="«state.name»">
 			<on-entry>
-				<evaluate expression="jVoiceArchOutput" result="flashScope.«state.name»"></evaluate>
+				<evaluate expression="jVoiceArchInput" result="flashScope.«state.name»"/>
 				<set name="flashScope.«state.name».name" value="'«audioIn.name»'" />
+				«IF configuration != null»
+					«IF configuration.getValue("bargein") != null && !configuration.getValue("bargein").equals("")»
+						<set name="flashScope.«state.name».bargein" value="«configuration.getValue("bargein")»" />
+					«ENDIF»	
+					«IF configuration.getValue("maxAttempts") != null && !configuration.getValue("maxAttempts").equals("")»
+					<set name="flashScope.«state.name».maxAttempts" value="«configuration.getValue("maxAttempts")»" />
+					«ENDIF»
+					«IF configuration.getValue("timeout") != null && !configuration.getValue("timeout").equals("")»
+					<set name="flashScope.«state.name».timeout" value="'«configuration.getValue("timeout")»'" />
+					«ENDIF»
+					«IF configuration.getValue("interdigittimeout") != null && !configuration.getValue("interdigittimeout").equals("")»
+					<set name="flashScope.«state.name».interdigittimeout" value="'«configuration.getValue("interdigittimeout")»'" />
+					«ENDIF»
+					«IF configuration.getValue("confidence") != null && !configuration.getValue("confidence").equals("")»
+					<set name="flashScope.«state.name».confidence" value="'«configuration.getValue("confidence")»'" />
+					«ENDIF»
+					«IF configuration.getValue("maxNoInput") != null »
+					<set name="flashScope.«state.name».maxNoInput" value="«configuration.getValue("maxNoInput")»" />
+					«ENDIF»
+					«IF configuration.getValue("maxNoMatch") != null»
+					<set name="flashScope.«state.name».maxNoMatch" value="«configuration.getValue("maxNoMatch")»" />
+					«ENDIF»
+				«ENDIF»		
 				«/*Obtenemos las gramaticas del menu */»
 				«IF grammars != null»
 					«var grammatics = audioIn.locution.grammars.grammatics»
 					«IF grammatics != null && grammatics.size>0» 				
 						«FOR grammatic : grammatics »
 							<evaluate expression="jVoiceArchGrammar" result="flashScope.grammar«i=i+1»" />
-							<set name="flashScope.grammar«i».type" value="'«grammatic.expr.booleanValue»'"/>
 							<set name="flashScope.grammar«i».src" value="'«grammatic.src»'"/>
 							<set name="flashScope.grammar«i».mode" value="'«grammatic.mode»'"/>
 							<evaluate expression="flashScope.«state.name».grammars.add(flashScope.grammar«i»)" />
 						«ENDFOR»
 	        		«ENDIF»
         		«ENDIF»
-        		«IF Audios != null» 
+        		«IF audios != null» 
         			«var mainAudios = audioIn.locution.audios.mainAudios»
 	        		«var noMatchAudios = audioIn.locution.audios.noMatchAudios»
 	        		«var noInputAudios = audioIn.locution.audios.noInputAudios»
@@ -57,7 +80,7 @@ class MenuStateCodeXML {
 		</view-state>
 			
 		<action-state id="render_decision_«state.name»">
-			<evaluate expression="flashScope.menuOption"></evaluate>
+			<evaluate expression="lastInputResult.interpretation"></evaluate>
 			«IF outputs != null» 
 				«var output = audioIn.locution.outputs.output» 
 				«IF tranSalidaS != null && output !=null && output.size>0 && tranSalidaS.size>0»

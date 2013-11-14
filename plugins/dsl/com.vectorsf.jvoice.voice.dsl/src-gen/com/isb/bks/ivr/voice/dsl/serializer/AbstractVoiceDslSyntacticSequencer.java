@@ -73,8 +73,6 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 			return getArrayBracketsToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getOpSingleAssignRule())
 			return getOpSingleAssignToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getSTRINGRule())
-			return getSTRINGToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
@@ -98,17 +96,6 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 		if (node != null)
 			return getTokenText(node);
 		return "=";
-	}
-	
-	/**
-	 * terminal STRING: 
-	 * 			'"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
-	 * 			"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
-	 */
-	protected String getSTRINGToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "\"\"";
 	}
 	
 	@Override
@@ -173,7 +160,7 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 	
 	/**
 	 * Syntax:
-	 *     ('}'* ('audios' '{')+ ('}'* ('audios' '{')+)* '}'*) | '}'*
+	 *     '}'* | ('}'* ('audios' '{')+ ('}'* ('audios' '{')+)* '}'*)
 	 */
 	protected void emit_Audios_RightCurlyBracketKeyword_3_1_a_or___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p__a_RightCurlyBracketKeyword_3_1_a__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

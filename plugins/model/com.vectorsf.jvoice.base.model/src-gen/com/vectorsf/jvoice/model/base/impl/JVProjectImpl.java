@@ -5,7 +5,6 @@ package com.vectorsf.jvoice.model.base.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -13,15 +12,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.Configuration;
+import com.vectorsf.jvoice.model.base.EventHandler;
 import com.vectorsf.jvoice.model.base.JVModel;
-import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 
 /**
@@ -31,25 +28,15 @@ import com.vectorsf.jvoice.model.base.JVProject;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.model.base.impl.JVProjectImpl#getPackages <em>Packages</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.base.impl.JVProjectImpl#getModel <em>Model</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.base.impl.JVProjectImpl#getConfiguration <em>Configuration</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.base.impl.JVProjectImpl#getHandlers <em>Handlers</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public abstract class JVProjectImpl extends NamedElementImpl implements JVProject {
-	/**
-	 * The cached value of the '{@link #getPackages() <em>Packages</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPackages()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<JVPackage> packages;
-
 	/**
 	 * The cached value of the '{@link #getConfiguration() <em>Configuration</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -59,6 +46,16 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	 * @ordered
 	 */
 	protected EList<Configuration> configuration;
+
+	/**
+	 * The cached value of the '{@link #getHandlers() <em>Handlers</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHandlers()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EventHandler> handlers;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -77,18 +74,6 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	@Override
 	protected EClass eStaticClass() {
 		return BasePackage.Literals.JV_PROJECT;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public List<JVPackage> getPackages() {
-		if (packages == null) {
-			packages = new EObjectContainmentWithInverseEList.Resolving<JVPackage>(JVPackage.class, this, BasePackage.JV_PROJECT__PACKAGES, BasePackage.JV_PACKAGE__OWNER_PROJECT);
-		}
-		return packages;
 	}
 
 	/**
@@ -159,14 +144,20 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public JVPackage getPackage(final String name) {
-		for (JVPackage pck: getPackages()) {
-			if (pck.getName().equals(name)) {
-				return pck;
-			}
+	public List<EventHandler> getHandlers() {
+		if (handlers == null) {
+			handlers = new EObjectContainmentEList.Resolving<EventHandler>(EventHandler.class, this, BasePackage.JV_PROJECT__HANDLERS);
 		}
-		
-		return null;
+		return handlers;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<JVProject> getReferencedProjects() {
+		return BaseModel.getInstance().getVisibleProjects(this);
 	}
 
 	/**
@@ -189,21 +180,10 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<JVProject> getReferencedProjects() {
-		return BaseModel.getInstance().getVisibleProjects(this);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case BasePackage.JV_PROJECT__PACKAGES:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getPackages()).basicAdd(otherEnd, msgs);
 			case BasePackage.JV_PROJECT__MODEL:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
@@ -220,12 +200,12 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case BasePackage.JV_PROJECT__PACKAGES:
-				return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
 			case BasePackage.JV_PROJECT__MODEL:
 				return basicSetModel(null, msgs);
 			case BasePackage.JV_PROJECT__CONFIGURATION:
 				return ((InternalEList<?>)getConfiguration()).basicRemove(otherEnd, msgs);
+			case BasePackage.JV_PROJECT__HANDLERS:
+				return ((InternalEList<?>)getHandlers()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -252,13 +232,13 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case BasePackage.JV_PROJECT__PACKAGES:
-				return getPackages();
 			case BasePackage.JV_PROJECT__MODEL:
 				if (resolve) return getModel();
 				return basicGetModel();
 			case BasePackage.JV_PROJECT__CONFIGURATION:
 				return getConfiguration();
+			case BasePackage.JV_PROJECT__HANDLERS:
+				return getHandlers();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -272,16 +252,16 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case BasePackage.JV_PROJECT__PACKAGES:
-				getPackages().clear();
-				getPackages().addAll((Collection<? extends JVPackage>)newValue);
-				return;
 			case BasePackage.JV_PROJECT__MODEL:
 				setModel((JVModel)newValue);
 				return;
 			case BasePackage.JV_PROJECT__CONFIGURATION:
 				getConfiguration().clear();
 				getConfiguration().addAll((Collection<? extends Configuration>)newValue);
+				return;
+			case BasePackage.JV_PROJECT__HANDLERS:
+				getHandlers().clear();
+				getHandlers().addAll((Collection<? extends EventHandler>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -295,14 +275,14 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case BasePackage.JV_PROJECT__PACKAGES:
-				getPackages().clear();
-				return;
 			case BasePackage.JV_PROJECT__MODEL:
 				setModel((JVModel)null);
 				return;
 			case BasePackage.JV_PROJECT__CONFIGURATION:
 				getConfiguration().clear();
+				return;
+			case BasePackage.JV_PROJECT__HANDLERS:
+				getHandlers().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -316,12 +296,12 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case BasePackage.JV_PROJECT__PACKAGES:
-				return packages != null && !packages.isEmpty();
 			case BasePackage.JV_PROJECT__MODEL:
 				return basicGetModel() != null;
 			case BasePackage.JV_PROJECT__CONFIGURATION:
 				return configuration != null && !configuration.isEmpty();
+			case BasePackage.JV_PROJECT__HANDLERS:
+				return handlers != null && !handlers.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -334,12 +314,10 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case BasePackage.JV_PROJECT___GET_PACKAGE__STRING:
-				return getPackage((String)arguments.get(0));
-			case BasePackage.JV_PROJECT___GET_CONFIGURATION__STRING:
-				return getConfiguration((String)arguments.get(0));
 			case BasePackage.JV_PROJECT___GET_REFERENCED_PROJECTS:
 				return getReferencedProjects();
+			case BasePackage.JV_PROJECT___GET_CONFIGURATION__STRING:
+				return getConfiguration((String)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -1435,7 +1435,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	
 	/**
 	 * Constraint:
-	 *     (src=STRING? (tts=STRING | (interpretation=Interpretation format='('? tts=STRING))?)
+	 *     (src=STRING? (tts=STRING | (interpretation=Interpretation format=STRING? tts=STRING))?)
 	 */
 	protected void sequence_SimpleAudio(EObject context, Audio semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

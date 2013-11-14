@@ -70,7 +70,7 @@ public final class JVoiceProjectConfigurator {
 		dsl_builder.setVersion("0.0.2-SNAPSHOT");
 		PluginExecution voiceDSL = new PluginExecution();
 		voiceDSL.setPhase("generate-sources");
-		voiceDSL.addGoal("voiceDSL");
+		voiceDSL.addGoal("generateFlow");
 
 		dsl_builder.addExecution(voiceDSL);
 

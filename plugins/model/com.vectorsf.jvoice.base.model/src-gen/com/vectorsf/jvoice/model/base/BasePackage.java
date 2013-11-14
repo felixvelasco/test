@@ -306,13 +306,13 @@ public interface BasePackage extends EPackage {
 	int JV_PACKAGE__BEANS = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Owner Project</b></em>' container reference.
+	 * The feature id for the '<em><b>Owner Module</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_PACKAGE__OWNER_PROJECT = NAMED_ELEMENT_FEATURE_COUNT + 1;
+	int JV_PACKAGE__OWNER_MODULE = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>JV Package</em>' class.
@@ -379,22 +379,13 @@ public interface BasePackage extends EPackage {
 	int JV_PROJECT__DESCRIPTION = NAMED_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_PROJECT__PACKAGES = NAMED_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Model</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_PROJECT__MODEL = NAMED_ELEMENT_FEATURE_COUNT + 1;
+	int JV_PROJECT__MODEL = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Configuration</b></em>' containment reference list.
@@ -403,7 +394,16 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int JV_PROJECT__CONFIGURATION = NAMED_ELEMENT_FEATURE_COUNT + 2;
+	int JV_PROJECT__CONFIGURATION = NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Handlers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_PROJECT__HANDLERS = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>JV Project</em>' class.
@@ -415,13 +415,13 @@ public interface BasePackage extends EPackage {
 	int JV_PROJECT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The operation id for the '<em>Get Package</em>' operation.
+	 * The operation id for the '<em>Get Referenced Projects</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_PROJECT___GET_PACKAGE__STRING = NAMED_ELEMENT_OPERATION_COUNT + 0;
+	int JV_PROJECT___GET_REFERENCED_PROJECTS = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Get Configuration</em>' operation.
@@ -433,22 +433,13 @@ public interface BasePackage extends EPackage {
 	int JV_PROJECT___GET_CONFIGURATION__STRING = NAMED_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Get Referenced Projects</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_PROJECT___GET_REFERENCED_PROJECTS = NAMED_ELEMENT_OPERATION_COUNT + 2;
-
-	/**
 	 * The number of operations of the '<em>JV Project</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_PROJECT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 3;
+	int JV_PROJECT_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.base.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
@@ -599,15 +590,6 @@ public interface BasePackage extends EPackage {
 	int JV_APPLICATION__DESCRIPTION = JV_PROJECT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_APPLICATION__PACKAGES = JV_PROJECT__PACKAGES;
-
-	/**
 	 * The feature id for the '<em><b>Model</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -624,6 +606,15 @@ public interface BasePackage extends EPackage {
 	 * @ordered
 	 */
 	int JV_APPLICATION__CONFIGURATION = JV_PROJECT__CONFIGURATION;
+
+	/**
+	 * The feature id for the '<em><b>Handlers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION__HANDLERS = JV_PROJECT__HANDLERS;
 
 	/**
 	 * The feature id for the '<em><b>Module</b></em>' reference list.
@@ -644,13 +635,13 @@ public interface BasePackage extends EPackage {
 	int JV_APPLICATION_FEATURE_COUNT = JV_PROJECT_FEATURE_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Get Package</em>' operation.
+	 * The operation id for the '<em>Get Referenced Projects</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_APPLICATION___GET_PACKAGE__STRING = JV_PROJECT___GET_PACKAGE__STRING;
+	int JV_APPLICATION___GET_REFERENCED_PROJECTS = JV_PROJECT___GET_REFERENCED_PROJECTS;
 
 	/**
 	 * The operation id for the '<em>Get Configuration</em>' operation.
@@ -660,15 +651,6 @@ public interface BasePackage extends EPackage {
 	 * @ordered
 	 */
 	int JV_APPLICATION___GET_CONFIGURATION__STRING = JV_PROJECT___GET_CONFIGURATION__STRING;
-
-	/**
-	 * The operation id for the '<em>Get Referenced Projects</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_APPLICATION___GET_REFERENCED_PROJECTS = JV_PROJECT___GET_REFERENCED_PROJECTS;
 
 	/**
 	 * The number of operations of the '<em>JV Application</em>' class.
@@ -717,15 +699,6 @@ public interface BasePackage extends EPackage {
 	int JV_MODULE__DESCRIPTION = JV_PROJECT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_MODULE__PACKAGES = JV_PROJECT__PACKAGES;
-
-	/**
 	 * The feature id for the '<em><b>Model</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -744,31 +717,31 @@ public interface BasePackage extends EPackage {
 	int JV_MODULE__CONFIGURATION = JV_PROJECT__CONFIGURATION;
 
 	/**
+	 * The feature id for the '<em><b>Handlers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE__HANDLERS = JV_PROJECT__HANDLERS;
+
+	/**
+	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE__PACKAGES = JV_PROJECT_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>JV Module</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_MODULE_FEATURE_COUNT = JV_PROJECT_FEATURE_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Get Package</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_MODULE___GET_PACKAGE__STRING = JV_PROJECT___GET_PACKAGE__STRING;
-
-	/**
-	 * The operation id for the '<em>Get Configuration</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int JV_MODULE___GET_CONFIGURATION__STRING = JV_PROJECT___GET_CONFIGURATION__STRING;
+	int JV_MODULE_FEATURE_COUNT = JV_PROJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Referenced Projects</em>' operation.
@@ -780,13 +753,78 @@ public interface BasePackage extends EPackage {
 	int JV_MODULE___GET_REFERENCED_PROJECTS = JV_PROJECT___GET_REFERENCED_PROJECTS;
 
 	/**
+	 * The operation id for the '<em>Get Configuration</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE___GET_CONFIGURATION__STRING_1 = JV_PROJECT___GET_CONFIGURATION__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Package</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE___GET_PACKAGE__STRING = JV_PROJECT_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>JV Module</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_MODULE_OPERATION_COUNT = JV_PROJECT_OPERATION_COUNT + 0;
+	int JV_MODULE_OPERATION_COUNT = JV_PROJECT_OPERATION_COUNT + 1;
+
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.base.impl.EventHandlerImpl <em>Event Handler</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.base.impl.EventHandlerImpl
+	 * @see com.vectorsf.jvoice.model.base.impl.BasePackageImpl#getEventHandler()
+	 * @generated
+	 */
+	int EVENT_HANDLER = 10;
+
+	/**
+	 * The feature id for the '<em><b>Event</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_HANDLER__EVENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_HANDLER__HANDLER = 1;
+
+	/**
+	 * The number of structural features of the '<em>Event Handler</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_HANDLER_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Event Handler</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVENT_HANDLER_OPERATION_COUNT = 0;
 
 
 	/**
@@ -916,15 +954,15 @@ public interface BasePackage extends EPackage {
 	EReference getJVPackage_Beans();
 
 	/**
-	 * Returns the meta object for the container reference '{@link com.vectorsf.jvoice.model.base.JVPackage#getOwnerProject <em>Owner Project</em>}'.
+	 * Returns the meta object for the container reference '{@link com.vectorsf.jvoice.model.base.JVPackage#getOwnerModule <em>Owner Module</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Owner Project</em>'.
-	 * @see com.vectorsf.jvoice.model.base.JVPackage#getOwnerProject()
+	 * @return the meta object for the container reference '<em>Owner Module</em>'.
+	 * @see com.vectorsf.jvoice.model.base.JVPackage#getOwnerModule()
 	 * @see #getJVPackage()
 	 * @generated
 	 */
-	EReference getJVPackage_OwnerProject();
+	EReference getJVPackage_OwnerModule();
 
 	/**
 	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVPackage#getBean(java.lang.String) <em>Get Bean</em>}' operation.
@@ -945,17 +983,6 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getJVProject();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.base.JVProject#getPackages <em>Packages</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Packages</em>'.
-	 * @see com.vectorsf.jvoice.model.base.JVProject#getPackages()
-	 * @see #getJVProject()
-	 * @generated
-	 */
-	EReference getJVProject_Packages();
 
 	/**
 	 * Returns the meta object for the container reference '{@link com.vectorsf.jvoice.model.base.JVProject#getModel <em>Model</em>}'.
@@ -980,24 +1007,15 @@ public interface BasePackage extends EPackage {
 	EReference getJVProject_Configuration();
 
 	/**
-	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVProject#getPackage(java.lang.String) <em>Get Package</em>}' operation.
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.base.JVProject#getHandlers <em>Handlers</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Package</em>' operation.
-	 * @see com.vectorsf.jvoice.model.base.JVProject#getPackage(java.lang.String)
+	 * @return the meta object for the containment reference list '<em>Handlers</em>'.
+	 * @see com.vectorsf.jvoice.model.base.JVProject#getHandlers()
+	 * @see #getJVProject()
 	 * @generated
 	 */
-	EOperation getJVProject__GetPackage__String();
-
-	/**
-	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVProject#getConfiguration(java.lang.String) <em>Get Configuration</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Configuration</em>' operation.
-	 * @see com.vectorsf.jvoice.model.base.JVProject#getConfiguration(java.lang.String)
-	 * @generated
-	 */
-	EOperation getJVProject__GetConfiguration__String();
+	EReference getJVProject_Handlers();
 
 	/**
 	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVProject#getReferencedProjects() <em>Get Referenced Projects</em>}' operation.
@@ -1008,6 +1026,16 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getJVProject__GetReferencedProjects();
+
+	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVProject#getConfiguration(java.lang.String) <em>Get Configuration</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Configuration</em>' operation.
+	 * @see com.vectorsf.jvoice.model.base.JVProject#getConfiguration(java.lang.String)
+	 * @generated
+	 */
+	EOperation getJVProject__GetConfiguration__String();
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String Map</em>}'.
@@ -1094,6 +1122,59 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getJVModule();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.base.JVModule#getPackages <em>Packages</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Packages</em>'.
+	 * @see com.vectorsf.jvoice.model.base.JVModule#getPackages()
+	 * @see #getJVModule()
+	 * @generated
+	 */
+	EReference getJVModule_Packages();
+
+	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVModule#getPackage(java.lang.String) <em>Get Package</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Package</em>' operation.
+	 * @see com.vectorsf.jvoice.model.base.JVModule#getPackage(java.lang.String)
+	 * @generated
+	 */
+	EOperation getJVModule__GetPackage__String();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.base.EventHandler <em>Event Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Event Handler</em>'.
+	 * @see com.vectorsf.jvoice.model.base.EventHandler
+	 * @generated
+	 */
+	EClass getEventHandler();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.base.EventHandler#getEvent <em>Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Event</em>'.
+	 * @see com.vectorsf.jvoice.model.base.EventHandler#getEvent()
+	 * @see #getEventHandler()
+	 * @generated
+	 */
+	EAttribute getEventHandler_Event();
+
+	/**
+	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.base.EventHandler#getHandler <em>Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Handler</em>'.
+	 * @see com.vectorsf.jvoice.model.base.EventHandler#getHandler()
+	 * @see #getEventHandler()
+	 * @generated
+	 */
+	EReference getEventHandler_Handler();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1225,12 +1306,12 @@ public interface BasePackage extends EPackage {
 		EReference JV_PACKAGE__BEANS = eINSTANCE.getJVPackage_Beans();
 
 		/**
-		 * The meta object literal for the '<em><b>Owner Project</b></em>' container reference feature.
+		 * The meta object literal for the '<em><b>Owner Module</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference JV_PACKAGE__OWNER_PROJECT = eINSTANCE.getJVPackage_OwnerProject();
+		EReference JV_PACKAGE__OWNER_MODULE = eINSTANCE.getJVPackage_OwnerModule();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Bean</b></em>' operation.
@@ -1251,14 +1332,6 @@ public interface BasePackage extends EPackage {
 		EClass JV_PROJECT = eINSTANCE.getJVProject();
 
 		/**
-		 * The meta object literal for the '<em><b>Packages</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference JV_PROJECT__PACKAGES = eINSTANCE.getJVProject_Packages();
-
-		/**
 		 * The meta object literal for the '<em><b>Model</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1275,20 +1348,12 @@ public interface BasePackage extends EPackage {
 		EReference JV_PROJECT__CONFIGURATION = eINSTANCE.getJVProject_Configuration();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Package</b></em>' operation.
+		 * The meta object literal for the '<em><b>Handlers</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation JV_PROJECT___GET_PACKAGE__STRING = eINSTANCE.getJVProject__GetPackage__String();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Configuration</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation JV_PROJECT___GET_CONFIGURATION__STRING = eINSTANCE.getJVProject__GetConfiguration__String();
+		EReference JV_PROJECT__HANDLERS = eINSTANCE.getJVProject_Handlers();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Referenced Projects</b></em>' operation.
@@ -1297,6 +1362,14 @@ public interface BasePackage extends EPackage {
 		 * @generated
 		 */
 		EOperation JV_PROJECT___GET_REFERENCED_PROJECTS = eINSTANCE.getJVProject__GetReferencedProjects();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Configuration</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation JV_PROJECT___GET_CONFIGURATION__STRING = eINSTANCE.getJVProject__GetConfiguration__String();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.base.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
@@ -1369,6 +1442,48 @@ public interface BasePackage extends EPackage {
 		 * @generated
 		 */
 		EClass JV_MODULE = eINSTANCE.getJVModule();
+
+		/**
+		 * The meta object literal for the '<em><b>Packages</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference JV_MODULE__PACKAGES = eINSTANCE.getJVModule_Packages();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Package</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation JV_MODULE___GET_PACKAGE__STRING = eINSTANCE.getJVModule__GetPackage__String();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.base.impl.EventHandlerImpl <em>Event Handler</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.base.impl.EventHandlerImpl
+		 * @see com.vectorsf.jvoice.model.base.impl.BasePackageImpl#getEventHandler()
+		 * @generated
+		 */
+		EClass EVENT_HANDLER = eINSTANCE.getEventHandler();
+
+		/**
+		 * The meta object literal for the '<em><b>Event</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVENT_HANDLER__EVENT = eINSTANCE.getEventHandler_Event();
+
+		/**
+		 * The meta object literal for the '<em><b>Handler</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EVENT_HANDLER__HANDLER = eINSTANCE.getEventHandler_Handler();
 
 	}
 

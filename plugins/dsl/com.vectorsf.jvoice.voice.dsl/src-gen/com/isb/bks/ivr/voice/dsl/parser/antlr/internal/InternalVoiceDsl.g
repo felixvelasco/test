@@ -1908,26 +1908,29 @@ ruleSimpleAudio returns [EObject current=null]
 	    }
 
 )
-)((
-(
-		lv_format_8_0=	'(' 
+)(	otherlv_8='(' 
     {
-        newLeafNode(lv_format_8_0, grammarAccess.getSimpleAudioAccess().getFormatLeftParenthesisKeyword_2_1_1_2_0_0());
+    	newLeafNode(otherlv_8, grammarAccess.getSimpleAudioAccess().getLeftParenthesisKeyword_2_1_1_2_0());
     }
- 
-	    {
+(
+(
+		lv_format_9_0=RULE_STRING
+		{
+			newLeafNode(lv_format_9_0, grammarAccess.getSimpleAudioAccess().getFormatSTRINGTerminalRuleCall_2_1_1_2_1_0()); 
+		}
+		{
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getSimpleAudioRule());
 	        }
-       		setWithLastConsumed($current, "format", lv_format_8_0, "(");
+       		setWithLastConsumed(
+       			$current, 
+       			"format",
+        		lv_format_9_0, 
+        		"STRING");
 	    }
 
 )
-)this_STRING_9=RULE_STRING
-    { 
-    newLeafNode(this_STRING_9, grammarAccess.getSimpleAudioAccess().getSTRINGTerminalRuleCall_2_1_1_2_1()); 
-    }
-	otherlv_10=')' 
+)	otherlv_10=')' 
     {
     	newLeafNode(otherlv_10, grammarAccess.getSimpleAudioAccess().getRightParenthesisKeyword_2_1_1_2_2());
     }

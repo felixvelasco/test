@@ -18,7 +18,7 @@ public class EmptyPackagesFilter extends ViewerFilter {
 				return true;
 			}
 			String name = jvPackage.getName();
-			for (JVPackage pck : jvPackage.getOwnerProject().getPackages()) {
+			for (JVPackage pck : jvPackage.getOwnerModule().getPackages()) {
 				if (pck != jvPackage && pck.getName().startsWith(name)) {
 					return false;
 				}
