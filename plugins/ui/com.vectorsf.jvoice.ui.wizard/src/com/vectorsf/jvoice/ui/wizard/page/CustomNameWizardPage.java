@@ -80,9 +80,9 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 	private String initialFlow = "";
 	private String initialPackage = "";
 	private String initialProject = "";
-	private String cabecera="<%@ page language=\"java\" contentType=\"application/vxml; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n";
+	private String cabecera="<%@ page language=\"java\" contentType=\"application/vxml; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n\n";
 	private String cabeceravxml="<vxml version=\"2.1\" xmlns=\"http://www.w3.org/2001/vxml\" \nxmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xml:lang=\"es-ES\">";
-	private String cuerpo="<form> \n <!-- TODO: Add custom code here --> \n<block> \n";
+	private String cuerpo="<form> \n\n <!-- TODO: Add custom code here --> \n\n<block> \n";
 	private String variables="<var name=\"_eventId\" expr=\"'success'\" /> \n";
 	private String submit="<submit next=\"${flowExecutionUrl}\" namelist=\"_eventId\" /> \n\n";
 	private String end= "</block> \n</form>\n\n</vxml>";
@@ -197,6 +197,10 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 		}
 		
 		IFolder folder = (IFolder) selection;
+		if(!folder.exists()){
+			setErrorMessage("Folder resource does not exit");
+			return false;
+		}
 		
 		JVBean bean = paquete.getBean(text);
 		if (bean != null || folder.getFile(text.concat(".jsp")).exists()) {
@@ -550,7 +554,12 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 						+ end;
 					
 				InputStream source = new ByteArrayInputStream(contents.getBytes());
-				customFile.create(source, false, null);
+				try {
+					customFile.create(source, false, null);
+				} catch (Exception e) {
+					validatePage();
+				}
+				
 			}
 
 		}

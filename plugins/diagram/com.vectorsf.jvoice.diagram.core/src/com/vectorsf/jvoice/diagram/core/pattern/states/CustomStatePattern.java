@@ -98,12 +98,14 @@ public class CustomStatePattern extends StatePattern {
 		IResource[] members = null;
 		int i = 0;
 		try {
-			members = folderFlow.members();
-			for (IResource member : members) {
-				if (member.getName().contains(".jsp")) {
-					if (member instanceof IFile) {
-						fileList.add(i, member.getName());
-						i++;
+			if (folderFlow.exists()) {
+				members = folderFlow.members();
+				for (IResource member : members) {
+					if (member.getName().contains(".jsp")) {
+						if (member instanceof IFile) {
+							fileList.add(i, member.getName());
+							i++;
+						}
 					}
 				}
 			}
