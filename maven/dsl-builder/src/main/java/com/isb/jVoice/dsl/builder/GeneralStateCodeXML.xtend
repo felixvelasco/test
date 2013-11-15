@@ -23,7 +23,7 @@ class GeneralStateCodeXML {
 						«IF condition.simpleA.tts!=null»
 							<evaluate expression="jVoiceArchWording" result="flashScope.«state.name»«type»«i».wording"/>	
 							«IF condition.simpleA.interpretation.name.equals("STRING")» 
-								<set name="flashScope.«state.name»«type»«i».wording.text" value="'«condition.simpleA.tts»'"/>
+								<set name="flashScope.«state.name»«type»«i».wording.text" value="«condition.simpleA.tts.expandCode»"/>
 							«ELSEIF condition.simpleA.interpretation.name !=null»
 								<evaluate expression="jVoiceArchSayAs" result="flashScope.«state.name»«type»«i».wording.sayAs" />
 								<set name="flashScope.«state.name»«type»«i».wording.sayAs.interpretAs" value="«condition.simpleA.tts».«condition.simpleA.interpretation.name»"/>
@@ -43,7 +43,7 @@ class GeneralStateCodeXML {
 						«ENDIF»
 						«IF audio.tts!=null»
 							<evaluate expression="jVoiceArchWording" result="flashScope.«state.name»«type»«i».wording"/>
-							<set name="flashScope.«state.name»«type»«i».wording.text" value="'«audio.tts»'"/>
+							<set name="flashScope.«state.name»«type»«i».wording.text" value="«audio.tts.expandCode»"/>
 							«IF !audio.interpretation.name.equals("STRING")» 
 								<evaluate expression="jVoiceArchSayAs" result="flashScope.«state.name»«type»«i».wording.sayAs" />
 								<set name="flashScope.«state.name»«type»«i».wording.sayAs.interpretAs" value="T(com.vectorsf.jvoiceframework.core.enums.InterpretAs).«audio.interpretation.name»"/>
@@ -59,6 +59,14 @@ class GeneralStateCodeXML {
 			«ENDIF»		 
 '''
 	}
+	
+	static def expandCode(String string) {
+		if (string.indexOf("${") == -1)
+			"'" + string + "'"
+		else   
+			"'" + string.replace("${", "' + ").replace("}", " + '") + "'"
+	}
+	
 }
 
 
