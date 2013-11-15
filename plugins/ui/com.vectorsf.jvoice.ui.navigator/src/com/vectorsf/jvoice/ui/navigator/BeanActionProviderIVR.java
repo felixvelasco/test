@@ -27,7 +27,7 @@ import com.vectorsf.jvoice.model.base.JVBean;
  * @author xIS14487
  * 
  */
-public class CommonActionProviderIVR extends CommonActionProvider {
+public class BeanActionProviderIVR extends CommonActionProvider {
 
 	private OpenFileAction openFileAction;
 
@@ -64,12 +64,13 @@ public class CommonActionProviderIVR extends CommonActionProvider {
 			return;
 		}
 		IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
-		if (selection.size() == 1
-				&& (selection.getFirstElement() instanceof IFile || selection.getFirstElement() instanceof JVBean)) {
-			openFileAction.selectionChanged(selection);
-			theActionBars.setGlobalActionHandler(ICommonActionConstants.OPEN, openFileAction);
+		if (selection.size() == 1) {
+			Object firstElement = selection.getFirstElement();
+			if (firstElement instanceof IFile || firstElement instanceof JVBean) {
+				openFileAction.selectionChanged(selection);
+				theActionBars.setGlobalActionHandler(ICommonActionConstants.OPEN, openFileAction);
+			}
 		}
-
 	}
 
 	private void addOpenWithMenu(IMenuManager aMenu) {

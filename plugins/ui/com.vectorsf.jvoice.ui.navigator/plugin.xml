@@ -246,7 +246,7 @@
          </triggerPoints>
       </navigatorContent>
       <actionProvider
-            class="com.vectorsf.jvoice.ui.navigator.CommonActionProviderIVR"
+            class="com.vectorsf.jvoice.ui.navigator.BeanActionProviderIVR"
             id="com.vectorsf.jvoice.ui.navigator.ActionProvider">
          <enablement>
             <with
@@ -257,6 +257,24 @@
                         operator="and">
                      <instanceof
                            value="com.vectorsf.jvoice.model.base.JVBean">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </with>
+         </enablement>
+      </actionProvider>
+      <actionProvider
+            class="com.vectorsf.jvoice.ui.navigator.JVProjectActionProvider"
+            id="com.vectorsf.jvoice.ui.navigator.ActionProvider">
+         <enablement>
+            <with
+                  variable="selection">
+               <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVProject">
                      </instanceof>
                   </iterate>
                </and>
