@@ -98,7 +98,7 @@ ConfigValue:
 ;
 
 ConfigValueValue:
-	INT ('ms')?| FLOAT | 'true' | 'false' 
+	INT ('ms'|'s')?| FLOAT | 'true' | 'false' 
 ;
 
 Grammar:
