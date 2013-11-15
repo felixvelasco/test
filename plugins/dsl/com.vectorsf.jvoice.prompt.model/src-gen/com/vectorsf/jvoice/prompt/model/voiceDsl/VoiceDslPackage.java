@@ -1977,13 +1977,22 @@ public interface VoiceDslPackage extends EPackage {
 	int RECORD_DSL__OUTPUTS = VOICE_DSL__OUTPUTS;
 
 	/**
+	 * The feature id for the '<em><b>File Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__FILE_NAME = VOICE_DSL_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Record Dsl</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_DSL_FEATURE_COUNT = VOICE_DSL_FEATURE_COUNT + 0;
+	int RECORD_DSL_FEATURE_COUNT = VOICE_DSL_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Record Dsl</em>' class.
@@ -2971,6 +2980,17 @@ public interface VoiceDslPackage extends EPackage {
 	EClass getRecordDsl();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl#getFileName <em>File Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>File Name</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl#getFileName()
+	 * @see #getRecordDsl()
+	 * @generated
+	 */
+	EAttribute getRecordDsl_FileName();
+
+	/**
 	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3770,6 +3790,14 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EClass RECORD_DSL = eINSTANCE.getRecordDsl();
+
+		/**
+		 * The meta object literal for the '<em><b>File Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RECORD_DSL__FILE_NAME = eINSTANCE.getRecordDsl_FileName();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}' enum.

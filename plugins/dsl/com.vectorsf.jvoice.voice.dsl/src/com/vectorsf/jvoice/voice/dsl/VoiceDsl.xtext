@@ -44,7 +44,7 @@ InputDsl:
 ;
 
 RecordDsl:
-	('recordname'  name = ID           
+	(('recordname'  name = ID 'filename' fileName = STRING)&        
       ((configuration = Configuration)& 
 	   (properties += Property*)&
 	   ((variables = Variables)?)&
@@ -99,6 +99,10 @@ ConfigValue:
 
 ConfigValueValue:
 	INT ('ms'|'s')?| FLOAT | 'true' | 'false' 
+;
+
+FilenameValueValue:
+	STRING 
 ;
 
 Grammar:

@@ -165,5 +165,7 @@
     <eLiterals name="time" value="6"/>
     <eLiterals name="boolean" value="7"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RecordDsl" eSuperTypes="#//VoiceDsl"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RecordDsl" eSuperTypes="#//VoiceDsl">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

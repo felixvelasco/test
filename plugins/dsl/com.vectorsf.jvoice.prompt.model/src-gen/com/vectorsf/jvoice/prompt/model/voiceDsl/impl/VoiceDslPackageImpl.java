@@ -1109,6 +1109,15 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getRecordDsl_FileName() {
+		return (EAttribute)recordDslEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getInterpretation() {
 		return interpretationEEnum;
 	}
@@ -1254,6 +1263,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		promptDslEClass = createEClass(PROMPT_DSL);
 
 		recordDslEClass = createEClass(RECORD_DSL);
+		createEAttribute(recordDslEClass, RECORD_DSL__FILE_NAME);
 
 		// Create enums
 		interpretationEEnum = createEEnum(INTERPRETATION);
@@ -1419,6 +1429,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEClass(promptDslEClass, PromptDsl.class, "PromptDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(recordDslEClass, RecordDsl.class, "RecordDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getRecordDsl_FileName(), ecorePackage.getEString(), "fileName", null, 0, 1, RecordDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(interpretationEEnum, Interpretation.class, "Interpretation");

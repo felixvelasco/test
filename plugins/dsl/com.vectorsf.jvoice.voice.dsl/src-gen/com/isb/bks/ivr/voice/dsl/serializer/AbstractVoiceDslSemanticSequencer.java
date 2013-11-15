@@ -1445,6 +1445,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	 * Constraint:
 	 *     (
 	 *         name=ID 
+	 *         fileName=STRING 
 	 *         configuration=Configuration 
 	 *         properties+=Property* 
 	 *         variables=Variables? 

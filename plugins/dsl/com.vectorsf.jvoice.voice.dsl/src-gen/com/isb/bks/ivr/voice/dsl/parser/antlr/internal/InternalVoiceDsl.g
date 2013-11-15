@@ -851,15 +851,29 @@ ruleRecordDsl returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='recordname' 
+(
+
+(
+	{ 
+	  getUnorderedGroupHelper().enter(grammarAccess.getRecordDslAccess().getUnorderedGroup());
+	}
+	(
+		(
+
+			( 
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup(), 0)}?=>(
+					{ 
+	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup(), 0);
+	 				}
+					({true}?=>(	otherlv_1='recordname' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getRecordDslAccess().getRecordnameKeyword_0());
+    	newLeafNode(otherlv_1, grammarAccess.getRecordDslAccess().getRecordnameKeyword_0_0());
     }
 (
 (
-		lv_name_1_0=RULE_ID
+		lv_name_2_0=RULE_ID
 		{
-			newLeafNode(lv_name_1_0, grammarAccess.getRecordDslAccess().getNameIDTerminalRuleCall_1_0()); 
+			newLeafNode(lv_name_2_0, grammarAccess.getRecordDslAccess().getNameIDTerminalRuleCall_0_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -868,38 +882,72 @@ ruleRecordDsl returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"name",
-        		lv_name_1_0, 
+        		lv_name_2_0, 
         		"ID");
 	    }
 
 )
-)(
+)	otherlv_3='filename' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getRecordDslAccess().getFilenameKeyword_0_2());
+    }
+(
+(
+		lv_fileName_4_0=RULE_STRING
+		{
+			newLeafNode(lv_fileName_4_0, grammarAccess.getRecordDslAccess().getFileNameSTRINGTerminalRuleCall_0_3_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getRecordDslRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"fileName",
+        		lv_fileName_4_0, 
+        		"STRING");
+	    }
+
+)
+)))
+					{ 
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup());
+	 				}
+ 				)
+			)  |
+
+			( 
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup(), 1)}?=>(
+					{ 
+	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup(), 1);
+	 				}
+					({true}?=>((
 
 (
 	{ 
-	  getUnorderedGroupHelper().enter(grammarAccess.getRecordDslAccess().getUnorderedGroup_2());
+	  getUnorderedGroupHelper().enter(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0());
 	}
 	(
 		(
 
 			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup_2(), 0)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0(), 0)}?=>(
 					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup_2(), 0);
+	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0(), 0);
 	 				}
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRecordDslAccess().getConfigurationConfigurationParserRuleCall_2_0_0()); 
+	        newCompositeNode(grammarAccess.getRecordDslAccess().getConfigurationConfigurationParserRuleCall_1_0_0_0()); 
 	    }
-		lv_configuration_3_0=ruleConfiguration		{
+		lv_configuration_6_0=ruleConfiguration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRecordDslRule());
 	        }
        		set(
        			$current, 
        			"configuration",
-        		lv_configuration_3_0, 
+        		lv_configuration_6_0, 
         		"Configuration");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -907,29 +955,29 @@ ruleRecordDsl returns [EObject current=null]
 )
 ))
 					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup_2());
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0());
 	 				}
  				)
 			)  |
 
 			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup_2(), 1)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0(), 1)}?=>(
 					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup_2(), 1);
+	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0(), 1);
 	 				}
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRecordDslAccess().getPropertiesPropertyParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getRecordDslAccess().getPropertiesPropertyParserRuleCall_1_0_1_0()); 
 	    }
-		lv_properties_4_0=ruleProperty		{
+		lv_properties_7_0=ruleProperty		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRecordDslRule());
 	        }
        		add(
        			$current, 
        			"properties",
-        		lv_properties_4_0, 
+        		lv_properties_7_0, 
         		"Property");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -937,29 +985,29 @@ ruleRecordDsl returns [EObject current=null]
 )
 ))+
 					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup_2());
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0());
 	 				}
  				)
 			)  |
 
 			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup_2(), 2)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0(), 2)}?=>(
 					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup_2(), 2);
+	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0(), 2);
 	 				}
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRecordDslAccess().getVariablesVariablesParserRuleCall_2_2_0()); 
+	        newCompositeNode(grammarAccess.getRecordDslAccess().getVariablesVariablesParserRuleCall_1_0_2_0()); 
 	    }
-		lv_variables_5_0=ruleVariables		{
+		lv_variables_8_0=ruleVariables		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRecordDslRule());
 	        }
        		set(
        			$current, 
        			"variables",
-        		lv_variables_5_0, 
+        		lv_variables_8_0, 
         		"Variables");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -967,29 +1015,29 @@ ruleRecordDsl returns [EObject current=null]
 )
 ))
 					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup_2());
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0());
 	 				}
  				)
 			)  |
 
 			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup_2(), 3)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0(), 3)}?=>(
 					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup_2(), 3);
+	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0(), 3);
 	 				}
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRecordDslAccess().getConditionsConditionParserRuleCall_2_3_0()); 
+	        newCompositeNode(grammarAccess.getRecordDslAccess().getConditionsConditionParserRuleCall_1_0_3_0()); 
 	    }
-		lv_conditions_6_0=ruleCondition		{
+		lv_conditions_9_0=ruleCondition		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRecordDslRule());
 	        }
        		add(
        			$current, 
        			"conditions",
-        		lv_conditions_6_0, 
+        		lv_conditions_9_0, 
         		"Condition");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -997,38 +1045,53 @@ ruleRecordDsl returns [EObject current=null]
 )
 ))+
 					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup_2());
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0());
 	 				}
  				)
 			)  
 
 		)+
-	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getRecordDslAccess().getUnorderedGroup_2())}?	
+	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0())}?	
 	)
 )
 	{ 
-	  getUnorderedGroupHelper().leave(grammarAccess.getRecordDslAccess().getUnorderedGroup_2());
+	  getUnorderedGroupHelper().leave(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0());
 	}
 
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRecordDslAccess().getAudiosAudiosParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getRecordDslAccess().getAudiosAudiosParserRuleCall_1_1_0()); 
 	    }
-		lv_audios_7_0=ruleAudios		{
+		lv_audios_10_0=ruleAudios		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRecordDslRule());
 	        }
        		set(
        			$current, 
        			"audios",
-        		lv_audios_7_0, 
+        		lv_audios_10_0, 
         		"Audios");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
+)))
+					{ 
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup());
+	 				}
+ 				)
+			)  
+
+		)+
+	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getRecordDslAccess().getUnorderedGroup())}?	
+	)
+)
+	{ 
+	  getUnorderedGroupHelper().leave(grammarAccess.getRecordDslAccess().getUnorderedGroup());
+	}
+
+)
 ;
 
 
@@ -1581,15 +1644,22 @@ ruleConfigValueValue returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRu
 	kw='ms' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getConfigValueValueAccess().getMsKeyword_0_1()); 
+        newLeafNode(kw, grammarAccess.getConfigValueValueAccess().getMsKeyword_0_1_0()); 
+    }
+
+    |
+	kw='s' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getConfigValueValueAccess().getSKeyword_0_1_1()); 
     }
 )?)
-    |    this_FLOAT_2=RULE_FLOAT    {
-		$current.merge(this_FLOAT_2);
+    |    this_FLOAT_3=RULE_FLOAT    {
+		$current.merge(this_FLOAT_3);
     }
 
     { 
-    newLeafNode(this_FLOAT_2, grammarAccess.getConfigValueValueAccess().getFLOATTerminalRuleCall_1()); 
+    newLeafNode(this_FLOAT_3, grammarAccess.getConfigValueValueAccess().getFLOATTerminalRuleCall_1()); 
     }
 
     |
@@ -1607,6 +1677,8 @@ ruleConfigValueValue returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRu
     }
 )
     ;
+
+
 
 
 

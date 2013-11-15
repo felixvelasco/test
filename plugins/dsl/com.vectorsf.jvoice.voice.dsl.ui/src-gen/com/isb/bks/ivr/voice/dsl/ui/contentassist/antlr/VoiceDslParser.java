@@ -39,6 +39,7 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getVoiceDslAccess().getAlternatives(), "rule__VoiceDsl__Alternatives");
 					put(grammarAccess.getConfigValueValueAccess().getAlternatives(), "rule__ConfigValueValue__Alternatives");
+					put(grammarAccess.getConfigValueValueAccess().getAlternatives_0_1(), "rule__ConfigValueValue__Alternatives_0_1");
 					put(grammarAccess.getGrammarAccess().getModeAlternatives_0_0(), "rule__Grammar__ModeAlternatives_0_0");
 					put(grammarAccess.getOutputValueAccess().getAlternatives(), "rule__OutputValue__Alternatives");
 					put(grammarAccess.getSimpleAudioAccess().getAlternatives_2_1(), "rule__SimpleAudio__Alternatives_2_1");
@@ -88,7 +89,8 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPromptDslAccess().getGroup(), "rule__PromptDsl__Group__0");
 					put(grammarAccess.getMenuDslAccess().getGroup_0(), "rule__MenuDsl__Group_0__0");
 					put(grammarAccess.getInputDslAccess().getGroup(), "rule__InputDsl__Group__0");
-					put(grammarAccess.getRecordDslAccess().getGroup(), "rule__RecordDsl__Group__0");
+					put(grammarAccess.getRecordDslAccess().getGroup_0(), "rule__RecordDsl__Group_0__0");
+					put(grammarAccess.getRecordDslAccess().getGroup_1(), "rule__RecordDsl__Group_1__0");
 					put(grammarAccess.getVariablesAccess().getGroup(), "rule__Variables__Group__0");
 					put(grammarAccess.getVariableAccess().getGroup(), "rule__Variable__Group__0");
 					put(grammarAccess.getGrammarsAccess().getGroup(), "rule__Grammars__Group__0");
@@ -309,12 +311,13 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getInputDslAccess().getVariablesAssignment_2_3(), "rule__InputDsl__VariablesAssignment_2_3");
 					put(grammarAccess.getInputDslAccess().getConditionsAssignment_2_4(), "rule__InputDsl__ConditionsAssignment_2_4");
 					put(grammarAccess.getInputDslAccess().getAudiosAssignment_3(), "rule__InputDsl__AudiosAssignment_3");
-					put(grammarAccess.getRecordDslAccess().getNameAssignment_1(), "rule__RecordDsl__NameAssignment_1");
-					put(grammarAccess.getRecordDslAccess().getConfigurationAssignment_2_0(), "rule__RecordDsl__ConfigurationAssignment_2_0");
-					put(grammarAccess.getRecordDslAccess().getPropertiesAssignment_2_1(), "rule__RecordDsl__PropertiesAssignment_2_1");
-					put(grammarAccess.getRecordDslAccess().getVariablesAssignment_2_2(), "rule__RecordDsl__VariablesAssignment_2_2");
-					put(grammarAccess.getRecordDslAccess().getConditionsAssignment_2_3(), "rule__RecordDsl__ConditionsAssignment_2_3");
-					put(grammarAccess.getRecordDslAccess().getAudiosAssignment_3(), "rule__RecordDsl__AudiosAssignment_3");
+					put(grammarAccess.getRecordDslAccess().getNameAssignment_0_1(), "rule__RecordDsl__NameAssignment_0_1");
+					put(grammarAccess.getRecordDslAccess().getFileNameAssignment_0_3(), "rule__RecordDsl__FileNameAssignment_0_3");
+					put(grammarAccess.getRecordDslAccess().getConfigurationAssignment_1_0_0(), "rule__RecordDsl__ConfigurationAssignment_1_0_0");
+					put(grammarAccess.getRecordDslAccess().getPropertiesAssignment_1_0_1(), "rule__RecordDsl__PropertiesAssignment_1_0_1");
+					put(grammarAccess.getRecordDslAccess().getVariablesAssignment_1_0_2(), "rule__RecordDsl__VariablesAssignment_1_0_2");
+					put(grammarAccess.getRecordDslAccess().getConditionsAssignment_1_0_3(), "rule__RecordDsl__ConditionsAssignment_1_0_3");
+					put(grammarAccess.getRecordDslAccess().getAudiosAssignment_1_1(), "rule__RecordDsl__AudiosAssignment_1_1");
 					put(grammarAccess.getVariablesAccess().getVariableAssignment_3(), "rule__Variables__VariableAssignment_3");
 					put(grammarAccess.getVariableAccess().getNameAssignment_0(), "rule__Variable__NameAssignment_0");
 					put(grammarAccess.getVariableAccess().getExternalVarAssignment_2(), "rule__Variable__ExternalVarAssignment_2");
@@ -497,7 +500,8 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getMenuDslAccess().getUnorderedGroup(), "rule__MenuDsl__UnorderedGroup");
 					put(grammarAccess.getMenuDslAccess().getUnorderedGroup_0_2(), "rule__MenuDsl__UnorderedGroup_0_2");
 					put(grammarAccess.getInputDslAccess().getUnorderedGroup_2(), "rule__InputDsl__UnorderedGroup_2");
-					put(grammarAccess.getRecordDslAccess().getUnorderedGroup_2(), "rule__RecordDsl__UnorderedGroup_2");
+					put(grammarAccess.getRecordDslAccess().getUnorderedGroup(), "rule__RecordDsl__UnorderedGroup");
+					put(grammarAccess.getRecordDslAccess().getUnorderedGroup_1_0(), "rule__RecordDsl__UnorderedGroup_1_0");
 					put(grammarAccess.getAudiosAccess().getUnorderedGroup(), "rule__Audios__UnorderedGroup");
 				}
 			};
