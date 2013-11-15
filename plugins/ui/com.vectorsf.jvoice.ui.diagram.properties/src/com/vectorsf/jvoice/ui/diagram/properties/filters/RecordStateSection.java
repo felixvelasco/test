@@ -18,8 +18,6 @@ public class RecordStateSection extends StateSection {
         TabbedPropertySheetWidgetFactory factory = tabbedPropertySheetPage.getWidgetFactory();
         Composite composite = factory.createFlatFormComposite(parent);
         super.nombre_path(factory, composite);
-        super.comboTransaIn(factory, composite);
-        super.comboTransaOut(factory, composite);
         super.subFlowPath(factory, composite, "Name locution:");		
 	}
 }

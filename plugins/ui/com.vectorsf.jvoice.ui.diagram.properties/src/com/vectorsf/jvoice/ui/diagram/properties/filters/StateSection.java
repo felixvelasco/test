@@ -3,11 +3,8 @@ package com.vectorsf.jvoice.ui.diagram.properties.filters;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.graphiti.features.IFeatureProvider;
-import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
-import org.eclipse.graphiti.mm.pictograms.Connection;
-import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
@@ -32,8 +29,6 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.CustomState;
-import com.vectorsf.jvoice.model.operations.FinalState;
-import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
@@ -41,7 +36,6 @@ import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.TransferState;
-import com.vectorsf.jvoice.model.operations.Transition;
 import com.vectorsf.jvoice.model.operations.TypeTransfer;
 import com.vectorsf.jvoice.ui.diagram.properties.Activator;
 import com.vectorsf.jvoice.ui.diagram.properties.editting.ConditionEditingSupport;
@@ -57,15 +51,12 @@ public class StateSection  extends  GFPropertySection implements
 ITabbedPropertyConstants {
 	
 	private Text nameText;
-	private Text pathText;
 	private Text nameSubFlow;
 	private Text destinationText;
 	private Text transferAudioText;
 	private Text maxTimeText;
 	private Text timeOutText;
 	private CCombo typeTranferCombo;
-	private CCombo InTransitions;
-	private CCombo OutTransitions;
 	private Button btEditFlow;
 	private Button btAdd;
 	private Button btRemove;
@@ -74,7 +65,6 @@ ITabbedPropertyConstants {
 	private FormData data;
 	private Table table;
 	private TableViewer tableViewer;
-	private org.eclipse.graphiti.mm.algorithms.Text nameArrow;
 	private List<Case> casos = new ArrayList<Case>();
 	private static final String CONDITION = "Condition";
 	private static final String NAME = "EventName";
@@ -106,60 +96,7 @@ ITabbedPropertyConstants {
         Composite composite = factory.createFlatFormComposite(parent);
     
         nombre_path(factory, composite);
-        
-        comboTransaIn(factory, composite);
-
-        comboTransaOut(factory, composite); 
     }
-
-	/**
-	 * @param factory
-	 * @param composite
-	 */
-	protected void comboTransaIn(TabbedPropertySheetWidgetFactory factory,
-			Composite composite) {
-		//Transiciones de Entrada. 
-	       	InTransitions = factory.createCCombo(composite, 0);
-	       	data = new FormData();
-		    data.left = new FormAttachment(nameText, 0,SWT.LEFT);
-		    data.right = new FormAttachment(nameText,0,SWT.RIGHT);
-	       	data.top = new FormAttachment(pathText, 10);
-	       	InTransitions.setLayoutData(data);
-	       	InTransitions.setEditable(false);
-	        	
-	        CLabel LabelINTrans = factory.createCLabel(composite, "Incoming Transitions:");
-	        data = new FormData();
-	        data.left = new FormAttachment(0, 0);
-	        data.right = new FormAttachment(InTransitions,-HSPACE);
-	        data.top = new FormAttachment(InTransitions, 0, SWT.CENTER);
-	        LabelINTrans.setLayoutData(data);
-	}
-	
-	/**
-	 * @param factory
-	 * @param composite
-	 */
-	protected void comboTransaOut(TabbedPropertySheetWidgetFactory factory,
-			Composite composite) {
-		//Transiciones de salida.
-        OutTransitions = factory.createCCombo(composite, 0);
-        data = new FormData();
-	    data.left = new FormAttachment(nameText, 0,SWT.LEFT);
-	    data.right = new FormAttachment(nameText,0,SWT.RIGHT);
-        if(InTransitions!=null)
-        	data.top = new FormAttachment(InTransitions, 10);
-        else
-        	data.top = new FormAttachment(pathText, 10);
-        OutTransitions.setLayoutData(data);
-        OutTransitions.setEditable(false);
-        
-        CLabel LabelOutTrans = factory.createCLabel(composite, "Out Transitions:");
-        data = new FormData();
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(OutTransitions,-HSPACE);
-        data.top = new FormAttachment(OutTransitions, 0, SWT.CENTER);
-        LabelOutTrans.setLayoutData(data);
-	}
 	
 	/**
 	 * @param factory
@@ -172,7 +109,7 @@ ITabbedPropertyConstants {
 		data = new FormData();
 		data.left = new FormAttachment(nameText, 0,SWT.LEFT);
 		data.right = new FormAttachment(nameText,-120,SWT.RIGHT);
-        data.top = new FormAttachment(OutTransitions, 10);
+        data.top = new FormAttachment(nameText, 10);
         table.setLayoutData(data);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
@@ -268,23 +205,7 @@ ITabbedPropertyConstants {
 		    data.right = new FormAttachment(nameText, -HSPACE);
 		    data.top = new FormAttachment(nameText, 0, SWT.CENTER);
 		    LabelName.setLayoutData(data);
-		    
-		    //Path donde se encuentra el elemento
-		    pathText = factory.createText(composite, "");
-		    data = new FormData();
-		    data.left = new FormAttachment(nameText, 0,SWT.LEFT);
-		    data.right = new FormAttachment(nameText,0,SWT.RIGHT);
-		    data.top = new FormAttachment(nameText, 10);
-		    pathText.setLayoutData(data);
-		    pathText.setEditable(false);
-		    pathText.setEnabled(false);
-		    
-	        CLabel LabelPath = factory.createCLabel(composite, "Path:");
-	        data = new FormData();
-	        data.left = new FormAttachment(0, 0);
-	        data.right = new FormAttachment(pathText, -HSPACE);
-	        data.top = new FormAttachment(pathText, 0, SWT.CENTER);
-	        LabelPath.setLayoutData(data);
+	    
 	}
 	
 	/**
@@ -328,7 +249,7 @@ ITabbedPropertyConstants {
 	    data = new FormData();
 	    data.left = new FormAttachment(nameText, 0,SWT.LEFT);
 		data.right = new FormAttachment(nameText,-120,SWT.RIGHT);
-        data.top = new FormAttachment(OutTransitions, 10);
+        data.top = new FormAttachment(nameText, 10);
 	    nameSubFlow.setLayoutData(data);
 	    nameSubFlow.setEditable(false);
 	    nameSubFlow.setEnabled(false);
@@ -358,7 +279,7 @@ ITabbedPropertyConstants {
        	data = new FormData();
 	    data.left = new FormAttachment(nameText, 0,SWT.LEFT);
 	    data.right = new FormAttachment(nameText,0,SWT.RIGHT);
-       	data.top = new FormAttachment(OutTransitions, 10);
+       	data.top = new FormAttachment(nameText, 10);
        	typeTranferCombo.setLayoutData(data);
        	typeTranferCombo.setEditable(false);
        	llenarCombo();
@@ -511,22 +432,7 @@ ITabbedPropertyConstants {
                 return;
             
             removelistener(bo);
-            if (pathText!=null){
-            	textnompath(bo);
-            }else{
-            	refreshName(bo);
-            }
-
-            if(!(bo instanceof InitialState)){
-            	if(InTransitions!=null){
-            		transactionIncoming(bo);
-            	}
-            }
-            
-            if(!(bo instanceof FinalState))
-            	if(OutTransitions!=null){
-            	transactionOut(bo);
-            	}
+            refreshName(bo);
             
             if(bo instanceof SwitchState){
             	estadoSelection = (SwitchState)bo;
@@ -677,107 +583,6 @@ ITabbedPropertyConstants {
 		}
 	}
 
-	/**
-	 * Obtenemos el nombre de las transiciones de salida.
-	 * @param bo
-	 */
-	protected void transactionOut(Object bo) {
-		EList<Transition> OUTtransaction = ((State) bo).getOutgoingTransitions();
-		OutTransitions.removeAll();
-
-		if(OUTtransaction.size()>0){             	
-			for (Object trans : OUTtransaction){            		
-				Transition tr = (Transition)trans;
-		    	//Cogemos el Pictogram Elements a la transacion.
-				PictogramElement obj =  obtenerFeatureProvider().getPictogramElementForBusinessObject(tr);
-	    		if(obj instanceof Connection){
-		    		Connection connection = (Connection) obj;
-    				//Obtenemos la conexion de nuestra transacion y la recorremos.
-                	EList<ConnectionDecorator> liCD = connection.getConnectionDecorators();
-                	for (ConnectionDecorator connectionDecorator : liCD) 
-                	{
-                		/**Obtenemos los Graphics Algorithms, que en este caso son dos, 
-                		 * el texto y el arrow.
-                		 * Para obtener el nombre, comprobamos que el Graphics Algorithm sea Text,
-                		 * de ser asi obtenemos el nombre.
-                		**/
-                		GraphicsAlgorithm ga= connectionDecorator.getGraphicsAlgorithm();
-                		if (ga instanceof org.eclipse.graphiti.mm.algorithms.Text)
-                		{
-                			nameArrow = (org.eclipse.graphiti.mm.algorithms.Text)ga;
-                			OutTransitions.add(nameArrow.getValue().toString());
-                		}
-                		
-    				}
-				}//Fin del for.   
-			} 
-			
-		}else{
-			OutTransitions.add("none");      
-		}
-		OutTransitions.select(0);
-	}
-
-	/**
-	 * Obtenemos el nombre de las transiciones de entrada.
-	 * @param bo
-	 */
-	protected void transactionIncoming(Object bo) {
-		EList<Transition>INCOMtransaction = ((State) bo).getIncomingTransitions();
-		InTransitions.removeAll();
-           
-		if(INCOMtransaction.size()>0){ 
-			
-				for (Object transIN : INCOMtransaction){            		
-		    		Transition tr = (Transition)transIN;
-		        	//Cogemos el Pictogram Elements a la transacion.
-		        	List<?> li = Graphiti.getLinkService().getPictogramElements(getDiagramTypeProvider().getDiagram(), tr);
-		        	for (Object object : li) {            		
-		        		if(object instanceof Connection){
-		        		Connection connection = (Connection) object;
-		        				//Obtenemos la conexion de nuestra transacion y la recorremos.
-		                    	EList<ConnectionDecorator> liCD = connection.getConnectionDecorators();
-		                    	for (ConnectionDecorator connectionDecorator : liCD) 
-		                    	{
-		                    		/**Obtenemos los Graphics Algorithms, que en este caso son dos, 
-		                    		 * el texto y el arrow.
-		                    		 * Para obtener el nombre, comprobamos que el Graphics Algorithm sea Text,
-		                    		 * de ser asi obtenemos el nombre.
-		                    		**/
-		                    		GraphicsAlgorithm ga= connectionDecorator.getGraphicsAlgorithm();
-		                    		if (ga instanceof org.eclipse.graphiti.mm.algorithms.Text)
-		                    		{
-		                    			nameArrow = (org.eclipse.graphiti.mm.algorithms.Text)ga;
-		                    			InTransitions.add(nameArrow.getValue().toString());
-		                    		}
-		                    		
-		        				}
-		        		}
-					}//Fin del for.           		
-			}
-				
-		}else{
-			InTransitions.add("none");      
-		}
-		
-		InTransitions.select(0);
-	}
-
-	/**
-	 * @param bo
-	 */
-	protected void textnompath(Object bo) {
-		String name = null;
-		name = ((State) bo).getName();            
-		nameText.setText(name == null ? "" : name);
-		
-		nameStateListener = new ListenerIntentionName(this, nameText);
-		
-		nameText.addFocusListener(nameStateListener);
-		String path = (((State) bo).eResource()).getURI().path().substring(9).toString();
-		pathText.setText(path == null ? "" : path);
-	}
-	
 	/**
 	 * @param bo
 	 */
