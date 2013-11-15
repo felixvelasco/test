@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.vectorsf.jvoice.ui.project.editor.EditorExecutableExtensionFactory:com.vectorsf.jvoice.ui.project.editor.ProjectEditor"
+            default="false"
+            contributorClass="com.vectorsf.jvoice.ui.project.editor.EditorExecutableExtensionFactory:org.eclipse.emf.parsley.editors.EmfParsleyEditorActionBarContributor"
+            id="com.vectorsf.jvoice.ui.project.editor.ProjectEditor"
+            name="Project Tree Editor">
+         <contentTypeBinding
+               contentTypeId="org.eclipse.emf.ecore.xmi">
+         </contentTypeBinding>
+      </editor>
+   </extension>
+<!--             contributorClass="org.eclipse.emf.parsley.editors.EmfParsleyEditorsExecutableExtensionFactory:org.eclipse.emf.parsley.editors.EmfParsleyEditorActionBarContributor"
+-->
+</plugin>

@@ -1,0 +1,32 @@
+import com.vectorsf.jvoice.model.base.EventHandler
+import com.vectorsf.jvoice.model.base.JVBean
+import com.vectorsf.jvoice.model.base.JVModule
+import com.vectorsf.jvoice.model.base.JVProject
+import com.vectorsf.jvoice.model.base.NamedElement
+
+/* com.vectorsf.jvoice.ui.project.editor Emf Parsley Dsl Module file */
+module com.vectorsf.jvoice.ui.project.editor {
+	featuresProvider {
+		features {
+			JVModule -> name, description
+			EventHandler -> event, handler
+		}
+	}
+	
+	formFeatureCaptionProvider {
+		text {
+			EventHandler:event -> "Event name"
+			EventHandler:handler -> "Handled by"
+			NamedElement:name -> "Name"
+			NamedElement:description -> "Description"
+		}
+	}
+	
+	labelProvider {
+		text {
+			JVProject -> name
+			JVBean -> ownerPackage.name + "." + name
+			EventHandler -> "Specify event handling"
+		}
+	}
+}
