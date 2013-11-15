@@ -31,7 +31,9 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.PROCEED_ID, "Create", false);
+		if (isButtonCreatevailable()) {
+			createButton(parent, IDialogConstants.PROCEED_ID, "Create", false);
+		}
 		super.createButtonsForButtonBar(parent);
 	}
 
