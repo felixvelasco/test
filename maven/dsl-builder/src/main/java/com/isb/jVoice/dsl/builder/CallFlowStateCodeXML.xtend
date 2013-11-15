@@ -6,32 +6,31 @@ import org.eclipse.emf.common.util.EList
 import com.vectorsf.jvoice.model.operations.CustomState
 import com.vectorsf.jvoice.model.operations.CallFlowState
 
-class CallFlowStateCodeXML {
-	
-	// Falta por definir
-	
-	def static doGenerateCallFlowState(State state){
-		var EList<Transition> TranSalida =state.getOutgoingTransitions()
+class CallFlowStateCodeXML { // Falta por definir
+	def static doGenerateCallFlowState(State state) {
+		var EList<Transition> TranSalida = state.getOutgoingTransitions()
 		var callFlow = state as CallFlowState
-'''
-		<subflow-state id="«state.name»" subflow="«callFlow.subflow.name»">
+		'''
+		«var pathURI = callFlow.subflow.eResource.URI.path» 
+		«var pathURIFinal = pathURI.substring(pathURI.indexOf("src/main/resources/jv")+22,pathURI.lastIndexOf("."))»
+		<subflow-state id="«state.name»" subflow="«pathURIFinal»">
+		«IF TranSalida.length==1»
+			«val target = TranSalida.get(0).target»
+			«IF target instanceof CustomState»
+				<transition to="render_«target.name»"/>
+			«ELSE»
+				<transition to="«target.name»"/>
+			«ENDIF»				
+		«ELSE»
 			«FOR trans : TranSalida»
-				«IF TranSalida.length==1»
-					«IF trans.target instanceof CustomState»
-						<transition to="render_«trans.target.name»"/>
-					«ELSE»
-						<transition to="«trans.target.name»"/>
-					«ENDIF»				
+				«IF trans.target instanceof CustomState»
+					<transition on="«trans.eventName»" to="render_«trans.target.name»"/>
 				«ELSE»
-					«IF trans.target instanceof CustomState»
-						<transition on="«trans.eventName»" to="render_«trans.target.name»"/>
-					«ELSE»
-						<transition on="«trans.eventName»" to="«trans.target.name»"/>
-					«ENDIF»
-				«ENDIF»				
+					<transition on="«trans.eventName»" to="«trans.target.name»"/>
+				«ENDIF»
        		«ENDFOR»
+		«ENDIF»				
 		</subflow-state>
     	'''
 	}
 }
-
