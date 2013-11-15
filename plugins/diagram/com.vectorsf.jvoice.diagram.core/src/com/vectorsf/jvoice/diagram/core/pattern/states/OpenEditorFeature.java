@@ -81,7 +81,7 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 							.getInjector(VoiceDslActivator.COM_ISB_BKS_IVR_VOICE_DSL_VOICEDSL)
 							.getInstance(IURIEditorOpener.class);
 					instance.open(locutionUri, false);
-				} else {
+				} else if (eObject instanceof CustomState) {
 					String uri = locutionUri.path().substring(9).replace(".jvflow", ".resources").concat("/")
 							.concat(((CustomState) eObject).getPath());
 					IFile filecustom = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri));
