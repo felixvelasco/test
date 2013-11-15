@@ -8,7 +8,7 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.runtime.CoreException;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
-import com.vectorsf.jvoice.core.project.JVoiceProjectNature;
+import com.vectorsf.jvoice.core.project.JVoiceModuleNature;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVProject;
@@ -36,7 +36,7 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener 
 				} else {
 					try {
 						IProject project = (IProject) res;
-						if (project.exists() && project.isOpen() && project.hasNature(JVoiceProjectNature.NATURE_ID)) {
+						if (project.exists() && project.isOpen() && project.hasNature(JVoiceModuleNature.NATURE_ID)) {
 							// el modelo tiene proyectos, pero no encuentra el solicitado. Es nuevo
 							model.getProjects().add(JVoiceModelReconcilier.getInstance().createProject((IProject) res));
 						}

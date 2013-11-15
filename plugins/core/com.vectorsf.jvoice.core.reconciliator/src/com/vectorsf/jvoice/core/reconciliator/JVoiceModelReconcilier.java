@@ -15,12 +15,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.factory.JVBeanFactory;
 import com.vectorsf.jvoice.core.factory.JVBeanFactoryManager;
 import com.vectorsf.jvoice.core.project.JVoiceApplicationNature;
-import com.vectorsf.jvoice.core.project.JVoiceProjectNature;
+import com.vectorsf.jvoice.core.project.JVoiceModuleNature;
 import com.vectorsf.jvoice.model.base.BaseFactory;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVApplication;
@@ -52,7 +53,7 @@ public class JVoiceModelReconcilier {
 			try {
 				if (project.isOpen() && project.hasNature(JVoiceApplicationNature.NATURE_ID)) {
 					baseModel.getModel().getProjects().add(createApplication(project));
-				} else if (project.isOpen() && project.hasNature(JVoiceProjectNature.NATURE_ID)) {
+				} else if (project.isOpen() && project.hasNature(JVoiceModuleNature.NATURE_ID)) {
 					baseModel.getModel().getProjects().add(createProject(project));
 				}
 			} catch (CoreException e) {
@@ -65,25 +66,25 @@ public class JVoiceModelReconcilier {
 	}
 
 	public JVProject createProject(IProject project) {
-		// JVProject jvProject = BaseFactory.eINSTANCE.createJVModule();
-		// jvProject.setName(project.getName());
-		// jvProject.setDescription(project.getName());
 
+		ResourceSet rSet = baseModel.getResourceSet();
+		URI resourceURI = URI.createPlatformResourceURI(
+				project.getFile(".projectInformation").getFullPath().toString(), true).appendFragment("/0");
 		JVProject jvProject = null;
+		try {
+			jvProject = (JVProject) rSet.getEObject(resourceURI, true);
+		} catch (RuntimeException e) {
+			jvProject = BaseFactory.eINSTANCE.createJVModule();
+			jvProject.setName(project.getName());
+			jvProject.setDescription(project.getName());
+		}
+
 		IFolder packageFolder = (IFolder) project.findMember(BaseModel.JV_PATH);
 		if (packageFolder != null) {
 			try {
-				JVModule module = BaseFactory.eINSTANCE.createJVModule();
-				module.setName(project.getName());
-				module.setDescription(project.getName());
-				packageFolder.accept(new ResourceVisitor(module, baseModel));
-				jvProject = module;
+				packageFolder.accept(new ResourceVisitor((JVModule) jvProject, baseModel));
 			} catch (CoreException e) {
 			}
-		} else {
-			jvProject = BaseFactory.eINSTANCE.createJVApplication();
-			jvProject.setName(project.getName());
-			jvProject.setDescription(project.getName());
 		}
 
 		IFolder configurationsFolder = (IFolder) project.findMember(BaseModel.PROPERTIES_PATH);
@@ -104,9 +105,17 @@ public class JVoiceModelReconcilier {
 
 	// Este metodo no se esta usando.
 	public JVApplication createApplication(IProject project) {
-		JVApplication application = BaseFactory.eINSTANCE.createJVApplication();
-		application.setName(project.getName());
-		application.setDescription(project.getName());
+		ResourceSet rSet = baseModel.getResourceSet();
+		URI resourceURI = URI.createPlatformResourceURI(
+				project.getFile(".projectInformation").getFullPath().toString(), true).appendFragment("/0");
+		JVApplication application = null;
+		try {
+			application = (JVApplication) rSet.getEObject(resourceURI, true);
+		} catch (RuntimeException e) {
+			application = BaseFactory.eINSTANCE.createJVApplication();
+			application.setName(project.getName());
+			application.setDescription(project.getName());
+		}
 
 		IFolder configurationsFolder = (IFolder) project.findMember(BaseModel.PROPERTIES_PATH);
 		if (configurationsFolder != null) {
@@ -191,7 +200,8 @@ public class JVoiceModelReconcilier {
 
 		@Override
 		public boolean visit(IResource resource) throws CoreException {
-			if (resource instanceof IFolder && !resource.getProjectRelativePath().toString().equals(BaseModel.JV_PATH)&&!((IFolder) resource).getName().endsWith("resources")) {
+			if (resource instanceof IFolder && !resource.getProjectRelativePath().toString().equals(BaseModel.JV_PATH)
+					&& !((IFolder) resource).getName().endsWith("resources")) {
 				project.getPackages().add(createPackage((IFolder) resource));
 			}
 			return true;

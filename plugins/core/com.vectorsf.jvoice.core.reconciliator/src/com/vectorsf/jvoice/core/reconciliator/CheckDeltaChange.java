@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
-import com.vectorsf.jvoice.core.project.JVoiceProjectNature;
+import com.vectorsf.jvoice.core.project.JVoiceModuleNature;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModule;
@@ -140,7 +140,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 			if (delta.getKind() == IResourceDelta.CHANGED
 					&& ((delta.getFlags() & IResourceDelta.DESCRIPTION) != 0 || (delta.getFlags() & IResourceDelta.OPEN) != 0)) {
 				IProject project = (IProject) resource;
-				if (!project.isOpen() || !project.hasNature(JVoiceProjectNature.NATURE_ID)) {
+				if (!project.isOpen() || !project.hasNature(JVoiceModuleNature.NATURE_ID)) {
 					jvProject.getModel().getProjects().remove(jvProject);
 					removeResources(jvProject);
 					return false;
