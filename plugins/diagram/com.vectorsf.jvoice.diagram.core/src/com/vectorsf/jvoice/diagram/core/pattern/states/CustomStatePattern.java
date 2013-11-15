@@ -121,6 +121,7 @@ public class CustomStatePattern extends StatePattern {
 		}
 
 		dialog.setHelpAvailable(false);
+		dialog.setIsButtonCreatevailable(true);
 		dialog.setListLabelProvider(new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 		dialog.setInitialPattern("?", FilteredItemsSelectionDialog.FULL_SELECTION);
