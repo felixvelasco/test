@@ -643,12 +643,20 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	public void setNames(IFolder folder) {
 		IProject iProject = folder.getProject();
 		initialProject = iProject.getName();
-		IPath iPath = folder.getRawLocation();
-		String path = iPath.toString();
+		IPath iPath = folder.getFullPath();
+		String path = iPath.toString().substring(1);
 		String[] pathSegments = path.split("/");
 		String diagramFolder = pathSegments[pathSegments.length-1]; 
 		if (diagramFolder.endsWith("resources")){
-			initialPackage = pathSegments[pathSegments.length-2];
+			//Obtenemos el pack
+			for (int i=5; i<pathSegments.length-1;i++){
+				if(i==5){
+					initialPackage =pathSegments[i].toString();
+				}else{
+					initialPackage =initialPackage+"."+pathSegments[i].toString();		
+				}						
+			}
+			//initialPackage = pathSegments[pathSegments.length-2];
 			String[] diagramNameSegments = diagramFolder.split("\\.");
 			initialFlow = diagramNameSegments[0];		
 		}
