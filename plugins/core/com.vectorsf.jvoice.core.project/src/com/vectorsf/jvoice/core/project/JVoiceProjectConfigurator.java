@@ -103,7 +103,7 @@ public final class JVoiceProjectConfigurator {
 
 			String[] newNatureIds = new String[natureIds.length + 2];
 			System.arraycopy(natureIds, 0, newNatureIds, 1, natureIds.length);
-			newNatureIds[0] = JVoiceProjectNature.NATURE_ID;
+			newNatureIds[0] = JVoiceModuleNature.NATURE_ID;
 			newNatureIds[newNatureIds.length-1] = XtextProjectHelper.NATURE_ID;
 			description.setNatureIds(newNatureIds);
 			

@@ -106,7 +106,7 @@ public final class JVoiceApplicationConfigurator {
 
 			String[] newNatureIds = new String[natureIds.length + 2];
 			System.arraycopy(natureIds, 0, newNatureIds, 1, natureIds.length);
-			newNatureIds[0] = JVoiceProjectNature.NATURE_ID;
+			newNatureIds[0] = JVoiceModuleNature.NATURE_ID;
 			newNatureIds[newNatureIds.length-1] = JVoiceApplicationNature.NATURE_ID;
 			description.setNatureIds(newNatureIds);
 			

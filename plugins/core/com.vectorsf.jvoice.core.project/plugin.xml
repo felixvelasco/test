@@ -5,7 +5,7 @@
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run
-               class="com.vectorsf.jvoice.core.project.JVoiceProjectNature">
+               class="com.vectorsf.jvoice.core.project.JVoiceModuleNature">
          </run>
       </runtime>
    </extension>
