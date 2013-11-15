@@ -20,6 +20,7 @@ import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 
 import com.isb.bks.ivr.voice.dsl.ui.internal.VoiceDslActivator;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
+import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.LocutionState;
 
@@ -41,6 +42,9 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 		} else if (businessObject instanceof LocutionState) {
 			LocutionState locutionState = (LocutionState) businessObject;
 			eObject = locutionState.getLocution();
+		} else if (businessObject instanceof CustomState) {
+			CustomState customState = (CustomState) businessObject;
+			eObject = customState;
 		}
 
 		if (eObject != null) {
@@ -54,6 +58,11 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 
 		String fileString = locutionUri.toPlatformString(true);
+		if (eObject instanceof CustomState) {
+			fileString = fileString.replace(".jvflow", ".resources").concat("/")
+					.concat(((CustomState) eObject).getPath());
+		}
+
 		try {
 			if (fileString != null) {
 				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileString));
@@ -67,11 +76,16 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 				URIEditorInput input = new URIEditorInput(locutionUri);
 				if (eObject instanceof Flow) {
 					IDE.openEditor(page, input, "org.eclipse.graphiti.ui.editor.DiagramEditorJVoice");
-				} else { // Locution
+				} else if (eObject instanceof LocutionState) { // Locution
 					IURIEditorOpener instance = VoiceDslActivator.getInstance()
 							.getInjector(VoiceDslActivator.COM_ISB_BKS_IVR_VOICE_DSL_VOICEDSL)
 							.getInstance(IURIEditorOpener.class);
 					instance.open(locutionUri, false);
+				} else {
+					String uri = locutionUri.path().substring(9).replace(".jvflow", ".resources").concat("/")
+							.concat(((CustomState) eObject).getPath());
+					IFile filecustom = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri));
+					IDE.openEditor(page, filecustom);
 				}
 			}
 		} catch (PartInitException e) {
