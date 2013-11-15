@@ -13,6 +13,7 @@ import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
+import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
@@ -65,6 +66,8 @@ public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
 			} else if (oldTargetState instanceof InputState || targetBO instanceof InputState) {
 				return false;
 			} else if (oldTargetState instanceof PromptState || targetBO instanceof PromptState) {
+				return false;
+			} else if (oldTargetState instanceof RecordState || targetBO instanceof RecordState) {
 				return false;
 			} else if (oldTargetState instanceof SwitchState || targetBO instanceof SwitchState) {
 				return false;

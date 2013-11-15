@@ -37,6 +37,7 @@ import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
+import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.TransferState;
@@ -557,6 +558,12 @@ ITabbedPropertyConstants {
             		nameSubFlow.setText(outputLocution.getLocution().getName());
             	}
             	addListenerSubflujos();
+            }else if(bo instanceof RecordState){
+            	RecordState recordLocution = (RecordState)bo;
+            	if (recordLocution.getLocution().getName()!=null){
+            		nameSubFlow.setText(recordLocution.getLocution().getName());
+            	}
+            	addListenerSubflujos();
             }else if(bo instanceof CustomState){
             	CustomState custom = (CustomState)bo;
             	if (custom.getPath()!=null){
@@ -659,7 +666,7 @@ ITabbedPropertyConstants {
 			timeOutText.removeVerifyListener(timeOutVerifyListener);
 			maxTimeText.removeVerifyListener(maxTimeVerifyListener);
 		}else if ((bo instanceof MenuState) || (bo instanceof InputState) || (bo instanceof PromptState) || (bo instanceof CallFlowState)
-				|| (bo instanceof CustomState)){
+				|| (bo instanceof CustomState) || (bo instanceof RecordState)){
 			
 			btEditFlow.removeListener(SWT.Selection, propertielistener);
 		}else if(bo instanceof SwitchState){

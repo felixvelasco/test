@@ -23,6 +23,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
@@ -212,6 +213,13 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	private EClass promptDslEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass recordDslEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1092,6 +1100,15 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getRecordDsl() {
+		return recordDslEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getInterpretation() {
 		return interpretationEEnum;
 	}
@@ -1236,6 +1253,8 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 
 		promptDslEClass = createEClass(PROMPT_DSL);
 
+		recordDslEClass = createEClass(RECORD_DSL);
+
 		// Create enums
 		interpretationEEnum = createEEnum(INTERPRETATION);
 	}
@@ -1282,6 +1301,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		inputDslEClass.getESuperTypes().add(this.getVoiceDsl());
 		menuDslEClass.getESuperTypes().add(this.getVoiceDsl());
 		promptDslEClass.getESuperTypes().add(this.getVoiceDsl());
+		recordDslEClass.getESuperTypes().add(this.getVoiceDsl());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(voiceDslEClass, VoiceDsl.class, "VoiceDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1397,6 +1417,8 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEClass(menuDslEClass, MenuDsl.class, "MenuDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(promptDslEClass, PromptDsl.class, "PromptDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(recordDslEClass, RecordDsl.class, "RecordDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Initialize enums and add enum literals
 		initEEnum(interpretationEEnum, Interpretation.class, "Interpretation");

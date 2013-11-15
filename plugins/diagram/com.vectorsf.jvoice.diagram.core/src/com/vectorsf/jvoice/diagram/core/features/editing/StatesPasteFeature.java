@@ -230,7 +230,8 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	}
 
 	private boolean isLocution(Object object) {
-		return object instanceof InputState || object instanceof MenuState || object instanceof PromptState;
+		return object instanceof InputState || object instanceof MenuState || object instanceof PromptState
+				|| object instanceof RecordState;
 	}
 
 	private String generateName(String stateName, IPasteContext context) {

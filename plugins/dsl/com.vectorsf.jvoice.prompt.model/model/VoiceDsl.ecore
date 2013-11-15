@@ -165,4 +165,5 @@
     <eLiterals name="time" value="6"/>
     <eLiterals name="boolean" value="7"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RecordDsl" eSuperTypes="#//VoiceDsl"/>
 </ecore:EPackage>

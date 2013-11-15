@@ -41,9 +41,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
-import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
-import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.PromptState;
@@ -88,6 +86,7 @@ public class PromptStatePattern extends StatePattern implements ISelectionStatus
 
 	}
 
+	@SuppressWarnings({ "restriction" })
 	@Override
 	public Object[] create(ICreateContext context) {
 
@@ -124,6 +123,7 @@ public class PromptStatePattern extends StatePattern implements ISelectionStatus
 			e.printStackTrace();
 		}
 		dialog.setHelpAvailable(false);
+		dialog.setIsButtonCreatevailable(true);
 		dialog.setListLabelProvider(new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 		dialog.setInitialPattern("?", FilteredItemsSelectionDialog.FULL_SELECTION);
@@ -132,7 +132,6 @@ public class PromptStatePattern extends StatePattern implements ISelectionStatus
 
 		URI res = flow.eResource().getURI();
 		String projectName = res.segment(1);
-		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
 		dialog.open();
 
 		VoiceDsl result = null;

@@ -1,9 +1,9 @@
 /**
  */
-package com.vectorsf.jvoice.model.operations.provider;
+package com.vectorsf.jvoice.prompt.model.voiceDsl.provider;
 
 
-import com.vectorsf.jvoice.model.operations.RecordState;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,13 +19,13 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
- * This is the item provider adapter for a {@link com.vectorsf.jvoice.model.operations.RecordState} object.
+ * This is the item provider adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class RecordStateItemProvider
-	extends LocutionStateItemProvider
+public class RecordDslItemProvider
+	extends VoiceDslItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -38,7 +38,7 @@ public class RecordStateItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RecordStateItemProvider(AdapterFactory adapterFactory) {
+	public RecordDslItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -58,14 +58,14 @@ public class RecordStateItemProvider
 	}
 
 	/**
-	 * This returns RecordState.gif.
+	 * This returns RecordDsl.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/RecordState"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/RecordDsl"));
 	}
 
 	/**
@@ -76,10 +76,10 @@ public class RecordStateItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((RecordState)object).getName();
+		String label = ((RecordDsl)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_RecordState_type") :
-			getString("_UI_RecordState_type") + " " + label;
+			getString("_UI_RecordDsl_type") :
+			getString("_UI_RecordDsl_type") + " " + label;
 	}
 
 	/**

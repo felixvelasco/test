@@ -23,6 +23,7 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 	private static final String DIALOG_SETTINGS = "FilteredResourcesSelectionDialogExampleSettings";
 	private List<?> resources;
 	private Button checkButton;
+	private static boolean createAvailable;
 
 	public DialogLocution(Shell shell) {
 		super(shell);
@@ -112,4 +113,11 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 
 	}
 
+	public boolean isButtonCreatevailable() {
+		return createAvailable;
+	}
+
+	public void setIsButtonCreatevailable(boolean buttonAvailable) {
+		createAvailable = buttonAvailable;
+	}
 }

@@ -26,15 +26,16 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInputDslParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cMenuDslParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cPromptDslParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final Assignment cTypesAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
-		private final RuleCall cTypesTypeParserRuleCall_3_0 = (RuleCall)cTypesAssignment_3.eContents().get(0);
+		private final RuleCall cRecordDslParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final Assignment cTypesAssignment_4 = (Assignment)cAlternatives.eContents().get(4);
+		private final RuleCall cTypesTypeParserRuleCall_4_0 = (RuleCall)cTypesAssignment_4.eContents().get(0);
 		
 		//VoiceDsl:
 		//
-		//	InputDsl | MenuDsl | PromptDsl | types+=Type*;
+		//	InputDsl | MenuDsl | PromptDsl | RecordDsl | types+=Type*;
 		public ParserRule getRule() { return rule; }
 
-		//InputDsl | MenuDsl | PromptDsl | types+=Type*
+		//InputDsl | MenuDsl | PromptDsl | RecordDsl | types+=Type*
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//InputDsl
@@ -46,11 +47,14 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//PromptDsl
 		public RuleCall getPromptDslParserRuleCall_2() { return cPromptDslParserRuleCall_2; }
 
+		//RecordDsl
+		public RuleCall getRecordDslParserRuleCall_3() { return cRecordDslParserRuleCall_3; }
+
 		//types+=Type*
-		public Assignment getTypesAssignment_3() { return cTypesAssignment_3; }
+		public Assignment getTypesAssignment_4() { return cTypesAssignment_4; }
 
 		//Type
-		public RuleCall getTypesTypeParserRuleCall_3_0() { return cTypesTypeParserRuleCall_3_0; }
+		public RuleCall getTypesTypeParserRuleCall_4_0() { return cTypesTypeParserRuleCall_4_0; }
 	}
 
 	public class PromptDslElements extends AbstractParserRuleElementFinder {
@@ -282,6 +286,79 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Condition
 		public RuleCall getConditionsConditionParserRuleCall_2_4_0() { return cConditionsConditionParserRuleCall_2_4_0; }
+
+		//audios=Audios
+		public Assignment getAudiosAssignment_3() { return cAudiosAssignment_3; }
+
+		//Audios
+		public RuleCall getAudiosAudiosParserRuleCall_3_0() { return cAudiosAudiosParserRuleCall_3_0; }
+	}
+
+	public class RecordDslElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RecordDsl");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cRecordnameKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final UnorderedGroup cUnorderedGroup_2 = (UnorderedGroup)cGroup.eContents().get(2);
+		private final Assignment cConfigurationAssignment_2_0 = (Assignment)cUnorderedGroup_2.eContents().get(0);
+		private final RuleCall cConfigurationConfigurationParserRuleCall_2_0_0 = (RuleCall)cConfigurationAssignment_2_0.eContents().get(0);
+		private final Assignment cPropertiesAssignment_2_1 = (Assignment)cUnorderedGroup_2.eContents().get(1);
+		private final RuleCall cPropertiesPropertyParserRuleCall_2_1_0 = (RuleCall)cPropertiesAssignment_2_1.eContents().get(0);
+		private final Assignment cVariablesAssignment_2_2 = (Assignment)cUnorderedGroup_2.eContents().get(2);
+		private final RuleCall cVariablesVariablesParserRuleCall_2_2_0 = (RuleCall)cVariablesAssignment_2_2.eContents().get(0);
+		private final Assignment cConditionsAssignment_2_3 = (Assignment)cUnorderedGroup_2.eContents().get(3);
+		private final RuleCall cConditionsConditionParserRuleCall_2_3_0 = (RuleCall)cConditionsAssignment_2_3.eContents().get(0);
+		private final Assignment cAudiosAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cAudiosAudiosParserRuleCall_3_0 = (RuleCall)cAudiosAssignment_3.eContents().get(0);
+		
+		//RecordDsl:
+		//
+		//	"recordname" name=ID (configuration=Configuration & properties+=Property* & variables=Variables? &
+		//
+		//	conditions+=Condition*) audios=Audios;
+		public ParserRule getRule() { return rule; }
+
+		//"recordname" name=ID (configuration=Configuration & properties+=Property* & variables=Variables? &
+		//
+		//conditions+=Condition*) audios=Audios
+		public Group getGroup() { return cGroup; }
+
+		//"recordname"
+		public Keyword getRecordnameKeyword_0() { return cRecordnameKeyword_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//configuration=Configuration & properties+=Property* & variables=Variables? & conditions+=Condition*
+		public UnorderedGroup getUnorderedGroup_2() { return cUnorderedGroup_2; }
+
+		//configuration=Configuration
+		public Assignment getConfigurationAssignment_2_0() { return cConfigurationAssignment_2_0; }
+
+		//Configuration
+		public RuleCall getConfigurationConfigurationParserRuleCall_2_0_0() { return cConfigurationConfigurationParserRuleCall_2_0_0; }
+
+		//properties+=Property*
+		public Assignment getPropertiesAssignment_2_1() { return cPropertiesAssignment_2_1; }
+
+		//Property
+		public RuleCall getPropertiesPropertyParserRuleCall_2_1_0() { return cPropertiesPropertyParserRuleCall_2_1_0; }
+
+		//variables=Variables?
+		public Assignment getVariablesAssignment_2_2() { return cVariablesAssignment_2_2; }
+
+		//Variables
+		public RuleCall getVariablesVariablesParserRuleCall_2_2_0() { return cVariablesVariablesParserRuleCall_2_2_0; }
+
+		//conditions+=Condition*
+		public Assignment getConditionsAssignment_2_3() { return cConditionsAssignment_2_3; }
+
+		//Condition
+		public RuleCall getConditionsConditionParserRuleCall_2_3_0() { return cConditionsConditionParserRuleCall_2_3_0; }
 
 		//audios=Audios
 		public Assignment getAudiosAssignment_3() { return cAudiosAssignment_3; }
@@ -1299,6 +1376,7 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	private PromptDslElements pPromptDsl;
 	private MenuDslElements pMenuDsl;
 	private InputDslElements pInputDsl;
+	private RecordDslElements pRecordDsl;
 	private VariablesElements pVariables;
 	private VariableElements pVariable;
 	private GrammarsElements pGrammars;
@@ -1359,7 +1437,7 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VoiceDsl:
 	//
-	//	InputDsl | MenuDsl | PromptDsl | types+=Type*;
+	//	InputDsl | MenuDsl | PromptDsl | RecordDsl | types+=Type*;
 	public VoiceDslElements getVoiceDslAccess() {
 		return (pVoiceDsl != null) ? pVoiceDsl : (pVoiceDsl = new VoiceDslElements());
 	}
@@ -1403,6 +1481,19 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getInputDslRule() {
 		return getInputDslAccess().getRule();
+	}
+
+	//RecordDsl:
+	//
+	//	"recordname" name=ID (configuration=Configuration & properties+=Property* & variables=Variables? &
+	//
+	//	conditions+=Condition*) audios=Audios;
+	public RecordDslElements getRecordDslAccess() {
+		return (pRecordDsl != null) ? pRecordDsl : (pRecordDsl = new RecordDslElements());
+	}
+	
+	public ParserRule getRecordDslRule() {
+		return getRecordDslAccess().getRule();
 	}
 
 	//Variables:

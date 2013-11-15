@@ -1832,6 +1832,169 @@ public interface VoiceDslPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.RecordDslImpl <em>Record Dsl</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.RecordDslImpl
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getRecordDsl()
+	 * @generated
+	 */
+	int RECORD_DSL = 23;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__ID = VOICE_DSL__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__NAME = VOICE_DSL__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__DESCRIPTION = VOICE_DSL__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owner Package</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__OWNER_PACKAGE = VOICE_DSL__OWNER_PACKAGE;
+
+	/**
+	 * The feature id for the '<em><b>Configuration</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__CONFIGURATION = VOICE_DSL__CONFIGURATION;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__PROPERTIES = VOICE_DSL__PROPERTIES;
+
+	/**
+	 * The feature id for the '<em><b>Conditions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__CONDITIONS = VOICE_DSL__CONDITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Audios</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__AUDIOS = VOICE_DSL__AUDIOS;
+
+	/**
+	 * The feature id for the '<em><b>Grammars</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__GRAMMARS = VOICE_DSL__GRAMMARS;
+
+	/**
+	 * The feature id for the '<em><b>Variables</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__VARIABLES = VOICE_DSL__VARIABLES;
+
+	/**
+	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__TYPES = VOICE_DSL__TYPES;
+
+	/**
+	 * The feature id for the '<em><b>Input Dsl</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__INPUT_DSL = VOICE_DSL__INPUT_DSL;
+
+	/**
+	 * The feature id for the '<em><b>Prompt Dsl</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__PROMPT_DSL = VOICE_DSL__PROMPT_DSL;
+
+	/**
+	 * The feature id for the '<em><b>Menu Dsl</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__MENU_DSL = VOICE_DSL__MENU_DSL;
+
+	/**
+	 * The feature id for the '<em><b>Outputs</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL__OUTPUTS = VOICE_DSL__OUTPUTS;
+
+	/**
+	 * The number of structural features of the '<em>Record Dsl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL_FEATURE_COUNT = VOICE_DSL_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Record Dsl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_DSL_OPERATION_COUNT = VOICE_DSL_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1839,7 +2002,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getInterpretation()
 	 * @generated
 	 */
-	int INTERPRETATION = 23;
+	int INTERPRETATION = 24;
 
 
 	/**
@@ -2798,6 +2961,16 @@ public interface VoiceDslPackage extends EPackage {
 	EClass getPromptDsl();
 
 	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl <em>Record Dsl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Record Dsl</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl
+	 * @generated
+	 */
+	EClass getRecordDsl();
+
+	/**
 	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3587,6 +3760,16 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EClass PROMPT_DSL = eINSTANCE.getPromptDsl();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.RecordDslImpl <em>Record Dsl</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.RecordDslImpl
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getRecordDsl()
+		 * @generated
+		 */
+		EClass RECORD_DSL = eINSTANCE.getRecordDsl();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}' enum.

@@ -21,6 +21,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
@@ -104,6 +105,7 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 			case VoiceDslPackage.INPUT_DSL: return createInputDsl();
 			case VoiceDslPackage.MENU_DSL: return createMenuDsl();
 			case VoiceDslPackage.PROMPT_DSL: return createPromptDsl();
+			case VoiceDslPackage.RECORD_DSL: return createRecordDsl();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -367,6 +369,16 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 	public PromptDsl createPromptDsl() {
 		PromptDslImpl promptDsl = new PromptDslImpl();
 		return promptDsl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RecordDsl createRecordDsl() {
+		RecordDslImpl recordDsl = new RecordDslImpl();
+		return recordDsl;
 	}
 
 	/**

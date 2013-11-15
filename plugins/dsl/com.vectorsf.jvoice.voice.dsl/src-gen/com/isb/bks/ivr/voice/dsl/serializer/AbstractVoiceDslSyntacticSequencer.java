@@ -160,7 +160,7 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 	
 	/**
 	 * Syntax:
-	 *     '}'* | ('}'* ('audios' '{')+ ('}'* ('audios' '{')+)* '}'*)
+	 *     ('}'* ('audios' '{')+ ('}'* ('audios' '{')+)* '}'*) | '}'*
 	 */
 	protected void emit_Audios_RightCurlyBracketKeyword_3_1_a_or___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p__a_RightCurlyBracketKeyword_3_1_a__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -185,6 +185,7 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 	/**
 	 * Syntax:
 	 *     (
+	     ('}'* 'noinput' ':')? | 
 	     (
 	         '}'* 
 	         ('audios' '{')+ 
@@ -192,8 +193,7 @@ public abstract class AbstractVoiceDslSyntacticSequencer extends AbstractSyntact
 	         '}'* 
 	         'noinput' 
 	         ':'
-	     ) | 
-	     ('}'* 'noinput' ':')?
+	     )
 	 )
 	 */
 	protected void emit_Audios___RightCurlyBracketKeyword_3_1_a_NoinputKeyword_3_0_0_ColonKeyword_3_0_1__q_or___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p___RightCurlyBracketKeyword_3_1_a___AudiosKeyword_0_0_LeftCurlyBracketKeyword_0_1__p__a_RightCurlyBracketKeyword_3_1_a_NoinputKeyword_3_0_0_ColonKeyword_3_0_1__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

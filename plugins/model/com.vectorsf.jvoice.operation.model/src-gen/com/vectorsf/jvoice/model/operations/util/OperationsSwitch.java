@@ -196,6 +196,7 @@ public class OperationsSwitch<T> extends Switch<T> {
 			case OperationsPackage.RECORD_STATE: {
 				RecordState recordState = (RecordState)theEObject;
 				T result = caseRecordState(recordState);
+				if (result == null) result = caseLocutionState(recordState);
 				if (result == null) result = caseState(recordState);
 				if (result == null) result = caseNamedElement(recordState);
 				if (result == null) result = caseJVElement(recordState);

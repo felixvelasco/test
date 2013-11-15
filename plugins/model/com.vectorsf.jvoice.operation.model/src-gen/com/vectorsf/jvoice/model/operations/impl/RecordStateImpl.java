@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class RecordStateImpl extends StateImpl implements RecordState {
+public class RecordStateImpl extends LocutionStateImpl implements RecordState {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

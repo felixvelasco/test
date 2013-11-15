@@ -20,7 +20,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -400,6 +399,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		box.add("Menu");
 		box.add("Input");
 		box.add("Output");
+		box.add("Record");
 
 		
 		if (tipo != null) {
@@ -411,6 +411,9 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			}
 			if (tipo.equalsIgnoreCase("Output")) {
 				box.select(2);
+			}
+			if (tipo.equalsIgnoreCase("Record")) {
+				box.select(3);
 			}
 
 			box.setEnabled(false);
@@ -588,6 +591,11 @@ public class DslNameWizardPage extends AbstractWizardPage {
 				}else if(seleccion.equals("Output")){
 					contents="outputname "+dslName+"\n\n"
 							+variables
+							+audios;
+					
+				}else if(seleccion.equals("Record")){
+					contents="recordname "+dslName+"\n\n"
+							+configuration
 							+audios;
 					
 				}

@@ -19,6 +19,7 @@ import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
+import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
@@ -74,7 +75,8 @@ public class StatesCopyFeature extends AbstractCopyFeature {
 	private boolean isState(Object object) {
 		if (object instanceof CallFlowState || object instanceof CallState || object instanceof FinalState
 				|| object instanceof InitialState || object instanceof InputState || object instanceof MenuState
-				|| object instanceof PromptState || object instanceof SwitchState || object instanceof CustomState) {
+				|| object instanceof PromptState || object instanceof RecordState || object instanceof SwitchState
+				|| object instanceof CustomState) {
 			return true;
 		}
 		return false;

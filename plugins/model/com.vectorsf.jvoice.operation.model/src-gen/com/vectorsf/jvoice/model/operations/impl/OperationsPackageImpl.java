@@ -746,7 +746,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		menuStateEClass.getESuperTypes().add(this.getLocutionState());
 		locutionStateEClass.getESuperTypes().add(this.getState());
 		transferStateEClass.getESuperTypes().add(this.getState());
-		recordStateEClass.getESuperTypes().add(this.getState());
+		recordStateEClass.getESuperTypes().add(this.getLocutionState());
 		noteEClass.getESuperTypes().add(theBasePackage.getJVElement());
 		customStateEClass.getESuperTypes().add(this.getState());
 

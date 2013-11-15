@@ -16,6 +16,7 @@ import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
+import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.ui.diagram.properties.filters.StateSection;
 import com.vectorsf.jvoice.ui.diagram.properties.util.AddCaseSwitch;
@@ -63,6 +64,10 @@ public class PropertiesListener implements Listener {
             	InputState inputLocution = (InputState)bo;
             	TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(inputLocution);
             	dominio.getCommandStack().execute(new EditMenuStateLocution(dominio, inputLocution, nameSubFlow));
+            }else if (bo instanceof RecordState){
+            	RecordState recordLocution = (RecordState)bo;
+            	TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(recordLocution);
+            	dominio.getCommandStack().execute(new EditMenuStateLocution(dominio, recordLocution, nameSubFlow));
             }else if (bo instanceof PromptState){
             	PromptState outputLocution = (PromptState)bo;
             	TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(outputLocution);

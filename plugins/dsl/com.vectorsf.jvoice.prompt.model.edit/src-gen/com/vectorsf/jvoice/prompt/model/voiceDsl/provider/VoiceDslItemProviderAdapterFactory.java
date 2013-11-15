@@ -601,6 +601,29 @@ public class VoiceDslItemProviderAdapterFactory extends VoiceDslAdapterFactory i
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RecordDslItemProvider recordDslItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRecordDslAdapter() {
+		if (recordDslItemProvider == null) {
+			recordDslItemProvider = new RecordDslItemProvider(this);
+		}
+
+		return recordDslItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -722,6 +745,7 @@ public class VoiceDslItemProviderAdapterFactory extends VoiceDslAdapterFactory i
 		if (inputDslItemProvider != null) inputDslItemProvider.dispose();
 		if (menuDslItemProvider != null) menuDslItemProvider.dispose();
 		if (promptDslItemProvider != null) promptDslItemProvider.dispose();
+		if (recordDslItemProvider != null) recordDslItemProvider.dispose();
 	}
 
 }

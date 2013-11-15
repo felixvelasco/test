@@ -13,5 +13,5 @@ package com.vectorsf.jvoice.model.operations;
  * @model
  * @generated
  */
-public interface RecordState extends State {
+public interface RecordState extends LocutionState {
 } // RecordState

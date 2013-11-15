@@ -24,6 +24,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
@@ -246,6 +247,16 @@ public class VoiceDslSwitch<T> extends Switch<T> {
 				if (result == null) result = caseJVBean(promptDsl);
 				if (result == null) result = caseNamedElement(promptDsl);
 				if (result == null) result = caseJVElement(promptDsl);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case VoiceDslPackage.RECORD_DSL: {
+				RecordDsl recordDsl = (RecordDsl)theEObject;
+				T result = caseRecordDsl(recordDsl);
+				if (result == null) result = caseVoiceDsl(recordDsl);
+				if (result == null) result = caseJVBean(recordDsl);
+				if (result == null) result = caseNamedElement(recordDsl);
+				if (result == null) result = caseJVElement(recordDsl);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -595,6 +606,21 @@ public class VoiceDslSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T casePromptDsl(PromptDsl object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Record Dsl</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Record Dsl</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRecordDsl(RecordDsl object) {
 		return null;
 	}
 

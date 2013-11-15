@@ -21,6 +21,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
@@ -265,6 +266,13 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 			case VoiceDslPackage.PROPERTY:
 				if(context == grammarAccess.getPropertyRule()) {
 					sequence_Property(context, (Property) semanticObject); 
+					return; 
+				}
+				else break;
+			case VoiceDslPackage.RECORD_DSL:
+				if(context == grammarAccess.getRecordDslRule() ||
+				   context == grammarAccess.getVoiceDslRule()) {
+					sequence_RecordDsl(context, (RecordDsl) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1430,6 +1438,22 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 		feeder.accept(grammarAccess.getPropertyAccess().getNameQualifiedNameParserRuleCall_1_0(), semanticObject.getName());
 		feeder.accept(grammarAccess.getPropertyAccess().getValueSTRINGTerminalRuleCall_2_0(), semanticObject.getValue());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         name=ID 
+	 *         configuration=Configuration 
+	 *         properties+=Property* 
+	 *         variables=Variables? 
+	 *         conditions+=Condition* 
+	 *         audios=Audios
+	 *     )
+	 */
+	protected void sequence_RecordDsl(EObject context, RecordDsl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

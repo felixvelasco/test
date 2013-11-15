@@ -1288,7 +1288,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_STATE__ID = STATE__ID;
+	int RECORD_STATE__ID = LOCUTION_STATE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1297,7 +1297,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_STATE__NAME = STATE__NAME;
+	int RECORD_STATE__NAME = LOCUTION_STATE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -1306,7 +1306,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_STATE__DESCRIPTION = STATE__DESCRIPTION;
+	int RECORD_STATE__DESCRIPTION = LOCUTION_STATE__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
@@ -1315,7 +1315,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+	int RECORD_STATE__INCOMING_TRANSITIONS = LOCUTION_STATE__INCOMING_TRANSITIONS;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
@@ -1324,7 +1324,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+	int RECORD_STATE__OUTGOING_TRANSITIONS = LOCUTION_STATE__OUTGOING_TRANSITIONS;
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
@@ -1333,7 +1333,16 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_STATE__NOTES = STATE__NOTES;
+	int RECORD_STATE__NOTES = LOCUTION_STATE__NOTES;
+
+	/**
+	 * The feature id for the '<em><b>Locution</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
 
 	/**
 	 * The number of structural features of the '<em>Record State</em>' class.
@@ -1342,7 +1351,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 0;
+	int RECORD_STATE_FEATURE_COUNT = LOCUTION_STATE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Record State</em>' class.
@@ -1351,7 +1360,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+	int RECORD_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.NoteImpl <em>Note</em>}' class.
