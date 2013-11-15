@@ -16,7 +16,7 @@ import com.google.common.collect.Sets
 class VoiceDslProposalProvider extends AbstractVoiceDslProposalProvider {
 	
 	override completeConfiguration_ConfigValue(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		val      FILTERED_KEYWORDS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts", "confidence", "bargein", "timeout", "interdigittimeout");
+		val      FILTERED_KEYWORDS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts", "confidence", "bargein", "timeout", "interdigittimeout", "beep", "dtmfterm", "maxtime", "finalsilence", "keep");
 		
 		for (String keyword: FILTERED_KEYWORDS){
 			acceptor.accept(createCompletionProposal(keyword, keyword, null, context));
