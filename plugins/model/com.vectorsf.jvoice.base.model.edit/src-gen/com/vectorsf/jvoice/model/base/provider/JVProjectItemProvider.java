@@ -71,7 +71,6 @@ public class JVProjectItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(BasePackage.Literals.JV_PROJECT__CONFIGURATION);
-			childrenFeatures.add(BasePackage.Literals.JV_PROJECT__HANDLERS);
 		}
 		return childrenFeatures;
 	}
@@ -126,8 +125,10 @@ public class JVProjectItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(JVProject.class)) {
-			case BasePackage.JV_PROJECT__CONFIGURATION:
 			case BasePackage.JV_PROJECT__HANDLERS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case BasePackage.JV_PROJECT__CONFIGURATION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}

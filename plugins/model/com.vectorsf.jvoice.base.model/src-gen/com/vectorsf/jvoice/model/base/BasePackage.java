@@ -759,7 +759,7 @@ public interface BasePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int JV_MODULE___GET_CONFIGURATION__STRING_1 = JV_PROJECT___GET_CONFIGURATION__STRING;
+	int JV_MODULE___GET_CONFIGURATION__STRING = JV_PROJECT___GET_CONFIGURATION__STRING;
 
 	/**
 	 * The operation id for the '<em>Get Package</em>' operation.
