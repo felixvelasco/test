@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getPromptDsl <em>Prompt Dsl</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getMenuDsl <em>Menu Dsl</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getRecordDsl <em>Record Dsl</em>}</li>
  * </ul>
  * </p>
  *
@@ -168,6 +169,32 @@ public interface VoiceDsl extends JVBean {
 	 * @generated
 	 */
 	void setOutputs(Outputs value);
+
+	/**
+	 * Returns the value of the '<em><b>Record Dsl</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Record Dsl</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Record Dsl</em>' reference.
+	 * @see #setRecordDsl(RecordDsl)
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getVoiceDsl_RecordDsl()
+	 * @model
+	 * @generated
+	 */
+	RecordDsl getRecordDsl();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getRecordDsl <em>Record Dsl</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Record Dsl</em>' reference.
+	 * @see #getRecordDsl()
+	 * @generated
+	 */
+	void setRecordDsl(RecordDsl value);
 
 	/**
 	 * Returns the value of the '<em><b>Variables</b></em>' containment reference.

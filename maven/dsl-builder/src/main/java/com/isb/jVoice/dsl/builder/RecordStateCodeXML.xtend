@@ -3,6 +3,7 @@ package com.isb.jVoice.dsl.builder
 import com.vectorsf.jvoice.model.operations.State
 import com.vectorsf.jvoice.model.operations.RecordState
 import com.vectorsf.jvoice.model.operations.CustomState
+import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl
 
 class RecordStateCodeXML {
 	def static doGenerateRecordState(State state){
@@ -10,18 +11,17 @@ class RecordStateCodeXML {
 		var tranSalidaS =state.getOutgoingTransitions()
 		var RecordState recordIn = state as RecordState
 		
+		var RecordDsl dsl = recordIn.locution as RecordDsl
 		var configuration = recordIn.locution.configuration
 		
 		var audios = recordIn.locution.audios
-		
-		var i=0
 		
 '''
 		<action-state id="«state.name»">
 			<on-entry>
 				<evaluate expression="jVoiceArchRecord" result="flashScope.«state.name»"></evaluate>
 				
-				<set name="flashScope.«state.locution.recordDsl.filename».fileName" value="'«state.locution.recordDsl.filename»'" />
+				<set name="flashScope.«state.name».fileName" value="'«dsl.fileName»'" />
 				«IF configuration != null»
 					«IF configuration.getValue("beep") != null && !configuration.getValue("beep").equals("")»
 						<set name="flashScope.«state.name».beep" value="«configuration.getValue("beep")»" />

@@ -60,6 +60,7 @@ public class VoiceDslItemProvider
 			addInputDslPropertyDescriptor(object);
 			addPromptDslPropertyDescriptor(object);
 			addMenuDslPropertyDescriptor(object);
+			addRecordDslPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -122,6 +123,28 @@ public class VoiceDslItemProvider
 				 getString("_UI_VoiceDsl_menuDsl_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_VoiceDsl_menuDsl_feature", "_UI_VoiceDsl_type"),
 				 VoiceDslPackage.Literals.VOICE_DSL__MENU_DSL,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Record Dsl feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRecordDslPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_VoiceDsl_recordDsl_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_VoiceDsl_recordDsl_feature", "_UI_VoiceDsl_type"),
+				 VoiceDslPackage.Literals.VOICE_DSL__RECORD_DSL,
 				 true,
 				 false,
 				 true,

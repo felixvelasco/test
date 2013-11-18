@@ -13,6 +13,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
@@ -51,6 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getPromptDsl <em>Prompt Dsl</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getMenuDsl <em>Menu Dsl</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getRecordDsl <em>Record Dsl</em>}</li>
  * </ul>
  * </p>
  *
@@ -166,6 +168,16 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 	 * @ordered
 	 */
 	protected Outputs outputs;
+
+	/**
+	 * The cached value of the '{@link #getRecordDsl() <em>Record Dsl</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRecordDsl()
+	 * @generated
+	 * @ordered
+	 */
+	protected RecordDsl recordDsl;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -380,6 +392,44 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.VOICE_DSL__OUTPUTS, newOutputs, newOutputs));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RecordDsl getRecordDsl() {
+		if (recordDsl != null && recordDsl.eIsProxy()) {
+			InternalEObject oldRecordDsl = (InternalEObject)recordDsl;
+			recordDsl = (RecordDsl)eResolveProxy(oldRecordDsl);
+			if (recordDsl != oldRecordDsl) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, VoiceDslPackage.VOICE_DSL__RECORD_DSL, oldRecordDsl, recordDsl));
+			}
+		}
+		return recordDsl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RecordDsl basicGetRecordDsl() {
+		return recordDsl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRecordDsl(RecordDsl newRecordDsl) {
+		RecordDsl oldRecordDsl = recordDsl;
+		recordDsl = newRecordDsl;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.VOICE_DSL__RECORD_DSL, oldRecordDsl, recordDsl));
 	}
 
 	/**
@@ -612,6 +662,9 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 				return basicGetMenuDsl();
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				return getOutputs();
+			case VoiceDslPackage.VOICE_DSL__RECORD_DSL:
+				if (resolve) return getRecordDsl();
+				return basicGetRecordDsl();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -661,6 +714,9 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				setOutputs((Outputs)newValue);
 				return;
+			case VoiceDslPackage.VOICE_DSL__RECORD_DSL:
+				setRecordDsl((RecordDsl)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -706,6 +762,9 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				setOutputs((Outputs)null);
 				return;
+			case VoiceDslPackage.VOICE_DSL__RECORD_DSL:
+				setRecordDsl((RecordDsl)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -740,6 +799,8 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 				return menuDsl != null;
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				return outputs != null;
+			case VoiceDslPackage.VOICE_DSL__RECORD_DSL:
+				return recordDsl != null;
 		}
 		return super.eIsSet(featureID);
 	}
