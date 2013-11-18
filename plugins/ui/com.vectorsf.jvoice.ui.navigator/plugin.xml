@@ -21,7 +21,10 @@
             viewerId="com.vectorsf.jvoice.ui.navigator.ViewIVR">
          <includes>
             <actionExtension
-                  pattern="com.vectorsf.jvoice.ui.navigator.ActionProvider">
+                  pattern="com.vectorsf.jvoice.ui.navigator.projectActionProvider">
+            </actionExtension>
+            <actionExtension
+                  pattern="com.vectorsf.jvoice.ui.navigator.beanActionProvider">
             </actionExtension>
             <actionExtension
                   pattern="com.vectorsf.jvoice.ui.navigator.PortingActionProvider">
@@ -247,7 +250,7 @@
       </navigatorContent>
       <actionProvider
             class="com.vectorsf.jvoice.ui.navigator.BeanActionProviderIVR"
-            id="com.vectorsf.jvoice.ui.navigator.ActionProvider">
+            id="com.vectorsf.jvoice.ui.navigator.beanActionProvider">
          <enablement>
             <with
                   variable="selection">
@@ -265,7 +268,7 @@
       </actionProvider>
       <actionProvider
             class="com.vectorsf.jvoice.ui.navigator.JVProjectActionProvider"
-            id="com.vectorsf.jvoice.ui.navigator.ActionProvider">
+            id="com.vectorsf.jvoice.ui.navigator.projectActionProvider">
          <enablement>
             <with
                   variable="selection">
