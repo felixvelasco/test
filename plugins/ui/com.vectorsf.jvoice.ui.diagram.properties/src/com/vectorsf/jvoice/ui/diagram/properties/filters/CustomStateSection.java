@@ -19,7 +19,7 @@ public class CustomStateSection extends StateSection {
         TabbedPropertySheetWidgetFactory factory = tabbedPropertySheetPage.getWidgetFactory();
         Composite composite = factory.createFlatFormComposite(parent);
         super.drawName(factory, composite);
-        super.drawCustomStatePath(factory, composite, "Name subflow:");
+        super.drawCustomStatePath(factory, composite, "Custom Page Name:");
 		
 	}
 
