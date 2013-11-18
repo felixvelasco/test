@@ -82,7 +82,18 @@ public class PropertiesDiagramTest {
 		if (editor != null) {
 			editor.close();
 		}
-
+		SWTBotShell[] shells = bot.shells();
+		for (int i = 0; i < shells.length; i++) {
+			if (shells[i].isOpen()) {
+				SWTBotShell shell = shells[i];
+				if (shell.getText().contains("Container")
+						|| shell.getText().contains("New Locution")
+						|| shell.getText().contains("New Flow")
+						|| shell.getText().contains("Flow Selection")) {
+					shell.close();
+				}
+			}
+		}
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 
 			try {
@@ -139,11 +150,8 @@ public class PropertiesDiagramTest {
 
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Estado_Final"), is(not(nullValue())));
-		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-		assertThat(
-				viewProperties.bot().text(
-						"/testNavigator/" + BaseModel.JV_PATH + "/test/five.jvflow"),
-				is(not(nullValue())));
+
+		
 		
 		
 		SWTBotText textName = viewProperties.bot().text("Estado_Final");
@@ -181,11 +189,7 @@ public class PropertiesDiagramTest {
 
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Initial"), is(not(nullValue())));
-		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-		assertThat(
-				viewProperties.bot().text(
-						"/testNavigator/" + BaseModel.JV_PATH + "/test/five.jvflow"),
-				is(not(nullValue())));
+
 		
 		SWTBotText textName = viewProperties.bot().text("Initial");
 		
@@ -220,11 +224,6 @@ public class PropertiesDiagramTest {
 
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Call"), is(not(nullValue())));
-		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-		assertThat(
-				viewProperties.bot().text(
-						"/testNavigator/" + BaseModel.JV_PATH + "/test/five.jvflow"),
-				is(not(nullValue())));
 		
 		SWTBotText textName = viewProperties.bot().text("Call");
 		textName.setFocus();
@@ -260,11 +259,6 @@ public class PropertiesDiagramTest {
 
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Switch"), is(not(nullValue())));
-		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-		assertThat(
-				viewProperties.bot().text(
-						"/testNavigator/" + BaseModel.JV_PATH + "/test/five.jvflow"),
-				is(not(nullValue())));
 		
 		SWTBotText textName = viewProperties.bot().text("Switch");
 
@@ -303,12 +297,8 @@ public class PropertiesDiagramTest {
 
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("subFlow"), is(not(nullValue())));
-		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-		assertThat(
-				viewProperties.bot().text(
-						"/testNavigator/" + BaseModel.JV_PATH + "/test/five.jvflow"),
-				is(not(nullValue())));
-		assertThat(viewProperties.bot().text(2).getText(), is("subFlow"));
+
+		assertThat(viewProperties.bot().text(1).getText(), is("subFlow"));
 		
 		viewProperties.bot().button(0).click();
 		
@@ -357,7 +347,7 @@ public class PropertiesDiagramTest {
 				}, 5 * 60 * 1000);
 		bot.sleep(LARGE_SLEEP);
 		
-		assertThat(viewProperties.bot().text(2).getText(), is("otroSubFlow"));
+		assertThat(viewProperties.bot().text(1).getText(), is("otroSubFlow"));
 		
 		SWTBotText textName = viewProperties.bot().text("subFlow");
 		textName.setFocus();
@@ -395,11 +385,6 @@ public class PropertiesDiagramTest {
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("default"), is(not(nullValue())));
 
-		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-		assertThat(
-				viewProperties.bot().text(
-						"/testNavigator/" + BaseModel.JV_PATH + "/test/five.jvflow"),
-				is(not(nullValue())));
 		assertThat(viewProperties.bot().clabel("Initial State:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Switch"), is(not(nullValue())));
 		assertThat(viewProperties.bot().clabel("Final State:"), is(not(nullValue())));
@@ -411,9 +396,9 @@ public class PropertiesDiagramTest {
 	public void testPropertiesMenu() throws CoreException {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/menuVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/menuVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("menuVoice.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/otroMenuVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/otroMenuVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("otroMenuVoice.voiceDsl"));
 		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("dslFlow.jvflow"));
@@ -436,14 +421,9 @@ public class PropertiesDiagramTest {
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("menuVoice"), is(not(nullValue())));
 		SWTBotText textName = viewProperties.bot().text("menuVoice");
-		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-		assertThat(
-				viewProperties.bot().text(
-						"/testNavigator/" + BaseModel.JV_PATH + "/test/dslFlow.jvflow"),
-				is(not(nullValue())));
 		
 		assertThat(viewProperties.bot().clabel("Name locution:"), is(not(nullValue())));
-		assertThat(viewProperties.bot().text(2).getText(), is("menuVoice"));
+		assertThat(viewProperties.bot().text(1).getText(), is("menuVoice"));
 		viewProperties.bot().button(0).click();
 		
 		bot.shell("Menu Selection").activate();
@@ -452,28 +432,7 @@ public class PropertiesDiagramTest {
 		
 		bot.sleep(LARGE_SLEEP);
 		
-		assertThat(dialogBot.tree().rowCount(), is(1));
-		assertThat(dialogBot.button("OK").isEnabled(), is(false));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator"), is(not(nullValue())));
-		
-		dialogBot.tree().expandNode("testNavigator");
-		
-		bot.sleep(LARGE_SLEEP);
-		
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").rowCount(), is(1));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test"), is(not(nullValue())));
-		
-		dialogBot.tree().getTreeItem("testNavigator").expandNode("test");
-		
-		bot.sleep(LARGE_SLEEP);
-		
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").rowCount(), is(2));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("menuVoice"), is(not(nullValue())));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("otroMenuVoice"), is(not(nullValue())));
-		dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("otroMenuVoice").select();
-		
 		assertThat(dialogBot.button("OK").isEnabled(), is(true));
-		
 		dialogBot.button("OK").click();
 		
 		bot.waitUntil(new DefaultCondition() {
@@ -490,7 +449,7 @@ public class PropertiesDiagramTest {
 				}, 5 * 60 * 1000);
 		bot.sleep(LARGE_SLEEP);
 		
-		assertThat(viewProperties.bot().text(2).getText(), is("otroMenuVoice"));
+		assertThat(viewProperties.bot().text(1).getText(), is("otroMenuVoice"));
 
 		textName.setFocus();
 		textName.setText("otro");
@@ -502,9 +461,9 @@ public class PropertiesDiagramTest {
 	public void testPropertiesPrompt() throws CoreException {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/outputVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/outputVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("outputVoice.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/otroOutputVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/otroOutputVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("otroOutputVoice.voiceDsl"));
 		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("dslFlow.jvflow"));
@@ -527,14 +486,9 @@ public class PropertiesDiagramTest {
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("outputVoice"), is(not(nullValue())));
 		SWTBotText textName = viewProperties.bot().text("outputVoice");
-		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-		assertThat(
-				viewProperties.bot().text(
-						"/testNavigator/" + BaseModel.JV_PATH + "/test/dslFlow.jvflow"),
-				is(not(nullValue())));
 		
 		assertThat(viewProperties.bot().clabel("Name locution:"), is(not(nullValue())));
-		assertThat(viewProperties.bot().text(2).getText(), is("outputVoice"));
+		assertThat(viewProperties.bot().text(1).getText(), is("outputVoice"));
 		viewProperties.bot().button(0).click();
 		
 		bot.shell("Output Selection").activate();
@@ -543,28 +497,8 @@ public class PropertiesDiagramTest {
 		
 		bot.sleep(LARGE_SLEEP);
 		
-		assertThat(dialogBot.tree().rowCount(), is(1));
-		assertThat(dialogBot.button("OK").isEnabled(), is(false));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator"), is(not(nullValue())));
-		
-		dialogBot.tree().expandNode("testNavigator");
-		
-		bot.sleep(LARGE_SLEEP);
-		
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").rowCount(), is(1));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test"), is(not(nullValue())));
-		
-		dialogBot.tree().getTreeItem("testNavigator").expandNode("test");
-		
-		bot.sleep(LARGE_SLEEP);
-		
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").rowCount(), is(2));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("outputVoice"), is(not(nullValue())));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("otroOutputVoice"), is(not(nullValue())));
-		dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("otroOutputVoice").select();
-		
+	
 		assertThat(dialogBot.button("OK").isEnabled(), is(true));
-		
 		dialogBot.button("OK").click();
 		
 		bot.waitUntil(new DefaultCondition() {
@@ -581,7 +515,7 @@ public class PropertiesDiagramTest {
 				}, 5 * 60 * 1000);
 		bot.sleep(LARGE_SLEEP);
 		
-		assertThat(viewProperties.bot().text(2).getText(), is("otroOutputVoice"));
+		assertThat(viewProperties.bot().text(1).getText(), is("otroOutputVoice"));
 
 		textName.setFocus();
 		textName.setText("otro");
@@ -593,9 +527,9 @@ public class PropertiesDiagramTest {
 	public void testPropertiesInput() throws CoreException {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/inputVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/inputVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("inputVoice.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/otroInputVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/otroInputVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("otroInputVoice.voiceDsl"));
 		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("dslFlow.jvflow"));
@@ -618,14 +552,10 @@ public class PropertiesDiagramTest {
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("inputVoice"), is(not(nullValue())));
 		SWTBotText textName = viewProperties.bot().text("inputVoice");
-		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-		assertThat(
-				viewProperties.bot().text(
-						"/testNavigator/" + BaseModel.JV_PATH + "/test/dslFlow.jvflow"),
-				is(not(nullValue())));
+
 		
 		assertThat(viewProperties.bot().clabel("Name locution:"), is(not(nullValue())));
-		assertThat(viewProperties.bot().text(2).getText(), is("inputVoice"));
+		assertThat(viewProperties.bot().text(1).getText(), is("inputVoice"));
 		viewProperties.bot().button(0).click();
 		
 		bot.shell("Input Selection").activate();
@@ -634,28 +564,7 @@ public class PropertiesDiagramTest {
 		
 		bot.sleep(LARGE_SLEEP);
 		
-		assertThat(dialogBot.tree().rowCount(), is(1));
-		assertThat(dialogBot.button("OK").isEnabled(), is(false));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator"), is(not(nullValue())));
-		
-		dialogBot.tree().expandNode("testNavigator");
-		
-		bot.sleep(LARGE_SLEEP);
-		
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").rowCount(), is(1));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test"), is(not(nullValue())));
-		
-		dialogBot.tree().getTreeItem("testNavigator").expandNode("test");
-		
-		bot.sleep(LARGE_SLEEP);
-		
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").rowCount(), is(2));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("inputVoice"), is(not(nullValue())));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("otroInputVoice"), is(not(nullValue())));
-		dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("otroInputVoice").select();
-		
 		assertThat(dialogBot.button("OK").isEnabled(), is(true));
-		
 		dialogBot.button("OK").click();
 		
 		bot.waitUntil(new DefaultCondition() {
@@ -672,7 +581,7 @@ public class PropertiesDiagramTest {
 				}, 5 * 60 * 1000);
 		bot.sleep(LARGE_SLEEP);
 		
-		assertThat(viewProperties.bot().text(2).getText(), is("otroInputVoice"));
+		assertThat(viewProperties.bot().text(1).getText(), is("otroInputVoice"));
 
 		textName.setFocus();
 		textName.setText("otro");
@@ -1010,11 +919,11 @@ public class PropertiesDiagramTest {
 
 		comunesTransfer();
 		
-		SWTBotCCombo comboTransfer = viewProperties.bot().ccomboBox(2);
+		SWTBotCCombo comboTransfer = viewProperties.bot().ccomboBox(0);
 		comboTransfer.setFocus();
 		comboTransfer.setSelection(1);
 		
-		assertThat(viewProperties.bot().ccomboBox(2).getText(), is("consultation"));
+		assertThat(viewProperties.bot().ccomboBox(0).getText(), is("consultation"));
 		assertThat(viewProperties.bot().text(4).isEnabled(), is (true));
 		assertThat(viewProperties.bot().text(4).getText(), is("0"));
 		assertThat(viewProperties.bot().text(5).isEnabled(), is (false));
@@ -1036,15 +945,15 @@ public class PropertiesDiagramTest {
 
 		comunesTransfer();
 		
-		SWTBotCCombo comboTransfer = viewProperties.bot().ccomboBox(2);
+		SWTBotCCombo comboTransfer = viewProperties.bot().ccomboBox(0);
 		comboTransfer.setFocus();
 		comboTransfer.setSelection(2);
 		
-		assertThat(viewProperties.bot().ccomboBox(2).getText(), is("bridge"));
+		assertThat(viewProperties.bot().ccomboBox(0).getText(), is("bridge"));
+		assertThat(viewProperties.bot().text(3).isEnabled(), is (true));
+		assertThat(viewProperties.bot().text(3).getText(), is("0"));
 		assertThat(viewProperties.bot().text(4).isEnabled(), is (true));
 		assertThat(viewProperties.bot().text(4).getText(), is("0"));
-		assertThat(viewProperties.bot().text(5).isEnabled(), is (true));
-		assertThat(viewProperties.bot().text(5).getText(), is("0"));
 	}
 	
 	@Test
@@ -1062,15 +971,15 @@ public class PropertiesDiagramTest {
 
 		comunesTransfer();
 		
-		SWTBotCCombo comboTransfer = viewProperties.bot().ccomboBox(2);
+		SWTBotCCombo comboTransfer = viewProperties.bot().ccomboBox(0);
 		comboTransfer.setFocus();
 		comboTransfer.setSelection(1);
 		
-		SWTBotText textName = viewProperties.bot().text(4);
+		SWTBotText textName = viewProperties.bot().text(2);
 		textName.setFocus();
 		textName.setText("100");
 		gefViewer.click("Transfer");
-		assertThat(viewProperties.bot().text(4).getText(), is("100"));
+		assertThat(viewProperties.bot().text(2).getText(), is("100"));
 	}
 	
 	@Test
@@ -1088,15 +997,15 @@ public class PropertiesDiagramTest {
 
 		comunesTransfer();
 		
-		SWTBotCCombo comboTransfer = viewProperties.bot().ccomboBox(2);
+		SWTBotCCombo comboTransfer = viewProperties.bot().ccomboBox(0);
 		comboTransfer.setFocus();
 		comboTransfer.setSelection(2);
 		
-		SWTBotText textName = viewProperties.bot().text(5);
+		SWTBotText textName = viewProperties.bot().text(4);
 		textName.setFocus();
 		textName.setText("100");
 		gefViewer.click("Transfer");
-		assertThat(viewProperties.bot().text(5).getText(), is("100"));
+		assertThat(viewProperties.bot().text(4).getText(), is("100"));
 	}
 	
 	private void comunesTransfer(){
@@ -1114,23 +1023,20 @@ public class PropertiesDiagramTest {
 		
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Transfer"), is(not(nullValue())));
-		assertThat(viewProperties.bot().clabel("Path:"), is(not(nullValue())));
-		assertThat(
-				viewProperties.bot().text(
-						"/testNavigator/" + BaseModel.JV_PATH + "/test/newsStates.jvflow"),
-				is(not(nullValue())));
+
+	
 		assertThat(viewProperties.bot().clabel("Transfer Type:"), is(not(nullValue())));
-		assertThat(viewProperties.bot().ccomboBox(2).items(), is(arrayWithSize(3)));
-		assertThat(viewProperties.bot().ccomboBox(2).getText(), is("blind"));
+		assertThat(viewProperties.bot().ccomboBox(0).items(), is(arrayWithSize(3)));
+		assertThat(viewProperties.bot().ccomboBox(0).getText(), is("blind"));
 		assertThat(viewProperties.bot().clabel("Destination:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("676455022"), is(not(nullValue())));
 		assertThat(viewProperties.bot().clabel("Audio Transfer:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("esperando"), is(not(nullValue())));
 		assertThat(viewProperties.bot().clabel("TimeOut:"), is(not(nullValue())));
+		assertThat(viewProperties.bot().text(3).isEnabled(), is (false));
+		assertThat(viewProperties.bot().text(3).getText(), is("0"));
 		assertThat(viewProperties.bot().text(4).isEnabled(), is (false));
 		assertThat(viewProperties.bot().text(4).getText(), is("0"));
-		assertThat(viewProperties.bot().text(5).isEnabled(), is (false));
-		assertThat(viewProperties.bot().text(5).getText(), is("0"));
 	}
 	
 }
