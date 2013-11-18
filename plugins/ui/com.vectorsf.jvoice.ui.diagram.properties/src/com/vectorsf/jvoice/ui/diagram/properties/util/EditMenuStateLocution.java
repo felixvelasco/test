@@ -100,27 +100,26 @@ public class EditMenuStateLocution extends RecordingCommand {
 			for (IResource resource : resources) {
 				if (resource instanceof File) {
 					URI uri = URI.createPlatformResourceURI(resource.getFullPath().toString(), true);
-					EObject eObject;
-					if (menuLocution!=null){
+					EObject eObject=null;
+					if(!resource.getName().contains(".jsp")){
 						eObject = flujo.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
+					}
+					if (menuLocution!=null){						
 						if (eObject instanceof MenuDsl) {
 							locutionResources.add((MenuDsl) eObject);
 						}
 					}
 					if (inputLocution!=null){
-						eObject = flujo.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
 						if (eObject instanceof InputDsl) {
 							locutionResources.add((InputDsl) eObject);
 						}
 					}
 					if (outputLocution!=null){
-						eObject = flujo.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
 						if (eObject instanceof PromptDsl) {
 							locutionResources.add((PromptDsl) eObject);
 						}
 					}
 					if (recordLocution!=null){
-						eObject = flujo.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
 						if (eObject instanceof RecordDsl) {
 							locutionResources.add((RecordDsl) eObject);
 						}
@@ -224,8 +223,7 @@ public class EditMenuStateLocution extends RecordingCommand {
 	    		nameSubFlow.setText(recordLocution.getLocution().getName());
 	    		
 			}else if (results[0].toString().contains(".jsp")){	
-				IFile resultcustom = resourcesFolder.getFile(results[0].toString());
-			
+				IFile resultcustom = resourcesFolder.getFile(results[0].toString());			
 	    		nameSubFlow.setText(custom.getName());
 	    		custom.setPath(resultcustom.getName());
 
