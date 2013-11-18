@@ -20,6 +20,7 @@
     <module>ui/com.vectorsf.jvoice.ui.diagram.properties</module>
     <module>ui/com.vectorsf.jvoice.ui.navigator</module>
     <module>ui/com.vectorsf.jvoice.ui.perspective</module>
+    <module>ui/com.vectorsf.jvoice.ui.project.editor</module>
     <module>ui/com.vectorsf.jvoice.ui.wizard</module>
 
     <module>core/com.vectorsf.jvoice.core.operation</module>
