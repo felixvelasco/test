@@ -157,7 +157,7 @@ public class IVRNavigatorTest {
 		synchronized (hook) {
 			int value = hook.count.get();
 			if (value != 0) {
-				hook.wait();
+				hook.wait(10000);
 			}
 		}
 
