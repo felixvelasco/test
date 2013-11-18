@@ -17,6 +17,7 @@ import com.vectorsf.jvoice.model.operations.CustomState
 
 import static com.isb.jVoice.dsl.builder.Using.*
 import com.vectorsf.jvoice.model.operations.TransferState
+import com.vectorsf.jvoice.model.operations.RecordState
 
 class SpringWebFlowGenerator {
 	
@@ -64,6 +65,7 @@ class SpringWebFlowGenerator {
 		«doGenerateFinalState(state)»
 		«doGenerateCustomState(state)»
 		«doGenerateTransferState(state)»
+		«doGenerateRecordState(state)»
 	«IF positionIni==positionFin»
 			«doGenerateFooter()»
 	«ENDIF»
@@ -129,6 +131,12 @@ class SpringWebFlowGenerator {
 		def doGenerateTransferState(State state) '''
 		«IF state instanceof TransferState»
 			«TransferStateCodeXML.doGenerateTransferState(state)»
+		«ENDIF»		
+	'''
+	
+	def doGenerateRecordState(State state) '''
+		«IF state instanceof RecordState »
+			«RecordStateCodeXML.doGenerateRecordState(state)»
 		«ENDIF»		
 	'''
 
