@@ -19,12 +19,11 @@ class RecordStateCodeXML {
 '''
 		<action-state id="«state.name»">
 			<on-entry>
-				<evaluate expression="jVoiceArchRecord" result="flashScope.«state.name»"></evaluate>
-				
+				<evaluate expression="jVoiceArchRecord" result="flashScope.«state.name»" />
 				<set name="flashScope.«state.name».fileName" value="'«dsl.fileName»'" />
 				«IF configuration != null»
 					«IF configuration.getValue("beep") != null && !configuration.getValue("beep").equals("")»
-						<set name="flashScope.«state.name».beep" value="«configuration.getValue("beep")»" />
+					<set name="flashScope.«state.name».beep" value="«configuration.getValue("beep")»" />
 					«ENDIF»	
 					«IF configuration.getValue("dtmfterm") != null && !configuration.getValue("dtmfterm").equals("")»
 					<set name="flashScope.«state.name».dtmfterm" value="«configuration.getValue("dtmfterm")»" />
@@ -42,7 +41,7 @@ class RecordStateCodeXML {
 					<set name="flashScope.«state.name».keep" value="«configuration.getValue("keep")»" />
 					«ENDIF»
 				«ENDIF»
-		<set name="flashScope.jVoiceArchRecFileName" value="flashScope.«state.name».fileName" />		
+				<set name="flashScope.jVoiceArchRecFileName" value="flashScope.«state.name».fileName" />		
         «IF audios != null»
         «var mainAudios = recordIn.locution.audios.mainAudios»
         «var noMatchAudios = recordIn.locution.audios.noMatchAudios»
