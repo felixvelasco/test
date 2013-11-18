@@ -17,4 +17,10 @@
       </listener>
    </extension>
 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="projectInformation"
+            class="com.vectorsf.jvoice.core.reconciliator.util.ReconciliableResourceFactoryImpl"/>
+   </extension>
 </plugin>

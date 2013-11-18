@@ -49,6 +49,7 @@ public class JVoiceModelReconcilier {
 		this.baseModel = baseModel;
 
 		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+
 		for (IProject project : workspace.getRoot().getProjects()) {
 			try {
 				if (project.isOpen() && project.hasNature(JVoiceApplicationNature.NATURE_ID)) {
@@ -77,27 +78,10 @@ public class JVoiceModelReconcilier {
 			jvProject = BaseFactory.eINSTANCE.createJVModule();
 			jvProject.setName(project.getName());
 			jvProject.setDescription(project.getName());
-		}
-
-		IFolder packageFolder = (IFolder) project.findMember(BaseModel.JV_PATH);
-		if (packageFolder != null) {
-			try {
-				packageFolder.accept(new ResourceVisitor((JVModule) jvProject, baseModel));
-			} catch (CoreException e) {
+			if (jvProject instanceof JVModule) {
+				addPackages(project, (JVModule) jvProject);
 			}
-		}
-
-		IFolder configurationsFolder = (IFolder) project.findMember(BaseModel.PROPERTIES_PATH);
-		if (configurationsFolder != null) {
-			try {
-				for (IResource res : configurationsFolder.members()) {
-					if (res.getType() == IResource.FILE && res.getFileExtension().equalsIgnoreCase("properties")) {
-						jvProject.getConfiguration().add(createConfigurationFromFile((IFile) res));
-					}
-				}
-			} catch (CoreException e) {
-				System.out.print(e);
-			}
+			addConfiguration(project, jvProject);
 		}
 
 		return jvProject;
@@ -115,14 +99,29 @@ public class JVoiceModelReconcilier {
 			application = BaseFactory.eINSTANCE.createJVApplication();
 			application.setName(project.getName());
 			application.setDescription(project.getName());
+			addConfiguration(project, application);
 		}
 
+		return application;
+	}
+
+	public void addPackages(IProject project, JVModule jvModule) {
+		IFolder packageFolder = (IFolder) project.findMember(BaseModel.JV_PATH);
+		if (packageFolder != null) {
+			try {
+				packageFolder.accept(new ResourceVisitor(jvModule, baseModel));
+			} catch (CoreException e) {
+			}
+		}
+	}
+
+	public void addConfiguration(IProject project, JVProject jvProject) {
 		IFolder configurationsFolder = (IFolder) project.findMember(BaseModel.PROPERTIES_PATH);
 		if (configurationsFolder != null) {
 			try {
 				for (IResource res : configurationsFolder.members()) {
 					if (res.getType() == IResource.FILE && res.getFileExtension().equalsIgnoreCase("properties")) {
-						application.getConfiguration().add(createConfigurationFromFile((IFile) res));
+						jvProject.getConfiguration().add(createConfigurationFromFile((IFile) res));
 					}
 				}
 			} catch (CoreException e) {
@@ -130,7 +129,6 @@ public class JVoiceModelReconcilier {
 			}
 		}
 
-		return application;
 	}
 
 	public Configuration createConfigurationFromFile(IFile file) throws CoreException {
