@@ -103,9 +103,12 @@ public class InputStatePattern extends StatePattern implements ISelectionStatusV
 		try {
 			IResource[] resources = resourcesFolder.members();
 			for (IResource resource : resources) {
+				EObject eObject = null;
 				if (resource instanceof File) {
 					URI uri = URI.createPlatformResourceURI(resource.getFullPath().toString(), true);
-					EObject eObject = flow.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
+					if (!resource.getName().contains(".jsp")) {
+						eObject = flow.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
+					}
 					if (eObject instanceof InputDsl) {
 						locutionResources.add((InputDsl) eObject);
 					}
