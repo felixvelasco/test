@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -20,6 +22,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 
+import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
@@ -39,6 +42,17 @@ public class EditMenuStateLocution extends RecordingCommand {
 	private PromptState outputLocution;
 	private RecordState recordLocution;
 	private Text nameSubFlow;
+	private CustomState custom;
+	private Flow flujo;
+	private String flowFolderPath;
+	private IFolder resourcesFolder;
+	
+	public EditMenuStateLocution(TransactionalEditingDomain domain, CustomState custom, Text nameSubFlow) {
+		super(domain);
+		this.custom = custom;
+		this.nameSubFlow = nameSubFlow;
+		
+	}
 	
 	public EditMenuStateLocution(TransactionalEditingDomain domain, MenuState menuLocution, Text nameSubFlow) {
 		super(domain);
@@ -74,40 +88,53 @@ public class EditMenuStateLocution extends RecordingCommand {
 		Shell activeShell = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getShell();
 		
-		Flow flujo = obtenerFlow();
+		flujo = obtenerFlow();
 		DialogLocution dialog = new DialogLocution(activeShell);
-		List<VoiceDsl> locutionResources = new ArrayList<VoiceDsl>();
-		String flowFolderPath = getFolderPath(flujo);
+		List locutionResources = new ArrayList<>();
+		flowFolderPath = getFolderPath(flujo);
 
-		IFolder resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace().getRoot().findMember(flowFolderPath);
-		
+		resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace().getRoot().findMember(flowFolderPath);
+
 		try {
 			IResource[] resources = resourcesFolder.members();
 			for (IResource resource : resources) {
 				if (resource instanceof File) {
 					URI uri = URI.createPlatformResourceURI(resource.getFullPath().toString(), true);
-					EObject eObject = flujo.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
+					EObject eObject;
 					if (menuLocution!=null){
+						eObject = flujo.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
 						if (eObject instanceof MenuDsl) {
 							locutionResources.add((MenuDsl) eObject);
 						}
 					}
 					if (inputLocution!=null){
+						eObject = flujo.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
 						if (eObject instanceof InputDsl) {
 							locutionResources.add((InputDsl) eObject);
 						}
 					}
 					if (outputLocution!=null){
+						eObject = flujo.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
 						if (eObject instanceof PromptDsl) {
 							locutionResources.add((PromptDsl) eObject);
 						}
 					}
 					if (recordLocution!=null){
+						eObject = flujo.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
 						if (eObject instanceof RecordDsl) {
 							locutionResources.add((RecordDsl) eObject);
 						}
 					}
+					if (custom!=null){
+						if (resource.getName().contains(".jsp")) {
+							locutionResources.add(resource.getName());		
+						}
+										
+					
+					}
+					
 				}
+	
 			}
 		} catch (CoreException e1) {
 			// TODO Auto-generated catch block
@@ -152,6 +179,9 @@ public class EditMenuStateLocution extends RecordingCommand {
 		}else if (recordLocution!=null){
 			dialog.setTitle("Record Selection");
 			dialog.setMessage("Select an record:");
+		}else if (custom!=null){
+			dialog.setTitle("Custom Selection");
+			dialog.setMessage("Select a Custom:");
 		}
 	}
 	
@@ -193,6 +223,13 @@ public class EditMenuStateLocution extends RecordingCommand {
 				recordLocution.setLocution(result);
 	    		nameSubFlow.setText(recordLocution.getLocution().getName());
 	    		
+			}else if (results[0].toString().contains(".jsp")){	
+				IFile resultcustom = resourcesFolder.getFile(results[0].toString());
+			
+	    		nameSubFlow.setText(custom.getName());
+	    		custom.setPath(resultcustom.getName());
+
+	    		
 			}
 		}
 	}
@@ -219,6 +256,8 @@ public class EditMenuStateLocution extends RecordingCommand {
 			return (Flow)outputLocution.eContainer();
 		if (recordLocution!=null)
 			return (Flow)recordLocution.eContainer();
+		if (custom!=null)
+			return (Flow)custom.eContainer();
 		return null;
 	}
 }

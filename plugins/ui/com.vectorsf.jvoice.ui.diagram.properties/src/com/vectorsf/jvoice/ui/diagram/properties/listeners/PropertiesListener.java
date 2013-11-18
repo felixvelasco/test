@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Text;
 
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Case;
+import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
@@ -85,6 +86,10 @@ public class PropertiesListener implements Listener {
             		dominio.getCommandStack().execute(new UpCaseSwitch(dominio, estadoSelection, casos, tableViewer));
             	else if (event.widget.getData().equals("down"))
             		dominio.getCommandStack().execute(new DownCaseSwitch(dominio, estadoSelection, casos, tableViewer));
+            }else if (bo instanceof CustomState){
+            	CustomState custom = (CustomState)bo;
+            	TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(custom);
+            	dominio.getCommandStack().execute(new EditMenuStateLocution(dominio, custom, nameSubFlow));
             }
             stateSection.refresh();
         }
