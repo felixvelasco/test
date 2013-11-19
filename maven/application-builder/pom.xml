@@ -1,12 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.vectorsf.jvoice</groupId>
 		<artifactId>maven</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</parent>
-  <artifactId>application-builder</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+	<artifactId>application-builder</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
 	<repositories>
 		<repository>
 			<id>ivr</id>
@@ -14,13 +15,13 @@
 			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/groups/jvoiceGroup/</url>
 		</repository>
 	</repositories>
-  	<pluginRepositories>
+	<pluginRepositories>
 		<pluginRepository>
 			<id>xtend</id>
 			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/xtend/</url>
 		</pluginRepository>
 	</pluginRepositories>
-  <dependencies>
+	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
@@ -60,7 +61,7 @@
 			<artifactId>maven-project</artifactId>
 			<version>3.0-alpha-2</version>
 		</dependency>
-			<dependency>
+		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.lib</artifactId>
 			<version>2.4.2</version>
@@ -92,49 +93,50 @@
 			<artifactId>guava</artifactId>
 			<version>13.0</version>
 		</dependency>
-</dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-source-plugin</artifactId>
-			<executions>
-				<execution>
-					<id>attach-sources</id>
-					<goals>
-						<goal>jar</goal>
-					</goals>
-				</execution>
-			</executions>
-      </plugin>
-      <plugin>
-		<groupId>org.eclipse.xtend</groupId>
-		<artifactId>xtend-maven-plugin</artifactId>
-		<version>2.4.2</version>
-		<configuration>
-			<outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
-		</configuration>
-		<executions>
-			<execution>
-				<goals>
-					<goal>compile</goal>
-				</goals>
-			</execution>
-		</executions>
-	  </plugin>
-    </plugins>
-  </build>
-  <packaging>maven-plugin</packaging>
-  <url>http://maven.apache.org</url>
-  <properties>
-  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  <name>application.builder Maven Mojo</name>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>2.4.2</version>
+				<configuration>
+					<outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<packaging>maven-plugin</packaging>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<name>application.builder Maven Mojo</name>
 </project>

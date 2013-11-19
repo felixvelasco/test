@@ -1,9 +1,8 @@
 package com.isb.jVoice.dsl.builder
 
-import com.vectorsf.jvoice.model.operations.State
-import com.vectorsf.jvoice.model.operations.PromptState
-import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio
 import com.vectorsf.jvoice.model.operations.CustomState
+import com.vectorsf.jvoice.model.operations.PromptState
+import com.vectorsf.jvoice.model.operations.State
 
 class OutputStateCodeXML {
 	
