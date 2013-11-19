@@ -564,7 +564,7 @@
                            value="com.vectorsf.jvoice.model.base.JVPackage">
                      </instanceof>
                      <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVProject">
+                           value="com.vectorsf.jvoice.model.base.JVModule">
                      </instanceof>
                   </or>
                </iterate>
