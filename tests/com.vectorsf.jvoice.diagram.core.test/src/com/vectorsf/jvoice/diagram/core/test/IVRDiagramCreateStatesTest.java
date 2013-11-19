@@ -126,6 +126,7 @@ public class IVRDiagramCreateStatesTest {
 			if (shells[i].isOpen()) {
 				SWTBotShell shell = shells[i];
 				if (shell.getText().contains("Input")
+						|| shell.getText().contains("Selection")
 						|| shell.getText().contains("Menu")
 						|| shell.getText().contains("Flow")
 						|| shell.getText().contains("Menu")) {
@@ -394,8 +395,11 @@ public class IVRDiagramCreateStatesTest {
 
 		bot.waitUntil(shellIsActive(stateName + " Selection"), 10000);
 		SWTBotShell shell = bot.shell(stateName + " Selection");
-
-		shell.bot().table().select(stateName);
+		if (stateName.equals("Output")) {
+			shell.bot().table().select("Prompt Dsl " + stateName);
+		} else {
+			shell.bot().table().select(stateName + " Dsl " + stateName);
+		}
 
 		shell.bot().button("OK").click();
 
@@ -411,8 +415,9 @@ public class IVRDiagramCreateStatesTest {
 		final IFile file = createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/five.jvflow",
 				getInputStreamResource(bundle, "five.jvflow"));
-		createFile(project, BaseModel.JV_PATH + "/several/packages/inside/five.resources/"
-				+ stateName + ".voiceDsl",
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/five.resources/" + stateName
+				+ ".voiceDsl",
 				getInputStreamResource(bundle, stateName + ".voiceDsl"));
 
 		bot.sleep(LARGE_SLEEP);
