@@ -233,7 +233,7 @@ public class WizardsTest {
 	public void testCreatePackageSimple() throws CoreException {
 		SWTBotHelper.createProject("baseNavigator");
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
-		assertThat(view.bot().tree().expandNode("baseNavigator").getItems(), is(arrayWithSize(3)));
+		assertThat(view.bot().tree().expandNode("baseNavigator").getItems(), is(arrayWithSize(2)));
 		view.bot().tree().getTreeItem("baseNavigator").contextMenu("New").menu("Package").click();
 		bot.shell("New Package").activate();
 		final SWTBotShell shellCreate = bot.shell("New Package"); //$NON-NLS-1$
