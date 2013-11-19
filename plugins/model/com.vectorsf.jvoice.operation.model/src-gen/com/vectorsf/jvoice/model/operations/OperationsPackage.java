@@ -280,13 +280,22 @@ public interface OperationsPackage extends EPackage {
 	int FLOW__NOTES = BasePackage.JV_BEAN_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Beans</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLOW__BEANS = BasePackage.JV_BEAN_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Flow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FLOW_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 3;
+	int FLOW_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Flow</em>' class.
@@ -1518,6 +1527,70 @@ public interface OperationsPackage extends EPackage {
 	int CUSTOM_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl <em>Component Bean</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getComponentBean()
+	 * @generated
+	 */
+	int COMPONENT_BEAN = 17;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_BEAN__ID = BasePackage.NAMED_ELEMENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_BEAN__NAME = BasePackage.NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_BEAN__DESCRIPTION = BasePackage.NAMED_ELEMENT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Fqdn</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_BEAN__FQDN = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Component Bean</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_BEAN_FEATURE_COUNT = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Component Bean</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_BEAN_OPERATION_COUNT = BasePackage.NAMED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1525,7 +1598,7 @@ public interface OperationsPackage extends EPackage {
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTypeTransfer()
 	 * @generated
 	 */
-	int TYPE_TRANSFER = 17;
+	int TYPE_TRANSFER = 18;
 
 
 	/**
@@ -1656,6 +1729,17 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getFlow_Notes();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.operations.Flow#getBeans <em>Beans</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Beans</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.Flow#getBeans()
+	 * @see #getFlow()
+	 * @generated
+	 */
+	EReference getFlow_Beans();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.InitialState <em>Initial State</em>}'.
@@ -1962,6 +2046,27 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getCustomState_Path();
 
 	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.ComponentBean <em>Component Bean</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Component Bean</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.ComponentBean
+	 * @generated
+	 */
+	EClass getComponentBean();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.ComponentBean#getFqdn <em>Fqdn</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Fqdn</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.ComponentBean#getFqdn()
+	 * @see #getComponentBean()
+	 * @generated
+	 */
+	EAttribute getComponentBean_Fqdn();
+
+	/**
 	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2095,6 +2200,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference FLOW__NOTES = eINSTANCE.getFlow_Notes();
+
+		/**
+		 * The meta object literal for the '<em><b>Beans</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FLOW__BEANS = eINSTANCE.getFlow_Beans();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.InitialStateImpl <em>Initial State</em>}' class.
@@ -2355,6 +2468,24 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CUSTOM_STATE__PATH = eINSTANCE.getCustomState_Path();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl <em>Component Bean</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getComponentBean()
+		 * @generated
+		 */
+		EClass COMPONENT_BEAN = eINSTANCE.getComponentBean();
+
+		/**
+		 * The meta object literal for the '<em><b>Fqdn</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_BEAN__FQDN = eINSTANCE.getComponentBean_Fqdn();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}' enum.

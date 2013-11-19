@@ -72,6 +72,7 @@ public class OperationsFactoryImpl extends EFactoryImpl implements OperationsFac
 			case OperationsPackage.RECORD_STATE: return createRecordState();
 			case OperationsPackage.NOTE: return createNote();
 			case OperationsPackage.CUSTOM_STATE: return createCustomState();
+			case OperationsPackage.COMPONENT_BEAN: return createComponentBean();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -255,6 +256,16 @@ public class OperationsFactoryImpl extends EFactoryImpl implements OperationsFac
 	public CustomState createCustomState() {
 		CustomStateImpl customState = new CustomStateImpl();
 		return customState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ComponentBean createComponentBean() {
+		ComponentBeanImpl componentBean = new ComponentBeanImpl();
+		return componentBean;
 	}
 
 	/**

@@ -8,6 +8,8 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.provider.FlowItemProvider;
+import com.vectorsf.jvoice.model.operations.provider.flow.LocutionItemProvider;
+import com.vectorsf.jvoice.model.operations.provider.flow.ScopeItemProvider;
 
 public class ExtFlowItemProvider extends FlowItemProvider {
 
@@ -34,7 +36,7 @@ public class ExtFlowItemProvider extends FlowItemProvider {
 			Flow flow = (Flow) object;
 			children = new ArrayList<>();
 			children.add(new LocutionItemProvider(adapterFactory, flow));
-			// children.add(new ContextItemProvider(adapterFactory, flow));
+			children.add(new ScopeItemProvider(adapterFactory, flow));
 			// children.add(new CustomPageItemProvider(adapterFactory, flow));
 		}
 		return children;

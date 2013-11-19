@@ -140,6 +140,10 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 				return createCustomStateAdapter();
 			}
 			@Override
+			public Adapter caseComponentBean(ComponentBean object) {
+				return createComponentBeanAdapter();
+			}
+			@Override
 			public Adapter caseJVElement(JVElement object) {
 				return createJVElementAdapter();
 			}
@@ -406,6 +410,20 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCustomStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.operations.ComponentBean <em>Component Bean</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.operations.ComponentBean
+	 * @generated
+	 */
+	public Adapter createComponentBeanAdapter() {
 		return null;
 	}
 

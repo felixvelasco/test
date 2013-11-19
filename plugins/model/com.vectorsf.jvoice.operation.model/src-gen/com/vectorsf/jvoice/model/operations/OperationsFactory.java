@@ -157,6 +157,15 @@ public interface OperationsFactory extends EFactory {
 	CustomState createCustomState();
 
 	/**
+	 * Returns a new object of class '<em>Component Bean</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Component Bean</em>'.
+	 * @generated
+	 */
+	ComponentBean createComponentBean();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

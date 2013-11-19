@@ -104,6 +104,7 @@ public class FlowItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(OperationsPackage.Literals.FLOW__STATES);
 			childrenFeatures.add(OperationsPackage.Literals.FLOW__TRANSITIONS);
+			childrenFeatures.add(OperationsPackage.Literals.FLOW__BEANS);
 		}
 		return childrenFeatures;
 	}
@@ -160,6 +161,7 @@ public class FlowItemProvider
 		switch (notification.getFeatureID(Flow.class)) {
 			case OperationsPackage.FLOW__STATES:
 			case OperationsPackage.FLOW__TRANSITIONS:
+			case OperationsPackage.FLOW__BEANS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -236,6 +238,11 @@ public class FlowItemProvider
 			(createChildParameter
 				(OperationsPackage.Literals.FLOW__TRANSITIONS,
 				 OperationsFactory.eINSTANCE.createTransition()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(OperationsPackage.Literals.FLOW__BEANS,
+				 OperationsFactory.eINSTANCE.createComponentBean()));
 	}
 
 	/**

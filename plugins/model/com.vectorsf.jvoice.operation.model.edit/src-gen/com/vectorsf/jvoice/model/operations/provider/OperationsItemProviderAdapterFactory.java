@@ -414,6 +414,29 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.ComponentBean} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ComponentBeanItemProvider componentBeanItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.ComponentBean}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createComponentBeanAdapter() {
+		if (componentBeanItemProvider == null) {
+			componentBeanItemProvider = new ComponentBeanItemProvider(this);
+		}
+
+		return componentBeanItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
