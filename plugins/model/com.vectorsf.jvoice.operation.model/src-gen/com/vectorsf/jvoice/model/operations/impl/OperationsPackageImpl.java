@@ -797,8 +797,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEClass(transferStateEClass, TransferState.class, "TransferState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTransferState_Destination(), ecorePackage.getEString(), "destination", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTransferState_AudioTransfer(), ecorePackage.getEString(), "audioTransfer", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTransferState_MaxTime(), ecorePackage.getEInt(), "maxTime", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTransferState_Timeout(), ecorePackage.getEInt(), "timeout", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTransferState_MaxTime(), ecorePackage.getEString(), "maxTime", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTransferState_Timeout(), ecorePackage.getEString(), "timeout", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTransferState_TypeTransfer(), this.getTypeTransfer(), "typeTransfer", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(recordStateEClass, RecordState.class, "RecordState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

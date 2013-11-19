@@ -48,13 +48,13 @@ public final class RenameCommand extends RecordingCommand {
 				
 			case 3:
 				//se trata de un transfer y queremos cambiar el tiempo de timeout
-				((TransferState) bimElement).setTimeout(Integer.parseInt(newValue));
+				((TransferState) bimElement).setTimeout(newValue);
 
 				break;
 				
 			case 4:
 				//se trata de un transfer y queremos cambiar el tiempo máximo de espera
-				((TransferState) bimElement).setMaxTime(Integer.parseInt(newValue));
+				((TransferState) bimElement).setMaxTime(newValue);
 
 				break;
 			

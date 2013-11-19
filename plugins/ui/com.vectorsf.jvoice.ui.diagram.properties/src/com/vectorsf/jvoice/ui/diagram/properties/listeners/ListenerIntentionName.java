@@ -41,35 +41,41 @@ public class ListenerIntentionName implements FocusListener {
 		boolean changed = false;
 		switch (option){
 			case 0:
-				if (!bimElement.getName().equals(nameText.getText())){
+				if (bimElement!=null && !bimElement.getName().equals(nameText.getText())){
 					changed = true;
 				}
 				break;
 				
 			case 1:
 				//se trata de un transfer y queremos cambiar la URI a la que se transferirá la llamada
-				if (!((TransferState) bimElement).getDestination().equals(nameText.getText())){
+			String destination = ((TransferState) bimElement).getDestination();
+			if (!nameText.getText().equals(destination)){
 					changed = true;
 				}	
 				break;
 				
 			case 2:
 				//se trata de un transfer y queremos cambiar el audio de espera
-				if (!((TransferState) bimElement).getAudioTransfer().equals(nameText.getText())){
+			String audioTransfer = ((TransferState) bimElement).getAudioTransfer();
+			if (!nameText.getText().equals(audioTransfer)){
 					changed = true;
 				}	
 				break;
 				
 			case 3:
 				//se trata de un transfer y queremos cambiar el tiempo de timeout
-				if (((TransferState) bimElement).getTimeout() != Integer.parseInt(nameText.getText())){
+			String timeout = ((TransferState) bimElement).getTimeout();
+			if (!nameText.getText().equals(timeout)){
 					changed = true;
 				}	
 				break;
 				
 			case 4:
 				//se trata de un transfer y queremos cambiar el tiempo máximo de espera
-				if (((TransferState) bimElement).getMaxTime() != Integer.parseInt(nameText.getText())){
+				
+					String maxTime = ((TransferState) bimElement).getMaxTime();
+					if (!nameText.getText().equals(maxTime))
+					{
 					changed = true;
 				}	
 				break;

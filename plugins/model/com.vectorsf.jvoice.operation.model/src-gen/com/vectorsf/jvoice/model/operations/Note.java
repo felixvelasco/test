@@ -57,7 +57,7 @@ public interface Note extends JVElement {
 	 * It is bidirectional and its opposite is '{@link com.vectorsf.jvoice.model.operations.State#getNotes <em>Notes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Referenced States</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Referenced States</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->

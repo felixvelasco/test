@@ -85,12 +85,12 @@ public interface TransferState extends State {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Max Time</em>' attribute.
-	 * @see #setMaxTime(int)
+	 * @see #setMaxTime(String)
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getTransferState_MaxTime()
 	 * @model
 	 * @generated
 	 */
-	int getMaxTime();
+	String getMaxTime();
 
 	/**
 	 * Sets the value of the '{@link com.vectorsf.jvoice.model.operations.TransferState#getMaxTime <em>Max Time</em>}' attribute.
@@ -100,7 +100,7 @@ public interface TransferState extends State {
 	 * @see #getMaxTime()
 	 * @generated
 	 */
-	void setMaxTime(int value);
+	void setMaxTime(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Timeout</b></em>' attribute.
@@ -111,12 +111,12 @@ public interface TransferState extends State {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Timeout</em>' attribute.
-	 * @see #setTimeout(int)
+	 * @see #setTimeout(String)
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getTransferState_Timeout()
 	 * @model
 	 * @generated
 	 */
-	int getTimeout();
+	String getTimeout();
 
 	/**
 	 * Sets the value of the '{@link com.vectorsf.jvoice.model.operations.TransferState#getTimeout <em>Timeout</em>}' attribute.
@@ -126,7 +126,7 @@ public interface TransferState extends State {
 	 * @see #getTimeout()
 	 * @generated
 	 */
-	void setTimeout(int value);
+	void setTimeout(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Type Transfer</b></em>' attribute.

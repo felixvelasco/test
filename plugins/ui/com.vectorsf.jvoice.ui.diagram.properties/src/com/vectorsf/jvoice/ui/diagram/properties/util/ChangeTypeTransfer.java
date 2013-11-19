@@ -50,27 +50,38 @@ public class ChangeTypeTransfer extends RecordingCommand {
 	}
 
 	private void actualizarTimes(TransferState transferState) {
+		String timeout = transferState.getTimeout();
 		switch (transferState.getTypeTransfer().getValue()){
 		case 0:
-			transferState.setTimeout(0);
-			transferState.setMaxTime(0);
-			timeOutText.setText("0");
-			maxTimeText.setText("0");
+			transferState.setTimeout("");
+			transferState.setMaxTime("");
+			timeOutText.setText("");
+			maxTimeText.setText("");
 			timeOutText.setEnabled(false);
 			maxTimeText.setEnabled(false);
 			break;
 			
 		case 1:
-			transferState.setMaxTime(0);
-			timeOutText.setText(Integer.toString(transferState.getTimeout()));
-			maxTimeText.setText("0");
+			transferState.setMaxTime("");
+			if (timeout!=null)
+			{
+				timeOutText.setText(timeout);
+			}
+			maxTimeText.setText("");
 			timeOutText.setEnabled(true);
 			maxTimeText.setEnabled(false);
 			break;
 			
 		case 2:
-			timeOutText.setText(Integer.toString(transferState.getTimeout()));
-			maxTimeText.setText(Integer.toString(transferState.getMaxTime()));
+			if (timeout!=null)
+			{
+				timeOutText.setText(timeout);			
+			}
+			String maxTime = transferState.getMaxTime();
+			if (maxTime!=null)
+			{
+				maxTimeText.setText(maxTime);
+			}
 			timeOutText.setEnabled(true);
 			maxTimeText.setEnabled(true);
 			break;

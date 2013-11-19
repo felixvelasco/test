@@ -5,8 +5,11 @@ package com.vectorsf.jvoice.model.operations.impl;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.TransferState;
 import com.vectorsf.jvoice.model.operations.TypeTransfer;
+
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -75,7 +78,7 @@ public class TransferStateImpl extends StateImpl implements TransferState {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int MAX_TIME_EDEFAULT = 0;
+	protected static final String MAX_TIME_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getMaxTime() <em>Max Time</em>}' attribute.
@@ -85,7 +88,7 @@ public class TransferStateImpl extends StateImpl implements TransferState {
 	 * @generated
 	 * @ordered
 	 */
-	protected int maxTime = MAX_TIME_EDEFAULT;
+	protected String maxTime = MAX_TIME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getTimeout() <em>Timeout</em>}' attribute.
@@ -95,7 +98,7 @@ public class TransferStateImpl extends StateImpl implements TransferState {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int TIMEOUT_EDEFAULT = 0;
+	protected static final String TIMEOUT_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getTimeout() <em>Timeout</em>}' attribute.
@@ -105,7 +108,7 @@ public class TransferStateImpl extends StateImpl implements TransferState {
 	 * @generated
 	 * @ordered
 	 */
-	protected int timeout = TIMEOUT_EDEFAULT;
+	protected String timeout = TIMEOUT_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getTypeTransfer() <em>Type Transfer</em>}' attribute.
@@ -193,7 +196,7 @@ public class TransferStateImpl extends StateImpl implements TransferState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getMaxTime() {
+	public String getMaxTime() {
 		return maxTime;
 	}
 
@@ -202,8 +205,8 @@ public class TransferStateImpl extends StateImpl implements TransferState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setMaxTime(int newMaxTime) {
-		int oldMaxTime = maxTime;
+	public void setMaxTime(String newMaxTime) {
+		String oldMaxTime = maxTime;
 		maxTime = newMaxTime;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OperationsPackage.TRANSFER_STATE__MAX_TIME, oldMaxTime, maxTime));
@@ -214,7 +217,7 @@ public class TransferStateImpl extends StateImpl implements TransferState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getTimeout() {
+	public String getTimeout() {
 		return timeout;
 	}
 
@@ -223,8 +226,8 @@ public class TransferStateImpl extends StateImpl implements TransferState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTimeout(int newTimeout) {
-		int oldTimeout = timeout;
+	public void setTimeout(String newTimeout) {
+		String oldTimeout = timeout;
 		timeout = newTimeout;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OperationsPackage.TRANSFER_STATE__TIMEOUT, oldTimeout, timeout));
@@ -288,10 +291,10 @@ public class TransferStateImpl extends StateImpl implements TransferState {
 				setAudioTransfer((String)newValue);
 				return;
 			case OperationsPackage.TRANSFER_STATE__MAX_TIME:
-				setMaxTime((Integer)newValue);
+				setMaxTime((String)newValue);
 				return;
 			case OperationsPackage.TRANSFER_STATE__TIMEOUT:
-				setTimeout((Integer)newValue);
+				setTimeout((String)newValue);
 				return;
 			case OperationsPackage.TRANSFER_STATE__TYPE_TRANSFER:
 				setTypeTransfer((TypeTransfer)newValue);
@@ -340,9 +343,9 @@ public class TransferStateImpl extends StateImpl implements TransferState {
 			case OperationsPackage.TRANSFER_STATE__AUDIO_TRANSFER:
 				return AUDIO_TRANSFER_EDEFAULT == null ? audioTransfer != null : !AUDIO_TRANSFER_EDEFAULT.equals(audioTransfer);
 			case OperationsPackage.TRANSFER_STATE__MAX_TIME:
-				return maxTime != MAX_TIME_EDEFAULT;
+				return MAX_TIME_EDEFAULT == null ? maxTime != null : !MAX_TIME_EDEFAULT.equals(maxTime);
 			case OperationsPackage.TRANSFER_STATE__TIMEOUT:
-				return timeout != TIMEOUT_EDEFAULT;
+				return TIMEOUT_EDEFAULT == null ? timeout != null : !TIMEOUT_EDEFAULT.equals(timeout);
 			case OperationsPackage.TRANSFER_STATE__TYPE_TRANSFER:
 				return typeTransfer != TYPE_TRANSFER_EDEFAULT;
 		}
