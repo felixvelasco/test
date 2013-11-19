@@ -54,6 +54,7 @@ import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteApplicationProject;
 
 /**
  * 
@@ -298,11 +299,11 @@ public class NavigatorActionsTest {
 		assertThat(editor, is(not(nullValue())));
 		editor.close();
 
-		here = view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("newLocution")
+		here = view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("Input Dsl newLocution")
 				.select();
 		assertThat(here.contextMenu("Open"), hasProperty("enabled", is(true)));
 
-		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("newLocution")
+		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("Input Dsl newLocution")
 				.select().contextMenu("Open").click();
 
 		bot.sleep(MEDIUM_SLEEP);
@@ -317,7 +318,7 @@ public class NavigatorActionsTest {
 	@Test
 	public void testCopyPackageToApplication() throws Exception {
 
-		createApplicationProject("testNavigatorApplication");
+		IProject project = createApplicationProject("testNavigatorApplication");
 		bot.sleep(SMALL_SLEEP);
 
 		SWTBotTreeItem project1Item = view.bot().tree().getTreeItem("testNavigator");
@@ -328,6 +329,8 @@ public class NavigatorActionsTest {
 		project1Item.getNode("several.packages.inside").select().contextMenu("Copy").click();
 
 		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
+		
+		deleteApplicationProject(project);
 	}
 
 	@Test
@@ -359,27 +362,7 @@ public class NavigatorActionsTest {
 				both(hasBeanNamed("one")).and(hasBeanNamed("two")));
 
 		project1Item.contextMenu("Delete").click();
-		bot.shell("Delete").activate();
-		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
-		dialogBot = bot.shell("Delete").bot();
-		assertThat(dialogBot.button("OK").isEnabled(), is(true));
-		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
-		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
-		dialogBot.button("OK").click();
-		bot.waitUntil(new DefaultCondition() {
-			@Override
-			public boolean test() throws Exception {
-				if (!shellCreate.isOpen()) {
-					return true;
-				}
-				return false;
-			}
-
-			@Override
-			public String getFailureMessage() {
-				return "Was expecting the 'Create' dialog to close itself";
-			}
-		}, 5 * 60 * 1000);
+		delete();
 
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("two")));
@@ -415,27 +398,7 @@ public class NavigatorActionsTest {
 		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").select("one", "two");
 		new SWTBotMenu(ContextMenuHelper.contextMenu(view.bot().tree(), "Delete")).click();
 
-		bot.shell("Delete").activate();
-		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
-		dialogBot = bot.shell("Delete").bot();
-		assertThat(dialogBot.button("OK").isEnabled(), is(true));
-		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
-		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
-		dialogBot.button("OK").click();
-		bot.waitUntil(new DefaultCondition() {
-			@Override
-			public boolean test() throws Exception {
-				if (!shellCreate.isOpen()) {
-					return true;
-				}
-				return false;
-			}
-
-			@Override
-			public String getFailureMessage() {
-				return "Was expecting the 'Create' dialog to close itself";
-			}
-		}, 5 * 60 * 1000);
+		delete();
 
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("one")));
@@ -475,27 +438,7 @@ public class NavigatorActionsTest {
 		assertThat(project1.getPackages(), hasPackageNamed("several.packages.inside.here"));
 
 		project1Item.contextMenu("Delete").click();
-		bot.shell("Delete").activate();
-		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
-		dialogBot = bot.shell("Delete").bot();
-		assertThat(dialogBot.button("OK").isEnabled(), is(true));
-		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
-		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
-		dialogBot.button("OK").click();
-		bot.waitUntil(new DefaultCondition() {
-			@Override
-			public boolean test() throws Exception {
-				if (!shellCreate.isOpen()) {
-					return true;
-				}
-				return false;
-			}
-
-			@Override
-			public String getFailureMessage() {
-				return "Was expecting the 'Create' dialog to close itself";
-			}
-		}, 5 * 60 * 1000);
+		delete();
 
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(project1.getPackages(), not(hasPackageNamed("several.packages.inside.here")));
@@ -534,27 +477,7 @@ public class NavigatorActionsTest {
 		view.bot().tree().getTreeItem("testNavigator").select("several.packages.inside.here", "other.packages.inside");
 		new SWTBotMenu(ContextMenuHelper.contextMenu(view.bot().tree(), "Delete")).click();
 
-		bot.shell("Delete").activate();
-		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
-		dialogBot = bot.shell("Delete").bot();
-		assertThat(dialogBot.button("OK").isEnabled(), is(true));
-		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
-		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
-		dialogBot.button("OK").click();
-		bot.waitUntil(new DefaultCondition() {
-			@Override
-			public boolean test() throws Exception {
-				if (!shellCreate.isOpen()) {
-					return true;
-				}
-				return false;
-			}
-
-			@Override
-			public String getFailureMessage() {
-				return "Was expecting the 'Create' dialog to close itself";
-			}
-		}, 5 * 60 * 1000);
+		delete();
 
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(project1.getPackages(), not(hasPackageNamed("several.packages.inside.here")));
@@ -593,29 +516,7 @@ public class NavigatorActionsTest {
 		assertThat(view.bot().tree().getTreeItem("testNavigator3"), is(not(nullValue())));
 
 		project1Item.contextMenu("Delete").click();
-		bot.shell("Delete").activate();
-		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
-		dialogBot = bot.shell("Delete").bot();
-		assertThat(dialogBot.button("OK").isEnabled(), is(true));
-		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
-		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
-		assertThat(dialogBot.checkBox().isEnabled(), is(true));
-		dialogBot.checkBox().click();
-		dialogBot.button("OK").click();
-		bot.waitUntil(new DefaultCondition() {
-			@Override
-			public boolean test() throws Exception {
-				if (!shellCreate.isOpen()) {
-					return true;
-				}
-				return false;
-			}
-
-			@Override
-			public String getFailureMessage() {
-				return "Was expecting the 'Create' dialog to close itself";
-			}
-		}, 5 * 60 * 1000);
+		deleteWithCheck();
 
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
@@ -652,29 +553,7 @@ public class NavigatorActionsTest {
 		assertThat(view.bot().tree().getTreeItem("testNavigator3"), is(not(nullValue())));
 
 		new SWTBotMenu(ContextMenuHelper.contextMenu(view.bot().tree(), "Delete")).click();
-		bot.shell("Delete").activate();
-		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
-		dialogBot = bot.shell("Delete").bot();
-		assertThat(dialogBot.button("OK").isEnabled(), is(true));
-		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
-		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
-		assertThat(dialogBot.checkBox().isEnabled(), is(true));
-		dialogBot.checkBox().click();
-		dialogBot.button("OK").click();
-		bot.waitUntil(new DefaultCondition() {
-			@Override
-			public boolean test() throws Exception {
-				if (!shellCreate.isOpen()) {
-					return true;
-				}
-				return false;
-			}
-
-			@Override
-			public String getFailureMessage() {
-				return "Was expecting the 'Create' dialog to close itself";
-			}
-		}, 5 * 60 * 1000);
+		deleteWithCheck();
 
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(0)));
@@ -745,6 +624,66 @@ public class NavigatorActionsTest {
 		Matcher<Object[]> hasItem = hasItemInArray(hasProperty("text", is(name)));
 		return hasItem;
 	}
+	
+	/**
+	 * 
+	 */
+	protected void delete() {
+		SWTBot dialogBot;
+		bot.shell("Delete").activate();
+		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
+		dialogBot = bot.shell("Delete").bot();
+		assertThat(dialogBot.button("OK").isEnabled(), is(true));
+		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
+		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
+		dialogBot.button("OK").click();
+		bot.waitUntil(new DefaultCondition() {
+			@Override
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 5 * 60 * 1000);
+	}
+	
+	/**
+	 * 
+	 */
+	protected void deleteWithCheck() {
+		SWTBot dialogBot;
+		bot.shell("Delete").activate();
+		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
+		dialogBot = bot.shell("Delete").bot();
+		assertThat(dialogBot.button("OK").isEnabled(), is(true));
+		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
+		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
+		assertThat(dialogBot.checkBox().isEnabled(), is(true));
+		dialogBot.checkBox().click();
+		dialogBot.button("OK").click();
+		deleteWindow();
+		bot.waitUntil(new DefaultCondition() {
+			@Override
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 5 * 60 * 1000);
+		deleteWindow();
+	}
 
 	/**
 	 * Metodo para borrar la ventana Delete en caso de que aparezca para eliminar la carpeta target.
@@ -752,28 +691,35 @@ public class NavigatorActionsTest {
 	protected void deleteWindow() {
 		SWTBot dialogBot;
 		try {
-			bot.shell("Delete");
-			bot.shell("Delete").activate();
-			final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
-			dialogBot = bot.shell("Delete").bot();
-			assertThat(dialogBot.button("OK").isEnabled(), is(true));
-			assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
-			assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
-			dialogBot.button("OK").click();
-			bot.waitUntil(new DefaultCondition() {
-				@Override
-				public boolean test() throws Exception {
-					if (!shellCreate.isOpen()) {
-						return true;
-					}
-					return false;
-				}
+			if(bot.shells().length>0){
+				for ( SWTBotShell shell : bot.shells()) {
+					if(shell.getText().equals("Delete")){
+						bot.shell("Delete");
+						bot.shell("Delete").activate();
+						final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
+						dialogBot = bot.shell("Delete").bot();			
+						dialogBot.button(1).click();
+						bot.waitUntil(new DefaultCondition() {
+							@Override
+							public boolean test() throws Exception {
+								if (!shellCreate.isOpen()) {
+									return true;
+								}
+								return false;
+							}
 
-				@Override
-				public String getFailureMessage() {
-					return "Was expecting the 'Create' dialog to close itself";
+							@Override
+							public String getFailureMessage() {
+								return "Was expecting the 'Create' dialog to close itself";
+							}
+						}, 5 * 60 * 1000);
+						
+					}
+					
 				}
-			}, 5 * 60 * 1000);
+				
+			}
+	
 
 		} catch (WidgetNotFoundException wnfe) {
 			// Ignorada

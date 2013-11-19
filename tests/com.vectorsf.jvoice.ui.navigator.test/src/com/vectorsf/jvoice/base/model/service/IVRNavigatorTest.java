@@ -30,6 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -37,6 +38,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2e.core.internal.builder.BuildDebugHook;
 import org.eclipse.m2e.core.internal.builder.MavenBuilder;
 import org.eclipse.m2e.core.project.IMavenProjectFacade;
@@ -53,11 +55,15 @@ import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 
 import com.vectorsf.jvoice.base.test.SWTBotHelper;
+import com.vectorsf.jvoice.model.base.JVApplication;
+import com.vectorsf.jvoice.model.base.JVModule;
+import com.vectorsf.jvoice.model.base.JVProject;
 
 /**
  * 
@@ -163,14 +169,13 @@ public class IVRNavigatorTest {
 
 		MavenBuilder.removeDebugHook(hook);
 
-		bot.viewById(NAVIGATOR_ID).close();
-
-		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects()) {
+		for ( IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 			while (true) {
+				
 				if (project.isSynchronized(2)) {
 					try {
 						deleteProject(project);
+												
 					} catch (ResourceException re) {
 						IStatus status = re.getStatus();
 						//System.err.println(status);
@@ -186,6 +191,7 @@ public class IVRNavigatorTest {
 				}
 			}
 		}
+		bot.viewById(NAVIGATOR_ID).close();
 	}
 
 	@Test
@@ -244,28 +250,29 @@ public class IVRNavigatorTest {
 	public void testCreateApplicationProjects() throws CoreException {
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
-		createApplicationProject("testNavigator");
+		createApplicationProject("Navigator");
 
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
-		assertThat(view.bot().tree().getTreeItem("testNavigator application"),
+		assertThat(view.bot().tree().getTreeItem("Navigator application"),
 				is(not(nullValue())));
-		assertThat(view.bot().tree().getTreeItem("testNavigator application")
+		assertThat(view.bot().tree().getTreeItem("Navigator application")
 				.expand().getItems(), is(arrayWithSize(1)));
 
-		createApplicationProject("testNavigator2");
+		createApplicationProject("Navigator2");
 
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
-		assertThat(view.bot().tree().getTreeItem("testNavigator application"),
+		assertThat(view.bot().tree().getTreeItem("Navigator application"),
 				is(not(nullValue())));
-		assertThat(view.bot().tree().getTreeItem("testNavigator application")
+		assertThat(view.bot().tree().getTreeItem("Navigator application")
 				.expand().getItems(), is(arrayWithSize(1)));
 
-		assertThat(view.bot().tree().getTreeItem("testNavigator2 application"),
+		assertThat(view.bot().tree().getTreeItem("Navigator2 application"),
 				is(not(nullValue())));
-		assertThat(view.bot().tree().getTreeItem("testNavigator2 application")
+		assertThat(view.bot().tree().getTreeItem("Navigator2 application")
 				.expand().getItems(), is(arrayWithSize(1)));
+		
 	}
 
 	@Test
