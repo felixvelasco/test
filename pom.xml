@@ -28,6 +28,11 @@
       <layout>p2</layout>
       <url>http://download.eclipse.org/technology/swtbot/releases/latest/</url>
     </repository>
+    <repository>
+      <id>Parsley</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/emf-parsley/updates/</url>
+    </repository>
   </repositories>
   <modules>
     <module>plugins</module>
