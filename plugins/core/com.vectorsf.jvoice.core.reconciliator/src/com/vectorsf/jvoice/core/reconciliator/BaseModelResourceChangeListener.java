@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.CoreException;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.project.JVoiceModuleNature;
+import com.vectorsf.jvoice.model.base.JVApplication;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVProject;
@@ -33,7 +34,9 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener 
 				JVProject prj = model.getProject(name);
 				if (prj instanceof JVModule) {
 					updatePackages(child, (JVModule) prj);
-				} else {
+				}else if(prj instanceof JVApplication) {
+					updateApplication(child, (JVApplication) prj);
+				}else {
 					try {
 						IProject project = (IProject) res;
 						if (project.exists() && project.isOpen() && project.hasNature(JVoiceModuleNature.NATURE_ID)) {
@@ -49,6 +52,17 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener 
 			}
 		}
 
+	}
+
+	private void updateApplication(IResourceDelta child, JVApplication prj) {
+		if (child != null) {
+			CheckDeltaChangeApplication visitor = new CheckDeltaChangeApplication(prj);
+			try {
+				child.accept(visitor);
+			} catch (CoreException e) {
+			}
+		}
+		
 	}
 
 	public void updatePackages(IResourceDelta delta, JVModule prj) {
