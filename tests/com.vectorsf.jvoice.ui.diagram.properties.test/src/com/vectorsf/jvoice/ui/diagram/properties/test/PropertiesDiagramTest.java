@@ -45,7 +45,7 @@ public class PropertiesDiagramTest {
 
 	private static final int LARGE_SLEEP = 100;
 	protected static SWTGefBot bot = new SWTGefBot();
-	private SWTBotView viewProperties;
+	private static SWTBotView viewProperties;
 	private SWTBotGefEditor editor;
 	private SWTBotGefViewer gefViewer;
 
@@ -55,6 +55,8 @@ public class PropertiesDiagramTest {
 	@BeforeClass
 	public static void setClassUp() throws Exception {
 		SWTBotHelper.closeWelcomeView(bot);
+		SWTBotHelper.openView(bot, "General", "Properties");
+		viewProperties = bot.viewByTitle("Properties");
 	}
 
 	/**
@@ -69,8 +71,7 @@ public class PropertiesDiagramTest {
 			}
 		});
 
-		SWTBotHelper.openView(bot, "General", "Properties");
-		viewProperties = bot.viewByTitle("Properties");
+		
 	}
 
 	/**
@@ -78,7 +79,6 @@ public class PropertiesDiagramTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		bot.viewByTitle("Properties").close();
 		if (editor != null) {
 			editor.close();
 		}
@@ -432,6 +432,15 @@ public class PropertiesDiagramTest {
 		
 		bot.sleep(LARGE_SLEEP);
 		
+		assertThat(dialogBot.table().rowCount(), is (2));
+		if (dialogBot.table().getTableItem(0).getText().contains("otroMenuVoice")){
+			dialogBot.table().select(0);
+			dialogBot.table().click(0, 0);
+		}else{
+			dialogBot.table().select(1);
+			dialogBot.table().click(1, 0);
+		}
+		
 		assertThat(dialogBot.button("OK").isEnabled(), is(true));
 		dialogBot.button("OK").click();
 		
@@ -497,6 +506,15 @@ public class PropertiesDiagramTest {
 		
 		bot.sleep(LARGE_SLEEP);
 		
+		
+		assertThat(dialogBot.table().rowCount(), is(2));
+		if (dialogBot.table().getTableItem(0).getText().contains("otroOutputVoice")){
+			dialogBot.table().select(0);
+			dialogBot.table().click(0, 0);
+		}else{
+			dialogBot.table().select(1);
+			dialogBot.table().click(1, 0);
+		}
 	
 		assertThat(dialogBot.button("OK").isEnabled(), is(true));
 		dialogBot.button("OK").click();
@@ -563,6 +581,15 @@ public class PropertiesDiagramTest {
 		final SWTBot dialogBot = bot.shell("Input Selection").bot();
 		
 		bot.sleep(LARGE_SLEEP);
+		assertThat(dialogBot.table().rowCount(), is(2));
+		if (dialogBot.table().getTableItem(0).getText().contains("otroInputVoice")){
+			dialogBot.table().select(0);
+			dialogBot.table().click(0, 0);
+		}else{
+			dialogBot.table().select(1);
+			dialogBot.table().click(1, 0);
+		}
+		
 		
 		assertThat(dialogBot.button("OK").isEnabled(), is(true));
 		dialogBot.button("OK").click();
@@ -924,10 +951,10 @@ public class PropertiesDiagramTest {
 		comboTransfer.setSelection(1);
 		
 		assertThat(viewProperties.bot().ccomboBox(0).getText(), is("consultation"));
-		assertThat(viewProperties.bot().text(4).isEnabled(), is (true));
+		assertThat(viewProperties.bot().text(3).isEnabled(), is (true));
+		assertThat(viewProperties.bot().text(3).getText(), is("0"));
+		assertThat(viewProperties.bot().text(4).isEnabled(), is (false));
 		assertThat(viewProperties.bot().text(4).getText(), is("0"));
-		assertThat(viewProperties.bot().text(5).isEnabled(), is (false));
-		assertThat(viewProperties.bot().text(5).getText(), is("0"));
 	}
 	
 	@Test
