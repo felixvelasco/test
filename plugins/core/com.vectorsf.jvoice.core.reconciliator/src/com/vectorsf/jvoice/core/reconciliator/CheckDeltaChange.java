@@ -161,8 +161,10 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 	}
 
 	private void removeResources(JVModule module) {
+		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
 		for (JVPackage pck : module.getPackages()) {
 			removeResources(pck);
+			resourceSet.getResources().remove(pck.eResource());
 		}
 
 	}
