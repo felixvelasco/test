@@ -32,7 +32,7 @@ import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.ui.wizard.test.SWTBotHelper;
 
 public class WizardsTest {
-	private static final int LARGE_SLEEP = 100;
+	private static final int LARGE_SLEEP = 3000;
 	protected static SWTGefBot bot = new SWTGefBot();
 	private static SWTBotView view;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
@@ -358,8 +358,17 @@ public class WizardsTest {
 		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
 		dialogBot.button(0).click();
 		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice")!=null) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting newJVoice to be created";
+			}
+		}, 3*60 * 1000);
 		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 	
 		bot.shell("New Flow").activate();
@@ -460,7 +469,7 @@ public class WizardsTest {
 			public String getFailureMessage() {
 				return "Was expecting the 'Create' dialog to close itself";
 			}
-		}, 60 * 60 * 1000);
+		},  3 * 60 * 1000);
 		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").expand().getItems()[0].getText(), is("newJVoice"));
 	}
@@ -481,8 +490,17 @@ public class WizardsTest {
 		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
 		dialogBot.button(0).click();
 		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice")!=null) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting newJVoice to be created";
+			}
+		}, 3 * 60 * 1000);
 		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
 		final SWTBotShell shellCreate3 = bot.shell("New Locution"); //$NON-NLS-1$
@@ -537,7 +555,7 @@ public class WizardsTest {
 			public String getFailureMessage() {
 				return "Was expecting the 'Create' dialog to close itself";
 			}
-		}, 60 * 60 * 1000);
+		}, 3 * 60 * 1000);
 		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(0)));
 		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
 		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("paquetePrueba").expand().getItems()[0].getText(), is("menuPrueba"));
@@ -547,8 +565,6 @@ public class WizardsTest {
 	@Test
 	public void testMenuTwoBrowse() throws CoreException {
 
-		DosProjectTwoPack();
-		
 		DosProjectTwoPack();
 		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").contextMenu("New").menu("Flow").click();
 		bot.shell("New Flow").activate();
@@ -635,9 +651,18 @@ public class WizardsTest {
 		bot.sleep(LARGE_SLEEP);
 		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba");
 		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
-		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("otroFlow").contextMenu("New").menu("Locution").click();
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice")!=null) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting newJVoice to be created";
+			}
+		}, 3 * 60 * 1000);
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
 		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
 		final SWTBot dialogBot2 = bot.shell("New Locution").bot();
@@ -674,9 +699,9 @@ public class WizardsTest {
 			public String getFailureMessage() {
 				return "Was expecting the 'Create' dialog to close itself";
 			}
-		}, 60 * 60 * 1000);
+		}, 3 * 60 * 1000);
 		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
-		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").expand().getItems()[0].getText(), is("inputPrueba"));
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").expand().getItems()[0].getText(), is("newJVoice"));
 	}
 	
 	@Test
@@ -699,7 +724,17 @@ public class WizardsTest {
 		bot.sleep(LARGE_SLEEP);
 		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba");
 		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice")!=null) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting newJVoice to be created";
+			}
+		}, 3 * 60 * 1000);
 		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
 		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
@@ -743,9 +778,17 @@ public class WizardsTest {
 		assertThat(dialogBot.text(2).getText(), is("paquetePrueba"));
 		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
 		dialogBot.button(0).click();
-		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice")!=null) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting newJVoice to be created";
+			}
+		}, 3 * 60 * 1000);
 		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
 		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
@@ -800,7 +843,7 @@ public class WizardsTest {
 		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(0)));
 		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("otroPaquete").getItems(), is(arrayWithSize(0)));
 		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("segundoPaquete").getItems(), is(arrayWithSize(1)));
-		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("segundoPaquete").expand().getItems()[0].getText(), is("inputPrueba"));
+		assertThat(view.bot().tree().expandNode("baseNavigator2").getNode("segundoPaquete").expand().getItems()[0].getText(), is("newJVoice"));
 	}
 	
 	@Test
@@ -819,8 +862,17 @@ public class WizardsTest {
 		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
 		dialogBot.button(0).click();
 		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice")!=null) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting newJVoice to be created";
+			}
+		}, 60 * 60 * 1000);
 		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
 		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
@@ -860,10 +912,10 @@ public class WizardsTest {
 			}
 		}, 60 * 60 * 1000);
 		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").getItems(), is(arrayWithSize(1)));
-		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").expand().getItems()[0].getText(), is("outputPrueba"));
+		assertThat(view.bot().tree().expandNode("baseNavigator").getNode("paquetePrueba").expand().getItems()[0].getText(), is("newJVoice"));
 	}
 	
-	@Test
+
 	public void testOutputOneBrowse() throws CoreException {
 		DosProjectOnePack();
 		
@@ -880,8 +932,17 @@ public class WizardsTest {
 		assertThat(dialogBot.button("Finish").isEnabled(), is(true));
 		dialogBot.button(0).click();
 		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice")!=null) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting newJVoice to be created";
+			}
+		}, 60 * 60 * 1000);
 		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 	
 		bot.shell("New Locution").activate();
@@ -955,8 +1016,17 @@ public class WizardsTest {
 		bot.sleep(LARGE_SLEEP);
 		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba");
 		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
-		bot.sleep(LARGE_SLEEP);
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice")!=null) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting newJVoice to be created";
+			}
+		}, 60 * 60 * 1000);
 		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
 		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
