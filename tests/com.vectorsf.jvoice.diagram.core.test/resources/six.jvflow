@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:al="http://eclipse.org/graphiti/mm/algorithms" xmlns:operations="http://jvoice.vectorsf.com/operations/1.0" xmlns:pi="http://eclipse.org/graphiti/mm/pictograms">
-  <pi:Diagram visible="true" gridUnit="10" diagramTypeId="jVoiceDiagram" name="six" snapToGrid="true" pictogramLinks="/0/@link /0/@children.0/@link /0/@children.0/@children.0/@link /0/@children.1/@link /0/@children.1/@children.0/@link /0/@children.2/@link /0/@children.2/@children.0/@link /0/@connections.0/@link /0/@children.3/@link /0/@children.3/@children.0/@link /0/@children.4/@link /0/@children.4/@children.0/@link /0/@connections.1/@link /0/@connections.2/@link /0/@children.5/@link /0/@children.5/@children.0/@link /0/@connections.3/@link /0/@children.6/@link /0/@children.7/@link /0/@connections.4/@link /0/@connections.5/@link /0/@connections.6/@link" version="0.10.0">
+  <pi:Diagram visible="true" gridUnit="10" diagramTypeId="jVoiceDiagram" name="six" snapToGrid="true" pictogramLinks="/0/@link /0/@children.0/@link /0/@children.0/@children.0/@link /0/@children.1/@link /0/@children.1/@children.0/@link /0/@children.2/@link /0/@children.2/@children.0/@link /0/@connections.0/@link /0/@children.3/@link /0/@children.3/@children.0/@link /0/@children.4/@link /0/@children.4/@children.0/@link /0/@connections.1/@link /0/@connections.2/@link /0/@children.5/@link /0/@children.5/@children.0/@link /0/@connections.3/@link /0/@children.6/@link /0/@children.7/@link /0/@connections.4/@link /0/@connections.5/@link" version="0.10.0">
     <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@colors.1" foreground="/0/@colors.0" lineWidth="1" transparency="0.0" width="1000" height="1000"/>
     <link businessObjects="/1"/>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
@@ -268,7 +268,7 @@
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
       <link businessObjects="/1/@states.2"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.4" incomingConnections="/0/@connections.0"/>
+      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.0"/>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="120" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="empty">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
@@ -374,7 +374,7 @@
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
       <link businessObjects="/1/@states.4"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.1" incomingConnections="/0/@connections.6"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.1" incomingConnections="/0/@connections.5"/>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="120" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="Input">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
@@ -425,7 +425,7 @@
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
       <link businessObjects="/1/@states.5"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.3" incomingConnections="/0/@connections.5"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.3" incomingConnections="/0/@connections.4"/>
       <children visible="true">
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" width="120" height="60" horizontalAlignment="ALIGNMENT_CENTER" value="Menu">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
@@ -564,7 +564,7 @@
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
       <link businessObjects="/1/@states.7"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.5 /0/@connections.6" incomingConnections="/0/@connections.4"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.4 /0/@connections.5"/>
     </children>
     <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@anchors.0" end="/0/@children.2/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
@@ -646,29 +646,9 @@
         <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" horizontalAlignment="ALIGNMENT_CENTER" value="Menu_Final"/>
       </connectionDecorators>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.2/@anchors.0" end="/0/@children.7/@anchors.0">
-      <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
-      <link businessObjects="/1/@transitions.13"/>
-      <connectionDecorators visible="true" locationRelative="true" location="1.0">
-        <graphicsAlgorithm xsi:type="al:Polygon" background="/0/@colors.2" foreground="/0/@colors.2" lineWidth="1" filled="true" transparency="0.0">
-          <points x="-7" y="4"/>
-          <points x="2"/>
-          <points x="-7" y="-4"/>
-          <points x="-1"/>
-          <points x="-7" y="4"/>
-          <points x="-3"/>
-          <points x="-7" y="-4"/>
-          <points x="-5"/>
-          <points x="-7" y="4"/>
-        </graphicsAlgorithm>
-      </connectionDecorators>
-      <connectionDecorators visible="true" active="true" locationRelative="true" location="0.5">
-        <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" filled="false" transparency="0.0" horizontalAlignment="ALIGNMENT_CENTER" value="empty_Switch"/>
-      </connectionDecorators>
-    </connections>
     <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.7/@anchors.0" end="/0/@children.5/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
-      <link businessObjects="/1/@transitions.14"/>
+      <link businessObjects="/1/@transitions.13"/>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
         <graphicsAlgorithm xsi:type="al:Polygon" background="/0/@colors.2" foreground="/0/@colors.2" lineWidth="1" filled="true" transparency="0.0">
           <points x="-7" y="4"/>
@@ -688,7 +668,7 @@
     </connections>
     <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.7/@anchors.0" end="/0/@children.4/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
-      <link businessObjects="/1/@transitions.15"/>
+      <link businessObjects="/1/@transitions.14"/>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
         <graphicsAlgorithm xsi:type="al:Polygon" background="/0/@colors.2" foreground="/0/@colors.2" lineWidth="1" filled="true" transparency="0.0">
           <points x="-7" y="4"/>
@@ -713,20 +693,20 @@
   <operations:Flow name="six" description="six">
     <states xsi:type="operations:FinalState" name="Final" incomingTransitions="/1/@transitions.5 /1/@transitions.6 /1/@transitions.9 /1/@transitions.10 /1/@transitions.12"/>
     <states xsi:type="operations:CallState" name="Call" incomingTransitions="/1/@transitions.0" outgoingTransitions="/1/@transitions.1"/>
-    <states xsi:type="operations:CallFlowState" name="empty" incomingTransitions="/1/@transitions.1" outgoingTransitions="/1/@transitions.13">
+    <states xsi:type="operations:CallFlowState" name="empty" incomingTransitions="/1/@transitions.1">
       <subflow href="vega://testNavigator/src/main/resources/jv/several/packages/inside/empty#/1"/>
     </states>
     <states xsi:type="operations:PromptState" name="Prompt" incomingTransitions="/1/@transitions.8" outgoingTransitions="/1/@transitions.9">
       <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Prompt#/0"/>
     </states>
-    <states xsi:type="operations:InputState" name="Input" incomingTransitions="/1/@transitions.15" outgoingTransitions="/1/@transitions.8">
+    <states xsi:type="operations:InputState" name="Input" incomingTransitions="/1/@transitions.14" outgoingTransitions="/1/@transitions.8">
       <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Input#/0"/>
     </states>
-    <states xsi:type="operations:MenuState" name="Menu" incomingTransitions="/1/@transitions.14" outgoingTransitions="/1/@transitions.12">
+    <states xsi:type="operations:MenuState" name="Menu" incomingTransitions="/1/@transitions.13" outgoingTransitions="/1/@transitions.12">
       <locution href="vega://testNavigator/src/main/resources/jv/several/packages/inside/Menu#/0"/>
     </states>
     <states xsi:type="operations:InitialState" name="Initial"/>
-    <states xsi:type="operations:SwitchState" name="Switch" incomingTransitions="/1/@transitions.13" outgoingTransitions="/1/@transitions.14 /1/@transitions.15">
+    <states xsi:type="operations:SwitchState" name="Switch" outgoingTransitions="/1/@transitions.13 /1/@transitions.14">
       <case condition="" eventName="Case_1"/>
       <case condition="" eventName="Case_2"/>
       <case eventName="default"/>
@@ -744,7 +724,6 @@
     <transitions target="/1/@states.0" eventName="others"/>
     <transitions eventName="Transition"/>
     <transitions source="/1/@states.5" target="/1/@states.0" eventName="others"/>
-    <transitions source="/1/@states.2" target="/1/@states.7" eventName="Transition"/>
     <transitions source="/1/@states.7" target="/1/@states.5" eventName="default"/>
     <transitions source="/1/@states.7" target="/1/@states.4" eventName="Case_1"/>
   </operations:Flow>
