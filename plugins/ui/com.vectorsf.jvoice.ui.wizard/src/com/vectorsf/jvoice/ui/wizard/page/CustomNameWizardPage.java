@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.internal.resources.Folder;
+import org.eclipse.core.internal.utils.Messages;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -23,6 +24,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -51,6 +53,8 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 	private static final String PAGE_TITLE = "Create a Custom";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
+	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '.', '^', '¿', '(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
+
 
 	Text textFieldCustom;
 	Text textFieldProject;
@@ -173,6 +177,9 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 			setErrorMessage(status.getMessage());
 			return false;
 		}
+		if(!customValidate(text)){
+			return false;
+		}
 
 		String packageName = getPackageFieldValue();
 
@@ -216,6 +223,16 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 		primeraVez++;
 		setErrorMessage(null);
 		setMessage(null);
+		return true;
+	}
+
+	private boolean customValidate(String text) {
+		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++){
+			if (text.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
+				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName, String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
+				return false;
+			}
+		}
 		return true;
 	}
 

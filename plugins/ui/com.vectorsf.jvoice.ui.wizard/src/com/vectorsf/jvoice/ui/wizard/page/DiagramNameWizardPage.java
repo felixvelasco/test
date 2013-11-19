@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.internal.utils.Messages;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -35,6 +36,7 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -64,6 +66,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	private static final Path PACKAGES_PATH = new Path(BaseModel.JV_PATH);
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
+	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '.', '^', '¿', '(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
 
 	Text textFieldDiagram;
 	Text textFieldProject;
@@ -172,6 +175,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			setErrorMessage(status.getMessage());
 			return false;
 		}
+		if(!customValidate(text)){
+			return false;
+		}
 
 		String packageName = getPackageFieldValue();
 		browsePackage.setEnabled(true);
@@ -202,6 +208,16 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		setSelection(paquete);
 		setErrorMessage(null);
 		setMessage(null);
+		return true;
+	}
+
+	private boolean customValidate(String text) {
+		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++){
+			if (text.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
+				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName, String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
+				return false;
+			}
+		}
 		return true;
 	}
 

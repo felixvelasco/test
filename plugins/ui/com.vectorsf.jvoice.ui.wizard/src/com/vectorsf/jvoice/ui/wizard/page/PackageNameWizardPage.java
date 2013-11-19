@@ -6,6 +6,7 @@ package com.vectorsf.jvoice.ui.wizard.page;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.internal.utils.Messages;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -23,6 +24,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -44,6 +46,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	private static final String PAGE_TITLE = "Create a Package";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
+	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '^', '¿', '(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
 
 	private Text textField;
 	private Text packageField;
@@ -114,7 +117,11 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 				setErrorMessage("Enter a package name");
 				return false;
 			}
+			if(!customValidate(packageName)){
+				return false;
+			}
 		}
+		
 		IPath path = new Path(BaseModel.JV_PATH + "/" + toPath(packageName));
 
 		if (root.getProject(projectName).getFolder(path).exists()) {
@@ -124,6 +131,16 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 
 		setErrorMessage(null);
 		setMessage(null);
+		return true;
+	}
+
+	private boolean customValidate(String packageName) {
+		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++){
+			if (packageName.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
+				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName, String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), packageName));
+				return false;
+			}
+		}
 		return true;
 	}
 
