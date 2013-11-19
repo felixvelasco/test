@@ -92,7 +92,7 @@ public class TransientFlowItemProvider extends ItemProviderAdapter implements IE
 		};
 	}
 
-	protected Flow getFlow() {
+	public Flow getFlow() {
 		return flow;
 	}
 }
