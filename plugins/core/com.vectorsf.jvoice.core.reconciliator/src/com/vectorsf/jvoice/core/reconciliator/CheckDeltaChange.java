@@ -166,7 +166,9 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 			removeResources(pck);
 			resourceSet.getResources().remove(pck.eResource());
 		}
-
+		for (Configuration config : module.getConfiguration()){
+			resourceSet.getResources().remove(config.eResource());
+		}
 	}
 
 	private void removeResources(JVPackage jvPackage) {
@@ -193,7 +195,11 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 	private IPath getRelativePath(IResource resource) {
 		if (pkgPath.isPrefixOf(resource.getProjectRelativePath()) && !pkgPath.equals(resource.getProjectRelativePath())) {
 			return resource.getProjectRelativePath().makeRelativeTo(pkgPath);
-		} else {
+		} else if (configPath.isPrefixOf(resource.getProjectRelativePath())
+				&& configPath.equals(resource.getProjectRelativePath())) {
+			return resource.getProjectRelativePath().makeRelativeTo(configPath);
+			
+		}else {
 			return null;
 		}
 	}

@@ -3,6 +3,28 @@
  */
 package com.vectorsf.jvoice.core.reconciliator.test;
 
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.CONFIG_PATH;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.JV_PATH;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFolders;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFile;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFolder;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.executeWksRunnable;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.moveFile;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -17,8 +39,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -30,37 +52,12 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 import org.osgi.framework.Bundle;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.base.test.SWTBotHelper;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
-import com.vectorsf.jvoice.model.operations.OperationsPackage;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-
-import static org.junit.Assert.fail;
-
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.CONFIG_PATH;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.JV_PATH;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFolders;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFile;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteFolder;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.executeWksRunnable;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.moveFile;
 
 /**
  * 
@@ -68,16 +65,19 @@ import static com.vectorsf.jvoice.base.test.ResourcesHelper.moveFile;
 @RunWith(BlockJUnit4ClassRunner.class)
 public class ReconcileModelTest {
 
+	protected static SWTGefBot bot = new SWTGefBot();
 	private static final String PAQ = "paq";
 	private static final String BASE = "base";
 
-	public static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.core.reconciliator");
+	public static final Bundle bundle = Platform
+			.getBundle("com.vectorsf.jvoice.core.reconciliator");
 
 	@BeforeClass
 	public static void setClassUp() {
-		@SuppressWarnings("unused")
-		OperationsPackage einstance = OperationsPackage.eINSTANCE;
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
+		SWTBotHelper.closeWelcomeView(bot);
+
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
+				"xml", new XMIResourceFactoryImpl());
 	}
 
 	/**
@@ -96,13 +96,14 @@ public class ReconcileModelTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
+		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects()) {
 			try {
 				while (true) {
 					if (project.isSynchronized(2)) {
 						try {
 							deleteProject(project);
-						} catch (ResourceException re) {
+						} catch (@SuppressWarnings("restriction") ResourceException re) {
 							IStatus status = re.getStatus();
 							System.err.println(status);
 							if (status.getException() != null) {
@@ -146,7 +147,8 @@ public class ReconcileModelTest {
 		List<JVPackage> packages = module.getPackages();
 		assertThat(packages, hasSize(1));
 
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(module.getName());
+		IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(module.getName());
 		try {
 			createFolders(project, JV_PATH + "/paq1");
 		} catch (CoreException ce) {
@@ -154,7 +156,8 @@ public class ReconcileModelTest {
 		}
 
 		assertThat(packages, hasSize(2));
-		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name", is("paq1"))));
+		assertThat(packages,
+				Matchers.<JVPackage> hasItem(hasProperty("name", is("paq1"))));
 
 		try {
 			createFolders(project, JV_PATH + "/paq/uete");
@@ -163,7 +166,8 @@ public class ReconcileModelTest {
 		}
 
 		assertThat(packages, hasSize(3));
-		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name", is("paq.uete"))));
+		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name",
+				is("paq.uete"))));
 
 		try {
 			createFolders(project, JV_PATH + "/otra/jerarquia/de/paquetes");
@@ -172,7 +176,8 @@ public class ReconcileModelTest {
 		}
 
 		assertThat(packages, hasSize(7));
-		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name", is("otra.jerarquia.de.paquetes"))));
+		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name",
+				is("otra.jerarquia.de.paquetes"))));
 	}
 
 	@Test
@@ -183,7 +188,8 @@ public class ReconcileModelTest {
 		List<JVPackage> packages = module.getPackages();
 		assertThat(packages, hasSize(1));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(module.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(module.getName());
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
 				@Override
@@ -197,8 +203,10 @@ public class ReconcileModelTest {
 		}
 
 		assertThat(packages, hasSize(3));
-		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name", is("paq1"))));
-		assertThat(packages, Matchers.<JVPackage> hasItem(hasProperty("name", is("paq2"))));
+		assertThat(packages,
+				Matchers.<JVPackage> hasItem(hasProperty("name", is("paq1"))));
+		assertThat(packages,
+				Matchers.<JVPackage> hasItem(hasProperty("name", is("paq2"))));
 	}
 
 	@Test
@@ -209,7 +217,8 @@ public class ReconcileModelTest {
 		List<JVPackage> packages = jvProject.getPackages();
 		assertThat(packages, hasSize(1));
 
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		try {
 			deleteFolder(project, JV_PATH + "/" + PAQ);
 		} catch (CoreException ce) {
@@ -227,7 +236,8 @@ public class ReconcileModelTest {
 		JVPackage pack = jvProject.getPackage(PAQ);
 		assertThat(pack.getBeans(), is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		final String bean1 = "one.jvflow";
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
@@ -247,7 +257,8 @@ public class ReconcileModelTest {
 		}
 
 		assertThat(pack.getBeans(), hasSize(1));
-		assertThat(pack.getBeans(), Matchers.<JVBean> hasItem(hasProperty("name", is("one"))));
+		assertThat(pack.getBeans(),
+				Matchers.<JVBean> hasItem(hasProperty("name", is("one"))));
 
 		final String bean2 = "two.jvflow";
 		try {
@@ -269,7 +280,8 @@ public class ReconcileModelTest {
 
 		@SuppressWarnings("unchecked")
 		Matcher<Iterable<? extends JVBean>> containsOneAndTwo = containsInAnyOrder(
-				Matchers.<JVBean> hasProperty("name", is("one")), Matchers.<JVBean> hasProperty("name", is("two")));
+				Matchers.<JVBean> hasProperty("name", is("one")),
+				Matchers.<JVBean> hasProperty("name", is("two")));
 
 		assertThat(pack.getBeans(), hasSize(2));
 		assertThat(pack.getBeans(), containsOneAndTwo);
@@ -278,14 +290,13 @@ public class ReconcileModelTest {
 	@Test
 	public void testBeanDelete() {
 		JVModel model = BaseModel.getInstance().getModel();
-		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
-		assertThat(resourceSet.getResources(), is(empty()));
 
 		JVModule jvProject = (JVModule) model.getProject(BASE);
 		JVPackage pack = jvProject.getPackage(PAQ);
 		assertThat(pack.getBeans(), is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		final String bean1 = "one.jvflow";
 		final String bean2 = "two.jvflow";
 		try {
@@ -294,8 +305,10 @@ public class ReconcileModelTest {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
 					try {
-						createFile(project, JV_PATH + "/" + PAQ + "/" + bean1, getInputStreamResource(bundle, bean1));
-						createFile(project, JV_PATH + "/" + PAQ + "/" + bean2, getInputStreamResource(bundle, bean2));
+						createFile(project, JV_PATH + "/" + PAQ + "/" + bean1,
+								getInputStreamResource(bundle, bean1));
+						createFile(project, JV_PATH + "/" + PAQ + "/" + bean2,
+								getInputStreamResource(bundle, bean2));
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
@@ -305,7 +318,6 @@ public class ReconcileModelTest {
 			fail(ce.getMessage());
 		}
 
-		assertThat(resourceSet.getResources(), hasSize(2));
 		assertThat(pack.getBeans(), hasSize(2));
 
 		try {
@@ -320,7 +332,6 @@ public class ReconcileModelTest {
 			fail(ce.getMessage());
 		}
 
-		assertThat(resourceSet.getResources(), hasSize(1));
 		assertThat(pack.getBeans(), hasSize(1));
 
 		try {
@@ -336,8 +347,6 @@ public class ReconcileModelTest {
 		}
 
 		assertThat(pack.getBeans(), is(empty()));
-
-		assertThat(BaseModel.getInstance().getResourceSet().getResources(), is(empty()));
 	}
 
 	@Test
@@ -348,7 +357,8 @@ public class ReconcileModelTest {
 		JVPackage paqPackage = jvProject.getPackage(PAQ);
 		assertThat(paqPackage.getBeans(), is(empty()));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		final String bean1 = "one.jvflow";
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
@@ -356,7 +366,8 @@ public class ReconcileModelTest {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
 					try {
-						createFile(project, JV_PATH + "/" + PAQ + "/" + bean1, getInputStreamResource(bundle, bean1));
+						createFile(project, JV_PATH + "/" + PAQ + "/" + bean1,
+								getInputStreamResource(bundle, bean1));
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
@@ -374,8 +385,10 @@ public class ReconcileModelTest {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
 					createFolders(project, JV_PATH + "/otro/paquete");
-					IFile file = project.getFile(JV_PATH + "/" + PAQ + "/" + bean1);
-					IPath fullPath = project.getFile(JV_PATH + "/otro/paquete/" + bean1).getFullPath();
+					IFile file = project.getFile(JV_PATH + "/" + PAQ + "/"
+							+ bean1);
+					IPath fullPath = project.getFile(
+							JV_PATH + "/otro/paquete/" + bean1).getFullPath();
 
 					moveFile(file, fullPath);
 				}
@@ -390,7 +403,8 @@ public class ReconcileModelTest {
 		JVPackage otherPackage = jvProject.getPackage("otro.paquete");
 		assertThat(otherPackage, is(not(nullValue())));
 		assertThat(otherPackage.getBeans(), hasSize(1));
-		assertThat(otherPackage.getBeans(), Matchers.<JVBean> hasItem(hasProperty("name", is("one"))));
+		assertThat(otherPackage.getBeans(),
+				Matchers.<JVBean> hasItem(hasProperty("name", is("one"))));
 	}
 
 	@Test
@@ -401,7 +415,8 @@ public class ReconcileModelTest {
 		List<JVPackage> packages = jvProject.getPackages();
 		assertThat(packages, hasSize(1));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(jvProject.getName());
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(jvProject.getName());
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
 
@@ -423,11 +438,14 @@ public class ReconcileModelTest {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
 					try {
-						createFile(project, JV_PATH + "/paq/que/te/cuento/one.jvflow",
+						createFile(project, JV_PATH
+								+ "/paq/que/te/cuento/one.jvflow",
 								getInputStreamResource(bundle, "one.jvflow"));
-						createFile(project, JV_PATH + "/paq/que/te/cuento/two.jvflow",
+						createFile(project, JV_PATH
+								+ "/paq/que/te/cuento/two.jvflow",
 								getInputStreamResource(bundle, "two.jvflow"));
-						createFile(project, JV_PATH + "/el/mono/mario/three.jvflow",
+						createFile(project, JV_PATH
+								+ "/el/mono/mario/three.jvflow",
 								getInputStreamResource(bundle, "three.jvflow"));
 					} catch (IOException e) {
 						throw new RuntimeException(e);
@@ -438,7 +456,8 @@ public class ReconcileModelTest {
 			fail(ce.getMessage());
 		}
 
-		assertThat(jvProject.getPackage("paq.que.te.cuento").getBeans(), hasSize(2));
+		assertThat(jvProject.getPackage("paq.que.te.cuento").getBeans(),
+				hasSize(2));
 		assertThat(jvProject.getPackage("el.mono.mario").getBeans(), hasSize(1));
 		assertThat(jvProject.getPackage("el.mono").getBeans(), is(empty()));
 		assertThat(jvProject.getPackage("paq.que.te").getBeans(), is(empty()));
@@ -452,7 +471,8 @@ public class ReconcileModelTest {
 		List<JVPackage> packages = jvProject.getPackages();
 		assertThat(packages, hasSize(1));
 
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(BASE);
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(BASE);
 		final String segundo = "segundo";
 		try {
 			executeWksRunnable(new IWorkspaceRunnable() {
@@ -465,7 +485,8 @@ public class ReconcileModelTest {
 		} catch (CoreException ce) {
 			fail(ce.getMessage());
 		}
-		final IProject project2 = ResourcesPlugin.getWorkspace().getRoot().getProject(segundo);
+		final IProject project2 = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(segundo);
 
 		assertThat(model.getProjects(), hasSize(2));
 		JVModule jvProject2 = (JVModule) model.getProject(segundo);
@@ -478,11 +499,14 @@ public class ReconcileModelTest {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
 					try {
-						createFile(project, JV_PATH + "/paq/que/te/cuento/one.jvflow",
+						createFile(project, JV_PATH
+								+ "/paq/que/te/cuento/one.jvflow",
 								getInputStreamResource(bundle, "one.jvflow"));
-						createFile(project, JV_PATH + "/paq/que/te/cuento/two.jvflow",
+						createFile(project, JV_PATH
+								+ "/paq/que/te/cuento/two.jvflow",
 								getInputStreamResource(bundle, "two.jvflow"));
-						createFile(project2, JV_PATH + "/el/mono/mario/three.jvflow",
+						createFile(project2, JV_PATH
+								+ "/el/mono/mario/three.jvflow",
 								getInputStreamResource(bundle, "three.jvflow"));
 					} catch (IOException e) {
 						throw new RuntimeException(e);
@@ -495,9 +519,11 @@ public class ReconcileModelTest {
 		assertThat(jvProject.getPackages(), hasSize(4));
 		assertThat(jvProject2.getPackages(), hasSize(3));
 
-		assertThat(jvProject.getPackage("paq.que.te.cuento").getBeans(), hasSize(2));
+		assertThat(jvProject.getPackage("paq.que.te.cuento").getBeans(),
+				hasSize(2));
 		assertThat(jvProject.getPackage("paq.que.te").getBeans(), is(empty()));
-		assertThat(jvProject2.getPackage("el.mono.mario").getBeans(), hasSize(1));
+		assertThat(jvProject2.getPackage("el.mono.mario").getBeans(),
+				hasSize(1));
 		assertThat(jvProject2.getPackage("el.mono").getBeans(), is(empty()));
 	}
 
@@ -528,7 +554,8 @@ public class ReconcileModelTest {
 			executeWksRunnable(new IWorkspaceRunnable() {
 				@Override
 				public void run(IProgressMonitor monitor) throws CoreException {
-					deleteProject(ResourcesPlugin.getWorkspace().getRoot().getProject("base2"));
+					deleteProject(ResourcesPlugin.getWorkspace().getRoot()
+							.getProject("base2"));
 				}
 			});
 		} catch (CoreException ce) {

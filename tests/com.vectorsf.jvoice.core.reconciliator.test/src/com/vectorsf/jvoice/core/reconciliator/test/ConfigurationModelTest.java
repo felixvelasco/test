@@ -33,15 +33,18 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.base.test.SWTBotHelper;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVProject;
@@ -52,7 +55,13 @@ import com.vectorsf.jvoice.model.base.JVProject;
 @RunWith(BlockJUnit4ClassRunner.class)
 public class ConfigurationModelTest {
 
+	protected static SWTGefBot bot = new SWTGefBot();
 	private static final String BASE = "base";
+
+	@BeforeClass
+	public static void setClassUp() {
+		SWTBotHelper.closeWelcomeView(bot);
+	}
 
 	/**
 	 * @throws java.lang.Exception
@@ -75,7 +84,7 @@ public class ConfigurationModelTest {
 				if (project.isSynchronized(2)) {
 					try {
 						deleteProject(project);
-					} catch (ResourceException re) {
+					} catch (@SuppressWarnings("restriction") ResourceException re) {
 						IStatus status = re.getStatus();
 						System.err.println(status);
 						if (status.getException() != null) {
@@ -345,7 +354,7 @@ public class ConfigurationModelTest {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				for (int i = 0; i < 100; i++) {
+				for (int i = 0; i < 5; i++) {
 					createFile(project, CONFIG_PATH + "/test" + i
 							+ ".properties",
 							"uno=prueba\ndos=test\ntres=ejemplo\ncuatro=example\n");
@@ -353,7 +362,7 @@ public class ConfigurationModelTest {
 			}
 		}, project);
 
-		assertThat(configurations, hasSize(100));
+		assertThat(configurations, hasSize(5));
 	}
 
 	@Test

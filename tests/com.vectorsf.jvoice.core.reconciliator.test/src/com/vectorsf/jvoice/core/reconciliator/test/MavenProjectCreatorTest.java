@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -40,11 +41,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.osgi.framework.Bundle;
 
+import com.vectorsf.jvoice.base.test.SWTBotHelper;
 import com.vectorsf.jvoice.core.reconciliator.MavenProjectCreator;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
-import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 /**
  * 
@@ -54,14 +55,15 @@ public class MavenProjectCreatorTest {
 
 	private static final String PAQ = "paq";
 	private static final String BASE = "base";
+	protected static SWTGefBot bot = new SWTGefBot();
 
 	public static final Bundle bundle = Platform
 			.getBundle("com.vectorsf.jvoice.core.reconciliator");
 
 	@BeforeClass
 	public static void setClassUp() {
-		@SuppressWarnings("unused")
-		OperationsPackage einstance = OperationsPackage.eINSTANCE;
+
+		SWTBotHelper.closeWelcomeView(bot);
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
 				"xml", new XMIResourceFactoryImpl());
 	}
@@ -89,7 +91,7 @@ public class MavenProjectCreatorTest {
 					if (project.isSynchronized(2)) {
 						try {
 							deleteProject(project);
-						} catch (ResourceException re) {
+						} catch (@SuppressWarnings("restriction") ResourceException re) {
 							IStatus status = re.getStatus();
 							System.err.println(status);
 							if (status.getException() != null) {
