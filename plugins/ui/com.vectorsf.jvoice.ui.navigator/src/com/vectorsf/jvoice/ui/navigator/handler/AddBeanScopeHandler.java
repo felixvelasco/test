@@ -86,8 +86,6 @@ public class AddBeanScopeHandler extends AbstractHandler implements IHandler {
 		@Override
 		public boolean select(Viewer viewer, Object parentElement,
 				Object element) {
-			System.out.println("=>"+element);
-
 			if (element instanceof ITypeRoot) {
 				ITypeRoot unit = (ITypeRoot) element;
 				IType type = unit.findPrimaryType();
