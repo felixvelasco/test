@@ -31,13 +31,12 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 	}
 
 	@Override
-	public Set<IProject> build(int kind, IProgressMonitor monitor)
-			throws Exception {
+	public Set<IProject> build(int kind, IProgressMonitor monitor) throws Exception {
 		IMaven maven = MavenPlugin.getMaven();
 		BuildContext buildContext = getBuildContext();
 
 		IResourceDelta delta = getDelta(getMavenProjectFacade().getProject());
-		if (delta.getKind() == IResourceDelta.CHANGED) {
+		if (delta != null && delta.getKind() == IResourceDelta.CHANGED) {
 			for (IResourceDelta delt : delta.getAffectedChildren()) {
 				IResource resource = delt.getResource();
 				if (resource instanceof IFolder) {
@@ -56,9 +55,8 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 		Set<IProject> result = super.build(kind, monitor);
 
 		// tell m2e builder to refresh generated files
-		File generated = maven.getMojoParameterValue(getSession()
-				.getCurrentProject(), getMojoExecution(), "outputDirectory",
-				File.class, monitor);
+		File generated = maven.getMojoParameterValue(getSession().getCurrentProject(), getMojoExecution(),
+				"outputDirectory", File.class, monitor);
 		if (generated != null) {
 			buildContext.refresh(generated);
 		}
@@ -67,8 +65,7 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 	}
 
 	private IPath getRelativePath(IResource resource) {
-		if (pkgPath.isPrefixOf(resource.getProjectRelativePath())
-				&& !pkgPath.equals(resource.getProjectRelativePath())) {
+		if (pkgPath.isPrefixOf(resource.getProjectRelativePath()) && !pkgPath.equals(resource.getProjectRelativePath())) {
 			return resource.getProjectRelativePath().makeRelativeTo(pkgPath);
 		} else {
 			return null;
