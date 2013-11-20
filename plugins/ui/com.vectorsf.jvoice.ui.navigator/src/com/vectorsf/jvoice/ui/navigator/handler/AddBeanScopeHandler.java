@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.ITypeRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.ui.JavaElementLabelProvider;
@@ -86,12 +87,12 @@ public class AddBeanScopeHandler extends AbstractHandler implements IHandler {
 		public boolean select(Viewer viewer, Object parentElement,
 				Object element) {
 			if (element instanceof ICompilationUnit) {
-				System.out.println(element);
-				ICompilationUnit unit = (ICompilationUnit) element;
+				ITypeRoot unit = (ITypeRoot) element;
 				IType type = unit.findPrimaryType();
-				if (type == null) {
+				
+				if(type == null)
 					return false;
-				}
+				
 				IAnnotation[] annotations;
 				try {
 					annotations = type.getAnnotations();
@@ -100,8 +101,9 @@ public class AddBeanScopeHandler extends AbstractHandler implements IHandler {
 						if (elementName
 								.equals("org.springframework.stereotype.Component")) {
 							return true;
-						} else if (elementName.equals("Component")) {
-							for (IImportDeclaration _import : unit.getImports()) {
+						}  
+						else if (elementName.equals("Component") && element instanceof ICompilationUnit){
+							for (IImportDeclaration _import : ((ICompilationUnit) unit).getImports()) {
 								String importedType = _import.getElementName();
 								if (importedType
 										.equals("org.springframework.stereotype.Component")) {
