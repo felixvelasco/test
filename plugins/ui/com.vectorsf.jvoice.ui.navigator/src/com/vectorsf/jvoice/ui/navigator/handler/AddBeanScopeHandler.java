@@ -89,6 +89,9 @@ public class AddBeanScopeHandler extends AbstractHandler implements IHandler {
 				System.out.println(element);
 				ICompilationUnit unit = (ICompilationUnit) element;
 				IType type = unit.findPrimaryType();
+				if (type == null) {
+					return false;
+				}
 				IAnnotation[] annotations;
 				try {
 					annotations = type.getAnnotations();
