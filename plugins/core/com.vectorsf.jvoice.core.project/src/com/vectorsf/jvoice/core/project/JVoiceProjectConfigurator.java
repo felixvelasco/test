@@ -1,6 +1,10 @@
 package com.vectorsf.jvoice.core.project;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.maven.model.Build;
+import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
@@ -63,6 +67,14 @@ public final class JVoiceProjectConfigurator {
 
 		model.setName(projectName);
 		model.setDescription(descriptionProject);
+		
+		List<Dependency> dependencies = new ArrayList<Dependency>();		
+		Dependency dep = new Dependency();
+		dep.setGroupId("com.vectorsf");
+		dep.setArtifactId("jvoiceframework-flow");
+		dep.setVersion("1.0-SNAPSHOT");
+		dependencies.add(dep);
+		model.setDependencies(dependencies);
 
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");

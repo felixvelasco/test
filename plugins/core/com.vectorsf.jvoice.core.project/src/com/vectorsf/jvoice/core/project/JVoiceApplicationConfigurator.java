@@ -58,14 +58,6 @@ public final class JVoiceApplicationConfigurator {
 		model.setName(projectName);
 		model.setDescription(descProject);
 		
-		List<Dependency> dependencies = new ArrayList<Dependency>();		
-		Dependency dep2 = new Dependency();
-		dep2.setGroupId("com.vectorsf");
-		dep2.setArtifactId("jvoiceframework-flow");
-		dep2.setVersion("1.0-SNAPSHOT");
-		dependencies.add(dep2);
-		model.setDependencies(dependencies);
-		
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");
 		dsl_builder.setArtifactId("application-builder");

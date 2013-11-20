@@ -37,7 +37,7 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 		BuildContext buildContext = getBuildContext();
 
 		IResourceDelta delta = getDelta(getMavenProjectFacade().getProject());
-		if (delta.getKind() == IResourceDelta.CHANGED) {
+		if (delta != null && delta.getKind() == IResourceDelta.CHANGED) {
 			for (IResourceDelta delt : delta.getAffectedChildren()) {
 				IResource resource = delt.getResource();
 				if (resource instanceof IFolder) {
