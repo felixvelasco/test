@@ -1,6 +1,10 @@
 package com.vectorsf.jvoice.core.project;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.maven.model.Build;
+import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
@@ -29,8 +33,8 @@ public final class JVoiceProjectConfigurator {
 
 	}
 
-	public static IProject createProject(final String groupId, final String artifactId, final String projectName, final String descriptionProject)
-			throws CoreException {
+	public static IProject createProject(final String groupId, final String artifactId, final String projectName,
+			final String descriptionProject) throws CoreException {
 		final IProject result[] = new IProject[1];
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
@@ -64,6 +68,14 @@ public final class JVoiceProjectConfigurator {
 		model.setName(projectName);
 		model.setDescription(descriptionProject);
 
+		List<Dependency> dependencies = new ArrayList<Dependency>();
+		Dependency dep = new Dependency();
+		dep.setGroupId("com.vectorsf");
+		dep.setArtifactId("jvoiceframework-flow");
+		dep.setVersion("1.0-SNAPSHOT");
+		dependencies.add(dep);
+		model.setDependencies(dependencies);
+
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");
 		dsl_builder.setArtifactId("dsl-builder");
@@ -84,7 +96,7 @@ public final class JVoiceProjectConfigurator {
 		repository.setName("JVoice repository");
 		repository.setUrl("http://isbks208510504s.scisb.isban.corp/nexus/content/groups/jvoiceGroup/");
 
-		model.addPluginRepository(repository);
+		model.addRepository(repository);
 
 		return model;
 	}
@@ -104,9 +116,8 @@ public final class JVoiceProjectConfigurator {
 			String[] newNatureIds = new String[natureIds.length + 2];
 			System.arraycopy(natureIds, 0, newNatureIds, 1, natureIds.length);
 			newNatureIds[0] = JVoiceModuleNature.NATURE_ID;
-			newNatureIds[newNatureIds.length-1] = XtextProjectHelper.NATURE_ID;
+			newNatureIds[newNatureIds.length - 1] = XtextProjectHelper.NATURE_ID;
 			description.setNatureIds(newNatureIds);
-			
 
 			this.project.setDescription(description, null);
 		}
