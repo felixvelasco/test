@@ -12,7 +12,7 @@ public class ExtInputDslItemProvider extends InputDslItemProvider {
 
 	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/VoiceDsl.png");
+		return getResourceLocator().getImage("full/obj16/icon_nav_locution.png");
 	}
 
 	@Override

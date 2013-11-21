@@ -19,6 +19,6 @@ public class ExtFlowItemProvider extends FlowItemProvider {
 
 	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/Flow.png");
+		return getResourceLocator().getImage("full/obj16/icon_nav_flow.png");
 	}
 }

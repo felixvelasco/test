@@ -19,6 +19,6 @@ public class ExtJVApplicationItemProvider extends JVApplicationItemProvider {
 
 	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/JVProject.png");
+		return getResourceLocator().getImage("full/obj16/icon_nav_project.png");
 	}
 }

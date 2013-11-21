@@ -20,9 +20,9 @@ public class ExtJVPackageItemProvider extends JVPackageItemProvider {
 	@Override
 	public Object getImage(Object object) {
 		if (((JVPackage) object).getBeans().isEmpty()) {
-			return getResourceLocator().getImage("full/obj16/JVPackageEmpty.png");
+			return getResourceLocator().getImage("full/obj16/icon_nav_boxempty.png");
 		} else {
-			return getResourceLocator().getImage("full/obj16/JVPackage.png");
+			return getResourceLocator().getImage("full/obj16/icon_nav_boxfull.png");
 		}
 	}
 }
