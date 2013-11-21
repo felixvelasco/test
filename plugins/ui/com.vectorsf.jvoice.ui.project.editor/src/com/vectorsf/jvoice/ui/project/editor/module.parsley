@@ -3,12 +3,14 @@ import com.vectorsf.jvoice.model.base.JVBean
 import com.vectorsf.jvoice.model.base.JVModule
 import com.vectorsf.jvoice.model.base.JVProject
 import com.vectorsf.jvoice.model.base.NamedElement
+import com.vectorsf.jvoice.model.base.JVApplication
 
 /* com.vectorsf.jvoice.ui.project.editor Emf Parsley Dsl Module file */
 module com.vectorsf.jvoice.ui.project.editor {
 	featuresProvider {
 		features {
-			JVModule -> name, description
+			JVModule -> name, componentsPackage, description
+			JVApplication -> name, description
 			EventHandler -> event, handler
 		}
 	}
@@ -19,6 +21,7 @@ module com.vectorsf.jvoice.ui.project.editor {
 			EventHandler:handler -> "Handled by"
 			NamedElement:name -> "Name"
 			NamedElement:description -> "Description"
+			JVModule:componentsPackage -> "Components package"
 		}
 	}
 	

@@ -15,6 +15,7 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorSite;
 
 import com.google.inject.Inject;
 import com.vectorsf.jvoice.model.base.BasePackage;
@@ -84,5 +85,14 @@ public class ProjectEditor extends EmfAbstractEditor {
 		});
 
 		// updateProblemIndication();
+	}
+
+	@Override
+	public void init(IEditorSite site, IEditorInput editorInput) {
+		super.init(site, editorInput);
+
+		IFile file = (IFile) editorInput.getAdapter(IFile.class);
+		setPartName(file.getProject().getName());
+
 	}
 }
