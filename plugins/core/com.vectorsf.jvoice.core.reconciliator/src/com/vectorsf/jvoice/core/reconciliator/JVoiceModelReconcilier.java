@@ -78,9 +78,13 @@ public class JVoiceModelReconcilier {
 			jvProject = BaseFactory.eINSTANCE.createJVModule();
 			jvProject.setName(project.getName());
 			jvProject.setDescription(project.getName());
+
 			if (jvProject instanceof JVModule) {
-				addPackages(project, (JVModule) jvProject);
+				JVModule module = (JVModule) jvProject;
+				addPackages(project, module);
+				module.setComponentsPackage(JVoiceModuleNature.getDefaultComponentsPackageName(module));
 			}
+
 			addConfiguration(project, jvProject);
 		}
 

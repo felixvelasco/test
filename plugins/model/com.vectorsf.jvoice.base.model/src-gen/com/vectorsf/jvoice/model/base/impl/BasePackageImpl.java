@@ -435,6 +435,15 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getJVModule_ComponentsPackage() {
+		return (EAttribute)jvModuleEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getJVModule__GetPackage__String() {
 		return jvModuleEClass.getEOperations().get(0);
 	}
@@ -532,6 +541,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 
 		jvModuleEClass = createEClass(JV_MODULE);
 		createEReference(jvModuleEClass, JV_MODULE__PACKAGES);
+		createEAttribute(jvModuleEClass, JV_MODULE__COMPONENTS_PACKAGE);
 		createEOperation(jvModuleEClass, JV_MODULE___GET_PACKAGE__STRING);
 
 		eventHandlerEClass = createEClass(EVENT_HANDLER);
@@ -621,6 +631,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 
 		initEClass(jvModuleEClass, JVModule.class, "JVModule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVModule_Packages(), this.getJVPackage(), this.getJVPackage_OwnerModule(), "packages", null, 0, -1, JVModule.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getJVModule_ComponentsPackage(), ecorePackage.getEString(), "componentsPackage", null, 0, 1, JVModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getJVModule__GetPackage__String(), this.getJVPackage(), "getPackage", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);

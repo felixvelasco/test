@@ -735,13 +735,22 @@ public interface BasePackage extends EPackage {
 	int JV_MODULE__PACKAGES = JV_PROJECT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Components Package</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_MODULE__COMPONENTS_PACKAGE = JV_PROJECT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>JV Module</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_MODULE_FEATURE_COUNT = JV_PROJECT_FEATURE_COUNT + 1;
+	int JV_MODULE_FEATURE_COUNT = JV_PROJECT_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Referenced Projects</em>' operation.
@@ -1135,6 +1144,17 @@ public interface BasePackage extends EPackage {
 	EReference getJVModule_Packages();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.base.JVModule#getComponentsPackage <em>Components Package</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Components Package</em>'.
+	 * @see com.vectorsf.jvoice.model.base.JVModule#getComponentsPackage()
+	 * @see #getJVModule()
+	 * @generated
+	 */
+	EAttribute getJVModule_ComponentsPackage();
+
+	/**
 	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.base.JVModule#getPackage(java.lang.String) <em>Get Package</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1450,6 +1470,14 @@ public interface BasePackage extends EPackage {
 		 * @generated
 		 */
 		EReference JV_MODULE__PACKAGES = eINSTANCE.getJVModule_Packages();
+
+		/**
+		 * The meta object literal for the '<em><b>Components Package</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute JV_MODULE__COMPONENTS_PACKAGE = eINSTANCE.getJVModule_ComponentsPackage();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Package</b></em>' operation.
