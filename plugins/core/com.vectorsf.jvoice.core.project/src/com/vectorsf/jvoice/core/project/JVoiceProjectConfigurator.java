@@ -97,6 +97,7 @@ public final class JVoiceProjectConfigurator {
 		repository.setUrl("http://isbks208510504s.scisb.isban.corp/nexus/content/groups/jvoiceGroup/");
 
 		model.addRepository(repository);
+		model.addPluginRepository(repository);
 
 		return model;
 	}
