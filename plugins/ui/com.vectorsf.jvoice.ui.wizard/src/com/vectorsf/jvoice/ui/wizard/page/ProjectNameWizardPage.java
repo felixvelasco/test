@@ -10,7 +10,6 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -20,6 +19,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+
+import com.vectorsf.jvoice.ui.wizard.Activator;
 
 /**
  * @author xIS14487
@@ -32,8 +33,9 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 	private static final int SIZING_TEXT_FIELD_HEIGHT = 50;
-	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '.', '^', '¿', '(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
-	
+	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] { ' ', ',', '.', '^', 'ï¿½', '(', ')', '[', ']',
+			'{', '}', ';', '-', '_', '!', 'ï¿½', '$', '%', '&', '=' };
+
 	private Text textField;
 	private Text descriptionField;
 
@@ -45,22 +47,20 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 
 		}
 	};
-	
-    private Listener focusListener = new Listener() {
-        public void handleEvent(Event e) {
-            boolean valid = validatePage();
-            setPageComplete(valid);
-        }
-    };
 
-	public ProjectNameWizardPage(String pageName, String title, ImageDescriptor titleImage) {
-		super(pageName, title, titleImage);
-	}
+	private Listener focusListener = new Listener() {
+		@Override
+		public void handleEvent(Event e) {
+			boolean valid = validatePage();
+			setPageComplete(valid);
+		}
+	};
 
 	public ProjectNameWizardPage(String pageName) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
+		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_project.png"));
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 	protected boolean validatePage() {
 		setErrorMessage(null);
 		setMessage(null);
-		
+
 		String text = getTextFieldValue();
 		if (text.equals("")) { //$NON-NLS-1$
 			setMessage("Enter a project name");
@@ -115,21 +115,22 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 			setErrorMessage(status.getMessage());
 			return false;
 		}
-		if(!customValidate(text)){
+		if (!customValidate(text)) {
 			return false;
 		}
-		
+
 		if (getDescriptionFieldValue().length() == 0) {
 			setMessage("The field Description is empty", WARNING);
-	    }
+		}
 
 		return true;
 	}
 
 	private boolean customValidate(String text) {
-		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++){
+		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++) {
 			if (text.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
-				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName, String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
+				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName,
+						String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
 				return false;
 			}
 		}
@@ -155,43 +156,42 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 		textField.setLayoutData(data);
 		textField.setFont(parent.getFont());
 
-		Label label= new Label(parent, SWT.LEFT);
-		GridData gd= new GridData();
-		gd.horizontalAlignment= GridData.BEGINNING;
-		gd.grabExcessHorizontalSpace= false;
-		gd.horizontalSpan= 1;
-		gd.horizontalIndent= 0;
-		gd.widthHint= 0;
-		gd.heightHint= 0;
+		Label label = new Label(parent, SWT.LEFT);
+		GridData gd = new GridData();
+		gd.horizontalAlignment = GridData.BEGINNING;
+		gd.grabExcessHorizontalSpace = false;
+		gd.horizontalSpan = 1;
+		gd.horizontalIndent = 0;
+		gd.widthHint = 0;
+		gd.heightHint = 0;
 		label.setLayoutData(gd);
 
 		textField.addListener(SWT.Modify, nameModifyListener);
 		textField.addListener(SWT.FocusIn, nameModifyListener);
 	}
 
-	private void createDescriptionGroup(Composite composite) 
-    {
-        Composite descriptionGroup = new Composite(composite, SWT.NONE);
-        GridLayout layout = new GridLayout();
-        layout.numColumns = 1;
-        descriptionGroup.setLayout(layout);
-        descriptionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        
-        Label projectLabel = new Label(descriptionGroup, SWT.NONE);
-        projectLabel.setText("Description:");
-        projectLabel.setFont(composite.getFont());
+	private void createDescriptionGroup(Composite composite) {
+		Composite descriptionGroup = new Composite(composite, SWT.NONE);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 1;
+		descriptionGroup.setLayout(layout);
+		descriptionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        descriptionField = new Text(descriptionGroup, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-        GridData data = new GridData(GridData.FILL_BOTH);
-        data.widthHint = SIZING_TEXT_FIELD_WIDTH;
-        data.heightHint = SIZING_TEXT_FIELD_HEIGHT;
-        descriptionField.setLayoutData(data);
-        descriptionField.setFont(composite.getFont());
+		Label projectLabel = new Label(descriptionGroup, SWT.NONE);
+		projectLabel.setText("Description:");
+		projectLabel.setFont(composite.getFont());
 
-        descriptionField.addListener(SWT.Modify, nameModifyListener);
-        descriptionField.addListener(SWT.FocusIn, focusListener);
+		descriptionField = new Text(descriptionGroup, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		GridData data = new GridData(GridData.FILL_BOTH);
+		data.widthHint = SIZING_TEXT_FIELD_WIDTH;
+		data.heightHint = SIZING_TEXT_FIELD_HEIGHT;
+		descriptionField.setLayoutData(data);
+		descriptionField.setFont(composite.getFont());
+
+		descriptionField.addListener(SWT.Modify, nameModifyListener);
+		descriptionField.addListener(SWT.FocusIn, focusListener);
 	}
-	
+
 	private String getTextFieldValue() {
 		if (textField == null) {
 			return ""; //$NON-NLS-1$
@@ -199,12 +199,12 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 
 		return textField.getText().trim();
 	}
-	
+
 	private String getDescriptionFieldValue() {
 		if (descriptionField == null) {
 			return ""; //$NON-NLS-1$
 		}
-	    return descriptionField.getText().trim();
+		return descriptionField.getText().trim();
 	}
 
 	private String getInitialTextFieldValue() {
@@ -223,11 +223,11 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 			textField.setFocus();
 		}
 	}
-	
-    @Override
-    public String getDescription() {
-    	return getDescriptionFieldValue();
-    }
+
+	@Override
+	public String getDescription() {
+		return getDescriptionFieldValue();
+	}
 
 	@Override
 	protected void createWizardContents(Composite parent) {

@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -39,6 +38,7 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
+import com.vectorsf.jvoice.ui.wizard.Activator;
 
 public class PackageNameWizardPage extends AbstractWizardPage {
 
@@ -46,7 +46,8 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	private static final String PAGE_TITLE = "Create a Package";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
-	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '^', '¿', '(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
+	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] { ' ', ',', '^', 'ï¿½', '(', ')', '[', ']', '{',
+			'}', ';', '-', '_', '!', 'ï¿½', '$', '%', '&', '=' };
 
 	private Text textField;
 	private Text packageField;
@@ -62,16 +63,12 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		}
 	};
 
-	public PackageNameWizardPage(String pageName, String title, ImageDescriptor titleImage) {
-		super(pageName, title, titleImage);
-		primeraVez = 0;
-	}
-
 	public PackageNameWizardPage(String pageName) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
 		primeraVez = 0;
+		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_box.png"));
 	}
 
 	public String getText() {
@@ -117,11 +114,11 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 				setErrorMessage("Enter a package name");
 				return false;
 			}
-			if(!customValidate(packageName)){
+			if (!customValidate(packageName)) {
 				return false;
 			}
 		}
-		
+
 		IPath path = new Path(BaseModel.JV_PATH + "/" + toPath(packageName));
 
 		if (root.getProject(projectName).getFolder(path).exists()) {
@@ -135,9 +132,10 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	}
 
 	private boolean customValidate(String packageName) {
-		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++){
+		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++) {
 			if (packageName.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
-				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName, String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), packageName));
+				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName,
+						String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), packageName));
 				return false;
 			}
 		}

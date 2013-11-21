@@ -35,7 +35,6 @@ import org.eclipse.graphiti.mm.pictograms.PictogramsFactory;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -58,6 +57,7 @@ import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
+import com.vectorsf.jvoice.ui.wizard.Activator;
 
 public class DiagramNameWizardPage extends AbstractWizardPage {
 
@@ -66,7 +66,8 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	private static final Path PACKAGES_PATH = new Path(BaseModel.JV_PATH);
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
-	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '.', '^', '¿', '(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
+	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] { ' ', ',', '.', '^', 'ï¿½', '(', ')', '[', ']',
+			'{', '}', ';', '-', '_', '!', 'ï¿½', '$', '%', '&', '=' };
 
 	Text textFieldDiagram;
 	Text textFieldProject;
@@ -89,16 +90,8 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	private String initialFolder = "";
 	private String initialProject = "";
 
-	public DiagramNameWizardPage(String pageName, String title, ImageDescriptor titleImage) {
-		super(pageName, title, titleImage);
-		primeraVez = 0;
-	}
-
 	public DiagramNameWizardPage(String pageName) {
-		super(pageName);
-		setTitle(PAGE_TITLE);
-		setDescription(PAGE_DESC);
-		primeraVez = 0;
+		this(pageName, true);
 	}
 
 	public DiagramNameWizardPage(String pageName, boolean projectEnable) {
@@ -107,6 +100,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		setDescription(PAGE_DESC);
 		primeraVez = 0;
 		this.projectEnable = projectEnable;
+		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_flow.png"));
 	}
 
 	@Override
@@ -175,7 +169,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			setErrorMessage(status.getMessage());
 			return false;
 		}
-		if(!customValidate(text)){
+		if (!customValidate(text)) {
 			return false;
 		}
 
@@ -212,9 +206,10 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	}
 
 	private boolean customValidate(String text) {
-		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++){
+		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++) {
 			if (text.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
-				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName, String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
+				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName,
+						String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
 				return false;
 			}
 		}
@@ -488,12 +483,10 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		URI uri = URI.createPlatformResourceURI(diagramFile.getFullPath().toString(), true);
 
 		createFile(uri, diagram, diagramName);
-		
+
 		// Creamos la carpeta de recursos del flow
 		final IFolder packageFolder = project.getFolder(BaseModel.JV_PATH + "/" + toPath(getPackageFieldValue()));
-		String folderName = getFolderName(packageFolder, diagramName); 
-
-
+		String folderName = getFolderName(packageFolder, diagramName);
 
 		final IFolder resourcesFolder = getFolder(folderName);
 		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
@@ -583,18 +576,17 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	public Flow returnFlow() {
 		return myFlow;
 	}
-	
 
-	private String getFolderName(IFolder packageFolder, String dslName){
-		String folderName = packageFolder+"/"+dslName+".resources";
+	private String getFolderName(IFolder packageFolder, String dslName) {
+		String folderName = packageFolder + "/" + dslName + ".resources";
 		String newFolderName = "";
 		String[] folderNameSegments = folderName.split("/");
-		for (int i=2;i<folderNameSegments.length;i++){
-			newFolderName = newFolderName.concat("/"+folderNameSegments[i]);
+		for (int i = 2; i < folderNameSegments.length; i++) {
+			newFolderName = newFolderName.concat("/" + folderNameSegments[i]);
 		}
 		return newFolderName;
 	}
-	
+
 	private void createRecursively(IFolder container, IProgressMonitor monitor) throws CoreException {
 		IContainer parent = container.getParent();
 		if (parent instanceof IFolder && !parent.exists()) {
@@ -606,16 +598,16 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		}
 
 	}
-	
+
 	public IFolder getFolder(String folderName) {
 		IProject project = getProject();
 		return project.getFolder(folderName);
 	}
-	
+
 	private IProject getProject() {
 		return ResourcesPlugin.getWorkspace().getRoot().getProject(getProjectFieldValue());
 	}
-	
+
 	private String toPath(String packageFieldValue) {
 		return packageFieldValue.replace('.', '/');
 	}

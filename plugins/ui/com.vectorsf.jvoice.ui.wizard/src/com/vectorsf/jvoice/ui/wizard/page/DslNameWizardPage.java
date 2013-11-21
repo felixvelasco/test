@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -46,6 +45,7 @@ import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.ui.wizard.Activator;
 
 public class DslNameWizardPage extends AbstractWizardPage {
 
@@ -53,23 +53,21 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private static final String PAGE_TITLE = "Create a Locution";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
-	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '.', '^', '¿', '(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
+	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] { ' ', ',', '.', '^', 'ï¿½', '(', ')', '[', ']',
+			'{', '}', ';', '-', '_', '!', 'ï¿½', '$', '%', '&', '=' };
 
 	Text textFieldDSL;
 	Text textFieldProject;
 	Text textFieldPackage;
 	Text textFieldDiagram;
-	
 
 	private Button browsePackage;
 	private Button browseDiagram;
 	private Combo box;
 	private int primeraVez;
 	private static URI miURI;
-	private boolean projectEnable = true;
 	private String tipo = null;
 
-	
 	// Variable para diferenciar si la locucion se crea desde el
 	// navegador o desde el diagrama
 	// Si se crea desde el diagrama en el wizard no se podran
@@ -94,25 +92,17 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private String audios = "audios{\n //Code \n}";
 	private String variables = "variables{\n // User's variables \n}\n";
 
-	public DslNameWizardPage(String pageName, String title, ImageDescriptor titleImage) {
-		super(pageName, title, titleImage);
-		primeraVez = 0;
-	}
-
 	public DslNameWizardPage(String pageName) {
-		super(pageName);
-		setTitle(PAGE_TITLE);
-		setDescription(PAGE_DESC);
-		primeraVez = 0;
+		this(pageName, null);
 	}
 
-	public DslNameWizardPage(String pageName, boolean projectEnable, String tipo) {
+	public DslNameWizardPage(String pageName, String tipo) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
 		primeraVez = 0;
-		this.projectEnable = projectEnable;
 		this.tipo = tipo;
+		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_locution.png"));
 	}
 
 	@Override
@@ -179,7 +169,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			setErrorMessage(status.getMessage());
 			return false;
 		}
-		if(!customValidate(text)){
+		if (!customValidate(text)) {
 			return false;
 		}
 
@@ -196,15 +186,14 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			setErrorMessage("Package does not exist");
 			return false;
 		}
-		
+
 		String diagramName = getDiagramFieldValue();
 		JVBean diagram = paquete.getBean(diagramName);
-		
+
 		if (diagram == null) {
 			setErrorMessage("Diagram does not exist");
 			return false;
 		}
-		
 
 		JVBean voiceDsl = paquete.getBean(text);
 
@@ -224,9 +213,10 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	}
 
 	private boolean customValidate(String text) {
-		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++){
+		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++) {
 			if (text.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
-				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName, String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
+				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName,
+						String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
 				return false;
 			}
 		}
@@ -242,10 +232,10 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		// Obtenemos el nombre del proyecto, paquete y diagrama
 		if (selection instanceof IFolder) {
-			// Si se crea desde el diagrama			
+			// Si se crea desde el diagrama
 			IFolder folder = (IFolder) selection;
 			setNames(folder);
-		}else{
+		} else {
 			// Si se crea desde el navegador
 			fromNavigator = true;
 			Flow flow = (Flow) selection;
@@ -273,7 +263,6 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		textFieldDSL.setLayoutData(data);
 		textFieldDSL.setFont(parent.getFont());
 
-		
 		// Project label
 
 		Label projectLabel2 = new Label(projectGroup, SWT.NONE);
@@ -287,7 +276,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		textFieldProject.setFont(parent.getFont());
 		textFieldProject.setEditable(false);
 
-		// Project browse button 
+		// Project browse button
 		Button browse = new Button(projectGroup, SWT.PUSH);
 		browse.setText("Browse...");
 		browse.setEnabled(fromNavigator);
@@ -295,11 +284,9 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 			@Override
 			public void handleEvent(Event event) {
-				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
-						getShell(),
-						new AdapterFactoryLabelProvider(
-								new ComposedAdapterFactory(
-										ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(),
+						new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+								ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 				dialog.setTitle("Container Selection");
 				dialog.setAllowDuplicates(false);
 				dialog.setMultipleSelection(false);
@@ -363,7 +350,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		Label projectLabel4 = new Label(projectGroup, SWT.NONE);
 		projectLabel4.setText("Diagram name:");
 		projectLabel4.setFont(parent.getFont());
-		
+
 		textFieldDiagram = new Text(projectGroup, SWT.BORDER);
 		GridData data4 = new GridData(GridData.FILL_HORIZONTAL);
 		data4.widthHint = SIZING_TEXT_FIELD_WIDTH;
@@ -371,23 +358,20 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		textFieldDiagram.setFont(parent.getFont());
 		textFieldDiagram.setEditable(false);
 
-		// Diagram browse button 
+		// Diagram browse button
 		browseDiagram = new Button(projectGroup, SWT.PUSH);
 		browseDiagram.setText("Browse...");
 		browseDiagram.setEnabled(fromNavigator);
 		browseDiagram.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
-						getShell(),
-						new AdapterFactoryLabelProvider(
-								new ComposedAdapterFactory(
-										ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(),
+						new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+								ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 				dialog.setTitle("Container Selection");
 				dialog.setAllowDuplicates(false);
 				dialog.setMultipleSelection(false);
-				JVModule project = (JVModule) BaseModel.getInstance().getModel()
-						.getProject(textFieldProject.getText());
+				JVModule project = (JVModule) BaseModel.getInstance().getModel().getProject(textFieldProject.getText());
 				JVPackage pack = project.getPackage(textFieldPackage.getText());
 				dialog.setElements(pack.getBeans().toArray());
 				dialog.open();
@@ -407,7 +391,6 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		ComboLabel4.setText("Select an option:");
 		ComboLabel4.setFont(parent.getFont());
 
-		
 		// Combo para indicar que clase de DSL queremos crear.
 
 		box = new Combo(projectGroup, SWT.READ_ONLY);
@@ -417,7 +400,6 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		box.add("Output");
 		box.add("Record");
 
-		
 		if (tipo != null) {
 			if (tipo.equalsIgnoreCase("Menu")) {
 				box.select(0);
@@ -443,13 +425,13 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			textFieldDSL.setText(getInitialTextFieldValue());
 		}
 		textFieldDSL.addListener(SWT.Modify, nameModifyListener);
-		
+
 		textFieldProject.setText(getInitialTextProjectFieldValue());
 		textFieldProject.addListener(SWT.Modify, nameModifyListener);
 
 		textFieldPackage.setText(getInitialTextFolderFieldValue());
 		textFieldPackage.addListener(SWT.Modify, nameModifyListener);
-	
+
 		textFieldDiagram.setText(getInitialTextDiagramFieldValue());
 		textFieldDiagram.addListener(SWT.Modify, nameModifyListener);
 	}
@@ -522,7 +504,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		return project.getPackages();
 	}
-	
+
 	private String getProjectFieldValue() {
 		if (textFieldProject == null) {
 			return ""; //$NON-NLS-1$
@@ -538,7 +520,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		return textFieldPackage.getText().trim();
 	}
-	
+
 	private String getDiagramFieldValue() {
 		if (textFieldDiagram == null) {
 			return ""; //$NON-NLS-1$
@@ -554,26 +536,25 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		IProject project = null;
 		IFolder dslFolder = null;
 		String editorExtension = "voiceDsl";
-		IFile dslFile =null;
-		String contents ="";
-		String seleccion= box.getText();
+		IFile dslFile = null;
+		String contents = "";
+		String seleccion = box.getText();
 
 		Object element = getSelection();
-		
-		if (element instanceof IFolder){
+
+		if (element instanceof IFolder) {
 			// Creado desde el diagrama
-			project = (IProject) Platform.getAdapterManager().getAdapter(
-					((IFolder) element).getProject(), IProject.class);
-			
-			dslFolder = (IFolder) Platform.getAdapterManager().getAdapter(
-					element, IFolder.class);
-		}else {
+			project = (IProject) Platform.getAdapterManager().getAdapter(((IFolder) element).getProject(),
+					IProject.class);
+
+			dslFolder = (IFolder) Platform.getAdapterManager().getAdapter(element, IFolder.class);
+		} else {
 			// Creado desde el navegador
 			Flow flow = (Flow) element;
-			project = (IProject) Platform.getAdapterManager().getAdapter(
-					flow.getOwnerPackage().getOwnerModule(), IProject.class); 
-		    IFolder packageFolder = project.getFolder(BaseModel.JV_PATH + "/" + toPath(getPackageFieldValue()));
-			String folderName = getFolderName(packageFolder, flow.getName()); 
+			project = (IProject) Platform.getAdapterManager().getAdapter(flow.getOwnerPackage().getOwnerModule(),
+					IProject.class);
+			IFolder packageFolder = project.getFolder(BaseModel.JV_PATH + "/" + toPath(getPackageFieldValue()));
+			String folderName = getFolderName(packageFolder, flow.getName());
 			dslFolder = getFolder(folderName);
 		}
 
@@ -583,37 +564,23 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			ErrorDialog.openError(getShell(), error, null, status);
 			throw new CoreException(status);
 		}
-		
-		
-		if (dslFolder != null){
-			dslFile= dslFolder.getFile(dslName + "." + editorExtension);
-		
+
+		if (dslFolder != null) {
+			dslFile = dslFolder.getFile(dslName + "." + editorExtension);
+
 			if (!dslFile.exists()) {
-				if (seleccion.equals("Menu")){
-					contents="menuname "+dslName+ "\n\n"
-							+configuration
-							+grammars
-							+audios
-							+outputs;
-					
-					
-					
-				}else if(seleccion.equals("Input")){
-					contents="inputname "+dslName+"\n\n"
-							+configuration
-							+grammars
-							+audios;
-					
-				}else if(seleccion.equals("Output")){
-					contents="outputname "+dslName+"\n\n"
-							+variables
-							+audios;
-					
-				}else if(seleccion.equals("Record")){
-					contents="recordname "+dslName+"\n\n"
-							+configuration
-							+audios;
-					
+				if (seleccion.equals("Menu")) {
+					contents = "menuname " + dslName + "\n\n" + configuration + grammars + audios + outputs;
+
+				} else if (seleccion.equals("Input")) {
+					contents = "inputname " + dslName + "\n\n" + configuration + grammars + audios;
+
+				} else if (seleccion.equals("Output")) {
+					contents = "outputname " + dslName + "\n\n" + variables + audios;
+
+				} else if (seleccion.equals("Record")) {
+					contents = "recordname " + dslName + "\n\n" + configuration + audios;
+
 				}
 
 				InputStream source = new ByteArrayInputStream(contents.getBytes());
@@ -639,50 +606,50 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	public URI returnURI() {
 		return miURI;
 	}
-	
-	private String getFolderName(IFolder packageFolder, String dslName){
-		String folderName = packageFolder+"/"+dslName+".resources";
+
+	private String getFolderName(IFolder packageFolder, String dslName) {
+		String folderName = packageFolder + "/" + dslName + ".resources";
 		String newFolderName = "";
 		String[] folderNameSegments = folderName.split("/");
-		for (int i=2;i<folderNameSegments.length;i++){
-			newFolderName = newFolderName.concat("/"+folderNameSegments[i]);
+		for (int i = 2; i < folderNameSegments.length; i++) {
+			newFolderName = newFolderName.concat("/" + folderNameSegments[i]);
 		}
 		return newFolderName;
 	}
-	
+
 	private IProject getProject() {
 		return ResourcesPlugin.getWorkspace().getRoot().getProject(getProjectFieldValue());
 	}
-	
+
 	public IFolder getFolder(String folderName) {
 		IProject project = getProject();
 		return project.getFolder(folderName);
 	}
-	
+
 	public String getProjectName(IFolder folderName) {
 		IProject iProject = folderName.getProject();
 		return iProject.getName();
 	}
-	
+
 	public void setNames(IFolder folder) {
 		IProject iProject = folder.getProject();
 		initialProject = iProject.getName();
 		IPath iPath = folder.getFullPath();
 		String path = iPath.toString().substring(1);
 		String[] pathSegments = path.split("/");
-		String diagramFolder = pathSegments[pathSegments.length-1]; 
-		if (diagramFolder.endsWith("resources")){
-			//Obtenemos el pack
-			for (int i=5; i<pathSegments.length-1;i++){
-				if(i==5){
-					initialPackage =pathSegments[i].toString();
-				}else{
-					initialPackage =initialPackage+"."+pathSegments[i].toString();		
-				}						
+		String diagramFolder = pathSegments[pathSegments.length - 1];
+		if (diagramFolder.endsWith("resources")) {
+			// Obtenemos el pack
+			for (int i = 5; i < pathSegments.length - 1; i++) {
+				if (i == 5) {
+					initialPackage = pathSegments[i].toString();
+				} else {
+					initialPackage = initialPackage + "." + pathSegments[i].toString();
+				}
 			}
-			//initialPackage = pathSegments[pathSegments.length-2];
+			// initialPackage = pathSegments[pathSegments.length-2];
 			String[] diagramNameSegments = diagramFolder.split("\\.");
-			initialFlow = diagramNameSegments[0];		
+			initialFlow = diagramNameSegments[0];
 		}
 	}
 
