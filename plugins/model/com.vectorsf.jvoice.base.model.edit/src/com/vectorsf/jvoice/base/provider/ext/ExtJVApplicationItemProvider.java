@@ -13,12 +13,12 @@ public class ExtJVApplicationItemProvider extends JVApplicationItemProvider {
 
 	@Override
 	public String getText(Object object) {
-		String label = ((JVProject) object).getName() + " application";
+		String label = ((JVProject) object).getName();
 		return label;
 	}
 
 	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/icon_nav_project.png");
+		return getResourceLocator().getImage("full/obj16/icon_nav_app.png");
 	}
 }

@@ -32,7 +32,8 @@ module com.vectorsf.jvoice.ui.project.editor {
 			EventHandler -> "Specify event handling"
 		}
 		image {
-			JVProject -> "obj48/icon_wiz_project.png"
+			JVApplication -> "obj48/icon_wiz_app.png"
+			JVModule -> "obj48/icon_wiz_project.png"
 		}
 	}
 }

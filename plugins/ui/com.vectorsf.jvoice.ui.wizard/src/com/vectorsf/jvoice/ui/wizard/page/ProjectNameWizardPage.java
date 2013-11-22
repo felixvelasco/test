@@ -56,11 +56,11 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 		}
 	};
 
-	public ProjectNameWizardPage(String pageName) {
+	public ProjectNameWizardPage(String pageName, String imagePath) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
-		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_project.png"));
+		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, imagePath));
 	}
 
 	@Override

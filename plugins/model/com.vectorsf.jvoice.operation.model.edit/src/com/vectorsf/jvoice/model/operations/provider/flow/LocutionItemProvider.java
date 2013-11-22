@@ -42,6 +42,11 @@ public class LocutionItemProvider extends TransientFlowItemProvider {
 	}
 
 	@Override
+	public Object getImage(Object object) {
+		return getResourceLocator().getImage("full/obj16/icon_nav_locutions.png");
+	}
+
+	@Override
 	public Collection<?> getChildren(Object object) {
 		Function<State, VoiceDsl> collectLocutions = new Function<State, VoiceDsl>() {
 

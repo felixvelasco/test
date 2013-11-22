@@ -2,7 +2,9 @@ package com.vectorsf.jvoice.ui.project.editor.ui.provider;
 
 import com.google.inject.Inject;
 import com.vectorsf.jvoice.model.base.EventHandler;
+import com.vectorsf.jvoice.model.base.JVApplication;
 import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -33,7 +35,11 @@ public class LabelProviderGen extends ViewerLabelProvider {
     return "Specify event handling";
   }
   
-  public Object image(final JVProject it) {
+  public Object image(final JVApplication it) {
+    return "obj48/icon_wiz_app.png";
+  }
+  
+  public Object image(final JVModule it) {
     return "obj48/icon_wiz_project.png";
   }
 }
