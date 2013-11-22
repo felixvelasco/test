@@ -81,7 +81,7 @@ public class JVoiceModelReconcilier {
 
 			if (jvProject instanceof JVModule) {
 				JVModule module = (JVModule) jvProject;
-				addPackages(project, module);
+				addPackages(project, module, baseModel.getResourceSet());
 				module.setComponentsPackage(JVoiceModuleNature.getDefaultComponentsPackageName(module));
 			}
 
@@ -109,11 +109,11 @@ public class JVoiceModelReconcilier {
 		return application;
 	}
 
-	public void addPackages(IProject project, JVModule jvModule) {
+	public void addPackages(IProject project, JVModule jvModule, ResourceSet resourceSet) {
 		IFolder packageFolder = (IFolder) project.findMember(BaseModel.JV_PATH);
 		if (packageFolder != null) {
 			try {
-				packageFolder.accept(new ResourceVisitor(jvModule, baseModel));
+				packageFolder.accept(new ResourceVisitor(jvModule, resourceSet));
 			} catch (CoreException e) {
 			}
 		}
@@ -158,7 +158,7 @@ public class JVoiceModelReconcilier {
 		}
 	}
 
-	public JVPackage createPackage(IFolder folder) throws CoreException {
+	public JVPackage createPackage(IFolder folder, ResourceSet resourceSet) throws CoreException {
 		JVPackage jvPackage = BaseFactory.eINSTANCE.createJVPackage();
 		IPath relativePath = folder.getProjectRelativePath().makeRelativeTo(PACKAGES_PATH);
 		jvPackage.setName(relativePath.toString().replace("/", "."));
@@ -166,7 +166,7 @@ public class JVoiceModelReconcilier {
 
 		for (IResource res : folder.members()) {
 			if (res instanceof IFile) {
-				JVBean bean = createBean((IFile) res);
+				JVBean bean = createBean((IFile) res, resourceSet);
 				if (bean != null) {
 					jvPackage.getBeans().add(bean);
 				}
@@ -176,15 +176,15 @@ public class JVoiceModelReconcilier {
 		return jvPackage;
 	}
 
-	public JVBean createBean(IFile file) {
+	public JVBean createBean(IFile file, ResourceSet resourceSet) {
 		JVBeanFactory factory = JVBeanFactoryManager.getInstance().getFactory(file.getFileExtension());
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-		return factory != null ? factory.loadBeanFromFile(uri) : null;
+		return factory != null ? factory.loadBeanFromFile(resourceSet, uri) : null;
 	}
 
-	public JVBean createBean(URI uri) {
+	public JVBean createBean(URI uri, ResourceSet resourceSet) {
 		JVBeanFactory factory = JVBeanFactoryManager.getInstance().getFactory(uri.fileExtension());
-		return factory != null ? factory.loadBeanFromFile(uri) : null;
+		return factory != null ? factory.loadBeanFromFile(resourceSet, uri) : null;
 	}
 
 	public String getBeanName(IFile file) {
@@ -195,16 +195,18 @@ public class JVoiceModelReconcilier {
 	public class ResourceVisitor implements IResourceVisitor {
 
 		private JVModule project;
+		private ResourceSet resourceSet;
 
-		public ResourceVisitor(JVModule jvProject, BaseModel base) {
+		public ResourceVisitor(JVModule jvProject, ResourceSet resourceSet) {
 			this.project = jvProject;
+			this.resourceSet = resourceSet;
 		}
 
 		@Override
 		public boolean visit(IResource resource) throws CoreException {
 			if (resource instanceof IFolder && !resource.getProjectRelativePath().toString().equals(BaseModel.JV_PATH)
 					&& !((IFolder) resource).getName().endsWith("resources")) {
-				project.getPackages().add(createPackage((IFolder) resource));
+				project.getPackages().add(createPackage((IFolder) resource, resourceSet));
 			}
 			return true;
 		}

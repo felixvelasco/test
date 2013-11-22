@@ -7,7 +7,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
-import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.factory.JVBeanFactory;
 import com.vectorsf.jvoice.model.operations.Flow;
 
@@ -17,12 +16,7 @@ public class FlowFactory implements JVBeanFactory {
 	}
 
 	@Override
-	public Flow loadBeanFromFile(URI uri) {
-		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
-		return loadFlow(uri, resourceSet);
-	}
-
-	private Flow loadFlow(URI uri, ResourceSet resourceSet) {
+	public Flow loadBeanFromFile(ResourceSet resourceSet, URI uri) {
 		Resource resource = resourceSet.getResource(uri, true);
 
 		for (EObject eobject : resource.getContents()) {
@@ -37,9 +31,8 @@ public class FlowFactory implements JVBeanFactory {
 	public String getNameFromFile(IFile file) {
 		if (file.exists()) {
 			ResourceSet rset = new ResourceSetImpl();
-			URI uri = URI.createPlatformResourceURI(file.getFullPath()
-					.toString(), true);
-			return loadFlow(uri, rset).getName();
+			URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+			return loadBeanFromFile(rset, uri).getName();
 		} else {
 			return file.getName().replace(".jvflow", "");
 		}

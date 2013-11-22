@@ -6,7 +6,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.factory.JVBeanFactory;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
@@ -16,8 +15,7 @@ public class PromptFactory implements JVBeanFactory {
 	}
 
 	@Override
-	public VoiceDsl loadBeanFromFile(URI uri) {
-		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
+	public VoiceDsl loadBeanFromFile(ResourceSet resourceSet, URI uri) {
 		Resource resource = resourceSet.getResource(uri, true);
 
 		for (EObject eobject : resource.getContents()) {

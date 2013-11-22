@@ -59,8 +59,9 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 						return true;
 					}
 				} else {
-					if (!((IFolder) resource).getName().endsWith("resources")){
-						currentPackage = JVoiceModelReconcilier.getInstance().createPackage((IFolder) resource);
+					if (!((IFolder) resource).getName().endsWith("resources")) {
+						currentPackage = JVoiceModelReconcilier.getInstance().createPackage((IFolder) resource,
+								BaseModel.getInstance().getResourceSet());
 						jvProject.getPackages().add(currentPackage);
 					}
 					return true;
@@ -79,7 +80,8 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 
 					final List<JVBean> beans = pkg.getBeans();
 					if (delta.getKind() == IResourceDelta.ADDED) {
-						beans.add(JVoiceModelReconcilier.getInstance().createBean((IFile) resource));
+						beans.add(JVoiceModelReconcilier.getInstance().createBean((IFile) resource,
+								BaseModel.getInstance().getResourceSet()));
 
 					} else if (delta.getKind() == IResourceDelta.CHANGED) {
 						ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
@@ -91,7 +93,10 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 							if (index != -1) {
 								beans.remove(index);
 								eResource.unload();
-								beans.add(index, JVoiceModelReconcilier.getInstance().createBean((IFile) resource));
+								beans.add(
+										index,
+										JVoiceModelReconcilier.getInstance().createBean((IFile) resource,
+												BaseModel.getInstance().getResourceSet()));
 							}
 						}
 
@@ -166,7 +171,7 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 			removeResources(pck);
 			resourceSet.getResources().remove(pck.eResource());
 		}
-		for (Configuration config : module.getConfiguration()){
+		for (Configuration config : module.getConfiguration()) {
 			resourceSet.getResources().remove(config.eResource());
 		}
 	}
@@ -198,8 +203,8 @@ public class CheckDeltaChange implements IResourceDeltaVisitor {
 		} else if (configPath.isPrefixOf(resource.getProjectRelativePath())
 				&& configPath.equals(resource.getProjectRelativePath())) {
 			return resource.getProjectRelativePath().makeRelativeTo(configPath);
-			
-		}else {
+
+		} else {
 			return null;
 		}
 	}

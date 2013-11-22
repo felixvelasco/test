@@ -39,7 +39,7 @@ public class ReconciliableResource extends XMIResourceImpl {
 			IProject project = workspace.getRoot().findMember(path).getProject();
 			EObject content = getContents().get(0);
 			if (content instanceof JVModule) {
-				JVoiceModelReconcilier.getInstance().addPackages(project, (JVModule) content);
+				JVoiceModelReconcilier.getInstance().addPackages(project, (JVModule) content, getResourceSet());
 			}
 			if (content instanceof JVProject) {
 				JVoiceModelReconcilier.getInstance().addConfiguration(project, (JVProject) content);
