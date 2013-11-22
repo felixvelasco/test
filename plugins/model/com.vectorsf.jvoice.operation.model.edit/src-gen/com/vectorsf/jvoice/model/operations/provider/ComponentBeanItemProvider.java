@@ -62,6 +62,7 @@ public class ComponentBeanItemProvider
 			super.getPropertyDescriptors(object);
 
 			addFqdnPropertyDescriptor(object);
+			addNameBeanPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -80,6 +81,28 @@ public class ComponentBeanItemProvider
 				 getString("_UI_ComponentBean_fqdn_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_ComponentBean_fqdn_feature", "_UI_ComponentBean_type"),
 				 OperationsPackage.Literals.COMPONENT_BEAN__FQDN,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Name Bean feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNameBeanPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ComponentBean_nameBean_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ComponentBean_nameBean_feature", "_UI_ComponentBean_type"),
+				 OperationsPackage.Literals.COMPONENT_BEAN__NAME_BEAN,
 				 true,
 				 false,
 				 false,
@@ -126,6 +149,7 @@ public class ComponentBeanItemProvider
 
 		switch (notification.getFeatureID(ComponentBean.class)) {
 			case OperationsPackage.COMPONENT_BEAN__FQDN:
+			case OperationsPackage.COMPONENT_BEAN__NAME_BEAN:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

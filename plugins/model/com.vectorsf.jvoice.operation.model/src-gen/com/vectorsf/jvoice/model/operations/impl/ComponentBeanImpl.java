@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl#getFqdn <em>Fqdn</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl#getNameBean <em>Name Bean</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,6 +47,26 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 	 * @ordered
 	 */
 	protected String fqdn = FQDN_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getNameBean() <em>Name Bean</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNameBean()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_BEAN_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getNameBean() <em>Name Bean</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNameBean()
+	 * @generated
+	 * @ordered
+	 */
+	protected String nameBean = NAME_BEAN_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -92,11 +113,34 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getNameBean() {
+		return nameBean;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNameBean(String newNameBean) {
+		String oldNameBean = nameBean;
+		nameBean = newNameBean;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationsPackage.COMPONENT_BEAN__NAME_BEAN, oldNameBean, nameBean));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case OperationsPackage.COMPONENT_BEAN__FQDN:
 				return getFqdn();
+			case OperationsPackage.COMPONENT_BEAN__NAME_BEAN:
+				return getNameBean();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -111,6 +155,9 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 		switch (featureID) {
 			case OperationsPackage.COMPONENT_BEAN__FQDN:
 				setFqdn((String)newValue);
+				return;
+			case OperationsPackage.COMPONENT_BEAN__NAME_BEAN:
+				setNameBean((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -127,6 +174,9 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 			case OperationsPackage.COMPONENT_BEAN__FQDN:
 				setFqdn(FQDN_EDEFAULT);
 				return;
+			case OperationsPackage.COMPONENT_BEAN__NAME_BEAN:
+				setNameBean(NAME_BEAN_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -141,6 +191,8 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 		switch (featureID) {
 			case OperationsPackage.COMPONENT_BEAN__FQDN:
 				return FQDN_EDEFAULT == null ? fqdn != null : !FQDN_EDEFAULT.equals(fqdn);
+			case OperationsPackage.COMPONENT_BEAN__NAME_BEAN:
+				return NAME_BEAN_EDEFAULT == null ? nameBean != null : !NAME_BEAN_EDEFAULT.equals(nameBean);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -157,6 +209,8 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (fqdn: ");
 		result.append(fqdn);
+		result.append(", nameBean: ");
+		result.append(nameBean);
 		result.append(')');
 		return result.toString();
 	}

@@ -13,6 +13,7 @@ import com.vectorsf.jvoice.model.base.NamedElement;
  * The following features are supported:
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.ComponentBean#getFqdn <em>Fqdn</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.ComponentBean#getNameBean <em>Name Bean</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,5 +47,31 @@ public interface ComponentBean extends NamedElement {
 	 * @generated
 	 */
 	void setFqdn(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Name Bean</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name Bean</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name Bean</em>' attribute.
+	 * @see #setNameBean(String)
+	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getComponentBean_NameBean()
+	 * @model
+	 * @generated
+	 */
+	String getNameBean();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.model.operations.ComponentBean#getNameBean <em>Name Bean</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name Bean</em>' attribute.
+	 * @see #getNameBean()
+	 * @generated
+	 */
+	void setNameBean(String value);
 
 } // ComponentBean

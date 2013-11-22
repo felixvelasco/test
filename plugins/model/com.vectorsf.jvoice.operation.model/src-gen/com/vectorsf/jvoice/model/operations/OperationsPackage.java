@@ -1573,13 +1573,22 @@ public interface OperationsPackage extends EPackage {
 	int COMPONENT_BEAN__FQDN = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Name Bean</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_BEAN__NAME_BEAN = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Component Bean</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_BEAN_FEATURE_COUNT = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 1;
+	int COMPONENT_BEAN_FEATURE_COUNT = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Component Bean</em>' class.
@@ -2067,6 +2076,17 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getComponentBean_Fqdn();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.ComponentBean#getNameBean <em>Name Bean</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name Bean</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.ComponentBean#getNameBean()
+	 * @see #getComponentBean()
+	 * @generated
+	 */
+	EAttribute getComponentBean_NameBean();
+
+	/**
 	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2486,6 +2506,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute COMPONENT_BEAN__FQDN = eINSTANCE.getComponentBean_Fqdn();
+
+		/**
+		 * The meta object literal for the '<em><b>Name Bean</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT_BEAN__NAME_BEAN = eINSTANCE.getComponentBean_NameBean();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}' enum.
