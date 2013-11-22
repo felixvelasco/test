@@ -38,12 +38,13 @@ public final class JVoiceProjectConfigurator {
 		final IProject result[] = new IProject[1];
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
+			//Se añade la carpeta "src/main/resources/audios"cuando se crea el proyecto.
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
 						getModel(groupId, artifactId, projectName, descriptionProject),
-						new String[] { "src/main/java", "src/main/resources/jv" }, new ProjectImportConfiguration(),
+						new String[] { "src/main/java", "src/main/resources/jv","src/main/resources/audios" }, new ProjectImportConfiguration(),
 						monitor);
 
 				result[0] = project;
