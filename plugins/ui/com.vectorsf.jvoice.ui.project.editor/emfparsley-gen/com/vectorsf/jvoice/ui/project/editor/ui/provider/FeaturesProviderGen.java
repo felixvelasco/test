@@ -11,6 +11,8 @@ public class FeaturesProviderGen extends FeaturesProvider {
     
     stringMap.mapTo("com.vectorsf.jvoice.model.base.JVModule",
       "name", "description");
+    stringMap.mapTo("com.vectorsf.jvoice.model.base.JVApplication",
+      "name", "description");
     stringMap.mapTo("com.vectorsf.jvoice.model.base.EventHandler",
       "event", "handler");
   }

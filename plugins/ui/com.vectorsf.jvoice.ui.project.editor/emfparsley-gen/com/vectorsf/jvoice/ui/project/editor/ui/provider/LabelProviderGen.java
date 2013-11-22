@@ -32,4 +32,8 @@ public class LabelProviderGen extends ViewerLabelProvider {
   public String text(final EventHandler it) {
     return "Specify event handling";
   }
+  
+  public Object image(final JVProject it) {
+    return "obj48/icon_wiz_project.png";
+  }
 }
