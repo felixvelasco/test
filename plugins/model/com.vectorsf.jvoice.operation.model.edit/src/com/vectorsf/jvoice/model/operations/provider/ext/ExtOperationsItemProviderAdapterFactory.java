@@ -12,6 +12,15 @@ public class ExtOperationsItemProviderAdapterFactory extends OperationsItemProvi
 	}
 
 	@Override
+	public Adapter createComponentBeanAdapter() {
+		if (componentBeanItemProvider == null) {
+			componentBeanItemProvider = new ExtComponentBeanItemProvider(this);
+		}
+
+		return componentBeanItemProvider;
+	}
+
+	@Override
 	public Adapter createInitialStateAdapter() {
 		if (initialStateItemProvider == null) {
 			initialStateItemProvider = new ExtInitialStateItemProvider(this);
