@@ -1,155 +1,120 @@
 package com.isb.jVoice.dsl.builder
 
+import com.vectorsf.jvoice.model.operations.CallFlowState
+import com.vectorsf.jvoice.model.operations.CallState
+import com.vectorsf.jvoice.model.operations.CustomState
+import com.vectorsf.jvoice.model.operations.FinalState
+import com.vectorsf.jvoice.model.operations.Flow
+import com.vectorsf.jvoice.model.operations.InitialState
+import com.vectorsf.jvoice.model.operations.InputState
+import com.vectorsf.jvoice.model.operations.MenuState
+import com.vectorsf.jvoice.model.operations.PromptState
+import com.vectorsf.jvoice.model.operations.RecordState
+import com.vectorsf.jvoice.model.operations.State
+import com.vectorsf.jvoice.model.operations.SwitchState
+import com.vectorsf.jvoice.model.operations.TransferState
 import java.io.File
 import java.io.FileWriter
 import org.eclipse.emf.ecore.resource.Resource
-import com.vectorsf.jvoice.model.operations.Flow
-import com.vectorsf.jvoice.model.operations.State
-import com.vectorsf.jvoice.model.operations.FinalState
-import com.vectorsf.jvoice.model.operations.CallFlowState
-import com.vectorsf.jvoice.model.operations.CallState
-import com.vectorsf.jvoice.model.operations.PromptState
-import com.vectorsf.jvoice.model.operations.SwitchState
-import com.vectorsf.jvoice.model.operations.InputState
-import com.vectorsf.jvoice.model.operations.MenuState
-import com.vectorsf.jvoice.model.operations.InitialState
-import com.vectorsf.jvoice.model.operations.CustomState
 
 import static com.isb.jVoice.dsl.builder.Using.*
-import com.vectorsf.jvoice.model.operations.TransferState
-import com.vectorsf.jvoice.model.operations.RecordState
 
 class SpringWebFlowGenerator {
-	
+
 	Resource res
 	Flow element
 
-	int positionIni;
-	
 	new(Resource resource) {
 		res = resource;
 		element = res.contents.get(1) as Flow;
 	}
-		
+
 	def generate(File file) {
 		using(new FileWriter(file)) [
-			var initial = false;
-			var positionFin =element.getStates().length-1;
 			//Obtenemos el estado inicial para escribri la cabecera.
-			for (State state : element.getStates()) {
-				if (state instanceof InitialState){
-					it.append(doGenerateHeader(state));	
-					initial = true;			
-				}			
-			}
-			//En el caso de que no haya estados iniciales y haya otros estados en el diagrama se coge cualquiera
-			if (!initial && element.getStates().length>0){
-				it.append(doGenerateHeader(element.getStates().get(0)));	
-			}
+			it.append(doGenerateHeader())
+			
 			// Se recorre de nuevo todo el array para escribir el resto de estados del diagrama 
 			for (State state : element.getStates()) {
-					positionIni =element.getStates().indexOf(state);				
-					it.append(doGenerate(state, positionIni,positionFin));	
+				it.append(generateState(state))
 			}
-			initial
+			it.append(doGenerateFooter());
 		]
 	}
 	
-	def doGenerate(State state, int position, int positionFin) '''
-		«doGenerateCallFlowState(state)»
-		«doGenerateCallState(state)»
-		«doGenerateOutputState(state)»		
-		«doGenerateSwitchState(state)»
-		«doGenerateInputState(state)»
-		«doGenerateMenuState(state)»
-		«doGenerateFinalState(state)»
-		«doGenerateCustomState(state)»
-		«doGenerateTransferState(state)»
-		«doGenerateRecordState(state)»
-	«IF positionIni==positionFin»
-			«doGenerateFooter()»
-	«ENDIF»
-	
+	def doGenerateHeader() '''
+		<flow xmlns="http://www.springframework.org/schema/webflow"	
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
+		xsi:schemaLocation="http://www.springframework.org/schema/webflow        				
+		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+		start-state= "«GetNameTransOut.Name(initialState)»" >
 	'''
 	
-	def doGenerateHeader(State state) '''
-	<flow xmlns="http://www.springframework.org/schema/webflow"	
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow        				
-	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
-	start-state= "«GetNameTransOut.Name(state)»" >
-	'''
-	
-	def doGenerateFinalState(State state) '''
-		«IF state instanceof FinalState »
-			«FinalStateCodeXML.doGenerateFinalState(state)»
-		«ENDIF»	
-	'''
+	def getInitialState() {
+		for (State state : element.getStates()) {
+			if (state instanceof InitialState) {
+				return state;
+			}
+		}
+		//En el caso de que no haya estados iniciales y haya otros estados en el diagrama se coge cualquiera
+		if (element.getStates().length > 0) {
+			element.getStates().get(0);
+		}
+	}
 
-	def doGenerateCallFlowState(State state) '''
-		«IF state instanceof CallFlowState »
-			«CallFlowStateCodeXML.doGenerateCallFlowState(state)»
-		«ENDIF»		
-	'''
-	
-	def doGenerateSwitchState(State state) '''
-		«IF state instanceof SwitchState »
-			«SwitchStateCodeXML.doGenerateSwitchState(state)»
-		«ENDIF»	
-	'''
-	
-	def doGenerateOutputState(State state) '''
-		«IF state instanceof PromptState »
-			«OutputStateCodeXML.doGenerateOutputState(state)»
-		«ENDIF»		
-	'''
-	
-	def doGenerateInputState(State state) '''
-		«IF state instanceof InputState »
-			«InputStateCodeXML.doGenerateInputState(state)»
-		«ENDIF»		
-	'''
-	
-	def doGenerateCallState(State state) '''
-		«IF state instanceof CallState »
-			«CallStateCodeXML.doGenerateCallState(state)»
-		«ENDIF»	
-	'''
-	
-	def doGenerateMenuState(State state) '''
-		«IF state instanceof MenuState »
-			«MenuStateCodeXML.doGenerateMenuState(state)»
-		«ENDIF»	
-	'''	
+	def dispatch generateState(FinalState state) {
+		FinalStateCodeXML.doGenerateFinalState(state)
+	}
 
-	def doGenerateCustomState(State state) '''
-		«IF state instanceof CustomState»
-			«CustomStateCodeXML.doGenerateCustomState(state)»
-		«ENDIF»		
-	'''
-	
-		def doGenerateTransferState(State state) '''
-		«IF state instanceof TransferState»
-			«TransferStateCodeXML.doGenerateTransferState(state)»
-		«ENDIF»		
-	'''
-	
-	def doGenerateRecordState(State state) '''
-		«IF state instanceof RecordState »
-			«RecordStateCodeXML.doGenerateRecordState(state)»
-		«ENDIF»		
-	'''
+	def dispatch generateState(InitialState state) {
+		InitialStateCodeXML.doGenerateInitialState(element, state)
+	}
 
+	def dispatch generateState(CallFlowState state) {
+		CallFlowStateCodeXML.doGenerateCallFlowState(state)
+	}
+
+	def dispatch generateState(SwitchState state) {
+		SwitchStateCodeXML.doGenerateSwitchState(state)
+	}
+
+	def dispatch generateState(PromptState state) {
+		OutputStateCodeXML.doGenerateOutputState(state)
+	}
+
+	def dispatch generateState(InputState state) {
+		InputStateCodeXML.doGenerateInputState(state)
+	}
+
+	def dispatch generateState(CallState state) {
+		CallStateCodeXML.doGenerateCallState(state)
+	}
+
+	def dispatch generateState(MenuState state) {
+		MenuStateCodeXML.doGenerateMenuState(state)
+	}
+
+	def dispatch generateState(CustomState state) {
+		CustomStateCodeXML.doGenerateCustomState(state)
+	}
+
+	def dispatch generateState(TransferState state) {
+		TransferStateCodeXML.doGenerateTransferState(state)
+	}
+
+	def dispatch generateState(RecordState state) {
+		RecordStateCodeXML.doGenerateRecordState(state)
+	}
 
 	def doGenerateFooter() '''
 		<end-state id="end-call" view="#{flowProcessor.getRenderer().getView()}"/>
 		</flow> 
 	'''
-	
+
 	def setResource(Resource resource) {
 		res = resource;
 	}
-	
+
 	def static compile(File target, Resource resource) {
 		new SpringWebFlowGenerator(resource).generate(target);
 	}

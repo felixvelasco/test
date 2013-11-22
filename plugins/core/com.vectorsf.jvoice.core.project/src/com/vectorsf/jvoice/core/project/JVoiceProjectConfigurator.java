@@ -33,8 +33,8 @@ public final class JVoiceProjectConfigurator {
 
 	}
 
-	public static IProject createProject(final String groupId, final String artifactId, final String projectName, final String descriptionProject)
-			throws CoreException {
+	public static IProject createProject(final String groupId, final String artifactId, final String projectName,
+			final String descriptionProject) throws CoreException {
 		final IProject result[] = new IProject[1];
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
@@ -67,8 +67,8 @@ public final class JVoiceProjectConfigurator {
 
 		model.setName(projectName);
 		model.setDescription(descriptionProject);
-		
-		List<Dependency> dependencies = new ArrayList<Dependency>();		
+
+		List<Dependency> dependencies = new ArrayList<Dependency>();
 		Dependency dep = new Dependency();
 		dep.setGroupId("com.vectorsf");
 		dep.setArtifactId("jvoiceframework-flow");
@@ -117,9 +117,8 @@ public final class JVoiceProjectConfigurator {
 			String[] newNatureIds = new String[natureIds.length + 2];
 			System.arraycopy(natureIds, 0, newNatureIds, 1, natureIds.length);
 			newNatureIds[0] = JVoiceModuleNature.NATURE_ID;
-			newNatureIds[newNatureIds.length-1] = XtextProjectHelper.NATURE_ID;
+			newNatureIds[newNatureIds.length - 1] = XtextProjectHelper.NATURE_ID;
 			description.setNatureIds(newNatureIds);
-			
 
 			this.project.setDescription(description, null);
 		}

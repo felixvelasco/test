@@ -2,16 +2,14 @@ package com.isb.jVoice.dsl.builder
 
 import com.vectorsf.jvoice.model.operations.CustomState
 import com.vectorsf.jvoice.model.operations.PromptState
-import com.vectorsf.jvoice.model.operations.State
 
 class OutputStateCodeXML {
 	
-	def static doGenerateOutputState(State state){
+	def static doGenerateOutputState(PromptState state){
 			
 		var tranSalida =state.getOutgoingTransitions()
-		var PromptState audioOut = state as PromptState
-		var audio = audioOut.locution.audios
-		var properties = audioOut.locution.properties
+		var audio = state.locution.audios
+		var properties = state.locution.properties
 
 '''
 		<action-state id="«state.name»">
@@ -19,7 +17,7 @@ class OutputStateCodeXML {
 				<evaluate expression="jVoiceArchOutput" result="flashScope.«state.name»"></evaluate>
 			«/*Falta especificar el bargein del propmp general  */»
 				«IF audio != null» 
-					«var audios = audioOut.locution.audios.mainAudios»
+					«var audios = state.locution.audios.mainAudios»
 					«GeneralStateCodeXML.doGenerateGeneralState(state, audios,"audioItems")»
 					«IF properties != null && properties.size>0 » 
 						«FOR property : properties »

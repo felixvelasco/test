@@ -20,7 +20,10 @@ Require-Bundle: org.eclipse.ui.navigator;bundle-version="3.5.300",
  com.vectorsf.jvoice.operation.model,
  org.eclipse.xtext,
  com.vectorsf.jvoice.ui.wizard,
- com.vectorsf.jvoice.core.project
+ com.vectorsf.jvoice.core.project,
+ com.vectorsf.jvoice.operation.model.edit;bundle-version="0.1.0",
+ org.eclipse.core.resources,
+ com.vectorsf.jvoice.core.uri
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor

@@ -10,7 +10,7 @@ public class FeaturesProviderGen extends FeaturesProvider {
     super.buildStringMap(stringMap);
     
     stringMap.mapTo("com.vectorsf.jvoice.model.base.JVModule",
-      "name", "description");
+      "name", "componentsPackage", "description");
     stringMap.mapTo("com.vectorsf.jvoice.model.base.JVApplication",
       "name", "description");
     stringMap.mapTo("com.vectorsf.jvoice.model.base.EventHandler",

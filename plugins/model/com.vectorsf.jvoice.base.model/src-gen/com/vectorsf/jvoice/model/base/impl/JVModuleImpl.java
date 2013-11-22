@@ -4,6 +4,7 @@ package com.vectorsf.jvoice.model.base.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import com.vectorsf.jvoice.model.base.BasePackage;
@@ -12,6 +13,7 @@ import com.vectorsf.jvoice.model.base.JVPackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.List;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
@@ -23,6 +25,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.base.impl.JVModuleImpl#getPackages <em>Packages</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.base.impl.JVModuleImpl#getComponentsPackage <em>Components Package</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,6 +41,25 @@ public class JVModuleImpl extends JVProjectImpl implements JVModule {
 	 * @ordered
 	 */
 	protected EList<JVPackage> packages;
+
+	/**
+	 * The default value of the '{@link #getComponentsPackage() <em>Components Package</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getComponentsPackage()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String COMPONENTS_PACKAGE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getComponentsPackage() <em>Components Package</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getComponentsPackage()
+	 * @generated
+	 * @ordered
+	 */
+	protected String componentsPackage = COMPONENTS_PACKAGE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -68,6 +90,27 @@ public class JVModuleImpl extends JVProjectImpl implements JVModule {
 			packages = new EObjectContainmentWithInverseEList.Resolving<JVPackage>(JVPackage.class, this, BasePackage.JV_MODULE__PACKAGES, BasePackage.JV_PACKAGE__OWNER_MODULE);
 		}
 		return packages;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getComponentsPackage() {
+		return componentsPackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setComponentsPackage(String newComponentsPackage) {
+		String oldComponentsPackage = componentsPackage;
+		componentsPackage = newComponentsPackage;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, BasePackage.JV_MODULE__COMPONENTS_PACKAGE, oldComponentsPackage, componentsPackage));
 	}
 
 	/**
@@ -124,6 +167,8 @@ public class JVModuleImpl extends JVProjectImpl implements JVModule {
 		switch (featureID) {
 			case BasePackage.JV_MODULE__PACKAGES:
 				return getPackages();
+			case BasePackage.JV_MODULE__COMPONENTS_PACKAGE:
+				return getComponentsPackage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -141,6 +186,9 @@ public class JVModuleImpl extends JVProjectImpl implements JVModule {
 				getPackages().clear();
 				getPackages().addAll((Collection<? extends JVPackage>)newValue);
 				return;
+			case BasePackage.JV_MODULE__COMPONENTS_PACKAGE:
+				setComponentsPackage((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -156,6 +204,9 @@ public class JVModuleImpl extends JVProjectImpl implements JVModule {
 			case BasePackage.JV_MODULE__PACKAGES:
 				getPackages().clear();
 				return;
+			case BasePackage.JV_MODULE__COMPONENTS_PACKAGE:
+				setComponentsPackage(COMPONENTS_PACKAGE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -170,6 +221,8 @@ public class JVModuleImpl extends JVProjectImpl implements JVModule {
 		switch (featureID) {
 			case BasePackage.JV_MODULE__PACKAGES:
 				return packages != null && !packages.isEmpty();
+			case BasePackage.JV_MODULE__COMPONENTS_PACKAGE:
+				return COMPONENTS_PACKAGE_EDEFAULT == null ? componentsPackage != null : !COMPONENTS_PACKAGE_EDEFAULT.equals(componentsPackage);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -186,6 +239,22 @@ public class JVModuleImpl extends JVProjectImpl implements JVModule {
 				return getPackage((String)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (componentsPackage: ");
+		result.append(componentsPackage);
+		result.append(')');
+		return result.toString();
 	}
 
 } //JVModuleImpl

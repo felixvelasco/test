@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.Disposable;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -48,6 +49,14 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	 * @generated
 	 */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
+
+	/**
+	 * This keeps track of all the item providers created, so that they can be {@link #dispose disposed}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected Disposable disposable = new Disposable();
 
 	/**
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -95,14 +104,6 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.Flow} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected FlowItemProvider flowItemProvider;
-
-	/**
 	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.Flow}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -110,11 +111,7 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	 */
 	@Override
 	public Adapter createFlowAdapter() {
-		if (flowItemProvider == null) {
-			flowItemProvider = new FlowItemProvider(this);
-		}
-
-		return flowItemProvider;
+		return new FlowItemProvider(this);
 	}
 
 	/**
@@ -417,6 +414,29 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.model.operations.ComponentBean} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ComponentBeanItemProvider componentBeanItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link com.vectorsf.jvoice.model.operations.ComponentBean}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createComponentBeanAdapter() {
+		if (componentBeanItemProvider == null) {
+			componentBeanItemProvider = new ComponentBeanItemProvider(this);
+		}
+
+		return componentBeanItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -475,6 +495,20 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	}
 
 	/**
+	 * Associates an adapter with a notifier via the base implementation, then records it to ensure it will be disposed.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected void associate(Adapter adapter, Notifier target) {
+		super.associate(adapter, target);
+		if (adapter != null) {
+			disposable.add(adapter);
+		}
+	}
+
+	/**
 	 * This adds a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -515,21 +549,7 @@ public class OperationsItemProviderAdapterFactory extends OperationsAdapterFacto
 	 * @generated
 	 */
 	public void dispose() {
-		if (transitionItemProvider != null) transitionItemProvider.dispose();
-		if (flowItemProvider != null) flowItemProvider.dispose();
-		if (initialStateItemProvider != null) initialStateItemProvider.dispose();
-		if (finalStateItemProvider != null) finalStateItemProvider.dispose();
-		if (switchStateItemProvider != null) switchStateItemProvider.dispose();
-		if (caseItemProvider != null) caseItemProvider.dispose();
-		if (callStateItemProvider != null) callStateItemProvider.dispose();
-		if (callFlowStateItemProvider != null) callFlowStateItemProvider.dispose();
-		if (promptStateItemProvider != null) promptStateItemProvider.dispose();
-		if (inputStateItemProvider != null) inputStateItemProvider.dispose();
-		if (menuStateItemProvider != null) menuStateItemProvider.dispose();
-		if (transferStateItemProvider != null) transferStateItemProvider.dispose();
-		if (recordStateItemProvider != null) recordStateItemProvider.dispose();
-		if (noteItemProvider != null) noteItemProvider.dispose();
-		if (customStateItemProvider != null) customStateItemProvider.dispose();
+		disposable.dispose();
 	}
 
 }

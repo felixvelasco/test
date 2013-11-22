@@ -75,6 +75,7 @@
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="packages" upperBound="-1"
         eType="#//JVPackage" transient="true" containment="true" eOpposite="#//JVPackage/ownerModule"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentsPackage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EventHandler">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="event" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

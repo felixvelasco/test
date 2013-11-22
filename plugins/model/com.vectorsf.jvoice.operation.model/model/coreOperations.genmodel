@@ -23,7 +23,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Transition/target"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//Transition/eventName"/>
     </genClasses>
-    <genClasses ecoreClass="coreOperations.ecore#//Flow">
+    <genClasses provider="Stateful" ecoreClass="coreOperations.ecore#//Flow">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Flow/states"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Flow/transitions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Flow/notes"/>

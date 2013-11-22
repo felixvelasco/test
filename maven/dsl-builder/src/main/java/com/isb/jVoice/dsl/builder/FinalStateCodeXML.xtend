@@ -1,11 +1,11 @@
 package com.isb.jVoice.dsl.builder
 
-import com.vectorsf.jvoice.model.operations.State
+import com.vectorsf.jvoice.model.operations.FinalState
 
 class FinalStateCodeXML {
 
 	
-	def static doGenerateFinalState(State state) '''
+	def static doGenerateFinalState(FinalState state) '''
 		<action-state id="«state.name»">
 		    <on-entry>
 		        <evaluate expression="jVoiceArchEnd" result="flashScope.end_«state.name»"></evaluate>              

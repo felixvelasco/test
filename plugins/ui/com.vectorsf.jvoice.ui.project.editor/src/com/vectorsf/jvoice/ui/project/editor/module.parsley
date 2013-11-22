@@ -9,7 +9,7 @@ import com.vectorsf.jvoice.model.base.JVApplication
 module com.vectorsf.jvoice.ui.project.editor {
 	featuresProvider {
 		features {
-			JVModule -> name, description
+			JVModule -> name, componentsPackage, description
 			JVApplication -> name, description
 			EventHandler -> event, handler
 		}
@@ -21,6 +21,7 @@ module com.vectorsf.jvoice.ui.project.editor {
 			EventHandler:handler -> "Handled by"
 			NamedElement:name -> "Name"
 			NamedElement:description -> "Description"
+			JVModule:componentsPackage -> "Components package"
 		}
 	}
 	

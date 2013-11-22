@@ -4,18 +4,13 @@ import org.eclipse.emf.common.notify.Adapter;
 
 import com.vectorsf.jvoice.model.operations.provider.OperationsItemProviderAdapterFactory;
 
-public class ExtOperationsItemProviderAdapterFactory extends
-		OperationsItemProviderAdapterFactory {
+public class ExtOperationsItemProviderAdapterFactory extends OperationsItemProviderAdapterFactory {
 
 	@Override
 	public Adapter createFlowAdapter() {
-		if (flowItemProvider == null) {
-			flowItemProvider = new ExtFlowItemProvider(this);
-		}
-
-		return flowItemProvider;
+		return new ExtFlowItemProvider(this);
 	}
-	
+
 	@Override
 	public Adapter createInitialStateAdapter() {
 		if (initialStateItemProvider == null) {
@@ -24,7 +19,7 @@ public class ExtOperationsItemProviderAdapterFactory extends
 
 		return initialStateItemProvider;
 	}
-	
+
 	@Override
 	public Adapter createSwitchStateAdapter() {
 		if (switchStateItemProvider == null) {
@@ -33,7 +28,7 @@ public class ExtOperationsItemProviderAdapterFactory extends
 
 		return switchStateItemProvider;
 	}
-	
+
 	@Override
 	public Adapter createFinalStateAdapter() {
 		if (finalStateItemProvider == null) {

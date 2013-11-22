@@ -7,6 +7,7 @@ import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.Case;
+import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -161,6 +162,13 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * @generated
 	 */
 	private EClass customStateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass componentBeanEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -339,6 +347,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 */
 	public EReference getFlow_Notes() {
 		return (EReference)flowEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFlow_Beans() {
+		return (EReference)flowEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -607,6 +624,33 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getComponentBean() {
+		return componentBeanEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentBean_Fqdn() {
+		return (EAttribute)componentBeanEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponentBean_NameBean() {
+		return (EAttribute)componentBeanEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getTypeTransfer() {
 		return typeTransferEEnum;
 	}
@@ -653,6 +697,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEReference(flowEClass, FLOW__STATES);
 		createEReference(flowEClass, FLOW__TRANSITIONS);
 		createEReference(flowEClass, FLOW__NOTES);
+		createEReference(flowEClass, FLOW__BEANS);
 
 		initialStateEClass = createEClass(INITIAL_STATE);
 
@@ -696,6 +741,10 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		customStateEClass = createEClass(CUSTOM_STATE);
 		createEAttribute(customStateEClass, CUSTOM_STATE__PATH);
+
+		componentBeanEClass = createEClass(COMPONENT_BEAN);
+		createEAttribute(componentBeanEClass, COMPONENT_BEAN__FQDN);
+		createEAttribute(componentBeanEClass, COMPONENT_BEAN__NAME_BEAN);
 
 		// Create enums
 		typeTransferEEnum = createEEnum(TYPE_TRANSFER);
@@ -749,6 +798,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		recordStateEClass.getESuperTypes().add(this.getLocutionState());
 		noteEClass.getESuperTypes().add(theBasePackage.getJVElement());
 		customStateEClass.getESuperTypes().add(this.getState());
+		componentBeanEClass.getESuperTypes().add(theBasePackage.getNamedElement());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(stateEClass, State.class, "State", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -765,6 +815,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEReference(getFlow_States(), this.getState(), null, "states", null, 1, -1, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFlow_Transitions(), this.getTransition(), null, "transitions", null, 1, 4, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFlow_Notes(), this.getNote(), null, "notes", null, 0, -1, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFlow_Beans(), this.getComponentBean(), null, "beans", null, 0, -1, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(initialStateEClass, InitialState.class, "InitialState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -810,6 +861,10 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		initEClass(customStateEClass, CustomState.class, "CustomState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCustomState_Path(), ecorePackage.getEString(), "path", null, 0, 1, CustomState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(componentBeanEClass, ComponentBean.class, "ComponentBean", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getComponentBean_Fqdn(), ecorePackage.getEString(), "fqdn", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentBean_NameBean(), ecorePackage.getEString(), "nameBean", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(typeTransferEEnum, TypeTransfer.class, "TypeTransfer");

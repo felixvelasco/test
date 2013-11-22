@@ -20,4 +20,8 @@ public class FormFeatureCaptionProviderGen extends FormFeatureCaptionProvider {
   public String text_NamedElement_description(final EStructuralFeature it) {
     return "Description";
   }
+  
+  public String text_JVModule_componentsPackage(final EStructuralFeature it) {
+    return "Components package";
+  }
 }

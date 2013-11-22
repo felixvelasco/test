@@ -24,6 +24,8 @@
         upperBound="4" eType="#//Transition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="notes" upperBound="-1"
         eType="#//Note" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="beans" upperBound="-1"
+        eType="#//ComponentBean" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InitialState" eSuperTypes="#//State"/>
   <eClassifiers xsi:type="ecore:EClass" name="FinalState" eSuperTypes="#//State"/>
@@ -72,5 +74,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomState" eSuperTypes="#//State">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComponentBean" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fqdn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameBean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>
