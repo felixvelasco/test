@@ -6,7 +6,7 @@
       <wizard
             category="com.vectorsf.jvoice.diagram.core.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateProjectJVoice"
-            icon="res/JVProject.png"
+            icon="res/obj16/icon_nav_project.png"
             id="com.vectorsf.jvoice.ui.project.wizard"
             name="%wizard.project.name"
             project="true">
@@ -14,7 +14,7 @@
       <wizard
          category="com.vectorsf.jvoice.diagram.core.category"
          class="com.vectorsf.jvoice.ui.wizard.create.CreateJVPackageWizard"
-         icon="res/JVPackage.png"
+         icon="res/obj16/icon_nav_boxempty.png"
          id="com.vectorsf.jvoice.ui.package.wizard"
          name="%wizard.package.name"
          project="false">
@@ -22,7 +22,7 @@
      <wizard
            category="com.vectorsf.jvoice.diagram.core.category"
            class="com.vectorsf.jvoice.ui.wizard.create.CreateDiagramJVoice"
-           icon="res/Flow.png"
+           icon="res/obj16/icon_nav_flow.png"
            id="com.vectorsf.jvoice.ui.wizard.DiagramJVoice"
            name="%wizard.flow.name"
            project="false">
@@ -30,7 +30,7 @@
       <wizard
             category="com.vectorsf.jvoice.diagram.core.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice"
-            icon="res/VoiceDsl.png"
+            icon="res/obj16/icon_nav_locution.png"
             id="com.vectorsf.jvoice.ui.wizard.wizardDSL"
             name="%wizard.locution.name"
             project="false">
@@ -38,7 +38,7 @@
       <wizard
             category="com.vectorsf.jvoice.diagram.core.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateJVoiceApplicationWizard"
-            icon="res/JVProject.png"
+            icon="res/obj16/icon_nav_project.png"
             id="com.vectorsf.jvoice.ui.application.wizard"
             name="%wizard.application.name"
             project="true">
