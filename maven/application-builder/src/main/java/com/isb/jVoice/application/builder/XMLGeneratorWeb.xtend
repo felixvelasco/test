@@ -54,7 +54,7 @@ class XMLGeneratorWeb {
 				
 		<servlet-mapping>
 				<servlet-name>appServlet</servlet-name>
-				<url-pattern>/</url-pattern>
+				<url-pattern>/jvoice/*</url-pattern>
 		</servlet-mapping>
 
 	</web-app>
