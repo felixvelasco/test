@@ -148,6 +148,8 @@ public class GenerateFlowMojo extends AbstractMojo {
 			if (project != null) {
 				projectHelper.addResource(project, outputDirectory.getAbsolutePath(),
 						Collections.singletonList("jVoice/**/*.xml"), Collections.emptyList());
+				projectHelper.addResource(project, project.getBasedir().getAbsolutePath(),
+						Collections.singletonList(".projectInformation"), Collections.emptyList());
 			}
 
 		} catch (Exception e) {
