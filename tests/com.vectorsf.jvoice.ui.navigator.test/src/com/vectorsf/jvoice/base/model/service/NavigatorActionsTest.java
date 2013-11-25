@@ -322,7 +322,7 @@ public class NavigatorActionsTest {
 		bot.sleep(SMALL_SLEEP);
 
 		SWTBotTreeItem project1Item = view.bot().tree().getTreeItem("testNavigator");
-		SWTBotTreeItem project2Item = view.bot().tree().getTreeItem("testNavigatorApplication application");
+		SWTBotTreeItem project2Item = view.bot().tree().getTreeItem("testNavigatorApplication");
 		assertThat(project1Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
 		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
 
