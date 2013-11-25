@@ -1,14 +1,30 @@
 package com.isb.jVoice.dsl.builder
 
 import com.vectorsf.jvoice.model.operations.State
-import java.util.List
-import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio
+import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio
+
+import java.util.List
 
 class GeneralStateCodeXML {
 	
 	def static doGenerateGeneralState(State state, List mainAudios, String type){
-		var i=0		
+		var i=0	
+		var ind=0	
+		var nameModule=""
+		var src = false		
+		var ruta = state.eResource.URI
+		var segments = ruta.segments
+		
+		while (!src){
+			if(segments.get(ind).equals("src")){
+				nameModule =segments.get(ind-1).toString
+				src=true					
+			}
+			ind=ind+1
+		}
+		
+
 '''
 		«IF (mainAudios!=null && mainAudios.size>0)»
 				«FOR mainAudio : mainAudios »	
@@ -18,7 +34,7 @@ class GeneralStateCodeXML {
 						«var ConditionalAudio condition = mainAudio as ConditionalAudio» 
 						<set name="flashScope.«state.name»«type»«i».bargein" value="«condition.simpleA.dontBargeIn.booleanValue»"/>
 						«IF condition.simpleA.src != null» 
-							<set name="flashScope.«state.name»«type»«i».src" value="'«condition.simpleA.src»'"/>
+							<set name="flashScope.«state.name»«type»«i».src" value="locutionProvider.getAudioSrc('«condition.simpleA.src»','«nameModule»')"/>
 						«ENDIF»
 						«IF condition.simpleA.tts!=null»
 							<evaluate expression="jVoiceArchWording" result="flashScope.«state.name»«type»«i».wording"/>	
@@ -39,7 +55,7 @@ class GeneralStateCodeXML {
 						«var Audio audio = mainAudio as Audio»
 						<set name="flashScope.«state.name»«type»«i».bargein" value="«audio.dontBargeIn.booleanValue»"/>
 						«IF audio.src != null» 
-							<set name="flashScope.«state.name»«type»«i».src" value="'«audio.src»'"/>
+							<set name="flashScope.«state.name»«type»«i».src" value="locutionProvider.getAudioSrc('«audio.src»','«nameModule»')"/>
 						«ENDIF»
 						«IF audio.tts!=null»
 							<evaluate expression="jVoiceArchWording" result="flashScope.«state.name»«type»«i».wording"/>
