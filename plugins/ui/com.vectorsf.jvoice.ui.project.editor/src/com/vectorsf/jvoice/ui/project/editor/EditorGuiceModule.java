@@ -1,6 +1,7 @@
 package com.vectorsf.jvoice.ui.project.editor;
 
 import org.eclipse.emf.parsley.binding.FormControlFactory;
+import org.eclipse.emf.parsley.binding.ProposalCreator;
 import org.eclipse.emf.parsley.builders.TableViewerColumnBuilder;
 import org.eclipse.emf.parsley.resource.EmptyResourceInitializer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -24,6 +25,11 @@ public class EditorGuiceModule extends EmfParsleyGuiceModuleGen {
 	@Override
 	public Class<? extends EmptyResourceInitializer> bindEmptyResourceInitializer() {
 		return ProjectEditorEmptyResourceInitializer.class;
+	}
+
+	@Override
+	public Class<? extends ProposalCreator> bindProposalCreator() {
+		return ProjectEditorProposalCreator.class;
 	}
 
 }
