@@ -71,6 +71,7 @@ public class CopyMojo extends AbstractMojo {
 	 * @parameter expression="${project.runtimeClasspathElements}"
 	 */
 	private List<String> runtimeClasspathElements;
+	private List<JVModule> modules;
 
 	private void findFullPath(List<String> fileNameToSearch, File file) throws IOException {
 		ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
@@ -80,7 +81,9 @@ public class CopyMojo extends AbstractMojo {
 		while ((ze = zip.getNextEntry()) != null) {
 			String entryName = ze.getName();
 			if(entryName.equals(".projectInformation")){
-				nameProject = getNameProject(entryName, file);
+				JVModule module = getProject(entryName, file);
+				modules.add(module);
+				nameProject = module.getName();
 			}
 			
 			int index = entryName.lastIndexOf(DOT);
@@ -175,7 +178,7 @@ public class CopyMojo extends AbstractMojo {
 				} else if (inFileName.equals("servlet-context.xml")) {
 					XMLGeneratorServlet.generate(targetFile);
 				} else if (inFileName.equals("app-context.xml")){
-					XMLGeneratorAPP.generate(targetFile);
+					XMLGeneratorAPP.generate(targetFile, modules);
 				}
 				else if (inFileName.equals("renderHTML.jsp"))
 				{
@@ -263,16 +266,18 @@ public class CopyMojo extends AbstractMojo {
 	/**
 	 * @param entryName
 	 */
-	protected String getNameProject(String entryName, File file) {		
-		String name =null;
+	protected JVModule getProject(String entryName, File file) {		
+		
 		String ruta = ARCHIVE_FILE+file.getAbsolutePath()
 				.replace(SEPARATOR2, SEPARATOR)+ "!/"
 				+ entryName;
 		ResourceSet resSet = new ResourceSetImpl();
 		URI uri=URI.createURI(ruta);
+		
+		
 		Resource res = resSet.getResource(uri, true);
-		name = ((JVModule)res.getContents().get(0)).getName();
-		return name;
+		return ((JVModule)res.getContents().get(0));
+		
 	}
 	
 }
