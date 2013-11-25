@@ -22,6 +22,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.base.model.service.JVModelCreateProject;
 import com.vectorsf.jvoice.model.base.JVModel;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVProject;
 
 public class BaseModelEclipseHelper {
@@ -69,7 +70,7 @@ public class BaseModelEclipseHelper {
 								if (modelCreateProject != null) {
 									JVProject referencedProject = modelCreateProject.createProject(classPathEntry
 											.getPath());
-									if (referencedProject != null) {
+									if (((JVModule)referencedProject).getPackages().size() >0) {
 										ret.add(referencedProject);
 									}
 								}
