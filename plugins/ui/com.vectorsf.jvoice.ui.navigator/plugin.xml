@@ -227,6 +227,19 @@
                </with>
             </enablement>
          </commonWizard>
+         <dropAssistant
+               class="com.vectorsf.jvoice.ui.navigator.drop.FileCommonDropAdapterAssistant"
+               id="com.vectorsf.jvoice.ui.navigator.drop.dropAssistant2">
+            <possibleDropTargets>
+               <or>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVModule">
+                  </instanceof>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVPackage">
+                  </instanceof>
+               </or></possibleDropTargets>
+         </dropAssistant>
       </navigatorContent>
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.edit.provider.MavenContentProvider"

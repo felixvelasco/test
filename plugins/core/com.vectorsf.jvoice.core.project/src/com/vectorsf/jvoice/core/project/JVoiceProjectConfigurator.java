@@ -44,7 +44,7 @@ public final class JVoiceProjectConfigurator {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
 						getModel(groupId, artifactId, projectName, descriptionProject),
-						new String[] { "src/main/java", "src/main/resources/jv","src/main/resources/audios" }, new ProjectImportConfiguration(),
+						new String[] { "src/main/java", "src/main/resources/jv" }, new ProjectImportConfiguration(),
 						monitor);
 
 				result[0] = project;
