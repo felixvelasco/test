@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.apache.maven.model.Model;
+import org.apache.maven.model.Plugin;
+import org.apache.maven.model.PluginExecution;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
+import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -84,7 +87,8 @@ public class WSDLResourceChangeListener implements IResourceChangeListener {
 			{
 				mm = reader.read(new FileInputStream(pomFile));
 				
-				addBuildToModel(mm);
+				// Descomentar cuando sepamos como va a ser la estructura de auxiliar para la llamada al WS.
+				//addBuildToModel(mm);
 				
 				MavenXpp3Writer writer = new MavenXpp3Writer();
 				writer.write(new FileOutputStream(pomFile), mm);
@@ -100,15 +104,58 @@ public class WSDLResourceChangeListener implements IResourceChangeListener {
 		// MODIFICARRRRRRRRRRRR
 		// Descomentar y rellenar cuando tengamos la configuración del plugin maven
 		
-//		Plugin dsl_builder = new Plugin();
-//		dsl_builder.setGroupId("doble");
-//		dsl_builder.setArtifactId("mandoble");
-//		dsl_builder.setVersion("0.0.1-SNAPSHOT");
-//		PluginExecution voiceDSL = new PluginExecution();
-//		voiceDSL.setPhase("compile");
-//		voiceDSL.addGoal("doce");
-//		dsl_builder.addExecution(voiceDSL);
-//		mm.getBuild().addPlugin(dsl_builder);
+		Plugin dsl_builder = new Plugin();
+		dsl_builder.setGroupId("org.codehaus.mojo");
+		dsl_builder.setArtifactId("jaxws-maven-plugin");
+		dsl_builder.setVersion("1.9");
+		PluginExecution pexecution = new PluginExecution();
+		//voiceDSL.setPhase("compile");
+		pexecution.addGoal("wsimport");
+
+		
+		 Xpp3Dom configuration = new Xpp3Dom( "configuration" );
+
+		 Xpp3Dom wsdlDirectory = new Xpp3Dom( "wsdlDirectory" );
+		 wsdlDirectory.setValue( "src/main/resources" );
+		 configuration.addChild( wsdlDirectory );
+		 
+		 Xpp3Dom wsdlFiles = new Xpp3Dom( "wsdlFiles" );
+		 
+		 Xpp3Dom wsdlFile = new Xpp3Dom( "wsdlFile" );
+		 
+		 wsdlFiles.addChild( wsdlFile );
+		 wsdlFile.setValue( "src/main/resources" );
+		 
+		 Xpp3Dom wsdlLocation = new Xpp3Dom( "wsdlLocation" );
+		 wsdlLocation.setValue( "http://localhost/wsdl/hello.wsdl" );
+		 configuration.addChild( wsdlLocation );
+		 
+		 Xpp3Dom sourceDestDir = new Xpp3Dom( "sourceDestDir" );
+		 sourceDestDir.setValue( "src/main/java" );
+		 configuration.addChild( sourceDestDir );
+		 
+		 Xpp3Dom keep = new Xpp3Dom( "keep" );
+		 keep.setValue( "true" );
+		 configuration.addChild( keep );
+		 
+		 Xpp3Dom verbose = new Xpp3Dom( "verbose" );
+		 verbose.setValue( "true" );
+		 configuration.addChild( verbose );
+		 
+		 Xpp3Dom packageName = new Xpp3Dom( "packageName" );
+		 packageName.setValue( "com.vectorsf.test.ws" );
+		 configuration.addChild( packageName );
+		 
+
+
+		 	pexecution.setConfiguration(configuration);
+
+
+		dsl_builder.addExecution(pexecution);
+		mm.getBuild().addPlugin(dsl_builder);
+			
+		
+		
 	}
 
 	private boolean pomContainsLine(File pomFile, CharSequence in_line) throws FileNotFoundException 
