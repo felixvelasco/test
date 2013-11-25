@@ -254,23 +254,23 @@ public class IVRNavigatorTest {
 
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
-		assertThat(view.bot().tree().getTreeItem("Navigator application"),
+		assertThat(view.bot().tree().getTreeItem("Navigator"),
 				is(not(nullValue())));
-		assertThat(view.bot().tree().getTreeItem("Navigator application")
+		assertThat(view.bot().tree().getTreeItem("Navigator")
 				.expand().getItems(), is(arrayWithSize(1)));
 
 		createApplicationProject("Navigator2");
 
 		bot.sleep(SMALL_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
-		assertThat(view.bot().tree().getTreeItem("Navigator application"),
+		assertThat(view.bot().tree().getTreeItem("Navigator"),
 				is(not(nullValue())));
-		assertThat(view.bot().tree().getTreeItem("Navigator application")
+		assertThat(view.bot().tree().getTreeItem("Navigator")
 				.expand().getItems(), is(arrayWithSize(1)));
 
-		assertThat(view.bot().tree().getTreeItem("Navigator2 application"),
+		assertThat(view.bot().tree().getTreeItem("Navigator2"),
 				is(not(nullValue())));
-		assertThat(view.bot().tree().getTreeItem("Navigator2 application")
+		assertThat(view.bot().tree().getTreeItem("Navigator2")
 				.expand().getItems(), is(arrayWithSize(1)));
 		
 	}
