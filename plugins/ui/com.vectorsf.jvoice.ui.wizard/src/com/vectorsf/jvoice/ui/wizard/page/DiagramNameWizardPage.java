@@ -66,8 +66,8 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	private static final Path PACKAGES_PATH = new Path(BaseModel.JV_PATH);
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
-	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] { ' ', ',', '.', '^', 'ï¿½', '(', ')', '[', ']',
-			'{', '}', ';', '-', '_', '!', 'ï¿½', '$', '%', '&', '=' };
+	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '.', '^', '¿', 
+		'(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
 
 	Text textFieldDiagram;
 	Text textFieldProject;
