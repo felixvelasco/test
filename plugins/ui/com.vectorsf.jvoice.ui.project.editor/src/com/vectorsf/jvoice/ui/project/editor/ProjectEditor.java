@@ -1,24 +1,34 @@
 package com.vectorsf.jvoice.ui.project.editor;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.parsley.editors.EmfAbstractEditor;
 import org.eclipse.emf.parsley.factories.FormFactory;
-import org.eclipse.emf.parsley.factories.ViewerFactory;
+import org.eclipse.emf.parsley.factories.TableFormFactory;
 import org.eclipse.emf.parsley.resource.LoadResourceResponse;
 import org.eclipse.emf.parsley.widgets.FormDetailComposite;
-import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.emf.parsley.widgets.TableFormComposite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 
 import com.google.inject.Inject;
+import com.vectorsf.jvoice.model.base.BaseFactory;
 import com.vectorsf.jvoice.model.base.BasePackage;
+import com.vectorsf.jvoice.model.base.EventHandler;
 import com.vectorsf.jvoice.model.base.JVProject;
 
 public class ProjectEditor extends EmfAbstractEditor {
@@ -27,13 +37,12 @@ public class ProjectEditor extends EmfAbstractEditor {
 	private FormFactory formFactory;
 
 	@Inject
-	private ViewerFactory viewerFactory;
+	private TableFormFactory tableFormFactory;
 
 	protected Composite parent;
-
 	protected FormDetailComposite formComposite;
-
-	private TableViewer tableViewer;
+	private TableFormComposite tableFormDetailComposite;
+	private Composite parentComposite;
 
 	@Override
 	protected void createPages() {
@@ -52,18 +61,28 @@ public class ProjectEditor extends EmfAbstractEditor {
 		formComposite = formFactory.createFormDetailComposite(parent, SWT.NONE);
 		formComposite.init(project);
 
-		tableViewer = viewerFactory.createTableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION, project.getHandlers(),
-				BasePackage.eINSTANCE.getEventHandler());
+		parentComposite = new Composite(parent, SWT.NONE);
+		parentComposite.setLayout(new GridLayout());
 
-		Table table = tableViewer.getTable();
-		// table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		Composite buttonComposite = new Composite(parentComposite, SWT.NONE);
+		buttonComposite.setLayout(new GridLayout(2, false));
+		buttonComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		Button addButton = new Button(buttonComposite, SWT.NONE);
+		addButton.setText("Add new handler");
+		addButton.addSelectionListener(new AddButtonSelectionListener(project));
+
+		tableFormDetailComposite = tableFormFactory.createTableFormMasterDetailComposite(parentComposite, SWT.NONE,
+				BasePackage.eINSTANCE.getEventHandler());
+		tableFormDetailComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+		tableFormDetailComposite.update(project.getHandlers());
 
 		parent.layout(true, true);
 
 		int pageIndex = addPage(formComposite);
 		setPageText(pageIndex, "Project");
 
-		pageIndex = addPage(table);
+		pageIndex = addPage(parentComposite);
 		setPageText(pageIndex, "Event handlers");
 
 		setActivePage(0);
@@ -95,4 +114,30 @@ public class ProjectEditor extends EmfAbstractEditor {
 		setPartName(file.getProject().getName());
 
 	}
+
+	@Override
+	public void setFocus() {
+		tableFormDetailComposite.setFocus();
+	}
+
+	private final class AddButtonSelectionListener extends SelectionAdapter {
+		private JVProject project;
+
+		public AddButtonSelectionListener(JVProject project) {
+			this.project = project;
+		}
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(project);
+			EventHandler newHandler = BaseFactory.eINSTANCE.createEventHandler();
+			Command command = AddCommand.create(editingDomain, project, BasePackage.eINSTANCE.getJVProject_Handlers(),
+					newHandler);
+
+			editingDomain.getCommandStack().execute(command);
+
+			tableFormDetailComposite.getViewer().refresh();
+		}
+	}
+
 }
