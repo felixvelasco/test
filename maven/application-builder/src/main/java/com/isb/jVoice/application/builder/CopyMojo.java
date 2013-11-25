@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -71,7 +72,7 @@ public class CopyMojo extends AbstractMojo {
 	 * @parameter expression="${project.runtimeClasspathElements}"
 	 */
 	private List<String> runtimeClasspathElements;
-	private List<JVModule> modules;
+	private List<JVModule> modules = new ArrayList<JVModule>();
 
 	private void findFullPath(List<String> fileNameToSearch, File file) throws IOException {
 		ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
@@ -173,14 +174,12 @@ public class CopyMojo extends AbstractMojo {
 		if (!targetFile.exists()) {
 			try {
 				targetFile.createNewFile();
-				if (inFileName.equals("web.xml")) {
+				if (inFileName.equals("web.xml")) 
+				{
 					XMLGeneratorWeb.generate(targetFile);
 				} else if (inFileName.equals("servlet-context.xml")) {
 					XMLGeneratorServlet.generate(targetFile);
-				} else if (inFileName.equals("app-context.xml")){
-					XMLGeneratorAPP.generate(targetFile, modules);
-				}
-				else if (inFileName.equals("renderHTML.jsp"))
+				} else if (inFileName.equals("renderHTML.jsp"))
 				{
 					XMLGeneratorRHTML.generate(targetFile);
 				}
@@ -201,6 +200,10 @@ public class CopyMojo extends AbstractMojo {
 			{
 				e.printStackTrace();
 			}
+		}
+		if (inFileName.equals("app-context.xml"))
+		{
+			XMLGeneratorAPP.generate(targetFile, modules);
 		}
 	}
 
