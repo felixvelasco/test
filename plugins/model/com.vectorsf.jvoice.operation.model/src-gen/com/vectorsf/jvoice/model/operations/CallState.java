@@ -2,10 +2,9 @@
  */
 package com.vectorsf.jvoice.model.operations;
 
-import com.vectorsf.jvoice.model.base.JVBean;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface CallState extends State {
-
 	/**
 	 * Returns the value of the '<em><b>Parameters</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
@@ -78,12 +76,12 @@ public interface CallState extends State {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Bean</em>' reference.
-	 * @see #setBean(JVBean)
+	 * @see #setBean(ComponentBean)
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getCallState_Bean()
 	 * @model
 	 * @generated
 	 */
-	JVBean getBean();
+	ComponentBean getBean();
 
 	/**
 	 * Sets the value of the '{@link com.vectorsf.jvoice.model.operations.CallState#getBean <em>Bean</em>}' reference.
@@ -93,5 +91,6 @@ public interface CallState extends State {
 	 * @see #getBean()
 	 * @generated
 	 */
-	void setBean(JVBean value);
+	void setBean(ComponentBean value);
+
 } // CallState
