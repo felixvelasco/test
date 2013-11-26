@@ -6,7 +6,9 @@ import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -32,6 +34,7 @@ public class FinalStateImpl extends StateImpl implements FinalState {
 	 * @ordered
 	 */
 	protected static final boolean FINAL_EDEFAULT = false;
+
 	/**
 	 * The cached value of the '{@link #isFinal() <em>Final</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -41,6 +44,7 @@ public class FinalStateImpl extends StateImpl implements FinalState {
 	 * @ordered
 	 */
 	protected boolean final_ = FINAL_EDEFAULT;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

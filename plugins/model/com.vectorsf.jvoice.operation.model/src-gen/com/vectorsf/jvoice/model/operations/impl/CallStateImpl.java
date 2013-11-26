@@ -2,17 +2,22 @@
  */
 package com.vectorsf.jvoice.model.operations.impl;
 
-import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.operations.CallState;
+import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -50,6 +55,7 @@ public class CallStateImpl extends StateImpl implements CallState {
 	 * @ordered
 	 */
 	protected static final String METHOD_NAME_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getMethodName() <em>Method Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -59,6 +65,7 @@ public class CallStateImpl extends StateImpl implements CallState {
 	 * @ordered
 	 */
 	protected String methodName = METHOD_NAME_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getBean() <em>Bean</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -67,7 +74,7 @@ public class CallStateImpl extends StateImpl implements CallState {
 	 * @generated
 	 * @ordered
 	 */
-	protected JVBean bean;
+	protected ComponentBean bean;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -126,10 +133,10 @@ public class CallStateImpl extends StateImpl implements CallState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public JVBean getBean() {
+	public ComponentBean getBean() {
 		if (bean != null && bean.eIsProxy()) {
 			InternalEObject oldBean = (InternalEObject)bean;
-			bean = (JVBean)eResolveProxy(oldBean);
+			bean = (ComponentBean)eResolveProxy(oldBean);
 			if (bean != oldBean) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationsPackage.CALL_STATE__BEAN, oldBean, bean));
@@ -143,7 +150,7 @@ public class CallStateImpl extends StateImpl implements CallState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public JVBean basicGetBean() {
+	public ComponentBean basicGetBean() {
 		return bean;
 	}
 
@@ -152,8 +159,8 @@ public class CallStateImpl extends StateImpl implements CallState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setBean(JVBean newBean) {
-		JVBean oldBean = bean;
+	public void setBean(ComponentBean newBean) {
+		ComponentBean oldBean = bean;
 		bean = newBean;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OperationsPackage.CALL_STATE__BEAN, oldBean, bean));
@@ -195,7 +202,7 @@ public class CallStateImpl extends StateImpl implements CallState {
 				setMethodName((String)newValue);
 				return;
 			case OperationsPackage.CALL_STATE__BEAN:
-				setBean((JVBean)newValue);
+				setBean((ComponentBean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -216,7 +223,7 @@ public class CallStateImpl extends StateImpl implements CallState {
 				setMethodName(METHOD_NAME_EDEFAULT);
 				return;
 			case OperationsPackage.CALL_STATE__BEAN:
-				setBean((JVBean)null);
+				setBean((ComponentBean)null);
 				return;
 		}
 		super.eUnset(featureID);
