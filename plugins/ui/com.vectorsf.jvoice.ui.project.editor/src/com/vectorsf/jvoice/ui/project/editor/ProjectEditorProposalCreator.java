@@ -1,7 +1,6 @@
 package com.vectorsf.jvoice.ui.project.editor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -11,14 +10,15 @@ import java.util.Set;
 import org.eclipse.emf.parsley.binding.ProposalCreator;
 
 import com.vectorsf.jvoice.model.base.EventHandler;
+import com.vectorsf.jvoice.model.base.EventsEnum;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 public class ProjectEditorProposalCreator extends ProposalCreator {
 
-	public List<Object> proposals_EventHandler_event(EventHandler handler) {
-		List<Object> ret = getAllEvents();
+	public List<EventsEnum> proposals_EventHandler_event(EventHandler handler) {
+		List<EventsEnum> ret = getAllEvents();
 		ret.removeAll(collectCoveredEvents(handler));
 
 		return ret;
@@ -55,10 +55,8 @@ public class ProjectEditorProposalCreator extends ProposalCreator {
 		return ret;
 	}
 
-	private List<Object> getAllEvents() {
+	private ArrayList<EventsEnum> getAllEvents() {
 		// TODO ENUM!
-		return new ArrayList<>(Arrays.<Object> asList("busy", "connectionerror", "error", "far_end_disconnect",
-				"hangup", "maxtime_disconnect", "maxAttempts", "maxNoInput", "maxNoMatch", "near_end_disconnect",
-				"network_busy", "network_disconnect", "noanswer", "noresource", "recordunsupported", "unknown"));
+		return new ArrayList<>(EventsEnum.VALUES);
 	}
 }

@@ -3,18 +3,18 @@
 package com.vectorsf.jvoice.model.base.impl;
 
 import java.util.Map;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import com.vectorsf.jvoice.model.base.BaseFactory;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.EventHandler;
+import com.vectorsf.jvoice.model.base.EventsEnum;
 import com.vectorsf.jvoice.model.base.JVApplication;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVElement;
@@ -107,6 +107,13 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * @generated
 	 */
 	private EClass eventHandlerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum eventsEnumEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -480,6 +487,15 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getEventsEnum() {
+		return eventsEnumEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public BaseFactory getBaseFactory() {
 		return (BaseFactory)getEFactoryInstance();
 	}
@@ -547,6 +563,9 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		eventHandlerEClass = createEClass(EVENT_HANDLER);
 		createEAttribute(eventHandlerEClass, EVENT_HANDLER__EVENT);
 		createEReference(eventHandlerEClass, EVENT_HANDLER__HANDLER);
+
+		// Create enums
+		eventsEnumEEnum = createEEnum(EVENTS_ENUM);
 	}
 
 	/**
@@ -637,8 +656,27 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(eventHandlerEClass, EventHandler.class, "EventHandler", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEventHandler_Event(), ecorePackage.getEString(), "event", null, 0, 1, EventHandler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEventHandler_Event(), this.getEventsEnum(), "event", null, 0, 1, EventHandler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEventHandler_Handler(), this.getJVBean(), null, "handler", null, 0, 1, EventHandler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(eventsEnumEEnum, EventsEnum.class, "EventsEnum");
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.BUSY);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.CONNECTIONERROR);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.ERROR);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.FAR_END_DISCONNECT);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.HANGUP);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.MAXTIME_DISCONNECT);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.MAX_ATTEMPTS);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.MAX_NO_INPUT);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.MAX_NO_MATCH);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.NEAR_END_DISCONNECT);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.NETWORK_BUSY);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.NETWORK_DISCONNECT);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.NOANSWER);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.NORESOURCE);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.RECORDUNSUPPORTED);
+		addEEnumLiteral(eventsEnumEEnum, EventsEnum.UNKNOWN);
 
 		// Create resource
 		createResource(eNS_URI);

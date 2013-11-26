@@ -4,6 +4,7 @@ package com.vectorsf.jvoice.model.base;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -837,6 +838,16 @@ public interface BasePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.base.EventsEnum <em>Events Enum</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.base.EventsEnum
+	 * @see com.vectorsf.jvoice.model.base.impl.BasePackageImpl#getEventsEnum()
+	 * @generated
+	 */
+	int EVENTS_ENUM = 11;
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.base.NamedElement <em>Named Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1197,6 +1208,16 @@ public interface BasePackage extends EPackage {
 	EReference getEventHandler_Handler();
 
 	/**
+	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.model.base.EventsEnum <em>Events Enum</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Events Enum</em>'.
+	 * @see com.vectorsf.jvoice.model.base.EventsEnum
+	 * @generated
+	 */
+	EEnum getEventsEnum();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1512,6 +1533,16 @@ public interface BasePackage extends EPackage {
 		 * @generated
 		 */
 		EReference EVENT_HANDLER__HANDLER = eINSTANCE.getEventHandler_Handler();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.base.EventsEnum <em>Events Enum</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.base.EventsEnum
+		 * @see com.vectorsf.jvoice.model.base.impl.BasePackageImpl#getEventsEnum()
+		 * @generated
+		 */
+		EEnum EVENTS_ENUM = eINSTANCE.getEventsEnum();
 
 	}
 

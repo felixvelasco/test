@@ -5,15 +5,12 @@ package com.vectorsf.jvoice.model.base.provider;
 
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.EventHandler;
-
+import com.vectorsf.jvoice.model.base.EventsEnum;
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -129,7 +126,8 @@ public class EventHandlerItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((EventHandler)object).getEvent();
+		EventsEnum labelValue = ((EventHandler)object).getEvent();
+		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
 			getString("_UI_EventHandler_type") :
 			getString("_UI_EventHandler_type") + " " + label;

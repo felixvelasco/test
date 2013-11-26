@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface EventHandler extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Event</b></em>' attribute.
+	 * The literals are from the enumeration {@link com.vectorsf.jvoice.model.base.EventsEnum}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Event</em>' attribute isn't clear,
@@ -31,22 +32,24 @@ public interface EventHandler extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Event</em>' attribute.
-	 * @see #setEvent(String)
+	 * @see com.vectorsf.jvoice.model.base.EventsEnum
+	 * @see #setEvent(EventsEnum)
 	 * @see com.vectorsf.jvoice.model.base.BasePackage#getEventHandler_Event()
 	 * @model
 	 * @generated
 	 */
-	String getEvent();
+	EventsEnum getEvent();
 
 	/**
 	 * Sets the value of the '{@link com.vectorsf.jvoice.model.base.EventHandler#getEvent <em>Event</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Event</em>' attribute.
+	 * @see com.vectorsf.jvoice.model.base.EventsEnum
 	 * @see #getEvent()
 	 * @generated
 	 */
-	void setEvent(String value);
+	void setEvent(EventsEnum value);
 
 	/**
 	 * Returns the value of the '<em><b>Handler</b></em>' reference.

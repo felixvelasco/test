@@ -78,7 +78,25 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentsPackage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EventHandler">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="event" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="event" eType="#//EventsEnum"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="handler" eType="#//JVBean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="EventsEnum">
+    <eLiterals name="busy"/>
+    <eLiterals name="connectionerror" value="1"/>
+    <eLiterals name="error" value="2"/>
+    <eLiterals name="far_end_disconnect" value="3"/>
+    <eLiterals name="hangup" value="4"/>
+    <eLiterals name="maxtime_disconnect" value="5"/>
+    <eLiterals name="maxAttempts" value="6"/>
+    <eLiterals name="maxNoInput" value="7"/>
+    <eLiterals name="maxNoMatch" value="8"/>
+    <eLiterals name="near_end_disconnect" value="9"/>
+    <eLiterals name="network_busy" value="10"/>
+    <eLiterals name="network_disconnect" value="11"/>
+    <eLiterals name="noanswer" value="12"/>
+    <eLiterals name="noresource" value="13"/>
+    <eLiterals name="recordunsupported" value="14"/>
+    <eLiterals name="unknown" value="15"/>
   </eClassifiers>
 </ecore:EPackage>

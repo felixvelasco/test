@@ -4,13 +4,11 @@ package com.vectorsf.jvoice.model.base.impl;
 
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.EventHandler;
+import com.vectorsf.jvoice.model.base.EventsEnum;
 import com.vectorsf.jvoice.model.base.JVBean;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
@@ -37,7 +35,7 @@ public class EventHandlerImpl extends MinimalEObjectImpl.Container implements Ev
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String EVENT_EDEFAULT = null;
+	protected static final EventsEnum EVENT_EDEFAULT = EventsEnum.BUSY;
 
 	/**
 	 * The cached value of the '{@link #getEvent() <em>Event</em>}' attribute.
@@ -47,7 +45,7 @@ public class EventHandlerImpl extends MinimalEObjectImpl.Container implements Ev
 	 * @generated
 	 * @ordered
 	 */
-	protected String event = EVENT_EDEFAULT;
+	protected EventsEnum event = EVENT_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getHandler() <em>Handler</em>}' reference.
@@ -83,7 +81,7 @@ public class EventHandlerImpl extends MinimalEObjectImpl.Container implements Ev
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getEvent() {
+	public EventsEnum getEvent() {
 		return event;
 	}
 
@@ -92,9 +90,9 @@ public class EventHandlerImpl extends MinimalEObjectImpl.Container implements Ev
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setEvent(String newEvent) {
-		String oldEvent = event;
-		event = newEvent;
+	public void setEvent(EventsEnum newEvent) {
+		EventsEnum oldEvent = event;
+		event = newEvent == null ? EVENT_EDEFAULT : newEvent;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, BasePackage.EVENT_HANDLER__EVENT, oldEvent, event));
 	}
@@ -163,7 +161,7 @@ public class EventHandlerImpl extends MinimalEObjectImpl.Container implements Ev
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BasePackage.EVENT_HANDLER__EVENT:
-				setEvent((String)newValue);
+				setEvent((EventsEnum)newValue);
 				return;
 			case BasePackage.EVENT_HANDLER__HANDLER:
 				setHandler((JVBean)newValue);
@@ -199,7 +197,7 @@ public class EventHandlerImpl extends MinimalEObjectImpl.Container implements Ev
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case BasePackage.EVENT_HANDLER__EVENT:
-				return EVENT_EDEFAULT == null ? event != null : !EVENT_EDEFAULT.equals(event);
+				return event != EVENT_EDEFAULT;
 			case BasePackage.EVENT_HANDLER__HANDLER:
 				return handler != null;
 		}
