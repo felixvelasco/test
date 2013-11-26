@@ -86,6 +86,9 @@ class XMLGeneratorJFC {
 					<beans:entry key="flash">
 						<beans:bean class="org.springframework.webflow.scope.FlashScope" />
 					</beans:entry>
+					<beans:entry key="flow">
+					<beans:bean class="org.springframework.webflow.scope.FlowScope" />
+				</beans:entry>
 				</beans:map>
 			</beans:property>
 		</beans:bean>
