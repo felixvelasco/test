@@ -28,7 +28,9 @@
         eType="#//ComponentBean" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InitialState" eSuperTypes="#//State"/>
-  <eClassifiers xsi:type="ecore:EClass" name="FinalState" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FinalState" eSuperTypes="#//State">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="final" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SwitchState" eSuperTypes="#//State">
     <eOperations name="getCase" eType="#//Case">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

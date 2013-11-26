@@ -453,13 +453,22 @@ public interface OperationsPackage extends EPackage {
 	int FINAL_STATE__NOTES = STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Final</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FINAL_STATE__FINAL = STATE_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Final State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FINAL_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 0;
+	int FINAL_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Final State</em>' class.
@@ -1771,6 +1780,17 @@ public interface OperationsPackage extends EPackage {
 	EClass getFinalState();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.FinalState#isFinal <em>Final</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Final</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.FinalState#isFinal()
+	 * @see #getFinalState()
+	 * @generated
+	 */
+	EAttribute getFinalState_Final();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.SwitchState <em>Switch State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2248,6 +2268,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass FINAL_STATE = eINSTANCE.getFinalState();
+
+		/**
+		 * The meta object literal for the '<em><b>Final</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FINAL_STATE__FINAL = eINSTANCE.getFinalState_Final();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.SwitchStateImpl <em>Switch State</em>}' class.

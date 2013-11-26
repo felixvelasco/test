@@ -27,9 +27,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Flow/states"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Flow/transitions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Flow/notes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference coreOperations.ecore#//Flow/beans"/>
     </genClasses>
     <genClasses ecoreClass="coreOperations.ecore#//InitialState"/>
-    <genClasses ecoreClass="coreOperations.ecore#//FinalState"/>
+    <genClasses ecoreClass="coreOperations.ecore#//FinalState">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//FinalState/final"/>
+    </genClasses>
     <genClasses ecoreClass="coreOperations.ecore#//SwitchState">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference coreOperations.ecore#//SwitchState/case"/>
       <genOperations ecoreOperation="coreOperations.ecore#//SwitchState/getCase">
@@ -65,6 +68,10 @@
     </genClasses>
     <genClasses ecoreClass="coreOperations.ecore#//CustomState">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//CustomState/path"/>
+    </genClasses>
+    <genClasses ecoreClass="coreOperations.ecore#//ComponentBean">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//ComponentBean/fqdn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//ComponentBean/nameBean"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
