@@ -29,14 +29,14 @@ class SpringWebFlowGenerator {
 		element = res.contents.get(1) as Flow;
 	}
 
-	def generate(File file) {
+	def generate(File file, String nameProject) {
 		using(new FileWriter(file)) [
 			//Obtenemos el estado inicial para escribri la cabecera.
 			it.append(doGenerateHeader())
 			
 			// Se recorre de nuevo todo el array para escribir el resto de estados del diagrama 
 			for (State state : element.getStates()) {
-				it.append(generateState(state))
+				it.append(generateState(state, nameProject))
 			}
 			it.append(doGenerateFooter());
 		]
@@ -62,48 +62,48 @@ class SpringWebFlowGenerator {
 		}
 	}
 
-	def dispatch generateState(FinalState state) {
+	def dispatch generateState(FinalState state, String nameProject) {
 		FinalStateCodeXML.doGenerateFinalState(state)
 	}
 
-	def dispatch generateState(InitialState state) {
+	def dispatch generateState(InitialState state, String nameProject) {
 		InitialStateCodeXML.doGenerateInitialState(element, state)
 	}
 
-	def dispatch generateState(CallFlowState state) {
+	def dispatch generateState(CallFlowState state, String nameProject) {
 		CallFlowStateCodeXML.doGenerateCallFlowState(state)
 	}
 
-	def dispatch generateState(SwitchState state) {
+	def dispatch generateState(SwitchState state, String nameProject) {
 		SwitchStateCodeXML.doGenerateSwitchState(state)
 	}
 
-	def dispatch generateState(PromptState state) {
-		OutputStateCodeXML.doGenerateOutputState(state)
+	def dispatch generateState(PromptState state, String nameProject) {
+		OutputStateCodeXML.doGenerateOutputState(state, nameProject)
 	}
 
-	def dispatch generateState(InputState state) {
-		InputStateCodeXML.doGenerateInputState(state)
+	def dispatch generateState(InputState state, String nameProject) {
+		InputStateCodeXML.doGenerateInputState(state, nameProject)
 	}
 
-	def dispatch generateState(CallState state) {
+	def dispatch generateState(CallState state, String nameProject) {
 		CallStateCodeXML.doGenerateCallState(state)
 	}
 
-	def dispatch generateState(MenuState state) {
-		MenuStateCodeXML.doGenerateMenuState(state)
+	def dispatch generateState(MenuState state, String nameProject) {
+		MenuStateCodeXML.doGenerateMenuState(state, nameProject)
 	}
 
-	def dispatch generateState(CustomState state) {
+	def dispatch generateState(CustomState state, String nameProject) {
 		CustomStateCodeXML.doGenerateCustomState(state)
 	}
 
-	def dispatch generateState(TransferState state) {
+	def dispatch generateState(TransferState state, String nameProject) {
 		TransferStateCodeXML.doGenerateTransferState(state)
 	}
 
-	def dispatch generateState(RecordState state) {
-		RecordStateCodeXML.doGenerateRecordState(state)
+	def dispatch generateState(RecordState state, String nameProject) {
+		RecordStateCodeXML.doGenerateRecordState(state, nameProject)
 	}
 
 	def doGenerateFooter() '''
@@ -115,7 +115,7 @@ class SpringWebFlowGenerator {
 		res = resource;
 	}
 
-	def static compile(File target, Resource resource) {
-		new SpringWebFlowGenerator(resource).generate(target);
+	def static compile(File target, Resource resource, String nameProject) {
+		new SpringWebFlowGenerator(resource).generate(target, nameProject);
 	}
 }

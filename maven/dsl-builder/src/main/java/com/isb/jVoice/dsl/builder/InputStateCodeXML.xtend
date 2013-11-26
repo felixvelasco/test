@@ -6,7 +6,7 @@ import com.vectorsf.jvoice.model.operations.State
 
 class InputStateCodeXML {
 	
-	def static doGenerateInputState(State state){
+	def static doGenerateInputState(State state, String nameProject){
 			
 		var tranSalidaS =state.getOutgoingTransitions()
 		var InputState audioIn = state as InputState
@@ -64,10 +64,10 @@ class InputStateCodeXML {
         «var noMatchAudios = audioIn.locution.audios.noMatchAudios»
         «var noInputAudios = audioIn.locution.audios.noInputAudios»
        	«var matchAudios = audioIn.locution.audios.matchAudios»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios")»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios")»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios")»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios")»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios", nameProject)»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios", nameProject)»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios", nameProject)»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios", nameProject)»
 		«ENDIF»
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flashScope.«state.name»)"/>			

@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.graphiti.mm.algorithms.AlgorithmsPackage;
@@ -34,6 +35,7 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
 import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 /**
@@ -49,6 +51,10 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
  */
 public class GenerateFlowMojo extends AbstractMojo {
 	
+	private static final CharSequence SEPARATOR2 = "\\";
+
+	private static final CharSequence SEPARATOR = "/";
+
 	/**
 	 * Location of the target directory.
 	 * 
@@ -99,6 +105,8 @@ public class GenerateFlowMojo extends AbstractMojo {
 	 */
 	private List<String> runtimeClasspathElements;
 
+	private String nameProject;
+
 	private URL[] buildURLs() {
 		List<URL> urls = new ArrayList<URL>(runtimeClasspathElements.size());
 		for (String element : runtimeClasspathElements) {
@@ -136,6 +144,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 			EPackage.Registry.INSTANCE.put(StylesPackage.eNS_URI, StylesPackage.eINSTANCE);
 
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("jvflow", new XMIResourceFactoryImpl());
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("projectInformation", new XMIResourceFactoryImpl());
 
 			ResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
 			resourceSet.getLoadOptions().put(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
@@ -143,6 +152,10 @@ public class GenerateFlowMojo extends AbstractMojo {
 			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project,
 					createClassLoaderForProjectDependencies());
 			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
+			
+			//Obtenemos el nombre del modulo del projectInformation
+			nameProject=getProjectInformation();
+			
 
 			processFlowFiles(resourceSet, f);
 			if (project != null) {
@@ -156,6 +169,19 @@ public class GenerateFlowMojo extends AbstractMojo {
 			throw new MojoExecutionException("", e);
 		}
 
+	}
+
+	/**
+	 * Metodo que accede al projectInformation para obtener informacion de el.
+	 */
+	private String getProjectInformation() {		
+		String ruta = "file:///"+ project.getBasedir().getAbsolutePath()+SEPARATOR+".projectInformation";
+		ResourceSet resSet = new ResourceSetImpl();
+		URI uri=URI.createURI(ruta.replace(SEPARATOR2, SEPARATOR));
+		Resource res = resSet.getResource(uri, true);
+		JVModule module= (JVModule)res.getContents().get(0);
+		nameProject = module.getName();
+		return nameProject;
 	}
 
 	private String getTargetFlowName(String name) {
@@ -233,7 +259,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 			URI uri = URI.createFileURI(origFile.getCanonicalPath().toString());
 			Resource res = resourceSet.getResource(uri, true);
 			Resource diagrama = res.getContents().get(0).eResource();
-			SpringWebFlowGenerator.compile(targetFile, diagrama);
+			SpringWebFlowGenerator.compile(targetFile, diagrama,nameProject);
 
 			return true;
 		} else {

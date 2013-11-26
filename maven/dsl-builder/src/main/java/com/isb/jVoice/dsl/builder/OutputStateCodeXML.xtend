@@ -5,7 +5,7 @@ import com.vectorsf.jvoice.model.operations.PromptState
 
 class OutputStateCodeXML {
 	
-	def static doGenerateOutputState(PromptState state){
+	def static doGenerateOutputState(PromptState state, String nameProject){
 			
 		var tranSalida =state.getOutgoingTransitions()
 		var audio = state.locution.audios
@@ -18,7 +18,7 @@ class OutputStateCodeXML {
 			«/*Falta especificar el bargein del propmp general  */»
 				«IF audio != null» 
 					«var audios = state.locution.audios.mainAudios»
-					«GeneralStateCodeXML.doGenerateGeneralState(state, audios,"audioItems")»
+					«GeneralStateCodeXML.doGenerateGeneralState(state, audios,"audioItems", nameProject)»
 					«IF properties != null && properties.size>0 » 
 						«FOR property : properties »
 							<evaluate expression="flashScope.«state.name».properties.put('«property.name»','«property.value»')"/>

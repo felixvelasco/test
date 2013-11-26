@@ -6,7 +6,7 @@ import com.vectorsf.jvoice.model.operations.CustomState
 import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl
 
 class RecordStateCodeXML {
-	def static doGenerateRecordState(State state){
+	def static doGenerateRecordState(State state, String nameProject){
 			
 		var tranSalidaS =state.getOutgoingTransitions()
 		var RecordState recordIn = state as RecordState
@@ -47,10 +47,10 @@ class RecordStateCodeXML {
         «var noMatchAudios = recordIn.locution.audios.noMatchAudios»
         «var noInputAudios = recordIn.locution.audios.noInputAudios»
        	«var matchAudios = recordIn.locution.audios.matchAudios»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios")»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios")»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios")»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios")»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios", nameProject)»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios", nameProject)»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios", nameProject)»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios", nameProject)»
 		«ENDIF»
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flashScope.«state.name»)"/>			
