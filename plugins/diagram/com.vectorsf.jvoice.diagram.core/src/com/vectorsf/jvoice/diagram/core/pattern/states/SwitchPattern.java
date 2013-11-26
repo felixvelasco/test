@@ -14,6 +14,7 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 
+import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -38,22 +39,17 @@ public class SwitchPattern extends StatePattern {
 		IGaService gaService = Graphiti.getGaService();
 
 		// Outer container (invisible)
-		ContainerShape outerContainerShape = peCreateService
-				.createContainerShape(getDiagram(), true);
-		Rectangle outerRectangle = gaService
-				.createInvisibleRectangle(outerContainerShape);
-		gaService.setLocationAndSize(outerRectangle, context.getX(),
-				context.getY(), Math.max(MIN_WIDTH, context.getWidth()),
-				Math.max(MIN_HEIGHT, context.getHeight()));
+		ContainerShape outerContainerShape = peCreateService.createContainerShape(getDiagram(), true);
+		Rectangle outerRectangle = gaService.createInvisibleRectangle(outerContainerShape);
+		gaService.setLocationAndSize(outerRectangle, context.getX(), context.getY(),
+				Math.max(MIN_WIDTH, context.getWidth()), Math.max(MIN_HEIGHT, context.getHeight()));
 
 		// Default end point
-		Polygon endPoint = gaService.createPlainPolygon(outerRectangle,
-				new int[] { 0, 0, 20, 40, 40, 0 });
+		Polygon endPoint = gaService.createPlainPolygon(outerRectangle, new int[] { 0, 0, 20, 40, 40, 0 });
 		setId(endPoint, ID_CASE_POLYGON);
 		setIndex(endPoint, 0);
 		endPoint.setFilled(true);
-		gaService.setRenderingStyle(endPoint,
-				StatePredefinedColoredAreas.getGreenWhiteAdaptions());
+		gaService.setRenderingStyle(endPoint, StatePredefinedColoredAreas.getGreenWhiteAdaptions());
 
 		// Main contents area,
 		// this comment is to know if its true that Jose Luis is reading
@@ -61,11 +57,9 @@ public class SwitchPattern extends StatePattern {
 		Rectangle mainRectangle = gaService.createRectangle(outerRectangle);
 		setId(mainRectangle, ID_MAIN_FIGURE);
 		mainRectangle.setFilled(true);
-		gaService.setRenderingStyle(mainRectangle,
-				StatePredefinedColoredAreas.getGreenWhiteAdaptions());
+		gaService.setRenderingStyle(mainRectangle, StatePredefinedColoredAreas.getGreenWhiteAdaptions());
 
-		Text text = gaService.createText(mainRectangle,
-				addedDomainObject.getName());
+		Text text = gaService.createText(mainRectangle, addedDomainObject.getName());
 		setId(text, ID_NAME_TEXT);
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
@@ -82,15 +76,12 @@ public class SwitchPattern extends StatePattern {
 	protected boolean layout(IdLayoutContext context, String id) {
 		boolean changesDone = false;
 
-		Rectangle outerRectangle = (Rectangle) context
-				.getRootPictogramElement().getGraphicsAlgorithm();
+		Rectangle outerRectangle = (Rectangle) context.getRootPictogramElement().getGraphicsAlgorithm();
 
 		if (id.equals(ID_MAIN_FIGURE) || id.equals(ID_NAME_TEXT)) {
 			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
-			if (ga.getWidth() != outerRectangle.getWidth()
-					|| ga.getHeight() != outerRectangle.getHeight() - 20) {
-				Graphiti.getGaService().setLocationAndSize(ga, 0, 0,
-						outerRectangle.getWidth(),
+			if (ga.getWidth() != outerRectangle.getWidth() || ga.getHeight() != outerRectangle.getHeight() - 20) {
+				Graphiti.getGaService().setLocationAndSize(ga, 0, 0, outerRectangle.getWidth(),
 						outerRectangle.getHeight() - 20);
 				changesDone = true;
 			}
@@ -130,4 +121,8 @@ public class SwitchPattern extends StatePattern {
 		return mainBusinessObject instanceof SwitchState;
 	}
 
+	@Override
+	public String getCreateImageId() {
+		return CoreImageProvider.IMG_PALETTE_SWITCH;
+	}
 }

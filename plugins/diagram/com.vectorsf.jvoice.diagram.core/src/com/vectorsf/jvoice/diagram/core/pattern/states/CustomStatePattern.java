@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 
+import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -190,4 +191,8 @@ public class CustomStatePattern extends StatePattern {
 		return mainBusinessObject instanceof CustomState;
 	}
 
+	@Override
+	public String getCreateImageId() {
+		return CoreImageProvider.IMG_PALETTE_CUSTOM;
+	}
 }

@@ -41,6 +41,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
+import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.MenuState;
@@ -226,4 +227,8 @@ public class MenuStatePattern extends StatePattern implements ISelectionStatusVa
 		}
 	}
 
+	@Override
+	public String getCreateImageId() {
+		return CoreImageProvider.IMG_PALETTE_MENU;
+	}
 }

@@ -12,6 +12,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 
+import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
@@ -73,5 +74,10 @@ public class TransferStatePattern extends StatePattern {
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
 		return mainBusinessObject instanceof TransferState;
+	}
+
+	@Override
+	public String getCreateImageId() {
+		return CoreImageProvider.IMG_PALETTE_TRANSFER;
 	}
 }

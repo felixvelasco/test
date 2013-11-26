@@ -40,6 +40,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
+import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
@@ -219,5 +220,10 @@ public class RecordStatePattern extends StatePattern implements ISelectionStatus
 		} else {
 			return new Status(IStatus.ERROR, "com.vectorsf.jvoice.diagram.core", "Select an record");
 		}
+	}
+
+	@Override
+	public String getCreateImageId() {
+		return CoreImageProvider.IMG_PALETTE_RECORD;
 	}
 }

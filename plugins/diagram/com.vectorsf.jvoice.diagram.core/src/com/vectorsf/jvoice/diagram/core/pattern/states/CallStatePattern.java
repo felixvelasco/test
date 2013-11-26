@@ -19,6 +19,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
@@ -126,4 +127,8 @@ public class CallStatePattern extends StatePattern {
 		return mainBusinessObject instanceof CallState;
 	}
 
+	@Override
+	public String getCreateImageId() {
+		return CoreImageProvider.IMG_PALETTE_EXECUTION;
+	}
 }

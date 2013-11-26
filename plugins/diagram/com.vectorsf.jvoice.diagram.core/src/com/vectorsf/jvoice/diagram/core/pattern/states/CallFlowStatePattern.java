@@ -35,6 +35,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
@@ -180,5 +181,10 @@ public class CallFlowStatePattern extends StatePattern implements ISelectionStat
 		} else {
 			return new Status(IStatus.ERROR, "com.vectorsf.jvoice.diagram.core", "Select a flow");
 		}
+	}
+
+	@Override
+	public String getCreateImageId() {
+		return CoreImageProvider.IMG_PALETTE_SUBFLOW;
 	}
 }
