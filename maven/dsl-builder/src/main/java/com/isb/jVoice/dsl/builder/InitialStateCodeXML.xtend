@@ -7,6 +7,8 @@ class InitialStateCodeXML {
 	
 	def static doGenerateInitialState(Flow flow, InitialState state) {
 		var beans = flow.beans
+		if (beans.empty)
+			return "";
 
 	'''
 		<on-start>

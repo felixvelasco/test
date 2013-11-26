@@ -79,7 +79,7 @@ class XMLGeneratorJFC {
 			</beans:property>
 		</beans:bean>
 		
-		<!-- Habilitamos el ámbito flujo -->
+		<!-- Habilitamos los ámbitos flow y flash -->
 		<beans:bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
 			<beans:property name="scopes">
 				<beans:map>
@@ -92,7 +92,7 @@ class XMLGeneratorJFC {
 				</beans:map>
 			</beans:property>
 		</beans:bean>
-	
+
 	</beans:beans>
 	'''
 }

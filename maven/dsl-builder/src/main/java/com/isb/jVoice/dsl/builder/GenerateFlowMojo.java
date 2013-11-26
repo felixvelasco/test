@@ -50,7 +50,7 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
  * @requiresDependencyResolution compile+runtime
  */
 public class GenerateFlowMojo extends AbstractMojo {
-	
+
 	private static final CharSequence SEPARATOR2 = "\\";
 
 	private static final CharSequence SEPARATOR = "/";
@@ -130,7 +130,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 
-		File f = new File(outputDirectory,"jVoice");
+		File f = new File(outputDirectory, "jVoice");
 		if (!f.exists()) {
 			f.mkdirs();
 		}
@@ -144,7 +144,8 @@ public class GenerateFlowMojo extends AbstractMojo {
 			EPackage.Registry.INSTANCE.put(StylesPackage.eNS_URI, StylesPackage.eINSTANCE);
 
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("jvflow", new XMIResourceFactoryImpl());
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("projectInformation", new XMIResourceFactoryImpl());
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("projectInformation",
+					new XMIResourceFactoryImpl());
 
 			ResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
 			resourceSet.getLoadOptions().put(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
@@ -152,10 +153,12 @@ public class GenerateFlowMojo extends AbstractMojo {
 			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project,
 					createClassLoaderForProjectDependencies());
 			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
-			
-			//Obtenemos el nombre del modulo del projectInformation
-			JVModule modulo=getProjectInformation();
+
+			// Obtenemos el nombre del modulo del projectInformation
+			JVModule modulo = getProjectInformation();
 			nameProject = modulo.getName();
+
+			generateMainModule(modulo, f);
 
 			processFlowFiles(resourceSet, f);
 			if (project != null) {
@@ -171,15 +174,21 @@ public class GenerateFlowMojo extends AbstractMojo {
 
 	}
 
+	private void generateMainModule(JVModule modulo, File mainFolder) {
+		File folder = new File(mainFolder, modulo.getName());
+		folder.mkdirs();
+		MainFlowGenerator.compile(new File(folder, "errorHandler.xml"), modulo);
+	}
+
 	/**
 	 * Metodo que accede al projectInformation para obtener informacion de el.
 	 */
-	private JVModule getProjectInformation() {		
-		String ruta = "file:///"+ project.getBasedir().getAbsolutePath()+SEPARATOR+".projectInformation";
+	private JVModule getProjectInformation() {
+		String ruta = "file:///" + project.getBasedir().getAbsolutePath() + SEPARATOR + ".projectInformation";
 		ResourceSet resSet = new ResourceSetImpl();
-		URI uri=URI.createURI(ruta.replace(SEPARATOR2, SEPARATOR));
+		URI uri = URI.createURI(ruta.replace(SEPARATOR2, SEPARATOR));
 		Resource res = resSet.getResource(uri, true);
-		JVModule module= (JVModule)res.getContents().get(0);
+		JVModule module = (JVModule) res.getContents().get(0);
 		return module;
 	}
 
@@ -241,16 +250,16 @@ public class GenerateFlowMojo extends AbstractMojo {
 	}
 
 	private boolean processFlowFile(ResourceSet resourceSet, File origFile, File targetFolder) throws IOException {
-		//Obtenemos los paquetes en los que se encuentra el archivo.
-		String rutafile = origFile.getAbsolutePath().toString().replace(sourceDirectory.toString(),"").trim();
-		//Copiamos la estrucutra de paquetes.		
-		targetFolder = new File(targetFolder,rutafile.replace(origFile.getName(), "").trim());
+		// Obtenemos los paquetes en los que se encuentra el archivo.
+		String rutafile = origFile.getAbsolutePath().toString().replace(sourceDirectory.toString(), "").trim();
+		// Copiamos la estrucutra de paquetes.
+		targetFolder = new File(targetFolder, rutafile.replace(origFile.getName(), "").trim());
 		if (!targetFolder.exists()) {
 			targetFolder.mkdirs();
 		}
-		
+
 		File targetFile = new File(targetFolder, getTargetFlowName(origFile.getName()));
-		
+
 		if (buildRequired(origFile, Collections.singletonList(targetFile))) {
 			targetFile.createNewFile();
 
@@ -258,7 +267,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 			URI uri = URI.createFileURI(origFile.getCanonicalPath().toString());
 			Resource res = resourceSet.getResource(uri, true);
 			Resource diagrama = res.getContents().get(0).eResource();
-			SpringWebFlowGenerator.compile(targetFile, diagrama,nameProject);
+			SpringWebFlowGenerator.compile(targetFile, diagrama, nameProject);
 
 			return true;
 		} else {

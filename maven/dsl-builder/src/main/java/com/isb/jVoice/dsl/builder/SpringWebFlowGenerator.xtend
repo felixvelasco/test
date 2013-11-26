@@ -32,7 +32,7 @@ class SpringWebFlowGenerator {
 	def generate(File file, String nameProject) {
 		using(new FileWriter(file)) [
 			//Obtenemos el estado inicial para escribri la cabecera.
-			it.append(doGenerateHeader())
+			it.append(doGenerateHeader(nameProject))
 			
 			// Se recorre de nuevo todo el array para escribir el resto de estados del diagrama 
 			for (State state : element.getStates()) {
@@ -42,11 +42,12 @@ class SpringWebFlowGenerator {
 		]
 	}
 	
-	def doGenerateHeader() '''
+	def doGenerateHeader(String projectName) '''
 		<flow xmlns="http://www.springframework.org/schema/webflow"	
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
-		xsi:schemaLocation="http://www.springframework.org/schema/webflow        				
+		xsi:schemaLocation="http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+		parent="«projectName»/errorHandler"
 		start-state= "«GetNameTransOut.Name(initialState)»" >
 	'''
 	
@@ -67,7 +68,7 @@ class SpringWebFlowGenerator {
 	}
 
 	def dispatch generateState(InitialState state, String nameProject) {
-		InitialStateCodeXML.doGenerateInitialState(element, state)
+		InitialStateCodeXML.doGenerateInitialState(element, state) 
 	}
 
 	def dispatch generateState(CallFlowState state, String nameProject) {
