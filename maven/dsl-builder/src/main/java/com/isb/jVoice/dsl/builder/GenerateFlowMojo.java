@@ -154,8 +154,8 @@ public class GenerateFlowMojo extends AbstractMojo {
 			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
 			
 			//Obtenemos el nombre del modulo del projectInformation
-			nameProject=getProjectInformation();
-			
+			JVModule modulo=getProjectInformation();
+			nameProject = modulo.getName();
 
 			processFlowFiles(resourceSet, f);
 			if (project != null) {
@@ -174,14 +174,13 @@ public class GenerateFlowMojo extends AbstractMojo {
 	/**
 	 * Metodo que accede al projectInformation para obtener informacion de el.
 	 */
-	private String getProjectInformation() {		
+	private JVModule getProjectInformation() {		
 		String ruta = "file:///"+ project.getBasedir().getAbsolutePath()+SEPARATOR+".projectInformation";
 		ResourceSet resSet = new ResourceSetImpl();
 		URI uri=URI.createURI(ruta.replace(SEPARATOR2, SEPARATOR));
 		Resource res = resSet.getResource(uri, true);
 		JVModule module= (JVModule)res.getContents().get(0);
-		nameProject = module.getName();
-		return nameProject;
+		return module;
 	}
 
 	private String getTargetFlowName(String name) {
