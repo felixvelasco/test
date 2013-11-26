@@ -25,6 +25,10 @@ public class JVoiceModuleNature extends AbstractJVoiceNature {
 	public static String getDefaultComponentsPackageName(JVModule module) {
 		return getBaseName() + DOT + lowerCaseFirst(module.getName()) + DOT + COMPONENTS_SUFIX;
 	}
+	
+	public static String getDefaultComponentsPackageName(String name) {
+		return getBaseName() + DOT + lowerCaseFirst(name) + DOT + COMPONENTS_SUFIX;
+	}
 
 	private static String lowerCaseFirst(String name) {
 		char c = name.charAt(0);

@@ -18,7 +18,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.m2e.core.MavenPlugin;
@@ -43,7 +42,6 @@ public final class JVoiceProjectConfigurator {
 		final IProject result[] = new IProject[1];
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
-			//Se añade la carpeta "src/main/resources/audios"cuando se crea el proyecto.
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
@@ -59,23 +57,16 @@ public final class JVoiceProjectConfigurator {
 		ResourcesPlugin.getWorkspace().run(action, null);
 		IProject project = result[0];
 		ResourcesPlugin.getWorkspace().run(new AddJVoiceNatureRunnable(project), null);
-
-		String carpetaBeans = "com.isb." + lowerCaseFirst(projectName) + ".components";
+		
+		String carpetaBeans = JVoiceModuleNature.getDefaultComponentsPackageName(project.getName());
 		IJavaProject javaProject = JavaCore.create(result[0]);
 		IFolder folder = project.getFolder("src/main/java");
 		IPackageFragmentRoot defaultPackage = javaProject
 		        .getPackageFragmentRoot(folder);
-		@SuppressWarnings("unused")
-		IPackageFragment fragment = defaultPackage.createPackageFragment(carpetaBeans, true, null);
+		
+
+		defaultPackage.createPackageFragment(carpetaBeans, true, null);
 		return result[0];
-	}
-	
-	private static String lowerCaseFirst(String name) {
-		char c = name.charAt(0);
-		if (Character.isUpperCase(c)) {
-			return Character.toLowerCase(c) + name.substring(1);
-		}
-		return name;
 	}
 
 	private static Model getModel(String groupId, String artifactId, String projectName, String descriptionProject) {
