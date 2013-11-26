@@ -690,13 +690,40 @@ public interface OperationsPackage extends EPackage {
 	int CALL_STATE__NOTES = STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_STATE__PARAMETERS = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_STATE__METHOD_NAME = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Bean</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_STATE__BEAN = STATE_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Call State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 0;
+	int CALL_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Call State</em>' class.
@@ -1864,6 +1891,39 @@ public interface OperationsPackage extends EPackage {
 	EClass getCallState();
 
 	/**
+	 * Returns the meta object for the reference list '{@link com.vectorsf.jvoice.model.operations.CallState#getParameters <em>Parameters</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Parameters</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.CallState#getParameters()
+	 * @see #getCallState()
+	 * @generated
+	 */
+	EReference getCallState_Parameters();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.CallState#getMethodName <em>Method Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Method Name</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.CallState#getMethodName()
+	 * @see #getCallState()
+	 * @generated
+	 */
+	EAttribute getCallState_MethodName();
+
+	/**
+	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.CallState#getBean <em>Bean</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Bean</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.CallState#getBean()
+	 * @see #getCallState()
+	 * @generated
+	 */
+	EReference getCallState_Bean();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.CallFlowState <em>Call Flow State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2338,6 +2398,30 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CALL_STATE = eINSTANCE.getCallState();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameters</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CALL_STATE__PARAMETERS = eINSTANCE.getCallState_Parameters();
+
+		/**
+		 * The meta object literal for the '<em><b>Method Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CALL_STATE__METHOD_NAME = eINSTANCE.getCallState_MethodName();
+
+		/**
+		 * The meta object literal for the '<em><b>Bean</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CALL_STATE__BEAN = eINSTANCE.getCallState_Bean();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl <em>Call Flow State</em>}' class.

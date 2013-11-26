@@ -45,7 +45,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="condition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CallState" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CallState" eSuperTypes="#//State">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="methodName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bean" eType="ecore:EClass ../../com.vectorsf.jvoice.base.model/model/Base.ecore#//JVBean"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CallFlowState" eSuperTypes="#//State">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subflow" eType="#//Flow"/>
   </eClassifiers>
