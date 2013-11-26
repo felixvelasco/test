@@ -26,7 +26,7 @@ class MainFlowGenerator {
 			for (handler: module.handlers) {
 				it.append(generateViews(handler))
 			}
-			generateTransitions(module.handlers)
+			it.append(generateTransitions(module.handlers))
 
 			it.append(doGenerateFooter());
 		]
