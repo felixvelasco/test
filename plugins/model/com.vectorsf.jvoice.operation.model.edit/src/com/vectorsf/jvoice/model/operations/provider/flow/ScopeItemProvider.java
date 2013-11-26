@@ -27,6 +27,11 @@ public class ScopeItemProvider extends TransientFlowItemProvider {
 	}
 
 	@Override
+	public Object getImage(Object object) {
+		return getResourceLocator().getImage("full/obj16/icon_nav_beans.png");
+	}
+
+	@Override
 	protected Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			childrenFeatures = new ArrayList<>();

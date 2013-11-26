@@ -13,7 +13,7 @@ public class ExtComponentBeanItemProvider extends ComponentBeanItemProvider {
 
 	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/icon_nav_bean");
+		return getResourceLocator().getImage("full/obj16/icon_nav_bean.png");
 	}
 
 	@Override
