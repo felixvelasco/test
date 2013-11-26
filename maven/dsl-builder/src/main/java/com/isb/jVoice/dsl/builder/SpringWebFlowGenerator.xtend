@@ -108,7 +108,6 @@ class SpringWebFlowGenerator {
 	}
 
 	def doGenerateFooter() '''
-		<end-state id="end-call" view="#{flowProcessor.getRenderer().getView()}"/>
 		</flow> 
 	'''
 
