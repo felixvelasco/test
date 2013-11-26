@@ -395,11 +395,8 @@ public class IVRDiagramCreateStatesTest {
 
 		bot.waitUntil(shellIsActive(stateName + " Selection"), 10000);
 		SWTBotShell shell = bot.shell(stateName + " Selection");
-		if (stateName.equals("Output")) {
-			shell.bot().table().select("Prompt Dsl " + stateName);
-		} else {
-			shell.bot().table().select(stateName + " Dsl " + stateName);
-		}
+
+		shell.bot().table().select(stateName);
 
 		shell.bot().button("OK").click();
 
