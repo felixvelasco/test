@@ -7,6 +7,7 @@ import java.io.File
 import java.io.FileWriter
 
 import static com.isb.jVoice.application.builder.Using.*
+import java.util.List
 
 class MainFlowGenerator {
 
@@ -20,13 +21,13 @@ class MainFlowGenerator {
 
 	def generate(File file) {
 		using(new FileWriter(file)) [
-			//Obtenemos el estado inicial para escribri la cabecera.
 			it.append(doGenerateHeader())
 			
-			// Se recorre de nuevo todo el array para escribir el resto de estados del diagrama 
 			for (handler: module.handlers) {
-				it.append(generateTransition(handler))
+				it.append(generateViews(handler))
 			}
+			generateTransitions(module.handlers)
+
 			it.append(doGenerateFooter());
 		]
 	}
@@ -41,12 +42,17 @@ class MainFlowGenerator {
 
 	'''
 
-	def generateTransition(EventHandler handler) '''
-		<view-state id="globalhandler_«handler.event»" view="flowRedirect:«handler.handler.createId»"/>  
-			
+
+	def generateTransitions(List<EventHandler> handlers) '''
 		<global-transitions>
+		«FOR handler: handlers»
 			<transition on="«handler.event»" to="globalhandler_«handler.event»"/>
+		«ENDFOR»
 		</global-transitions>
+	'''
+	
+	def generateViews(EventHandler handler) '''
+		<view-state id="globalhandler_«handler.event»" view="flowRedirect:«handler.handler.createId»"/>
 	'''
 	
 	def createId(JVBean bean) {
