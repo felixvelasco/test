@@ -9,11 +9,17 @@ public class CoreImageProvider extends AbstractImageProvider {
 
 	public static final String IMG_RELATION_PAD = "relation_pad"; //$NON-NLS-1$
 
+	public static final String SET_FINAL_PAD = "set_final_pad"; //$NON-NLS-1$
+
+	public static final String UNSET_FINAL_PAD = "unset_final_pad"; //$NON-NLS-1$
+
 	@Override
 	protected void addAvailableImages() {
 
 		addImageFilePath(IMG_TRANSACTION_PAD, "icons/transition.gif"); //$NON-NLS-1$
 		addImageFilePath(IMG_RELATION_PAD, "icons/relation.gif"); //$NON-NLS-1$
+		addImageFilePath(SET_FINAL_PAD, "icons/setFinal.gif"); //$NON-NLS-1$
+		addImageFilePath(UNSET_FINAL_PAD, "icons/unsetFinal.gif"); //$NON-NLS-1$
 	}
 
 }

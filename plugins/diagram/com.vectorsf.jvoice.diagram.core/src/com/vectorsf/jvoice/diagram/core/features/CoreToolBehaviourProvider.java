@@ -7,6 +7,7 @@ import java.util.List;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
+import org.eclipse.graphiti.features.IFeature;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.IDoubleClickContext;
@@ -29,6 +30,7 @@ import org.eclipse.graphiti.tb.IContextMenuEntry;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
+import com.vectorsf.jvoice.diagram.core.features.editing.FinalStateFinalFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.note.CreateRelationFromPad;
 import com.vectorsf.jvoice.diagram.core.pattern.note.RelationPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.states.OpenEditorFeature;
@@ -241,6 +243,22 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 					data.getDomainSpecificContextButtons().add(button);
 				}
 
+			} else if (bo instanceof FinalState) {
+				FinalState finalState = (FinalState) sta;
+				boolean isFinal = finalState.isFinal();
+				if (!isFinal) {
+					IFeature feature = new FinalStateFinalFeature(getFeatureProvider());
+					ContextButtonEntry menuButton = new ContextButtonEntry(feature, context);
+					menuButton.setText("Set final");
+					menuButton.setIconId("set_final_pad");
+					data.getDomainSpecificContextButtons().add(menuButton);
+				} else {
+					IFeature feature = new FinalStateFinalFeature(getFeatureProvider());
+					ContextButtonEntry menuButton = new ContextButtonEntry(feature, context);
+					menuButton.setText("Unset final");
+					menuButton.setIconId("unset_final_pad");
+					data.getDomainSpecificContextButtons().add(menuButton);
+				}
 			}
 
 		} else if (bo instanceof NoteImpl) {
