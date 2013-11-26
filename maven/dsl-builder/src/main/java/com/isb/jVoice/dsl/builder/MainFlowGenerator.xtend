@@ -43,13 +43,18 @@ class MainFlowGenerator {
 
 	'''
 
-	def generateTransitions(List<EventHandler> handlers) '''
+	def generateTransitions(List<EventHandler> handlers) {
+		if (handlers.empty)
+			return ""
+		
+	 '''
 		<global-transitions>
 		«FOR handler: handlers»
 			<transition on="«handler.event»" to="globalhandler_«handler.event»"/>
 		«ENDFOR»
 		</global-transitions>
 	'''
+	}
 	
 	def generateViews(EventHandler handler) '''
 		<view-state id="globalhandler_«handler.event»" view="flowRedirect:«handler.handler.createId»"/>
