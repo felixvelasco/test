@@ -9,6 +9,7 @@ import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
 import org.apache.maven.model.Repository;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspace;
@@ -16,6 +17,10 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.project.ProjectImportConfiguration;
 import org.eclipse.xtext.ui.XtextProjectHelper;
@@ -44,17 +49,33 @@ public final class JVoiceProjectConfigurator {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
 						getModel(groupId, artifactId, projectName, descriptionProject),
-						new String[] { "src/main/java", "src/main/resources/jv" }, new ProjectImportConfiguration(),
+						new String[] { "src/main/java", "src/main/resources/jv"}, new ProjectImportConfiguration(),
 						monitor);
 
 				result[0] = project;
 			}
 		};
+		
 		ResourcesPlugin.getWorkspace().run(action, null);
 		IProject project = result[0];
 		ResourcesPlugin.getWorkspace().run(new AddJVoiceNatureRunnable(project), null);
 
+		String carpetaBeans = "com.isb." + lowerCaseFirst(projectName) + ".components";
+		IJavaProject javaProject = JavaCore.create(result[0]);
+		IFolder folder = project.getFolder("src/main/java");
+		IPackageFragmentRoot defaultPackage = javaProject
+		        .getPackageFragmentRoot(folder);
+		@SuppressWarnings("unused")
+		IPackageFragment fragment = defaultPackage.createPackageFragment(carpetaBeans, true, null);
 		return result[0];
+	}
+	
+	private static String lowerCaseFirst(String name) {
+		char c = name.charAt(0);
+		if (Character.isUpperCase(c)) {
+			return Character.toLowerCase(c) + name.substring(1);
+		}
+		return name;
 	}
 
 	private static Model getModel(String groupId, String artifactId, String projectName, String descriptionProject) {

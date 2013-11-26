@@ -10,5 +10,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.9.0",
  org.eclipse.m2e.core;bundle-version="1.4.0",
  org.eclipse.m2e.maven.runtime;bundle-version="1.4.0",
  org.eclipse.xtext.xtext.ui,
- com.vectorsf.jvoice.base.model
+ com.vectorsf.jvoice.base.model,
+ org.eclipse.jdt.core
 Export-Package: com.vectorsf.jvoice.core.project
