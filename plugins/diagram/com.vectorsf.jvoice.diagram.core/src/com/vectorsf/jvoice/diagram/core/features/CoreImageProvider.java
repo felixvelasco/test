@@ -15,6 +15,7 @@ public class CoreImageProvider extends AbstractImageProvider {
 
 	public static final String IMG_PALETTE_CUSTOM = "icon_est_custom";
 	public static final String IMG_PALETTE_EXECUTION = "icon_est_execution";
+	public static final String IMG_PALETTE_FINAL = "icon_est_final";
 	public static final String IMG_PALETTE_INPUT = "icon_est_input";
 	public static final String IMG_PALETTE_MENU = "icon_est_menu";
 	public static final String IMG_PALETTE_PROMPT = "icon_est_prompt";
@@ -33,6 +34,7 @@ public class CoreImageProvider extends AbstractImageProvider {
 
 		addImageFilePath(IMG_PALETTE_CUSTOM, "icons/palette/icon_est_custom.png");
 		addImageFilePath(IMG_PALETTE_EXECUTION, "icons/palette/icon_est_execution.png");
+		addImageFilePath(IMG_PALETTE_FINAL, "icons/palette/icon_est_final.png");
 		addImageFilePath(IMG_PALETTE_INPUT, "icons/palette/icon_est_input.png");
 		addImageFilePath(IMG_PALETTE_MENU, "icons/palette/icon_est_menu.png");
 		addImageFilePath(IMG_PALETTE_PROMPT, "icons/palette/icon_est_prompt.png");

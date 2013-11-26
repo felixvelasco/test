@@ -12,6 +12,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 
+import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -29,24 +30,17 @@ public class FinalStatePattern extends StatePattern {
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
 
-		ContainerShape outerContainerShape = peCreateService
-				.createContainerShape(getDiagram(), true);
+		ContainerShape outerContainerShape = peCreateService.createContainerShape(getDiagram(), true);
 
-		Rectangle mainRectangle = gaService
-				.createRectangle(outerContainerShape);
+		Rectangle mainRectangle = gaService.createRectangle(outerContainerShape);
 		setId(mainRectangle, ID_MAIN_FIGURE);
 		mainRectangle.setFilled(true);
-		gaService
-				.setRenderingStyle(
-						mainRectangle,
-						StatePredefinedColoredAreas
-								.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.LIGHT_YELLOW_ID));
-		gaService.setLocationAndSize(mainRectangle, context.getX(),
-				context.getY(), Math.max(MIN_WIDTH, context.getWidth()),
-				Math.max(MIN_HEIGHT, context.getHeight()));
+		gaService.setRenderingStyle(mainRectangle,
+				StatePredefinedColoredAreas.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.LIGHT_YELLOW_ID));
+		gaService.setLocationAndSize(mainRectangle, context.getX(), context.getY(),
+				Math.max(MIN_WIDTH, context.getWidth()), Math.max(MIN_HEIGHT, context.getHeight()));
 
-		Text text = gaService.createText(mainRectangle,
-				addedDomainObject.getName());
+		Text text = gaService.createText(mainRectangle, addedDomainObject.getName());
 		setId(text, ID_NAME_TEXT);
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
@@ -81,4 +75,8 @@ public class FinalStatePattern extends StatePattern {
 		return mainBusinessObject instanceof FinalState;
 	}
 
+	@Override
+	public String getCreateImageId() {
+		return CoreImageProvider.IMG_PALETTE_FINAL;
+	}
 }
