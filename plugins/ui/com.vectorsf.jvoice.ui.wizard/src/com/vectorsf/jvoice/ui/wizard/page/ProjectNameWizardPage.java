@@ -3,14 +3,12 @@
  */
 package com.vectorsf.jvoice.ui.wizard.page;
 
-import org.eclipse.core.internal.utils.Messages;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,8 +31,6 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 	private static final int SIZING_TEXT_FIELD_HEIGHT = 50;
-	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '.', '^', '¿', 
-		'(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
 
 	private Text textField;
 	private Text descriptionField;
@@ -127,14 +123,7 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 	}
 
 	private boolean customValidate(String text) {
-		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++) {
-			if (text.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
-				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName,
-						String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
-				return false;
-			}
-		}
-		return true;
+		return ResourcesPlugin.getWorkspace().validateName(text, IResource.PROJECT).isOK();
 	}
 
 	private final void createProjectNameGroup(Composite parent) {

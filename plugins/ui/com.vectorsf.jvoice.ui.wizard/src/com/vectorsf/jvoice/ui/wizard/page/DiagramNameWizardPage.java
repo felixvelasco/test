@@ -66,9 +66,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	private static final Path PACKAGES_PATH = new Path(BaseModel.JV_PATH);
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
-	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '.', '^', '¿', 
-		'(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
-
+	
 	Text textFieldDiagram;
 	Text textFieldProject;
 	Text textFieldPackage;
@@ -206,14 +204,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	}
 
 	private boolean customValidate(String text) {
-		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++) {
-			if (text.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
-				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName,
-						String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
-				return false;
-			}
-		}
-		return true;
+		return ResourcesPlugin.getWorkspace().validateName(text, IResource.FILE).isOK();
 	}
 
 	@Override

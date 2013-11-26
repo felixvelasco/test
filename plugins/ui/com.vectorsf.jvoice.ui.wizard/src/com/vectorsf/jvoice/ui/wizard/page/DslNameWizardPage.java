@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.internal.utils.Messages;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -22,7 +21,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -53,8 +51,6 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private static final String PAGE_TITLE = "Create a Locution";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
-	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '.', '^', '¿', 
-		'(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
 
 	Text textFieldDSL;
 	Text textFieldProject;
@@ -213,14 +209,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	}
 
 	private boolean customValidate(String text) {
-		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++) {
-			if (text.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
-				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName,
-						String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), text));
-				return false;
-			}
-		}
-		return true;
+		return ResourcesPlugin.getWorkspace().validateName(text, IResource.FILE).isOK();
 	}
 
 	@Override

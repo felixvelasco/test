@@ -46,8 +46,6 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	private static final String PAGE_TITLE = "Create a Package";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
-	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] {' ', ',', '.', '^', '¿', 
-		'(', ')', '[', ']', '{', '}', ';', '-', '_', '!', '¡', '$', '%', '&', '='};
 
 	private Text textField;
 	private Text packageField;
@@ -111,7 +109,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		for (String path : packageName.split("\\.")) {
 			IStatus status = doWorkspaceValidation(workspace, path);
 			if (!status.isOK()) {
-				setErrorMessage("Enter a package name");
+				setErrorMessage(status.getMessage());
 				return false;
 			}
 			if (!customValidate(packageName)) {
@@ -131,15 +129,8 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		return true;
 	}
 
-	private boolean customValidate(String packageName) {
-		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length; i++) {
-			if (packageName.indexOf(INVALID_RESOURCE_CHARACTERS[i]) != -1) {
-				setErrorMessage(NLS.bind(Messages.resources_invalidCharInName,
-						String.valueOf(INVALID_RESOURCE_CHARACTERS[i]), packageName));
-				return false;
-			}
-		}
-		return true;
+	private boolean customValidate(String text) {
+		return ResourcesPlugin.getWorkspace().validateName(text, IResource.FOLDER).isOK();
 	}
 
 	@Override
