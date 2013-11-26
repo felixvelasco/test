@@ -1,7 +1,11 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
@@ -14,7 +18,12 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
+import org.eclipse.jdt.core.Flags;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -89,6 +98,7 @@ public class CallStatePattern extends StatePattern {
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 
 		EList<ComponentBean> lb = flow.getBeans();
+
 		dialog.setInput(lb);
 		dialog.open();
 		IMethod methodResult = null;
@@ -108,6 +118,13 @@ public class CallStatePattern extends StatePattern {
 			CallState cs = OperationsFactory.eINSTANCE.createCallState();
 			cs.setName(methodResult.getElementName());
 			cs.setDescription(methodResult.getElementName());
+			cs.setMethodName(methodResult.getElementName());
+			for (ComponentBean componentBean : lb) {
+				if (containsMethod(componentBean, methodResult)) {
+					cs.setBean(componentBean);
+				}
+			}
+
 			flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 			flow.getStates().add(cs);
 
@@ -131,4 +148,27 @@ public class CallStatePattern extends StatePattern {
 	public String getCreateImageId() {
 		return CoreImageProvider.IMG_PALETTE_EXECUTION;
 	}
+
+	private boolean containsMethod(ComponentBean inCompBean, IMethod inMethod) {
+		URI uri = EcoreUtil.getURI(inCompBean);
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().findMember(uri.toPlatformString(true)).getProject();
+		IJavaProject jProject = JavaCore.create(project);
+		IType type;
+		try {
+			type = jProject.findType(inCompBean.getFqdn());
+			IMethod[] methods = type.getMethods();
+			for (IMethod iMethod : methods) {
+				if (Flags.isPublic(iMethod.getFlags())) {
+					if (inMethod.equals(iMethod)) {
+						return true;
+					}
+				}
+			}
+
+		} catch (JavaModelException e) {
+
+		}
+		return false;
+	}
+
 }

@@ -7,14 +7,12 @@ class InitialStateCodeXML {
 	
 	def static doGenerateInitialState(Flow flow, InitialState state) {
 		var beans = flow.beans
-		if (beans.empty)
-			return "";
 
 	'''
 		<on-start>
 			<on-entry>
 			«FOR bean: beans »
-				<evaluate expression="«bean.fqdn»" result="flowScope.«bean.name»"></evaluate>
+				<evaluate expression="«bean.nameBean»" result="flowScope.«bean.name»"></evaluate>
 			«ENDFOR»
 			</on-entry>
 		</on-start>
