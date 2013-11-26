@@ -292,18 +292,18 @@ public class NavigatorActionsTest {
 		assertThat(here.contextMenu("Open"), hasProperty("enabled", is(true)));
 
 		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("one").select()
-				.contextMenu("Open").click();
+			.contextMenu("Open").click();
 
 		bot.sleep(MEDIUM_SLEEP);
 		editor = getGefEditor();
 		assertThat(editor, is(not(nullValue())));
 		editor.close();
 
-		here = view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("Input Dsl newLocution")
+		here = view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("newLocution")
 				.select();
 		assertThat(here.contextMenu("Open"), hasProperty("enabled", is(true)));
 
-		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("Input Dsl newLocution")
+		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").getNode("newLocution")
 				.select().contextMenu("Open").click();
 
 		bot.sleep(MEDIUM_SLEEP);
