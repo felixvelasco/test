@@ -3,8 +3,8 @@
 package com.vectorsf.jvoice.model.operations.provider;
 
 
-import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
+import com.vectorsf.jvoice.model.operations.ParameterizedState;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,15 +19,17 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link com.vectorsf.jvoice.model.operations.CallFlowState} object.
+ * This is the item provider adapter for a {@link com.vectorsf.jvoice.model.operations.ParameterizedState} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class CallFlowStateItemProvider
-	extends ParameterizedStateItemProvider
+public class ParameterizedStateItemProvider
+	extends StateItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -40,7 +42,7 @@ public class CallFlowStateItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CallFlowStateItemProvider(AdapterFactory adapterFactory) {
+	public ParameterizedStateItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -55,42 +57,31 @@ public class CallFlowStateItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addSubflowPropertyDescriptor(object);
+			addParametersPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Subflow feature.
+	 * This adds a property descriptor for the Parameters feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addSubflowPropertyDescriptor(Object object) {
+	protected void addParametersPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CallFlowState_subflow_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CallFlowState_subflow_feature", "_UI_CallFlowState_type"),
-				 OperationsPackage.Literals.CALL_FLOW_STATE__SUBFLOW,
+				 getString("_UI_ParameterizedState_parameters_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ParameterizedState_parameters_feature", "_UI_ParameterizedState_type"),
+				 OperationsPackage.Literals.PARAMETERIZED_STATE__PARAMETERS,
 				 true,
 				 false,
-				 true,
-				 null,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
-	}
-
-	/**
-	 * This returns CallFlowState.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CallFlowState"));
 	}
 
 	/**
@@ -101,10 +92,10 @@ public class CallFlowStateItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((CallFlowState)object).getName();
+		String label = ((ParameterizedState)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_CallFlowState_type") :
-			getString("_UI_CallFlowState_type") + " " + label;
+			getString("_UI_ParameterizedState_type") :
+			getString("_UI_ParameterizedState_type") + " " + label;
 	}
 
 	/**
@@ -117,6 +108,12 @@ public class CallFlowStateItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(ParameterizedState.class)) {
+			case OperationsPackage.PARAMETERIZED_STATE__PARAMETERS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 

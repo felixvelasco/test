@@ -29,7 +29,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class CallStateItemProvider
-	extends StateItemProvider
+	extends ParameterizedStateItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -57,33 +57,10 @@ public class CallStateItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addParametersPropertyDescriptor(object);
 			addMethodNamePropertyDescriptor(object);
 			addBeanPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Parameters feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addParametersPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_CallState_parameters_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CallState_parameters_feature", "_UI_CallState_type"),
-				 OperationsPackage.Literals.CALL_STATE__PARAMETERS,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**

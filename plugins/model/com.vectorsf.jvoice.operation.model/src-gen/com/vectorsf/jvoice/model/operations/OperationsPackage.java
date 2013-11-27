@@ -626,6 +626,97 @@ public interface OperationsPackage extends EPackage {
 	int CASE_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl <em>Parameterized State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getParameterizedState()
+	 * @generated
+	 */
+	int PARAMETERIZED_STATE = 18;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_STATE__ID = STATE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_STATE__NAME = STATE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_STATE__DESCRIPTION = STATE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Notes</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_STATE__NOTES = STATE__NOTES;
+
+	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_STATE__PARAMETERS = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Parameterized State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Parameterized State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl <em>Call State</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -642,7 +733,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__ID = STATE__ID;
+	int CALL_STATE__ID = PARAMETERIZED_STATE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -651,7 +742,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__NAME = STATE__NAME;
+	int CALL_STATE__NAME = PARAMETERIZED_STATE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -660,7 +751,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__DESCRIPTION = STATE__DESCRIPTION;
+	int CALL_STATE__DESCRIPTION = PARAMETERIZED_STATE__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
@@ -669,7 +760,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+	int CALL_STATE__INCOMING_TRANSITIONS = PARAMETERIZED_STATE__INCOMING_TRANSITIONS;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
@@ -678,7 +769,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+	int CALL_STATE__OUTGOING_TRANSITIONS = PARAMETERIZED_STATE__OUTGOING_TRANSITIONS;
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
@@ -687,16 +778,16 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__NOTES = STATE__NOTES;
+	int CALL_STATE__NOTES = PARAMETERIZED_STATE__NOTES;
 
 	/**
-	 * The feature id for the '<em><b>Parameters</b></em>' reference list.
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__PARAMETERS = STATE_FEATURE_COUNT + 0;
+	int CALL_STATE__PARAMETERS = PARAMETERIZED_STATE__PARAMETERS;
 
 	/**
 	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
@@ -705,7 +796,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__METHOD_NAME = STATE_FEATURE_COUNT + 1;
+	int CALL_STATE__METHOD_NAME = PARAMETERIZED_STATE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Bean</b></em>' reference.
@@ -714,7 +805,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__BEAN = STATE_FEATURE_COUNT + 2;
+	int CALL_STATE__BEAN = PARAMETERIZED_STATE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Call State</em>' class.
@@ -723,7 +814,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 3;
+	int CALL_STATE_FEATURE_COUNT = PARAMETERIZED_STATE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Call State</em>' class.
@@ -732,7 +823,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+	int CALL_STATE_OPERATION_COUNT = PARAMETERIZED_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl <em>Call Flow State</em>}' class.
@@ -751,7 +842,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_FLOW_STATE__ID = STATE__ID;
+	int CALL_FLOW_STATE__ID = PARAMETERIZED_STATE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -760,7 +851,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_FLOW_STATE__NAME = STATE__NAME;
+	int CALL_FLOW_STATE__NAME = PARAMETERIZED_STATE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -769,7 +860,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_FLOW_STATE__DESCRIPTION = STATE__DESCRIPTION;
+	int CALL_FLOW_STATE__DESCRIPTION = PARAMETERIZED_STATE__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
@@ -778,7 +869,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_FLOW_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+	int CALL_FLOW_STATE__INCOMING_TRANSITIONS = PARAMETERIZED_STATE__INCOMING_TRANSITIONS;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
@@ -787,7 +878,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_FLOW_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+	int CALL_FLOW_STATE__OUTGOING_TRANSITIONS = PARAMETERIZED_STATE__OUTGOING_TRANSITIONS;
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
@@ -796,7 +887,16 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_FLOW_STATE__NOTES = STATE__NOTES;
+	int CALL_FLOW_STATE__NOTES = PARAMETERIZED_STATE__NOTES;
+
+	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE__PARAMETERS = PARAMETERIZED_STATE__PARAMETERS;
 
 	/**
 	 * The feature id for the '<em><b>Subflow</b></em>' reference.
@@ -805,7 +905,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_FLOW_STATE__SUBFLOW = STATE_FEATURE_COUNT + 0;
+	int CALL_FLOW_STATE__SUBFLOW = PARAMETERIZED_STATE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Call Flow State</em>' class.
@@ -814,7 +914,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_FLOW_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+	int CALL_FLOW_STATE_FEATURE_COUNT = PARAMETERIZED_STATE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Call Flow State</em>' class.
@@ -823,7 +923,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_FLOW_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+	int CALL_FLOW_STATE_OPERATION_COUNT = PARAMETERIZED_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.LocutionStateImpl <em>Locution State</em>}' class.
@@ -1643,7 +1743,7 @@ public interface OperationsPackage extends EPackage {
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTypeTransfer()
 	 * @generated
 	 */
-	int TYPE_TRANSFER = 18;
+	int TYPE_TRANSFER = 19;
 
 
 	/**
@@ -1889,17 +1989,6 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getCallState();
-
-	/**
-	 * Returns the meta object for the reference list '{@link com.vectorsf.jvoice.model.operations.CallState#getParameters <em>Parameters</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Parameters</em>'.
-	 * @see com.vectorsf.jvoice.model.operations.CallState#getParameters()
-	 * @see #getCallState()
-	 * @generated
-	 */
-	EReference getCallState_Parameters();
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.CallState#getMethodName <em>Method Name</em>}'.
@@ -2167,6 +2256,27 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getComponentBean_NameBean();
 
 	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.ParameterizedState <em>Parameterized State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Parameterized State</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.ParameterizedState
+	 * @generated
+	 */
+	EClass getParameterizedState();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link com.vectorsf.jvoice.model.operations.ParameterizedState#getParameters <em>Parameters</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Parameters</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.ParameterizedState#getParameters()
+	 * @see #getParameterizedState()
+	 * @generated
+	 */
+	EAttribute getParameterizedState_Parameters();
+
+	/**
 	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2400,14 +2510,6 @@ public interface OperationsPackage extends EPackage {
 		EClass CALL_STATE = eINSTANCE.getCallState();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameters</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CALL_STATE__PARAMETERS = eINSTANCE.getCallState_Parameters();
-
-		/**
 		 * The meta object literal for the '<em><b>Method Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2626,6 +2728,24 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute COMPONENT_BEAN__NAME_BEAN = eINSTANCE.getComponentBean_NameBean();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl <em>Parameterized State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getParameterizedState()
+		 * @generated
+		 */
+		EClass PARAMETERIZED_STATE = eINSTANCE.getParameterizedState();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameters</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETERIZED_STATE__PARAMETERS = eINSTANCE.getParameterizedState_Parameters();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}' enum.

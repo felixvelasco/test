@@ -18,6 +18,7 @@ import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
+import com.vectorsf.jvoice.model.operations.ParameterizedState;
 import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
@@ -169,6 +170,13 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * @generated
 	 */
 	private EClass componentBeanEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass parameterizedStateEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -453,17 +461,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCallState_Parameters() {
-		return (EReference)callStateEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getCallState_MethodName() {
-		return (EAttribute)callStateEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)callStateEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -472,7 +471,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * @generated
 	 */
 	public EReference getCallState_Bean() {
-		return (EReference)callStateEClass.getEStructuralFeatures().get(2);
+		return (EReference)callStateEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -687,6 +686,24 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getParameterizedState() {
+		return parameterizedStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParameterizedState_Parameters() {
+		return (EAttribute)parameterizedStateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getTypeTransfer() {
 		return typeTransferEEnum;
 	}
@@ -749,7 +766,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEAttribute(caseEClass, CASE__EVENT_NAME);
 
 		callStateEClass = createEClass(CALL_STATE);
-		createEReference(callStateEClass, CALL_STATE__PARAMETERS);
 		createEAttribute(callStateEClass, CALL_STATE__METHOD_NAME);
 		createEReference(callStateEClass, CALL_STATE__BEAN);
 
@@ -785,6 +801,9 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		componentBeanEClass = createEClass(COMPONENT_BEAN);
 		createEAttribute(componentBeanEClass, COMPONENT_BEAN__FQDN);
 		createEAttribute(componentBeanEClass, COMPONENT_BEAN__NAME_BEAN);
+
+		parameterizedStateEClass = createEClass(PARAMETERIZED_STATE);
+		createEAttribute(parameterizedStateEClass, PARAMETERIZED_STATE__PARAMETERS);
 
 		// Create enums
 		typeTransferEEnum = createEEnum(TYPE_TRANSFER);
@@ -828,8 +847,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initialStateEClass.getESuperTypes().add(this.getState());
 		finalStateEClass.getESuperTypes().add(this.getState());
 		switchStateEClass.getESuperTypes().add(this.getState());
-		callStateEClass.getESuperTypes().add(this.getState());
-		callFlowStateEClass.getESuperTypes().add(this.getState());
+		callStateEClass.getESuperTypes().add(this.getParameterizedState());
+		callFlowStateEClass.getESuperTypes().add(this.getParameterizedState());
 		promptStateEClass.getESuperTypes().add(this.getLocutionState());
 		inputStateEClass.getESuperTypes().add(this.getLocutionState());
 		menuStateEClass.getESuperTypes().add(this.getLocutionState());
@@ -839,6 +858,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		noteEClass.getESuperTypes().add(theBasePackage.getJVElement());
 		customStateEClass.getESuperTypes().add(this.getState());
 		componentBeanEClass.getESuperTypes().add(theBasePackage.getNamedElement());
+		parameterizedStateEClass.getESuperTypes().add(this.getState());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(stateEClass, State.class, "State", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -873,7 +893,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEAttribute(getCase_EventName(), ecorePackage.getEString(), "eventName", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(callStateEClass, CallState.class, "CallState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCallState_Parameters(), ecorePackage.getEObject(), null, "parameters", null, 0, -1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCallState_MethodName(), ecorePackage.getEString(), "methodName", null, 0, 1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCallState_Bean(), this.getComponentBean(), null, "bean", null, 0, 1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -909,6 +928,9 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEClass(componentBeanEClass, ComponentBean.class, "ComponentBean", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComponentBean_Fqdn(), ecorePackage.getEString(), "fqdn", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentBean_NameBean(), ecorePackage.getEString(), "nameBean", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(parameterizedStateEClass, ParameterizedState.class, "ParameterizedState", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getParameterizedState_Parameters(), ecorePackage.getEString(), "parameters", null, 0, -1, ParameterizedState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(typeTransferEEnum, TypeTransfer.class, "TypeTransfer");

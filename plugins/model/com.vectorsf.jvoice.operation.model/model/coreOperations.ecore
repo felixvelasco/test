@@ -45,13 +45,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="condition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CallState" eSuperTypes="#//State">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CallState" eSuperTypes="#//ParameterizedState">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="methodName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bean" eType="#//ComponentBean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CallFlowState" eSuperTypes="#//State">
+  <eClassifiers xsi:type="ecore:EClass" name="CallFlowState" eSuperTypes="#//ParameterizedState">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subflow" eType="#//Flow"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PromptState" eSuperTypes="#//LocutionState"/>
@@ -85,5 +83,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="ComponentBean" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fqdn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameBean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ParameterizedState" abstract="true"
+      eSuperTypes="#//State">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parameters" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

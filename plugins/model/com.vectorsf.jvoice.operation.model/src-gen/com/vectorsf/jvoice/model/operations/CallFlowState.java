@@ -19,7 +19,7 @@ package com.vectorsf.jvoice.model.operations;
  * @model
  * @generated
  */
-public interface CallFlowState extends State {
+public interface CallFlowState extends ParameterizedState {
 	/**
 	 * Returns the value of the '<em><b>Subflow</b></em>' reference.
 	 * <!-- begin-user-doc -->

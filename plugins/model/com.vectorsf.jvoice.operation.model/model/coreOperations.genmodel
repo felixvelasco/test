@@ -44,7 +44,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//Case/eventName"/>
     </genClasses>
     <genClasses ecoreClass="coreOperations.ecore#//CallState">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//CallState/parameters"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//CallState/methodName"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//CallState/bean"/>
     </genClasses>
@@ -76,6 +75,9 @@
     <genClasses ecoreClass="coreOperations.ecore#//ComponentBean">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//ComponentBean/fqdn"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//ComponentBean/nameBean"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="coreOperations.ecore#//ParameterizedState">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//ParameterizedState/parameters"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

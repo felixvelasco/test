@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class CallFlowStateImpl extends StateImpl implements CallFlowState {
+public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlowState {
 	/**
 	 * The cached value of the '{@link #getSubflow() <em>Subflow</em>}' reference.
 	 * <!-- begin-user-doc -->

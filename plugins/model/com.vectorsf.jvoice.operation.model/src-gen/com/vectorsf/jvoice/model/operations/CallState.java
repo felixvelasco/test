@@ -2,9 +2,6 @@
  */
 package com.vectorsf.jvoice.model.operations;
 
-import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,7 +11,6 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.model.operations.CallState#getParameters <em>Parameters</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.CallState#getMethodName <em>Method Name</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.CallState#getBean <em>Bean</em>}</li>
  * </ul>
@@ -24,23 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface CallState extends State {
-	/**
-	 * Returns the value of the '<em><b>Parameters</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Parameters</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parameters</em>' reference list.
-	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getCallState_Parameters()
-	 * @model
-	 * @generated
-	 */
-	EList<EObject> getParameters();
-
+public interface CallState extends ParameterizedState {
 	/**
 	 * Returns the value of the '<em><b>Method Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->

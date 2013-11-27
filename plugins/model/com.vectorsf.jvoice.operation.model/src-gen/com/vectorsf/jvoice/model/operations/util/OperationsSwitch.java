@@ -130,6 +130,7 @@ public class OperationsSwitch<T> extends Switch<T> {
 			case OperationsPackage.CALL_STATE: {
 				CallState callState = (CallState)theEObject;
 				T result = caseCallState(callState);
+				if (result == null) result = caseParameterizedState(callState);
 				if (result == null) result = caseState(callState);
 				if (result == null) result = caseNamedElement(callState);
 				if (result == null) result = caseJVElement(callState);
@@ -139,6 +140,7 @@ public class OperationsSwitch<T> extends Switch<T> {
 			case OperationsPackage.CALL_FLOW_STATE: {
 				CallFlowState callFlowState = (CallFlowState)theEObject;
 				T result = caseCallFlowState(callFlowState);
+				if (result == null) result = caseParameterizedState(callFlowState);
 				if (result == null) result = caseState(callFlowState);
 				if (result == null) result = caseNamedElement(callFlowState);
 				if (result == null) result = caseJVElement(callFlowState);
@@ -224,6 +226,15 @@ public class OperationsSwitch<T> extends Switch<T> {
 				T result = caseComponentBean(componentBean);
 				if (result == null) result = caseNamedElement(componentBean);
 				if (result == null) result = caseJVElement(componentBean);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case OperationsPackage.PARAMETERIZED_STATE: {
+				ParameterizedState parameterizedState = (ParameterizedState)theEObject;
+				T result = caseParameterizedState(parameterizedState);
+				if (result == null) result = caseState(parameterizedState);
+				if (result == null) result = caseNamedElement(parameterizedState);
+				if (result == null) result = caseJVElement(parameterizedState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -498,6 +509,21 @@ public class OperationsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseComponentBean(ComponentBean object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Parameterized State</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Parameterized State</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseParameterizedState(ParameterizedState object) {
 		return null;
 	}
 

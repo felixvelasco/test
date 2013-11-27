@@ -5,20 +5,10 @@ package com.vectorsf.jvoice.model.operations.impl;
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
-
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +17,6 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl#getMethodName <em>Method Name</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl#getBean <em>Bean</em>}</li>
  * </ul>
@@ -35,17 +24,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *
  * @generated
  */
-public class CallStateImpl extends StateImpl implements CallState {
-	/**
-	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getParameters()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<EObject> parameters;
-
+public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	/**
 	 * The default value of the '{@link #getMethodName() <em>Method Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -93,18 +72,6 @@ public class CallStateImpl extends StateImpl implements CallState {
 	@Override
 	protected EClass eStaticClass() {
 		return OperationsPackage.Literals.CALL_STATE;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<EObject> getParameters() {
-		if (parameters == null) {
-			parameters = new EObjectResolvingEList<EObject>(EObject.class, this, OperationsPackage.CALL_STATE__PARAMETERS);
-		}
-		return parameters;
 	}
 
 	/**
@@ -174,8 +141,6 @@ public class CallStateImpl extends StateImpl implements CallState {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OperationsPackage.CALL_STATE__PARAMETERS:
-				return getParameters();
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				return getMethodName();
 			case OperationsPackage.CALL_STATE__BEAN:
@@ -194,10 +159,6 @@ public class CallStateImpl extends StateImpl implements CallState {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OperationsPackage.CALL_STATE__PARAMETERS:
-				getParameters().clear();
-				getParameters().addAll((Collection<? extends EObject>)newValue);
-				return;
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				setMethodName((String)newValue);
 				return;
@@ -216,9 +177,6 @@ public class CallStateImpl extends StateImpl implements CallState {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OperationsPackage.CALL_STATE__PARAMETERS:
-				getParameters().clear();
-				return;
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				setMethodName(METHOD_NAME_EDEFAULT);
 				return;
@@ -237,8 +195,6 @@ public class CallStateImpl extends StateImpl implements CallState {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OperationsPackage.CALL_STATE__PARAMETERS:
-				return parameters != null && !parameters.isEmpty();
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				return METHOD_NAME_EDEFAULT == null ? methodName != null : !METHOD_NAME_EDEFAULT.equals(methodName);
 			case OperationsPackage.CALL_STATE__BEAN:
