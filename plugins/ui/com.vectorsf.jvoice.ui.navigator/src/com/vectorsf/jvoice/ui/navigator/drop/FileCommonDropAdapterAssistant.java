@@ -11,6 +11,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -106,6 +107,13 @@ public class FileCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
 		File rutadestino = new File(pathdestino, filewav.getName());
 
 		copyFile(filewav, rutadestino);
+
+		try {
+			root.refreshLocal(2, null);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return Status.OK_STATUS;
 	}
