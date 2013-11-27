@@ -32,9 +32,6 @@ public class FileContentProvider extends JavaNavigatorContentProvider {
 			if (prj.getFolder(path).exists()) {
 				object = prj.getFolder(path);
 				lObjects.add(object);
-
-			} else {
-				System.out.println("No existe la carpeta");
 			}
 
 		} else if (object instanceof IFolder) {
