@@ -15,7 +15,7 @@ class CallStateCodeXML {
 		
 		'''
 		<action-state id="«state.name»">
-		 <evaluate expression="«jvBean.nameBean».«state.methodName»"/>
+		 <evaluate expression="flowScope.«state.bean.name».«state.methodName»"/>
 			«state.transitions»
 		</action-state>
     	'''
