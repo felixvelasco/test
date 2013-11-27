@@ -1,6 +1,9 @@
 package com.vectorsf.jvoice.ui.project.editor;
 
+import java.util.EventObject;
+
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -52,6 +55,16 @@ public class EventsHandlerComposite extends Composite {
 		tableFormDetailComposite.update(project.getHandlers());
 
 		tableFormDetailComposite.getViewer().addSelectionChangedListener(new RemoveButtonListener());
+
+		EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(project);
+		editingDomain.getCommandStack().addCommandStackListener(new CommandStackListener() {
+
+			@Override
+			public void commandStackChanged(EventObject event) {
+				tableFormDetailComposite.getViewer().refresh();
+			}
+		});
+
 	}
 
 	private void createScrolledForm() {
@@ -112,8 +125,6 @@ public class EventsHandlerComposite extends Composite {
 					newHandler);
 
 			editingDomain.getCommandStack().execute(command);
-
-			tableFormDetailComposite.getViewer().refresh();
 		}
 	}
 
@@ -137,8 +148,6 @@ public class EventsHandlerComposite extends Composite {
 					BasePackage.eINSTANCE.getJVProject_Handlers(), selectedHandler);
 
 			editingDomain.getCommandStack().execute(command);
-
-			tableFormDetailComposite.getViewer().refresh();
 		}
 	}
 }
