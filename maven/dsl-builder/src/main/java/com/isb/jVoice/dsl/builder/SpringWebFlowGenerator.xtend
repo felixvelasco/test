@@ -50,6 +50,9 @@ class SpringWebFlowGenerator {
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 		parent="«projectName»/errorHandler"
 		start-state= "«GetNameTransOut.Name(initialState)»" >
+		«FOR param: element.parameters»
+		<input name="«param»"/>
+		«ENDFOR»
 	'''
 	
 	def getInitialState() {
