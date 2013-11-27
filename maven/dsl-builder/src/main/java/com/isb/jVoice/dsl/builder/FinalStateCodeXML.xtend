@@ -8,9 +8,11 @@ class FinalStateCodeXML {
 	    '''
 		«IF state.final»
 			<view-state id="redirect" view="flowredirect:jVoiceArch-end">    
-			</view-state>			
+			</view-state>
 		«ELSE»
-		  <end-state id="«state.name»" view="#{flowProcessor.getRenderer().getView()}"/>		  
+		  <end-state id="«state.name»" view="#{flowProcessor.getRenderer().getView()}">
+		  	<output name="result" value="«state.returnExpression»" />
+		  </end-state>
 		«ENDIF»
 	'''
 }

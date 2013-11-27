@@ -4,7 +4,7 @@ import com.vectorsf.jvoice.model.operations.CallFlowState
 
 class CallFlowStateCodeXML extends StateCodeGenerator {
 
-	val path = "src/main/resources/jv"
+	val path = "src/main/resources/jv/"
 
 	def doGenerateCallFlowState(CallFlowState state) '''
 		<subflow-state id="«state.name»" subflow="«state.flowName»">
