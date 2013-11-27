@@ -63,6 +63,10 @@
             <contentExtension
                   pattern="com.vectorsf.jvoice.ui.navigator.linkHelper">
             </contentExtension>
+            <contentExtension
+                  isRoot="false"
+                  pattern="com.vectorsf.jvoice.ui.navigator.navigatorContent1">
+            </contentExtension>
          </includes>
       </viewerContentBinding>
       <viewer
@@ -240,6 +244,9 @@
                   </instanceof>
                   <instanceof
                         value="com.vectorsf.jvoice.model.base.JVPackage">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.core.internal.resources.Folder">
                   </instanceof>
                </or></possibleDropTargets>
          </dropAssistant>
@@ -432,6 +439,23 @@
             </with>
          </enablement>
       </actionProvider>
+      <navigatorContent
+            contentProvider="com.vectorsf.jvoice.ui.edit.provider.AudioContentProvider"
+            id="com.vectorsf.jvoice.ui.navigator.navigatorContent1"
+            labelProvider="com.vectorsf.jvoice.ui.edit.provider.AudioNavigatorLabelProvider"
+            name="Audio navigator content"
+            priority="low">
+         <triggerPoints>
+            <or>
+               <instanceof
+                     value="com.vectorsf.jvoice.model.base.JVProject">
+               </instanceof>
+               <instanceof
+                     value="org.eclipse.core.resources.IFolder">
+               </instanceof>
+            </or>
+         </triggerPoints>
+      </navigatorContent>
    </extension>
    <extension
          point="org.eclipse.ui.menus">

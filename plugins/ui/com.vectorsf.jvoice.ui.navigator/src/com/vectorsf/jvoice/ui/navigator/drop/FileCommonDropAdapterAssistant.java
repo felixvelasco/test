@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -74,6 +75,12 @@ public class FileCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
 					.getLocation() + DIRBASE;
 			targetRes = (IResource) Platform.getAdapterManager().getAdapter(
 					target.getOwnerModule(), IResource.class);
+		} else if (aTarget instanceof IFolder) {
+			IFolder target = (IFolder) aTarget;
+			destino = root.getProject(target.getProject().getName())
+					.getLocation() + DIRBASE;
+			targetRes = (IResource) Platform.getAdapterManager().getAdapter(
+					target.getProject(), IResource.class);
 		}
 
 		String[] dataruta = (String[]) aDropTargetEvent.data;
