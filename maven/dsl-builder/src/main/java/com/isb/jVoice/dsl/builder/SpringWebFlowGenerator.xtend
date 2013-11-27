@@ -22,11 +22,11 @@ import static com.isb.jVoice.dsl.builder.Using.*
 class SpringWebFlowGenerator {
 
 	Resource res
-	Flow element
+	Flow flow
 
 	new(Resource resource) {
 		res = resource;
-		element = res.contents.get(1) as Flow;
+		flow = res.contents.get(1) as Flow;
 	}
 
 	def generate(File file, String nameProject) {
@@ -34,13 +34,28 @@ class SpringWebFlowGenerator {
 			//Obtenemos el estado inicial para escribri la cabecera.
 			it.append(doGenerateHeader(nameProject))
 			
-			InitialStateCodeXML.doGenerateInitialState(element, getInitialState()) 
+			it.append(generateScope()) 
 			// Se recorre de nuevo todo el array para escribir el resto de estados del diagrama 
-			for (State state : element.getStates()) {
+			for (State state : flow.getStates()) {
 				it.append(generateState(state, nameProject))
 			}
 			it.append(doGenerateFooter());
 		]
+	}
+	
+	def generateScope() {
+		var beans = flow.beans
+		if (beans.empty)
+			return "";
+	'''
+		<on-start>
+			<on-entry>
+			«FOR bean: beans »
+				<evaluate expression="«bean.nameBean»" result="flowScope.«bean.name»"></evaluate>
+			«ENDFOR»
+			</on-entry>
+		</on-start>
+	'''
 	}
 	
 	def doGenerateHeader(String projectName) '''
@@ -50,13 +65,13 @@ class SpringWebFlowGenerator {
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 		parent="«projectName»/errorHandler"
 		start-state= "«GetNameTransOut.Name(initialState)»" >
-		«FOR param: element.parameters»
+		«FOR param: flow.parameters»
 		<input name="«param»"/>
 		«ENDFOR»
 	'''
 	
 	def getInitialState() {
-		for (State state : element.getStates()) {
+		for (State state : flow.getStates()) {
 			if (state instanceof InitialState) {
 				return state as InitialState;
 			}
