@@ -535,6 +535,32 @@
                         <instanceof
                               value="com.vectorsf.jvoice.model.operations.provider.flow.ScopeItemProvider">
                         </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.operations.Flow">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+          <command
+               commandId="com.vectorsf.jvoice.ui.navigator.addFlowParameter"
+               label="%command.label.addParameter"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.operations.provider.flow.ParametersItemProvider">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.operations.Flow">
+                        </instanceof>
                      </or>
                   </iterate>
                </with>
@@ -697,6 +723,10 @@
             commandId="com.vectorsf.jvoice.ui.navigator.addBeanScope">
       </handler>
       <handler
+            class="com.vectorsf.jvoice.ui.navigator.handler.AddFlowParameterHandler"
+            commandId="com.vectorsf.jvoice.ui.navigator.addFlowParameter">
+      </handler>
+      <handler
             class="com.vectorsf.jvoice.ui.navigator.handler.RemoveBeanScopeHandler"
             commandId="com.vectorsf.jvoice.ui.navigator.removeBeanScope">
       </handler>
@@ -719,6 +749,11 @@
             defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.AddBeanScopeHandler"
             id="com.vectorsf.jvoice.ui.navigator.addBeanScope"
             name="%command.name.addBeanScope">
+      </command>
+      <command
+            defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.AddFlowParameterHandler"
+            id="com.vectorsf.jvoice.ui.navigator.addFlowParameter"
+            name="%command.name.addFlowParameter">
       </command>
       <command
             defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.RemoveBeanScopeHandler"
