@@ -67,8 +67,8 @@ class SpringWebFlowGenerator {
 		FinalStateCodeXML.doGenerateFinalState(state)
 	}
 
-	def dispatch generateState(InitialState state, String nameProject) {
-	}
+	def dispatch generateState(InitialState state, String nameProject) '''
+	'''
 
 	def dispatch generateState(CallFlowState state, String nameProject) {
 		CallFlowStateCodeXML.doGenerateCallFlowState(state)
