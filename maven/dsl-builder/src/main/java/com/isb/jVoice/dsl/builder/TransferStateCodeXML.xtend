@@ -53,9 +53,9 @@ class TransferStateCodeXML {
 		«IF tranSalida !=null»
 			«FOR trans : tranSalida»
 				«IF trans.target instanceof CustomState»
-					<transition on="«trans.eventName»" to="render_«trans.target.name»"/>
+					<transition on="transferred" to="render_«trans.target.name»"/>
 				«ELSE»
-					<transition on="«trans.eventName»" to="«trans.target.name»"/>
+					<transition on="transferred" to="«trans.target.name»"/>
 				«ENDIF»
 			«ENDFOR»
 		«ENDIF»
