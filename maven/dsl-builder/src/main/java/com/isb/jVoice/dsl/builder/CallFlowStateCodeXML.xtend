@@ -1,36 +1,27 @@
 package com.isb.jVoice.dsl.builder
 
-import com.vectorsf.jvoice.model.operations.State
-import com.vectorsf.jvoice.model.operations.Transition
-import org.eclipse.emf.common.util.EList
-import com.vectorsf.jvoice.model.operations.CustomState
 import com.vectorsf.jvoice.model.operations.CallFlowState
 
-class CallFlowStateCodeXML { // Falta por definir
-	def static doGenerateCallFlowState(State state) {
-		var EList<Transition> TranSalida = state.getOutgoingTransitions()
-		var callFlow = state as CallFlowState
-		'''
-		«var pathURI = callFlow.subflow.eResource.URI.path» 
-		«var pathURIFinal = pathURI.substring(pathURI.indexOf("src/main/resources/jv")+22,pathURI.lastIndexOf("."))»
-		<subflow-state id="«state.name»" subflow="«pathURIFinal»">
-		«IF TranSalida.length==1»
-			«val target = TranSalida.get(0).target»
-			«IF target instanceof CustomState»
-				<transition to="render_«target.name»"/>
-			«ELSE»
-				<transition to="«target.name»"/>
-			«ENDIF»				
-		«ELSE»
-			«FOR trans : TranSalida»
-				«IF trans.target instanceof CustomState»
-					<transition on="«trans.eventName»" to="render_«trans.target.name»"/>
-				«ELSE»
-					<transition on="«trans.eventName»" to="«trans.target.name»"/>
-				«ENDIF»
-       		«ENDFOR»
-		«ENDIF»				
+class CallFlowStateCodeXML extends StateCodeGenerator {
+
+	val path = "src/main/resources/jv"
+
+	def doGenerateCallFlowState(CallFlowState state) '''
+		<subflow-state id="«state.name»" subflow="«state.flowName»">
+		«state.externalizeParameters»
+		«state.transitions('\n\t<evaluate expression="currentEvent.attributes.result" result="flowScope.result" />\n')»
 		</subflow-state>
-    	'''
+	'''
+	
+	def externalizeParameters(CallFlowState state) '''
+		«FOR i : 0..<state.subflow.parameters.size»
+			<input name="«state.subflow.parameters.get(i)»" value="«state.parameters.get(i)»" 
+		«ENDFOR»
+	'''
+
+	def flowName(CallFlowState state) {
+		var pathURI = state.subflow.eResource.URI.path
+		pathURI.substring(pathURI.indexOf(path) + path.length, pathURI.lastIndexOf("."))
 	}
+
 }

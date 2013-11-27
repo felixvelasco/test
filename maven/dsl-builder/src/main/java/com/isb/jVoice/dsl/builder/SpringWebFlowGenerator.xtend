@@ -86,7 +86,7 @@ class SpringWebFlowGenerator {
 	'''
 
 	def dispatch generateState(CallFlowState state, String nameProject) {
-		CallFlowStateCodeXML.doGenerateCallFlowState(state)
+		new CallFlowStateCodeXML().doGenerateCallFlowState(state)
 	}
 
 	def dispatch generateState(SwitchState state, String nameProject) {
@@ -102,7 +102,7 @@ class SpringWebFlowGenerator {
 	}
 
 	def dispatch generateState(CallState state, String nameProject) {
-		CallStateCodeXML.doGenerateCallState(state)
+		new CallStateCodeXML().doGenerateCallState(state)
 	}
 
 	def dispatch generateState(MenuState state, String nameProject) {
