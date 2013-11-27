@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FinalStateImpl#isFinal <em>Final</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FinalStateImpl#getReturnExpression <em>Return Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,6 +45,26 @@ public class FinalStateImpl extends StateImpl implements FinalState {
 	 * @ordered
 	 */
 	protected boolean final_ = FINAL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getReturnExpression() <em>Return Expression</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReturnExpression()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String RETURN_EXPRESSION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getReturnExpression() <em>Return Expression</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReturnExpression()
+	 * @generated
+	 * @ordered
+	 */
+	protected String returnExpression = RETURN_EXPRESSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -90,11 +111,34 @@ public class FinalStateImpl extends StateImpl implements FinalState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getReturnExpression() {
+		return returnExpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReturnExpression(String newReturnExpression) {
+		String oldReturnExpression = returnExpression;
+		returnExpression = newReturnExpression;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationsPackage.FINAL_STATE__RETURN_EXPRESSION, oldReturnExpression, returnExpression));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case OperationsPackage.FINAL_STATE__FINAL:
 				return isFinal();
+			case OperationsPackage.FINAL_STATE__RETURN_EXPRESSION:
+				return getReturnExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -109,6 +153,9 @@ public class FinalStateImpl extends StateImpl implements FinalState {
 		switch (featureID) {
 			case OperationsPackage.FINAL_STATE__FINAL:
 				setFinal((Boolean)newValue);
+				return;
+			case OperationsPackage.FINAL_STATE__RETURN_EXPRESSION:
+				setReturnExpression((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -125,6 +172,9 @@ public class FinalStateImpl extends StateImpl implements FinalState {
 			case OperationsPackage.FINAL_STATE__FINAL:
 				setFinal(FINAL_EDEFAULT);
 				return;
+			case OperationsPackage.FINAL_STATE__RETURN_EXPRESSION:
+				setReturnExpression(RETURN_EXPRESSION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -139,6 +189,8 @@ public class FinalStateImpl extends StateImpl implements FinalState {
 		switch (featureID) {
 			case OperationsPackage.FINAL_STATE__FINAL:
 				return final_ != FINAL_EDEFAULT;
+			case OperationsPackage.FINAL_STATE__RETURN_EXPRESSION:
+				return RETURN_EXPRESSION_EDEFAULT == null ? returnExpression != null : !RETURN_EXPRESSION_EDEFAULT.equals(returnExpression);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -155,6 +207,8 @@ public class FinalStateImpl extends StateImpl implements FinalState {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (final: ");
 		result.append(final_);
+		result.append(", returnExpression: ");
+		result.append(returnExpression);
 		result.append(')');
 		return result.toString();
 	}

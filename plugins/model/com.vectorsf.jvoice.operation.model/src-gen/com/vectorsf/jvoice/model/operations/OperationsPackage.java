@@ -471,13 +471,22 @@ public interface OperationsPackage extends EPackage {
 	int FINAL_STATE__FINAL = STATE_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Return Expression</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FINAL_STATE__RETURN_EXPRESSION = STATE_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Final State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FINAL_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+	int FINAL_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Final State</em>' class.
@@ -1938,6 +1947,17 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getFinalState_Final();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.FinalState#getReturnExpression <em>Return Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Return Expression</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.FinalState#getReturnExpression()
+	 * @see #getFinalState()
+	 * @generated
+	 */
+	EAttribute getFinalState_ReturnExpression();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.SwitchState <em>Switch State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2474,6 +2494,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FINAL_STATE__FINAL = eINSTANCE.getFinalState_Final();
+
+		/**
+		 * The meta object literal for the '<em><b>Return Expression</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FINAL_STATE__RETURN_EXPRESSION = eINSTANCE.getFinalState_ReturnExpression();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.SwitchStateImpl <em>Switch State</em>}' class.

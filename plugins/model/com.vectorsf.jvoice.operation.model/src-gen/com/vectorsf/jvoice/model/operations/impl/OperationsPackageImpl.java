@@ -407,6 +407,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getFinalState_ReturnExpression() {
+		return (EAttribute)finalStateEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getSwitchState() {
 		return switchStateEClass;
 	}
@@ -766,6 +775,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		finalStateEClass = createEClass(FINAL_STATE);
 		createEAttribute(finalStateEClass, FINAL_STATE__FINAL);
+		createEAttribute(finalStateEClass, FINAL_STATE__RETURN_EXPRESSION);
 
 		switchStateEClass = createEClass(SWITCH_STATE);
 		createEReference(switchStateEClass, SWITCH_STATE__CASE);
@@ -892,6 +902,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		initEClass(finalStateEClass, FinalState.class, "FinalState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFinalState_Final(), ecorePackage.getEBoolean(), "final", null, 0, 1, FinalState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFinalState_ReturnExpression(), ecorePackage.getEString(), "returnExpression", null, 0, 1, FinalState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(switchStateEClass, SwitchState.class, "SwitchState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSwitchState_Case(), this.getCase(), null, "case", null, 0, -1, SwitchState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
