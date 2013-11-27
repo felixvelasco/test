@@ -5,6 +5,7 @@ package com.vectorsf.jvoice.model.base.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -14,6 +15,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.Configuration;
@@ -22,9 +24,7 @@ import com.vectorsf.jvoice.model.base.JVModel;
 import com.vectorsf.jvoice.model.base.JVProject;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>JV Project</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>JV Project</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -38,9 +38,9 @@ import com.vectorsf.jvoice.model.base.JVProject;
  */
 public abstract class JVProjectImpl extends NamedElementImpl implements JVProject {
 	/**
-	 * The cached value of the '{@link #getConfiguration() <em>Configuration</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getConfiguration() <em>Configuration</em>}' containment reference list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getConfiguration()
 	 * @generated
 	 * @ordered
@@ -48,9 +48,9 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	protected EList<Configuration> configuration;
 
 	/**
-	 * The cached value of the '{@link #getHandlers() <em>Handlers</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getHandlers() <em>Handlers</em>}' containment reference list. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getHandlers()
 	 * @generated
 	 * @ordered
@@ -58,8 +58,7 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	protected EList<EventHandler> handlers;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected JVProjectImpl() {
@@ -67,8 +66,7 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -77,18 +75,17 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public JVModel getModel() {
 		if (eContainerFeatureID() != BasePackage.JV_PROJECT__MODEL) return null;
 		return (JVModel)eContainer();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public JVModel basicGetModel() {
@@ -97,8 +94,7 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetModel(JVModel newModel, NotificationChain msgs) {
@@ -107,10 +103,10 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setModel(JVModel newModel) {
 		if (newModel != eInternalContainer() || (eContainerFeatureID() != BasePackage.JV_PROJECT__MODEL && newModel != null)) {
 			if (EcoreUtil.isAncestor(this, newModel))
@@ -128,10 +124,10 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public List<Configuration> getConfiguration() {
 		if (configuration == null) {
 			configuration = new EObjectContainmentEList.Resolving<Configuration>(Configuration.class, this, BasePackage.JV_PROJECT__CONFIGURATION);
@@ -140,10 +136,10 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public List<EventHandler> getHandlers() {
 		if (handlers == null) {
 			handlers = new EObjectContainmentEList.Resolving<EventHandler>(EventHandler.class, this, BasePackage.JV_PROJECT__HANDLERS);
@@ -152,19 +148,19 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public List<JVProject> getReferencedProjects() {
 		return BaseModel.getInstance().getVisibleProjects(this);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Configuration getConfiguration(final String name) {
 		for (Configuration conf: getConfiguration()) {
 			if (conf.getName().equals(name)) {
@@ -176,11 +172,9 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -193,8 +187,7 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -211,8 +204,7 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -225,8 +217,7 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -244,8 +235,7 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -268,8 +258,7 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -289,8 +278,7 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -307,8 +295,7 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -322,4 +309,4 @@ public abstract class JVProjectImpl extends NamedElementImpl implements JVProjec
 		return super.eInvoke(operationID, arguments);
 	}
 
-} //JVProjectImpl
+} // JVProjectImpl

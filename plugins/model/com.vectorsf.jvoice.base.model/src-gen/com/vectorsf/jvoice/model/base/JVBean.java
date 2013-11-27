@@ -33,7 +33,7 @@ public interface JVBean extends NamedElement {
 	 * @see #setOwnerPackage(JVPackage)
 	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVBean_OwnerPackage()
 	 * @see com.vectorsf.jvoice.model.base.JVPackage#getBeans
-	 * @model opposite="beans" transient="false"
+	 * @model opposite="beans"
 	 * @generated
 	 */
 	JVPackage getOwnerPackage();

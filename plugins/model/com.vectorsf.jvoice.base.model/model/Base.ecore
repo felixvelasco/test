@@ -7,7 +7,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JVBean" abstract="true" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownerPackage" eType="#//JVPackage"
-        eOpposite="#//JVPackage/beans"/>
+        transient="true" eOpposite="#//JVPackage/beans"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JVElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
