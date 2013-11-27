@@ -27,11 +27,14 @@ import com.vectorsf.jvoice.model.base.JVPackage;
 
 public class FileCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
 
-	private static final String DIRBASE = "/src/main/resources/audios";
+	private String mType = ".other";
+	private String mDirBase = "/src/main/resources/other";
 	private String destino;
 	private IResource targetRes;
 
-	public FileCommonDropAdapterAssistant() {
+	public FileCommonDropAdapterAssistant(String inType, String inDirBase) {
+		mType = inType;
+		mDirBase = inDirBase;
 	}
 
 	@Override
@@ -47,8 +50,8 @@ public class FileCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
 		// audios
 		String[] resource = (String[]) FileTransfer.getInstance().nativeToJava(
 				transferType);
-		String selection = resource[0];
-		if (!selection.contains(".wav")) {
+		String sExt = resource[0].substring(resource[0].lastIndexOf(".") + 1);
+		if (!sExt.equalsIgnoreCase(mType)) {
 			return Status.CANCEL_STATUS;
 		}
 
@@ -65,20 +68,21 @@ public class FileCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
 		if (aTarget instanceof JVModule) {
 			JVModule target = (JVModule) aTarget;
 			// Mirar direcciones geenradas para copiar
-			destino = root.getProject(target.getName()).getLocation() + DIRBASE;
+			destino = root.getProject(target.getName()).getLocation()
+					+ mDirBase;
 			targetRes = (IResource) Platform.getAdapterManager().getAdapter(
 					target, IResource.class);
 
 		} else if (aTarget instanceof JVPackage) {
 			JVPackage target = (JVPackage) aTarget;
 			destino = root.getProject(target.getOwnerModule().getName())
-					.getLocation() + DIRBASE;
+					.getLocation() + mDirBase;
 			targetRes = (IResource) Platform.getAdapterManager().getAdapter(
 					target.getOwnerModule(), IResource.class);
 		} else if (aTarget instanceof IFolder) {
 			IFolder target = (IFolder) aTarget;
 			destino = root.getProject(target.getProject().getName())
-					.getLocation() + DIRBASE;
+					.getLocation() + mDirBase;
 			targetRes = (IResource) Platform.getAdapterManager().getAdapter(
 					target.getProject(), IResource.class);
 		}
@@ -93,7 +97,7 @@ public class FileCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
 		}
 
 		// Comprobamos que el archivo ya no existe en el Modulo.
-		IPath targetPath = targetRes.getFullPath().append(DIRBASE)
+		IPath targetPath = targetRes.getFullPath().append(mDirBase)
 				.append(filewav.getName());
 		if (root.getFile(targetPath).exists()) {
 			return Status.CANCEL_STATUS;

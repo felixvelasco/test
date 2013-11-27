@@ -67,6 +67,10 @@
                   isRoot="false"
                   pattern="com.vectorsf.jvoice.ui.navigator.navigatorContent1">
             </contentExtension>
+            <contentExtension
+                  isRoot="false"
+                  pattern="com.vectorsf.jvoice.ui.navigator.navigatorContent2">
+            </contentExtension>
          </includes>
       </viewerContentBinding>
       <viewer
@@ -235,8 +239,24 @@
             </enablement>
          </commonWizard>
          <dropAssistant
-               class="com.vectorsf.jvoice.ui.navigator.drop.FileCommonDropAdapterAssistant"
+               class="com.vectorsf.jvoice.ui.navigator.drop.AudiosDropAdapterAssistant"
                id="com.vectorsf.jvoice.ui.navigator.drop.dropAssistant2">
+            <possibleDropTargets>
+               <or>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVModule">
+                  </instanceof>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVPackage">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.core.internal.resources.Folder">
+                  </instanceof>
+               </or></possibleDropTargets>
+         </dropAssistant>
+         <dropAssistant
+               class="com.vectorsf.jvoice.ui.navigator.drop.WSDLDropAdapterAssistant"
+               id="com.vectorsf.jvoice.ui.navigator.dropAssistant1">
             <possibleDropTargets>
                <or>
                   <instanceof
@@ -440,10 +460,27 @@
          </enablement>
       </actionProvider>
       <navigatorContent
-            contentProvider="com.vectorsf.jvoice.ui.edit.provider.AudioContentProvider"
+            contentProvider="com.vectorsf.jvoice.ui.edit.provider.AudiosContentProvider"
             id="com.vectorsf.jvoice.ui.navigator.navigatorContent1"
-            labelProvider="com.vectorsf.jvoice.ui.edit.provider.AudioNavigatorLabelProvider"
+            labelProvider="com.vectorsf.jvoice.ui.edit.provider.FileNavigatorLabelProvider"
             name="Audio navigator content"
+            priority="low">
+         <triggerPoints>
+            <or>
+               <instanceof
+                     value="com.vectorsf.jvoice.model.base.JVProject">
+               </instanceof>
+               <instanceof
+                     value="org.eclipse.core.resources.IFolder">
+               </instanceof>
+            </or>
+         </triggerPoints>
+      </navigatorContent>
+      <navigatorContent
+            contentProvider="com.vectorsf.jvoice.ui.edit.provider.WsdlContentProvider"
+            id="com.vectorsf.jvoice.ui.navigator.navigatorContent2"
+            labelProvider="com.vectorsf.jvoice.ui.edit.provider.FileNavigatorLabelProvider"
+            name="Wsdl navigator content"
             priority="low">
          <triggerPoints>
             <or>
