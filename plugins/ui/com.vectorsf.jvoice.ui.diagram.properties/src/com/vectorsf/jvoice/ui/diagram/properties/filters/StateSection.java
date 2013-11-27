@@ -50,7 +50,7 @@ import com.vectorsf.jvoice.ui.diagram.properties.provider.CaseLabelProvider;
 public class StateSection  extends  GFPropertySection implements
 ITabbedPropertyConstants {
 	
-	private Text nameText;
+	protected Text nameText;
 	private Text nameSubFlow;
 	private Text destinationText;
 	private Text transferAudioText;
@@ -80,6 +80,7 @@ ITabbedPropertyConstants {
 	private ListenerIntentionName maxTimeListener;
 	private ListenerTypeTransfer typeTransferListener;
 	private PropertiesListener propertielistener;
+	protected Composite composite;
 	
 
 	public StateSection() {}
@@ -91,7 +92,7 @@ ITabbedPropertyConstants {
         super.createControls(parent, tabbedPropertySheetPage);
  
         TabbedPropertySheetWidgetFactory factory = getWidgetFactory();
-        Composite composite = factory.createFlatFormComposite(parent);
+        composite = factory.createFlatFormComposite(parent);
     
         nombre_path(factory, composite);
     }
