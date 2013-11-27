@@ -49,11 +49,9 @@ class SpringWebFlowGenerator {
 			return "";
 	'''
 		<on-start>
-			<on-entry>
 			«FOR bean: beans »
-				<evaluate expression="«bean.nameBean»" result="flowScope.«bean.name»"></evaluate>
+			<evaluate expression="«bean.nameBean»" result="flowScope.«bean.name»"></evaluate>
 			«ENDFOR»
-			</on-entry>
 		</on-start>
 	'''
 	}
