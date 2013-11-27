@@ -289,13 +289,22 @@ public interface OperationsPackage extends EPackage {
 	int FLOW__BEANS = BasePackage.JV_BEAN_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLOW__PARAMETERS = BasePackage.JV_BEAN_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Flow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FLOW_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 4;
+	int FLOW_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Flow</em>' class.
@@ -1887,6 +1896,17 @@ public interface OperationsPackage extends EPackage {
 	EReference getFlow_Beans();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link com.vectorsf.jvoice.model.operations.Flow#getParameters <em>Parameters</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Parameters</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.Flow#getParameters()
+	 * @see #getFlow()
+	 * @generated
+	 */
+	EAttribute getFlow_Parameters();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.InitialState <em>Initial State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2418,6 +2438,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference FLOW__BEANS = eINSTANCE.getFlow_Beans();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameters</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FLOW__PARAMETERS = eINSTANCE.getFlow_Parameters();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.InitialStateImpl <em>Initial State</em>}' class.

@@ -26,6 +26,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -64,6 +65,7 @@ public class FlowItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNotesPropertyDescriptor(object);
+			addParametersPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -86,6 +88,28 @@ public class FlowItemProvider
 				 false,
 				 true,
 				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Parameters feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addParametersPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Flow_parameters_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Flow_parameters_feature", "_UI_Flow_type"),
+				 OperationsPackage.Literals.FLOW__PARAMETERS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -159,6 +183,9 @@ public class FlowItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Flow.class)) {
+			case OperationsPackage.FLOW__PARAMETERS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 			case OperationsPackage.FLOW__STATES:
 			case OperationsPackage.FLOW__TRANSITIONS:
 			case OperationsPackage.FLOW__BEANS:

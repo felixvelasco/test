@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getTransitions <em>Transitions</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getNotes <em>Notes</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getBeans <em>Beans</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getParameters <em>Parameters</em>}</li>
  * </ul>
  * </p>
  *
@@ -89,5 +90,21 @@ public interface Flow extends JVBean {
 	 * @generated
 	 */
 	EList<ComponentBean> getBeans();
+
+	/**
+	 * Returns the value of the '<em><b>Parameters</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parameters</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parameters</em>' attribute list.
+	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getFlow_Parameters()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getParameters();
 
 } // Flow

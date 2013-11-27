@@ -2,18 +2,17 @@
  */
 package com.vectorsf.jvoice.model.operations.impl;
 
-import com.vectorsf.jvoice.model.operations.CallState;
-import com.vectorsf.jvoice.model.operations.ComponentBean;
-import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import com.vectorsf.jvoice.model.operations.CallState;
+import com.vectorsf.jvoice.model.operations.ComponentBean;
+import com.vectorsf.jvoice.model.operations.OperationsPackage;
+
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Call State</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Call State</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -27,8 +26,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	/**
 	 * The default value of the '{@link #getMethodName() <em>Method Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getMethodName()
 	 * @generated
 	 * @ordered
@@ -37,8 +36,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 
 	/**
 	 * The cached value of the '{@link #getMethodName() <em>Method Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getMethodName()
 	 * @generated
 	 * @ordered
@@ -46,9 +45,9 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	protected String methodName = METHOD_NAME_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getBean() <em>Bean</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getBean() <em>Bean</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @see #getBean()
 	 * @generated
 	 * @ordered
@@ -56,8 +55,7 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	protected ComponentBean bean;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected CallStateImpl() {
@@ -65,8 +63,7 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -75,19 +72,19 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getMethodName() {
 		return methodName;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setMethodName(String newMethodName) {
 		String oldMethodName = methodName;
 		methodName = newMethodName;
@@ -96,10 +93,10 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ComponentBean getBean() {
 		if (bean != null && bean.eIsProxy()) {
 			InternalEObject oldBean = (InternalEObject)bean;
@@ -113,8 +110,7 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ComponentBean basicGetBean() {
@@ -122,10 +118,10 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setBean(ComponentBean newBean) {
 		ComponentBean oldBean = bean;
 		bean = newBean;
@@ -134,8 +130,7 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -151,11 +146,9 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -170,8 +163,7 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -188,8 +180,7 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -204,8 +195,7 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -219,4 +209,4 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 		return result.toString();
 	}
 
-} //CallStateImpl
+} // CallStateImpl

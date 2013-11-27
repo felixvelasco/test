@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -34,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getTransitions <em>Transitions</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getNotes <em>Notes</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getBeans <em>Beans</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
  * </p>
  *
@@ -79,6 +81,16 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 	 * @ordered
 	 */
 	protected EList<ComponentBean> beans;
+
+	/**
+	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParameters()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> parameters;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -152,6 +164,18 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<String> getParameters() {
+		if (parameters == null) {
+			parameters = new EDataTypeUniqueEList<String>(String.class, this, OperationsPackage.FLOW__PARAMETERS);
+		}
+		return parameters;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -183,6 +207,8 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 				return getNotes();
 			case OperationsPackage.FLOW__BEANS:
 				return getBeans();
+			case OperationsPackage.FLOW__PARAMETERS:
+				return getParameters();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -212,6 +238,10 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 				getBeans().clear();
 				getBeans().addAll((Collection<? extends ComponentBean>)newValue);
 				return;
+			case OperationsPackage.FLOW__PARAMETERS:
+				getParameters().clear();
+				getParameters().addAll((Collection<? extends String>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -236,6 +266,9 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 			case OperationsPackage.FLOW__BEANS:
 				getBeans().clear();
 				return;
+			case OperationsPackage.FLOW__PARAMETERS:
+				getParameters().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -256,8 +289,26 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 				return notes != null && !notes.isEmpty();
 			case OperationsPackage.FLOW__BEANS:
 				return beans != null && !beans.isEmpty();
+			case OperationsPackage.FLOW__PARAMETERS:
+				return parameters != null && !parameters.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (parameters: ");
+		result.append(parameters);
+		result.append(')');
+		return result.toString();
 	}
 
 } //FlowImpl
