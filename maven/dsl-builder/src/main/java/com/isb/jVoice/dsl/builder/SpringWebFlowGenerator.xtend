@@ -34,6 +34,7 @@ class SpringWebFlowGenerator {
 			//Obtenemos el estado inicial para escribri la cabecera.
 			it.append(doGenerateHeader(nameProject))
 			
+			InitialStateCodeXML.doGenerateInitialState(element, getInitialState()) 
 			// Se recorre de nuevo todo el array para escribir el resto de estados del diagrama 
 			for (State state : element.getStates()) {
 				it.append(generateState(state, nameProject))
@@ -54,12 +55,8 @@ class SpringWebFlowGenerator {
 	def getInitialState() {
 		for (State state : element.getStates()) {
 			if (state instanceof InitialState) {
-				return state;
+				return state as InitialState;
 			}
-		}
-		//En el caso de que no haya estados iniciales y haya otros estados en el diagrama se coge cualquiera
-		if (element.getStates().length > 0) {
-			element.getStates().get(0);
 		}
 	}
 
@@ -68,7 +65,6 @@ class SpringWebFlowGenerator {
 	}
 
 	def dispatch generateState(InitialState state, String nameProject) {
-		InitialStateCodeXML.doGenerateInitialState(element, state) 
 	}
 
 	def dispatch generateState(CallFlowState state, String nameProject) {
