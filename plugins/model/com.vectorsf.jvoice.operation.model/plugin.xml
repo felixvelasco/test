@@ -18,7 +18,7 @@
       <!-- @generated coreOperations -->
       <parser
             type="jvflow"
-            class="com.vectorsf.jvoice.model.operations.util.OperationsResourceFactoryImpl"/>
+            class="com.vectorsf.jvoice.model.operations.util.OperationsResourceFactoryJVoiceImpl"/>
    </extension>
 
 </plugin>
