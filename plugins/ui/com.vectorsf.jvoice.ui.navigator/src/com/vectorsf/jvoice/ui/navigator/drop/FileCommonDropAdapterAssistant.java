@@ -46,13 +46,21 @@ public abstract class FileCommonDropAdapterAssistant extends
 		// Check the file extension
 		FileTransfer instance = FileTransfer.getInstance();
 		if (instance.isSupportedType(transferType)) {
-			String[] resource = (String[]) instance.nativeToJava(transferType);
-			if (resource != null) {
-				String sExt = resource[0].substring(resource[0]
-						.lastIndexOf(".") + 1);
-				if (sExt.equalsIgnoreCase(mType)) {
-					return Status.OK_STATUS;
+			String[] resources = (String[]) instance.nativeToJava(transferType);
+			if (resources != null) {
+				for (String recurso : resources) {
+					if (recurso.contains(".")
+							&& recurso.length() - 1 > recurso.lastIndexOf(".")) {
+						String sExt = recurso.substring(recurso
+								.lastIndexOf(".") + 1);
+						if (!sExt.equalsIgnoreCase(mType)) {
+							return Status.CANCEL_STATUS;
+						}
+					} else {
+						return Status.CANCEL_STATUS;
+					}
 				}
+				return Status.OK_STATUS;
 			}
 		}
 
@@ -87,36 +95,39 @@ public abstract class FileCommonDropAdapterAssistant extends
 		}
 
 		String[] dataruta = (String[]) aDropTargetEvent.data;
-		String ruta = dataruta[0];
-		File originalFile = new File(ruta);
+		for (String dato : dataruta) {
+			String ruta = dato;
+			File originalFile = new File(ruta);
 
-		try {
-			// Si no existe la carpeta padre, la crea.
-			if (!targetFolder.exists()) {
-				recursivelyCreate(targetFolder);
+			try {
+				// Si no existe la carpeta padre, la crea.
+				if (!targetFolder.exists()) {
+					recursivelyCreate(targetFolder);
+				}
+
+				// Comprobamos que el archivo ya no existe en el Modulo.
+				IFile target = targetFolder.getFile(originalFile.getName());
+				if (target.exists()) {
+					return Status.CANCEL_STATUS;
+				}
+
+				FileInputStream source = new FileInputStream(originalFile);
+				target.create(source, true, null);
+				String path = target.getFullPath().toString();
+				String name = path.substring(path.lastIndexOf("/") + 1);
+
+				// En caso de ser un wsdl añadimos plugin al pom
+				if ("wsdl".equalsIgnoreCase(mType)) {
+					ConfigurationPomWSDL configurate = new ConfigurationPomWSDL();
+					configurate.initial(iproject, name);
+				}
+
+			} catch (CoreException | FileNotFoundException e) {
+				return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+						"Error copying resources", e);
 			}
-
-			// Comprobamos que el archivo ya no existe en el Modulo.
-			IFile target = targetFolder.getFile(originalFile.getName());
-			if (target.exists()) {
-				return Status.CANCEL_STATUS;
-			}
-
-			FileInputStream source = new FileInputStream(originalFile);
-			target.create(source, true, null);
-			String path = target.getFullPath().toString();
-			String name = path.substring(path.lastIndexOf("/") + 1);
-
-			// En caso de ser un wsdl añadimos plugin al pom
-			if ("wsdl".equalsIgnoreCase(mType)) {
-				ConfigurationPomWSDL configurate = new ConfigurationPomWSDL();
-				configurate.initial(iproject, name);
-			}
-
-		} catch (CoreException | FileNotFoundException e) {
-			return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-					"Error copying resources", e);
 		}
+
 		return Status.OK_STATUS;
 	}
 
