@@ -31,3 +31,7 @@ Export-Package: com.vectorsf.jvoice.ui.edit.dialogs,
  com.vectorsf.jvoice.ui.edit.filters,
  com.vectorsf.jvoice.ui.edit.provider,
  com.vectorsf.jvoice.ui.edit.validators
+Import-Package: org.apache.maven.model,
+ org.apache.maven.model.io.xpp3,
+ org.codehaus.plexus.util.xml,
+ org.codehaus.plexus.util.xml.pull
