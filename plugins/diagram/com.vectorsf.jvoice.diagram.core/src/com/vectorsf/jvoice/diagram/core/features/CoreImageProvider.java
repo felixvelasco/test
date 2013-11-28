@@ -23,6 +23,7 @@ public class CoreImageProvider extends AbstractImageProvider {
 	public static final String IMG_PALETTE_SUBFLOW = "icon_est_subflow";
 	public static final String IMG_PALETTE_SWITCH = "icon_est_switch";
 	public static final String IMG_PALETTE_TRANSFER = "icon_est_transfer";
+	public static final String IMG_PALETTE_NOTE = "icon_notes";
 
 	@Override
 	protected void addAvailableImages() {
@@ -42,6 +43,8 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath(IMG_PALETTE_SUBFLOW, "icons/palette/icon_est_subflow.png");
 		addImageFilePath(IMG_PALETTE_SWITCH, "icons/palette/icon_est_switch.png");
 		addImageFilePath(IMG_PALETTE_TRANSFER, "icons/palette/icon_est_transfer.png");
+
+		addImageFilePath(IMG_PALETTE_NOTE, "icons/palette/icon_notes.png");
 	}
 
 }

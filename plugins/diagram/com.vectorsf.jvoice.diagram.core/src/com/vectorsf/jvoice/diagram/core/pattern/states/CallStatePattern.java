@@ -43,7 +43,7 @@ import com.vectorsf.jvoice.ui.edit.validators.ValidatorExecuteBean;
 
 public class CallStatePattern extends StatePattern {
 
-	private static final String CALL = "Call";
+	private static final String CALL = "Execution";
 	private static int MIN_WIDTH = 120;
 	private static int MIN_HEIGHT = 60;
 

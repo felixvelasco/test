@@ -35,18 +35,18 @@
    </extension>
    	<extension
          point="com.vectorsf.jvoice.diagram.core.patternContributor">
-      <patternContributor
-            patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.FinalStatePattern">
-      </patternContributor>
-    <patternContributor
-          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.InitialStatePattern">
-    </patternContributor>
      <patternContributor
-          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.SwitchPattern">
-    </patternContributor>
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.InitialStatePattern">
+     </patternContributor>
      <patternContributor
-          patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CallStatePattern">
-    </patternContributor>
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.FinalStatePattern">
+     </patternContributor>
+     <patternContributor
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.SwitchPattern">
+     </patternContributor>
+     <patternContributor
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CallStatePattern">
+     </patternContributor>
      <patternContributor
            patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CallFlowStatePattern">
      </patternContributor>
@@ -66,10 +66,10 @@
            patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.RecordStatePattern">
      </patternContributor>
      <patternContributor
-           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.note.NotePattern">
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CustomStatePattern">
      </patternContributor>
      <patternContributor
-           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CustomStatePattern">
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.note.NotePattern">
      </patternContributor>
  </extension>
  <extension
