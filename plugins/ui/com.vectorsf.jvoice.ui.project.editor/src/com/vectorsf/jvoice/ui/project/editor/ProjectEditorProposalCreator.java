@@ -1,42 +1,44 @@
 package com.vectorsf.jvoice.ui.project.editor;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.parsley.binding.ProposalCreator;
 
 import com.vectorsf.jvoice.model.base.EventHandler;
 import com.vectorsf.jvoice.model.base.EventsEnum;
+import com.vectorsf.jvoice.model.base.JVApplication;
+import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVModule;
+import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 public class ProjectEditorProposalCreator extends ProposalCreator {
 
 	public List<EventsEnum> proposals_EventHandler_event(EventHandler handler) {
-		List<EventsEnum> ret = getAllEvents();
+		List<EventsEnum> ret = new ArrayList<>(EventsEnum.VALUES);
 		ret.removeAll(collectCoveredEvents(handler));
 
 		return ret;
 	}
 
 	public List<Object> proposals_EventHandler_handler(EventHandler handler) {
-		Set<Object> allInstances = new HashSet<>(findAllInstances(OperationsPackage.eINSTANCE.getFlow()));
-		ArrayList<Object> ret = new ArrayList<>(allInstances);
-		Collections.sort(ret, new Comparator<Object>() {
-			@Override
-			public int compare(Object o1, Object o2) {
-				Flow f1 = (Flow) o1;
-				Flow f2 = (Flow) o2;
-				return fullName(f2).compareTo(fullName(f1));
+		List<Object> allInstances = new ArrayList<>();
+		JVProject project = (JVProject) handler.eContainer();
+		if (project instanceof JVModule) {
+			for (JVPackage pck : ((JVModule) project).getPackages()) {
+				for (JVBean bean : pck.getBeans()) {
+					if (bean instanceof Flow) {
+						allInstances.add(bean);
+					}
+				}
 			}
-		});
+		} else if (project instanceof JVApplication) {
+			// TODO
+		}
 
-		return ret;
+		return allInstances;
 	}
 
 	protected String fullName(Flow flow) {
@@ -53,10 +55,5 @@ public class ProjectEditorProposalCreator extends ProposalCreator {
 
 		ret.remove(handler.getEvent());
 		return ret;
-	}
-
-	private ArrayList<EventsEnum> getAllEvents() {
-		// TODO ENUM!
-		return new ArrayList<>(EventsEnum.VALUES);
 	}
 }
