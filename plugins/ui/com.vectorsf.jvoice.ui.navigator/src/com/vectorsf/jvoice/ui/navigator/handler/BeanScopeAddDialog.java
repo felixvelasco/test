@@ -1,5 +1,8 @@
 package com.vectorsf.jvoice.ui.navigator.handler;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jdt.core.IAnnotation;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IImportDeclaration;
@@ -10,6 +13,7 @@ import org.eclipse.jdt.core.ITypeRoot;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.ui.JavaElementLabelProvider;
 import org.eclipse.jdt.ui.StandardJavaElementContentProvider;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -17,8 +21,6 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -26,7 +28,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -43,11 +47,52 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 
 	private ComponentBean bean;
 
-	public BeanScopeAddDialog(Shell parentShell, IPackageFragment packageFragment) {
+	public BeanScopeAddDialog(Shell parentShell,
+			IPackageFragment packageFragment) {
 		super(parentShell);
 		this.packageFragment = packageFragment;
 		this.shell = parentShell;
 		this.bean = OperationsFactory.eINSTANCE.createComponentBean();
+	}
+
+	private Listener nameModifyListener = new Listener() {
+		@Override
+		public void handleEvent(Event e) {
+			boolean valid = validatePage();
+			if (!valid) {
+				getButton(IDialogConstants.OK_ID).setEnabled(false);
+			} else {
+				updateComponent(scopedNameText.getText());
+				getButton(IDialogConstants.OK_ID).setEnabled(true);
+			}
+		}
+	};
+
+	private boolean validatePage() {
+		String text = getScopedName();
+		if (text.isEmpty()) {
+			setErrorMessage(null);
+			setMessage("Enter a scope name");
+			return false;
+		}
+
+		IStatus status = ResourcesPlugin.getWorkspace().validateName(text,
+				IResource.FILE);
+		if (!status.isOK()) {
+			setErrorMessage(status.getMessage());
+			return false;
+		}
+
+		String beanClass = getBeanClassName();
+		if (beanClass.isEmpty()) {
+			setErrorMessage(null);
+			setMessage("Select Bean Class");
+			return false;
+		}
+		setErrorMessage(null);
+		setMessage(null);
+
+		return true;
 	}
 
 	@Override
@@ -55,6 +100,13 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		super.create();
 		setTitle("Add Bean to Scope");
 		setMessage("Select Bean", IMessageProvider.INFORMATION);
+	}
+
+	@Override
+	protected Control createContents(Composite parent) {
+		super.createContents(parent);
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
+		return parent;
 	}
 
 	@Override
@@ -70,6 +122,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		createLabelName(container);
 		createValueName(container);
 
+		setHelpAvailable(false);
 		return area;
 	}
 
@@ -83,13 +136,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		// dataName.horizontalSpan = 2;
 		scopedNameText = new Text(container, SWT.BORDER);
 		scopedNameText.setLayoutData(dataName);
-		scopedNameText.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-				updateComponent(scopedNameText.getText());
-			}
-		});
+		scopedNameText.addListener(SWT.Modify, nameModifyListener);
 
 		new Label(container, SWT.NONE);
 	}
@@ -112,10 +159,13 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				StandardJavaElementContentProvider contentProvider = new StandardJavaElementContentProvider(false);
-				ILabelProvider labelProvider = new JavaElementLabelProvider(JavaElementLabelProvider.SHOW_BASICS);
+				StandardJavaElementContentProvider contentProvider = new StandardJavaElementContentProvider(
+						false);
+				ILabelProvider labelProvider = new JavaElementLabelProvider(
+						JavaElementLabelProvider.SHOW_BASICS);
 
-				ComponentsSelectionDialog dialog = new ComponentsSelectionDialog(shell, labelProvider, contentProvider);
+				ComponentsSelectionDialog dialog = new ComponentsSelectionDialog(
+						shell, labelProvider, contentProvider);
 				dialog.setInput(packageFragment);
 				dialog.addFilter(new ComponentFilter());
 				if (dialog.open() == Window.OK) {
@@ -124,6 +174,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 					beanClassText.setText(bean.getFqdn());
 					beanNameText.setText(bean.getNameBean());
 				}
+				validatePage();
 			}
 
 			@Override
@@ -157,7 +208,8 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 
 		IAnnotation annotation = findAnnotation(typeRoot);
 		try {
-			IMemberValuePair[] memberValuePairs = annotation.getMemberValuePairs();
+			IMemberValuePair[] memberValuePairs = annotation
+					.getMemberValuePairs();
 			if (memberValuePairs.length > 0) {
 				name = (String) memberValuePairs[0].getValue();
 			}
@@ -195,15 +247,20 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		try {
 			for (IAnnotation annotation : type.getAnnotations()) {
 				String elementName = annotation.getElementName();
-				if (elementName.equals("org.springframework.stereotype.Component")) {
+				if (elementName
+						.equals("org.springframework.stereotype.Component")) {
 					return annotation;
-				} else if (elementName.equals("Component") && unit instanceof ICompilationUnit) {
-					for (IImportDeclaration _import : ((ICompilationUnit) unit).getImports()) {
+				} else if (elementName.equals("Component")
+						&& unit instanceof ICompilationUnit) {
+					for (IImportDeclaration _import : ((ICompilationUnit) unit)
+							.getImports()) {
 						String importedType = _import.getElementName();
-						if (importedType.equals("org.springframework.stereotype.Component")) {
+						if (importedType
+								.equals("org.springframework.stereotype.Component")) {
 							return annotation;
 						}
-						if (importedType.equals("org.springframework.stereotype.*")) {
+						if (importedType
+								.equals("org.springframework.stereotype.*")) {
 							return annotation;
 						}
 					}
@@ -219,7 +276,8 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 	public class ComponentFilter extends ViewerFilter {
 
 		@Override
-		public boolean select(Viewer viewer, Object parentElement, Object element) {
+		public boolean select(Viewer viewer, Object parentElement,
+				Object element) {
 			if (element instanceof ITypeRoot) {
 
 				return findAnnotation((ITypeRoot) element) != null;
@@ -231,6 +289,20 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 
 	public ComponentBean getComponentBean() {
 		return bean;
+	}
+
+	private String getScopedName() {
+		if (scopedNameText == null) {
+			return ""; //$NON-NLS-1$
+		}
+		return scopedNameText.getText().trim();
+	}
+
+	private String getBeanClassName() {
+		if (beanClassText == null) {
+			return ""; //$NON-NLS-1$
+		}
+		return beanClassText.getText().trim();
 	}
 
 }
