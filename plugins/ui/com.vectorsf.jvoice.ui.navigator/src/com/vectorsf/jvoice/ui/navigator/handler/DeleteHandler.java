@@ -49,6 +49,19 @@ public class DeleteHandler extends AbstractHandler {
 			Shell activeShell = PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow().getShell();
 			op.run(activeShell, "");
+
+			// Si se trata de un fichero wsdl se elima del pom el plugin
+			// correspondiente.
+			for (IResource iResource : resources) {
+				String extension = iResource.getName().substring(
+						iResource.getName().lastIndexOf(".") + 1);
+				if ("wsdl".equalsIgnoreCase(extension)) {
+					DeletePomWSDL deletewsdl = new DeletePomWSDL();
+					deletewsdl.modifyPom(iResource.getProject(),
+							iResource.getName());
+				}
+			}
+
 		} catch (InterruptedException e) {
 		}
 		return true;
