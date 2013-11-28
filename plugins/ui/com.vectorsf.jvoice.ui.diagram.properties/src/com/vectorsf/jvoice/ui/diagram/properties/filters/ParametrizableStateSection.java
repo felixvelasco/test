@@ -38,44 +38,36 @@ import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
-public class CallStateSection extends GFPropertySection {
+public class ParametrizableStateSection extends GFPropertySection {
 
-	private final class UpdatingFocusListener implements FocusListener {
+	protected final class UpdatingFocusListener implements FocusListener {
 		private final EStructuralFeature feature;
-		private final LabelAndText ret;
+		private final Text text;
 		private final int index;
 
-		private UpdatingFocusListener(EStructuralFeature feature,
-				LabelAndText ret, int index) {
+		private UpdatingFocusListener(EStructuralFeature feature, Text text, int index) {
 			this.feature = feature;
-			this.ret = ret;
+			this.text = text;
 			this.index = index;
 		}
 
 		@Override
 		public void focusLost(FocusEvent e) {
-			Object bo = getDiagramTypeProvider().getFeatureProvider()
-					.getBusinessObjectForPictogramElement(
-							getSelectedPictogramElement());
-			TransactionalEditingDomain editingDomain = TransactionUtil
-					.getEditingDomain(bo);
-			editingDomain.getCommandStack().execute(
-					getCommand(bo, editingDomain));
+			Object bo = getDiagramTypeProvider().getFeatureProvider().getBusinessObjectForPictogramElement(
+					getSelectedPictogramElement());
+			TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bo);
+			editingDomain.getCommandStack().execute(getCommand(bo, editingDomain));
 		}
 
-		private Command getCommand(Object bo,
-				TransactionalEditingDomain editingDomain) {
+		private Command getCommand(Object bo, TransactionalEditingDomain editingDomain) {
 			CompoundCommand cc = new CompoundCommand();
-			cc.append(SetCommand.create(editingDomain, bo, feature,
-					ret.text.getText(), index));
+			cc.append(SetCommand.create(editingDomain, bo, feature, text.getText(), index));
 			cc.append(new RecordingCommand(editingDomain) {
 
 				@Override
 				protected void doExecute() {
-					getDiagramTypeProvider().getFeatureProvider()
-							.updateIfPossibleAndNeeded(
-									new UpdateContext(
-											getSelectedPictogramElement()));
+					getDiagramTypeProvider().getFeatureProvider().updateIfPossibleAndNeeded(
+							new UpdateContext(getSelectedPictogramElement()));
 				}
 			});
 			return cc;
@@ -87,7 +79,7 @@ public class CallStateSection extends GFPropertySection {
 		}
 	}
 
-	public class LabelAndText {
+	protected class LabelAndText {
 		public final Label label;
 		public final Text text;
 
@@ -97,43 +89,34 @@ public class CallStateSection extends GFPropertySection {
 		}
 	}
 
-	private TabbedPropertySheetWidgetFactory factory;
-	private Composite composite;
+	protected TabbedPropertySheetWidgetFactory factory;
+	protected Composite composite;
 
-	private LabelAndText nameText;
+	protected LabelAndText nameText;
 	private List<LabelAndText> callParameters = new ArrayList<>();
 
-	public CallStateSection() {
-	}
-
 	@Override
-	public void createControls(Composite parent,
-			TabbedPropertySheetPage tabbedPropertySheetPage) {
+	public void createControls(Composite parent, TabbedPropertySheetPage tabbedPropertySheetPage) {
 		factory = tabbedPropertySheetPage.getWidgetFactory();
 		composite = factory.createPlainComposite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 
-		nameText = createLabelAndText("Name:", "",
-				BasePackage.eINSTANCE.getNamedElement_Name(),
+		nameText = createLabelAndText("Name:", "", BasePackage.eINSTANCE.getNamedElement_Name(),
 				CommandParameter.NO_INDEX);
 	}
 
-	protected LabelAndText createLabelAndText(String labelText, String value,
-			final EStructuralFeature feature, final int index) {
+	protected LabelAndText createLabelAndText(String labelText, String value, final EStructuralFeature feature,
+			final int index) {
 		Label label = factory.createLabel(composite, labelText);
 		label.setLayoutData(new GridData());
 
 		// Nombre del elemento
 		Text text = factory.createText(composite, value);
-		GridData layoutData = new GridData();
-		layoutData.grabExcessHorizontalSpace = true;
+		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
 		text.setLayoutData(layoutData);
+		text.addFocusListener(new UpdatingFocusListener(feature, text, index));
 
-		final LabelAndText ret = new LabelAndText(label, text);
-
-		text.addFocusListener(new UpdatingFocusListener(feature, ret, index));
-
-		return ret;
+		return new LabelAndText(label, text);
 	}
 
 	/**
@@ -142,8 +125,7 @@ public class CallStateSection extends GFPropertySection {
 	 * @param composite
 	 */
 	protected LabelAndText drawParameter(String name, String value, int index) {
-		return createLabelAndText(name + ":", value,
-				OperationsPackage.eINSTANCE.getParameterizedState_Parameters(),
+		return createLabelAndText(name + ":", value, OperationsPackage.eINSTANCE.getParameterizedState_Parameters(),
 				index);
 
 	}
@@ -154,14 +136,12 @@ public class CallStateSection extends GFPropertySection {
 
 		PictogramElement pe = getSelectedPictogramElement();
 
-		CallState call = (CallState) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(
-						getSelectedPictogramElement());
+		CallState call = (CallState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(
+				getSelectedPictogramElement());
 
 		nameText.text.setText(call.getName());
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
-				.findMember(EcoreUtil.getURI(pe).toPlatformString(true))
-				.getProject();
+				.findMember(EcoreUtil.getURI(pe).toPlatformString(true)).getProject();
 		IJavaProject jProject = JavaCore.create(project);
 		String[] parameterNames = {};
 		try {
@@ -189,8 +169,7 @@ public class CallStateSection extends GFPropertySection {
 			List<String> parametersValues = call.getParameters();
 			for (int i = 0; i < parametersValues.size(); i++) {
 				String paramValue = parametersValues.get(i);
-				callParameters.add(drawParameter(parameterNames[i], paramValue,
-						i));
+				callParameters.add(drawParameter(parameterNames[i], paramValue, i));
 			}
 		}
 		composite.layout(true, true);
