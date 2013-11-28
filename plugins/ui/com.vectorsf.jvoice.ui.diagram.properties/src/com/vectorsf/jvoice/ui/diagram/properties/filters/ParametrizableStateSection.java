@@ -82,10 +82,10 @@ public abstract class ParametrizableStateSection extends GFPropertySection {
 
 	protected TabbedPropertySheetWidgetFactory factory;
 	protected Composite composite;
+	protected ParameterizedState state;
 
 	protected LabelAndText nameText;
 	private List<LabelAndText> callParameters = new ArrayList<>();
-	private ParameterizedState state;
 
 	@Override
 	public void createControls(Composite parent, TabbedPropertySheetPage tabbedPropertySheetPage) {
