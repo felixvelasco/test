@@ -9,7 +9,7 @@ class CallFlowStateCodeXML extends StateCodeGenerator {
 	def doGenerateCallFlowState(CallFlowState state) '''
 		<subflow-state id="«state.name»" subflow="«state.flowName»">
 		«state.externalizeParameters»
-		«state.transitions('\n\t<evaluate expression="currentEvent.attributes.result" result="flowScope.result" />\n')»
+		«state.transitions('\n\t<set name="flowScope.result" value="currentEvent.attributes.result" />\n')»
 		</subflow-state>
 	'''
 	
