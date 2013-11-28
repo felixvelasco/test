@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -22,10 +23,12 @@ import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.ui.navigator.activator.Activator;
 
-public abstract class FileCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
+public abstract class FileCommonDropAdapterAssistant extends
+		CommonDropAdapterAssistant {
 
 	private String mType;
 	private String mDirBase;
+	private IProject iproject;
 
 	public FileCommonDropAdapterAssistant(String inType, String inDirBase) {
 		mType = inType;
@@ -33,7 +36,8 @@ public abstract class FileCommonDropAdapterAssistant extends CommonDropAdapterAs
 	}
 
 	@Override
-	public IStatus validateDrop(Object target, int operation, TransferData transferType) {
+	public IStatus validateDrop(Object target, int operation,
+			TransferData transferType) {
 
 		if (operation != DND.DROP_COPY) {
 			return Status.CANCEL_STATUS;
@@ -44,7 +48,8 @@ public abstract class FileCommonDropAdapterAssistant extends CommonDropAdapterAs
 		if (instance.isSupportedType(transferType)) {
 			String[] resource = (String[]) instance.nativeToJava(transferType);
 			if (resource != null) {
-				String sExt = resource[0].substring(resource[0].lastIndexOf(".") + 1);
+				String sExt = resource[0].substring(resource[0]
+						.lastIndexOf(".") + 1);
 				if (sExt.equalsIgnoreCase(mType)) {
 					return Status.OK_STATUS;
 				}
@@ -55,21 +60,27 @@ public abstract class FileCommonDropAdapterAssistant extends CommonDropAdapterAs
 	}
 
 	@Override
-	public IStatus handleDrop(CommonDropAdapter aDropAdapter, DropTargetEvent aDropTargetEvent, Object aTarget) {
+	public IStatus handleDrop(CommonDropAdapter aDropAdapter,
+			DropTargetEvent aDropTargetEvent, Object aTarget) {
 		aDropTargetEvent.detail = DND.DROP_NONE;
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 
 		IFolder targetFolder;
 		if (aTarget instanceof JVModule) {
 			JVModule target = (JVModule) aTarget;
+			iproject = root.getProject(target.getName());
 			// Mirar direcciones geenradas para copiar
-			targetFolder = root.getProject(target.getName()).getFolder(mDirBase);
+			targetFolder = root.getProject(target.getName())
+					.getFolder(mDirBase);
 
 		} else if (aTarget instanceof JVPackage) {
 			JVPackage target = (JVPackage) aTarget;
-			targetFolder = root.getProject(target.getOwnerModule().getName()).getFolder(mDirBase);
+			iproject = root.getProject(target.getOwnerModule().getName());
+			targetFolder = root.getProject(target.getOwnerModule().getName())
+					.getFolder(mDirBase);
 		} else if (aTarget instanceof IFolder) {
 			IFolder target = (IFolder) aTarget;
+			iproject = target.getProject();
 			targetFolder = target.getProject().getFolder(mDirBase);
 		} else {
 			return Status.CANCEL_STATUS;
@@ -93,9 +104,18 @@ public abstract class FileCommonDropAdapterAssistant extends CommonDropAdapterAs
 
 			FileInputStream source = new FileInputStream(originalFile);
 			target.create(source, true, null);
+			String path = target.getFullPath().toString();
+			String name = path.substring(path.lastIndexOf("/") + 1);
+
+			// En caso de ser un wsdl añadimos plugin al pom
+			if ("wsdl".equalsIgnoreCase(mType)) {
+				ConfigurationPomWSDL configurate = new ConfigurationPomWSDL();
+				configurate.initial(iproject, name);
+			}
 
 		} catch (CoreException | FileNotFoundException e) {
-			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error copying resources", e);
+			return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+					"Error copying resources", e);
 		}
 		return Status.OK_STATUS;
 	}
