@@ -61,7 +61,7 @@
 							<autoStart>true</autoStart>
 						</bundle>
 					</bundleStartLevel>
-					<skipTests>true</skipTests>
+					<skipTests>false</skipTests>
 					<argLine>${tycho.testArgLine} -Xmx512m -XX:MaxPermSize=128m</argLine>
 				</configuration>
 			</plugin>
