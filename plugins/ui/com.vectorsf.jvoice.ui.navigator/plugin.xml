@@ -572,6 +572,9 @@
                         <instanceof
                               value="com.vectorsf.jvoice.model.base.JVProject">
                         </instanceof>
+                        <instanceof
+                              value="org.eclipse.core.resources.IFile">
+                        </instanceof>
                      </or>
                   </iterate>
                </with>
@@ -710,6 +713,9 @@
                      </instanceof>
                      <instanceof
                            value="com.vectorsf.jvoice.model.base.JVProject">
+                     </instanceof>
+                     <instanceof
+                           value="org.eclipse.core.resources.IFile">
                      </instanceof>
                   </or>
                </iterate>
