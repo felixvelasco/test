@@ -50,7 +50,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CallState" eSuperTypes="#//ParameterizedState">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="methodName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bean" unique="false" eType="#//ComponentBean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bean" eType="#//ComponentBean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CallFlowState" eSuperTypes="#//ParameterizedState">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subflow" eType="#//Flow"/>
