@@ -7,41 +7,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
-import org.codehaus.plexus.compiler.util.scan.InclusionScanException;
-import org.codehaus.plexus.compiler.util.scan.SimpleSourceInclusionScanner;
-import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
-import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
-import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.graphiti.mm.algorithms.AlgorithmsPackage;
-import org.eclipse.graphiti.mm.algorithms.styles.StylesPackage;
-import org.eclipse.graphiti.mm.pictograms.PictogramsPackage;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.resource.XtextResourceSet;
 
-import com.google.inject.Injector;
-import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
-import com.vectorsf.jvoice.model.base.JVModule;
-import com.vectorsf.jvoice.model.operations.OperationsPackage;
+
 
 /**
  * Goal which touches a timestamp file.
@@ -110,6 +84,9 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 
+		File metaInf = new File(sourceDirectory.getParentFile(), "META-INF");
+		generateDir(metaInf);
+		
 		//Generamos la carpeta META-INF
 		File meta = new File(sourceDirectory.getParentFile()+"\\META-INF", "wsdl");
 		generateDir(meta);
@@ -120,6 +97,10 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 		for (File file : files) {
 			copyFile(file, meta);
 		}
+		
+		File targetFile = new File(metaInf, "jax-ws-catalog.xml");
+		XMLGeneratorWSDL.generate(targetFile, files);
+		
 	}
 
 	/**

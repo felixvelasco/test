@@ -96,11 +96,22 @@ public final class JVoiceProjectConfigurator {
 		PluginExecution voiceDSL = new PluginExecution();
 		voiceDSL.setPhase("generate-sources");
 		voiceDSL.addGoal("generateFlow");
-
+		
 		dsl_builder.addExecution(voiceDSL);
+		
+		Plugin dsl_builder2 = new Plugin();
+		dsl_builder2.setGroupId("com.vectorsf.jvoice");
+		dsl_builder2.setArtifactId("dsl-builder");
+		dsl_builder2.setVersion("0.0.2-SNAPSHOT");
+		PluginExecution voiceDSL2 = new PluginExecution();
+		voiceDSL2.setPhase("initialize");
+		voiceDSL2.addGoal("prepareWSDLSources");
+
+		dsl_builder2.addExecution(voiceDSL2);
 
 		Build build = new Build();
 		build.addPlugin(dsl_builder);
+		build.addPlugin(dsl_builder2);
 
 		model.setBuild(build);
 
