@@ -89,7 +89,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ParameterizedState" abstract="true"
       eSuperTypes="#//State">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parameters" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parameters" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

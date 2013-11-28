@@ -952,7 +952,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEAttribute(getComponentBean_NameBean(), ecorePackage.getEString(), "nameBean", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterizedStateEClass, ParameterizedState.class, "ParameterizedState", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getParameterizedState_Parameters(), ecorePackage.getEString(), "parameters", null, 0, -1, ParameterizedState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameterizedState_Parameters(), ecorePackage.getEString(), "parameters", null, 0, -1, ParameterizedState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(typeTransferEEnum, TypeTransfer.class, "TypeTransfer");

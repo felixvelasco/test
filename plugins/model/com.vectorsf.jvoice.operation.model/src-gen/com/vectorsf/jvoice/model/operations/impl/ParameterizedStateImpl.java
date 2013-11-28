@@ -4,14 +4,10 @@ package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.ParameterizedState;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -63,7 +59,7 @@ public abstract class ParameterizedStateImpl extends StateImpl implements Parame
 	 */
 	public EList<String> getParameters() {
 		if (parameters == null) {
-			parameters = new EDataTypeUniqueEList<String>(String.class, this, OperationsPackage.PARAMETERIZED_STATE__PARAMETERS);
+			parameters = new EDataTypeEList<String>(String.class, this, OperationsPackage.PARAMETERIZED_STATE__PARAMETERS);
 		}
 		return parameters;
 	}

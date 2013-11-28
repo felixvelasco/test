@@ -32,7 +32,7 @@ public interface ParameterizedState extends State {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Parameters</em>' attribute list.
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getParameterizedState_Parameters()
-	 * @model
+	 * @model unique="false"
 	 * @generated
 	 */
 	EList<String> getParameters();
