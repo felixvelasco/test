@@ -11,7 +11,7 @@ class FinalStateCodeXML {
 			</view-state>
 		«ELSE»
 			<end-state id="«state.name»" view="#{flowProcessor.getRenderer().getView()}">
-				<output name="result" value="«if(state.returnExpression.empty) "''" else state.returnExpression »" />
+				<output name="result" value="«if(state.returnExpression == null || state.returnExpression.empty) "''" else state.returnExpression »" />
 			</end-state>
 		«ENDIF»
 	'''
