@@ -20,6 +20,7 @@ import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 import org.eclipse.jdt.core.Flags;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.ILocalVariable;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
@@ -118,6 +119,14 @@ public class CallStatePattern extends StatePattern {
 			CallState cs = OperationsFactory.eINSTANCE.createCallState();
 			cs.setName(methodResult.getElementName());
 			cs.setDescription(methodResult.getElementName());
+
+			try {
+				for (ILocalVariable param : methodResult.getParameters()) {
+					cs.getParameters().add("");
+				}
+			} catch (JavaModelException e) {
+				e.printStackTrace();
+			}
 			cs.setMethodName(methodResult.getElementName());
 			for (ComponentBean componentBean : lb) {
 				if (containsMethod(componentBean, methodResult)) {
