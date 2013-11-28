@@ -1,7 +1,12 @@
 package com.isb.jVoice.dsl.builder;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -105,8 +110,48 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 
-
+		//Generamos la carpeta META-INF
+		File meta = new File(sourceDirectory.getParentFile()+"\\META-INF", "wsdl");
+		generateDir(meta);
+		
+		//Copiar wsdl a META-INF
+		File wsdl = new File(sourceDirectory.getParentFile(), "wsdl");
+		File[] files = wsdl.listFiles();
+		for (File file : files) {
+			copyFile(file, meta);
+		}
 	}
 
+	/**
+	 * @param meta2 
+	 * 
+	 */
+	protected void generateDir(File file) {
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+	}
+	
+	//Copia la carpeta wsdl con todos los ficheros dentro del META-INF
+	private void copyFile(File file, File meta) {
+		try {
+			File destino = new File(meta, file.getName());
+			InputStream in = new FileInputStream(file);
+			OutputStream out = new FileOutputStream(destino);
+			byte[] buf = new byte[1024];
+			int len;
 
+			while ((len = in.read(buf)) > 0) {
+				out.write(buf, 0, len);
+			}
+
+			in.close();
+			out.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }
