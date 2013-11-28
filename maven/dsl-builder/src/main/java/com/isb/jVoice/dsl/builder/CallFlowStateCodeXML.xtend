@@ -15,7 +15,7 @@ class CallFlowStateCodeXML extends StateCodeGenerator {
 	
 	def externalizeParameters(CallFlowState state) '''
 		«FOR i : 0..< Math.min(state.subflow.parameters.size, state.parameters.size)»
-			<input name="«state.subflow.parameters.get(i)»" value="«state.parameters.get(i)»" 
+			<input name="«state.subflow.parameters.get(i)»" value="«state.parameters.get(i)»" />
 		«ENDFOR»
 	'''
 
