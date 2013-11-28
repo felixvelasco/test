@@ -7,7 +7,8 @@ import com.vectorsf.jvoice.model.base.JVProject;
 public class JVoiceModuleNature extends AbstractJVoiceNature {
 
 	private static final String DOT = ".";
-	private static final String COMPONENTS_SUFIX = "components";
+	private static final String COMPONENTS_SUFFIX = "components";
+	private static final String WSDL_SUFFIX = "wsdl";
 	public static final String NATURE_ID = PLUGIN_ID + ".jVoiceNature"; //$NON-NLS-1$
 
 	@Override
@@ -23,11 +24,14 @@ public class JVoiceModuleNature extends AbstractJVoiceNature {
 	}
 
 	public static String getDefaultComponentsPackageName(JVModule module) {
-		return getBaseName() + DOT + lowerCaseFirst(module.getName()) + DOT + COMPONENTS_SUFIX;
+		return getBaseName() + DOT + lowerCaseFirst(module.getName()) + DOT + COMPONENTS_SUFFIX;
 	}
 	
 	public static String getDefaultComponentsPackageName(String name) {
-		return getBaseName() + DOT + lowerCaseFirst(name) + DOT + COMPONENTS_SUFIX;
+		return getBaseName() + DOT + lowerCaseFirst(name) + DOT + COMPONENTS_SUFFIX;
+	}
+	public static String getDefaultWSDLPackageName(String name,String sWsdl) {
+		return getBaseName() + DOT + lowerCaseFirst(name) + DOT + WSDL_SUFFIX+ DOT + ((sWsdl.indexOf(DOT)!=-1)?sWsdl.substring(0,sWsdl.indexOf(DOT)):sWsdl);
 	}
 
 	private static String lowerCaseFirst(String name) {
