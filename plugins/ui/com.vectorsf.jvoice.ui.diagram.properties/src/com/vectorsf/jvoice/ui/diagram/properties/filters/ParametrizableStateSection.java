@@ -3,26 +3,17 @@ package com.vectorsf.jvoice.ui.diagram.properties.filters;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.graphiti.features.context.impl.UpdateContext;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.IType;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -35,10 +26,10 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
 import com.vectorsf.jvoice.model.base.BasePackage;
-import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
+import com.vectorsf.jvoice.model.operations.ParameterizedState;
 
-public class ParametrizableStateSection extends GFPropertySection {
+public abstract class ParametrizableStateSection extends GFPropertySection {
 
 	protected final class UpdatingFocusListener implements FocusListener {
 		private final EStructuralFeature feature;
@@ -94,6 +85,7 @@ public class ParametrizableStateSection extends GFPropertySection {
 
 	protected LabelAndText nameText;
 	private List<LabelAndText> callParameters = new ArrayList<>();
+	private ParameterizedState state;
 
 	@Override
 	public void createControls(Composite parent, TabbedPropertySheetPage tabbedPropertySheetPage) {
@@ -134,39 +126,21 @@ public class ParametrizableStateSection extends GFPropertySection {
 	public void refresh() {
 		super.refresh();
 
-		PictogramElement pe = getSelectedPictogramElement();
-
-		CallState call = (CallState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(
+		state = (ParameterizedState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(
 				getSelectedPictogramElement());
 
-		nameText.text.setText(call.getName());
-		IProject project = ResourcesPlugin.getWorkspace().getRoot()
-				.findMember(EcoreUtil.getURI(pe).toPlatformString(true)).getProject();
-		IJavaProject jProject = JavaCore.create(project);
-		String[] parameterNames = {};
-		try {
-			IType type = jProject.findType(call.getBean().getFqdn());
+		nameText.text.setText(state.getName());
 
-			IMethod[] methods = type.getMethods();
-			for (IMethod method : methods) {
-				if (method.getElementName().equals(call.getMethodName())) {
-					parameterNames = method.getParameterNames();
-				}
-
-			}
-
-		} catch (JavaModelException e) {
-			e.printStackTrace();
-		}
+		String[] parameterNames = getParameterNames(state);
 
 		for (LabelAndText callp : callParameters) {
 			callp.label.dispose();
 			callp.text.dispose();
 		}
 		callParameters.clear();
-		if (call.getParameters() != null) {
+		if (state.getParameters() != null) {
 
-			List<String> parametersValues = call.getParameters();
+			List<String> parametersValues = state.getParameters();
 			for (int i = 0; i < parametersValues.size(); i++) {
 				String paramValue = parametersValues.get(i);
 				callParameters.add(drawParameter(parameterNames[i], paramValue, i));
@@ -174,6 +148,8 @@ public class ParametrizableStateSection extends GFPropertySection {
 		}
 		composite.layout(true, true);
 	}
+
+	protected abstract String[] getParameterNames(ParameterizedState state);
 
 	@Override
 	public void dispose() {
