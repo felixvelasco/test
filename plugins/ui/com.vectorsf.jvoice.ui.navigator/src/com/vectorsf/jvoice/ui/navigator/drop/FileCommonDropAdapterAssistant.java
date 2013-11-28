@@ -3,18 +3,13 @@ package com.vectorsf.jvoice.ui.navigator.drop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
@@ -25,13 +20,12 @@ import org.eclipse.ui.navigator.CommonDropAdapterAssistant;
 
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
+import com.vectorsf.jvoice.ui.navigator.activator.Activator;
 
-public class FileCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
+public abstract class FileCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
 
-	private String mType = ".other";
-	private String mDirBase = "/src/main/resources/other";
-	private String destino;
-	private IResource targetRes;
+	private String mType;
+	private String mDirBase;
 
 	public FileCommonDropAdapterAssistant(String inType, String inDirBase) {
 		mType = inType;
@@ -39,121 +33,82 @@ public class FileCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
 	}
 
 	@Override
-	public IStatus validateDrop(Object target, int operation,
-			TransferData transferType) {
+	public IStatus validateDrop(Object target, int operation, TransferData transferType) {
 
 		if (operation != DND.DROP_COPY) {
 			return Status.CANCEL_STATUS;
 		}
 
-		// Comprobamos que el archivo que se quiere mover es un WAV. De momento
-		// solo se podran copiar estos archivos para que se cree la carpeta de
-		// audios
-		String[] resource = (String[]) FileTransfer.getInstance().nativeToJava(
-				transferType);
-		String sExt = resource[0].substring(resource[0].lastIndexOf(".") + 1);
-		if (!sExt.equalsIgnoreCase(mType)) {
-			return Status.CANCEL_STATUS;
+		// Check the file extension
+		FileTransfer instance = FileTransfer.getInstance();
+		if (instance.isSupportedType(transferType)) {
+			String[] resource = (String[]) instance.nativeToJava(transferType);
+			if (resource != null) {
+				String sExt = resource[0].substring(resource[0].lastIndexOf(".") + 1);
+				if (sExt.equalsIgnoreCase(mType)) {
+					return Status.OK_STATUS;
+				}
+			}
 		}
 
-		return Status.OK_STATUS;
+		return Status.CANCEL_STATUS;
 	}
 
 	@Override
-	public IStatus handleDrop(CommonDropAdapter aDropAdapter,
-			DropTargetEvent aDropTargetEvent, Object aTarget) {
+	public IStatus handleDrop(CommonDropAdapter aDropAdapter, DropTargetEvent aDropTargetEvent, Object aTarget) {
 		aDropTargetEvent.detail = DND.DROP_NONE;
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot root = workspace.getRoot();
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 
+		IFolder targetFolder;
 		if (aTarget instanceof JVModule) {
 			JVModule target = (JVModule) aTarget;
 			// Mirar direcciones geenradas para copiar
-			destino = root.getProject(target.getName()).getLocation()
-					+ mDirBase;
-			targetRes = (IResource) Platform.getAdapterManager().getAdapter(
-					target, IResource.class);
+			targetFolder = root.getProject(target.getName()).getFolder(mDirBase);
 
 		} else if (aTarget instanceof JVPackage) {
 			JVPackage target = (JVPackage) aTarget;
-			destino = root.getProject(target.getOwnerModule().getName())
-					.getLocation() + mDirBase;
-			targetRes = (IResource) Platform.getAdapterManager().getAdapter(
-					target.getOwnerModule(), IResource.class);
+			targetFolder = root.getProject(target.getOwnerModule().getName()).getFolder(mDirBase);
 		} else if (aTarget instanceof IFolder) {
 			IFolder target = (IFolder) aTarget;
-			destino = root.getProject(target.getProject().getName())
-					.getLocation() + mDirBase;
-			targetRes = (IResource) Platform.getAdapterManager().getAdapter(
-					target.getProject(), IResource.class);
+			targetFolder = target.getProject().getFolder(mDirBase);
+		} else {
+			return Status.CANCEL_STATUS;
 		}
 
 		String[] dataruta = (String[]) aDropTargetEvent.data;
 		String ruta = dataruta[0];
-		File filewav = new File(ruta);
-		File pathdestino = new File(destino);
-		// Si no existe la carpeta audio, la crea.
-		if (!pathdestino.exists()) {
-			getDir(pathdestino);
-		}
-
-		// Comprobamos que el archivo ya no existe en el Modulo.
-		IPath targetPath = targetRes.getFullPath().append(mDirBase)
-				.append(filewav.getName());
-		if (root.getFile(targetPath).exists()) {
-			return Status.CANCEL_STATUS;
-		}
-
-		File rutadestino = new File(pathdestino, filewav.getName());
-
-		copyFile(filewav, rutadestino);
+		File originalFile = new File(ruta);
 
 		try {
-			root.refreshLocal(2, null);
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			// Si no existe la carpeta padre, la crea.
+			if (!targetFolder.exists()) {
+				recursivelyCreate(targetFolder);
+			}
 
+			// Comprobamos que el archivo ya no existe en el Modulo.
+			IFile target = targetFolder.getFile(originalFile.getName());
+			if (target.exists()) {
+				return Status.CANCEL_STATUS;
+			}
+
+			FileInputStream source = new FileInputStream(originalFile);
+			target.create(source, true, null);
+
+		} catch (CoreException | FileNotFoundException e) {
+			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error copying resources", e);
+		}
 		return Status.OK_STATUS;
 	}
 
-	/**
-	 * @param filewav
-	 * @param rutadestino
-	 */
-	protected void copyFile(File filewav, File rutadestino) {
-		try {
-			FileInputStream in = new FileInputStream(filewav.getAbsolutePath());
-			FileOutputStream out = new FileOutputStream(
-					rutadestino.getAbsolutePath());
-			int c;
-			while ((c = in.read()) != -1) {
-				out.write(c);
-			}
-
-			in.close();
-			out.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	private void recursivelyCreate(IFolder container) throws CoreException {
+		if (!container.getParent().exists()) {
+			recursivelyCreate((IFolder) container.getParent());
 		}
-	}
-
-	/**
-	 * @param pathname
-	 * 
-	 */
-	protected void getDir(File path) {
-		if (!path.exists()) {
-			path.mkdirs();
-		}
+		container.create(true, true, null);
 	}
 
 	@Override
 	public boolean isSupportedType(TransferData aTransferType) {
 		return FileTransfer.getInstance().isSupportedType(aTransferType);
-
 	}
 }
