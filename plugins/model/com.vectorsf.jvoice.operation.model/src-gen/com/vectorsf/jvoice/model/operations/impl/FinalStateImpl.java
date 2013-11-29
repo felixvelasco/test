@@ -54,7 +54,7 @@ public class FinalStateImpl extends StateImpl implements FinalState {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String RETURN_EXPRESSION_EDEFAULT = null;
+	protected static final String RETURN_EXPRESSION_EDEFAULT = "";
 
 	/**
 	 * The cached value of the '{@link #getReturnExpression() <em>Return Expression</em>}' attribute.

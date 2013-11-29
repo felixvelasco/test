@@ -50,6 +50,7 @@ public interface FinalState extends State {
 
 	/**
 	 * Returns the value of the '<em><b>Return Expression</b></em>' attribute.
+	 * The default value is <code>""</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Return Expression</em>' attribute isn't clear,
@@ -59,7 +60,7 @@ public interface FinalState extends State {
 	 * @return the value of the '<em>Return Expression</em>' attribute.
 	 * @see #setReturnExpression(String)
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getFinalState_ReturnExpression()
-	 * @model
+	 * @model default=""
 	 * @generated
 	 */
 	String getReturnExpression();
