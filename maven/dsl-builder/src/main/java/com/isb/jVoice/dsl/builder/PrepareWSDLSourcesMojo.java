@@ -81,7 +81,7 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 
-		File wsdl = new File(sourceDirectory.getParentFile(), "wsdl");
+		File wsdl = new File(sourceDirectory.getParentFile() + "/META-INF", "wsdl");
 		File[] files = wsdl.listFiles();
 		Xpp3Dom dom = null;
 		List<String> locations = new ArrayList<String>();
