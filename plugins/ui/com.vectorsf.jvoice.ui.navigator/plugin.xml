@@ -301,9 +301,14 @@
                   <iterate
                         ifEmpty="false"
                         operator="and">
-                     <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVBean">
-                     </instanceof>
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVBean">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.core.resources.IFile">
+                        </instanceof>
+                     </or>
                   </iterate>
                </and>
             </with>
