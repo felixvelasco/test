@@ -7,8 +7,7 @@ class FinalStateCodeXML {
 	def static doGenerateFinalState(FinalState state) 
 	    '''
 		«IF state.final»
-			<view-state id="redirect" view="flowredirect:jVoiceArchFlows/jVoiceArchFlows/jVoiceArch-end">
-			</view-state>
+			<view-state id="«state.name»" view="flowredirect:jVoiceArchFlows/jVoiceArchFlows/jVoiceArch-end"/>
 		«ELSE»
 			<end-state id="«state.name»" view="#{flowProcessor.getRenderer().getView()}">
 				<output name="result" value="«if(state.returnExpression == null || state.returnExpression.empty) "''" else state.returnExpression »" />
