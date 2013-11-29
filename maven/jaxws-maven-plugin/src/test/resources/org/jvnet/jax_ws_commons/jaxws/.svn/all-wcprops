@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/resources/org/jvnet/jax_ws_commons/jaxws
+END
+proxy1.xml
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/resources/org/jvnet/jax_ws_commons/jaxws/proxy1.xml
+END
+proxy2.xml
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/resources/org/jvnet/jax_ws_commons/jaxws/proxy2.xml
+END
+proxy3.xml
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/resources/org/jvnet/jax_ws_commons/jaxws/proxy3.xml
+END
+proxy4.xml
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/resources/org/jvnet/jax_ws_commons/jaxws/proxy4.xml
+END

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/it/parent
+END
+invoker.properties
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/it/parent/invoker.properties
+END
+pom.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/it/parent/pom.xml
+END

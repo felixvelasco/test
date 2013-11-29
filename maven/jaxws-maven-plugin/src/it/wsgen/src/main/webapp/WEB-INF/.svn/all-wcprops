@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/it/wsgen/src/main/webapp/WEB-INF
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/it/wsgen/src/main/webapp/WEB-INF/web.xml
+END
+sun-jaxws.xml
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/it/wsgen/src/main/webapp/WEB-INF/sun-jaxws.xml
+END

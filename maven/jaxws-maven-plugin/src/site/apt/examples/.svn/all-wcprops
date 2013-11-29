@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/site/apt/examples
+END
+using-binding-files.apt
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/site/apt/examples/using-binding-files.apt
+END
+using-wstools-from-jdk.apt
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/site/apt/examples/using-wstools-from-jdk.apt
+END
+using-snapshots.apt
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/site/apt/examples/using-snapshots.apt
+END
+using-wsdlLocation.apt
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/site/apt/examples/using-wsdlLocation.apt
+END
+using-jaxb-plugins.apt
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/site/apt/examples/using-jaxb-plugins.apt
+END
+using-jaxws22-on-jdk6.apt
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/site/apt/examples/using-jaxws22-on-jdk6.apt
+END
+using-metro.apt
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/site/apt/examples/using-metro.apt
+END

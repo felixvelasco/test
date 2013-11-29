@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/it/wsimport217/src/wsdl
+END
+HelloWs.wsdl
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/it/wsimport217/src/wsdl/HelloWs.wsdl
+END
+HelloWs_schema1.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/it/wsimport217/src/wsdl/HelloWs_schema1.xsd
+END

@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/java/org/jvnet/jax_ws_commons/jaxws
+END
+MixedITCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/java/org/jvnet/jax_ws_commons/jaxws/MixedITCase.java
+END
+WsGenMojoITCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/java/org/jvnet/jax_ws_commons/jaxws/WsGenMojoITCase.java
+END
+WsImportMojoITCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/java/org/jvnet/jax_ws_commons/jaxws/WsImportMojoITCase.java
+END
+HelpMojoITCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/java/org/jvnet/jax_ws_commons/jaxws/HelpMojoITCase.java
+END
+RepositoryITCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/java/org/jvnet/jax_ws_commons/jaxws/RepositoryITCase.java
+END
+WsImportMojoTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/java/org/jvnet/jax_ws_commons/jaxws/WsImportMojoTest.java
+END
+Assertions.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/jax-ws-commons~svn/!svn/ver/1122/tags/jaxws-maven-plugin-2.3/src/test/java/org/jvnet/jax_ws_commons/jaxws/Assertions.java
+END
