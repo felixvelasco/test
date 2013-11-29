@@ -26,9 +26,9 @@ class MenuStateCodeXML {
 				<evaluate expression="jVoiceArchInput" result="flashScope.«state.name»"/>
 				<set name="flashScope.«state.name».name" value="'«audioIn.name»'" />
 				«IF configuration != null»
-					«IF configuration.getValue("bargein") != null && !configuration.getValue("bargein").equals("")»
-						<set name="flashScope.«state.name».bargein" value="«configuration.getValue("bargein")»" />
-					«ENDIF»	
+«««					«IF configuration.getValue("bargein") != null && !configuration.getValue("bargein").equals("")»
+«««						<set name="flashScope.«state.name».bargein" value="«configuration.getValue("bargein")»" />
+«««					«ENDIF»	
 					«IF configuration.getValue("maxAttempts") != null && !configuration.getValue("maxAttempts").equals("")»
 					<set name="flashScope.«state.name».maxAttempts" value="«configuration.getValue("maxAttempts")»" />
 					«ENDIF»
