@@ -50,7 +50,7 @@ class MainFlowGenerator {
 	 '''
 		<global-transitions>
 		«FOR handler: handlers»
-			<transition on="«handler.event»" to="globalhandler_«handler.event»"/>
+			<transition on="«handler.event.toString.toLowerCase»" to="globalhandler_«handler.event»"/>
 		«ENDFOR»
 		</global-transitions>
 	'''
