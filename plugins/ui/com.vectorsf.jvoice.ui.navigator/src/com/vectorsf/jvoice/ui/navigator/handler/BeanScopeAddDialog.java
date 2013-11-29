@@ -59,11 +59,8 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		@Override
 		public void handleEvent(Event e) {
 			boolean valid = validatePage();
-			if (!valid) {
-				getButton(IDialogConstants.OK_ID).setEnabled(false);
-			} else {
+			if (valid) {
 				updateComponent(scopedNameText.getText());
-				getButton(IDialogConstants.OK_ID).setEnabled(true);
 			}
 		}
 	};
@@ -73,6 +70,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		if (text.isEmpty()) {
 			setErrorMessage(null);
 			setMessage("Enter a scope name");
+			getButton(IDialogConstants.OK_ID).setEnabled(false);
 			return false;
 		}
 
@@ -80,6 +78,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 				IResource.FILE);
 		if (!status.isOK()) {
 			setErrorMessage(status.getMessage());
+			getButton(IDialogConstants.OK_ID).setEnabled(false);
 			return false;
 		}
 
@@ -87,10 +86,12 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		if (beanClass.isEmpty()) {
 			setErrorMessage(null);
 			setMessage("Select Bean Class");
+			getButton(IDialogConstants.OK_ID).setEnabled(false);
 			return false;
 		}
 		setErrorMessage(null);
 		setMessage(null);
+		getButton(IDialogConstants.OK_ID).setEnabled(true);
 
 		return true;
 	}
