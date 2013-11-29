@@ -44,7 +44,9 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.jws.WebService;
+
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -54,231 +56,228 @@ import org.codehaus.plexus.util.FileUtils;
 
 /**
  * 
- *
+ * 
  * @author gnodet <gnodet@apache.org>
  * @author dantran <dantran@apache.org>
  * @version $Id: WsGenMojo.java 3169 2007-01-22 02:51:29Z dantran $
  */
 abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 
-    /**
-     * Specify that a WSDL file should be generated in <code>${resourceDestDir}</code>.
+	/**
+	 * Specify that a WSDL file should be generated in <code>${resourceDestDir}</code>.
+	 */
+	@Parameter(defaultValue = "false")
+	protected boolean genWsdl;
+
+	/**
+	 * Service endpoint implementation class name.
+	 */
+	@Parameter
+	private String sei;
+
+	/**
+	 * Used in conjunction with <code>genWsdl<code> to specify the protocol to use in the
+	 * <code>wsdl:binding</code>. Valid values are "<code>soap1.1</code>" or "<code>Xsoap1.2</code>", default is "
+	 * <code>soap1.1</code>". "<code>Xsoap1.2</code>" is not standard and can only be used in conjunction with the
+	 * <code>extension</code> option.
+	 */
+	@Parameter
+	private String protocol;
+
+	/**
+	 * Specify the Service name to use in the generated WSDL. Used in conjunction with the <code>genWsdl</code> option.
+	 */
+	@Parameter
+	private String servicename;
+
+	/**
+	 * Specify the Port name to use in the generated WSDL. Used in conjunction with the <code>genWsdl</code> option.
+	 */
+	@Parameter
+	private String portname;
+
+	/**
+	 * Inline schemas in the generated WSDL. Used in conjunction with the <code>genWsdl</code> option.
+	 */
+	@Parameter(defaultValue = "false")
+	private boolean inlineSchemas;
+
+	/**
+	 * Turn off compilation after code generation and let generated sources be compiled by maven during compilation
+	 * phase; keep is turned on with this option.
+	 */
+	@Parameter(defaultValue = "false")
+	private boolean xnocompile;
+
+	/**
      */
-    @Parameter(defaultValue = "false")
-    protected boolean genWsdl;
+	@Parameter(defaultValue = "false")
+	private boolean xdonotoverwrite;
 
-    /**
-     * Service endpoint implementation class name.
-     */
-    @Parameter
-    private String sei;
+	/**
+	 * Metadata file for wsgen. See <a
+	 * href="https://jax-ws.java.net/2.2.8/docs/ch03.html#users-guide-external-metadata">the JAX-WS Guide</a> for the
+	 * description of this feature. Unmatched files will be ignored.
+	 * 
+	 * @since 2.3
+	 * @see <a href="https://jax-ws.java.net/2.2.8/docs/ch03.html#users-guide-external-metadata">External Web Service
+	 *      Metadata</a>
+	 */
+	@Parameter
+	private File metadata;
 
-    /**
-     * Used in conjunction with <code>genWsdl<code> to specify the protocol to use in the
-     * <code>wsdl:binding</code>. Valid values are "<code>soap1.1</code>" or "<code>Xsoap1.2</code>",
-     * default is "<code>soap1.1</code>". "<code>Xsoap1.2</code>" is not standard
-     * and can only be used in conjunction with the <code>extension</code> option.
-     */
-    @Parameter
-    private String protocol;
+	protected abstract File getResourceDestDir();
 
-    /**
-     * Specify the Service name to use in the generated WSDL.
-     * Used in conjunction with the <code>genWsdl</code> option.
-     */
-    @Parameter
-    private String servicename;
+	protected abstract File getClassesDir();
 
-    /**
-     * Specify the Port name to use in the generated WSDL.
-     * Used in conjunction with the <code>genWsdl</code> option.
-     */
-    @Parameter
-    private String portname;
+	@Override
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		Set<String> seis = new HashSet<String>();
+		if (sei != null) {
+			seis.add(sei);
+		} else {
+			// find all SEIs within current classes
+			seis.addAll(getSEIs(getClassesDir()));
+		}
 
-    /**
-     * Inline schemas in the generated WSDL.
-     * Used in conjunction with the <code>genWsdl</code> option.
-     */
-    @Parameter(defaultValue = "false")
-    private boolean inlineSchemas;
+		if (seis.isEmpty()) {
+			throw new MojoFailureException("No @javax.jws.WebService found.");
+		}
 
-    /**
-     * Turn off compilation after code generation and let generated sources be
-     * compiled by maven during compilation phase; keep is turned on with this option.
-     */
-    @Parameter(defaultValue = "false")
-    private boolean xnocompile;
+		try {
+			for (String aSei : seis) {
+				getLog().info("Processing: " + aSei);
+				ArrayList<String> args = getWsGenArgs(aSei);
+				getLog().info("jaxws:wsgen args: " + args);
+				exec(args);
+				if (metadata != null) {
+					FileUtils.copyFileToDirectory(metadata, getClassesDir());
+				}
+			}
+		} catch (MojoExecutionException e) {
+			throw e;
+		} catch (IOException e) {
+			throw new MojoExecutionException("Failed to execute wsgen", e);
+		}
+	}
 
-    /**
-     */
-    @Parameter(defaultValue = "false")
-    private boolean xdonotoverwrite;
+	@Override
+	protected String getMain() {
+		return "com.sun.tools.ws.wscompile.WsgenTool";
+	}
 
-    /**
-     * Metadata file for wsgen. See <a href="https://jax-ws.java.net/2.2.8/docs/ch03.html#users-guide-external-metadata">the JAX-WS Guide</a>
-     * for the description of this feature.
-     * Unmatched files will be ignored.
-     *
-     * @since 2.3
-     * @see <a href="https://jax-ws.java.net/2.2.8/docs/ch03.html#users-guide-external-metadata">External Web Service Metadata</a>
-     */
-    @Parameter
-    private File metadata;
+	@Override
+	@SuppressWarnings("unchecked")
+	protected String getExtraClasspath() {
+		StringBuilder buf = new StringBuilder();
+		buf.append(getClassesDir().getAbsolutePath());
+		for (Artifact a : (Set<Artifact>) project.getArtifacts()) {
+			buf.append(File.pathSeparatorChar);
+			buf.append(a.getFile().getAbsolutePath());
+		}
+		return buf.toString();
+	}
 
-    protected abstract File getResourceDestDir();
+	@Override
+	protected boolean getXnocompile() {
+		return xnocompile;
+	}
 
-    protected abstract File getClassesDir();
+	/**
+	 * Construct wsgen arguments
+	 * 
+	 * @return a list of arguments
+	 * @throws MojoExecutionException
+	 */
+	private ArrayList<String> getWsGenArgs(String aSei) throws MojoExecutionException {
+		ArrayList<String> args = new ArrayList<String>();
+		args.addAll(getCommonArgs());
 
-    @Override
-    public void execute()
-        throws MojoExecutionException, MojoFailureException {
-        Set<String> seis = new HashSet<String>();
-        if (sei != null) {
-            seis.add(sei);
-        } else {
-            //find all SEIs within current classes
-            seis.addAll(getSEIs(getClassesDir()));
-        }
+		if (this.genWsdl) {
+			if (this.protocol != null) {
+				args.add("-wsdl:" + this.protocol);
+			} else {
+				args.add("-wsdl");
+			}
 
-        if (seis.isEmpty()) {
-            throw new MojoFailureException("No @javax.jws.WebService found.");
-        }
+			if (inlineSchemas) {
+				maybeUnsupportedOption("-inlineSchemas", null, args);
+			}
 
-        try {
-            for (String aSei : seis) {
-                getLog().info("Processing: " + aSei);
-                ArrayList<String> args = getWsGenArgs(aSei);
-                getLog().info("jaxws:wsgen args: " + args);
-                exec(args);
-                if (metadata != null) {
-                    FileUtils.copyFileToDirectory(metadata, getClassesDir());
-                }
-            }
-        } catch (MojoExecutionException e) {
-            throw e;
-        } catch (IOException e) {
-            throw new MojoExecutionException("Failed to execute wsgen",e);
-        }
-    }
+			if (servicename != null) {
+				args.add("-servicename");
+				args.add(servicename);
+			}
 
-    @Override
-    protected String getMain() {
-        return "com.sun.tools.ws.wscompile.WsgenTool";
-    }
+			if (portname != null) {
+				args.add("-portname");
+				args.add(portname);
+			}
 
-    @Override
-    @SuppressWarnings("unchecked")
-    protected String getExtraClasspath() {
-        StringBuilder buf = new StringBuilder();
-        buf.append(getClassesDir().getAbsolutePath());
-        for (Artifact a : (Set<Artifact>)project.getArtifacts()) {
-            buf.append(File.pathSeparatorChar);
-            buf.append(a.getFile().getAbsolutePath());
-        }
-        return buf.toString();
-    }
+			File resourceDir = getResourceDestDir();
+			if (!resourceDir.mkdirs() && !resourceDir.exists()) {
+				getLog().warn("Cannot create directory: " + resourceDir.getAbsolutePath());
+			}
+			args.add("-r");
+			args.add(resourceDir.getAbsolutePath());
+			if (!"war".equals(project.getPackaging())) {
+				Resource r = new Resource();
+				r.setDirectory(getRelativePath(project.getBasedir(), getResourceDestDir()));
+				project.addResource(r);
+			}
+		}
 
-    @Override
-    protected boolean getXnocompile() {
-        return xnocompile;
-    }
+		if (xdonotoverwrite) {
+			args.add("-Xdonotoverwrite");
+		}
 
-    /**
-     * Construct wsgen arguments
-     * @return a list of arguments
-     * @throws MojoExecutionException
-     */
-    @SuppressWarnings("unchecked")
-    private ArrayList<String> getWsGenArgs(String aSei) throws MojoExecutionException {
-        ArrayList<String> args = new ArrayList<String>();
-        args.addAll(getCommonArgs());
+		if (metadata != null && isArgSupported("-x")) {
+			maybeUnsupportedOption("-x", metadata.getAbsolutePath(), args);
+		}
 
-        if (this.genWsdl) {
-            if (this.protocol != null) {
-                args.add("-wsdl:" + this.protocol);
-            } else {
-                args.add("-wsdl");
-            }
+		args.add(aSei);
 
-            if (inlineSchemas) {
-                maybeUnsupportedOption("-inlineSchemas", null, args);
-            }
+		getLog().debug("jaxws:wsgen args: " + args);
 
-            if (servicename != null) {
-                args.add("-servicename");
-                args.add(servicename);
-            }
+		return args;
+	}
 
-            if (portname != null) {
-                args.add("-portname");
-                args.add(portname);
-            }
+	private String getRelativePath(File root, File f) {
+		return root.toURI().relativize(f.toURI()).getPath();
+	}
 
-            File resourceDir = getResourceDestDir();
-            if (!resourceDir.mkdirs() && !resourceDir.exists()) {
-                getLog().warn("Cannot create directory: " + resourceDir.getAbsolutePath());
-            }
-            args.add("-r");
-            args.add(resourceDir.getAbsolutePath());
-            if (!"war".equals(project.getPackaging())) {
-                Resource r = new Resource();
-                r.setDirectory(getRelativePath(project.getBasedir(), getResourceDestDir()));
-                project.addResource(r);
-            }
-        }
-
-        if (xdonotoverwrite) {
-            args.add("-Xdonotoverwrite");
-        }
-
-        if (metadata != null && isArgSupported("-x")) {
-            maybeUnsupportedOption("-x", metadata.getAbsolutePath(), args);
-        }
-
-        args.add(aSei);
-
-        getLog().debug("jaxws:wsgen args: " + args);
-
-        return args;
-    }
-
-    private String getRelativePath(File root, File f) {
-        return root.toURI().relativize(f.toURI()).getPath();
-    }
-
-    private Set<String> getSEIs(File directory) throws MojoExecutionException {
-        Set<String> seis = new HashSet<String>();
-        if (!directory.exists() || directory.isFile()) {
-            return seis;
-        }
-        ClassLoader cl = null;
-        try {
-            cl = new URLClassLoader(new URL[]{directory.toURI().toURL()});
-            for (String s : FileUtils.getFileAndDirectoryNames(directory, "**/*.class", null, false, true, true, false)) {
-                try {
-                    String clsName = s.replace(File.separator, ".");
-                    Class<?> c = cl.loadClass(clsName.substring(0, clsName.length() - 6));
-                    WebService ann = c.getAnnotation(WebService.class);
-                    if (!c.isInterface() && ann != null) {
-                        //more sophisticated checks are done by wsgen itself
-                        seis.add(c.getName());
-                    }
-                } catch (ClassNotFoundException ex) {
-                    throw new MojoExecutionException(ex.getMessage(), ex);
-                }
-            }
-        } catch (IOException ex) {
-            throw new MojoExecutionException(ex.getMessage(), ex);
-        } finally {
-            if (cl != null && cl instanceof Closeable) {
-                try {
-                    ((Closeable) cl).close();
-                } catch (IOException ex) {
-                    //ignore
-                }
-            }
-        }
-        return seis;
-    }
+	private Set<String> getSEIs(File directory) throws MojoExecutionException {
+		Set<String> seis = new HashSet<String>();
+		if (!directory.exists() || directory.isFile()) {
+			return seis;
+		}
+		ClassLoader cl = null;
+		try {
+			cl = new URLClassLoader(new URL[] { directory.toURI().toURL() });
+			for (String s : FileUtils.getFileAndDirectoryNames(directory, "**/*.class", null, false, true, true, false)) {
+				try {
+					String clsName = s.replace(File.separator, ".");
+					Class<?> c = cl.loadClass(clsName.substring(0, clsName.length() - 6));
+					WebService ann = c.getAnnotation(WebService.class);
+					if (!c.isInterface() && ann != null) {
+						// more sophisticated checks are done by wsgen itself
+						seis.add(c.getName());
+					}
+				} catch (ClassNotFoundException ex) {
+					throw new MojoExecutionException(ex.getMessage(), ex);
+				}
+			}
+		} catch (IOException ex) {
+			throw new MojoExecutionException(ex.getMessage(), ex);
+		} finally {
+			if (cl != null && cl instanceof Closeable) {
+				try {
+					((Closeable) cl).close();
+				} catch (IOException ex) {
+					// ignore
+				}
+			}
+		}
+		return seis;
+	}
 }
