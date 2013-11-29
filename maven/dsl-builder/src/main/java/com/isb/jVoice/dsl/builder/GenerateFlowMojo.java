@@ -200,7 +200,11 @@ public class GenerateFlowMojo extends AbstractMojo {
 
 	private Set<String> getFlowIncludesPatterns() {
 		if (includes == null || includes.isEmpty()) {
-			return Collections.singleton("**/*.jvflow");
+			Set<String> ret = new HashSet<>();
+			ret.add("**/*.jvflow");
+			ret.add("**/*.voiceDsl");
+
+			return ret;
 		}
 		return includes;
 	}
@@ -216,7 +220,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 	 */
 	private static boolean buildRequired(File sourceFile, List<File> outputFiles) {
 
-		long sourceLastModified = sourceFile.lastModified();
+		long sourceLastModified = getLastModified(sourceFile);
 
 		for (File outputFile : outputFiles) {
 			if (!outputFile.exists() || sourceLastModified > outputFile.lastModified()) {
@@ -226,19 +230,35 @@ public class GenerateFlowMojo extends AbstractMojo {
 		return false;
 	}
 
+	private static long getLastModified(File sourceFile) {
+		long lastModified = sourceFile.lastModified();
+		String flowName = sourceFile.getName();
+		flowName = flowName.substring(0, flowName.lastIndexOf('.'));
+
+		File folder = new File(sourceFile.getParentFile(), flowName + ".resources");
+		for (File locution : folder.listFiles()) {
+			long locutionModified = locution.lastModified();
+			if (locutionModified > lastModified) {
+				lastModified = locutionModified;
+			}
+		}
+		return lastModified;
+	}
+
 	private void processFlowFiles(ResourceSet resourceSet, File folder) throws InclusionScanException, IOException {
 		SourceMapping mapping = new SuffixMapping("jvflow", Collections.<String> emptySet());
 		Set<String> includes = getFlowIncludesPatterns();
 		SourceInclusionScanner scan = new SimpleSourceInclusionScanner(includes, excludes);
 
 		scan.addSourceMapping(mapping);
-		Set<File> flowFiles = scan.getIncludedSources(sourceDirectory, null);
-		if (flowFiles.isEmpty()) {
+		Set<File> modifiedFiles = scan.getIncludedSources(sourceDirectory, null);
+		if (modifiedFiles.isEmpty()) {
 			if (getLog().isInfoEnabled()) {
 				getLog().info("No Flows to process");
 			}
 		} else {
 			boolean built = false;
+			Set<File> flowFiles = getParentFlows(modifiedFiles);
 			for (File flow : flowFiles) {
 				built |= processFlowFile(resourceSet, flow, folder);
 			}
@@ -246,7 +266,31 @@ public class GenerateFlowMojo extends AbstractMojo {
 				getLog().info("No DSL processed; generated files are up to date");
 			}
 		}
+	}
 
+	private Set<File> getParentFlows(Set<File> files) {
+		Set<File> onlyFlows = new HashSet<>();
+		for (File file : files) {
+			String name = file.getName();
+			String extension = name.substring(name.lastIndexOf('.') + 1);
+			if (extension.equals("jvflow")) {
+				onlyFlows.add(file);
+			} else if (extension.equals("voiceDsl")) {
+				onlyFlows.add(findFlowFor(file));
+			}
+		}
+
+		return onlyFlows;
+	}
+
+	private File findFlowFor(File file) {
+		File parent = file.getParentFile();
+		String parentName = parent.getName();
+		String flowName = parentName.substring(0, parentName.lastIndexOf('.')) + ".jvflow";
+		File grandpa = parent.getParentFile();
+		File flow = new File(grandpa, flowName);
+
+		return flow;
 	}
 
 	private boolean processFlowFile(ResourceSet resourceSet, File origFile, File targetFolder) throws IOException {
