@@ -18,7 +18,7 @@ class GeneralStateCodeXML {
 							
 					«IF mainAudio instanceof ConditionalAudio»
 						«var ConditionalAudio condition = mainAudio as ConditionalAudio» 
-						<set name="flashScope.«state.name»«type»«i».bargein" value="«condition.simpleA.dontBargeIn.booleanValue»"/>
+«««						<set name="flashScope.«state.name»«type»«i».bargein" value="«condition.simpleA.dontBargeIn.booleanValue»"/>
 						«IF condition.simpleA.src != null» 
 							<set name="flashScope.«state.name»«type»«i».src" value="locutionProvider.getAudioSrc('«condition.simpleA.src»','«nameProject»')"/>
 						«ENDIF»
