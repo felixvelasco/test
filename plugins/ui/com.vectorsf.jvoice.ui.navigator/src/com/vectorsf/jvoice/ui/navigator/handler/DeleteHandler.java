@@ -6,7 +6,9 @@ import java.util.Collection;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -57,8 +59,15 @@ public class DeleteHandler extends AbstractHandler {
 						iResource.getName().lastIndexOf(".") + 1);
 				if ("wsdl".equalsIgnoreCase(extension)) {
 					DeletePomWSDL deletewsdl = new DeletePomWSDL();
-					deletewsdl.modifyPom(iResource.getProject(),
-							iResource.getName());
+					IFolder folder = (IFolder) iResource.getParent();
+					try {
+						if (folder.members().length == 0) {
+							deletewsdl.modifyPom(iResource.getProject());
+						}
+					} catch (CoreException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 
