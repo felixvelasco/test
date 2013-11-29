@@ -113,13 +113,11 @@ public abstract class FileCommonDropAdapterAssistant extends
 
 				FileInputStream source = new FileInputStream(originalFile);
 				target.create(source, true, null);
-				String path = target.getFullPath().toString();
-				String name = path.substring(path.lastIndexOf("/") + 1);
 
 				// En caso de ser un wsdl añadimos plugin al pom
 				if ("wsdl".equalsIgnoreCase(mType)) {
 					ConfigurationPomWSDL configurate = new ConfigurationPomWSDL();
-					configurate.initial(iproject, name);
+					configurate.initial(iproject);
 				}
 
 			} catch (CoreException | FileNotFoundException e) {

@@ -20,23 +20,23 @@ import com.vectorsf.jvoice.core.project.JVoiceModuleNature;
 
 public class ConfigurationPomWSDL {
 	private static final String POM_XML = "/pom.xml";
+	private static final String WSIMPORT = "jaxws-maven-plugin";
 
-	public void initial(IProject iproject, String ruta) {
-		modifyPom(iproject, ruta);
+	public void initial(IProject iproject) {
+		modifyPom(iproject);
 	}
 
-	private void modifyPom(final IProject iproject, final String nombre) {
+	private void modifyPom(final IProject iproject) {
 		try {
 			MavenXpp3Reader reader = new MavenXpp3Reader();
 			Model mm = null;
 			File pomFile = new File(iproject.getLocationURI().getPath(),
 					POM_XML);
 
-			CharSequence sWsdl_path = nombre;
-			if (!pomContainsLine(pomFile, sWsdl_path)) {
+			if (!pomContainsLine(pomFile, WSIMPORT)) {
 				mm = reader.read(new FileInputStream(pomFile));
 
-				addBuildToModel(mm, nombre, iproject.getName());
+				addBuildToModel(mm, iproject.getName());
 
 				MavenXpp3Writer writer = new MavenXpp3Writer();
 				writer.write(new FileOutputStream(pomFile), mm);
@@ -46,10 +46,10 @@ public class ConfigurationPomWSDL {
 		}
 	}
 
-	private void addBuildToModel(Model mm, String name, String moduleName) {
+	private void addBuildToModel(Model mm, String moduleName) {
 
-		String paquete = JVoiceModuleNature.getDefaultWSDLPackageName(
-				moduleName, name);
+		String paquete = JVoiceModuleNature
+				.getDefaultWSDLPackageName(moduleName);
 
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("org.codehaus.mojo");
@@ -65,32 +65,20 @@ public class ConfigurationPomWSDL {
 		wsdlDirectory.setValue("src/main/resources/wsdl");
 		configuration.addChild(wsdlDirectory);
 
-		Xpp3Dom wsdlFiles = new Xpp3Dom("wsdlFiles");
-
-		Xpp3Dom wsdlFile = new Xpp3Dom("wsdlFile");
-		wsdlFile.setValue(name);
-		wsdlFiles.addChild(wsdlFile);
-		pexecution.setConfiguration(wsdlFiles);
-		configuration.addChild(wsdlFiles);
-
 		Xpp3Dom wsdlLocation = new Xpp3Dom("wsdlLocation");
-		wsdlLocation.setValue("htpp://" + paquete + "/" + name);
+		wsdlLocation.setValue("http://" + paquete + ".*");
 		configuration.addChild(wsdlLocation);
 
 		Xpp3Dom sourceDestDir = new Xpp3Dom("sourceDestDir");
-		sourceDestDir.setValue("src/main/java");
+		sourceDestDir.setValue("src/generated-sources/wsimport");
 		configuration.addChild(sourceDestDir);
 
 		Xpp3Dom keep = new Xpp3Dom("keep");
 		keep.setValue("true");
 		configuration.addChild(keep);
 
-		Xpp3Dom verbose = new Xpp3Dom("verbose");
-		verbose.setValue("true");
-		configuration.addChild(verbose);
-
 		Xpp3Dom packageName = new Xpp3Dom("packageName");
-		packageName.setValue(paquete);
+		packageName.setValue(paquete + ".*");
 		configuration.addChild(packageName);
 
 		pexecution.setConfiguration(configuration);

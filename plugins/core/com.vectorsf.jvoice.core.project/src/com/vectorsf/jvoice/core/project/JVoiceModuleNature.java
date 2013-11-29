@@ -30,8 +30,8 @@ public class JVoiceModuleNature extends AbstractJVoiceNature {
 	public static String getDefaultComponentsPackageName(String name) {
 		return getBaseName() + DOT + lowerCaseFirst(name) + DOT + COMPONENTS_SUFFIX;
 	}
-	public static String getDefaultWSDLPackageName(String name,String sWsdl) {
-		return getBaseName() + DOT + lowerCaseFirst(name) + DOT + WSDL_SUFFIX+ DOT + ((sWsdl.indexOf(DOT)!=-1)?sWsdl.substring(0,sWsdl.indexOf(DOT)):sWsdl);
+	public static String getDefaultWSDLPackageName(String name) {
+		return getBaseName() + DOT + lowerCaseFirst(name) + DOT + WSDL_SUFFIX;
 	}
 
 	private static String lowerCaseFirst(String name) {
