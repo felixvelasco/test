@@ -128,25 +128,26 @@ public abstract class ParametrizableStateSection extends GFPropertySection {
 
 		state = (ParameterizedState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(
 				getSelectedPictogramElement());
+		if (state != null) {
+			nameText.text.setText(state.getName());
 
-		nameText.text.setText(state.getName());
+			String[] parameterNames = getParameterNames(state);
 
-		String[] parameterNames = getParameterNames(state);
-
-		for (LabelAndText callp : callParameters) {
-			callp.label.dispose();
-			callp.text.dispose();
-		}
-		callParameters.clear();
-		if (state.getParameters() != null) {
-
-			List<String> parametersValues = state.getParameters();
-			for (int i = 0; i < parametersValues.size(); i++) {
-				String paramValue = parametersValues.get(i);
-				callParameters.add(drawParameter(parameterNames[i], paramValue, i));
+			for (LabelAndText callp : callParameters) {
+				callp.label.dispose();
+				callp.text.dispose();
 			}
+			callParameters.clear();
+			if (state.getParameters() != null) {
+
+				List<String> parametersValues = state.getParameters();
+				for (int i = 0; i < parametersValues.size(); i++) {
+					String paramValue = parametersValues.get(i);
+					callParameters.add(drawParameter(parameterNames[i], paramValue, i));
+				}
+			}
+			composite.layout(true, true);
 		}
-		composite.layout(true, true);
 	}
 
 	protected abstract String[] getParameterNames(ParameterizedState state);
