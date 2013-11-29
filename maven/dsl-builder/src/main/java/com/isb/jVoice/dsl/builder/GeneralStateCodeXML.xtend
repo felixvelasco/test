@@ -39,7 +39,7 @@ class GeneralStateCodeXML {
 						«ENDIF»
 					«ELSE»
 						«var Audio audio = mainAudio as Audio»
-						<set name="flashScope.«state.name»«type»«i».bargein" value="«audio.dontBargeIn.booleanValue»"/>
+«««						<set name="flashScope.«state.name»«type»«i».bargein" value="«audio.dontBargeIn.booleanValue»"/>
 						«IF audio.src != null» 
 							<set name="flashScope.«state.name»«type»«i».src" value="locutionProvider.getAudioSrc('«audio.src»','«nameProject»')"/>
 						«ENDIF»
