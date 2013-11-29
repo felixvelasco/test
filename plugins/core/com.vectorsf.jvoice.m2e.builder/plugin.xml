@@ -8,6 +8,11 @@
             id="com.isb.bks.ivr.voice.m2e.jVoiceConfigurator"
             name="%configurator.name">
       </configurator>
+      <configurator
+            class="com.isb.bks.ivr.voice.m2e.builder.internal.JVoiceJaxWSConfigurator"
+            id="com.isb.bks.ivr.voice.m2e.jVoiceJaxWSConfigurator"
+            name="JaxWS">
+      </configurator>
    </extension>
    <extension
          point="org.eclipse.m2e.core.lifecycleMappingMetadataSource">
