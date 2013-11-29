@@ -13,6 +13,8 @@ public class CoreImageProvider extends AbstractImageProvider {
 
 	public static final String UNSET_FINAL_PAD = "unset_final_pad"; //$NON-NLS-1$
 
+	public static final String IMG_DROPDOWN = "icon_deco_dropdown";
+
 	public static final String IMG_PALETTE_CUSTOM = "icon_est_custom";
 	public static final String IMG_PALETTE_EXECUTION = "icon_est_execution";
 	public static final String IMG_PALETTE_FINAL = "icon_est_final";
@@ -24,6 +26,17 @@ public class CoreImageProvider extends AbstractImageProvider {
 	public static final String IMG_PALETTE_SWITCH = "icon_est_switch";
 	public static final String IMG_PALETTE_TRANSFER = "icon_est_transfer";
 	public static final String IMG_PALETTE_NOTE = "icon_notes";
+
+	public static final String IMG_STATE_CUSTOM = "icon_comp_custom";
+	public static final String IMG_STATE_EXECUTION = "icon_comp_execution";
+	public static final String IMG_STATE_FINAL = "icon_comp_final";
+	public static final String IMG_STATE_INPUT = "icon_comp_input";
+	public static final String IMG_STATE_MENU = "icon_comp_menu";
+	public static final String IMG_STATE_PROMPT = "icon_comp_prompt";
+	public static final String IMG_STATE_RECORD = "icon_comp_record";
+	public static final String IMG_STATE_SUBFLOW = "icon_comp_subflow";
+	public static final String IMG_STATE_SWITCH = "icon_comp_switch";
+	public static final String IMG_STATE_TRANSFER = "icon_comp_transfer";
 
 	@Override
 	protected void addAvailableImages() {
@@ -45,6 +58,19 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath(IMG_PALETTE_TRANSFER, "icons/palette/icon_est_transfer.png");
 
 		addImageFilePath(IMG_PALETTE_NOTE, "icons/palette/icon_notes.png");
+
+		addImageFilePath(IMG_STATE_CUSTOM, "icons/states/icon_comp_custom.png");
+		addImageFilePath(IMG_STATE_EXECUTION, "icons/states/icon_comp_execution.png");
+		addImageFilePath(IMG_STATE_FINAL, "icons/states/icon_comp_final.png");
+		addImageFilePath(IMG_STATE_INPUT, "icons/states/icon_comp_input.png");
+		addImageFilePath(IMG_STATE_MENU, "icons/states/icon_comp_menu.png");
+		addImageFilePath(IMG_STATE_PROMPT, "icons/states/icon_comp_prompt.png");
+		addImageFilePath(IMG_STATE_RECORD, "icons/states/icon_comp_record.png");
+		addImageFilePath(IMG_STATE_SUBFLOW, "icons/states/icon_comp_subflow.png");
+		addImageFilePath(IMG_STATE_SWITCH, "icons/states/icon_comp_switch.png");
+		addImageFilePath(IMG_STATE_TRANSFER, "icons/states/icon_comp_transfer.png");
+
+		addImageFilePath(IMG_DROPDOWN, "icons/states/dropdown.png"); //$NON-NLS-1$
 	}
 
 }

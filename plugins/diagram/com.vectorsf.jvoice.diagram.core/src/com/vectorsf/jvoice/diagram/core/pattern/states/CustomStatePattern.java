@@ -15,17 +15,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
-import org.eclipse.graphiti.mm.algorithms.Rectangle;
-import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
-import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.graphiti.services.IGaService;
-import org.eclipse.graphiti.services.IPeCreateService;
-import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
@@ -35,48 +25,15 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
-import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
 import com.vectorsf.jvoice.ui.wizard.create.CreateJspCustom;
 
-public class CustomStatePattern extends StatePattern {
+public class CustomStatePattern extends SimpleStatePattern {
 
 	private static final String CUSTOM = "Custom";
-	private static int MIN_WIDTH = 120;
-	private static int MIN_HEIGHT = 60;
-
-	@Override
-	protected PictogramElement doAdd(IAddContext context) {
-
-		CustomState addedDomainObject = (CustomState) context.getNewObject();
-		IPeCreateService peCreateService = Graphiti.getPeCreateService();
-		IGaService gaService = Graphiti.getGaService();
-
-		ContainerShape outerContainerShape = peCreateService.createContainerShape(getDiagram(), true);
-
-		Rectangle mainRectangle = gaService.createRectangle(outerContainerShape);
-		setId(mainRectangle, ID_MAIN_FIGURE);
-		mainRectangle.setFilled(true);
-		gaService.setRenderingStyle(mainRectangle, StatePredefinedColoredAreas
-				.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.COPPER_WHITE_GLOSS_ID));
-		gaService.setLocationAndSize(mainRectangle, context.getX(), context.getY(),
-				Math.max(MIN_WIDTH, context.getWidth()), Math.max(MIN_HEIGHT, context.getHeight()));
-
-		Text text = gaService.createText(mainRectangle, addedDomainObject.getName());
-		setId(text, ID_NAME_TEXT);
-		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
-		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
-
-		peCreateService.createChopboxAnchor(outerContainerShape);
-
-		link(outerContainerShape, addedDomainObject);
-
-		return outerContainerShape;
-
-	}
 
 	@Override
 	public Object[] create(ICreateContext context) {
@@ -95,7 +52,7 @@ public class CustomStatePattern extends StatePattern {
 
 		IFolder folderFlow = project.getFolder(fileFlow.getParent().getProjectRelativePath() + "/" + flow.getName()
 				+ ".resources");
-		List fileList = new ArrayList<>();
+		List<String> fileList = new ArrayList<>();
 		IResource[] members = null;
 		int i = 0;
 		try {
@@ -194,5 +151,10 @@ public class CustomStatePattern extends StatePattern {
 	@Override
 	public String getCreateImageId() {
 		return CoreImageProvider.IMG_PALETTE_CUSTOM;
+	}
+
+	@Override
+	protected String getStateImageId() {
+		return CoreImageProvider.IMG_STATE_CUSTOM;
 	}
 }
