@@ -6,7 +6,6 @@ public class WSDLDropAdapterAssistant extends FileCommonDropAdapterAssistant {
 	}
 
 	public WSDLDropAdapterAssistant() {
-		super("wsdl", "/src/main/resources/wsdl");
+		super("wsdl", "/src/main/resources/META-INF/wsdl");
 	}
-
 }

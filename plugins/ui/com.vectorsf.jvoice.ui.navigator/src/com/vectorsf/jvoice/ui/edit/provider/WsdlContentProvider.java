@@ -8,7 +8,7 @@ public class WsdlContentProvider extends FileContentProvider {
 	}
 
 	public WsdlContentProvider() {
-		super("/src/main/resources/wsdl");
+		super("/src/main/resources/META-INF/wsdl");
 		// TODO Auto-generated constructor stub
 	}
 
