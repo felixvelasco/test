@@ -12,7 +12,11 @@ class CallStateCodeXML extends StateCodeGenerator {
 
 		'''
 			<action-state id="«state.name»">
+			«IF state.parameters.size>0»
 				<evaluate expression="flowScope.«state.bean.name».«state.methodName»('«state.parameters.join(", ")»')" result="flowScope.result"/>
+			«ELSE»
+				<evaluate expression="flowScope.«state.bean.name».«state.methodName»()" result="flowScope.result"/>
+			«ENDIF»
 				«state.transitions»
 			</action-state>
 		  	'''
