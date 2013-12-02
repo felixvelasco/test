@@ -72,14 +72,10 @@ public class CustomStatePattern extends SimpleStatePattern {
 			e.printStackTrace();
 		}
 		dialog.setInitialElementSelections(fileList);
-		try {
-			dialog.setResources(fileList);
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
+		dialog.setResources(fileList);
 
 		dialog.setHelpAvailable(false);
-		dialog.setIsButtonCreatevailable(true);
+		dialog.setButtonCreateAvailable(true);
 		dialog.setListLabelProvider(new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 		dialog.setInitialPattern("?", FilteredItemsSelectionDialog.FULL_SELECTION);

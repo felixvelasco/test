@@ -43,6 +43,11 @@ import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.wizard.Activator;
 
 public class DslNameWizardPage extends AbstractWizardPage {
@@ -62,7 +67,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private Combo box;
 	private int primeraVez;
 	private static URI miURI;
-	private String tipo = null;
+	private Class<? extends VoiceDsl> targetClazz;
 
 	// Variable para diferenciar si la locucion se crea desde el
 	// navegador o desde el diagrama
@@ -92,12 +97,12 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		this(pageName, null);
 	}
 
-	public DslNameWizardPage(String pageName, String tipo) {
+	public DslNameWizardPage(String pageName, Class<? extends VoiceDsl> targetClazz) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
 		primeraVez = 0;
-		this.tipo = tipo;
+		this.targetClazz = targetClazz;
 		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_locution.png"));
 	}
 
@@ -384,22 +389,19 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		box = new Combo(projectGroup, SWT.READ_ONLY);
 		box.setEnabled(fromNavigator);
-		box.add("Menu");
-		box.add("Input");
-		box.add("Output");
-		box.add("Record");
+		box.setItems(new String[] { "Menu", "Input", "Prompt", "Record" });
 
-		if (tipo != null) {
-			if (tipo.equalsIgnoreCase("Menu")) {
+		if (targetClazz != null) {
+			if (targetClazz.equals(MenuDsl.class)) {
 				box.select(0);
 			}
-			if (tipo.equalsIgnoreCase("Input")) {
+			if (targetClazz.equals(InputDsl.class)) {
 				box.select(1);
 			}
-			if (tipo.equalsIgnoreCase("Output")) {
+			if (targetClazz.equals(PromptDsl.class)) {
 				box.select(2);
 			}
-			if (tipo.equalsIgnoreCase("Record")) {
+			if (targetClazz.equals(RecordDsl.class)) {
 				box.select(3);
 			}
 

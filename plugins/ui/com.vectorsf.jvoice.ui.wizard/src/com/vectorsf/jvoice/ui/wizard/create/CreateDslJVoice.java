@@ -9,6 +9,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.wizard.page.AbstractWizardPage;
 import com.vectorsf.jvoice.ui.wizard.page.DslNameWizardPage;
 
@@ -16,16 +17,16 @@ public class CreateDslJVoice extends BasicNewResourceWizard {
 
 	private static final String PAGE_NAME_DSL_NAME = "Locution Name";
 	private static final String WIZARD_WINDOW_TITLE = "New Locution";
-	private IFolder myDiagram;
-	private String tipoDSL;
-	DslNameWizardPage pageName;
+	private IFolder folder;
+	private Class<? extends VoiceDsl> targetClazz;
+	private DslNameWizardPage pageName;
 
 	public CreateDslJVoice() {
 	}
 
-	public CreateDslJVoice(IFolder ownerDiagram, String tipo) {
-		this.myDiagram = ownerDiagram;
-		this.tipoDSL = tipo;
+	public CreateDslJVoice(IFolder folder, Class<? extends VoiceDsl> targetClazz) {
+		this.folder = folder;
+		this.targetClazz = targetClazz;
 	}
 
 	@Override
@@ -36,13 +37,13 @@ public class CreateDslJVoice extends BasicNewResourceWizard {
 		}
 
 		super.addPages();
-		if (myDiagram == null) {
+		if (folder == null) {
 			pageName = new DslNameWizardPage(PAGE_NAME_DSL_NAME);
 			pageName.setSelection(getSelection().getFirstElement());
 			addPage(pageName);
 		} else {
-			pageName = new DslNameWizardPage(PAGE_NAME_DSL_NAME, tipoDSL);
-			pageName.setSelection(myDiagram);
+			pageName = new DslNameWizardPage(PAGE_NAME_DSL_NAME, targetClazz);
+			pageName.setSelection(folder);
 			addPage(pageName);
 		}
 

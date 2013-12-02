@@ -231,14 +231,14 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 		GraphicsAlgorithm gaOuter = context.getRootPictogramElement().getGraphicsAlgorithm();
 
+		// TODO : Resize state if name is too long
 		// if (id.equals(ID_MAIN_FIGURE) || id.equals(ID_NAME_TEXT)) {
-		if (false) {
-			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
-			if (ga.getWidth() != gaOuter.getWidth() || ga.getHeight() != gaOuter.getHeight()) {
-				Graphiti.getGaService().setLocationAndSize(ga, 0, 0, gaOuter.getWidth(), gaOuter.getHeight());
-				changesDone = true;
-			}
-		}
+		// GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
+		// if (ga.getWidth() != gaOuter.getWidth() || ga.getHeight() != gaOuter.getHeight()) {
+		// Graphiti.getGaService().setLocationAndSize(ga, 0, 0, gaOuter.getWidth(), gaOuter.getHeight());
+		// changesDone = true;
+		// }
+		// }
 
 		return changesDone;
 	}

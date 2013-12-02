@@ -10,7 +10,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -22,7 +21,6 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 
 	private static final String DIALOG_SETTINGS = "FilteredResourcesSelectionDialogExampleSettings";
 	private List<?> resources;
-	private Button checkButton;
 	private static boolean createAvailable;
 
 	public DialogLocution(Shell shell) {
@@ -31,7 +29,7 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		if (isButtonCreatevailable()) {
+		if (isButtonCreateAvailable()) {
 			createButton(parent, IDialogConstants.PROCEED_ID, "Create", false);
 		}
 		super.createButtonsForButtonBar(parent);
@@ -83,8 +81,8 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 	}
 
 	@Override
-	protected Comparator getItemsComparator() {
-		return new Comparator() {
+	protected Comparator<Object> getItemsComparator() {
+		return new Comparator<Object>() {
 			@Override
 			public int compare(Object arg0, Object arg1) {
 				return arg0.toString().compareTo(arg1.toString());
@@ -102,7 +100,7 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 			ItemsFilter itemsFilter, IProgressMonitor progressMonitor)
 			throws CoreException {
 		progressMonitor.beginTask("Searching", resources.size()); //$NON-NLS-1$
-		for (Iterator iter = resources.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = resources.iterator(); iter.hasNext();) {
 			contentProvider.add(iter.next(), itemsFilter);
 			progressMonitor.worked(1);
 		}
@@ -110,16 +108,16 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 
 	}
 
-	public void setResources(List<?> locutionResources) throws CoreException {
+	public void setResources(List<?> locutionResources) {
 		resources = locutionResources;
 
 	}
 
-	public boolean isButtonCreatevailable() {
+	public boolean isButtonCreateAvailable() {
 		return createAvailable;
 	}
 
-	public void setIsButtonCreatevailable(boolean buttonAvailable) {
+	public void setButtonCreateAvailable(boolean buttonAvailable) {
 		createAvailable = buttonAvailable;
 	}
 }
