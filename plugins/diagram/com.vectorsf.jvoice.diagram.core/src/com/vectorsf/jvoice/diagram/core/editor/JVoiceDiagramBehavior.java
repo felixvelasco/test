@@ -16,6 +16,7 @@ import org.eclipse.gef.ui.actions.ZoomOutAction;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.ISaveImageFeature;
 import org.eclipse.graphiti.ui.editor.DefaultPersistencyBehavior;
+import org.eclipse.graphiti.ui.editor.DefaultUpdateBehavior;
 import org.eclipse.graphiti.ui.editor.DiagramBehavior;
 import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
 import org.eclipse.graphiti.ui.internal.action.CopyAction;
@@ -39,8 +40,7 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 	@Override
 	protected void editingDomainInitialized() {
 		super.editingDomainInitialized();
-		getResourceSet().getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
-				new VegaXMLURIHandlerImpl());
+		getResourceSet().getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, new VegaXMLURIHandlerImpl());
 
 	}
 
@@ -50,20 +50,22 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 	}
 
 	@Override
+	protected DefaultUpdateBehavior createUpdateBehavior() {
+		return new JVoiceUpdateBehavior(this);
+	}
+
+	@Override
 	protected void initActionRegistry(ZoomManager zoomManager) {
 		if (getParentPart() == null) {
 			return;
 		}
-		final ActionRegistry actionRegistry = getDiagramContainer()
-				.getActionRegistry();
+		final ActionRegistry actionRegistry = getDiagramContainer().getActionRegistry();
 		@SuppressWarnings("unchecked")
-		final List<String> selectionActions = getDiagramContainer()
-				.getSelectionActions();
+		final List<String> selectionActions = getDiagramContainer().getSelectionActions();
 
 		// register predefined actions (e.g. update, remove, delete, ...)
 
-		IAction action = new DeleteAction(getParentPart(),
-				getConfigurationProvider());
+		IAction action = new DeleteAction(getParentPart(), getConfigurationProvider());
 		actionRegistry.registerAction(action);
 		selectionActions.add(action.getId());
 
@@ -75,8 +77,7 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 		actionRegistry.registerAction(action);
 		selectionActions.add(action.getId());
 
-		IFeatureProvider fp = getConfigurationProvider()
-				.getDiagramTypeProvider().getFeatureProvider();
+		IFeatureProvider fp = getConfigurationProvider().getDiagramTypeProvider().getFeatureProvider();
 		if (fp != null) {
 			ISaveImageFeature sf = fp.getSaveImageFeature();
 
@@ -91,22 +92,15 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 		registerAction(new ZoomOutAction(zoomManager));
 		registerAction(new DirectEditAction(getParentPart()));
 
-		registerAction(new AlignmentAction(getParentPart(),
-				PositionConstants.LEFT));
-		registerAction(new AlignmentAction(getParentPart(),
-				PositionConstants.RIGHT));
-		registerAction(new AlignmentAction(getParentPart(),
-				PositionConstants.TOP));
-		registerAction(new AlignmentAction(getParentPart(),
-				PositionConstants.BOTTOM));
-		registerAction(new AlignmentAction(getParentPart(),
-				PositionConstants.CENTER));
-		registerAction(new AlignmentAction(getParentPart(),
-				PositionConstants.MIDDLE));
+		registerAction(new AlignmentAction(getParentPart(), PositionConstants.LEFT));
+		registerAction(new AlignmentAction(getParentPart(), PositionConstants.RIGHT));
+		registerAction(new AlignmentAction(getParentPart(), PositionConstants.TOP));
+		registerAction(new AlignmentAction(getParentPart(), PositionConstants.BOTTOM));
+		registerAction(new AlignmentAction(getParentPart(), PositionConstants.CENTER));
+		registerAction(new AlignmentAction(getParentPart(), PositionConstants.MIDDLE));
 		registerAction(new MatchWidthAction(getParentPart()));
 		registerAction(new MatchHeightAction(getParentPart()));
-		IAction showGrid = new ToggleGridAction(getDiagramContainer()
-				.getGraphicalViewer());
+		IAction showGrid = new ToggleGridAction(getDiagramContainer().getGraphicalViewer());
 		getDiagramContainer().getActionRegistry().registerAction(showGrid);
 
 		// Bug 323351: Add button to toggle a flag if the context pad buttons
@@ -116,9 +110,17 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 		actionRegistry.registerAction(toggleContextButtonPad);
 		// End bug 323351
 
-		IHandlerService hs = (IHandlerService) getParentPart().getSite()
-				.getService(IHandlerService.class);
-		hs.activateHandler(FeatureExecutionHandler.COMMAND_ID,
-				new FeatureExecutionHandler(getConfigurationProvider()));
+		IHandlerService hs = (IHandlerService) getParentPart().getSite().getService(IHandlerService.class);
+		hs.activateHandler(FeatureExecutionHandler.COMMAND_ID, new FeatureExecutionHandler(getConfigurationProvider()));
+	}
+
+	@Override
+	public void disableAdapters() {
+		super.disableAdapters();
+	}
+
+	@Override
+	public void enableAdapters() {
+		super.enableAdapters();
 	}
 }
