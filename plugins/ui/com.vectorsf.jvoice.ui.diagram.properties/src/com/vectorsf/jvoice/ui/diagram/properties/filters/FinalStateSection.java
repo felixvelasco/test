@@ -80,7 +80,10 @@ public class FinalStateSection extends StateSection {
 		FinalState state = (FinalState) getDiagramTypeProvider().getFeatureProvider()
 				.getBusinessObjectForPictogramElement(getSelectedPictogramElement());
 
-		expressionText.setText(state.getReturnExpression());
-		expressionText.addFocusListener(expressionListener);
+		if (state != null) {
+			expressionText.setText(state.getReturnExpression());
+			expressionText.addFocusListener(expressionListener);
+		}
+
 	}
 }
