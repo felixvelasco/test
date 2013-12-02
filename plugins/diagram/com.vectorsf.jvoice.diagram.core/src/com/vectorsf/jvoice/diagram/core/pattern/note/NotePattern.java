@@ -11,9 +11,10 @@ import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.impl.ResizeShapeContext;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.func.IDirectEditing;
+import org.eclipse.graphiti.mm.algorithms.AbstractText;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.MultiText;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
-import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
@@ -24,7 +25,6 @@ import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
-import org.eclipse.graphiti.util.IColorConstant;
 import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
@@ -40,9 +40,6 @@ public class NotePattern extends IdPattern {
 	protected static final int MIN_WIDTH = 100;
 	protected static final int MIN_HEIGHT = 60;
 	private static final String NOTE = "Note";
-
-	private static final IColorConstant CLASS_TEXT_FOREGROUND = IColorConstant.BLACK;
-	private static final String FONT = "Segoe UI"; //$NON-NLS-1$
 
 	@Override
 	public boolean canAdd(IAddContext context) {
@@ -106,7 +103,7 @@ public class NotePattern extends IdPattern {
 		gaService.setLocationAndSize(mainRectangle, context.getX(), context.getY(),
 				Math.max(MIN_WIDTH, context.getWidth()), Math.max(MIN_HEIGHT, context.getHeight()));
 
-		Text text = gaService.createText(mainRectangle, addedDomainObject.getDescription());
+		MultiText text = gaService.createMultiText(mainRectangle, addedDomainObject.getDescription());
 		setId(text, ID_NAME_TEXT);
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
@@ -160,7 +157,7 @@ public class NotePattern extends IdPattern {
 	protected IReason updateNeeded(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
 			Note note = (Note) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-			Text text = (Text) context.getGraphicsAlgorithm();
+			AbstractText text = (AbstractText) context.getGraphicsAlgorithm();
 			if (!text.getValue().equals(note.getDescription())) {
 				return Reason.createTrueReason();
 			}
@@ -172,7 +169,7 @@ public class NotePattern extends IdPattern {
 	protected boolean update(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
 			Note note = (Note) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-			Text text = (Text) context.getGraphicsAlgorithm();
+			AbstractText text = (AbstractText) context.getGraphicsAlgorithm();
 			text.setValue(note.getDescription());
 			return true;
 		}
@@ -183,7 +180,7 @@ public class NotePattern extends IdPattern {
 	public Object[] create(ICreateContext context) {
 
 		Note note = OperationsFactory.eINSTANCE.createNote();
-		note.setDescription("note");
+		note.setDescription("");
 		note.setName("Note");
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		flow.getNotes().add(note);
@@ -200,6 +197,15 @@ public class NotePattern extends IdPattern {
 			ss.setDescription(value);
 			updatePictogramElement(context.getPictogramElement());
 		}
+	}
+
+	@Override
+	public String getInitialValue(IDirectEditingContext context, String id) {
+		if (id.equals(ID_NAME_TEXT)) {
+			Note note = (Note) getBusinessObjectForPictogramElement(context.getPictogramElement());
+			return note.getDescription();
+		}
+		return super.getInitialValue(context, id);
 	}
 
 	@Override
