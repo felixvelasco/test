@@ -86,7 +86,7 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 		Xpp3Dom dom = null;
 		List<String> locations = new ArrayList<String>();
 
-		if (files.length > 0) {
+		if (files !=null && files.length > 0) {
 			File metaInf = new File(sourceDirectory.getParentFile(), "META-INF");
 			generateDir(metaInf);
 

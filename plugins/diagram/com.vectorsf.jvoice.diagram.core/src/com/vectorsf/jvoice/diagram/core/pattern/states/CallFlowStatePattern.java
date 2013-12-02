@@ -145,19 +145,27 @@ public class CallFlowStatePattern extends StatePattern implements ISelectionStat
 			break;
 		}
 
-		URI flowURI = EcoreUtil.getURI(result);
-		result = (Flow) flow.eResource().getResourceSet().getEObject(flowURI, true);
+		if (callFlowName != null) {
+			URI flowURI = EcoreUtil.getURI(result);
+			result = (Flow) flow.eResource().getResourceSet().getEObject(flowURI, true);
 
-		CallFlowState callFlowState = OperationsFactory.eINSTANCE.createCallFlowState();
+			CallFlowState callFlowState = OperationsFactory.eINSTANCE.createCallFlowState();
 
-		callFlowState.setName(callFlowName);
-		callFlowState.setSubflow(result);
+			callFlowState.setName(callFlowName);
+			callFlowState.setSubflow(result);
 
-		flow.getStates().add(callFlowState);
+			for (String parametro : result.getParameters()) {
+				callFlowState.getParameters().add("");
+			}
 
-		addGraphicalRepresentation(context, callFlowState);
+			flow.getStates().add(callFlowState);
 
-		return new Object[] { callFlowState };
+			addGraphicalRepresentation(context, callFlowState);
+
+			return new Object[] { callFlowState };
+		}
+
+		return null;
 	}
 
 	@Override
