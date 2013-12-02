@@ -143,7 +143,10 @@ public abstract class ParametrizableStateSection extends GFPropertySection {
 				List<String> parametersValues = state.getParameters();
 				for (int i = 0; i < parametersValues.size(); i++) {
 					String paramValue = parametersValues.get(i);
-					callParameters.add(drawParameter(parameterNames[i], paramValue, i));
+					if (parameterNames.length != 0 && i < parameterNames.length) {
+						callParameters.add(drawParameter(parameterNames[i], paramValue, i));
+					}
+
 				}
 			}
 			composite.layout(true, true);
