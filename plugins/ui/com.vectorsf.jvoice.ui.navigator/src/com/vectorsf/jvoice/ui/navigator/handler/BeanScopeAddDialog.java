@@ -58,10 +58,8 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 	private Listener nameModifyListener = new Listener() {
 		@Override
 		public void handleEvent(Event e) {
-			boolean valid = validatePage();
-			if (valid) {
-				updateComponent(scopedNameText.getText());
-			}
+			validatePage();
+
 		}
 	};
 
@@ -92,7 +90,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		setErrorMessage(null);
 		setMessage(null);
 		getButton(IDialogConstants.OK_ID).setEnabled(true);
-
+		updateComponent(scopedNameText.getText());
 		return true;
 	}
 
