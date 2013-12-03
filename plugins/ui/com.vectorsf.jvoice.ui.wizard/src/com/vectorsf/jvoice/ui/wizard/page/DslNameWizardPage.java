@@ -566,7 +566,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 				} else if (seleccion.equals("Input")) {
 					contents = "inputname " + dslName + "\n\n" + configuration + grammars + audios;
 
-				} else if (seleccion.equals("Output")) {
+				} else if (seleccion.equals("Prompt")) {
 					contents = "outputname " + dslName + "\n\n" + variables + audios;
 
 				} else if (seleccion.equals("Record")) {
