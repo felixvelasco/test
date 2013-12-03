@@ -62,7 +62,7 @@ public class ConfigurationPomWSDL {
 		Xpp3Dom configuration = new Xpp3Dom("configuration");
 
 		Xpp3Dom wsdlDirectory = new Xpp3Dom("wsdlDirectory");
-		wsdlDirectory.setValue("src/main/resources/wsdl");
+		wsdlDirectory.setValue("src/main/resources/META-INF/wsdl");
 		configuration.addChild(wsdlDirectory);
 
 		Xpp3Dom wsdlLocation = new Xpp3Dom("wsdlLocation");
@@ -76,10 +76,6 @@ public class ConfigurationPomWSDL {
 		Xpp3Dom keep = new Xpp3Dom("keep");
 		keep.setValue("true");
 		configuration.addChild(keep);
-
-		Xpp3Dom packageName = new Xpp3Dom("packageName");
-		packageName.setValue(paquete + ".*");
-		configuration.addChild(packageName);
 
 		pexecution.setConfiguration(configuration);
 
