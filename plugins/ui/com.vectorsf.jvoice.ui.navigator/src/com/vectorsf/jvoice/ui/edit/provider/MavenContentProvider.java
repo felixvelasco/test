@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.internal.core.PackageFragment;
 import org.eclipse.jdt.internal.ui.navigator.JavaNavigatorContentProvider;
 import org.eclipse.jdt.internal.ui.packageview.ClassPathContainer;
 
@@ -82,7 +83,23 @@ public class MavenContentProvider extends JavaNavigatorContentProvider {
 			}
 		}
 
-		return super.getChildren(object);
+		Object[] objetos = super.getChildren(object);
+
+		if (objetos != null && objetos.length > 0
+				&& objetos[0] instanceof PackageFragment) {
+			Object[] salida = new Object[objetos.length - 1];
+			int j = 0;
+			for (int i = 0; i < objetos.length; i++) {
+				PackageFragment paquete = (PackageFragment) objetos[i];
+				if (!paquete.isDefaultPackage()) {
+					salida[j] = objetos[i];
+					j++;
+				}
+			}
+
+			return salida;
+		}
+		return objetos;
 	}
 
 }
