@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.internal.core.PackageFragment;
 import org.eclipse.jdt.internal.ui.navigator.JavaNavigatorContentProvider;
 import org.eclipse.jdt.internal.ui.packageview.ClassPathContainer;
 
@@ -21,16 +20,14 @@ import com.vectorsf.jvoice.model.base.JVProject;
 @SuppressWarnings("restriction")
 public class MavenContentProvider extends JavaNavigatorContentProvider {
 
-	private IPath mavenPath = new Path(
-			"org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER");
+	private IPath mavenPath = new Path("org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER");
 
 	private static final String EXCLUCION_PATTERNT = "**";
 
 	@Override
 	public Object[] getChildren(Object object) {
 		if (object instanceof JVProject) {
-			IProject prj = ResourcesPlugin.getWorkspace().getRoot()
-					.getProject(((JVProject) object).getName());
+			IProject prj = ResourcesPlugin.getWorkspace().getRoot().getProject(((JVProject) object).getName());
 			IJavaProject project = JavaCore.create(prj);
 
 			if (!project.getProject().isOpen()) {
@@ -45,8 +42,7 @@ public class MavenContentProvider extends JavaNavigatorContentProvider {
 					IClasspathEntry classpathEntry = rawClasspath[i];
 					String cadenaExcluxion = null;
 
-					for (IPath excluxion : classpathEntry
-							.getExclusionPatterns()) {
+					for (IPath excluxion : classpathEntry.getExclusionPatterns()) {
 
 						if (excluxion.toString().equals(EXCLUCION_PATTERNT)) {
 							cadenaExcluxion = excluxion.toString();
@@ -56,16 +52,12 @@ public class MavenContentProvider extends JavaNavigatorContentProvider {
 
 					if (classpathEntry.getEntryKind() == IClasspathEntry.CPE_CONTAINER
 							&& classpathEntry.getPath().equals(mavenPath)) {
-						result.add(new ClassPathContainer(project,
-								classpathEntry));
+						result.add(new ClassPathContainer(project, classpathEntry));
 						hayElementos = true;
 
-					} else if (classpathEntry.getEntryKind() == IClasspathEntry.CPE_SOURCE
-							&& cadenaExcluxion == null) {
+					} else if (classpathEntry.getEntryKind() == IClasspathEntry.CPE_SOURCE && cadenaExcluxion == null) {
 
-						IPackageFragmentRoot root = project
-								.findPackageFragmentRoot(classpathEntry
-										.getPath());
+						IPackageFragmentRoot root = project.findPackageFragmentRoot(classpathEntry.getPath());
 						if (root != null) {
 							result.add(root);
 							hayElementos = true;
@@ -83,23 +75,7 @@ public class MavenContentProvider extends JavaNavigatorContentProvider {
 			}
 		}
 
-		Object[] objetos = super.getChildren(object);
-
-		if (objetos != null && objetos.length > 0
-				&& objetos[0] instanceof PackageFragment) {
-			Object[] salida = new Object[objetos.length - 1];
-			int j = 0;
-			for (int i = 0; i < objetos.length; i++) {
-				PackageFragment paquete = (PackageFragment) objetos[i];
-				if (!paquete.isDefaultPackage()) {
-					salida[j] = objetos[i];
-					j++;
-				}
-			}
-
-			return salida;
-		}
-		return objetos;
+		return new Object[0];
 	}
 
 }

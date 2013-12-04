@@ -51,25 +51,14 @@
          <includes>
             <contentExtension
                   isRoot="true"
-                  pattern="com.vectorsf.jvoice.ui.navigator.navigatorContent">
+                  pattern="com.vectorsf.jvoice.ui.navigator.*">
             </contentExtension>
             <contentExtension
                   isRoot="false"
-                  pattern="com.vectorsf.jvoice.base.maven.navigatorContent">
+                  pattern="org.eclipse.jdt.java.ui.javaContent">
             </contentExtension>
             <contentExtension
-                  pattern="com.vectorsf.jvoice.ui.navigator.emptyPackagesFilter">
-            </contentExtension>
-            <contentExtension
-                  pattern="com.vectorsf.jvoice.ui.navigator.linkHelper">
-            </contentExtension>
-            <contentExtension
-                  isRoot="false"
-                  pattern="com.vectorsf.jvoice.ui.navigator.navigatorContent1">
-            </contentExtension>
-            <contentExtension
-                  isRoot="false"
-                  pattern="com.vectorsf.jvoice.ui.navigator.navigatorContent2">
+                  pattern="org.eclipse.jdt.java.ui.filters.*">
             </contentExtension>
          </includes>
       </viewerContentBinding>
@@ -250,7 +239,7 @@
                         value="com.vectorsf.jvoice.model.base.JVPackage">
                   </instanceof>
                   <instanceof
-                        value="org.eclipse.core.internal.resources.Folder">
+                        value="org.eclipse.core.resources.IFolder">
                   </instanceof>
                </or></possibleDropTargets>
          </dropAssistant>
@@ -266,25 +255,18 @@
                         value="com.vectorsf.jvoice.model.base.JVPackage">
                   </instanceof>
                   <instanceof
-                        value="org.eclipse.core.internal.resources.Folder">
+                        value="org.eclipse.core.resources.IFolder">
                   </instanceof>
                </or></possibleDropTargets>
          </dropAssistant>
       </navigatorContent>
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.edit.provider.MavenContentProvider"
-            id="com.vectorsf.jvoice.base.maven.navigatorContent"
-            labelProvider="org.eclipse.jdt.internal.ui.navigator.JavaNavigatorLabelProvider"
+            id="com.vectorsf.jvoice.ui.navigator.MavenNavigatorContent"
             name="%navigatorContent.name.maven"
             priority="low">
          <triggerPoints>
             <or>
-               <instanceof
-                     value="org.eclipse.jdt.core.IJavaElement">
-               </instanceof>
-               <instanceof
-                     value="org.eclipse.jdt.internal.ui.packageview.ClassPathContainer">
-               </instanceof>
                <instanceof
                      value="com.vectorsf.jvoice.model.base.JVProject">
                </instanceof>
