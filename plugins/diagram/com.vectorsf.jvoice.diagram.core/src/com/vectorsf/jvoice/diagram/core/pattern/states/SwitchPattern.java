@@ -1,5 +1,6 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
@@ -33,8 +34,19 @@ public class SwitchPattern extends StatePattern {
 
 		SwitchState addedDomainObject = (SwitchState) context.getNewObject();
 		Case caseDefault = OperationsFactory.eINSTANCE.createCase();
-		caseDefault.setEventName("default");
-		addedDomainObject.getCase().add(caseDefault);
+		// Se comprueba de que exista un estado default por si estamos copiando un switch.
+		Boolean nohaydefault = false;
+		EList<Case> listCase = addedDomainObject.getCase();
+		for (Case cases : listCase) {
+			if (cases.getEventName().equals("default")) {
+				nohaydefault = true;
+				break;
+			}
+		}
+		if (!nohaydefault) {
+			caseDefault.setEventName("default");
+			addedDomainObject.getCase().add(caseDefault);
+		}
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
 
