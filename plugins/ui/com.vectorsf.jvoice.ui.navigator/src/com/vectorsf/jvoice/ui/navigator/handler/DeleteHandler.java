@@ -9,6 +9,8 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -17,6 +19,8 @@ import org.eclipse.ltk.ui.refactoring.resource.DeleteResourcesWizard;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import com.vectorsf.jvoice.model.operations.Flow;
 
 public class DeleteHandler extends AbstractHandler {
 
@@ -32,6 +36,18 @@ public class DeleteHandler extends AbstractHandler {
 						.getAdapter(o, IResource.class);
 				if (resource != null) {
 					resources.add(resource);
+					if (o instanceof Flow) {
+						IPath path = new Path(resource.getName().replace(
+								".jvflow", ".resources"));
+						IFolder relacionado = resource.getParent().getFolder(
+								path);
+						if (relacionado.exists()) {
+							IResource extras = (IResource) Platform
+									.getAdapterManager().getAdapter(
+											relacionado, IResource.class);
+							resources.add(extras);
+						}
+					}
 				}
 			}
 			if (!resources.isEmpty()) {
