@@ -4,14 +4,11 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -212,15 +209,6 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 							if (objeto instanceof Diagram) {
 								((Diagram) objeto).setName(newName);
 							}
-						}
-						IPath pathRecursos = new Path(resource.getName()
-								.replace(".jvflow", ".resources"));
-						IFolder folderRecursos = resource.getParent()
-								.getFolder(pathRecursos);
-						IPath newPath = pathRecursos.removeLastSegments(1)
-								.append(newName + ".resources");
-						if (folderRecursos.exists()) {
-							folderRecursos.move(newPath, true, monitor);
 						}
 					}
 				}
