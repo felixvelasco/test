@@ -263,6 +263,7 @@
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.edit.provider.MavenContentProvider"
             id="com.vectorsf.jvoice.ui.navigator.MavenNavigatorContent"
+            labelProvider="org.eclipse.jdt.internal.ui.navigator.JavaNavigatorLabelProvider"
             name="%navigatorContent.name.maven"
             priority="low">
          <triggerPoints>
@@ -771,18 +772,6 @@
                </iterate>
             </with>
          </activeWhen>
-      </handler>
-      <handler
-            class="com.vectorsf.jvoice.ui.navigator.handler.AddBeanScopeHandler"
-            commandId="com.vectorsf.jvoice.ui.navigator.addBeanScope">
-      </handler>
-      <handler
-            class="com.vectorsf.jvoice.ui.navigator.handler.AddFlowParameterHandler"
-            commandId="com.vectorsf.jvoice.ui.navigator.addFlowParameter">
-      </handler>
-      <handler
-            class="com.vectorsf.jvoice.ui.navigator.handler.RemoveBeanScopeHandler"
-            commandId="com.vectorsf.jvoice.ui.navigator.removeBeanScope">
       </handler>
    </extension>
    <extension
