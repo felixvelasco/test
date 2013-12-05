@@ -3,6 +3,9 @@ package com.vectorsf.jvoice.ui.navigator.handler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.JavaCore;
@@ -13,14 +16,15 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 public class AddBeanScopeHandler extends AbstractModifyFlowHandler {
 
 	private ComponentBean componentBean;
 
 	@Override
-	protected void performChanges(Flow flow) throws ExecutionException {
-		flow.getBeans().add(componentBean);
+	protected Command getChangeCommand(EditingDomain domain, Flow flow) throws ExecutionException {
+		return AddCommand.create(domain, flow, OperationsPackage.eINSTANCE.getFlow_Beans(), componentBean);
 	}
 
 	@Override

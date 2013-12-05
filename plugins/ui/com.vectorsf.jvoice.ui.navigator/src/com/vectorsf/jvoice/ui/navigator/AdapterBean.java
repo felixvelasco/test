@@ -13,8 +13,7 @@ import com.vectorsf.jvoice.model.base.JVBean;
 @SuppressWarnings("rawtypes")
 public class AdapterBean implements IAdapterFactory {
 
-	private static final Class[] ADAPTER_TYPES = new Class[] { IFile.class,
-			ResourceMapping.class, IResource.class };
+	private static final Class[] ADAPTER_TYPES = new Class[] { IFile.class, ResourceMapping.class, IResource.class };
 
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
@@ -25,10 +24,13 @@ public class AdapterBean implements IAdapterFactory {
 				return adaptarElemento(adaptableObject);
 
 			} else if (adapterType == ResourceMapping.class) {
-				@SuppressWarnings("restriction")
-				final ResourceMapping simpleResourceMapping = new org.eclipse.core.internal.resources.mapping.SimpleResourceMapping(
-						adaptarElemento(adaptableObject));
-				return simpleResourceMapping;
+				IFile file = adaptarElemento(adaptableObject);
+				if (file != null) {
+					@SuppressWarnings("restriction")
+					final ResourceMapping simpleResourceMapping = new org.eclipse.core.internal.resources.mapping.SimpleResourceMapping(
+							file);
+					return simpleResourceMapping;
+				}
 			}
 		}
 		return null;
@@ -37,8 +39,7 @@ public class AdapterBean implements IAdapterFactory {
 	private IFile adaptarElemento(Object adaptableObject) {
 		JVBean bean = (JVBean) adaptableObject;
 		if (bean.eResource() != null) {
-			IPath path = new Path(bean.eResource().getURI()
-					.toPlatformString(true));
+			IPath path = new Path(bean.eResource().getURI().toPlatformString(true));
 			return ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 		} else {
 			return null;
