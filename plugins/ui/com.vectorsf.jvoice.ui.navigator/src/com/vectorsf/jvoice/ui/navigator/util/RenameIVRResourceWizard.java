@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -150,7 +153,7 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 							throws CoreException {
 						initializeRefactoring();
 						if (resource instanceof IFile) {
-							renameBean();
+							renameBean(monitor);
 						}
 						superPerformFinish();
 
@@ -186,7 +189,8 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 					+ textoExtension);
 		}
 
-		private boolean renameBean() {
+		private boolean renameBean(IProgressMonitor monitor)
+				throws CoreException {
 			String newName = fNameField.getText();
 			ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
 			Resource emfRes = resourceSetImpl.createResource(URI
@@ -194,7 +198,6 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 							.toString(), true));
 			try {
 				emfRes.load(null);
-
 				for (EObject obj : emfRes.getContents()) {
 					if (obj instanceof VoiceDsl) {
 						((VoiceDsl) obj).setName(newName);
@@ -210,11 +213,21 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 								((Diagram) objeto).setName(newName);
 							}
 						}
+						IPath pathRecursos = new Path(resource.getName()
+								.replace(".jvflow", ".resources"));
+						IFolder folderRecursos = resource.getParent()
+								.getFolder(pathRecursos);
+						IPath newPath = pathRecursos.removeLastSegments(1)
+								.append(newName + ".resources");
+						if (folderRecursos.exists()) {
+							folderRecursos.move(newPath, true, monitor);
+						}
 					}
 				}
 				try {
 					emfRes.save(SaveOptions.newBuilder().noValidation()
 							.getOptions().toOptionsMap());
+
 				} catch (RuntimeException re) {
 					re.printStackTrace();
 				}
