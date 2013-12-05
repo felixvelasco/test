@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -30,15 +31,22 @@ import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.ui.features.AbstractPasteFeature;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.util.Arrays;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVElement;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.CallState;
+import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -70,11 +78,12 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		Object[] copies = getCopiesFromClipBoard(context);
 		Map<JVElement, PictogramElement> hm = new HashMap<>();
 		for (Object copy : copies) {
+
 			AddContext ac = new AddContext();
 			if (copy != null) {
 				if (isState(copy)) {
 					State state = (State) copy;
-
+					state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 					state.setName(generateName(((State) copy).getName(), context));
 					Flow targetFlow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 					// Si es una locution hay que copiar el voiceDsl al que
@@ -93,18 +102,69 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 						// voiceDsl que hemos copiado
 						locution.setLocution((VoiceDsl) targetPackage.getBean(voiceDsl.getName()));
 						state = locution;
-					}
-					targetFlow.getStates().add(state);
-					ac.setLocation(context.getX(), context.getY());
-					ac.setTargetContainer(getDiagram());
-					PictogramElement pe = addGraphicalRepresentation(ac, copy);
-					hm.put(state, pe);
+					} else if (state instanceof CallState) {
+						// Si es un estado execution comprobamos si tiene una instancia al bean referido desde el
+						// estado execution del que procede y si se llama igual. En caso contrario se deja como null.
+						CallState callState = (CallState) state;
+						boolean setNull = false;
+						if (targetFlow.getBeans() == null || targetFlow.getBeans().size() == 0) {
+							setNull = true;
+						} else {
+							for (ComponentBean bean : targetFlow.getBeans()) {
+								if (bean.getName().equals(callState.getBean().getName())) {
+									IProject project = ResourcesPlugin.getWorkspace().getRoot()
+											.findMember(EcoreUtil.getURI(targetFlow).toPlatformString(true))
+											.getProject();
+									IJavaProject jProject = JavaCore.create(project);
+									IType type;
+									try {
+										type = jProject.findType(bean.getFqdn());
+										IMethod[] methods = type.getMethods();
+										boolean hasMethod = false;
+										for (IMethod method : methods) {
+											if (method.getElementName().equals(callState.getMethodName())) {
+												hasMethod = true;
+											}
+										}
+										if (hasMethod) {
+											targetFlow.getStates().add(state);
+											ac.setLocation(context.getX(), context.getY());
+											ac.setTargetContainer(getDiagram());
+											PictogramElement pe = addGraphicalRepresentation(ac, copy);
+											hm.put(state, pe);
+										} else {
+											setNull = true;
+										}
+									} catch (JavaModelException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 
+								}
+
+							}
+
+						}
+						if (setNull) {
+							callState.setBean(null);
+							targetFlow.getStates().add(state);
+							ac.setLocation(context.getX(), context.getY());
+							ac.setTargetContainer(getDiagram());
+							PictogramElement pe = addGraphicalRepresentation(ac, copy);
+							hm.put(state, pe);
+						}
+
+					} else {
+						targetFlow.getStates().add(state);
+						ac.setLocation(context.getX(), context.getY());
+						ac.setTargetContainer(getDiagram());
+						PictogramElement pe = addGraphicalRepresentation(ac, copy);
+						hm.put(state, pe);
+					}
 				} else if (copy instanceof Note) {
 					Note note = (Note) copy;
-
+					note.eUnset(note.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 					Flow targetFlow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
-
 					targetFlow.getNotes().add(note);
 					ac.setLocation(context.getX(), context.getY());
 					ac.setTargetContainer(getDiagram());
@@ -117,6 +177,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		for (Object copy : copies) {
 			if (copy instanceof Transition) {
 				Transition transition = (Transition) copy;
+				transition.eUnset(transition.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 				State sourceState = transition.getSource();
 				State targetState = transition.getTarget();
 				Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());

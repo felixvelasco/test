@@ -36,32 +36,43 @@ public class CallStateSection extends ParametrizableStateSection {
 	@Override
 	public void refresh() {
 		super.refresh();
+		if (((CallState) state).getBean() != null) {
+			bean.text.setText(((CallState) state).getBean().getNameBean());
+			if (((CallState) state).getMethodName() != null) {
+				method.text.setText(((CallState) state).getMethodName());
+			} else {
+				method.text.setText("");
+			}
+		} else {
+			bean.text.setText("");
+			method.text.setText("");
+		}
 
-		bean.text.setText(((CallState) state).getBean().getNameBean());
-		method.text.setText(((CallState) state).getMethodName());
 	}
 
 	@Override
 	protected String[] getParameterNames(ParameterizedState state) {
 		CallState callState = (CallState) state;
 		String[] parameterNames = {};
-		try {
-			IProject project = ResourcesPlugin.getWorkspace().getRoot()
-					.findMember(EcoreUtil.getURI(callState).toPlatformString(true)).getProject();
-			IJavaProject jProject = JavaCore.create(project);
+		if (callState.getBean() != null) {
+			try {
+				IProject project = ResourcesPlugin.getWorkspace().getRoot()
+						.findMember(EcoreUtil.getURI(callState).toPlatformString(true)).getProject();
+				IJavaProject jProject = JavaCore.create(project);
 
-			IType type = jProject.findType(callState.getBean().getFqdn());
+				IType type = jProject.findType(callState.getBean().getFqdn());
 
-			IMethod[] methods = type.getMethods();
-			for (IMethod method : methods) {
-				if (method.getElementName().equals(callState.getMethodName())) {
-					parameterNames = method.getParameterNames();
+				IMethod[] methods = type.getMethods();
+				for (IMethod method : methods) {
+					if (method.getElementName().equals(callState.getMethodName())) {
+						parameterNames = method.getParameterNames();
+					}
+
 				}
 
+			} catch (JavaModelException e) {
+				e.printStackTrace();
 			}
-
-		} catch (JavaModelException e) {
-			e.printStackTrace();
 		}
 		return parameterNames;
 	}
