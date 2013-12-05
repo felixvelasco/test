@@ -36,9 +36,11 @@ public final class JVoiceApplicationConfigurator {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
+				ProjectImportConfiguration configuration = new ProjectImportConfiguration();
+				configuration.getResolverConfiguration().setResolveWorkspaceProjects(false);
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
 						getModel(groupId, artifactId, projectName, descProject), new String[] { "src/" },
-						new ProjectImportConfiguration(), monitor);
+						configuration, monitor);
 
 				result[0] = project;
 			}

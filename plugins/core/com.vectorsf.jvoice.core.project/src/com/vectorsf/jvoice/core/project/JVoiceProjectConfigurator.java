@@ -45,9 +45,11 @@ public final class JVoiceProjectConfigurator {
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
+				ProjectImportConfiguration configuration = new ProjectImportConfiguration();
+				configuration.getResolverConfiguration().setResolveWorkspaceProjects(false);
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
 						getModel(groupId, artifactId, projectName, descriptionProject),
-						new String[] { "src/main/java", "src/main/resources/jv"}, new ProjectImportConfiguration(),
+						new String[] { "src/main/java", "src/main/resources/jv"}, configuration,
 						monitor);
 
 				result[0] = project;
@@ -57,15 +59,17 @@ public final class JVoiceProjectConfigurator {
 		ResourcesPlugin.getWorkspace().run(action, null);
 		IProject project = result[0];
 		ResourcesPlugin.getWorkspace().run(new AddJVoiceNatureRunnable(project), null);
-		
+			
 		String carpetaBeans = JVoiceModuleNature.getDefaultComponentsPackageName(project.getName());
 		IJavaProject javaProject = JavaCore.create(result[0]);
 		IFolder folder = project.getFolder("src/main/java");
 		IPackageFragmentRoot defaultPackage = javaProject
 		        .getPackageFragmentRoot(folder);
 		
-
+		
+		
 		defaultPackage.createPackageFragment(carpetaBeans, true, null);
+		
 		return result[0];
 	}
 
