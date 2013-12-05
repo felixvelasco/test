@@ -198,9 +198,10 @@ public class CopyMojo extends AbstractMojo {
 	 */
 	protected void generateFile(File ruta, String inFileName) {
 		File targetFile = new File(ruta, inFileName);
-		if (!targetFile.exists()) {
 			try {
+				if (!targetFile.exists()) {
 				targetFile.createNewFile();
+				}
 				if (inFileName.equals("web.xml")) {
 					XMLGeneratorWeb.generate(targetFile);
 				} else if (inFileName.equals("servlet-context.xml")) {
@@ -218,8 +219,8 @@ public class CopyMojo extends AbstractMojo {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		if (inFileName.equals("app-context.xml")) {
+
+			if (inFileName.equals("app-context.xml")) {
 			XMLGeneratorAPP.generate(targetFile, modules);
 		}
 	}
