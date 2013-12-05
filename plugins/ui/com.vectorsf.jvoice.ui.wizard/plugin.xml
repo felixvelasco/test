@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="com.vectorsf.jvoice.diagram.core.category"
+            category="com.vectorsf.jvoice.ui.wizards.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateProjectJVoice"
             icon="res/obj16/icon_nav_project.png"
             id="com.vectorsf.jvoice.ui.project.wizard"
@@ -12,7 +12,7 @@
             project="true">
       </wizard>
       <wizard
-         category="com.vectorsf.jvoice.diagram.core.category"
+         category="com.vectorsf.jvoice.ui.wizards.category"
          class="com.vectorsf.jvoice.ui.wizard.create.CreateJVPackageWizard"
          icon="res/obj16/icon_nav_boxempty.png"
          id="com.vectorsf.jvoice.ui.package.wizard"
@@ -20,7 +20,7 @@
          project="false">
       </wizard>
      <wizard
-           category="com.vectorsf.jvoice.diagram.core.category"
+           category="com.vectorsf.jvoice.ui.wizards.category"
            class="com.vectorsf.jvoice.ui.wizard.create.CreateDiagramJVoice"
            icon="res/obj16/icon_nav_flow.png"
            id="com.vectorsf.jvoice.ui.wizard.DiagramJVoice"
@@ -28,7 +28,7 @@
            project="false">
       </wizard>
       <wizard
-            category="com.vectorsf.jvoice.diagram.core.category"
+            category="com.vectorsf.jvoice.ui.wizards.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice"
             icon="res/obj16/icon_nav_locution.png"
             id="com.vectorsf.jvoice.ui.wizard.wizardDSL"
@@ -36,13 +36,17 @@
             project="false">
       </wizard>
       <wizard
-            category="com.vectorsf.jvoice.diagram.core.category"
+            category="com.vectorsf.jvoice.ui.wizards.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateJVoiceApplicationWizard"
             icon="res/obj16/icon_nav_project.png"
             id="com.vectorsf.jvoice.ui.application.wizard"
             name="%wizard.application.name"
             project="true">
       </wizard>
+      <category
+            id="com.vectorsf.jvoice.ui.wizards.category"
+            name="%wizard.category.name">
+      </category>
 
    </extension>
 </plugin>
