@@ -62,10 +62,22 @@ class SpringWebFlowGenerator {
 		xsi:schemaLocation="http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 		parent="«projectName»/errorHandler"
-		start-state= "«GetNameTransOut.Name(initialState)»" >
+		start-state= "_jVoiceCheckInit" >
 		«FOR param: flow.parameters»
 		<input name="«param»"/>
 		«ENDFOR»
+		
+		<action-state id="_jVoiceCheckInit">
+			<evaluate expression="jVoiceArchData.initialized == false" />
+				<transition on="true" to="_jVoiceInit"/>
+				<transition to="«GetNameTransOut.Name(initialState)»"/>
+			</action-state>
+		
+		<view-state id="_jVoiceInit" view="_init" model="jVoiceArchData">
+			<transition to="«GetNameTransOut.Name(initialState)»" >
+				<set name="jVoiceArchData.initialized" value="true"/>
+			</transition>
+		</view-state>
 	'''
 	
 	def getInitialState() {

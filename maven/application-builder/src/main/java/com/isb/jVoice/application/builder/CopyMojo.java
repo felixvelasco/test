@@ -153,25 +153,40 @@ public class CopyMojo extends AbstractMojo {
 		}
 		// Creamos la carpeta estatica spring/appServlet
 		File appServlet = new File(outputDirectory, APPSERVLET);
-		getDir(appServlet);
+		appServlet.mkdirs();
 		// Generamos el XML servlet-context.xml de la carpeta spring
-		generateFile(appServlet, "servlet-context.xml");
+		XMLGeneratorServlet.generate(new File(appServlet, "servlet-context.xml"));
 
 		// Creamos el app-context.xml en dentro de la carpeta WEB-INF
 		File spring = new File(outputDirectory, "spring");
-		generateFile(spring, "app-context.xml");
-		generateFile(spring, "jvoiceframework-context.xml");
-		generateFile(spring, "root-context.xml");
+		XMLGeneratorAPP.generate(new File(spring, "app-context.xml"), modules);
+		XMLGeneratorJFC.generate(new File(spring, "jvoiceframework-context.xml"));
+		XMLGeneratorRC.generate(new File(spring, "root-context.xml"));
 
 		// Creamos el web.xml en dentro de la carpeta WEB-INF
-		generateFile(outputDirectory, "web.xml");
+		XMLGeneratorWeb.generate(new File(outputDirectory, "web.xml"));
 
 		// Creamos la carpeta estatica views
 		File views = new File(outputDirectory, "views");
-		getDir(views);
-		generateFile(views, "renderHTML.jsp");
-		generateFile(views, "renderVXI.jsp");
+		views.mkdirs();
+		XMLGeneratorRHTML.generate(new File(views, "renderHTML.jsp"));
+		XMLGeneratorRVXI.generate(new File(views, "renderVXI.jsp"));
+		copyFile("_init.jsp", new File(views, "_init.jsp"));
 
+	}
+
+	private void copyFile(String origName, File destFile) throws MojoExecutionException {
+		try (InputStream is = getClass().getResourceAsStream("/static/" + origName);
+				FileOutputStream fos = new FileOutputStream(destFile)) {
+			int read = -1;
+			byte[] buf = new byte[4096];
+
+			while ((read = is.read(buf)) != -1) {
+				fos.write(buf, 0, read);
+			}
+		} catch (IOException e) {
+			throw new MojoExecutionException("Error copying resources", e);
+		}
 	}
 
 	/**
@@ -193,49 +208,6 @@ public class CopyMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @param appServlet
-	 * @param name
-	 */
-	protected void generateFile(File ruta, String inFileName) {
-		File targetFile = new File(ruta, inFileName);
-			try {
-				if (!targetFile.exists()) {
-				targetFile.createNewFile();
-				}
-				if (inFileName.equals("web.xml")) {
-					XMLGeneratorWeb.generate(targetFile);
-				} else if (inFileName.equals("servlet-context.xml")) {
-					XMLGeneratorServlet.generate(targetFile);
-				} else if (inFileName.equals("renderHTML.jsp")) {
-					XMLGeneratorRHTML.generate(targetFile);
-				} else if (inFileName.equals("renderVXI.jsp")) {
-					XMLGeneratorRVXI.generate(targetFile);
-				} else if (inFileName.equals("jvoiceframework-context.xml")) {
-					XMLGeneratorJFC.generate(targetFile);
-				} else if (inFileName.equals("root-context.xml")) {
-					XMLGeneratorRC.generate(targetFile);
-				}
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			if (inFileName.equals("app-context.xml")) {
-			XMLGeneratorAPP.generate(targetFile, modules);
-		}
-	}
-
-	/**
-	 * @param pathname
-	 * 
-	 */
-	protected void getDir(File path) {
-		if (!path.exists()) {
-			path.mkdirs();
-		}
-	}
-
-	/**
 	 * @param name
 	 * 
 	 */
@@ -251,7 +223,7 @@ public class CopyMojo extends AbstractMojo {
 			/*
 			 * Comprobamos que exista el directorio base donde vamos a crear los XML. Si no existe, se crea.
 			 */
-			getDir(pathname);
+			pathname.mkdirs();
 
 			destino = new File(pathname, ruta.getName().substring(0, ruta.getName().indexOf(DOT)) + FLOW
 					+ ruta.getName().substring(ruta.getName().indexOf(DOT)));
@@ -262,7 +234,7 @@ public class CopyMojo extends AbstractMojo {
 			/*
 			 * Comprobamos que exista el directorio base donde vamos a crear los wav. Si no existe, se crea.
 			 */
-			getDir(pathname);
+			pathname.mkdirs();
 
 			destino = new File(pathname, ruta.getName());
 		}
