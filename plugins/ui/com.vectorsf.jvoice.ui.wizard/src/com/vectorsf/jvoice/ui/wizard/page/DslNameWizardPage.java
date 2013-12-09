@@ -389,7 +389,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		box = new Combo(projectGroup, SWT.READ_ONLY);
 		box.setEnabled(fromNavigator);
-		box.setItems(new String[] { "Menu", "Input", "Prompt", "Record" });
+		box.setItems(new String[] { "Menu", "Input", "Output", "Record" });
 
 		if (targetClazz != null) {
 			if (targetClazz.equals(MenuDsl.class)) {
@@ -566,7 +566,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 				} else if (seleccion.equals("Input")) {
 					contents = "inputname " + dslName + "\n\n" + configuration + grammars + audios;
 
-				} else if (seleccion.equals("Prompt")) {
+				} else if (seleccion.equals("Output")) {
 					contents = "outputname " + dslName + "\n\n" + variables + audios;
 
 				} else if (seleccion.equals("Record")) {
