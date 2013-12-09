@@ -849,5 +849,15 @@
          </enablement>
       </renameParticipant>
    </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="com.vectorsf.jvoice.ui.navigator.util.ProjectPropertyTester"
+            id="com.vectorsf.jvoice.ui.navigator.propertyTesterProject"
+            namespace="org.eclipse.core.resources"
+            properties="open"
+            type="com.vectorsf.jvoice.model.base.JVProject">
+      </propertyTester>
+   </extension>
 
 </plugin>
