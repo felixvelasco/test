@@ -14,13 +14,13 @@ import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.ui.navigator.util.AbstractFlowModificationOperation;
 
-public class RemoveFlowParameterScopeHandler extends AbstractModifyFlowHandler {
+public class RemoveFlowParameterHandler extends AbstractModifyFlowHandler {
 
 	private AttributeValueWrapperItemProvider value;
 
-	public RemoveFlowParameterScopeHandler() {
+	public RemoveFlowParameterHandler() {
 		super();
-		setOperation(new RemoveFlowParameterScopeOperation());
+		setOperation(new RemoveFlowParameterOperation());
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class RemoveFlowParameterScopeHandler extends AbstractModifyFlowHandler {
 		return false;
 	}
 
-	public class RemoveFlowParameterScopeOperation extends AbstractFlowModificationOperation {
+	public class RemoveFlowParameterOperation extends AbstractFlowModificationOperation {
 
 		@Override
 		protected Command getChangeCommand(EditingDomain domain, Flow flow) {
