@@ -58,7 +58,7 @@ public final class JVoiceApplicationConfigurator {
 
 		model.setGroupId(groupId);
 		model.setArtifactId(artifactId);
-		model.setVersion("1.0.0");
+		model.setVersion("1.0.0-SNAPSHOT");
 		model.setPackaging("war");
 
 		model.setName(projectName);

@@ -49,27 +49,23 @@ public final class JVoiceProjectConfigurator {
 				configuration.getResolverConfiguration().setResolveWorkspaceProjects(false);
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
 						getModel(groupId, artifactId, projectName, descriptionProject),
-						new String[] { "src/main/java", "src/main/resources/jv"}, configuration,
-						monitor);
+						new String[] { "src/main/java", "src/main/resources/jv" }, configuration, monitor);
 
 				result[0] = project;
 			}
 		};
-		
+
 		ResourcesPlugin.getWorkspace().run(action, null);
 		IProject project = result[0];
 		ResourcesPlugin.getWorkspace().run(new AddJVoiceNatureRunnable(project), null);
-			
+
 		String carpetaBeans = JVoiceModuleNature.getDefaultComponentsPackageName(project.getName());
 		IJavaProject javaProject = JavaCore.create(result[0]);
 		IFolder folder = project.getFolder("src/main/java");
-		IPackageFragmentRoot defaultPackage = javaProject
-		        .getPackageFragmentRoot(folder);
-		
-		
-		
+		IPackageFragmentRoot defaultPackage = javaProject.getPackageFragmentRoot(folder);
+
 		defaultPackage.createPackageFragment(carpetaBeans, true, null);
-		
+
 		return result[0];
 	}
 
@@ -79,7 +75,7 @@ public final class JVoiceProjectConfigurator {
 
 		model.setGroupId(groupId);
 		model.setArtifactId(artifactId);
-		model.setVersion("1.0.0");
+		model.setVersion("1.0.0-SNAPSHOT");
 		model.setPackaging("jar");
 
 		model.setName(projectName);
@@ -100,9 +96,9 @@ public final class JVoiceProjectConfigurator {
 		PluginExecution voiceDSL = new PluginExecution();
 		voiceDSL.setPhase("generate-sources");
 		voiceDSL.addGoal("generateFlow");
-		
+
 		dsl_builder.addExecution(voiceDSL);
-		
+
 		Plugin dsl_builder2 = new Plugin();
 		dsl_builder2.setGroupId("com.vectorsf.jvoice");
 		dsl_builder2.setArtifactId("dsl-builder");
