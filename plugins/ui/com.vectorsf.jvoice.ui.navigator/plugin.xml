@@ -624,7 +624,7 @@
          </command>
          <command
                commandId="com.vectorsf.jvoice.ui.navigator.removeBeanScope"
-               label="Remove bean"
+               label="%command.label.removeBeanScope"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -636,6 +636,26 @@
                      <or>
                         <instanceof
                               value="com.vectorsf.jvoice.model.operations.ComponentBean">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+                  <command
+               commandId="com.vectorsf.jvoice.ui.navigator.removeFlowParameter"
+               label="%command.label.removeParameter"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="org.eclipse.emf.edit.provider.AttributeValueWrapperItemProvider">
                         </instanceof>
                      </or>
                   </iterate>
@@ -805,7 +825,12 @@
       <command
             defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.RemoveBeanScopeHandler"
             id="com.vectorsf.jvoice.ui.navigator.removeBeanScope"
-            name="Remove bean to flow scope">
+            name="%command.name.removeBeanScope">
+      </command>
+      <command
+            defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.RemoveFlowParameterHandler"
+            id="com.vectorsf.jvoice.ui.navigator.removeFlowParameter"
+            name="%command.name.removeParameter">
       </command>
    </extension>
    <extension

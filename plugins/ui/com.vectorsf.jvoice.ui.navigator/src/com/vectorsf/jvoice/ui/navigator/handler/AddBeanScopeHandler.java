@@ -1,7 +1,6 @@
 package com.vectorsf.jvoice.ui.navigator.handler;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -17,18 +16,20 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
+import com.vectorsf.jvoice.ui.navigator.util.AbstractFlowModificationOperation;
 
 public class AddBeanScopeHandler extends AbstractModifyFlowHandler {
+
+	public AddBeanScopeHandler() {
+		super();
+		setOperation(new AddBeanScopeOperation());
+	}
 
 	private ComponentBean componentBean;
 
 	@Override
-	protected Command getChangeCommand(EditingDomain domain, Flow flow) throws ExecutionException {
-		return AddCommand.create(domain, flow, OperationsPackage.eINSTANCE.getFlow_Beans(), componentBean);
-	}
-
-	@Override
-	protected boolean canExecute(ExecutionEvent event) throws ExecutionException {
+	protected boolean canExecute(ExecutionEvent event) {
+		Flow flow = operation.getOriginalFlow();
 		IProject project = getProject(flow);
 		Shell shell = HandlerUtil.getActiveShell(event);
 
@@ -49,6 +50,15 @@ public class AddBeanScopeHandler extends AbstractModifyFlowHandler {
 		} catch (JavaModelException e) {
 			return null;
 		}
+	}
+
+	public class AddBeanScopeOperation extends AbstractFlowModificationOperation {
+
+		@Override
+		protected Command getChangeCommand(EditingDomain domain, Flow flow) {
+			return AddCommand.create(domain, flow, OperationsPackage.eINSTANCE.getFlow_Beans(), componentBean);
+		}
+
 	}
 
 }
