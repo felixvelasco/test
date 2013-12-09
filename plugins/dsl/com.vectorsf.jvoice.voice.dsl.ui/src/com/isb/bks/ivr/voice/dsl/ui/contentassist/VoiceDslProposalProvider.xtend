@@ -3,24 +3,49 @@
  */
 package com.isb.bks.ivr.voice.dsl.ui.contentassist
 
-import com.isb.bks.ivr.voice.dsl.ui.contentassist.AbstractVoiceDslProposalProvider
-import org.eclipse.xtext.Assignment
+import com.google.common.collect.Sets
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio
+import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.Assignment
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
-import com.google.common.collect.Sets
 
 /**
  * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant
  */
 class VoiceDslProposalProvider extends AbstractVoiceDslProposalProvider {
-	
-	override completeConfiguration_ConfigValue(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		val      FILTERED_KEYWORDS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts", "confidence", "bargein", "timeout", "interdigittimeout", "beep", "dtmfterm", "maxtime", "finalsilence", "keep");
-		
-		for (String keyword: FILTERED_KEYWORDS){
+
+	static val CONFIGURATION_KEYS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts", "confidence", "bargein",
+		"timeout", "interdigittimeout", "beep", "dtmfterm", "maxtime", "finalsilence", "keep");
+
+	override completeConfiguration_ConfigValue(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+
+		for (String keyword : CONFIGURATION_KEYS) {
 			acceptor.accept(createCompletionProposal(keyword, keyword, null, context));
 		}
 		super.completeConfiguration_ConfigValue(model, assignment, context, acceptor);
+	}
+
+	def completeSimpleAudio_Src(Audio audio, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+
+		var uri = audio.eResource.URI
+		var project = ResourcesPlugin.workspace.root.findMember(uri.toPlatformString(true)).project;
+		var audiosFolder = project.getFolder("/src/main/resources/audios")
+		if (audiosFolder.exists)
+		{
+			for (file: audiosFolder.members)
+			{
+				var name = file.name;
+				if (name.endsWith(".wav")) {
+					var basename = name.substring(0, name.lastIndexOf('.'));
+					acceptor.accept(createCompletionProposal('"' + basename + '"', basename, null, context));
+				}
+			}
+		}
+
+		super.completeSimpleAudio_Src(audio, assignment, context, acceptor);
 	}
 }
