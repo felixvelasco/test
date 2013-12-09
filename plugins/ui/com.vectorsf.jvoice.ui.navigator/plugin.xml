@@ -94,6 +94,10 @@
                   separator="true">
             </insertionPoint>
             <insertionPoint
+                  name="group.search"
+                  separator="true">
+            </insertionPoint>
+            <insertionPoint
                   name="group.properties"
                   separator="true">
             </insertionPoint>
