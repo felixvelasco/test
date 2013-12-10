@@ -38,7 +38,7 @@ public interface State extends NamedElement {
 	 * @return the value of the '<em>Incoming Transitions</em>' reference list.
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getState_IncomingTransitions()
 	 * @see com.vectorsf.jvoice.model.operations.Transition#getTarget
-	 * @model opposite="target" required="true"
+	 * @model opposite="target"
 	 * @generated
 	 */
 	EList<Transition> getIncomingTransitions();
@@ -56,7 +56,7 @@ public interface State extends NamedElement {
 	 * @return the value of the '<em>Outgoing Transitions</em>' reference list.
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getState_OutgoingTransitions()
 	 * @see com.vectorsf.jvoice.model.operations.Transition#getSource
-	 * @model opposite="source" required="true"
+	 * @model opposite="source"
 	 * @generated
 	 */
 	EList<Transition> getOutgoingTransitions();
