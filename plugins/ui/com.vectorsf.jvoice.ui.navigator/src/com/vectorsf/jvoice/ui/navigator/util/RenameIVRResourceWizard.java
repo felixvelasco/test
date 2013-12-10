@@ -35,14 +35,12 @@ import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
-@SuppressWarnings("restriction")
 public class RenameIVRResourceWizard extends RefactoringWizard {
 
-	private static IResource resource;
-	private static String nombre;
-	private static String textoExtension;
+	private IResource resource;
+	RenameResourceRefactoringConfigurationPage reconfigRename;
 
-	@SuppressWarnings("static-access")
+	@SuppressWarnings("restriction")
 	public RenameIVRResourceWizard(IResource resource) {
 
 		super(new RenameRefactoring(new RenameResourceProcessor(resource)),
@@ -53,23 +51,43 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 		this.resource = resource;
 	}
 
+	@SuppressWarnings("restriction")
 	@Override
 	protected void addUserInputPages() {
 		RenameResourceProcessor processor = (RenameResourceProcessor) getRefactoring()
 				.getAdapter(RenameResourceProcessor.class);
-		addPage(new RenameResourceRefactoringConfigurationPage(processor));
+
+		reconfigRename = new RenameResourceRefactoringConfigurationPage(
+				processor, resource);
+		addPage(reconfigRename);
+	}
+
+	public boolean isDsl() {
+		return reconfigRename.isDsl();
+	}
+
+	public String getNewName() {
+		return reconfigRename.getText();
 	}
 
 	private static class RenameResourceRefactoringConfigurationPage extends
 			UserInputWizardPage {
 
+		@SuppressWarnings("restriction")
 		private final RenameResourceProcessor fRefactoringProcessor;
 		private Text fNameField;
+		private IResource resource;
+		private String nombre;
+		private String textoExtension;
+		private boolean isDsl = false;
+		private String newName;
 
+		@SuppressWarnings("restriction")
 		public RenameResourceRefactoringConfigurationPage(
-				RenameResourceProcessor processor) {
+				RenameResourceProcessor processor, IResource resource) {
 			super("RenameResourceRefactoringInputPage"); //$NON-NLS-1$
 			fRefactoringProcessor = processor;
+			this.resource = resource;
 		}
 
 		/*
@@ -79,6 +97,7 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 		 * org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt
 		 * .widgets.Composite)
 		 */
+		@SuppressWarnings("restriction")
 		@Override
 		public void createControl(Composite parent) {
 			Composite composite = new Composite(parent, SWT.NONE);
@@ -128,6 +147,7 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 		protected final void validatePage() {
 			String text = fNameField.getText();
 
+			@SuppressWarnings("restriction")
 			RefactoringStatus status = fRefactoringProcessor
 					.validateNewElementName(text + "." + textoExtension);
 
@@ -153,7 +173,6 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 							renameBean(monitor);
 						}
 						superPerformFinish();
-
 					}
 				};
 				ResourcesPlugin.getWorkspace().run(runnable, null);
@@ -181,6 +200,7 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 			return super.getNextPage();
 		}
 
+		@SuppressWarnings("restriction")
 		private void initializeRefactoring() {
 			fRefactoringProcessor.setNewResourceName(fNameField.getText() + "."
 					+ textoExtension);
@@ -188,42 +208,50 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 
 		private boolean renameBean(IProgressMonitor monitor)
 				throws CoreException {
-			String newName = fNameField.getText();
+			newName = fNameField.getText();
 			ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
 			Resource emfRes = resourceSetImpl.createResource(URI
 					.createPlatformResourceURI(resource.getFullPath()
 							.toString(), true));
 			try {
 				emfRes.load(null);
-				for (EObject obj : emfRes.getContents()) {
-					if (obj instanceof VoiceDsl) {
-						((VoiceDsl) obj).setName(newName);
+				EObject obj = emfRes.getContents().get(0);
+				if (emfRes.getContents().get(0) instanceof VoiceDsl) {
+					((VoiceDsl) obj).setName(newName);
+					isDsl = true;
 
-					} else if (obj instanceof JVBean) {
-						((JVBean) obj).setName(newName);
-						((JVBean) obj).setDescription(newName);
-						List<EObject> listaObjetos = ((Flow) obj).eResource()
-								.getContents();
-						for (int i = 0; i < listaObjetos.size(); i++) {
-							EObject objeto = listaObjetos.get(i);
-							if (objeto instanceof Diagram) {
-								((Diagram) objeto).setName(newName);
-							}
+				} else if (obj instanceof JVBean) {
+					((JVBean) obj).setName(newName);
+					((JVBean) obj).setDescription(newName);
+					List<EObject> listaObjetos = ((Flow) obj).eResource()
+							.getContents();
+					for (int i = 0; i < listaObjetos.size(); i++) {
+						EObject objeto = listaObjetos.get(i);
+						if (objeto instanceof Diagram) {
+							((Diagram) objeto).setName(newName);
 						}
 					}
-				}
-				try {
-					emfRes.save(SaveOptions.newBuilder().noValidation()
-							.getOptions().toOptionsMap());
+					try {
+						emfRes.save(SaveOptions.newBuilder().noValidation()
+								.getOptions().toOptionsMap());
 
-				} catch (RuntimeException re) {
-					re.printStackTrace();
+					} catch (RuntimeException re) {
+						re.printStackTrace();
+					}
 				}
 				return true;
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
 			}
+		}
+
+		public boolean isDsl() {
+			return isDsl;
+		}
+
+		public String getText() {
+			return newName;
 		}
 	}
 }
