@@ -56,7 +56,7 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		}
 
 		URI uri = null;
-		if (vegaURI.toString().startsWith(VEGA_URI)) {
+		if (mproject != null && vegaURI.toString().startsWith(VEGA_URI)) {
 			try {
 				mproject.getMavenProject(new NullProgressMonitor());
 				String uriPath = vegaURI.path();
@@ -83,7 +83,8 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			searchMavenProject();
 		}
 		URI vegaURI = null;
-		if (mproject.getMavenProject() != null && !isLocalUri(uri)) {
+		if (mproject != null && mproject.getMavenProject() != null
+				&& !isLocalUri(uri)) {
 			String sScheme = uri.scheme();
 			if (PLATFORM.equals(sScheme)) {
 				vegaURI = getURIPlatform(uri);
@@ -110,8 +111,10 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			uriG = URI.createURI(uriG.toPlatformString(true));
 		}
 		IResource resource = ws.getRoot().findMember(uriG.toString());
-		mproject = MavenPlugin.getMavenProjectRegistry().getProject(
-				resource.getProject());
+		if (resource != null) {
+			mproject = MavenPlugin.getMavenProjectRegistry().getProject(
+					resource.getProject());
+		}
 	}
 
 	private URI searchURIs(URI uri, URI vegaURI, String fileNameToSearch,
