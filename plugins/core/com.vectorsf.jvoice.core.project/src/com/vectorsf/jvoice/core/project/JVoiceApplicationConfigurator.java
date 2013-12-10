@@ -12,6 +12,7 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.project.ProjectImportConfiguration;
 
@@ -29,8 +30,9 @@ public final class JVoiceApplicationConfigurator {
 	}
 
 	public static IProject createApplication(final String groupId, final String artifactId, final String projectName,
-			final String descProject) throws CoreException {
+			final String descProject, IProgressMonitor monitor) throws CoreException {
 		final IProject result[] = new IProject[1];
+		SubProgressMonitor sub1 = new SubProgressMonitor(monitor, 85);
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			@Override
@@ -45,9 +47,11 @@ public final class JVoiceApplicationConfigurator {
 				result[0] = project;
 			}
 		};
-		ResourcesPlugin.getWorkspace().run(action, null);
+		ResourcesPlugin.getWorkspace().run(action, sub1);
 		IProject project = result[0];
-		ResourcesPlugin.getWorkspace().run(new AddJVoiceNatureRunnable(project), null);
+		SubProgressMonitor sub2 = new SubProgressMonitor(monitor, 15);
+		ResourcesPlugin.getWorkspace().run(new AddJVoiceNatureRunnable(project), sub2);
+		monitor.done();
 
 		return result[0];
 	}
@@ -99,16 +103,22 @@ public final class JVoiceApplicationConfigurator {
 
 		@Override
 		public void run(IProgressMonitor monitor) throws CoreException {
+			monitor.beginTask("Add project nature", 8);
 			IProjectDescription description = project.getDescription();
 			String[] natureIds = description.getNatureIds();
+			monitor.worked(1);
 
 			String[] newNatureIds = new String[natureIds.length + 2];
 			System.arraycopy(natureIds, 0, newNatureIds, 1, natureIds.length);
 			newNatureIds[0] = JVoiceModuleNature.NATURE_ID;
 			newNatureIds[newNatureIds.length - 1] = JVoiceApplicationNature.NATURE_ID;
+			monitor.worked(1);
 			description.setNatureIds(newNatureIds);
+			monitor.worked(1);
 
 			this.project.setDescription(description, null);
+			monitor.worked(5);
+			monitor.done();
 		}
 	}
 

@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
@@ -38,8 +39,9 @@ public final class JVoiceProjectConfigurator {
 	}
 
 	public static IProject createProject(final String groupId, final String artifactId, final String projectName,
-			final String descriptionProject) throws CoreException {
+			final String descriptionProject, IProgressMonitor monitor) throws CoreException {
 		final IProject result[] = new IProject[1];
+		SubProgressMonitor sub1 = new SubProgressMonitor(monitor, 85);
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			@Override
@@ -55,9 +57,10 @@ public final class JVoiceProjectConfigurator {
 			}
 		};
 
-		ResourcesPlugin.getWorkspace().run(action, null);
+		ResourcesPlugin.getWorkspace().run(action, sub1);
 		IProject project = result[0];
-		ResourcesPlugin.getWorkspace().run(new AddJVoiceNatureRunnable(project), null);
+		SubProgressMonitor sub2 = new SubProgressMonitor(monitor, 10);
+		ResourcesPlugin.getWorkspace().run(new AddJVoiceNatureRunnable(project), sub2);
 
 		String carpetaBeans = JVoiceModuleNature.getDefaultComponentsPackageName(project.getName());
 		IJavaProject javaProject = JavaCore.create(result[0]);
@@ -65,6 +68,8 @@ public final class JVoiceProjectConfigurator {
 		IPackageFragmentRoot defaultPackage = javaProject.getPackageFragmentRoot(folder);
 
 		defaultPackage.createPackageFragment(carpetaBeans, true, null);
+		monitor.worked(5);
+		monitor.done();
 
 		return result[0];
 	}

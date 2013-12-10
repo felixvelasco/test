@@ -1,6 +1,10 @@
 package com.vectorsf.jvoice.ui.wizard.create;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -39,6 +43,11 @@ public class CreateJVoiceApplicationWizard extends BasicNewResourceWizard {
 	}
 
 	@Override
+	public boolean needsProgressMonitor() {
+		return true;
+	}
+
+	@Override
 	public boolean performFinish() {
 
 		final String applicationName = ((ProjectNameWizardPage) getPage(PAGE_NAME_APPLICATION_NAME)).getText();
@@ -47,9 +56,23 @@ public class CreateJVoiceApplicationWizard extends BasicNewResourceWizard {
 				.getDescription();
 
 		try {
-			JVoiceApplicationConfigurator.createApplication(applicationName, applicationName, applicationName,
-					descriptionProject);
-		} catch (CoreException e) {
+			getContainer().run(true, true, new IRunnableWithProgress() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+					try {
+						monitor.beginTask("Create application", 100);
+						JVoiceApplicationConfigurator.createApplication(applicationName, applicationName,
+								applicationName, descriptionProject, monitor);
+					} catch (CoreException e) {
+						throw new InvocationTargetException(e);
+					} finally {
+						monitor.done();
+					}
+				}
+			});
+
+		} catch (InvocationTargetException | InterruptedException e) {
 			return false;
 		}
 

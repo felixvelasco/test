@@ -3,8 +3,6 @@
  */
 package com.vectorsf.jvoice.ui.diagram.properties.test;
 
-import static org.junit.Assert.fail;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -39,17 +38,20 @@ import org.osgi.framework.Bundle;
 
 import com.vectorsf.jvoice.core.project.JVoiceProjectConfigurator;
 
+import static org.junit.Assert.fail;
+
 /**
  * @author xIS16396
- *
+ * 
  */
 public class SWTBotHelper {
 	protected String rutaProperties = "src/main/config/properties";
 
 	protected static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.ui.diagram.properties.test");
 
-	private SWTBotHelper() {}
-	
+	private SWTBotHelper() {
+	}
+
 	public static void openView(SWTWorkbenchBot bot, String node, String view) {
 		bot.menu("Window").menu("Show View").menu("Other...").click();
 		SWTBotShell shell1 = bot.shell("Show View");
@@ -58,7 +60,7 @@ public class SWTBotHelper {
 		bot.button("OK").click();
 
 	}
-	
+
 	public static void openPerspective(SWTWorkbenchBot bot, String perspective) {
 		bot.menu("Window").menu("Open Perspective").menu("Other...").click();
 		SWTBotShell openPerspectiveShell = bot.shell("Open Perspective");
@@ -67,7 +69,7 @@ public class SWTBotHelper {
 		bot.button("OK").click();
 
 	}
-	
+
 	public static void closeWelcomeView(SWTWorkbenchBot bot) {
 		try {
 			bot.viewByTitle("Welcome").close();
@@ -75,7 +77,7 @@ public class SWTBotHelper {
 			// do nothing
 		}
 	}
-	
+
 	public static void executeWksRunnable(IWorkspaceRunnable runnable) throws CoreException {
 		ResourcesPlugin.getWorkspace().run(runnable, null);
 	}
@@ -85,7 +87,7 @@ public class SWTBotHelper {
 	}
 
 	public static IProject createProject(final String name) throws CoreException {
-		return JVoiceProjectConfigurator.createProject(name, name, name, "test module");
+		return JVoiceProjectConfigurator.createProject(name, name, name, "test module", new NullProgressMonitor());
 	}
 
 	public static IFolder createFolders(final IProject project, final String ruta) throws CoreException {
@@ -162,10 +164,10 @@ public class SWTBotHelper {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				try{
-				project.delete(true, true, monitor);
-				}catch(Exception e){
-					for (int i = 0; i < 10; i++){ 
+				try {
+					project.delete(true, true, monitor);
+				} catch (Exception e) {
+					for (int i = 0; i < 10; i++) {
 						project.delete(true, true, monitor);
 					}
 				}
@@ -229,14 +231,13 @@ public class SWTBotHelper {
 			return null;
 		}
 	}
-	
+
 	public static void openFile(final IFile file) {
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
-				IWorkbenchPage activePage = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getActivePage();
+				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				try {
 					IDE.openEditor(activePage, file);
 				} catch (PartInitException e) {
@@ -245,7 +246,7 @@ public class SWTBotHelper {
 			}
 		});
 	}
-	
+
 	public static SWTBotGefEditor getGefEditor(SWTGefBot bot) {
 		SWTBotEditor activeEditor = bot.activeEditor();
 		String title = activeEditor.getTitle();

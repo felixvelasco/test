@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.osgi.framework.Bundle;
@@ -67,11 +68,12 @@ public class ResourcesHelper {
 	}
 
 	public static IProject createProject(final String name) throws CoreException {
-		return JVoiceProjectConfigurator.createProject(name, name, name, "test module");
+		return JVoiceProjectConfigurator.createProject(name, name, name, "test module", new NullProgressMonitor());
 	}
-	
+
 	public static IProject createApplicationProject(final String name) throws CoreException {
-		return JVoiceApplicationConfigurator.createApplication(name, name, name, "test application");
+		return JVoiceApplicationConfigurator.createApplication(name, name, name, "test application",
+				new NullProgressMonitor());
 	}
 
 	public static IFolder createFolders(final IProject project, final String ruta) throws CoreException {
@@ -152,7 +154,7 @@ public class ResourcesHelper {
 			}
 		});
 	}
-	
+
 	public static void deleteApplicationProject(final IProject project) throws CoreException {
 		safelyRetry(new IWorkspaceRunnable() {
 
