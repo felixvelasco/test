@@ -38,7 +38,7 @@
       <wizard
             category="com.vectorsf.jvoice.ui.wizards.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateJVoiceApplicationWizard"
-            icon="res/obj16/icon_nav_project.png"
+            icon="res/obj16/icon_nav_app.png"
             id="com.vectorsf.jvoice.ui.application.wizard"
             name="%wizard.application.name"
             project="true">
