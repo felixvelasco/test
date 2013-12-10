@@ -3,10 +3,10 @@
  */
 package com.isb.bks.ivr.voice.dsl.validation;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
+import java.io.File;
+
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.validation.Check;
 
@@ -24,14 +24,33 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 	public void checkAudioContainsProperSrc(Audio audio) {
 		if (audio.getSrc() != null) {
 			URI uri = audio.eResource().getURI();
-			IProject project = ResourcesPlugin.getWorkspace().getRoot().findMember(uri.toPlatformString(true))
-					.getProject();
-			IFolder audiosFolder = project.getFolder("/src/main/resources/audios");
+			File rawFile = null;
+			if (uri.isPlatformResource()) {
+				IPath rawPath = ResourcesPlugin.getWorkspace().getRoot().findMember(uri.toPlatformString(true))
+						.getRawLocation();
+
+				rawFile = rawPath.toFile();
+			} else {
+				rawFile = new File(uri.toFileString());
+			}
+			File projectFile = findProjectFile(rawFile);
+			File audiosFolder = new File(projectFile, "src/main/resources/audios");
 			String audioName = audio.getSrc() + ".wav";
-			IFile audioFile = audiosFolder.getFile(audioName);
+			File audioFile = new File(audiosFolder, audioName);
+
 			if (!audioFile.exists()) {
 				error("Audio file not found", VoiceDslPackage.Literals.AUDIO__SRC);
 			}
 		}
+	}
+
+	private File findProjectFile(File file) {
+		if (file == null) {
+			return null;
+		}
+		if (new File(file, "src/main/resources").exists()) {
+			return file;
+		}
+		return findProjectFile(file.getParentFile());
 	}
 }
