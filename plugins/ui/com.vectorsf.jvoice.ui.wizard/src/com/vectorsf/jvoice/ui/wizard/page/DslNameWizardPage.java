@@ -65,7 +65,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private Button browsePackage;
 	private Button browseDiagram;
 	private Combo box;
-	private int primeraVez;
+	private boolean primeraVez;
 	private static URI miURI;
 	private Class<? extends VoiceDsl> targetClazz;
 
@@ -101,7 +101,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
-		primeraVez = 0;
+		primeraVez = true;
 		this.targetClazz = targetClazz;
 		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_locution.png"));
 	}
@@ -165,12 +165,9 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		}
 		JVModule module = (JVModule) project;
 
-		IStatus status = doWorkspaceValidation(workspace, text);
+		IStatus status = workspace.validateName(text, IResource.FILE);
 		if (!status.isOK()) {
 			setErrorMessage(status.getMessage());
-			return false;
-		}
-		if (!customValidate(text)) {
 			return false;
 		}
 
@@ -196,25 +193,21 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
-		JVBean voiceDsl = paquete.getBean(text);
+		IFile file = findLocutionFolder().getFile(text + ".voiceDsl");
 
-		if (voiceDsl != null) {
-			if (primeraVez == 0) {
-				primeraVez++;
+		if (file.exists()) {
+			if (primeraVez) {
+				primeraVez = false;
 				return false;
 			}
 			setErrorMessage("Locution already exists");
 			return false;
 		}
 
-		primeraVez++;
+		primeraVez = false;
 		setErrorMessage(null);
 		setMessage(null);
 		return true;
-	}
-
-	private boolean customValidate(String text) {
-		return ResourcesPlugin.getWorkspace().validateName(text, IResource.FILE).isOK();
 	}
 
 	@Override
@@ -451,11 +444,6 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		return initialProject;
 	}
 
-	private IStatus doWorkspaceValidation(IWorkspace workspace, String text) {
-		IStatus ret = workspace.validateName(text, IResource.FILE);
-		return ret;
-	}
-
 	@Override
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
@@ -524,30 +512,15 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	@Override
 	public void createResource() throws CoreException {
 		String dslName = getText();
-		IProject project = null;
 		IFolder dslFolder = null;
 		String editorExtension = "voiceDsl";
 		IFile dslFile = null;
 		String contents = "";
 		String seleccion = box.getText();
 
-		Object element = getSelection();
+		dslFolder = findLocutionFolder();
 
-		if (element instanceof IFolder) {
-			// Creado desde el diagrama
-			project = (IProject) Platform.getAdapterManager().getAdapter(((IFolder) element).getProject(),
-					IProject.class);
-
-			dslFolder = (IFolder) Platform.getAdapterManager().getAdapter(element, IFolder.class);
-		} else {
-			// Creado desde el navegador
-			Flow flow = (Flow) element;
-			project = (IProject) Platform.getAdapterManager().getAdapter(flow.getOwnerPackage().getOwnerModule(),
-					IProject.class);
-			IFolder packageFolder = project.getFolder(BaseModel.JV_PATH + "/" + toPath(getPackageFieldValue()));
-			String folderName = getFolderName(packageFolder, flow.getName());
-			dslFolder = getFolder(folderName);
-		}
+		IProject project = dslFolder.getProject();
 
 		if (project == null || !project.isAccessible()) {
 			String error = "No Project Found";
@@ -592,6 +565,25 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			ErrorDialog.openError(getShell(), error, null, status);
 			throw new CoreException(status);
 		}
+	}
+
+	private IFolder findLocutionFolder() {
+		IFolder dslFolder;
+		Object element = getSelection();
+
+		if (element instanceof IFolder) {
+			// Creado desde el diagrama
+			dslFolder = (IFolder) element;
+
+		} else {
+			// Creado desde el navegador
+			Flow flow = (Flow) element;
+			IFolder packageFolder = (IFolder) Platform.getAdapterManager().getAdapter(flow.getOwnerPackage(),
+					IFolder.class);
+			String folderName = getFolderName(packageFolder, flow.getName());
+			dslFolder = getFolder(folderName);
+		}
+		return dslFolder;
 	}
 
 	public URI returnURI() {
@@ -642,9 +634,5 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			String[] diagramNameSegments = diagramFolder.split("\\.");
 			initialFlow = diagramNameSegments[0];
 		}
-	}
-
-	private String toPath(String packageFieldValue) {
-		return packageFieldValue.replace('.', '/');
 	}
 }
