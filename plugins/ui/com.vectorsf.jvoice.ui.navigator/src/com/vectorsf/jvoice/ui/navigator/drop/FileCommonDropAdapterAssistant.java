@@ -127,10 +127,11 @@ public abstract class FileCommonDropAdapterAssistant extends
 				target.create(source, true, null);
 
 				// En caso de ser un wsdl añadimos plugin al pom
-				if ("wsdl".equalsIgnoreCase(mType)) {
-					ConfigurationPomWSDL configurate = new ConfigurationPomWSDL();
-					configurate.initial(iproject, target);
-				}
+				// if ("wsdl".equalsIgnoreCase(mType)) {
+				// ConfigurationPomWSDL configurate = new
+				// ConfigurationPomWSDL();
+				// configurate.initial(iproject, target);
+				// }
 
 			} catch (CoreException | FileNotFoundException e) {
 				return new Status(IStatus.ERROR, Activator.PLUGIN_ID,

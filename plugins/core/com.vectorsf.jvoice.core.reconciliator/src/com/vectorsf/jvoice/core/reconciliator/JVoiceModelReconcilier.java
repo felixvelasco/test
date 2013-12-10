@@ -64,6 +64,9 @@ public class JVoiceModelReconcilier {
 		}
 
 		workspace.addResourceChangeListener(new BaseModelResourceChangeListener());
+		//Nuevo listener para modificar el POM e incluir o eliminar wsdl
+		workspace.addResourceChangeListener(new PomWsdlsChangeListener());
+		
 	}
 
 	public JVProject createProject(IProject project) {
