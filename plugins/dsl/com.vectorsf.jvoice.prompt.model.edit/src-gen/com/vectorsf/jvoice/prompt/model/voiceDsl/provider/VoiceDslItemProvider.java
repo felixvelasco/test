@@ -165,13 +165,6 @@ public class VoiceDslItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__CONFIGURATION);
-			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__PROPERTIES);
-			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__CONDITIONS);
-			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__AUDIOS);
-			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__GRAMMARS);
-			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__VARIABLES);
-			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__TYPES);
 			childrenFeatures.add(VoiceDslPackage.Literals.VOICE_DSL__OUTPUTS);
 		}
 		return childrenFeatures;
@@ -234,6 +227,8 @@ public class VoiceDslItemProvider
 			case VoiceDslPackage.VOICE_DSL__GRAMMARS:
 			case VoiceDslPackage.VOICE_DSL__VARIABLES:
 			case VoiceDslPackage.VOICE_DSL__TYPES:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
