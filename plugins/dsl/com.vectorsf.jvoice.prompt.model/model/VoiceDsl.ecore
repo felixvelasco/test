@@ -17,12 +17,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
         eType="#//Type" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inputDsl" eType="#//InputDsl"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="promptDsl" eType="#//PromptDsl"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="menuDsl" eType="#//MenuDsl"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" eType="#//Outputs"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="recordDsl" eType="#//RecordDsl"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Configuration">
     <eOperations name="getValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -70,8 +66,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="format" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConditionalAudio" eSuperTypes="#//Audio">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="simpleA" eType="#//Audio"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="simpleAudios" upperBound="-1"
+        eType="#//Audio" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="condit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OutputValue">

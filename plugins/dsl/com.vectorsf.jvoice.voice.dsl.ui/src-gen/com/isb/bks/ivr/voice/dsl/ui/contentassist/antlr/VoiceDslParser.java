@@ -290,7 +290,6 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedNameWithWildcardAccess().getGroup(), "rule__QualifiedNameWithWildcard__Group__0");
 					put(grammarAccess.getXImportDeclarationAccess().getGroup(), "rule__XImportDeclaration__Group__0");
 					put(grammarAccess.getXImportDeclarationAccess().getGroup_1_0(), "rule__XImportDeclaration__Group_1_0__0");
-					put(grammarAccess.getVoiceDslAccess().getTypesAssignment_4(), "rule__VoiceDsl__TypesAssignment_4");
 					put(grammarAccess.getPromptDslAccess().getNameAssignment_1(), "rule__PromptDsl__NameAssignment_1");
 					put(grammarAccess.getPromptDslAccess().getPropertiesAssignment_2_0(), "rule__PromptDsl__PropertiesAssignment_2_0");
 					put(grammarAccess.getPromptDslAccess().getVariablesAssignment_2_1(), "rule__PromptDsl__VariablesAssignment_2_1");
@@ -349,7 +348,7 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSimpleAudioAccess().getFormatAssignment_2_1_1_2_1(), "rule__SimpleAudio__FormatAssignment_2_1_1_2_1");
 					put(grammarAccess.getSimpleAudioAccess().getTtsAssignment_2_1_1_3(), "rule__SimpleAudio__TtsAssignment_2_1_1_3");
 					put(grammarAccess.getConditionalAudioAccess().getConditAssignment_0_3(), "rule__ConditionalAudio__ConditAssignment_0_3");
-					put(grammarAccess.getConditionalAudioAccess().getSimpleAAssignment_0_6(), "rule__ConditionalAudio__SimpleAAssignment_0_6");
+					put(grammarAccess.getConditionalAudioAccess().getSimpleAudiosAssignment_0_6(), "rule__ConditionalAudio__SimpleAudiosAssignment_0_6");
 					put(grammarAccess.getTypeAccess().getAnnotationsAssignment_1(), "rule__Type__AnnotationsAssignment_1");
 					put(grammarAccess.getTypeAccess().getMembersAssignment_2_3(), "rule__Type__MembersAssignment_2_3");
 					put(grammarAccess.getMemberAccess().getAnnotationsAssignment_1(), "rule__Member__AnnotationsAssignment_1");

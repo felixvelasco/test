@@ -99,7 +99,7 @@ public class ConditionalAudioItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(VoiceDslPackage.Literals.CONDITIONAL_AUDIO__SIMPLE_A);
+			childrenFeatures.add(VoiceDslPackage.Literals.CONDITIONAL_AUDIO__SIMPLE_AUDIOS);
 		}
 		return childrenFeatures;
 	}
@@ -155,7 +155,7 @@ public class ConditionalAudioItemProvider
 			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
+			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_AUDIOS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -175,12 +175,12 @@ public class ConditionalAudioItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(VoiceDslPackage.Literals.CONDITIONAL_AUDIO__SIMPLE_A,
+				(VoiceDslPackage.Literals.CONDITIONAL_AUDIO__SIMPLE_AUDIOS,
 				 VoiceDslFactory.eINSTANCE.createAudio()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(VoiceDslPackage.Literals.CONDITIONAL_AUDIO__SIMPLE_A,
+				(VoiceDslPackage.Literals.CONDITIONAL_AUDIO__SIMPLE_AUDIOS,
 				 VoiceDslFactory.eINSTANCE.createConditionalAudio()));
 	}
 

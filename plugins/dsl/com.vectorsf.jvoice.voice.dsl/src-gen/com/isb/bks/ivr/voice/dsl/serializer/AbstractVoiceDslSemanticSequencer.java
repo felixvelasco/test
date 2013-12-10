@@ -25,7 +25,6 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.common.types.JvmFormalParameter;
@@ -291,12 +290,6 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 			case VoiceDslPackage.VARIABLES:
 				if(context == grammarAccess.getVariablesRule()) {
 					sequence_Variables(context, (Variables) semanticObject); 
-					return; 
-				}
-				else break;
-			case VoiceDslPackage.VOICE_DSL:
-				if(context == grammarAccess.getVoiceDslRule()) {
-					sequence_VoiceDsl(context, (VoiceDsl) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1271,7 +1264,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	
 	/**
 	 * Constraint:
-	 *     (condit=STRING simpleA=SimpleAudio+)
+	 *     (condit=STRING simpleAudios+=SimpleAudio+)
 	 */
 	protected void sequence_ConditionalAudio(EObject context, ConditionalAudio semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1512,15 +1505,6 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	 *     (variable+=Variable*)
 	 */
 	protected void sequence_Variables(EObject context, Variables semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     types+=Type*
-	 */
-	protected void sequence_VoiceDsl(EObject context, VoiceDsl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

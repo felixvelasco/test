@@ -8,8 +8,7 @@ VoiceDsl:
 	| MenuDsl
 	| PromptDsl
 	| RecordDsl
-    |(  (types+=Type)*)
-;
+    ;
 
 PromptDsl:
 	('outputname'  name = ID 
@@ -72,7 +71,7 @@ Grammars:
 	    '}'
 ;
 
-Audios:
+Audios: 
 	'audios' '{' 
 	('main' ':' (
 			mainAudios += ConditionalAudio+))? &
@@ -147,7 +146,7 @@ enum Interpretation:
 
 ConditionalAudio returns Audio:
 	{ConditionalAudio}
-	'when' '('  condit=STRING ')'  '{' (simpleA=SimpleAudio)+ '}'		                                      
+	'when' '('  condit=STRING ')'  '{' (simpleAudios+=SimpleAudio)+ '}'		                                      
     |SimpleAudio
  ;
  

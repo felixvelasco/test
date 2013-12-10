@@ -354,16 +354,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	public EReference getVoiceDsl_Outputs() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(10);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVoiceDsl_RecordDsl() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(11);
+		return (EReference)voiceDslEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -382,33 +373,6 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 */
 	public EReference getVoiceDsl_Types() {
 		return (EReference)voiceDslEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVoiceDsl_InputDsl() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVoiceDsl_PromptDsl() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVoiceDsl_MenuDsl() {
-		return (EReference)voiceDslEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -668,7 +632,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getConditionalAudio_SimpleA() {
+	public EReference getConditionalAudio_SimpleAudios() {
 		return (EReference)conditionalAudioEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1167,11 +1131,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		createEReference(voiceDslEClass, VOICE_DSL__GRAMMARS);
 		createEReference(voiceDslEClass, VOICE_DSL__VARIABLES);
 		createEReference(voiceDslEClass, VOICE_DSL__TYPES);
-		createEReference(voiceDslEClass, VOICE_DSL__INPUT_DSL);
-		createEReference(voiceDslEClass, VOICE_DSL__PROMPT_DSL);
-		createEReference(voiceDslEClass, VOICE_DSL__MENU_DSL);
 		createEReference(voiceDslEClass, VOICE_DSL__OUTPUTS);
-		createEReference(voiceDslEClass, VOICE_DSL__RECORD_DSL);
 
 		configurationEClass = createEClass(CONFIGURATION);
 		createEReference(configurationEClass, CONFIGURATION__CONFIG_VALUE);
@@ -1208,7 +1168,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		createEAttribute(audioEClass, AUDIO__FORMAT);
 
 		conditionalAudioEClass = createEClass(CONDITIONAL_AUDIO);
-		createEReference(conditionalAudioEClass, CONDITIONAL_AUDIO__SIMPLE_A);
+		createEReference(conditionalAudioEClass, CONDITIONAL_AUDIO__SIMPLE_AUDIOS);
 		createEAttribute(conditionalAudioEClass, CONDITIONAL_AUDIO__CONDIT);
 
 		outputValueEClass = createEClass(OUTPUT_VALUE);
@@ -1332,11 +1292,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEReference(getVoiceDsl_Grammars(), this.getGrammars(), null, "grammars", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Variables(), this.getVariables(), null, "variables", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Types(), this.getType(), null, "types", null, 0, -1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVoiceDsl_InputDsl(), this.getInputDsl(), null, "inputDsl", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVoiceDsl_PromptDsl(), this.getPromptDsl(), null, "promptDsl", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVoiceDsl_MenuDsl(), this.getMenuDsl(), null, "menuDsl", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVoiceDsl_Outputs(), this.getOutputs(), null, "outputs", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVoiceDsl_RecordDsl(), this.getRecordDsl(), null, "recordDsl", null, 0, 1, VoiceDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getConfiguration_ConfigValue(), this.getConfigValue(), null, "configValue", null, 0, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1375,7 +1331,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEAttribute(getAudio_Format(), ecorePackage.getEString(), "format", null, 0, 1, Audio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(conditionalAudioEClass, ConditionalAudio.class, "ConditionalAudio", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getConditionalAudio_SimpleA(), this.getAudio(), null, "simpleA", null, 0, 1, ConditionalAudio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConditionalAudio_SimpleAudios(), this.getAudio(), null, "simpleAudios", null, 0, -1, ConditionalAudio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getConditionalAudio_Condit(), ecorePackage.getEString(), "condit", null, 0, 1, ConditionalAudio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(outputValueEClass, OutputValue.class, "OutputValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

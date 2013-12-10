@@ -6,13 +6,17 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,7 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConditionalAudioImpl#getSimpleA <em>Simple A</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConditionalAudioImpl#getSimpleAudios <em>Simple Audios</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConditionalAudioImpl#getCondit <em>Condit</em>}</li>
  * </ul>
  * </p>
@@ -30,14 +34,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio {
 	/**
-	 * The cached value of the '{@link #getSimpleA() <em>Simple A</em>}' containment reference.
+	 * The cached value of the '{@link #getSimpleAudios() <em>Simple Audios</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSimpleA()
+	 * @see #getSimpleAudios()
 	 * @generated
 	 * @ordered
 	 */
-	protected Audio simpleA;
+	protected EList<Audio> simpleAudios;
 
 	/**
 	 * The default value of the '{@link #getCondit() <em>Condit</em>}' attribute.
@@ -83,42 +87,11 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Audio getSimpleA() {
-		return simpleA;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetSimpleA(Audio newSimpleA, NotificationChain msgs) {
-		Audio oldSimpleA = simpleA;
-		simpleA = newSimpleA;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A, oldSimpleA, newSimpleA);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+	public EList<Audio> getSimpleAudios() {
+		if (simpleAudios == null) {
+			simpleAudios = new EObjectContainmentEList<Audio>(Audio.class, this, VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_AUDIOS);
 		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSimpleA(Audio newSimpleA) {
-		if (newSimpleA != simpleA) {
-			NotificationChain msgs = null;
-			if (simpleA != null)
-				msgs = ((InternalEObject)simpleA).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A, null, msgs);
-			if (newSimpleA != null)
-				msgs = ((InternalEObject)newSimpleA).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A, null, msgs);
-			msgs = basicSetSimpleA(newSimpleA, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A, newSimpleA, newSimpleA));
+		return simpleAudios;
 	}
 
 	/**
@@ -150,8 +123,8 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
-				return basicSetSimpleA(null, msgs);
+			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_AUDIOS:
+				return ((InternalEList<?>)getSimpleAudios()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -164,8 +137,8 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
-				return getSimpleA();
+			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_AUDIOS:
+				return getSimpleAudios();
 			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
 				return getCondit();
 		}
@@ -177,11 +150,13 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
-				setSimpleA((Audio)newValue);
+			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_AUDIOS:
+				getSimpleAudios().clear();
+				getSimpleAudios().addAll((Collection<? extends Audio>)newValue);
 				return;
 			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
 				setCondit((String)newValue);
@@ -198,8 +173,8 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
-				setSimpleA((Audio)null);
+			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_AUDIOS:
+				getSimpleAudios().clear();
 				return;
 			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
 				setCondit(CONDIT_EDEFAULT);
@@ -216,8 +191,8 @@ public class ConditionalAudioImpl extends AudioImpl implements ConditionalAudio 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_A:
-				return simpleA != null;
+			case VoiceDslPackage.CONDITIONAL_AUDIO__SIMPLE_AUDIOS:
+				return simpleAudios != null && !simpleAudios.isEmpty();
 			case VoiceDslPackage.CONDITIONAL_AUDIO__CONDIT:
 				return CONDIT_EDEFAULT == null ? condit != null : !CONDIT_EDEFAULT.equals(condit);
 		}

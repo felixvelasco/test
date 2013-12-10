@@ -170,49 +170,13 @@ public interface VoiceDslPackage extends EPackage {
 	int VOICE_DSL__TYPES = BasePackage.JV_BEAN_FEATURE_COUNT + 6;
 
 	/**
-	 * The feature id for the '<em><b>Input Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VOICE_DSL__INPUT_DSL = BasePackage.JV_BEAN_FEATURE_COUNT + 7;
-
-	/**
-	 * The feature id for the '<em><b>Prompt Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VOICE_DSL__PROMPT_DSL = BasePackage.JV_BEAN_FEATURE_COUNT + 8;
-
-	/**
-	 * The feature id for the '<em><b>Menu Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VOICE_DSL__MENU_DSL = BasePackage.JV_BEAN_FEATURE_COUNT + 9;
-
-	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL__OUTPUTS = BasePackage.JV_BEAN_FEATURE_COUNT + 10;
-
-	/**
-	 * The feature id for the '<em><b>Record Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VOICE_DSL__RECORD_DSL = BasePackage.JV_BEAN_FEATURE_COUNT + 11;
+	int VOICE_DSL__OUTPUTS = BasePackage.JV_BEAN_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Voice Dsl</em>' class.
@@ -221,7 +185,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VOICE_DSL_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 12;
+	int VOICE_DSL_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of operations of the '<em>Voice Dsl</em>' class.
@@ -664,13 +628,13 @@ public interface VoiceDslPackage extends EPackage {
 	int CONDITIONAL_AUDIO__FORMAT = AUDIO__FORMAT;
 
 	/**
-	 * The feature id for the '<em><b>Simple A</b></em>' containment reference.
+	 * The feature id for the '<em><b>Simple Audios</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONDITIONAL_AUDIO__SIMPLE_A = AUDIO_FEATURE_COUNT + 0;
+	int CONDITIONAL_AUDIO__SIMPLE_AUDIOS = AUDIO_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Condit</b></em>' attribute.
@@ -1460,33 +1424,6 @@ public interface VoiceDslPackage extends EPackage {
 	int INPUT_DSL__TYPES = VOICE_DSL__TYPES;
 
 	/**
-	 * The feature id for the '<em><b>Input Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INPUT_DSL__INPUT_DSL = VOICE_DSL__INPUT_DSL;
-
-	/**
-	 * The feature id for the '<em><b>Prompt Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INPUT_DSL__PROMPT_DSL = VOICE_DSL__PROMPT_DSL;
-
-	/**
-	 * The feature id for the '<em><b>Menu Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INPUT_DSL__MENU_DSL = VOICE_DSL__MENU_DSL;
-
-	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1494,15 +1431,6 @@ public interface VoiceDslPackage extends EPackage {
 	 * @ordered
 	 */
 	int INPUT_DSL__OUTPUTS = VOICE_DSL__OUTPUTS;
-
-	/**
-	 * The feature id for the '<em><b>Record Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INPUT_DSL__RECORD_DSL = VOICE_DSL__RECORD_DSL;
 
 	/**
 	 * The number of structural features of the '<em>Input Dsl</em>' class.
@@ -1632,33 +1560,6 @@ public interface VoiceDslPackage extends EPackage {
 	int MENU_DSL__TYPES = VOICE_DSL__TYPES;
 
 	/**
-	 * The feature id for the '<em><b>Input Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MENU_DSL__INPUT_DSL = VOICE_DSL__INPUT_DSL;
-
-	/**
-	 * The feature id for the '<em><b>Prompt Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MENU_DSL__PROMPT_DSL = VOICE_DSL__PROMPT_DSL;
-
-	/**
-	 * The feature id for the '<em><b>Menu Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MENU_DSL__MENU_DSL = VOICE_DSL__MENU_DSL;
-
-	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1666,15 +1567,6 @@ public interface VoiceDslPackage extends EPackage {
 	 * @ordered
 	 */
 	int MENU_DSL__OUTPUTS = VOICE_DSL__OUTPUTS;
-
-	/**
-	 * The feature id for the '<em><b>Record Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MENU_DSL__RECORD_DSL = VOICE_DSL__RECORD_DSL;
 
 	/**
 	 * The number of structural features of the '<em>Menu Dsl</em>' class.
@@ -1804,33 +1696,6 @@ public interface VoiceDslPackage extends EPackage {
 	int PROMPT_DSL__TYPES = VOICE_DSL__TYPES;
 
 	/**
-	 * The feature id for the '<em><b>Input Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROMPT_DSL__INPUT_DSL = VOICE_DSL__INPUT_DSL;
-
-	/**
-	 * The feature id for the '<em><b>Prompt Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROMPT_DSL__PROMPT_DSL = VOICE_DSL__PROMPT_DSL;
-
-	/**
-	 * The feature id for the '<em><b>Menu Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROMPT_DSL__MENU_DSL = VOICE_DSL__MENU_DSL;
-
-	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1838,15 +1703,6 @@ public interface VoiceDslPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROMPT_DSL__OUTPUTS = VOICE_DSL__OUTPUTS;
-
-	/**
-	 * The feature id for the '<em><b>Record Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROMPT_DSL__RECORD_DSL = VOICE_DSL__RECORD_DSL;
 
 	/**
 	 * The number of structural features of the '<em>Prompt Dsl</em>' class.
@@ -1977,33 +1833,6 @@ public interface VoiceDslPackage extends EPackage {
 	int RECORD_DSL__TYPES = VOICE_DSL__TYPES;
 
 	/**
-	 * The feature id for the '<em><b>Input Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECORD_DSL__INPUT_DSL = VOICE_DSL__INPUT_DSL;
-
-	/**
-	 * The feature id for the '<em><b>Prompt Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECORD_DSL__PROMPT_DSL = VOICE_DSL__PROMPT_DSL;
-
-	/**
-	 * The feature id for the '<em><b>Menu Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECORD_DSL__MENU_DSL = VOICE_DSL__MENU_DSL;
-
-	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2011,15 +1840,6 @@ public interface VoiceDslPackage extends EPackage {
 	 * @ordered
 	 */
 	int RECORD_DSL__OUTPUTS = VOICE_DSL__OUTPUTS;
-
-	/**
-	 * The feature id for the '<em><b>Record Dsl</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECORD_DSL__RECORD_DSL = VOICE_DSL__RECORD_DSL;
 
 	/**
 	 * The feature id for the '<em><b>File Name</b></em>' attribute.
@@ -2136,17 +1956,6 @@ public interface VoiceDslPackage extends EPackage {
 	EReference getVoiceDsl_Outputs();
 
 	/**
-	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getRecordDsl <em>Record Dsl</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Record Dsl</em>'.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getRecordDsl()
-	 * @see #getVoiceDsl()
-	 * @generated
-	 */
-	EReference getVoiceDsl_RecordDsl();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getVariables <em>Variables</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2167,39 +1976,6 @@ public interface VoiceDslPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getVoiceDsl_Types();
-
-	/**
-	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getInputDsl <em>Input Dsl</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Input Dsl</em>'.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getInputDsl()
-	 * @see #getVoiceDsl()
-	 * @generated
-	 */
-	EReference getVoiceDsl_InputDsl();
-
-	/**
-	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getPromptDsl <em>Prompt Dsl</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Prompt Dsl</em>'.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getPromptDsl()
-	 * @see #getVoiceDsl()
-	 * @generated
-	 */
-	EReference getVoiceDsl_PromptDsl();
-
-	/**
-	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getMenuDsl <em>Menu Dsl</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Menu Dsl</em>'.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl#getMenuDsl()
-	 * @see #getVoiceDsl()
-	 * @generated
-	 */
-	EReference getVoiceDsl_MenuDsl();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration <em>Configuration</em>}'.
@@ -2501,15 +2277,15 @@ public interface VoiceDslPackage extends EPackage {
 	EClass getConditionalAudio();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getSimpleA <em>Simple A</em>}'.
+	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getSimpleAudios <em>Simple Audios</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Simple A</em>'.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getSimpleA()
+	 * @return the meta object for the containment reference list '<em>Simple Audios</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getSimpleAudios()
 	 * @see #getConditionalAudio()
 	 * @generated
 	 */
-	EReference getConditionalAudio_SimpleA();
+	EReference getConditionalAudio_SimpleAudios();
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getCondit <em>Condit</em>}'.
@@ -3138,14 +2914,6 @@ public interface VoiceDslPackage extends EPackage {
 		EReference VOICE_DSL__OUTPUTS = eINSTANCE.getVoiceDsl_Outputs();
 
 		/**
-		 * The meta object literal for the '<em><b>Record Dsl</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference VOICE_DSL__RECORD_DSL = eINSTANCE.getVoiceDsl_RecordDsl();
-
-		/**
 		 * The meta object literal for the '<em><b>Variables</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3160,30 +2928,6 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EReference VOICE_DSL__TYPES = eINSTANCE.getVoiceDsl_Types();
-
-		/**
-		 * The meta object literal for the '<em><b>Input Dsl</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference VOICE_DSL__INPUT_DSL = eINSTANCE.getVoiceDsl_InputDsl();
-
-		/**
-		 * The meta object literal for the '<em><b>Prompt Dsl</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference VOICE_DSL__PROMPT_DSL = eINSTANCE.getVoiceDsl_PromptDsl();
-
-		/**
-		 * The meta object literal for the '<em><b>Menu Dsl</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference VOICE_DSL__MENU_DSL = eINSTANCE.getVoiceDsl_MenuDsl();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.ConfigurationImpl <em>Configuration</em>}' class.
@@ -3426,12 +3170,12 @@ public interface VoiceDslPackage extends EPackage {
 		EClass CONDITIONAL_AUDIO = eINSTANCE.getConditionalAudio();
 
 		/**
-		 * The meta object literal for the '<em><b>Simple A</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Simple Audios</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CONDITIONAL_AUDIO__SIMPLE_A = eINSTANCE.getConditionalAudio_SimpleA();
+		EReference CONDITIONAL_AUDIO__SIMPLE_AUDIOS = eINSTANCE.getConditionalAudio_SimpleAudios();
 
 		/**
 		 * The meta object literal for the '<em><b>Condit</b></em>' attribute feature.

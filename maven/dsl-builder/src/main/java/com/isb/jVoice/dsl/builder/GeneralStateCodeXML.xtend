@@ -7,68 +7,60 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio
 import java.util.List
 
 class GeneralStateCodeXML {
-	
-	def static doGenerateGeneralState(State state, List mainAudios, String type,String nameProject){
-		var i=0	
 
-'''
-		«IF (mainAudios!=null && mainAudios.size>0)»
-				«FOR mainAudio : mainAudios »	
-					<evaluate expression="jVoiceArchAudioItem" result="flashScope.«state.name»«type»«i=i+1»"/>	
-							
-					«IF mainAudio instanceof ConditionalAudio»
-						«var ConditionalAudio condition = mainAudio as ConditionalAudio» 
-«««						<set name="flashScope.«state.name»«type»«i».bargein" value="«condition.simpleA.dontBargeIn.booleanValue»"/>
-						«IF condition.simpleA.src != null» 
-							<set name="flashScope.«state.name»«type»«i».src" value="locutionProvider.getAudioSrc('«condition.simpleA.src»','«nameProject»')"/>
-						«ENDIF»
-						«IF condition.simpleA.tts!=null»
-							<evaluate expression="jVoiceArchWording" result="flashScope.«state.name»«type»«i».wording"/>	
-							«IF condition.simpleA.interpretation.name.equals("STRING")» 
-								<set name="flashScope.«state.name»«type»«i».wording.text" value="«condition.simpleA.tts.expandCode»"/>
-							«ELSEIF condition.simpleA.interpretation.name !=null»
-								<evaluate expression="jVoiceArchSayAs" result="flashScope.«state.name»«type»«i».wording.sayAs" />
-								<set name="flashScope.«state.name»«type»«i».wording.sayAs.interpretAs" value="«condition.simpleA.tts».«condition.simpleA.interpretation.name»"/>
-								«IF condition.simpleA.format!=null»
-									<set name="flashScope.«state.name»«type»«i».wording.sayAs.formatAs" value="'«condition.simpleA.format»'"/>
-								«ENDIF»
-							«ENDIF»
-						«ENDIF»
-						«IF condition.condit != null» 
-							<set name="flashScope.«state.name»«type»«i».condition" value="«condition.condit»"/>
-						«ENDIF»
-					«ELSE»
-						«var Audio audio = mainAudio as Audio»
-«««						<set name="flashScope.«state.name»«type»«i».bargein" value="«audio.dontBargeIn.booleanValue»"/>
-						«IF audio.src != null» 
-							<set name="flashScope.«state.name»«type»«i».src" value="locutionProvider.getAudioSrc('«audio.src»','«nameProject»')"/>
-						«ENDIF»
-						«IF audio.tts!=null»
-							<evaluate expression="jVoiceArchWording" result="flashScope.«state.name»«type»«i».wording"/>
-							<set name="flashScope.«state.name»«type»«i».wording.text" value="«audio.tts.expandCode»"/>
-							«IF !audio.interpretation.name.equals("STRING")» 
-								<evaluate expression="jVoiceArchSayAs" result="flashScope.«state.name»«type»«i».wording.sayAs" />
-								<set name="flashScope.«state.name»«type»«i».wording.sayAs.interpretAs" value="T(com.vectorsf.jvoiceframework.core.enums.InterpretAs).«audio.interpretation.name»"/>
-								«IF audio.format!=null»
-									<set name="flashScope.«state.name»«type»«i».wording.sayAs.formatAs" value="'«audio.format»'"/>
-								«ENDIF»					
-							«ENDIF»	
-						«ENDIF»		   
-					«ENDIF»
-					<evaluate expression="flashScope.«state.name».«type».add(flashScope.«state.name»«type»«i»)"/>
-					
-				«ENDFOR»	
-			«ENDIF»		 
-'''
+	def static doGenerateGeneralState(State state, List<Audio> mainAudios, String type, String projectName) {
+		var i = 0
+		var ret = new StringBuilder()
+		if (mainAudios != null && mainAudios.size > 0) {
+			for (mainAudio : mainAudios) {
+				ret.append(
+					'''<evaluate expression="jVoiceArchAudioItem" result="flashScope.«state.name»«type»«i = i + 1»"/>''')
+
+				if (mainAudio instanceof ConditionalAudio) {
+					var ConditionalAudio condition = mainAudio as ConditionalAudio
+					for (audio : condition.simpleAudios) {
+						ret.append(writeAudio(mainAudio, state.name + type + i, projectName))
+						if (condition.condit != null) {
+							ret.append(
+								'''<set name="flashScope.«state.name»«type»«i».condition" value="«condition.condit»"/>''')
+						}
+						i = i + 1
+					}
+				} else {
+					ret.append(writeAudio(mainAudio, state.name + type + i, projectName))
+				}
+				ret.append(
+					'''<evaluate expression="flashScope.«state.name».«type».add(flashScope.«state.name»«type»«i»)"/>''')
+
+			}
+		}
+		ret.toString
 	}
-	
+
+	def static writeAudio(Audio audio, String name, String projectName) '''
+		««« <set name="flashScope.«name».bargein" value="«audio.dontBargeIn.booleanValue»"/>
+		«IF audio.src != null» 
+			<set name="flashScope.«name».src" value="locutionProvider.getAudioSrc('«audio.src»','«projectName»')"/>
+		«ENDIF»
+		«IF audio.tts != null»
+			<evaluate expression="jVoiceArchWording" result="flashScope.«name».wording"/>
+			<set name="flashScope.«name».wording.text" value="«audio.tts.expandCode»"/>
+			«IF !audio.interpretation.name.equals("STRING")» 
+				<evaluate expression="jVoiceArchSayAs" result="flashScope.«name».wording.sayAs" />
+				<set name="flashScope.«name».wording.sayAs.interpretAs" value="T(com.vectorsf.jvoiceframework.core.enums.InterpretAs).«audio.
+			interpretation.name»"/>
+				«IF audio.format != null»
+					<set name="flashScope.«name».wording.sayAs.formatAs" value="'«audio.format»'"/>
+				«ENDIF»					
+			«ENDIF»	
+		«ENDIF»	
+	'''
+
 	static def expandCode(String string) {
 		if (string.indexOf("${") == -1)
 			"'" + string + "'"
-		else   
+		else
 			"'" + string.replace("${", "' + ").replace("}", " + '") + "'"
 	}
-	
+
 }
-
-

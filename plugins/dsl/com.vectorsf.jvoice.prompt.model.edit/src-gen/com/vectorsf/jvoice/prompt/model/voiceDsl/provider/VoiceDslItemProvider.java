@@ -13,7 +13,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -57,100 +56,8 @@ public class VoiceDslItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addInputDslPropertyDescriptor(object);
-			addPromptDslPropertyDescriptor(object);
-			addMenuDslPropertyDescriptor(object);
-			addRecordDslPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Input Dsl feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addInputDslPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_VoiceDsl_inputDsl_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VoiceDsl_inputDsl_feature", "_UI_VoiceDsl_type"),
-				 VoiceDslPackage.Literals.VOICE_DSL__INPUT_DSL,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Prompt Dsl feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addPromptDslPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_VoiceDsl_promptDsl_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VoiceDsl_promptDsl_feature", "_UI_VoiceDsl_type"),
-				 VoiceDslPackage.Literals.VOICE_DSL__PROMPT_DSL,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Menu Dsl feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addMenuDslPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_VoiceDsl_menuDsl_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VoiceDsl_menuDsl_feature", "_UI_VoiceDsl_type"),
-				 VoiceDslPackage.Literals.VOICE_DSL__MENU_DSL,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Record Dsl feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addRecordDslPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_VoiceDsl_recordDsl_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_VoiceDsl_recordDsl_feature", "_UI_VoiceDsl_type"),
-				 VoiceDslPackage.Literals.VOICE_DSL__RECORD_DSL,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**

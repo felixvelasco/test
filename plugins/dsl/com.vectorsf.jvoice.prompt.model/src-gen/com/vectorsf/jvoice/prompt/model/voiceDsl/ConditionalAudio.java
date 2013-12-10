@@ -2,6 +2,8 @@
  */
 package com.vectorsf.jvoice.prompt.model.voiceDsl;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -11,7 +13,7 @@ package com.vectorsf.jvoice.prompt.model.voiceDsl;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getSimpleA <em>Simple A</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getSimpleAudios <em>Simple Audios</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getCondit <em>Condit</em>}</li>
  * </ul>
  * </p>
@@ -22,30 +24,20 @@ package com.vectorsf.jvoice.prompt.model.voiceDsl;
  */
 public interface ConditionalAudio extends Audio {
 	/**
-	 * Returns the value of the '<em><b>Simple A</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Simple Audios</b></em>' containment reference list.
+	 * The list contents are of type {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Audio}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Simple A</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Simple Audios</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Simple A</em>' containment reference.
-	 * @see #setSimpleA(Audio)
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getConditionalAudio_SimpleA()
+	 * @return the value of the '<em>Simple Audios</em>' containment reference list.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getConditionalAudio_SimpleAudios()
 	 * @model containment="true"
 	 * @generated
 	 */
-	Audio getSimpleA();
-
-	/**
-	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio#getSimpleA <em>Simple A</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Simple A</em>' containment reference.
-	 * @see #getSimpleA()
-	 * @generated
-	 */
-	void setSimpleA(Audio value);
+	EList<Audio> getSimpleAudios();
 
 	/**
 	 * Returns the value of the '<em><b>Condit</b></em>' attribute.
