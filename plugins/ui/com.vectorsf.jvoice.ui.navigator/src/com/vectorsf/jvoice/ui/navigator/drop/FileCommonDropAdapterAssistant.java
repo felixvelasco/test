@@ -77,7 +77,7 @@ public abstract class FileCommonDropAdapterAssistant extends
 		if (aTarget instanceof JVModule) {
 			JVModule target = (JVModule) aTarget;
 			iproject = root.getProject(target.getName());
-			// Mirar direcciones geenradas para copiar
+			// Mirar direcciones generadas para copiar
 			targetFolder = root.getProject(target.getName())
 					.getFolder(mDirBase);
 
@@ -100,6 +100,18 @@ public abstract class FileCommonDropAdapterAssistant extends
 			File originalFile = new File(ruta);
 
 			try {
+				/*
+				 * En caso de que se trate de un wsdl se va a generar una
+				 * carpeta con el nombre del wsdl correspondiente donde se
+				 * almacenara el wsdl seleccionado y la carpeta schemas en caso
+				 * de tenerla.
+				 */
+				if ("wsdl".equalsIgnoreCase(mType)) {
+					targetFolder = iproject.getFolder(mDirBase
+							+ "/"
+							+ originalFile.getName().substring(0,
+									originalFile.getName().indexOf(".")));
+				}
 				// Si no existe la carpeta padre, la crea.
 				if (!targetFolder.exists()) {
 					recursivelyCreate(targetFolder);
@@ -117,7 +129,7 @@ public abstract class FileCommonDropAdapterAssistant extends
 				// En caso de ser un wsdl añadimos plugin al pom
 				if ("wsdl".equalsIgnoreCase(mType)) {
 					ConfigurationPomWSDL configurate = new ConfigurationPomWSDL();
-					configurate.initial(iproject);
+					configurate.initial(iproject, target);
 				}
 
 			} catch (CoreException | FileNotFoundException e) {

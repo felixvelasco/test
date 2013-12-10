@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.maven.model.Model;
@@ -14,6 +15,7 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 
 import com.vectorsf.jvoice.core.project.JVoiceModuleNature;
@@ -22,11 +24,11 @@ public class ConfigurationPomWSDL {
 	private static final String POM_XML = "/pom.xml";
 	private static final String WSIMPORT = "jaxws-maven-plugin";
 
-	public void initial(IProject iproject) {
-		modifyPom(iproject);
+	public void initial(IProject iproject, IFile target) {
+		modifyPom(iproject, target);
 	}
 
-	private void modifyPom(final IProject iproject) {
+	private void modifyPom(final IProject iproject, final IFile target) {
 		try {
 			MavenXpp3Reader reader = new MavenXpp3Reader();
 			Model mm = null;
@@ -36,7 +38,14 @@ public class ConfigurationPomWSDL {
 			if (!pomContainsLine(pomFile, WSIMPORT)) {
 				mm = reader.read(new FileInputStream(pomFile));
 
-				addBuildToModel(mm, iproject.getName());
+				addBuildToModel(mm, iproject.getName(), target);
+
+				MavenXpp3Writer writer = new MavenXpp3Writer();
+				writer.write(new FileOutputStream(pomFile), mm);
+			} else {
+				mm = reader.read(new FileInputStream(pomFile));
+
+				addFilewsdlToModel(mm, target);
 
 				MavenXpp3Writer writer = new MavenXpp3Writer();
 				writer.write(new FileOutputStream(pomFile), mm);
@@ -46,7 +55,26 @@ public class ConfigurationPomWSDL {
 		}
 	}
 
-	private void addBuildToModel(Model mm, String moduleName) {
+	private void addFilewsdlToModel(Model mm, IFile target) {
+		List<Plugin> plugins = mm.getBuild().getPlugins();
+		int index = plugins.size();
+		for (int i = 0; i < index; i++) {
+			Plugin plugin = plugins.get(i);
+			if (plugin.getArtifactId().equals("jaxws-maven-plugin")) {
+				PluginExecution confi = plugin.getExecutions().get(0);
+				Xpp3Dom conf = (Xpp3Dom) confi.getConfiguration();
+				if (conf != null) {
+					Xpp3Dom wsdlFile = new Xpp3Dom("wsdlFile");
+					wsdlFile.setValue(target.getParent().getName() + "/"
+							+ target.getName());
+					conf.getChild(3).addChild(wsdlFile);
+				}
+			}
+		}
+
+	}
+
+	private void addBuildToModel(Model mm, String moduleName, IFile target) {
 
 		String paquete = JVoiceModuleNature
 				.getDefaultWSDLPackageName(moduleName);
@@ -56,7 +84,6 @@ public class ConfigurationPomWSDL {
 		dsl_builder.setArtifactId("jaxws-maven-plugin");
 		dsl_builder.setVersion("1.9");
 		PluginExecution pexecution = new PluginExecution();
-		// voiceDSL.setPhase("compile");
 		pexecution.addGoal("wsimport");
 
 		Xpp3Dom configuration = new Xpp3Dom("configuration");
@@ -72,6 +99,14 @@ public class ConfigurationPomWSDL {
 		Xpp3Dom sourceDestDir = new Xpp3Dom("sourceDestDir");
 		sourceDestDir.setValue("src/generated-sources/wsimport");
 		configuration.addChild(sourceDestDir);
+
+		Xpp3Dom wsdlFiles = new Xpp3Dom("wsdlFiles");
+		Xpp3Dom wsdlFile = new Xpp3Dom("wsdlFile");
+		wsdlFile.setValue(target.getParent().getName() + "/" + target.getName());
+		wsdlFiles.addChild(wsdlFile);
+		pexecution.setConfiguration(wsdlFiles);
+
+		configuration.addChild(wsdlFiles);
 
 		Xpp3Dom keep = new Xpp3Dom("keep");
 		keep.setValue("true");
