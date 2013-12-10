@@ -14,3 +14,7 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.8.100",
  org.eclipse.emf.ecore.xmi
 Export-Package: com.vectorsf.jvoice.core.factory,
  com.vectorsf.jvoice.core.reconciliator
+Import-Package: org.apache.maven.model,
+ org.apache.maven.model.io.xpp3,
+ org.codehaus.plexus.util.xml,
+ org.codehaus.plexus.util.xml.pull
