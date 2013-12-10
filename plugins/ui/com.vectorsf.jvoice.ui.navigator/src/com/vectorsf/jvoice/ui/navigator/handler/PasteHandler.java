@@ -44,9 +44,11 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 public class PasteHandler extends AbstractHandler {
 
 	private IPath targetPath;
+	private IPath resourcesPath;
 	private IResource targetRes;
 	private IFolder miPack;
 	private IFile miBean;
+	private IFolder recursos;
 	private boolean rename;
 
 	@Override
@@ -59,12 +61,15 @@ public class PasteHandler extends AbstractHandler {
 		if (contents == null) {
 			setBaseEnabled(false);
 		} else {
-			Object target = getValidTarget(evaluationContext);
+			Object target = getTarget(evaluationContext);
 			if (target instanceof JVPackage) {
-				boolean state = getListFromClipboard(contents, JVBean.class) != null;
+				boolean state = getListFromClipboard(contents, Flow.class) != null;
 				setBaseEnabled(state);
 			} else if (target instanceof JVProject) {
 				boolean state = getListFromClipboard(contents, JVPackage.class) != null;
+				setBaseEnabled(state);
+			} else if (target instanceof Flow) {
+				boolean state = getListFromClipboard(contents, VoiceDsl.class) != null;
 				setBaseEnabled(state);
 			} else {
 				setBaseEnabled(false);
@@ -84,7 +89,7 @@ public class PasteHandler extends AbstractHandler {
 			return null;
 		}
 
-		Object objtarget = getValidTarget(event.getApplicationContext());
+		Object objtarget = getTarget(event.getApplicationContext());
 
 		if (objtarget == null) {
 			return null;
@@ -104,9 +109,16 @@ public class PasteHandler extends AbstractHandler {
 				miBean = (IFile) Platform.getAdapterManager().getAdapter(bean,
 						IFile.class);
 
+				IPath pathRecursos = new Path(miBean.getName().replace(
+						".jvflow", ".resources"));
+				recursos = miBean.getParent().getFolder(pathRecursos);
+				recursos.exists();
+
 				targetRes = (IResource) Platform.getAdapterManager()
 						.getAdapter(target, IResource.class);
 				targetPath = targetRes.getFullPath().append(miBean.getName());
+				resourcesPath = targetRes.getFullPath().append(
+						recursos.getName());
 
 				// Se comprueba el nombre del fichero y en caso de existir en el
 				// destino se recupera un nombre valido para ofrecer al usuario.
@@ -133,10 +145,6 @@ public class PasteHandler extends AbstractHandler {
 									if (!validateName.isOK()) {
 										return validateName.getMessage();
 									}
-									// targetPath = targetRes.getFullPath()
-									// .append(miBean.getParent()
-									// .getProjectRelativePath()
-									// .append(input));
 
 									targetPath = targetRes.getFullPath()
 											.append(input);
@@ -154,7 +162,8 @@ public class PasteHandler extends AbstractHandler {
 					// Obtenemos el nuevo target con la ruta, y el nombre del
 					// paquete seleccionado por el usuario.
 					targetPath = targetRes.getFullPath().append(nombreUsuario);
-
+					resourcesPath = targetRes.getFullPath().append(
+							nombreUsuario.replace(".jvflow", ".resources"));
 				}
 
 				// Realizamos la copia del fichero al destino.
@@ -164,7 +173,8 @@ public class PasteHandler extends AbstractHandler {
 						@Override
 						public void run(IProgressMonitor monitor)
 								throws CoreException {
-							miBean.copy(targetPath, true, null);
+							miBean.copy(targetPath, true, monitor);
+							recursos.copy(resourcesPath, true, monitor);
 							if (rename) {
 								renameBean(targetPath);
 							}
@@ -269,18 +279,121 @@ public class PasteHandler extends AbstractHandler {
 				}
 			}
 
+		} else if (objtarget instanceof Flow) {
+			Flow target = (Flow) objtarget;
+
+			List<VoiceDsl> dsls = getListFromClipboard(contents, VoiceDsl.class);
+			if (dsls == null) {
+				return null;
+			}
+			for (VoiceDsl dsl : dsls) {
+
+				miBean = (IFile) Platform.getAdapterManager().getAdapter(dsl,
+						IFile.class);
+
+				targetRes = (IResource) Platform.getAdapterManager()
+						.getAdapter(target, IResource.class);
+
+				// tenemos el path del flujo de destino, necesitamos su carpeta
+				// resources
+				targetRes = targetRes.getParent().findMember(
+						targetRes.getName().replace(".jvflow", ".resources"));
+
+				if (!targetRes.exists()) {
+					return null;
+				}
+
+				targetPath = targetRes.getFullPath().append(miBean.getName());
+
+				// Se comprueba el nombre del fichero y en caso de existir en el
+				// destino se recupera un nombre valido para ofrecer al usuario.
+				String nombre = nombreValido(
+						root,
+						targetPath,
+						target,
+						miBean,
+						targetRes,
+						miBean.getName().substring(0,
+								miBean.getName().lastIndexOf(".")));
+				// Comprobamos si el fichero existe en el destino. Si existe, se
+				// lanza un cuadro de dialogo donde el usuario podra poner el
+				// nombre que desee al fichero.
+				if (root.getFile(targetPath).exists()) {
+					rename = true;
+					// Proponemos al usuario un nombre valido para el fichero.
+					InputDialog ventana = new InputDialog(
+							HandlerUtil.getActiveShell(event),
+							"Conflicto de nombre",
+							"Ya existe un recurso llamado " + miBean.getName(),
+							nombre, new IInputValidator() {
+
+								@Override
+								public String isValid(String input) {
+
+									IStatus validateName = root
+											.getWorkspace()
+											.validateName(input, IResource.FILE);
+									if (!validateName.isOK()) {
+										return validateName.getMessage();
+									}
+									// targetPath = targetRes.getFullPath()
+									// .append(miBean.getParent()
+									// .getProjectRelativePath()
+									// .append(input));
+
+									targetPath = targetRes.getFullPath()
+											.append(input);
+									if (root.getFile(targetPath).exists()) {
+										return "Ya existe un recurso con ese nombre";
+									}
+
+									return null;
+								}
+							});
+
+					ventana.open();
+					String nombreUsuario = ventana.getValue();
+
+					// Obtenemos el nuevo target con la ruta, y el nombre del
+					// paquete seleccionado por el usuario.
+					targetPath = targetRes.getFullPath().append(
+							nombreUsuario + ".voiceDsl");
+
+				}
+
+				// Realizamos la copia del fichero al destino.
+				try {
+					IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+
+						@Override
+						public void run(IProgressMonitor monitor)
+								throws CoreException {
+							miBean.copy(targetPath, true, null);
+							if (rename) {
+								renameBean(targetPath);
+							}
+
+						}
+					};
+					ResourcesPlugin.getWorkspace().run(runnable, null);
+
+				} catch (CoreException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return null;
 	}
 
-	private Object getValidTarget(Object target) {
+	private Object getTarget(Object target) {
 		Object def = ((IEvaluationContext) target).getDefaultVariable();
 		if (def instanceof Collection<?> && ((Collection<?>) def).size() == 1) {
 
 			Object o = ((Collection<?>) def).iterator().next();
 
-			if (o instanceof JVPackage || o instanceof JVProject) {
+			if (o instanceof JVPackage || o instanceof JVProject
+					|| o instanceof JVBean) {
 				return o;
 			} else {
 				return null;
@@ -315,14 +428,14 @@ public class PasteHandler extends AbstractHandler {
 	// nombre.
 	private String nombreValido(IWorkspaceRoot root, IPath targetPath,
 			Object targets, Object miobjeto, IResource targetRes,
-			String NameUser) {
+			String nameUser) {
 		if (targets instanceof JVProject) {
 			JVProject target = (JVProject) targets;
 			IFolder mipackage = (IFolder) miobjeto;
 
 			if (root.getFolder(targetPath).exists()) {
 
-				String newName = "CopyOf" + NameUser;
+				String newName = "CopyOf" + nameUser;
 
 				targetPath = targetRes.getFullPath().append(
 						mipackage.getParent().getProjectRelativePath()
@@ -332,7 +445,7 @@ public class PasteHandler extends AbstractHandler {
 						targetRes, newName);
 
 			} else {
-				return NameUser;
+				return nameUser;
 			}
 		} else if (targets instanceof JVPackage) {
 			JVPackage target = (JVPackage) targets;
@@ -340,7 +453,7 @@ public class PasteHandler extends AbstractHandler {
 
 			if (root.getFile(targetPath).exists()) {
 
-				String newName = "CopyOf" + NameUser;
+				String newName = "CopyOf" + nameUser;
 
 				// targetPath = targetRes.getFullPath().append(
 				// mipackage.getParent().getProjectRelativePath()
@@ -352,9 +465,30 @@ public class PasteHandler extends AbstractHandler {
 						targetRes, newName);
 
 			} else {
-				return NameUser;
+				return nameUser;
 			}
 
+		} else if (targets instanceof Flow) {
+			Flow target = (Flow) targets;
+			IFile miDsl = (IFile) miobjeto;
+
+			if (root.getFile(targetPath).exists()) {
+
+				String newName = "CopyOf" + nameUser;
+
+				// targetPath = targetRes.getFullPath().append(
+				// mipackage.getParent().getProjectRelativePath()
+				// .append(newName));
+
+				targetPath = targetRes.getFullPath().append(
+						newName + ".voiceDsl");
+
+				return nombreValido(root, targetPath, target, miDsl, targetRes,
+						newName);
+
+			} else {
+				return nameUser;
+			}
 		} else {
 			return null;
 		}

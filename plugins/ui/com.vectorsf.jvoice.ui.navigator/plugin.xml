@@ -749,6 +749,9 @@
                      <instanceof
                            value="com.vectorsf.jvoice.model.base.JVModule">
                      </instanceof>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVBean">
+                     </instanceof>
                   </or>
                </iterate>
             </with>
