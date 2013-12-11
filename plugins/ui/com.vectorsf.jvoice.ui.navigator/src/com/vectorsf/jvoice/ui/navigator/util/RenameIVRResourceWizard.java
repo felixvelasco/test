@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -119,6 +120,10 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 				}
 			}
 
+			if (resource instanceof IFolder) {
+				nombre = fRefactoringProcessor.getNewResourceName();
+			}
+
 			fNameField = new Text(composite, SWT.BORDER);
 			fNameField.setText(nombre);
 			fNameField.setFont(composite.getFont());
@@ -144,12 +149,19 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 			super.setVisible(visible);
 		}
 
+		@SuppressWarnings("restriction")
 		protected final void validatePage() {
 			String text = fNameField.getText();
 
-			@SuppressWarnings("restriction")
-			RefactoringStatus status = fRefactoringProcessor
-					.validateNewElementName(text + "." + textoExtension);
+			RefactoringStatus status = null;
+			if (textoExtension != null) {
+
+				status = fRefactoringProcessor.validateNewElementName(text
+						+ "." + textoExtension);
+			} else {
+
+				status = fRefactoringProcessor.validateNewElementName(text);
+			}
 
 			setPageComplete(status);
 		}
@@ -202,8 +214,13 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 
 		@SuppressWarnings("restriction")
 		private void initializeRefactoring() {
-			fRefactoringProcessor.setNewResourceName(fNameField.getText() + "."
-					+ textoExtension);
+			if (textoExtension != null) {
+				fRefactoringProcessor.setNewResourceName(fNameField.getText()
+						+ "." + textoExtension);
+			} else {
+				fRefactoringProcessor.setNewResourceName(fNameField.getText());
+			}
+
 		}
 
 		private boolean renameBean(IProgressMonitor monitor)
@@ -215,30 +232,32 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 							.toString(), true));
 			try {
 				emfRes.load(null);
-				EObject obj = emfRes.getContents().get(0);
-				if (emfRes.getContents().get(0) instanceof VoiceDsl) {
-					((VoiceDsl) obj).setName(newName);
-					isDsl = true;
+				for (EObject obj : emfRes.getContents()) {
+					if (obj instanceof VoiceDsl) {
+						((VoiceDsl) obj).setName(newName);
+						isDsl = true;
 
-				} else if (obj instanceof JVBean) {
-					((JVBean) obj).setName(newName);
-					((JVBean) obj).setDescription(newName);
-					List<EObject> listaObjetos = ((Flow) obj).eResource()
-							.getContents();
-					for (int i = 0; i < listaObjetos.size(); i++) {
-						EObject objeto = listaObjetos.get(i);
-						if (objeto instanceof Diagram) {
-							((Diagram) objeto).setName(newName);
+					} else if (obj instanceof JVBean) {
+						((JVBean) obj).setName(newName);
+						((JVBean) obj).setDescription(newName);
+						List<EObject> listaObjetos = ((Flow) obj).eResource()
+								.getContents();
+						for (int i = 0; i < listaObjetos.size(); i++) {
+							EObject objeto = listaObjetos.get(i);
+							if (objeto instanceof Diagram) {
+								((Diagram) objeto).setName(newName);
+							}
+						}
+						try {
+							emfRes.save(SaveOptions.newBuilder().noValidation()
+									.getOptions().toOptionsMap());
+
+						} catch (RuntimeException re) {
+							re.printStackTrace();
 						}
 					}
-					try {
-						emfRes.save(SaveOptions.newBuilder().noValidation()
-								.getOptions().toOptionsMap());
-
-					} catch (RuntimeException re) {
-						re.printStackTrace();
-					}
 				}
+
 				return true;
 			} catch (IOException e) {
 				e.printStackTrace();
