@@ -20,7 +20,7 @@ public class FlowValidator extends AbstractPolymorphicValidator {
 		} else if (initialCount > 1) {
 			error(flow, "Too many initial states found");
 		}
-		return initialCount == 1;
+		return true;
 	}
 
 	public boolean validate_Flow_someFinalState(Flow flow) {
@@ -30,20 +30,18 @@ public class FlowValidator extends AbstractPolymorphicValidator {
 			}
 		}
 		error(flow, "No final state found");
-		return false;
+		return true;
 	}
 
 	public boolean validate_State_incoming(State state) {
-		if (state instanceof InitialState) {
-			return true;
+		if (!(state instanceof InitialState)) {
+
+			if (state.getIncomingTransitions().isEmpty()) {
+				error(state, "State " + state.getName() + " does not have incoming transitions");
+			}
 		}
 
-		boolean valid = !state.getIncomingTransitions().isEmpty();
-		if (!valid) {
-			error(state, "State " + state.getName() + " does not have incoming transitions");
-		}
-
-		return valid;
+		return true;
 	}
 
 	public boolean validate_LocutionState_incoming(State LocationState) {
