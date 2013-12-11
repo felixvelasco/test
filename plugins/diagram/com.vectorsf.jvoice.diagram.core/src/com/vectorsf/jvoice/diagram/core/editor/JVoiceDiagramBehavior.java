@@ -19,6 +19,7 @@ import org.eclipse.graphiti.ui.editor.DefaultPersistencyBehavior;
 import org.eclipse.graphiti.ui.editor.DefaultUpdateBehavior;
 import org.eclipse.graphiti.ui.editor.DiagramBehavior;
 import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
+import org.eclipse.graphiti.ui.editor.IDiagramEditorInput;
 import org.eclipse.graphiti.ui.internal.action.CopyAction;
 import org.eclipse.graphiti.ui.internal.action.DeleteAction;
 import org.eclipse.graphiti.ui.internal.action.FeatureExecutionHandler;
@@ -33,6 +34,8 @@ import com.vectorsf.jvoice.core.uri.VegaXMLURIHandlerImpl;
 @SuppressWarnings("restriction")
 public class JVoiceDiagramBehavior extends DiagramBehavior {
 
+	private JVoiceValidationListener validator;
+
 	public JVoiceDiagramBehavior(IDiagramContainerUI diagramContainer) {
 		super(diagramContainer);
 	}
@@ -41,7 +44,8 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 	protected void editingDomainInitialized() {
 		super.editingDomainInitialized();
 		getResourceSet().getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, new VegaXMLURIHandlerImpl());
-
+		validator = new JVoiceValidationListener(this);
+		getEditingDomain().addResourceSetListener(validator);
 	}
 
 	@Override
@@ -52,6 +56,12 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 	@Override
 	protected DefaultUpdateBehavior createUpdateBehavior() {
 		return new JVoiceUpdateBehavior(this);
+	}
+
+	@Override
+	protected void setInput(IDiagramEditorInput input) {
+		super.setInput(input);
+		validator.validate();
 	}
 
 	@Override

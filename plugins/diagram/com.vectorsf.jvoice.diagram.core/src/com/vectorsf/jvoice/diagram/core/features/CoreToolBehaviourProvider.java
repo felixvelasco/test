@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
@@ -18,6 +20,7 @@ import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
+import org.eclipse.graphiti.platform.IPlatformImageConstants;
 import org.eclipse.graphiti.tb.ConnectionSelectionInfoImpl;
 import org.eclipse.graphiti.tb.ContextButtonEntry;
 import org.eclipse.graphiti.tb.ContextEntryHelper;
@@ -27,6 +30,8 @@ import org.eclipse.graphiti.tb.IConnectionSelectionInfo;
 import org.eclipse.graphiti.tb.IContextButtonEntry;
 import org.eclipse.graphiti.tb.IContextButtonPadData;
 import org.eclipse.graphiti.tb.IContextMenuEntry;
+import org.eclipse.graphiti.tb.IDecorator;
+import org.eclipse.graphiti.tb.ImageDecorator;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
@@ -50,7 +55,6 @@ import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
-import com.vectorsf.jvoice.model.operations.impl.NoteImpl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
@@ -60,6 +64,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	public static final String PAD_CONTEXT_MENU_ENTRY = "padContextMenuEntry"; //$NON-NLS-1$
 	public static final String PAD_CONTEXT_SUB_MENU_ENTRY = "padContextSubMenuEntry"; //$NON-NLS-1$
 	public static final String CONTEXT_MENU_ENTRY = "contextMenuEntry"; //$NON-NLS-1$
+	private Diagnostic diagnostic;
 
 	public CoreToolBehaviourProvider(IDiagramTypeProvider diagramTypeProvider) {
 		super(diagramTypeProvider);
@@ -261,7 +266,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 				}
 			}
 
-		} else if (bo instanceof NoteImpl) {
+		} else if (bo instanceof Note) {
 			Note note = (Note) bo;
 			ICreateConnectionFeature feature = null;
 			feature = new CreateRelationFromPad(getFeatureProvider(), new RelationPattern(getFeatureProvider()));
@@ -297,5 +302,41 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		}
 
 		return super.getDoubleClickFeature(context);
+	}
+
+	@Override
+	public IDecorator[] getDecorators(PictogramElement pe) {
+		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
+
+		Diagnostic diagnostic = getDiagnostic(bo);
+		if (diagnostic.getSeverity() == Diagnostic.ERROR) {
+			ImageDecorator imageDecorator = new ImageDecorator(IPlatformImageConstants.IMG_ECLIPSE_ERROR_TSK);
+			imageDecorator.setMessage(diagnostic.getMessage());
+			return new IDecorator[] { imageDecorator };
+		} else if (diagnostic.getSeverity() == Diagnostic.WARNING) {
+			ImageDecorator imageDecorator = new ImageDecorator(IPlatformImageConstants.IMG_ECLIPSE_WARNING_TSK);
+			imageDecorator.setMessage(diagnostic.getMessage());
+			return new IDecorator[] { imageDecorator };
+		} else {
+			return super.getDecorators(pe);
+		}
+	}
+
+	private Diagnostic getDiagnostic(Object bo) {
+		Diagnostic ret = new BasicDiagnostic();
+		if (diagnostic != null) {
+			for (Diagnostic diag : diagnostic.getChildren()) {
+				if (diag.getData().contains(bo)) {
+					if (diag.getSeverity() > ret.getSeverity()) {
+						ret = diag;
+					}
+				}
+			}
+		}
+		return ret;
+	}
+
+	public void setDiagnostic(Diagnostic diagnostic) {
+		this.diagnostic = diagnostic;
 	}
 }
