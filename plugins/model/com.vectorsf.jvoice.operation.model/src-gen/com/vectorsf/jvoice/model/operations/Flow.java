@@ -38,7 +38,7 @@ public interface Flow extends JVBean {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>States</em>' containment reference list.
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getFlow_States()
-	 * @model containment="true" required="true"
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<State> getStates();
@@ -54,7 +54,7 @@ public interface Flow extends JVBean {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Transitions</em>' containment reference list.
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getFlow_Transitions()
-	 * @model containment="true" required="true" upper="4"
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Transition> getTransitions();

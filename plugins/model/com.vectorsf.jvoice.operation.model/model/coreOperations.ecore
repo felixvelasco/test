@@ -18,10 +18,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Flow" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//JVBean">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="states" lowerBound="1"
-        upperBound="-1" eType="#//State" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" lowerBound="1"
-        upperBound="4" eType="#//Transition" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
+        eType="#//State" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" upperBound="-1"
+        eType="#//Transition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="notes" upperBound="-1"
         eType="#//Note" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="beans" upperBound="-1"
