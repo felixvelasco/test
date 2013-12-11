@@ -9,10 +9,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.parsley.runtime.util.PolymorphicDispatcher;
 
 import com.google.common.base.Predicate;
@@ -20,6 +23,7 @@ import com.google.common.base.Predicate;
 public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 
 	private PolymorphicDispatcher.ErrorHandler<Boolean> errorHandler = new PolymorphicDispatcher.NullErrorHandler<Boolean>();
+	private DiagnosticChain currentDiagnostic;
 
 	@Override
 	public final boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics,
@@ -71,12 +75,25 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 			}
 		};
 
-		return dispatcher.invoke(eObject, diagnostics);
+		this.currentDiagnostic = diagnostics;
+		Boolean invoke = dispatcher.invoke(eObject);
+		this.currentDiagnostic = null;
+		return invoke;
 	}
 
 	private Predicate<Method> getValidatePredicate(EClass eClass) {
 		String methodName = "validate_" + eClass.getName() + "_";
-		return new PartialMethodNameFilter(methodName, 2, 2);
+		return new PartialMethodNameFilter(methodName, 1, 1);
+	}
+
+	protected void error(EObject eobject, String string) {
+		currentDiagnostic.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreUtil.getURI(eobject).toPlatformString(true),
+				-1, string, new Object[] {}));
+	}
+
+	protected void warning(EObject eobject, String string) {
+		currentDiagnostic.add(new BasicDiagnostic(Diagnostic.WARNING, EcoreUtil.getURI(eobject).toPlatformString(true),
+				-1, string, new Object[] {}));
 	}
 
 	public static class PartialMethodNameFilter implements Predicate<Method> {

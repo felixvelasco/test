@@ -20,11 +20,16 @@ import org.codehaus.plexus.compiler.util.scan.SimpleSourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.graphiti.mm.algorithms.AlgorithmsPackage;
@@ -35,8 +40,12 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
 import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
+import com.isb.bks.ivr.voice.dsl.validation.VoiceDslJavaValidator;
+import com.vectorsf.jvoice.core.validation.FlowValidator;
 import com.vectorsf.jvoice.model.base.JVModule;
+import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 /**
  * Goal which touches a timestamp file.
@@ -129,7 +138,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
-
+		
 		File f = new File(outputDirectory, "jVoice");
 		if (!f.exists()) {
 			f.mkdirs();
@@ -150,6 +159,13 @@ public class GenerateFlowMojo extends AbstractMojo {
 			ResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
 			resourceSet.getLoadOptions().put(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
 
+			// Se registran las validaciones para los DSLs
+			VoiceDslJavaValidator validator = injector.getInstance(VoiceDslJavaValidator.class);
+	        EValidator.Registry.INSTANCE.put(VoiceDslPackage.eINSTANCE, validator);
+	        // Se registran las validaciones para el modelo de operaciones
+	        EValidator.Registry.INSTANCE.put(OperationsPackage.eINSTANCE,
+	                new FlowValidator());
+			
 			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project,
 					createClassLoaderForProjectDependencies());
 			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
@@ -245,7 +261,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 		return lastModified;
 	}
 
-	private void processFlowFiles(ResourceSet resourceSet, File folder) throws InclusionScanException, IOException {
+	private void processFlowFiles(ResourceSet resourceSet, File folder) throws InclusionScanException, IOException, MojoExecutionException {
 		SourceMapping mapping = new SuffixMapping("jvflow", Collections.<String> emptySet());
 		Set<String> includes = getFlowIncludesPatterns();
 		SourceInclusionScanner scan = new SimpleSourceInclusionScanner(includes, excludes);
@@ -293,7 +309,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 		return flow;
 	}
 
-	private boolean processFlowFile(ResourceSet resourceSet, File origFile, File targetFolder) throws IOException {
+	private boolean processFlowFile(ResourceSet resourceSet, File origFile, File targetFolder) throws IOException, MojoExecutionException {
 		// Obtenemos los paquetes en los que se encuentra el archivo.
 		String rutafile = origFile.getAbsolutePath().toString().replace(sourceDirectory.toString(), "").trim();
 		// Copiamos la estrucutra de paquetes.
@@ -310,7 +326,33 @@ public class GenerateFlowMojo extends AbstractMojo {
 			// resolve test
 			URI uri = URI.createFileURI(origFile.getCanonicalPath().toString());
 			Resource res = resourceSet.getResource(uri, true);
-			Resource diagrama = res.getContents().get(0).eResource();
+        
+	        EObject eObject = res.getContents().get(1);
+			if (eObject instanceof Flow)
+	        {
+		        // Se valida el flow, sus padres y sus estados hijos
+		        Diagnostic diagn = Diagnostician.INSTANCE.validate(eObject);
+		        List<Diagnostic> lD = diagn.getChildren();
+		        String sError=null;
+		        for (Diagnostic diagnostic : lD) 
+		        {
+		        	if (diagnostic.getSeverity()==Diagnostic.ERROR)
+		        	{
+		        		sError+=" -- "+diagnostic.getMessage();
+		        		System.out.print("ERROR: ");
+		        	}
+		        	else if (diagnostic.getSeverity()==Diagnostic.WARNING)
+		        	{
+		        		System.out.print("WARNING: ");
+		        	}
+		        	System.out.println(diagnostic.getMessage());
+				}
+				if (sError != null)
+				{
+					throw new MojoExecutionException(sError);
+				}
+	        }
+	        Resource diagrama = eObject.eResource();
 			SpringWebFlowGenerator.compile(targetFile, diagrama, nameProject);
 
 			return true;
