@@ -33,8 +33,8 @@ class SpringWebFlowGenerator {
 		using(new FileWriter(file)) [
 			//Obtenemos el estado inicial para escribri la cabecera.
 			it.append(doGenerateHeader(nameProject))
-			
-			it.append(generateScope()) 
+			it.append(generateScope())
+			it.append(generateInitialization())
 			// Se recorre de nuevo todo el array para escribir el resto de estados del diagrama 
 			for (State state : flow.getStates()) {
 				it.append(generateState(state, nameProject))
@@ -42,6 +42,19 @@ class SpringWebFlowGenerator {
 			it.append(doGenerateFooter());
 		]
 	}
+	
+	def doGenerateHeader(String projectName) '''
+		<flow xmlns="http://www.springframework.org/schema/webflow"	
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
+		xsi:schemaLocation="http://www.springframework.org/schema/webflow
+		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+		parent="«projectName»/errorHandler"
+		start-state= "_jVoiceCheckInit" >
+		«FOR param: flow.parameters»
+		<input name="«param»"/>
+		«ENDFOR»
+
+	'''
 	
 	def generateScope() {
 		var beans = flow.beans
@@ -56,20 +69,11 @@ class SpringWebFlowGenerator {
 	'''
 	}
 	
-	def doGenerateHeader(String projectName) '''
-		<flow xmlns="http://www.springframework.org/schema/webflow"	
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
-		xsi:schemaLocation="http://www.springframework.org/schema/webflow
-		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
-		parent="«projectName»/errorHandler"
-		start-state= "_jVoiceCheckInit" >
-		«FOR param: flow.parameters»
-		<input name="«param»"/>
-		«ENDFOR»
+	def generateInitialization() '''
 		
 		<action-state id="_jVoiceCheckInit">
-			<evaluate expression="jVoiceArchData.initialized == false" />
-				<transition on="true" to="_jVoiceInit"/>
+			<evaluate expression="jVoiceArchData.initialized" />
+				<transition on="no" to="_jVoiceInit"/>
 				<transition to="«GetNameTransOut.Name(initialState)»"/>
 			</action-state>
 		
