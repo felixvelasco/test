@@ -27,7 +27,10 @@ class XMLGeneratorWSDL {
 	<?xml version="1.0" encoding="UTF-8"?>
 	<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
 	«FOR location : locations »
-		<system systemId="«location»" uri="wsdl/«location.substring(location.lastIndexOf("/")+1, location.length)»" />
+		«var name = location.substring(location.lastIndexOf("/")+1, location.length)»
+		«var index = name.lastIndexOf(".")»
+		«var parent = name.substring(0, index)»
+		<system systemId="«location»" uri="wsdl/«parent»/«name»" />
 	«ENDFOR»
 	</catalog>
 	'''
