@@ -21,7 +21,7 @@ import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
 
-public class componentBeanActionProviderIVR extends CommonActionProvider {
+public class ComponentBeanActionProviderIVR extends CommonActionProvider {
 
 	private OpenFileAction openFileAction;
 

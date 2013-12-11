@@ -6,12 +6,14 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.util.LocalSelectionTransfer;
@@ -69,13 +71,28 @@ public class BeanCommonDropAdapterAssistant extends CommonDropAdapterAssistant {
 			IFile diagram = (IFile) Platform.getAdapterManager().getAdapter(
 					bean, IFile.class);
 
+			// Recursos del flow
+			IFolder resourcesFlow = diagram.getParent()
+					.getFolder(
+							new Path(diagram.getName().replace(".jvflow",
+									".resources")));
+
+			if (!resourcesFlow.exists()) {
+				// no existe carpeta de recursos, se cancela la operacion
+				return Status.CANCEL_STATUS;
+			}
+
 			IResource targetRes = (IResource) Platform.getAdapterManager()
 					.getAdapter(target, IResource.class);
 			IPath targetPath = targetRes.getFullPath()
 					.append(diagram.getName());
 
+			IPath targetResources = targetRes.getFullPath().append(
+					resourcesFlow.getName());
+
 			try {
 				diagram.move(targetPath, true, null);
+				resourcesFlow.move(targetResources, true, null);
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}

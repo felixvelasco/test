@@ -434,7 +434,7 @@
             visibleInUI="true">
       </commonFilter>
       <actionProvider
-            class="com.vectorsf.jvoice.ui.navigator.componentBeanActionProviderIVR"
+            class="com.vectorsf.jvoice.ui.navigator.ComponentBeanActionProviderIVR"
             id="com.vectorsf.jvoice.ui.navigator.componentBeanActionProvider">
          <enablement>
             <with
