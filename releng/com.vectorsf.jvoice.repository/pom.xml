@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-       <modelVersion>4.0.0</modelVersion>
-       <parent>
-             <groupId>com.vectorsf.jvoice.core</groupId>
-             <artifactId>releng</artifactId>
-             <version>0.1.0-SNAPSHOT</version>
-       </parent>
-       <artifactId>com.vectorsf.jvoice.repository</artifactId>
-       <packaging>eclipse-repository</packaging>
-       <version>0.1.0-SNAPSHOT</version>
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ivr-publish</id>
-      <name>Corporate Repository</name>
-      <url>http://180.105.4.102:8081/nexus/content/repositories/ivr-publish/</url>
-      <layout>default</layout>
-    </snapshotRepository>
-  </distributionManagement>
-
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.vectorsf.jvoice.core</groupId>
+		<artifactId>releng</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>com.vectorsf.jvoice.repository</artifactId>
+	<packaging>eclipse-repository</packaging>
+	<version>0.1.0-SNAPSHOT</version>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ivr-publish</id>
+			<name>Corporate Repository</name>
+			<url>http://180.105.4.102:8081/nexus/content/repositories/ivr-publish/</url>
+			<layout>default</layout>
+		</snapshotRepository>
+	</distributionManagement>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-director-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>materialize-products</id>
+						<goals>
+							<goal>materialize-products</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>archive-products</id>
+						<goals>
+							<goal>archive-products</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

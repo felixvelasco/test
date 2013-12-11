@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="jVoice"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="jVoice">
+         <property
+               name="jVoice"
+               value="jVoice">
+         </property>
+         <property
+               name="appName"
+               value="jVoice">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="15,280,360,15">
+         </property>
+         <property
+               name="windowImages"
+               value="/com.vectorsf.jvoice.feature/resources/icon_logo_32.png">
+         </property>
+      </product>
+   </extension>
+
+</plugin>

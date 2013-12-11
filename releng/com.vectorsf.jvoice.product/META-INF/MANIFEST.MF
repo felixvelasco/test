@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Product
+Bundle-SymbolicName: com.vectorsf.jvoice.product;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: com.vectorsf.jvoice.product.Activator
+Bundle-Vendor: VECTORSF
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
