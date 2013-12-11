@@ -36,7 +36,7 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 		boolean ret = polymorphicValidate(eClass, eObject, diagnostics);
 
 		for (EClass eSuperClass : eClass.getESuperTypes()) {
-			ret &= polymorphicValidate(eSuperClass, eObject, diagnostics);
+			ret &= hierarchicalValidate(eSuperClass, eObject, diagnostics);
 		}
 		return ret;
 	}
