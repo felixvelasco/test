@@ -3,13 +3,19 @@ package com.vectorsf.jvoice.core.validation;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.State;
 
-public class StateValidator extends AbstractPolymorphicValidator {
+public class StateValidator {
+
+	private OperationsValidator operationsValidator;
+
+	public StateValidator(OperationsValidator operationsValidator) {
+		this.operationsValidator = operationsValidator;
+	}
 
 	public boolean validate_State_incoming(State state) {
 		if (!(state instanceof InitialState)) {
 
 			if (state.getIncomingTransitions().isEmpty()) {
-				error(state, "State " + state.getName() + " does not have incoming transitions");
+				operationsValidator.error(state, "State " + state.getName() + " does not have incoming transitions");
 			}
 		}
 

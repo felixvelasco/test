@@ -5,7 +5,13 @@ import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.State;
 
-public class FlowValidator extends AbstractPolymorphicValidator {
+public class FlowValidator {
+
+	private OperationsValidator operationsValidator;
+
+	public FlowValidator(OperationsValidator operationsValidator) {
+		this.operationsValidator = operationsValidator;
+	}
 
 	public boolean validate_Flow_oneInitialState(Flow flow) {
 		int initialCount = 0;
@@ -15,10 +21,10 @@ public class FlowValidator extends AbstractPolymorphicValidator {
 			}
 		}
 		if (initialCount == 0) {
-			error(flow, "No initial state found");
+			operationsValidator.error(flow, "No initial state found");
 
 		} else if (initialCount > 1) {
-			error(flow, "Too many initial states found");
+			operationsValidator.error(flow, "Too many initial states found");
 		}
 		return true;
 	}
@@ -29,7 +35,7 @@ public class FlowValidator extends AbstractPolymorphicValidator {
 				return true;
 			}
 		}
-		error(flow, "No final state found");
+		operationsValidator.error(flow, "No final state found");
 		return true;
 	}
 

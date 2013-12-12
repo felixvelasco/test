@@ -2,7 +2,13 @@ package com.vectorsf.jvoice.core.validation;
 
 import com.vectorsf.jvoice.model.operations.LocutionState;
 
-public class LocutionStateValidator extends AbstractPolymorphicValidator {
+public class LocutionStateValidator {
+
+	private OperationsValidator operationsValidator;
+
+	public LocutionStateValidator(OperationsValidator operationsValidator) {
+		this.operationsValidator = operationsValidator;
+	}
 
 	public boolean validate_LocutionState_checkWav(LocutionState lstate) {
 

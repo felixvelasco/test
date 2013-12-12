@@ -13,10 +13,10 @@ public class OperationsValidator extends AbstractPolymorphicValidator {
 	private LocutionStateValidator dslValidator;
 
 	public OperationsValidator() {
-		this.flowValidator = new FlowValidator();
-		this.stateValidator = new StateValidator();
-		this.beanValidator = new BeanValidator();
-		this.dslValidator = new LocutionStateValidator();
+		this.flowValidator = new FlowValidator(this);
+		this.stateValidator = new StateValidator(this);
+		this.beanValidator = new BeanValidator(this);
+		this.dslValidator = new LocutionStateValidator(this);
 	}
 
 	/*****************************************/

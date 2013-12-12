@@ -2,7 +2,12 @@ package com.vectorsf.jvoice.core.validation;
 
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 
-public class BeanValidator extends AbstractPolymorphicValidator {
+public class BeanValidator {
+	private OperationsValidator operationsValidator;
+
+	public BeanValidator(OperationsValidator operationsValidator) {
+		this.operationsValidator = operationsValidator;
+	}
 
 	public boolean validate_ComponentBean_distintNameScopedBean(ComponentBean bean) {
 
