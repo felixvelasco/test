@@ -1,14 +1,10 @@
 package com.vectorsf.jvoice.diagram.core;
 
-import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.equinox.log.ExtendedLogService;
 import org.eclipse.equinox.log.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
-
-import com.vectorsf.jvoice.core.validation.TestValidator;
-import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -47,7 +43,6 @@ public class Activator extends AbstractUIPlugin {
 			logger = logservice.getLogger(EQUINOX_LOGGER_NAME);
 		}
 
-		EValidator.Registry.INSTANCE.put(OperationsPackage.eINSTANCE, new TestValidator());
 	}
 
 	/**
