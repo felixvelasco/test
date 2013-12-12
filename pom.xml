@@ -19,6 +19,11 @@
       <url>http://download.eclipse.org/releases/kepler</url>
     </repository>
     <repository>
+      <id>webtools</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/webtools/repository/kepler</url>
+    </repository>
+    <repository>
       <id>orbit-R20130827064939</id>
       <layout>p2</layout>
       <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository/</url>
@@ -32,6 +37,11 @@
       <id>Parsley</id>
       <layout>p2</layout>
       <url>http://download.eclipse.org/emf-parsley/updates/</url>
+    </repository>
+    <repository>
+      <id>Xtext</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
     </repository>
   </repositories>
   <distributionManagement>
