@@ -3,7 +3,6 @@
 package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.base.BasePackage;
-
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.Case;
@@ -25,17 +24,12 @@ import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.TransferState;
 import com.vectorsf.jvoice.model.operations.Transition;
-import com.vectorsf.jvoice.model.operations.TypeTransfer;
-
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -177,13 +171,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * @generated
 	 */
 	private EClass parameterizedStateEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EEnum typeTransferEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -569,51 +556,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTransferState_Destination() {
-		return (EAttribute)transferStateEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTransferState_AudioTransfer() {
-		return (EAttribute)transferStateEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTransferState_MaxTime() {
-		return (EAttribute)transferStateEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTransferState_Timeout() {
-		return (EAttribute)transferStateEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTransferState_TypeTransfer() {
-		return (EAttribute)transferStateEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getRecordState() {
 		return recordStateEClass;
 	}
@@ -722,15 +664,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EEnum getTypeTransfer() {
-		return typeTransferEEnum;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public OperationsFactory getOperationsFactory() {
 		return (OperationsFactory)getEFactoryInstance();
 	}
@@ -802,11 +735,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEReference(locutionStateEClass, LOCUTION_STATE__LOCUTION);
 
 		transferStateEClass = createEClass(TRANSFER_STATE);
-		createEAttribute(transferStateEClass, TRANSFER_STATE__DESTINATION);
-		createEAttribute(transferStateEClass, TRANSFER_STATE__AUDIO_TRANSFER);
-		createEAttribute(transferStateEClass, TRANSFER_STATE__MAX_TIME);
-		createEAttribute(transferStateEClass, TRANSFER_STATE__TIMEOUT);
-		createEAttribute(transferStateEClass, TRANSFER_STATE__TYPE_TRANSFER);
 
 		recordStateEClass = createEClass(RECORD_STATE);
 
@@ -824,9 +752,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		parameterizedStateEClass = createEClass(PARAMETERIZED_STATE);
 		createEAttribute(parameterizedStateEClass, PARAMETERIZED_STATE__PARAMETERS);
-
-		// Create enums
-		typeTransferEEnum = createEEnum(TYPE_TRANSFER);
 	}
 
 	/**
@@ -873,7 +798,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		inputStateEClass.getESuperTypes().add(this.getLocutionState());
 		menuStateEClass.getESuperTypes().add(this.getLocutionState());
 		locutionStateEClass.getESuperTypes().add(this.getState());
-		transferStateEClass.getESuperTypes().add(this.getState());
+		transferStateEClass.getESuperTypes().add(this.getLocutionState());
 		recordStateEClass.getESuperTypes().add(this.getLocutionState());
 		noteEClass.getESuperTypes().add(theBasePackage.getJVElement());
 		customStateEClass.getESuperTypes().add(this.getState());
@@ -931,11 +856,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEReference(getLocutionState_Locution(), theVoiceDslPackage.getVoiceDsl(), null, "locution", null, 0, 1, LocutionState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(transferStateEClass, TransferState.class, "TransferState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTransferState_Destination(), ecorePackage.getEString(), "destination", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTransferState_AudioTransfer(), ecorePackage.getEString(), "audioTransfer", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTransferState_MaxTime(), ecorePackage.getEString(), "maxTime", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTransferState_Timeout(), ecorePackage.getEString(), "timeout", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTransferState_TypeTransfer(), this.getTypeTransfer(), "typeTransfer", null, 0, 1, TransferState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(recordStateEClass, RecordState.class, "RecordState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -953,12 +873,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		initEClass(parameterizedStateEClass, ParameterizedState.class, "ParameterizedState", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameterizedState_Parameters(), ecorePackage.getEString(), "parameters", null, 0, -1, ParameterizedState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		// Initialize enums and add enum literals
-		initEEnum(typeTransferEEnum, TypeTransfer.class, "TypeTransfer");
-		addEEnumLiteral(typeTransferEEnum, TypeTransfer.BLIND);
-		addEEnumLiteral(typeTransferEEnum, TypeTransfer.CONSULTATION);
-		addEEnumLiteral(typeTransferEEnum, TypeTransfer.BRIDGE);
 
 		// Create resource
 		createResource(eNS_URI);

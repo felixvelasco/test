@@ -189,6 +189,7 @@ public class OperationsSwitch<T> extends Switch<T> {
 			case OperationsPackage.TRANSFER_STATE: {
 				TransferState transferState = (TransferState)theEObject;
 				T result = caseTransferState(transferState);
+				if (result == null) result = caseLocutionState(transferState);
 				if (result == null) result = caseState(transferState);
 				if (result == null) result = caseNamedElement(transferState);
 				if (result == null) result = caseJVElement(transferState);

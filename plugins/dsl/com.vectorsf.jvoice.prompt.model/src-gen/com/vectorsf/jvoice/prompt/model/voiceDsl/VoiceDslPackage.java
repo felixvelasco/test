@@ -1869,6 +1869,187 @@ public interface VoiceDslPackage extends EPackage {
 	int RECORD_DSL_OPERATION_COUNT = VOICE_DSL_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.TransferDslImpl <em>Transfer Dsl</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.TransferDslImpl
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getTransferDsl()
+	 * @generated
+	 */
+	int TRANSFER_DSL = 24;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__ID = VOICE_DSL__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__NAME = VOICE_DSL__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__DESCRIPTION = VOICE_DSL__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owner Package</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__OWNER_PACKAGE = VOICE_DSL__OWNER_PACKAGE;
+
+	/**
+	 * The feature id for the '<em><b>Configuration</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__CONFIGURATION = VOICE_DSL__CONFIGURATION;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__PROPERTIES = VOICE_DSL__PROPERTIES;
+
+	/**
+	 * The feature id for the '<em><b>Conditions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__CONDITIONS = VOICE_DSL__CONDITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Audios</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__AUDIOS = VOICE_DSL__AUDIOS;
+
+	/**
+	 * The feature id for the '<em><b>Grammars</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__GRAMMARS = VOICE_DSL__GRAMMARS;
+
+	/**
+	 * The feature id for the '<em><b>Variables</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__VARIABLES = VOICE_DSL__VARIABLES;
+
+	/**
+	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__TYPES = VOICE_DSL__TYPES;
+
+	/**
+	 * The feature id for the '<em><b>Outputs</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__OUTPUTS = VOICE_DSL__OUTPUTS;
+
+	/**
+	 * The feature id for the '<em><b>Destination</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__DESTINATION = VOICE_DSL_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Audio Transfer</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__AUDIO_TRANSFER = VOICE_DSL_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Max Time</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__MAX_TIME = VOICE_DSL_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Timeout</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__TIMEOUT = VOICE_DSL_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Type Transfer</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL__TYPE_TRANSFER = VOICE_DSL_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Transfer Dsl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL_FEATURE_COUNT = VOICE_DSL_FEATURE_COUNT + 5;
+
+	/**
+	 * The number of operations of the '<em>Transfer Dsl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_DSL_OPERATION_COUNT = VOICE_DSL_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1876,7 +2057,7 @@ public interface VoiceDslPackage extends EPackage {
 	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getInterpretation()
 	 * @generated
 	 */
-	int INTERPRETATION = 24;
+	int INTERPRETATION = 25;
 
 
 	/**
@@ -2823,6 +3004,71 @@ public interface VoiceDslPackage extends EPackage {
 	EAttribute getRecordDsl_FileName();
 
 	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl <em>Transfer Dsl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Transfer Dsl</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl
+	 * @generated
+	 */
+	EClass getTransferDsl();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getDestination <em>Destination</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Destination</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getDestination()
+	 * @see #getTransferDsl()
+	 * @generated
+	 */
+	EAttribute getTransferDsl_Destination();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getAudioTransfer <em>Audio Transfer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Audio Transfer</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getAudioTransfer()
+	 * @see #getTransferDsl()
+	 * @generated
+	 */
+	EAttribute getTransferDsl_AudioTransfer();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getMaxTime <em>Max Time</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Max Time</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getMaxTime()
+	 * @see #getTransferDsl()
+	 * @generated
+	 */
+	EAttribute getTransferDsl_MaxTime();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getTimeout <em>Timeout</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Timeout</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getTimeout()
+	 * @see #getTransferDsl()
+	 * @generated
+	 */
+	EAttribute getTransferDsl_Timeout();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getTypeTransfer <em>Type Transfer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type Transfer</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getTypeTransfer()
+	 * @see #getTransferDsl()
+	 * @generated
+	 */
+	EAttribute getTransferDsl_TypeTransfer();
+
+	/**
 	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3606,6 +3852,56 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute RECORD_DSL__FILE_NAME = eINSTANCE.getRecordDsl_FileName();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.TransferDslImpl <em>Transfer Dsl</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.TransferDslImpl
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getTransferDsl()
+		 * @generated
+		 */
+		EClass TRANSFER_DSL = eINSTANCE.getTransferDsl();
+
+		/**
+		 * The meta object literal for the '<em><b>Destination</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSFER_DSL__DESTINATION = eINSTANCE.getTransferDsl_Destination();
+
+		/**
+		 * The meta object literal for the '<em><b>Audio Transfer</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSFER_DSL__AUDIO_TRANSFER = eINSTANCE.getTransferDsl_AudioTransfer();
+
+		/**
+		 * The meta object literal for the '<em><b>Max Time</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSFER_DSL__MAX_TIME = eINSTANCE.getTransferDsl_MaxTime();
+
+		/**
+		 * The meta object literal for the '<em><b>Timeout</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSFER_DSL__TIMEOUT = eINSTANCE.getTransferDsl_Timeout();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Transfer</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSFER_DSL__TYPE_TRANSFER = eINSTANCE.getTransferDsl_TypeTransfer();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Interpretation <em>Interpretation</em>}' enum.

@@ -47,6 +47,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.wizard.Activator;
 
@@ -382,7 +383,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		box = new Combo(projectGroup, SWT.READ_ONLY);
 		box.setEnabled(fromNavigator);
-		box.setItems(new String[] { "Menu", "Input", "Output", "Record" });
+		box.setItems(new String[] { "Menu", "Input", "Output", "Record", "Transfer" });
 
 		if (targetClazz != null) {
 			if (targetClazz.equals(MenuDsl.class)) {
@@ -396,6 +397,9 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			}
 			if (targetClazz.equals(RecordDsl.class)) {
 				box.select(3);
+			}
+			if (targetClazz.equals(TransferDsl.class)) {
+				box.select(4);
 			}
 
 			box.setEnabled(false);
@@ -544,6 +548,9 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 				} else if (seleccion.equals("Record")) {
 					contents = "recordname " + dslName + "\n\n" + configuration + audios;
+
+				} else if (seleccion.equals("Transfer")) {
+					contents = "transfername " + dslName + "\n\n" + variables + audios;
 
 				}
 

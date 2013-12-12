@@ -117,6 +117,16 @@ ruleVoiceDsl returns [EObject current=null]
         $current = $this_RecordDsl_3.current; 
         afterParserOrEnumRuleCall();
     }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getVoiceDslAccess().getTransferDslParserRuleCall_4()); 
+    }
+    this_TransferDsl_4=ruleTransferDsl
+    { 
+        $current = $this_TransferDsl_4.current; 
+        afterParserOrEnumRuleCall();
+    }
 )
 ;
 
@@ -1079,6 +1089,324 @@ ruleRecordDsl returns [EObject current=null]
 
 
 
+// Entry rule entryRuleTransferDsl
+entryRuleTransferDsl returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTransferDslRule()); }
+	 iv_ruleTransferDsl=ruleTransferDsl 
+	 { $current=$iv_ruleTransferDsl.current; } 
+	 EOF 
+;
+
+// Rule TransferDsl
+ruleTransferDsl returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+
+(
+	{ 
+	  getUnorderedGroupHelper().enter(grammarAccess.getTransferDslAccess().getUnorderedGroup());
+	}
+	(
+		(
+
+			( 
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getTransferDslAccess().getUnorderedGroup(), 0)}?=>(
+					{ 
+	 				  getUnorderedGroupHelper().select(grammarAccess.getTransferDslAccess().getUnorderedGroup(), 0);
+	 				}
+					({true}?=>(	otherlv_1='transfername' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTransferDslAccess().getTransfernameKeyword_0_0());
+    }
+(
+(
+		lv_name_2_0=RULE_ID
+		{
+			newLeafNode(lv_name_2_0, grammarAccess.getTransferDslAccess().getNameIDTerminalRuleCall_0_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTransferDslRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"name",
+        		lv_name_2_0, 
+        		"ID");
+	    }
+
+)
+)	otherlv_3='destination' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getTransferDslAccess().getDestinationKeyword_0_2());
+    }
+(
+(
+		lv_destination_4_0=RULE_STRING
+		{
+			newLeafNode(lv_destination_4_0, grammarAccess.getTransferDslAccess().getDestinationSTRINGTerminalRuleCall_0_3_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTransferDslRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"destination",
+        		lv_destination_4_0, 
+        		"STRING");
+	    }
+
+)
+)	otherlv_5='audioTransfer' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getTransferDslAccess().getAudioTransferKeyword_0_4());
+    }
+(
+(
+		lv_audioTransfer_6_0=RULE_STRING
+		{
+			newLeafNode(lv_audioTransfer_6_0, grammarAccess.getTransferDslAccess().getAudioTransferSTRINGTerminalRuleCall_0_5_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTransferDslRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"audioTransfer",
+        		lv_audioTransfer_6_0, 
+        		"STRING");
+	    }
+
+)
+)	otherlv_7='maxTime' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getTransferDslAccess().getMaxTimeKeyword_0_6());
+    }
+(
+(
+		lv_maxTime_8_0=RULE_STRING
+		{
+			newLeafNode(lv_maxTime_8_0, grammarAccess.getTransferDslAccess().getMaxTimeSTRINGTerminalRuleCall_0_7_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTransferDslRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"maxTime",
+        		lv_maxTime_8_0, 
+        		"STRING");
+	    }
+
+)
+)	otherlv_9='timeout' 
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getTransferDslAccess().getTimeoutKeyword_0_8());
+    }
+(
+(
+		lv_timeout_10_0=RULE_STRING
+		{
+			newLeafNode(lv_timeout_10_0, grammarAccess.getTransferDslAccess().getTimeoutSTRINGTerminalRuleCall_0_9_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTransferDslRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"timeout",
+        		lv_timeout_10_0, 
+        		"STRING");
+	    }
+
+)
+)	otherlv_11='typeTransfer' 
+    {
+    	newLeafNode(otherlv_11, grammarAccess.getTransferDslAccess().getTypeTransferKeyword_0_10());
+    }
+(
+(
+		lv_typeTransfer_12_0=RULE_STRING
+		{
+			newLeafNode(lv_typeTransfer_12_0, grammarAccess.getTransferDslAccess().getTypeTransferSTRINGTerminalRuleCall_0_11_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTransferDslRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"typeTransfer",
+        		lv_typeTransfer_12_0, 
+        		"STRING");
+	    }
+
+)
+)))
+					{ 
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getTransferDslAccess().getUnorderedGroup());
+	 				}
+ 				)
+			)  |
+
+			( 
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getTransferDslAccess().getUnorderedGroup(), 1)}?=>(
+					{ 
+	 				  getUnorderedGroupHelper().select(grammarAccess.getTransferDslAccess().getUnorderedGroup(), 1);
+	 				}
+					({true}?=>((
+
+(
+	{ 
+	  getUnorderedGroupHelper().enter(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0());
+	}
+	(
+		(
+
+			( 
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0(), 0)}?=>(
+					{ 
+	 				  getUnorderedGroupHelper().select(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0(), 0);
+	 				}
+					({true}?=>(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getPropertiesPropertyParserRuleCall_1_0_0_0()); 
+	    }
+		lv_properties_14_0=ruleProperty		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
+	        }
+       		add(
+       			$current, 
+       			"properties",
+        		lv_properties_14_0, 
+        		"Property");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))+
+					{ 
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0());
+	 				}
+ 				)
+			)  |
+
+			( 
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0(), 1)}?=>(
+					{ 
+	 				  getUnorderedGroupHelper().select(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0(), 1);
+	 				}
+					({true}?=>(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getVariablesVariablesParserRuleCall_1_0_1_0()); 
+	    }
+		lv_variables_15_0=ruleVariables		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
+	        }
+       		set(
+       			$current, 
+       			"variables",
+        		lv_variables_15_0, 
+        		"Variables");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+					{ 
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0());
+	 				}
+ 				)
+			)  |
+
+			( 
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0(), 2)}?=>(
+					{ 
+	 				  getUnorderedGroupHelper().select(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0(), 2);
+	 				}
+					({true}?=>(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getConditionsConditionParserRuleCall_1_0_2_0()); 
+	    }
+		lv_conditions_16_0=ruleCondition		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
+	        }
+       		add(
+       			$current, 
+       			"conditions",
+        		lv_conditions_16_0, 
+        		"Condition");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))+
+					{ 
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0());
+	 				}
+ 				)
+			)  
+
+		)*	
+	)
+)
+	{ 
+	  getUnorderedGroupHelper().leave(grammarAccess.getTransferDslAccess().getUnorderedGroup_1_0());
+	}
+
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getAudiosAudiosParserRuleCall_1_1_0()); 
+	    }
+		lv_audios_17_0=ruleAudios		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
+	        }
+       		set(
+       			$current, 
+       			"audios",
+        		lv_audios_17_0, 
+        		"Audios");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)))
+					{ 
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getTransferDslAccess().getUnorderedGroup());
+	 				}
+ 				)
+			)  
+
+		)+
+	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getTransferDslAccess().getUnorderedGroup())}?	
+	)
+)
+	{ 
+	  getUnorderedGroupHelper().leave(grammarAccess.getTransferDslAccess().getUnorderedGroup());
+	}
+
+)
+;
+
+
+
+
+
 // Entry rule entryRuleVariables
 entryRuleVariables returns [EObject current=null] 
 	:
@@ -1658,8 +1986,6 @@ ruleConfigValueValue returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRu
     }
 )
     ;
-
-
 
 
 

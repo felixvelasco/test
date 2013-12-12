@@ -51,15 +51,10 @@ import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
-import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.LocutionState;
-import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.Note;
-import com.vectorsf.jvoice.model.operations.PromptState;
-import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
-import com.vectorsf.jvoice.model.operations.TransferState;
 import com.vectorsf.jvoice.model.operations.Transition;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
@@ -285,14 +280,12 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 	private boolean isState(Object object) {
 		return object instanceof CallFlowState || object instanceof CallState || object instanceof FinalState
-				|| object instanceof InitialState || object instanceof InputState || object instanceof MenuState
-				|| object instanceof PromptState || object instanceof SwitchState || object instanceof RecordState
-				|| object instanceof TransferState || object instanceof CustomState;
+				|| object instanceof InitialState || object instanceof SwitchState || object instanceof LocutionState
+				|| object instanceof CustomState;
 	}
 
 	private boolean isLocution(Object object) {
-		return object instanceof InputState || object instanceof MenuState || object instanceof PromptState
-				|| object instanceof RecordState;
+		return object instanceof LocutionState;
 	}
 
 	private String generateName(String stateName, IPasteContext context) {

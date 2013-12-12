@@ -238,6 +238,15 @@ public interface VoiceDslFactory extends EFactory {
 	RecordDsl createRecordDsl();
 
 	/**
+	 * Returns a new object of class '<em>Transfer Dsl</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Transfer Dsl</em>'.
+	 * @generated
+	 */
+	TransferDsl createTransferDsl();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

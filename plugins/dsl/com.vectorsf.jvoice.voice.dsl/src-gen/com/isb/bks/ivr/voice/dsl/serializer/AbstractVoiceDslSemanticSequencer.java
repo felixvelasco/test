@@ -22,6 +22,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
@@ -272,6 +273,13 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 				if(context == grammarAccess.getRecordDslRule() ||
 				   context == grammarAccess.getVoiceDslRule()) {
 					sequence_RecordDsl(context, (RecordDsl) semanticObject); 
+					return; 
+				}
+				else break;
+			case VoiceDslPackage.TRANSFER_DSL:
+				if(context == grammarAccess.getTransferDslRule() ||
+				   context == grammarAccess.getVoiceDslRule()) {
+					sequence_TransferDsl(context, (TransferDsl) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1456,6 +1464,26 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	 *     (src=STRING? (tts=STRING | (interpretation=Interpretation format=STRING? tts=STRING))?)
 	 */
 	protected void sequence_SimpleAudio(EObject context, Audio semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         name=ID 
+	 *         destination=STRING 
+	 *         audioTransfer=STRING 
+	 *         maxTime=STRING 
+	 *         timeout=STRING 
+	 *         typeTransfer=STRING 
+	 *         properties+=Property* 
+	 *         variables=Variables? 
+	 *         conditions+=Condition* 
+	 *         audios=Audios
+	 *     )
+	 */
+	protected void sequence_TransferDsl(EObject context, TransferDsl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -3,10 +3,8 @@
 package com.vectorsf.jvoice.model.operations;
 
 import com.vectorsf.jvoice.model.base.BasePackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -1324,7 +1322,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE__ID = STATE__ID;
+	int TRANSFER_STATE__ID = LOCUTION_STATE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1333,7 +1331,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE__NAME = STATE__NAME;
+	int TRANSFER_STATE__NAME = LOCUTION_STATE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -1342,7 +1340,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE__DESCRIPTION = STATE__DESCRIPTION;
+	int TRANSFER_STATE__DESCRIPTION = LOCUTION_STATE__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
@@ -1351,7 +1349,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE__INCOMING_TRANSITIONS = STATE__INCOMING_TRANSITIONS;
+	int TRANSFER_STATE__INCOMING_TRANSITIONS = LOCUTION_STATE__INCOMING_TRANSITIONS;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
@@ -1360,7 +1358,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE__OUTGOING_TRANSITIONS = STATE__OUTGOING_TRANSITIONS;
+	int TRANSFER_STATE__OUTGOING_TRANSITIONS = LOCUTION_STATE__OUTGOING_TRANSITIONS;
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
@@ -1369,52 +1367,16 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE__NOTES = STATE__NOTES;
+	int TRANSFER_STATE__NOTES = LOCUTION_STATE__NOTES;
 
 	/**
-	 * The feature id for the '<em><b>Destination</b></em>' attribute.
+	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE__DESTINATION = STATE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Audio Transfer</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFER_STATE__AUDIO_TRANSFER = STATE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Max Time</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFER_STATE__MAX_TIME = STATE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Timeout</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFER_STATE__TIMEOUT = STATE_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Type Transfer</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSFER_STATE__TYPE_TRANSFER = STATE_FEATURE_COUNT + 4;
+	int TRANSFER_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
 
 	/**
 	 * The number of structural features of the '<em>Transfer State</em>' class.
@@ -1423,7 +1385,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 5;
+	int TRANSFER_STATE_FEATURE_COUNT = LOCUTION_STATE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Transfer State</em>' class.
@@ -1432,7 +1394,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+	int TRANSFER_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.RecordStateImpl <em>Record State</em>}' class.
@@ -1752,17 +1714,6 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPONENT_BEAN_OPERATION_COUNT = BasePackage.NAMED_ELEMENT_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see com.vectorsf.jvoice.model.operations.TypeTransfer
-	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTypeTransfer()
-	 * @generated
-	 */
-	int TYPE_TRANSFER = 19;
-
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.State <em>State</em>}'.
@@ -2135,61 +2086,6 @@ public interface OperationsPackage extends EPackage {
 	EClass getTransferState();
 
 	/**
-	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.TransferState#getDestination <em>Destination</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Destination</em>'.
-	 * @see com.vectorsf.jvoice.model.operations.TransferState#getDestination()
-	 * @see #getTransferState()
-	 * @generated
-	 */
-	EAttribute getTransferState_Destination();
-
-	/**
-	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.TransferState#getAudioTransfer <em>Audio Transfer</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Audio Transfer</em>'.
-	 * @see com.vectorsf.jvoice.model.operations.TransferState#getAudioTransfer()
-	 * @see #getTransferState()
-	 * @generated
-	 */
-	EAttribute getTransferState_AudioTransfer();
-
-	/**
-	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.TransferState#getMaxTime <em>Max Time</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Max Time</em>'.
-	 * @see com.vectorsf.jvoice.model.operations.TransferState#getMaxTime()
-	 * @see #getTransferState()
-	 * @generated
-	 */
-	EAttribute getTransferState_MaxTime();
-
-	/**
-	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.TransferState#getTimeout <em>Timeout</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Timeout</em>'.
-	 * @see com.vectorsf.jvoice.model.operations.TransferState#getTimeout()
-	 * @see #getTransferState()
-	 * @generated
-	 */
-	EAttribute getTransferState_Timeout();
-
-	/**
-	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.TransferState#getTypeTransfer <em>Type Transfer</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type Transfer</em>'.
-	 * @see com.vectorsf.jvoice.model.operations.TransferState#getTypeTransfer()
-	 * @see #getTransferState()
-	 * @generated
-	 */
-	EAttribute getTransferState_TypeTransfer();
-
-	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.RecordState <em>Record State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2315,16 +2211,6 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getParameterizedState_Parameters();
-
-	/**
-	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>Type Transfer</em>'.
-	 * @see com.vectorsf.jvoice.model.operations.TypeTransfer
-	 * @generated
-	 */
-	EEnum getTypeTransfer();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2658,46 +2544,6 @@ public interface OperationsPackage extends EPackage {
 		EClass TRANSFER_STATE = eINSTANCE.getTransferState();
 
 		/**
-		 * The meta object literal for the '<em><b>Destination</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TRANSFER_STATE__DESTINATION = eINSTANCE.getTransferState_Destination();
-
-		/**
-		 * The meta object literal for the '<em><b>Audio Transfer</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TRANSFER_STATE__AUDIO_TRANSFER = eINSTANCE.getTransferState_AudioTransfer();
-
-		/**
-		 * The meta object literal for the '<em><b>Max Time</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TRANSFER_STATE__MAX_TIME = eINSTANCE.getTransferState_MaxTime();
-
-		/**
-		 * The meta object literal for the '<em><b>Timeout</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TRANSFER_STATE__TIMEOUT = eINSTANCE.getTransferState_Timeout();
-
-		/**
-		 * The meta object literal for the '<em><b>Type Transfer</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TRANSFER_STATE__TYPE_TRANSFER = eINSTANCE.getTransferState_TypeTransfer();
-
-		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.RecordStateImpl <em>Record State</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2802,16 +2648,6 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETERIZED_STATE__PARAMETERS = eINSTANCE.getParameterizedState_Parameters();
-
-		/**
-		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.TypeTransfer <em>Type Transfer</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see com.vectorsf.jvoice.model.operations.TypeTransfer
-		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTypeTransfer()
-		 * @generated
-		 */
-		EEnum TYPE_TRANSFER = eINSTANCE.getTypeTransfer();
 
 	}
 

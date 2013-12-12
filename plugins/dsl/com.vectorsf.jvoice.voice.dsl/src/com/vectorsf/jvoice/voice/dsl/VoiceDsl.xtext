@@ -8,6 +8,7 @@ VoiceDsl:
 	| MenuDsl
 	| PromptDsl
 	| RecordDsl
+	| TransferDsl
     ;
 
 PromptDsl:
@@ -51,7 +52,17 @@ RecordDsl:
   	    audios=Audios	
 	  ) 
 ;
-	
+
+TransferDsl:
+	(('transfername'  name = ID 'destination' destination = STRING
+		'audioTransfer' audioTransfer = STRING 'maxTime' maxTime = STRING
+		'timeout' timeout = STRING 'typeTransfer' typeTransfer = STRING)& 
+       ((properties += Property*)& 
+       	((variables = Variables)?)& 
+	    (conditions += Condition*))
+  	     audios=Audios	
+	   ) 
+;
 	  
 Variables:
 	{Variables}
@@ -98,10 +109,6 @@ ConfigValue:
 
 ConfigValueValue:
 	INT ('ms'|'s')?| FLOAT | 'true' | 'false' 
-;
-
-FilenameValueValue:
-	STRING 
 ;
 
 Grammar:

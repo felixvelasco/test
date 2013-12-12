@@ -25,6 +25,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
@@ -189,6 +190,10 @@ public class VoiceDslAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseRecordDsl(RecordDsl object) {
 				return createRecordDslAdapter();
+			}
+			@Override
+			public Adapter caseTransferDsl(TransferDsl object) {
+				return createTransferDslAdapter();
 			}
 			@Override
 			public Adapter caseJVElement(JVElement object) {
@@ -555,6 +560,20 @@ public class VoiceDslAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createRecordDslAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl <em>Transfer Dsl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl
+	 * @generated
+	 */
+	public Adapter createTransferDslAdapter() {
 		return null;
 	}
 

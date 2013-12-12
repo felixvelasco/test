@@ -39,4 +39,13 @@ public class ExtVoiceDslItemProviderAdapterFactory extends VoiceDslItemProviderA
 
 		return recordDslItemProvider;
 	}
+	
+	@Override
+	public Adapter createTransferDslAdapter() {
+		if (transferDslItemProvider == null) {
+			transferDslItemProvider = new ExtTransferDslItemProvider(this);
+		}
+
+		return transferDslItemProvider;
+	}
 }

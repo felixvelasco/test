@@ -24,6 +24,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
@@ -220,6 +221,13 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	private EClass recordDslEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass transferDslEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1091,6 +1099,60 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTransferDsl() {
+		return transferDslEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTransferDsl_Destination() {
+		return (EAttribute)transferDslEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTransferDsl_AudioTransfer() {
+		return (EAttribute)transferDslEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTransferDsl_MaxTime() {
+		return (EAttribute)transferDslEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTransferDsl_Timeout() {
+		return (EAttribute)transferDslEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTransferDsl_TypeTransfer() {
+		return (EAttribute)transferDslEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getInterpretation() {
 		return interpretationEEnum;
 	}
@@ -1235,6 +1297,13 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		recordDslEClass = createEClass(RECORD_DSL);
 		createEAttribute(recordDslEClass, RECORD_DSL__FILE_NAME);
 
+		transferDslEClass = createEClass(TRANSFER_DSL);
+		createEAttribute(transferDslEClass, TRANSFER_DSL__DESTINATION);
+		createEAttribute(transferDslEClass, TRANSFER_DSL__AUDIO_TRANSFER);
+		createEAttribute(transferDslEClass, TRANSFER_DSL__MAX_TIME);
+		createEAttribute(transferDslEClass, TRANSFER_DSL__TIMEOUT);
+		createEAttribute(transferDslEClass, TRANSFER_DSL__TYPE_TRANSFER);
+
 		// Create enums
 		interpretationEEnum = createEEnum(INTERPRETATION);
 	}
@@ -1282,6 +1351,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		menuDslEClass.getESuperTypes().add(this.getVoiceDsl());
 		promptDslEClass.getESuperTypes().add(this.getVoiceDsl());
 		recordDslEClass.getESuperTypes().add(this.getVoiceDsl());
+		transferDslEClass.getESuperTypes().add(this.getVoiceDsl());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(voiceDslEClass, VoiceDsl.class, "VoiceDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1397,6 +1467,13 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 
 		initEClass(recordDslEClass, RecordDsl.class, "RecordDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRecordDsl_FileName(), ecorePackage.getEString(), "fileName", null, 0, 1, RecordDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(transferDslEClass, TransferDsl.class, "TransferDsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTransferDsl_Destination(), ecorePackage.getEString(), "destination", "", 0, 1, TransferDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTransferDsl_AudioTransfer(), ecorePackage.getEString(), "audioTransfer", null, 0, 1, TransferDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTransferDsl_MaxTime(), ecorePackage.getEString(), "maxTime", null, 0, 1, TransferDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTransferDsl_Timeout(), ecorePackage.getEString(), "timeout", null, 0, 1, TransferDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTransferDsl_TypeTransfer(), ecorePackage.getEString(), "typeTransfer", null, 0, 1, TransferDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(interpretationEEnum, Interpretation.class, "Interpretation");

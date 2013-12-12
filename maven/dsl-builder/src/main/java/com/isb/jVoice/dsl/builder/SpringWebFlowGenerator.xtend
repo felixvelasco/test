@@ -128,7 +128,7 @@ class SpringWebFlowGenerator {
 	}
 
 	def dispatch generateState(TransferState state, String nameProject) {
-		TransferStateCodeXML.doGenerateTransferState(state)
+		TransferStateCodeXML.doGenerateTransferState(state, nameProject)
 	}
 
 	def dispatch generateState(RecordState state, String nameProject) {

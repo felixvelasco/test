@@ -27,10 +27,12 @@ import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.RecordState;
+import com.vectorsf.jvoice.model.operations.TransferState;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
 
 public class EditMenuStateLocution extends RecordingCommand {
@@ -44,6 +46,7 @@ public class EditMenuStateLocution extends RecordingCommand {
 	private Flow flujo;
 	private String flowFolderPath;
 	private IFolder resourcesFolder;
+	private TransferState transferLocution;
 
 	public EditMenuStateLocution(TransactionalEditingDomain domain, CustomState custom, Text nameSubFlow) {
 		super(domain);
@@ -80,6 +83,13 @@ public class EditMenuStateLocution extends RecordingCommand {
 
 	}
 
+	public EditMenuStateLocution(TransactionalEditingDomain domain, TransferState transferLocution, Text nameSubFlow) {
+		super(domain);
+		this.transferLocution = transferLocution;
+		this.nameSubFlow = nameSubFlow;
+
+	}
+
 	@SuppressWarnings("restriction")
 	@Override
 	protected void doExecute() {
@@ -87,7 +97,7 @@ public class EditMenuStateLocution extends RecordingCommand {
 
 		flujo = obtenerFlow();
 		DialogLocution dialog = new DialogLocution(activeShell);
-		List locutionResources = new ArrayList<>();
+		List<Object> locutionResources = new ArrayList<>();
 		flowFolderPath = getFolderPath(flujo);
 
 		resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace().getRoot().findMember(flowFolderPath);
@@ -118,6 +128,11 @@ public class EditMenuStateLocution extends RecordingCommand {
 					}
 					if (recordLocution != null) {
 						if (eObject instanceof RecordDsl) {
+							locutionResources.add(eObject);
+						}
+					}
+					if (transferLocution != null) {
+						if (eObject instanceof TransferDsl) {
 							locutionResources.add(eObject);
 						}
 					}
@@ -168,6 +183,9 @@ public class EditMenuStateLocution extends RecordingCommand {
 		} else if (recordLocution != null) {
 			dialog.setTitle("Record Selection");
 			dialog.setMessage("Select an record:");
+		} else if (transferLocution != null) {
+			dialog.setTitle("Transfer Selection");
+			dialog.setMessage("Select an transfer:");
 		} else if (custom != null) {
 			dialog.setTitle("Custom Selection");
 			dialog.setMessage("Select a Custom:");
@@ -208,6 +226,14 @@ public class EditMenuStateLocution extends RecordingCommand {
 				recordLocution.setLocution(result);
 				nameSubFlow.setText(recordLocution.getLocution().getName());
 
+			} else if (results[0] instanceof TransferDsl) {
+				TransferDsl result = (TransferDsl) results[0];
+
+				URI transferURI = EcoreUtil.getURI(result);
+				result = (TransferDsl) transferLocution.eResource().getResourceSet().getEObject(transferURI, true);
+
+				transferLocution.setLocution(result);
+				nameSubFlow.setText(transferLocution.getLocution().getName());
 			} else if (results[0].toString().contains(".jsp")) {
 				IFile resultcustom = resourcesFolder.getFile(results[0].toString());
 				nameSubFlow.setText(custom.getName());
@@ -242,6 +268,9 @@ public class EditMenuStateLocution extends RecordingCommand {
 		}
 		if (recordLocution != null) {
 			return (Flow) recordLocution.eContainer();
+		}
+		if (transferLocution != null) {
+			return (Flow) transferLocution.eContainer();
 		}
 		if (custom != null) {
 			return (Flow) custom.eContainer();
