@@ -40,6 +40,7 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Injector;
 import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
 import com.isb.bks.ivr.voice.dsl.validation.VoiceDslJavaValidator;
+import com.vectorsf.jvoice.core.validation.OperationsValidator;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
