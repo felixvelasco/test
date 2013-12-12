@@ -9,9 +9,8 @@ Require-Bundle: org.eclipse.m2e.jdt;bundle-version="1.4.0",
  org.eclipse.m2e.core;bundle-version="1.4.0",
  org.eclipse.m2e.maven.runtime;bundle-version="1.4.0",
  org.eclipse.core.runtime;bundle-version="3.9.0",
- org.eclipse.core.resources
-Import-Package: com.vectorsf.jvoice.base.model.service,
- com.vectorsf.jvoice.model.base,
- org.eclipse.emf.common.util,
- org.eclipse.emf.ecore,
- org.eclipse.emf.ecore.resource
+ org.eclipse.core.resources,
+ org.eclipse.emf.ecore;bundle-version="2.9.0",
+ org.eclipse.emf.common.ui;bundle-version="2.8.0",
+ org.eclipse.emf.edit.ui;bundle-version="2.9.0",
+ com.vectorsf.jvoice.base.model;bundle-version="0.1.0"

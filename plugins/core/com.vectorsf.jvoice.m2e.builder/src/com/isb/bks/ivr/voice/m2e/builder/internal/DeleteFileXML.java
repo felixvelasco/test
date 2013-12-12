@@ -14,11 +14,9 @@ import com.vectorsf.jvoice.base.model.service.BaseModel;
 public class DeleteFileXML implements IResourceDeltaVisitor {
 
 	private String target = "target/jVoice";
-	private IFolder folder;
 	private final static IPath pkgPath = new Path(BaseModel.JV_PATH);
 
-	public DeleteFileXML(IFolder packageFolder) {
-		folder = packageFolder;
+	public DeleteFileXML() {
 	}
 
 	@Override
@@ -30,17 +28,14 @@ public class DeleteFileXML implements IResourceDeltaVisitor {
 			}
 			if (delta.getKind() == IResourceDelta.REMOVED) {
 				IFile file = (IFile) resource;
-				IPath ruta = file.getParent().getProjectRelativePath()
-						.makeRelativeTo(pkgPath);
+				IPath ruta = file.getParent().getProjectRelativePath().makeRelativeTo(pkgPath);
 				String name = file.getName().replace(".jvflow", "").trim();
 				IPath pkgPathTarget = new Path(target + "/" + ruta);
-				IFolder folderTarget = file.getProject().getFolder(
-						pkgPathTarget);
+				IFolder folderTarget = file.getProject().getFolder(pkgPathTarget);
 
 				for (IResource member : folderTarget.members()) {
 					if (member instanceof IFile) {
-						String nameMember = member.getName()
-								.replace(".xml", "").trim();
+						String nameMember = member.getName().replace(".xml", "").trim();
 						if (nameMember.equals(name)) {
 							member.delete(false, null);
 							deleteFolder(folderTarget);
@@ -60,11 +55,8 @@ public class DeleteFileXML implements IResourceDeltaVisitor {
 			if (folderTarget.members().length == 0) {
 				folderTarget.delete(true, null);
 				IFolder parent = (IFolder) folderTarget.getParent();
-				String baseTarget = folderTarget.getProject().getName() + "/"
-						+ target;
-				if (parent.exists()
-						&& !parent.getFullPath().makeRelative().toString()
-								.equals(baseTarget)
+				String baseTarget = folderTarget.getProject().getName() + "/" + target;
+				if (parent.exists() && !parent.getFullPath().makeRelative().toString().equals(baseTarget)
 						&& parent.members().length == 0) {
 					deleteFolder(parent);
 				}
@@ -77,8 +69,7 @@ public class DeleteFileXML implements IResourceDeltaVisitor {
 	}
 
 	private boolean isValidFolder(IResource resource) {
-		if (pkgPath.isPrefixOf(resource.getProjectRelativePath())
-				&& !pkgPath.equals(resource.getProjectRelativePath())) {
+		if (pkgPath.isPrefixOf(resource.getProjectRelativePath()) && !pkgPath.equals(resource.getProjectRelativePath())) {
 			return true;
 		} else {
 			return false;
