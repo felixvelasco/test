@@ -47,13 +47,14 @@ public class JVoiceValidationListener extends ResourceSetListenerImpl {
 	}
 
 	private Flow getFlow() {
-		Diagram diagram = diagramBehavior.getDiagramTypeProvider().getDiagram();
-		Object bo = diagramBehavior.getDiagramTypeProvider().getFeatureProvider()
-				.getBusinessObjectForPictogramElement(diagram);
-		if (bo instanceof Flow) {
-			return (Flow) bo;
+		if (diagramBehavior != null && diagramBehavior.getDiagramTypeProvider() != null) {
+			Diagram diagram = diagramBehavior.getDiagramTypeProvider().getDiagram();
+			Object bo = diagramBehavior.getDiagramTypeProvider().getFeatureProvider()
+					.getBusinessObjectForPictogramElement(diagram);
+			if (bo instanceof Flow) {
+				return (Flow) bo;
+			}
 		}
-
 		return null;
 	}
 }
