@@ -4,7 +4,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecore.EValidator;
 import org.osgi.framework.BundleContext;
 
-import com.vectorsf.jvoice.core.validation.FlowValidator;
+import com.vectorsf.jvoice.core.validation.OperationsValidator;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 public class Activator extends Plugin {
@@ -25,7 +25,7 @@ public class Activator extends Plugin {
 		super.start(context);
 		plugin = this;
 
-		EValidator.Registry.INSTANCE.put(OperationsPackage.eINSTANCE, new FlowValidator());
+		EValidator.Registry.INSTANCE.put(OperationsPackage.eINSTANCE, new OperationsValidator());
 
 	}
 

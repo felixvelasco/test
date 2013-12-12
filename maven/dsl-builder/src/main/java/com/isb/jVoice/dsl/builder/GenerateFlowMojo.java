@@ -20,7 +20,6 @@ import org.codehaus.plexus.compiler.util.scan.SimpleSourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
-import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -41,7 +40,6 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Injector;
 import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
 import com.isb.bks.ivr.voice.dsl.validation.VoiceDslJavaValidator;
-import com.vectorsf.jvoice.core.validation.FlowValidator;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
@@ -164,7 +162,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 	        EValidator.Registry.INSTANCE.put(VoiceDslPackage.eINSTANCE, validator);
 	        // Se registran las validaciones para el modelo de operaciones
 	        EValidator.Registry.INSTANCE.put(OperationsPackage.eINSTANCE,
-	                new FlowValidator());
+	                new OperationsValidator());
 			
 			VegaXMLURIHandlerMavenImpl vegaURIHandler = new VegaXMLURIHandlerMavenImpl(project,
 					createClassLoaderForProjectDependencies());
