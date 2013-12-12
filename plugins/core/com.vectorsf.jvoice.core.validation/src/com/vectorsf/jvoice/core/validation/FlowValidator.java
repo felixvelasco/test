@@ -33,18 +33,8 @@ public class FlowValidator extends AbstractPolymorphicValidator {
 		return true;
 	}
 
-	public boolean validate_State_incoming(State state) {
-		if (!(state instanceof InitialState)) {
+	public boolean validate_Flow_distintNameParameter(Flow flow) {
 
-			if (state.getIncomingTransitions().isEmpty()) {
-				error(state, "State " + state.getName() + " does not have incoming transitions");
-			}
-		}
-
-		return true;
-	}
-
-	public boolean validate_LocutionState_incoming(State LocationState) {
 		return true;
 	}
 

@@ -1,0 +1,26 @@
+package com.vectorsf.jvoice.core.validation;
+
+import com.vectorsf.jvoice.model.operations.LocutionState;
+
+public class LocutionStateValidator extends AbstractPolymorphicValidator {
+
+	public boolean validate_LocutionState_checkWav(LocutionState lstate) {
+
+		return true;
+	}
+
+	public boolean validate_LocutionState_checkGrammars(LocutionState lstate) {
+
+		return true;
+	}
+
+	public boolean validate_LocutionState_checkOutcomingsLocution(LocutionState lstate) {
+
+		return true;
+	}
+
+	public boolean validate_LocutionState_checkOutcomingsMenuState(LocutionState lstate) {
+
+		return true;
+	}
+}
