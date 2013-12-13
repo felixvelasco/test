@@ -25,7 +25,7 @@
          </property>
          <property
                name="windowImages"
-               value="/com.vectorsf.jvoice.feature/resources/icon_logo_32.png">
+               value="resources/win/icon_JVoice_16.png,resources/win/icon_JVoice_32.png,resources/win/icon_JVoice_48.png,resources/win/icon_JVoice_64.png">
          </property>
       </product>
    </extension>

@@ -10,15 +10,21 @@
    <launcherArgs>
    </launcherArgs>
 
-   <windowImages i32="/com.vectorsf.jvoice.feature/resources/icon_logo_32.png"/>
+   <windowImages i16="/com.vectorsf.jvoice.product/resources/win/icon_JVoice_16.png" i32="/com.vectorsf.jvoice.product/resources/win/icon_JVoice_32.png" i48="/com.vectorsf.jvoice.product/resources/win/icon_JVoice_48.png" i64="/com.vectorsf.jvoice.product/resources/win/icon_JVoice_64.png"/>
 
    <splash
       location="com.vectorsf.jvoice.product"
       startupProgressRect="15,280,360,15" />
    <launcher>
+      <linux icon="/com.vectorsf.jvoice.product/resources/linux/iconjvoice256.xpm"/>
+      <macosx icon="/com.vectorsf.jvoice.product/resources/mac/icon_JVoice_256.icns"/>
       <solaris/>
       <win useIco="false">
-         <bmp/>
+         <bmp
+            winSmallHigh="/com.vectorsf.jvoice.product/resources/win/icon_JVoice_16.bmp"
+            winMediumHigh="/com.vectorsf.jvoice.product/resources/win/icon_JVoice_32.bmp"
+            winLargeHigh="/com.vectorsf.jvoice.product/resources/win/icon_JVoice_48.bmp"
+            winExtraLargeHigh="/com.vectorsf.jvoice.product/resources/win/icon_JVoice_256.bmp"/>
       </win>
    </launcher>
 
@@ -26,6 +32,7 @@
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
    </vm>
+
 
    <plugins>
    </plugins>
