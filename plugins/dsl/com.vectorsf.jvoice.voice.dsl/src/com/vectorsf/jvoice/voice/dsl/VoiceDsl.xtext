@@ -54,9 +54,9 @@ RecordDsl:
 ;
 
 TransferDsl:
-	(('transfername'  name = ID 'destination' destination = STRING
+	(('transfername'  name = ID 'typeTransfer' typeTransfer = TypeTransfer 'destination' destination = STRING
 		'audioTransfer' audioTransfer = STRING 'maxTime' maxTime = STRING
-		'timeout' timeout = STRING 'typeTransfer' typeTransfer = STRING)& 
+		'timeout' timeout = STRING )& 
        ((properties += Property*)& 
        	((variables = Variables)?)& 
 	    (conditions += Condition*))
@@ -149,7 +149,11 @@ SimpleAudio returns Audio:
 
 enum Interpretation:
 	number | boolean | currency | date | digits | phone | time
-;	
+;
+
+enum TypeTransfer:
+	blind | consultation | bridge
+;
 
 ConditionalAudio returns Audio:
 	{ConditionalAudio}

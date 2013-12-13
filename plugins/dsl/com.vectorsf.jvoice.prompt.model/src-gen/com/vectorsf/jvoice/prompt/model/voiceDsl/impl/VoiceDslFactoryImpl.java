@@ -24,6 +24,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
@@ -123,6 +124,8 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 		switch (eDataType.getClassifierID()) {
 			case VoiceDslPackage.INTERPRETATION:
 				return createInterpretationFromString(eDataType, initialValue);
+			case VoiceDslPackage.TYPE_TRANSFER:
+				return createTypeTransferFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -138,6 +141,8 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 		switch (eDataType.getClassifierID()) {
 			case VoiceDslPackage.INTERPRETATION:
 				return convertInterpretationToString(eDataType, instanceValue);
+			case VoiceDslPackage.TYPE_TRANSFER:
+				return convertTypeTransferToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -410,6 +415,26 @@ public class VoiceDslFactoryImpl extends EFactoryImpl implements VoiceDslFactory
 	 * @generated
 	 */
 	public String convertInterpretationToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TypeTransfer createTypeTransferFromString(EDataType eDataType, String initialValue) {
+		TypeTransfer result = TypeTransfer.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertTypeTransferToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

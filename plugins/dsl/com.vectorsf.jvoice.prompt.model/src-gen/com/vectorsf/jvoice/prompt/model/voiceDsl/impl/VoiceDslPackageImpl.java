@@ -26,6 +26,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
@@ -235,6 +236,13 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * @generated
 	 */
 	private EEnum interpretationEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum typeTransferEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -1162,6 +1170,15 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getTypeTransfer() {
+		return typeTransferEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public VoiceDslFactory getVoiceDslFactory() {
 		return (VoiceDslFactory)getEFactoryInstance();
 	}
@@ -1306,6 +1323,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 
 		// Create enums
 		interpretationEEnum = createEEnum(INTERPRETATION);
+		typeTransferEEnum = createEEnum(TYPE_TRANSFER);
 	}
 
 	/**
@@ -1473,7 +1491,7 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		initEAttribute(getTransferDsl_AudioTransfer(), ecorePackage.getEString(), "audioTransfer", null, 0, 1, TransferDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTransferDsl_MaxTime(), ecorePackage.getEString(), "maxTime", null, 0, 1, TransferDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTransferDsl_Timeout(), ecorePackage.getEString(), "timeout", null, 0, 1, TransferDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTransferDsl_TypeTransfer(), ecorePackage.getEString(), "typeTransfer", null, 0, 1, TransferDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTransferDsl_TypeTransfer(), this.getTypeTransfer(), "typeTransfer", null, 0, 1, TransferDsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(interpretationEEnum, Interpretation.class, "Interpretation");
@@ -1485,6 +1503,11 @@ public class VoiceDslPackageImpl extends EPackageImpl implements VoiceDslPackage
 		addEEnumLiteral(interpretationEEnum, Interpretation.PHONE);
 		addEEnumLiteral(interpretationEEnum, Interpretation.TIME);
 		addEEnumLiteral(interpretationEEnum, Interpretation.BOOLEAN);
+
+		initEEnum(typeTransferEEnum, TypeTransfer.class, "TypeTransfer");
+		addEEnumLiteral(typeTransferEEnum, TypeTransfer.BLIND);
+		addEEnumLiteral(typeTransferEEnum, TypeTransfer.CONSULTATION);
+		addEEnumLiteral(typeTransferEEnum, TypeTransfer.BRIDGE);
 
 		// Create resource
 		createResource(eNS_URI);

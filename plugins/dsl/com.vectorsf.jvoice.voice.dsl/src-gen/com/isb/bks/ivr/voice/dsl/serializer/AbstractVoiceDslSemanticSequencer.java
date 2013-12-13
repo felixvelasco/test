@@ -1472,11 +1472,11 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	 * Constraint:
 	 *     (
 	 *         name=ID 
+	 *         typeTransfer=TypeTransfer 
 	 *         destination=STRING 
 	 *         audioTransfer=STRING 
 	 *         maxTime=STRING 
 	 *         timeout=STRING 
-	 *         typeTransfer=STRING 
 	 *         properties+=Property* 
 	 *         variables=Variables? 
 	 *         conditions+=Condition* 

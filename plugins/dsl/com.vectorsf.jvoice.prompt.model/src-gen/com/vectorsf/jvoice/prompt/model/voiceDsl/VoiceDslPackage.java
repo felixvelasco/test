@@ -2061,6 +2061,17 @@ public interface VoiceDslPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer <em>Type Transfer</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getTypeTransfer()
+	 * @generated
+	 */
+	int TYPE_TRANSFER = 26;
+
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl <em>Voice Dsl</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3079,6 +3090,16 @@ public interface VoiceDslPackage extends EPackage {
 	EEnum getInterpretation();
 
 	/**
+	 * Returns the meta object for enum '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer <em>Type Transfer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Type Transfer</em>'.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer
+	 * @generated
+	 */
+	EEnum getTypeTransfer();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3912,6 +3933,16 @@ public interface VoiceDslPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum INTERPRETATION = eINSTANCE.getInterpretation();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer <em>Type Transfer</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer
+		 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslPackageImpl#getTypeTransfer()
+		 * @generated
+		 */
+		EEnum TYPE_TRANSFER = eINSTANCE.getTypeTransfer();
 
 	}
 

@@ -3,6 +3,7 @@
 package com.vectorsf.jvoice.prompt.model.voiceDsl.impl;
 
 import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -117,7 +118,7 @@ public class TransferDslImpl extends VoiceDslImpl implements TransferDsl {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String TYPE_TRANSFER_EDEFAULT = null;
+	protected static final TypeTransfer TYPE_TRANSFER_EDEFAULT = TypeTransfer.BLIND;
 
 	/**
 	 * The cached value of the '{@link #getTypeTransfer() <em>Type Transfer</em>}' attribute.
@@ -127,7 +128,7 @@ public class TransferDslImpl extends VoiceDslImpl implements TransferDsl {
 	 * @generated
 	 * @ordered
 	 */
-	protected String typeTransfer = TYPE_TRANSFER_EDEFAULT;
+	protected TypeTransfer typeTransfer = TYPE_TRANSFER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -237,7 +238,7 @@ public class TransferDslImpl extends VoiceDslImpl implements TransferDsl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getTypeTransfer() {
+	public TypeTransfer getTypeTransfer() {
 		return typeTransfer;
 	}
 
@@ -246,9 +247,9 @@ public class TransferDslImpl extends VoiceDslImpl implements TransferDsl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTypeTransfer(String newTypeTransfer) {
-		String oldTypeTransfer = typeTransfer;
-		typeTransfer = newTypeTransfer;
+	public void setTypeTransfer(TypeTransfer newTypeTransfer) {
+		TypeTransfer oldTypeTransfer = typeTransfer;
+		typeTransfer = newTypeTransfer == null ? TYPE_TRANSFER_EDEFAULT : newTypeTransfer;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.TRANSFER_DSL__TYPE_TRANSFER, oldTypeTransfer, typeTransfer));
 	}
@@ -296,7 +297,7 @@ public class TransferDslImpl extends VoiceDslImpl implements TransferDsl {
 				setTimeout((String)newValue);
 				return;
 			case VoiceDslPackage.TRANSFER_DSL__TYPE_TRANSFER:
-				setTypeTransfer((String)newValue);
+				setTypeTransfer((TypeTransfer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -346,7 +347,7 @@ public class TransferDslImpl extends VoiceDslImpl implements TransferDsl {
 			case VoiceDslPackage.TRANSFER_DSL__TIMEOUT:
 				return TIMEOUT_EDEFAULT == null ? timeout != null : !TIMEOUT_EDEFAULT.equals(timeout);
 			case VoiceDslPackage.TRANSFER_DSL__TYPE_TRANSFER:
-				return TYPE_TRANSFER_EDEFAULT == null ? typeTransfer != null : !TYPE_TRANSFER_EDEFAULT.equals(typeTransfer);
+				return typeTransfer != TYPE_TRANSFER_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}

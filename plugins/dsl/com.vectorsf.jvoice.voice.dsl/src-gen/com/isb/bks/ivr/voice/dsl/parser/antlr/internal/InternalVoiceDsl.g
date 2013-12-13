@@ -1139,15 +1139,37 @@ ruleTransferDsl returns [EObject current=null]
 	    }
 
 )
-)	otherlv_3='destination' 
+)	otherlv_3='typeTransfer' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getTransferDslAccess().getDestinationKeyword_0_2());
+    	newLeafNode(otherlv_3, grammarAccess.getTransferDslAccess().getTypeTransferKeyword_0_2());
     }
 (
 (
-		lv_destination_4_0=RULE_STRING
+		{ 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getTypeTransferTypeTransferEnumRuleCall_0_3_0()); 
+	    }
+		lv_typeTransfer_4_0=ruleTypeTransfer		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
+	        }
+       		set(
+       			$current, 
+       			"typeTransfer",
+        		lv_typeTransfer_4_0, 
+        		"TypeTransfer");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_5='destination' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getTransferDslAccess().getDestinationKeyword_0_4());
+    }
+(
+(
+		lv_destination_6_0=RULE_STRING
 		{
-			newLeafNode(lv_destination_4_0, grammarAccess.getTransferDslAccess().getDestinationSTRINGTerminalRuleCall_0_3_0()); 
+			newLeafNode(lv_destination_6_0, grammarAccess.getTransferDslAccess().getDestinationSTRINGTerminalRuleCall_0_5_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1156,20 +1178,20 @@ ruleTransferDsl returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"destination",
-        		lv_destination_4_0, 
+        		lv_destination_6_0, 
         		"STRING");
 	    }
 
 )
-)	otherlv_5='audioTransfer' 
+)	otherlv_7='audioTransfer' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getTransferDslAccess().getAudioTransferKeyword_0_4());
+    	newLeafNode(otherlv_7, grammarAccess.getTransferDslAccess().getAudioTransferKeyword_0_6());
     }
 (
 (
-		lv_audioTransfer_6_0=RULE_STRING
+		lv_audioTransfer_8_0=RULE_STRING
 		{
-			newLeafNode(lv_audioTransfer_6_0, grammarAccess.getTransferDslAccess().getAudioTransferSTRINGTerminalRuleCall_0_5_0()); 
+			newLeafNode(lv_audioTransfer_8_0, grammarAccess.getTransferDslAccess().getAudioTransferSTRINGTerminalRuleCall_0_7_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1178,20 +1200,20 @@ ruleTransferDsl returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"audioTransfer",
-        		lv_audioTransfer_6_0, 
+        		lv_audioTransfer_8_0, 
         		"STRING");
 	    }
 
 )
-)	otherlv_7='maxTime' 
+)	otherlv_9='maxTime' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getTransferDslAccess().getMaxTimeKeyword_0_6());
+    	newLeafNode(otherlv_9, grammarAccess.getTransferDslAccess().getMaxTimeKeyword_0_8());
     }
 (
 (
-		lv_maxTime_8_0=RULE_STRING
+		lv_maxTime_10_0=RULE_STRING
 		{
-			newLeafNode(lv_maxTime_8_0, grammarAccess.getTransferDslAccess().getMaxTimeSTRINGTerminalRuleCall_0_7_0()); 
+			newLeafNode(lv_maxTime_10_0, grammarAccess.getTransferDslAccess().getMaxTimeSTRINGTerminalRuleCall_0_9_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1200,20 +1222,20 @@ ruleTransferDsl returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"maxTime",
-        		lv_maxTime_8_0, 
+        		lv_maxTime_10_0, 
         		"STRING");
 	    }
 
 )
-)	otherlv_9='timeout' 
+)	otherlv_11='timeout' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getTransferDslAccess().getTimeoutKeyword_0_8());
+    	newLeafNode(otherlv_11, grammarAccess.getTransferDslAccess().getTimeoutKeyword_0_10());
     }
 (
 (
-		lv_timeout_10_0=RULE_STRING
+		lv_timeout_12_0=RULE_STRING
 		{
-			newLeafNode(lv_timeout_10_0, grammarAccess.getTransferDslAccess().getTimeoutSTRINGTerminalRuleCall_0_9_0()); 
+			newLeafNode(lv_timeout_12_0, grammarAccess.getTransferDslAccess().getTimeoutSTRINGTerminalRuleCall_0_11_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1222,29 +1244,7 @@ ruleTransferDsl returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"timeout",
-        		lv_timeout_10_0, 
-        		"STRING");
-	    }
-
-)
-)	otherlv_11='typeTransfer' 
-    {
-    	newLeafNode(otherlv_11, grammarAccess.getTransferDslAccess().getTypeTransferKeyword_0_10());
-    }
-(
-(
-		lv_typeTransfer_12_0=RULE_STRING
-		{
-			newLeafNode(lv_typeTransfer_12_0, grammarAccess.getTransferDslAccess().getTypeTransferSTRINGTerminalRuleCall_0_11_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTransferDslRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"typeTransfer",
-        		lv_typeTransfer_12_0, 
+        		lv_timeout_12_0, 
         		"STRING");
 	    }
 
@@ -8575,6 +8575,31 @@ ruleInterpretation returns [Enumerator current=null]
 	{
         $current = grammarAccess.getInterpretationAccess().getTimeEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_6, grammarAccess.getInterpretationAccess().getTimeEnumLiteralDeclaration_6()); 
+    }
+));
+
+
+
+// Rule TypeTransfer
+ruleTypeTransfer returns [Enumerator current=null] 
+    @init { enterRule(); }
+    @after { leaveRule(); }:
+((	enumLiteral_0='blind' 
+	{
+        $current = grammarAccess.getTypeTransferAccess().getBlindEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_0, grammarAccess.getTypeTransferAccess().getBlindEnumLiteralDeclaration_0()); 
+    }
+)
+    |(	enumLiteral_1='consultation' 
+	{
+        $current = grammarAccess.getTypeTransferAccess().getConsultationEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_1, grammarAccess.getTypeTransferAccess().getConsultationEnumLiteralDeclaration_1()); 
+    }
+)
+    |(	enumLiteral_2='bridge' 
+	{
+        $current = grammarAccess.getTypeTransferAccess().getBridgeEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_2, grammarAccess.getTypeTransferAccess().getBridgeEnumLiteralDeclaration_2()); 
     }
 ));
 

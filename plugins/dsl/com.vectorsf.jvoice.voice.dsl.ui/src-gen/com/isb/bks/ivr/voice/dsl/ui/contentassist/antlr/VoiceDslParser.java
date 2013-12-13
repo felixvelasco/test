@@ -86,6 +86,7 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getJvmTypeParameterAccess().getAlternatives_1(), "rule__JvmTypeParameter__Alternatives_1");
 					put(grammarAccess.getXImportDeclarationAccess().getAlternatives_1(), "rule__XImportDeclaration__Alternatives_1");
 					put(grammarAccess.getInterpretationAccess().getAlternatives(), "rule__Interpretation__Alternatives");
+					put(grammarAccess.getTypeTransferAccess().getAlternatives(), "rule__TypeTransfer__Alternatives");
 					put(grammarAccess.getPromptDslAccess().getGroup(), "rule__PromptDsl__Group__0");
 					put(grammarAccess.getMenuDslAccess().getGroup_0(), "rule__MenuDsl__Group_0__0");
 					put(grammarAccess.getInputDslAccess().getGroup(), "rule__InputDsl__Group__0");
@@ -320,11 +321,11 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRecordDslAccess().getConditionsAssignment_1_0_3(), "rule__RecordDsl__ConditionsAssignment_1_0_3");
 					put(grammarAccess.getRecordDslAccess().getAudiosAssignment_1_1(), "rule__RecordDsl__AudiosAssignment_1_1");
 					put(grammarAccess.getTransferDslAccess().getNameAssignment_0_1(), "rule__TransferDsl__NameAssignment_0_1");
-					put(grammarAccess.getTransferDslAccess().getDestinationAssignment_0_3(), "rule__TransferDsl__DestinationAssignment_0_3");
-					put(grammarAccess.getTransferDslAccess().getAudioTransferAssignment_0_5(), "rule__TransferDsl__AudioTransferAssignment_0_5");
-					put(grammarAccess.getTransferDslAccess().getMaxTimeAssignment_0_7(), "rule__TransferDsl__MaxTimeAssignment_0_7");
-					put(grammarAccess.getTransferDslAccess().getTimeoutAssignment_0_9(), "rule__TransferDsl__TimeoutAssignment_0_9");
-					put(grammarAccess.getTransferDslAccess().getTypeTransferAssignment_0_11(), "rule__TransferDsl__TypeTransferAssignment_0_11");
+					put(grammarAccess.getTransferDslAccess().getTypeTransferAssignment_0_3(), "rule__TransferDsl__TypeTransferAssignment_0_3");
+					put(grammarAccess.getTransferDslAccess().getDestinationAssignment_0_5(), "rule__TransferDsl__DestinationAssignment_0_5");
+					put(grammarAccess.getTransferDslAccess().getAudioTransferAssignment_0_7(), "rule__TransferDsl__AudioTransferAssignment_0_7");
+					put(grammarAccess.getTransferDslAccess().getMaxTimeAssignment_0_9(), "rule__TransferDsl__MaxTimeAssignment_0_9");
+					put(grammarAccess.getTransferDslAccess().getTimeoutAssignment_0_11(), "rule__TransferDsl__TimeoutAssignment_0_11");
 					put(grammarAccess.getTransferDslAccess().getPropertiesAssignment_1_0_0(), "rule__TransferDsl__PropertiesAssignment_1_0_0");
 					put(grammarAccess.getTransferDslAccess().getVariablesAssignment_1_0_1(), "rule__TransferDsl__VariablesAssignment_1_0_1");
 					put(grammarAccess.getTransferDslAccess().getConditionsAssignment_1_0_2(), "rule__TransferDsl__ConditionsAssignment_1_0_2");

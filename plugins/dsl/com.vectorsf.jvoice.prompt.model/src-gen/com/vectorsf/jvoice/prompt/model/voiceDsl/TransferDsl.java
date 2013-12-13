@@ -131,6 +131,7 @@ public interface TransferDsl extends VoiceDsl {
 
 	/**
 	 * Returns the value of the '<em><b>Type Transfer</b></em>' attribute.
+	 * The literals are from the enumeration {@link com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Type Transfer</em>' attribute isn't clear,
@@ -138,21 +139,23 @@ public interface TransferDsl extends VoiceDsl {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type Transfer</em>' attribute.
-	 * @see #setTypeTransfer(String)
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer
+	 * @see #setTypeTransfer(TypeTransfer)
 	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage#getTransferDsl_TypeTransfer()
 	 * @model
 	 * @generated
 	 */
-	String getTypeTransfer();
+	TypeTransfer getTypeTransfer();
 
 	/**
 	 * Sets the value of the '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl#getTypeTransfer <em>Type Transfer</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type Transfer</em>' attribute.
+	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer
 	 * @see #getTypeTransfer()
 	 * @generated
 	 */
-	void setTypeTransfer(String value);
+	void setTypeTransfer(TypeTransfer value);
 
 } // TransferDsl

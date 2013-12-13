@@ -21,20 +21,20 @@ class TransferStateCodeXML {
 '''
 		<action-state id="«transfer.name»">
 		<on-entry>
-			«IF dsl.typeTransfer.equals("blind")»
+			«IF dsl.typeTransfer.value == 0»
 				<evaluate expression="jVoiceArchBlindTransfer" result = "flashScope.«transfer.name»"/>
 				<set name="flashScope.«transfer.name».dest" value="'«dsl.destination»'"/>
 				«IF dsl.audioTransfer!=null && !dsl.audioTransfer.trim.empty»
 					<set name="flashScope.«transfer.name».transferaudio" value="'«dsl.audioTransfer»'"/>
 				«ENDIF»
-			«ELSEIF dsl.typeTransfer.equals("consultation")»
+			«ELSEIF dsl.typeTransfer.value == 1»
 				<evaluate expression="jVoiceArchConsultationTransfer" result = "flashScope.«transfer.name»"/>
 				<set name="flashScope.«transfer.name».dest" value="'«dsl.destination»'"/>
 				«IF dsl.audioTransfer!=null && !dsl.audioTransfer.trim.empty»
 					<set name="flashScope.«transfer.name».transferaudio" value="'«dsl.audioTransfer»'"/>
 				«ENDIF»
 				<set name="flashScope.«transfer.name».timeout" value="'«dsl.timeout»'"/>
-			«ELSEIF dsl.typeTransfer.equals("bridge")»
+			«ELSEIF dsl.typeTransfer.value == 2»
 				<evaluate expression="jVoiceArchBridgeTransfer" result = "flashScope.«transfer.name»"/>
 				<set name="flashScope.«transfer.name».dest" value="'«dsl.destination»'"/>
 				«IF dsl.audioTransfer!=null && !dsl.audioTransfer.trim.empty»
