@@ -86,12 +86,12 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 		return new PartialMethodNameFilter(methodName, 1, 1);
 	}
 
-	protected void error(EObject eobject, String message) {
+	public void error(EObject eobject, String message) {
 		currentDiagnostic.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreUtil.getURI(eobject).toPlatformString(true),
 				-1, message, new Object[] { eobject }));
 	}
 
-	protected void warning(EObject eobject, String message) {
+	public void warning(EObject eobject, String message) {
 		currentDiagnostic.add(new BasicDiagnostic(Diagnostic.WARNING, EcoreUtil.getURI(eobject).toPlatformString(true),
 				-1, message, new Object[] { eobject }));
 	}

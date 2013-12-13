@@ -1,7 +1,13 @@
 package com.vectorsf.jvoice.core.validation;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.vectorsf.jvoice.model.operations.CallFlowState;
+import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.Transition;
 
 public class StateValidator {
 
@@ -23,12 +29,46 @@ public class StateValidator {
 	}
 
 	public boolean validate_State_outcoming(State state) {
+		if (!(state instanceof FinalState)) {
 
+			if (state.getOutgoingTransitions().isEmpty()) {
+				operationsValidator.error(state, "State " + state.getName() + " does not have outgoing transitions");
+			}
+		}
 		return true;
 	}
 
 	public boolean validate_State_outcomingSubflowState(State state) {
+		List<String> finalStatesNames = new ArrayList<String>();
+		if (state instanceof CallFlowState) {
+			for (State subflowStates : ((CallFlowState) state).getSubflow().getStates()) {
+				if (subflowStates instanceof FinalState) {
+					finalStatesNames.add(subflowStates.getName());
+				}
+			}
 
+			for (Transition t : state.getOutgoingTransitions()) {
+				if (!finalStatesNames.contains(t.getEventName())) {
+					operationsValidator.warning(state,
+							"State " + state.getName() + " has final state \"" + t.getEventName() + "\" in subflow");
+				}
+			}
+
+			for (String f : finalStatesNames) {
+				boolean contains = false;
+				for (Transition t : state.getOutgoingTransitions()) {
+					if (f.equals(t.getEventName())) {
+						contains = true;
+						break;
+					}
+				}
+				if (!contains) {
+					operationsValidator.error(state, "State " + state.getName() + " has no transition for event \"" + f
+							+ "\" defined in subflow.");
+				}
+			}
+
+		}
 		return true;
 	}
 
