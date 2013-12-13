@@ -27,6 +27,7 @@
     <module>core/com.vectorsf.jvoice.core.project</module>
     <module>core/com.vectorsf.jvoice.core.prompt</module>
     <module>core/com.vectorsf.jvoice.core.reconciliator</module>
+    <module>core/com.vectorsf.jvoice.core.validation</module>
     <module>core/com.vectorsf.jvoice.core.uri</module>
     <module>core/com.vectorsf.jvoice.m2e.builder</module>
 
