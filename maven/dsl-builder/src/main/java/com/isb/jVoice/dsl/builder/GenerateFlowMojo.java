@@ -351,7 +351,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 					throw new MojoExecutionException(sError);
 				}
 	        }
-	        Resource diagrama = eObject.eResource();
+	        Resource diagrama =  res.getContents().get(0).eResource();
 			SpringWebFlowGenerator.compile(targetFile, diagrama, nameProject);
 
 			return true;
