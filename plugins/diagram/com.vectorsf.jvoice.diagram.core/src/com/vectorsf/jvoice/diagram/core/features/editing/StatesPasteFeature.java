@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
@@ -14,6 +15,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -63,6 +65,8 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	private IPath targetPath;
 	private IResource targetRes;
 	private boolean rename;
+	private String newName;
+	private VoiceDsl modificado;
 
 	public StatesPasteFeature(IFeatureProvider fp) {
 		super(fp);
@@ -91,12 +95,19 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 						Flow connectedFlow = (Flow) BaseModel.getInstance().getResourceSet().getEObject(uri, true);
 
 						JVPackage targetPackage = connectedFlow.getOwnerPackage();
-						pasteVoiceDsl(targetPackage, voiceDsl, state);
+						pasteVoiceDsl(targetPackage, voiceDsl, state, connectedFlow);
 
 						// Redireccionamos el nuevo estado al
 						// voiceDsl que hemos copiado
-						locution.setLocution((VoiceDsl) targetPackage.getBean(voiceDsl.getName()));
+						locution.setLocution(modificado);
 						state = locution;
+
+						targetFlow.getStates().add(state);
+						ac.setLocation(context.getX(), context.getY());
+						ac.setTargetContainer(getDiagram());
+						PictogramElement pe = addGraphicalRepresentation(ac, state);
+						hm.put(state, pe);
+
 					} else if (state instanceof CallState) {
 						// Si es un estado execution comprobamos si tiene una instancia al bean referido desde el
 						// estado execution del que procede y si se llama igual. En caso contrario se deja como null.
@@ -217,33 +228,60 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		}
 	}
 
-	protected void pasteVoiceDsl(JVPackage targetPackage, VoiceDsl voiceDsl, State state) {
+	protected void pasteVoiceDsl(JVPackage targetPackage, VoiceDsl voiceDsl, State state, Flow flow) {
 		final IFile voiceDslFile = (IFile) Platform.getAdapterManager().getAdapter(voiceDsl, IFile.class);
+		modificado = voiceDsl;
 
 		rename = false;
-		targetRes = (IResource) Platform.getAdapterManager().getAdapter(targetPackage, IResource.class);
-		targetPath = targetRes.getFullPath().append(state.getName() + ".voiceDsl");
-
-		// Realizamos la copia del fichero al destino.
-		try {
-			IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
-
-				@Override
-				public void run(IProgressMonitor monitor) throws CoreException {
-
-					if (rename) {
-						renameBean(targetPath);
-					}
-
-					voiceDslFile.copy(targetPath, true, null);
-
+		IFile targetFlow = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
+		IPath pathRecursos = new Path(targetFlow.getName().replace(".jvflow", ".resources"));
+		targetRes = targetFlow.getParent().getFolder(pathRecursos);
+		if (targetRes.exists()) {
+			// targetRes = (IResource) Platform.getAdapterManager().getAdapter(targetPackage, IResource.class);
+			newName = obtenerNuevoNombre((IFolder) targetRes, voiceDsl.getName() + ".voiceDsl");
+			try {
+				if (!newName.equals(voiceDsl.getName() + ".voiceDsl")) {
+					rename = true;
 				}
-			};
-			ResourcesPlugin.getWorkspace().run(runnable, targetRes.getProject(), IWorkspace.AVOID_UPDATE, null);
 
-		} catch (CoreException e) {
-			e.printStackTrace();
+				// Realizamos la copia del fichero al destino.
+
+				IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+
+					@Override
+					public void run(IProgressMonitor monitor) throws CoreException {
+						targetPath = targetRes.getFullPath().append(newName);
+						if (rename) {
+							IFile dsl = ((IFolder) targetRes).getFile(newName);
+
+							if (!dsl.exists()) {
+								dsl.create(voiceDslFile.getContents(), true, null);
+							}
+							renameBean(targetPath);
+						} else {
+
+							voiceDslFile.copy(targetPath, true, null);
+							changeURI(targetPath);
+						}
+
+					}
+				};
+				ResourcesPlugin.getWorkspace().run(runnable, targetRes.getProject(), IWorkspace.AVOID_UPDATE, null);
+
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
 		}
+
+	}
+
+	private String obtenerNuevoNombre(IFolder targetRes2, String nombre) {
+		IFile buscado = targetRes2.getFile(nombre);
+		if (buscado.exists()) {
+			rename = true;
+			nombre = obtenerNuevoNombre(targetRes2, "CopyOf" + nombre);
+		}
+		return nombre;
 	}
 
 	@Override
@@ -346,6 +384,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			for (EObject obj : emfRes.getContents()) {
 				if (obj instanceof VoiceDsl) {
 					((VoiceDsl) obj).setName(newName);
+					modificado = (VoiceDsl) obj;
 
 				} else if (obj instanceof JVBean) {
 					((JVBean) obj).setName(newName);
@@ -357,6 +396,30 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 							((Diagram) objeto).setName(newName);
 						}
 					}
+				}
+			}
+			try {
+				emfRes.save(SaveOptions.newBuilder().noValidation().getOptions().toOptionsMap());
+			} catch (RuntimeException re) {
+				re.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void changeURI(IPath targetPath) {
+		String newName = targetPath.lastSegment();
+		newName = newName.substring(0, newName.lastIndexOf('.'));
+		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
+		Resource emfRes = resourceSetImpl.createResource(URI.createPlatformResourceURI(targetPath.toString(), true));
+		try {
+			emfRes.load(null);
+
+			for (EObject obj : emfRes.getContents()) {
+				if (obj instanceof VoiceDsl) {
+					modificado = (VoiceDsl) obj;
+
 				}
 			}
 			try {
