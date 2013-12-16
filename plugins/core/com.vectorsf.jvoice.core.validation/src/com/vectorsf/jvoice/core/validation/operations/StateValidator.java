@@ -91,11 +91,22 @@ public class StateValidator {
 	}
 
 	public boolean validate_State_noOutcomingFinalState(State state) {
+		if (state instanceof FinalState) {
+			if (!state.getOutgoingTransitions().isEmpty()) {
+				operationsValidator.error(state, "State " + state.getName() + " have outgoing transitions");
+			}
+		}
 
 		return true;
 	}
 
 	public boolean validate_State_noIncomingInitialState(State state) {
+
+		if (state instanceof InitialState) {
+			if (!state.getIncomingTransitions().isEmpty()) {
+				operationsValidator.error(state, "State " + state.getName() + " have incoming transitions");
+			}
+		}
 
 		return true;
 	}
