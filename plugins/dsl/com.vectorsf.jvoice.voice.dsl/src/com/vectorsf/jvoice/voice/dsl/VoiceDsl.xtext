@@ -12,56 +12,53 @@ VoiceDsl:
     ;
 
 PromptDsl:
-	('outputname'  name = ID 
+	'outputname'  name = ID 
        ((properties += Property*)& 
        	((variables = Variables)?)& 
 	    (conditions += Condition*))
   	     audios=Audios	
-	   ) 
 ;
 
 MenuDsl:
-	('menuname'  name = ID
+	'menuname'  name = ID
 	   ((configuration = Configuration)& 
         (grammars = Grammars)&
 	    (properties += Property*)&
 	    ((variables = Variables)?)& 
-	    (conditions += Condition*))&
-	     (audios=Audios)&
+	    (conditions += Condition*))
+	     audios=Audios
   	     outputs=Outputs
-	   ) 
 ;
 
 InputDsl:
-	('inputname'  name = ID           
+	'inputname'  name = ID
       ((configuration = Configuration)& 
  	   (grammars = Grammars)&
 	   (properties += Property*)&
 	   ((variables = Variables)?)&
 	   (conditions += Condition*))
   	    audios=Audios	
-	  ) 
 ;
 
 RecordDsl:
-	(('recordname'  name = ID 'filename' fileName = STRING)&        
+	'recordname' name = ID 'filename' fileName = STRING
       ((configuration = Configuration)& 
 	   (properties += Property*)&
 	   ((variables = Variables)?)&
 	   (conditions += Condition*))
   	    audios=Audios	
-	  ) 
 ;
 
 TransferDsl:
-	(('transfername'  name = ID 'typeTransfer' typeTransfer = TypeTransfer 'destination' destination = STRING
-		'audioTransfer' audioTransfer = STRING 'maxTime' maxTime = STRING
-		'timeout' timeout = STRING )& 
+	'transfername' name = ID 'typeTransfer' typeTransfer = TypeTransfer
+	   (('destination' destination = STRING )&
+		('audioTransfer' audioTransfer = STRING )?& 
+		('maxTime' maxTime = STRING )?&
+		('timeout' timeout = STRING )?)
        ((properties += Property*)& 
        	((variables = Variables)?)& 
 	    (conditions += Condition*))
   	     audios=Audios	
-	   ) 
 ;
 	  
 Variables:
