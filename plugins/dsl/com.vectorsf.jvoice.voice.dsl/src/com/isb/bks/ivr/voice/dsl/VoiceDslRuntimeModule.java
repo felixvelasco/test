@@ -3,9 +3,16 @@
  */
 package com.isb.bks.ivr.voice.dsl;
 
+import org.eclipse.xtext.parser.antlr.ISyntaxErrorMessageProvider;
+
+import com.isb.bks.ivr.voice.dsl.validation.LocutionSyntaxErrorMessageProvider;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class VoiceDslRuntimeModule extends com.isb.bks.ivr.voice.dsl.AbstractVoiceDslRuntimeModule {
 
+	public Class<? extends ISyntaxErrorMessageProvider> bindISyntaxErrorMessageProvider() {
+		return LocutionSyntaxErrorMessageProvider.class;
+	}
 }
