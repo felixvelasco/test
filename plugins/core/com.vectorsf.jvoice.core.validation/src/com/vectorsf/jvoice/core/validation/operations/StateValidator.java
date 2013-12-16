@@ -123,7 +123,7 @@ public class StateValidator {
 			Flow flow = (Flow) state.eContainer();
 			boolean existbean = false;
 			for (ComponentBean bean : flow.getBeans()) {
-				if (bean.getNameBean().equals(callState.getBean().getNameBean())) {
+				if (bean == callState.getBean()) {
 					existbean = true;
 				}
 			}
