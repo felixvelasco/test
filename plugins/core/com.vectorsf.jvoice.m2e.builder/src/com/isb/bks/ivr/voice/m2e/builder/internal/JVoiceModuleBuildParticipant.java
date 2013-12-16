@@ -10,6 +10,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -64,8 +65,10 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 
 		cleanMarkers(delta);
 
-		if (!validate(delta)) {
-			return null;
+		if (kind != CLEAN_BUILD) {
+			if (!validate(delta)) {
+				return null;
+			}
 		}
 
 		// execute mojo
@@ -83,13 +86,21 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 
 	private boolean validate(IResourceDelta delta) throws CoreException {
 		ValidateVisitor visitor = new ValidateVisitor();
-		delta.accept(visitor);
+
+		if (delta == null) {
+			getMavenProjectFacade().getProject().accept(visitor);
+		} else {
+			delta.accept(visitor);
+		}
 		helper.createMarkers(visitor.getDiagnostic());
 
 		return visitor.isValid();
 	}
 
 	private void cleanMarkers(IResourceDelta delta) throws CoreException {
+		if (delta == null) {
+			helper.deleteMarkers(getMavenProjectFacade().getProject());
+		}
 		delta.accept(new RemoveMarkersVisitor());
 	}
 
@@ -107,7 +118,7 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 
 	}
 
-	public class ValidateVisitor implements IResourceDeltaVisitor {
+	public class ValidateVisitor implements IResourceDeltaVisitor, IResourceVisitor {
 
 		private BasicDiagnostic chain = new BasicDiagnostic();
 
@@ -115,29 +126,22 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 		public boolean visit(IResourceDelta delta) throws CoreException {
 			if (delta.getResource() instanceof IFile && delta.getKind() != IResourceDelta.REMOVED) {
 				IFile file = (IFile) delta.getResource();
-				if (file.getName().endsWith(".voiceDsl") || file.getName().endsWith(".jvflow")) {
-					chain.add(validateEObject(file));
-				}
+				chain.merge(validate(file));
 				return false;
 			} else {
 				return delta.getKind() != IResourceDelta.REMOVED;
 			}
 		}
 
-		private Diagnostic validateEObject(IFile file) {
-			BasicDiagnostic ret = new BasicDiagnostic();
-			ResourceSet rset = new ResourceSetImpl();
-			URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-			try {
-				Resource resource = rset.getResource(uri, true);
-				for (EObject obj : resource.getContents()) {
-					ret.merge(Diagnostician.INSTANCE.validate(obj));
-				}
-
-			} catch (RuntimeException re) {
-				ret.merge(BasicDiagnostic.toDiagnostic(re));
+		@Override
+		public boolean visit(IResource resource) throws CoreException {
+			if (resource instanceof IFile) {
+				IFile file = (IFile) resource;
+				chain.merge(validate(file));
+				return false;
+			} else {
+				return true;
 			}
-			return ret;
 		}
 
 		public boolean isValid() {
@@ -148,6 +152,29 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 			return chain;
 		}
 
+	}
+
+	private Diagnostic validate(IFile file) {
+		if (file.getName().endsWith(".voiceDsl") || file.getName().endsWith(".jvflow")) {
+			return validateEObject(file);
+		}
+		return new BasicDiagnostic();
+	}
+
+	private Diagnostic validateEObject(IFile file) {
+		BasicDiagnostic ret = new BasicDiagnostic();
+		ResourceSet rset = new ResourceSetImpl();
+		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+		try {
+			Resource resource = rset.getResource(uri, true);
+			for (EObject obj : resource.getContents()) {
+				ret.merge(Diagnostician.INSTANCE.validate(obj));
+			}
+
+		} catch (RuntimeException re) {
+			ret.merge(BasicDiagnostic.toDiagnostic(re));
+		}
+		return ret;
 	}
 
 	private IPath getRelativePath(IResource resource) {
