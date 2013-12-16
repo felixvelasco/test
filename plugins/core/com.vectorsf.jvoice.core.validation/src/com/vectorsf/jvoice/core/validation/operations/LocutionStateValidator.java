@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.core.validation;
+package com.vectorsf.jvoice.core.validation.operations;
 
 import com.vectorsf.jvoice.model.operations.LocutionState;
 

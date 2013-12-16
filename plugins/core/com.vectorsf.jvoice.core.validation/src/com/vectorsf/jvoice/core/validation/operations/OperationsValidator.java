@@ -1,5 +1,6 @@
-package com.vectorsf.jvoice.core.validation;
+package com.vectorsf.jvoice.core.validation.operations;
 
+import com.vectorsf.jvoice.core.validation.AbstractPolymorphicValidator;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.LocutionState;
@@ -33,6 +34,10 @@ public class OperationsValidator extends AbstractPolymorphicValidator {
 
 	public boolean validate_Flow_distintNameParameter(Flow flow) {
 		return flowValidator.validate_Flow_distintNameParameter(flow);
+	}
+	
+	public boolean validate_Flow_exitsbeans(Flow flow) {
+		return flowValidator.validate_Flow_exitsbeans(flow);
 	}
 
 	/*****************************************/

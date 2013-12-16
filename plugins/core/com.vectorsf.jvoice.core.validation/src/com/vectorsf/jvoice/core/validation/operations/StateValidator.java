@@ -1,10 +1,13 @@
-package com.vectorsf.jvoice.core.validation;
+package com.vectorsf.jvoice.core.validation.operations;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.vectorsf.jvoice.model.operations.CallFlowState;
+import com.vectorsf.jvoice.model.operations.CallState;
+import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.FinalState;
+import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
@@ -103,6 +106,21 @@ public class StateValidator {
 	}
 
 	public boolean validate_State_methodInstanceBeanExecutionState(State state) {
+
+		if (state instanceof CallState) {
+			CallState callState = (CallState) state;
+			Flow flow = (Flow) state.eContainer();
+			boolean existbean = false;
+			for (ComponentBean bean : flow.getBeans()) {
+				if (bean.getNameBean().equals(callState.getBean().getNameBean())) {
+					existbean = true;
+				}
+			}
+			if (!existbean) {
+				operationsValidator.error(state, "Instance Bean  " + callState.getBean() + " not found");
+			}
+
+		}
 
 		return true;
 	}
