@@ -39,7 +39,7 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 			File audioFile = new File(audiosFolder, audioName);
 
 			if (!audioFile.exists()) {
-				error("Audio file not found", VoiceDslPackage.Literals.AUDIO__SRC);
+				warning("Audio file not found", VoiceDslPackage.Literals.AUDIO__SRC);
 			}
 		}
 	}
