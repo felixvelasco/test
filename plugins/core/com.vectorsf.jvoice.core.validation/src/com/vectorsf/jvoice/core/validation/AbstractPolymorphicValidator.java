@@ -42,8 +42,54 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 	}
 
 	private boolean polymorphicValidate(EClass eClass, EObject eObject, DiagnosticChain diagnostics) {
+		Object polymorphicValidator = getPolymorphicValidator(eClass);
+		if (polymorphicValidator != null) {
+			PolymorphicDispatcher<Boolean> dispatcher = new PolymorphicDispatcher<Boolean>(
+					Collections.singletonList(polymorphicValidator), getValidatePredicate(eClass), errorHandler) {
+				@Override
+				protected Boolean handleNoSuchMethod(Object... params) {
+					if (PolymorphicDispatcher.NullErrorHandler.class.equals(errorHandler.getClass())) {
+						return true;
+					}
+					return super.handleNoSuchMethod(params);
+				}
+
+				@Override
+				protected Boolean handleAmbigousMethods(List<PolymorphicDispatcher<Boolean>.MethodDesc> result,
+						Object... params) {
+					boolean acum = true;
+					for (MethodDesc current : result) {
+						try {
+							current.getMethod().setAccessible(true);
+							acum &= (Boolean) current.getMethod().invoke(current.getTarget(), params);
+						} catch (InvocationTargetException e) {
+							if (e.getTargetException() instanceof Error) {
+								throw (Error) e.getTargetException();
+							}
+							return errorHandler.handle(params, e.getTargetException());
+						} catch (IllegalArgumentException e) {
+							return errorHandler.handle(params, e);
+						} catch (IllegalAccessException e) {
+							return errorHandler.handle(params, e);
+						}
+					}
+					return acum;
+				}
+			};
+
+			this.currentDiagnostic = diagnostics;
+			Boolean invoke = dispatcher.invoke(eObject);
+			this.currentDiagnostic = null;
+			return invoke;
+		} else {
+			return true;
+		}
+	}
+
+	private Object getPolymorphicValidator(EClass eClass) {
 		PolymorphicDispatcher<Boolean> dispatcher = new PolymorphicDispatcher<Boolean>(Collections.singletonList(this),
-				getValidatePredicate(eClass), errorHandler) {
+				getValidatorPredicate(eClass), errorHandler) {
+
 			@Override
 			protected Boolean handleNoSuchMethod(Object... params) {
 				if (PolymorphicDispatcher.NullErrorHandler.class.equals(errorHandler.getClass())) {
@@ -52,38 +98,20 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 				return super.handleNoSuchMethod(params);
 			}
 
-			@Override
-			protected Boolean handleAmbigousMethods(List<PolymorphicDispatcher<Boolean>.MethodDesc> result,
-					Object... params) {
-				boolean acum = true;
-				for (MethodDesc current : result) {
-					try {
-						current.getMethod().setAccessible(true);
-						acum &= (Boolean) current.getMethod().invoke(current.getTarget(), params);
-					} catch (InvocationTargetException e) {
-						if (e.getTargetException() instanceof Error) {
-							throw (Error) e.getTargetException();
-						}
-						return errorHandler.handle(params, e.getTargetException());
-					} catch (IllegalArgumentException e) {
-						return errorHandler.handle(params, e);
-					} catch (IllegalAccessException e) {
-						return errorHandler.handle(params, e);
-					}
-				}
-				return acum;
-			}
 		};
 
-		this.currentDiagnostic = diagnostics;
-		Boolean invoke = dispatcher.invoke(eObject);
-		this.currentDiagnostic = null;
+		Object invoke = dispatcher.invoke();
 		return invoke;
 	}
 
 	private Predicate<Method> getValidatePredicate(EClass eClass) {
 		String methodName = "validate_" + eClass.getName() + "_";
 		return new PartialMethodNameFilter(methodName, 1, 1);
+	}
+
+	private Predicate<Method> getValidatorPredicate(EClass eClass) {
+		String methodName = "get" + eClass.getName() + "Validator";
+		return new PolymorphicDispatcher.MethodNameFilter(methodName, 0, 0);
 	}
 
 	public void error(EObject eobject, String message) {
