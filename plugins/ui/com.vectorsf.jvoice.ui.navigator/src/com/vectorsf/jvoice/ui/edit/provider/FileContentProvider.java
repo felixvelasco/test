@@ -37,7 +37,8 @@ public class FileContentProvider extends JavaNavigatorContentProvider {
 		} else if (object instanceof IFolder) {
 			File directorio = new File(object.toString());
 			if (directorio.getName().equals("audios")
-					|| directorio.getName().equals("wsdl")) {
+					|| directorio.getName().equals("wsdl")
+					|| directorio.getName().equals("grammars")) {
 				Object[] children = super.getChildren(object);
 				for (Object object2 : children) {
 					lObjects.add(object2);

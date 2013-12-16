@@ -232,6 +232,54 @@
             </enablement>
          </commonWizard>
          <dropAssistant
+               class="com.vectorsf.jvoice.ui.navigator.drop.GrammarsBnfDropAdapterAssistant"
+               id="com.vectorsf.jvoice.ui.navigator.drop.dropAssistant5">
+            <possibleDropTargets>
+               <or>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVModule">
+                  </instanceof>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVPackage">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.core.resources.IFolder">
+                  </instanceof>
+               </or></possibleDropTargets>
+         </dropAssistant>
+         <dropAssistant
+               class="com.vectorsf.jvoice.ui.navigator.drop.GrammarsGrxmlDropAdapterAssistant"
+               id="com.vectorsf.jvoice.ui.navigator.drop.dropAssistant4">
+            <possibleDropTargets>
+               <or>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVModule">
+                  </instanceof>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVPackage">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.core.resources.IFolder">
+                  </instanceof>
+               </or></possibleDropTargets>
+         </dropAssistant>
+         <dropAssistant
+               class="com.vectorsf.jvoice.ui.navigator.drop.GrammarsGslDropAdapterAssistant"
+               id="com.vectorsf.jvoice.ui.navigator.drop.dropAssistant3">
+            <possibleDropTargets>
+               <or>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVModule">
+                  </instanceof>
+                  <instanceof
+                        value="com.vectorsf.jvoice.model.base.JVPackage">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.core.resources.IFolder">
+                  </instanceof>
+               </or></possibleDropTargets>
+         </dropAssistant>
+         <dropAssistant
                class="com.vectorsf.jvoice.ui.navigator.drop.AudiosDropAdapterAssistant"
                id="com.vectorsf.jvoice.ui.navigator.drop.dropAssistant2">
             <possibleDropTargets>
@@ -451,6 +499,23 @@
             </with>
          </enablement>
       </actionProvider>
+       <navigatorContent
+            contentProvider="com.vectorsf.jvoice.ui.edit.provider.GrammarsContentProvider"
+            id="com.vectorsf.jvoice.ui.navigator.navigatorContent2"
+            labelProvider="com.vectorsf.jvoice.ui.edit.provider.FileNavigatorLabelProvider"
+            name="Grammar navigator content"
+            priority="low">
+         <triggerPoints>
+            <or>
+               <instanceof
+                     value="com.vectorsf.jvoice.model.base.JVProject">
+               </instanceof>
+               <instanceof
+                     value="org.eclipse.core.resources.IFolder">
+               </instanceof>
+            </or>
+         </triggerPoints>
+      </navigatorContent>
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.edit.provider.AudiosContentProvider"
             id="com.vectorsf.jvoice.ui.navigator.navigatorContent1"
