@@ -4,7 +4,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecore.EValidator;
 import org.osgi.framework.BundleContext;
 
-import com.vectorsf.jvoice.core.validation.OperationsValidator;
+import com.vectorsf.jvoice.core.validation.operations.OperationsValidator;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 public class Activator extends Plugin {
