@@ -48,9 +48,11 @@ import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
-import com.vectorsf.jvoice.model.operations.LocutionState;
+import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.Note;
+import com.vectorsf.jvoice.model.operations.PromptState;
+import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
@@ -252,13 +254,13 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 				if (!isFinal) {
 					IFeature feature = new FinalStateFinalFeature(getFeatureProvider());
 					ContextButtonEntry menuButton = new ContextButtonEntry(feature, context);
-					menuButton.setText("Set final");
+					menuButton.setText("Exit");
 					menuButton.setIconId("set_final_pad");
 					data.getDomainSpecificContextButtons().add(menuButton);
 				} else {
 					IFeature feature = new FinalStateFinalFeature(getFeatureProvider());
 					ContextButtonEntry menuButton = new ContextButtonEntry(feature, context);
-					menuButton.setText("Unset final");
+					menuButton.setText("Unset exit");
 					menuButton.setIconId("unset_final_pad");
 					data.getDomainSpecificContextButtons().add(menuButton);
 				}
@@ -293,7 +295,8 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
 		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(context.getInnerPictogramElement());
 
-		if (bo instanceof CallFlowState || bo instanceof CustomState || bo instanceof LocutionState) {
+		if (bo instanceof CallFlowState || bo instanceof InputState || bo instanceof MenuState
+				|| bo instanceof PromptState || bo instanceof CustomState || bo instanceof RecordState) {
 
 			return new OpenEditorFeature(getFeatureProvider());
 		}

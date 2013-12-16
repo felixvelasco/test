@@ -662,6 +662,26 @@
                </with>
             </visibleWhen>
          </command>
+            <command
+               commandId="com.vectorsf.jvoice.ui.navigator.renameFlowParameter"
+               label="%command.label.renameParameter"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="org.eclipse.emf.edit.provider.AttributeValueWrapperItemProvider">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -834,6 +854,11 @@
             defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.RemoveFlowParameterHandler"
             id="com.vectorsf.jvoice.ui.navigator.removeFlowParameter"
             name="%command.name.removeParameter">
+      </command>
+      <command
+            defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.RenameFlowParameterHandler"
+            id="com.vectorsf.jvoice.ui.navigator.renameFlowParameter"
+            name="%command.name.renameParameter">
       </command>
    </extension>
    <extension
