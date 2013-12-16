@@ -8,12 +8,20 @@ public class OperationsValidator extends AbstractPolymorphicValidator {
 	private StateValidator stateValidator;
 	private BeanValidator beanValidator;
 	private LocutionStateValidator dslValidator;
+	private CallStateValidator callValidator;
+	private InitialStateValidator initialValidator;
+	private CallFlowStateValidator callFlowValidator;
+	private FinalStateValidator finalValidator;
 
 	public OperationsValidator() {
 		this.flowValidator = new FlowValidator(this);
 		this.stateValidator = new StateValidator(this);
 		this.beanValidator = new BeanValidator(this);
 		this.dslValidator = new LocutionStateValidator(this);
+		this.callValidator = new CallStateValidator(this);
+		this.initialValidator = new InitialStateValidator(this);
+		this.callFlowValidator = new CallFlowStateValidator(this);
+		this.finalValidator = new FinalStateValidator(this);
 	}
 
 	public FlowValidator getFlowValidator() {
@@ -30,5 +38,21 @@ public class OperationsValidator extends AbstractPolymorphicValidator {
 
 	public LocutionStateValidator getLocutionStateValidator() {
 		return dslValidator;
+	}
+
+	public CallStateValidator getCallStateValidator() {
+		return callValidator;
+	}
+
+	public InitialStateValidator getInitialStateValidator() {
+		return initialValidator;
+	}
+
+	public CallFlowStateValidator getCallFlowStateValidator() {
+		return callFlowValidator;
+	}
+
+	public FinalStateValidator getFinalStateValidator() {
+		return finalValidator;
 	}
 }
