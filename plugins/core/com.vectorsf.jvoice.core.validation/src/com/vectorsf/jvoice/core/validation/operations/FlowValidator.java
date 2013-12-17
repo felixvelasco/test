@@ -49,7 +49,19 @@ public class FlowValidator {
 	}
 
 	public boolean validate_Flow_distintNameParameter(Flow flow) {
+		if (flow.getParameters().size() > 1) {
+			for (int i = 0; i < flow.getParameters().size() - 1; i++) {
+				String param1 = flow.getParameters().get(i);
+				for (int j = i + 1; j < flow.getParameters().size(); j++) {
+					String param2 = flow.getParameters().get(i);
 
+					if (param1.equals(param2)) {
+						operationsValidator.error(flow,
+								"Duplicate parameter \"" + param1 + "\" in flow " + flow.getName());
+					}
+				}
+			}
+		}
 		return true;
 	}
 
