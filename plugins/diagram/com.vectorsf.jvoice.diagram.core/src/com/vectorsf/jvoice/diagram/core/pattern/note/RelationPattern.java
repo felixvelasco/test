@@ -149,6 +149,11 @@ public class RelationPattern extends AbstractConnectionPattern {
 
 	@Override
 	public boolean canCreate(ICreateConnectionContext context) {
+		State targetState = getState(context.getTargetAnchor());
+		Note sourceNote = getNote(context.getSourceAnchor());
+		if (sourceNote.getReferencedStates().contains(targetState)) {
+			return false;
+		}
 		Object boTarget = featureProvider.getBusinessObjectForPictogramElement(context.getTargetPictogramElement());
 		Object boSource = featureProvider.getBusinessObjectForPictogramElement(context.getSourcePictogramElement());
 		return boTarget instanceof State && !(boTarget instanceof InitialState) && boSource instanceof NoteImpl;

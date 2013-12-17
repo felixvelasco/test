@@ -107,15 +107,7 @@ public class NotePattern extends IdPattern {
 		setId(text, ID_NAME_TEXT);
 		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
-		// Create and set text graphics algorithm
-		// Shape textContainer = peCreateService.createShape(outerContainerShape, false);
-		// MultiText text = gaService.createDefaultMultiText(getDiagram(), textContainer, note.getDescription());
-		// text.setForeground(manageColor(CLASS_TEXT_FOREGROUND));
-		// text.setHorizontalAlignment(Orientation.ALIGNMENT_LEFT);
-		// text.setVerticalAlignment(Orientation.ALIGNMENT_TOP);
-		// text.setFont(gaService.manageFont(getDiagram(), FONT, 8, false, false));
 
-		// create link and wire it
 		link(outerContainerShape, note);
 
 		peCreateService.createChopboxAnchor(outerContainerShape);
