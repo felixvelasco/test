@@ -43,9 +43,7 @@ import org.eclipse.xtext.util.Arrays;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.BasePackage;
-import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVElement;
-import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
@@ -94,8 +92,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 						URI uri = EcoreUtil.getURI(targetFlow);
 						Flow connectedFlow = (Flow) BaseModel.getInstance().getResourceSet().getEObject(uri, true);
 
-						JVPackage targetPackage = connectedFlow.getOwnerPackage();
-						pasteVoiceDsl(targetPackage, voiceDsl, state, connectedFlow);
+						pasteVoiceDsl(voiceDsl, state, connectedFlow);
 
 						// Redireccionamos el nuevo estado al
 						// voiceDsl que hemos copiado
@@ -228,7 +225,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		}
 	}
 
-	protected void pasteVoiceDsl(JVPackage targetPackage, VoiceDsl voiceDsl, State state, Flow flow) {
+	protected void pasteVoiceDsl(VoiceDsl voiceDsl, State state, Flow flow) {
 		final IFile voiceDslFile = (IFile) Platform.getAdapterManager().getAdapter(voiceDsl, IFile.class);
 		modificado = voiceDsl;
 
@@ -385,17 +382,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 				if (obj instanceof VoiceDsl) {
 					((VoiceDsl) obj).setName(newName);
 					modificado = (VoiceDsl) obj;
-
-				} else if (obj instanceof JVBean) {
-					((JVBean) obj).setName(newName);
-					((JVBean) obj).setDescription(newName);
-					List<EObject> listaObjetos = ((Flow) obj).eResource().getContents();
-					for (int i = 0; i < listaObjetos.size(); i++) {
-						EObject objeto = listaObjetos.get(i);
-						if (objeto instanceof Diagram) {
-							((Diagram) objeto).setName(newName);
-						}
-					}
 				}
 			}
 			try {
@@ -423,7 +409,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 				}
 			}
 			try {
-				emfRes.save(SaveOptions.newBuilder().noValidation().getOptions().toOptionsMap());
+				// emfRes.save(SaveOptions.newBuilder().noValidation().getOptions().toOptionsMap());
 			} catch (RuntimeException re) {
 				re.printStackTrace();
 			}

@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
@@ -34,11 +35,15 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.resource.SaveOptions;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVApplication;
 import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.model.operations.LocutionState;
+import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
 public class PasteHandler extends AbstractHandler {
@@ -81,6 +86,7 @@ public class PasteHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		rename = false;
+		String nombreUsuario = "";
 		Clipboard clip = new Clipboard(Display.getCurrent());
 		Object contents = clip
 				.getContents(LocalSelectionTransfer.getTransfer());
@@ -112,7 +118,6 @@ public class PasteHandler extends AbstractHandler {
 				IPath pathRecursos = new Path(miBean.getName().replace(
 						".jvflow", ".resources"));
 				recursos = miBean.getParent().getFolder(pathRecursos);
-				recursos.exists();
 
 				targetRes = (IResource) Platform.getAdapterManager()
 						.getAdapter(target, IResource.class);
@@ -157,13 +162,15 @@ public class PasteHandler extends AbstractHandler {
 							});
 
 					ventana.open();
-					String nombreUsuario = ventana.getValue();
+					nombreUsuario = ventana.getValue();
 
 					// Obtenemos el nuevo target con la ruta, y el nombre del
 					// paquete seleccionado por el usuario.
 					targetPath = targetRes.getFullPath().append(nombreUsuario);
 					resourcesPath = targetRes.getFullPath().append(
 							nombreUsuario.replace(".jvflow", ".resources"));
+				} else {
+					nombreUsuario = bean.getName();
 				}
 
 				// Realizamos la copia del fichero al destino.
@@ -178,13 +185,39 @@ public class PasteHandler extends AbstractHandler {
 							if (rename) {
 								renameBean(targetPath);
 							}
-
 						}
 					};
 					ResourcesPlugin.getWorkspace().run(runnable, null);
 
 				} catch (CoreException e) {
 					e.printStackTrace();
+				}
+
+				// ahora tenemos que obtener el flujo copiado, revisar todos sus
+				// estados y si tiene locutions
+				// cambiar sus URIs
+				Flow flujoChanged = (Flow) target.getBean(nombreUsuario
+						.replace(".jvflow", ""));
+				for (State estado : flujoChanged.getStates()) {
+					if (estado instanceof LocutionState) {
+						LocutionState locution = (LocutionState) estado;
+						VoiceDsl voiceDsl = locution.getLocution();
+						URI uri = EcoreUtil.getURI(flujoChanged);
+						Flow connectedFlow = (Flow) BaseModel.getInstance()
+								.getResourceSet().getEObject(uri, true);
+						IFile targetFlow = (IFile) Platform.getAdapterManager()
+								.getAdapter(connectedFlow, IFile.class);
+
+						IPath pathnuevosResources = new Path(
+								nombreUsuario.replace(".jvflow", ".resources"));
+
+						IResource recursoResource = targetFlow.getParent()
+								.getFolder(pathnuevosResources);
+						IPath pathDsl = recursoResource.getFullPath().append(
+								voiceDsl.getName() + ".voiceDsl");
+						VoiceDsl modificado = changeURI(pathDsl);
+						locution.setLocution(modificado);
+					}
 				}
 			}
 
@@ -247,7 +280,7 @@ public class PasteHandler extends AbstractHandler {
 							});
 
 					ventana.open();
-					String nombreUsuario = ventana.getValue();
+					nombreUsuario = ventana.getValue();
 
 					// Obtenemos el nuevo target con la ruta, y el nombre del
 					// paquete seleccionado por el usuario.
@@ -255,6 +288,8 @@ public class PasteHandler extends AbstractHandler {
 							miPack.getParent().getProjectRelativePath()
 									.append(nombreUsuario));
 
+				} else {
+					nombreUsuario = miPack.getName();
 				}
 
 				// Realizamos la copia del paquete al destino.
@@ -276,6 +311,39 @@ public class PasteHandler extends AbstractHandler {
 					miPack.copy(targetPath, true, null);
 				} catch (CoreException e) {
 					throw new ExecutionException(e.getMessage(), e);
+				}
+
+				JVModule project = (JVModule) target;
+				JVPackage paqueteCopiado = project.getPackage(nombreUsuario);
+				for (JVBean bean : paqueteCopiado.getBeans()) {
+					if (bean instanceof Flow) {
+						Flow flujo = (Flow) bean;
+						for (State estado : flujo.getStates()) {
+							if (estado instanceof LocutionState) {
+								LocutionState locution = (LocutionState) estado;
+								VoiceDsl voiceDsl = locution.getLocution();
+								URI uri = EcoreUtil.getURI(flujo);
+								Flow connectedFlow = (Flow) BaseModel
+										.getInstance().getResourceSet()
+										.getEObject(uri, true);
+								IFile targetFlow = (IFile) Platform
+										.getAdapterManager().getAdapter(
+												connectedFlow, IFile.class);
+
+								IPath pathnuevosResources = new Path(
+										flujo.getName() + ".resources");
+
+								IResource recursoResource = targetFlow
+										.getParent().getFolder(
+												pathnuevosResources);
+								IPath pathDsl = recursoResource.getFullPath()
+										.append(voiceDsl.getName()
+												+ ".voiceDsl");
+								VoiceDsl modificado = changeURI(pathDsl);
+								locution.setLocution(modificado);
+							}
+						}
+					}
 				}
 			}
 
@@ -352,7 +420,7 @@ public class PasteHandler extends AbstractHandler {
 							});
 
 					ventana.open();
-					String nombreUsuario = ventana.getValue();
+					nombreUsuario = ventana.getValue();
 
 					// Obtenemos el nuevo target con la ruta, y el nombre del
 					// paquete seleccionado por el usuario.
@@ -529,6 +597,32 @@ public class PasteHandler extends AbstractHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private VoiceDsl changeURI(IPath resourcesPath) {
+		VoiceDsl modificado = null;
+		String newName = resourcesPath.lastSegment();
+		newName = newName.substring(0, newName.lastIndexOf('.'));
+		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
+		Resource emfRes = resourceSetImpl.createResource(URI
+				.createPlatformResourceURI(resourcesPath.toString(), true));
+		try {
+			emfRes.load(null);
+
+			for (EObject obj : emfRes.getContents()) {
+				if (obj instanceof VoiceDsl) {
+					modificado = (VoiceDsl) obj;
+
+				}
+			}
+			try {
+			} catch (RuntimeException re) {
+				re.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return modificado;
 	}
 
 }
