@@ -12,6 +12,7 @@ public class OperationsValidator extends AbstractPolymorphicValidator {
 	private InitialStateValidator initialValidator;
 	private CallFlowStateValidator callFlowValidator;
 	private FinalStateValidator finalValidator;
+	private SwitchStateValidator switchStateValidator;
 
 	public OperationsValidator() {
 		this.flowValidator = new FlowValidator(this);
@@ -22,6 +23,7 @@ public class OperationsValidator extends AbstractPolymorphicValidator {
 		this.initialValidator = new InitialStateValidator(this);
 		this.callFlowValidator = new CallFlowStateValidator(this);
 		this.finalValidator = new FinalStateValidator(this);
+		this.switchStateValidator = new SwitchStateValidator(this);
 	}
 
 	public FlowValidator getFlowValidator() {
@@ -54,5 +56,9 @@ public class OperationsValidator extends AbstractPolymorphicValidator {
 
 	public FinalStateValidator getFinalStateValidator() {
 		return finalValidator;
+	}
+
+	public SwitchStateValidator getSwitchStateValidator() {
+		return switchStateValidator;
 	}
 }
