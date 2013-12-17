@@ -282,6 +282,8 @@ public class PasteHandler extends AbstractHandler {
 					ventana.open();
 					nombreUsuario = ventana.getValue();
 
+					nombreUsuario = nombreUsuario.replace("/", ".");
+
 					// Obtenemos el nuevo target con la ruta, y el nombre del
 					// paquete seleccionado por el usuario.
 					targetPath = targetRes.getFullPath().append(
@@ -289,7 +291,11 @@ public class PasteHandler extends AbstractHandler {
 									.append(nombreUsuario));
 
 				} else {
-					nombreUsuario = miPack.getName();
+
+					IPath relativePackage = miPack.getProjectRelativePath()
+							.makeRelativeTo(new Path(BaseModel.JV_PATH));
+					nombreUsuario = relativePackage.toString()
+							.replace("/", ".");
 				}
 
 				// Realizamos la copia del paquete al destino.
