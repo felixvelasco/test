@@ -92,4 +92,21 @@ public class FlowValidator {
 		}
 		return findProjectFile(file.getParentFile());
 	}
+
+	public boolean validate_Flow_distintNameScopedBean(Flow flow) {
+		if (flow.getBeans().size() > 1) {
+			for (int i = 0; i < flow.getBeans().size() - 1; i++) {
+				ComponentBean bean1 = flow.getBeans().get(i);
+				for (int j = i + 1; j < flow.getBeans().size(); j++) {
+					ComponentBean bean2 = flow.getBeans().get(i);
+
+					if (bean2.getName().equals(bean1.getName())) {
+						operationsValidator.error(flow,
+								"Duplicate bean \"" + bean1.getName() + "\" in flow " + flow.getName());
+					}
+				}
+			}
+		}
+		return true;
+	}
 }
