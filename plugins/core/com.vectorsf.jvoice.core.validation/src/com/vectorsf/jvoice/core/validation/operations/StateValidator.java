@@ -72,4 +72,27 @@ public class StateValidator {
 
 		return true;
 	}
+
+	public boolean validate_State_formatNameState(State state) {
+		if (state.getName().length() > 30) {
+			operationsValidator.error(state, "Name of " + state.getName() + " is too long.");
+		}
+
+		char initial = state.getName().charAt(0);
+		if (!(state.getName().startsWith("_") || Character.isLetter(initial))) {
+			operationsValidator.error(state, "Name of " + state.getName() + " starts with a incorrect letter.");
+		}
+
+		for (int i = 0; i < state.getName().length(); i++) {
+			char letter = state.getName().charAt(i);
+			if (!(Character.isLetter(letter) || Character.isDigit(letter) || Character.toString(letter).equals(".")
+					|| Character.toString(letter).equals("_") || Character.toString(letter).equals("-"))) {
+				operationsValidator.error(state, "Name of " + state.getName() + " contains incorrect character.");
+				break;
+			}
+
+		}
+
+		return true;
+	}
 }
