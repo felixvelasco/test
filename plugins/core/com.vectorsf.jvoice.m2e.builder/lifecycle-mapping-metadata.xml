@@ -47,7 +47,7 @@
 		</pluginExecution>
 		<pluginExecution>
 			<pluginExecutionFilter>
-				<groupId>com.vectorsf.jvoice</groupId>
+				<groupId>org.jvnet.jax-ws-commons</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
 				<versionRange>[2.2,)</versionRange>
 				<goals>
