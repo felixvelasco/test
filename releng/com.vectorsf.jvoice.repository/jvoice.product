@@ -8,6 +8,7 @@
    </configIni>
 
    <launcherArgs>
+      <vmArgs>-XX:MaxPermSize=256m -Xms48m -Xmx512m</vmArgs>
    </launcherArgs>
 
    <windowImages i16="resources/win/icon_JVoice_16.png" i32="resources/win/icon_JVoice_32.png" i48="resources/win/icon_JVoice_48.png" i64="resources/win/icon_JVoice_64.png"/>
