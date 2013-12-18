@@ -501,7 +501,7 @@
       </actionProvider>
        <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.edit.provider.GrammarsContentProvider"
-            id="com.vectorsf.jvoice.ui.navigator.navigatorContent2"
+            id="com.vectorsf.jvoice.ui.navigator.navigatorContent3"
             labelProvider="com.vectorsf.jvoice.ui.edit.provider.FileNavigatorLabelProvider"
             name="Grammar navigator content"
             priority="low">
