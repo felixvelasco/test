@@ -8,6 +8,8 @@
    </configIni>
 
    <launcherArgs>
+      <programArgsWin>-vm
+jre/bin/java</programArgsWin>
       <vmArgs>-XX:MaxPermSize=256m -Xms48m -Xmx512m</vmArgs>
    </launcherArgs>
 
@@ -20,7 +22,8 @@
       <linux icon="resources/linux/iconjvoice256.xpm"/>
       <macosx icon="resources/mac/icon_JVoice_256.icns"/>
       <solaris/>
-      <win useIco="false">
+      <win useIco="true">
+         <ico path="/com.vectorsf.jvoice.repository/resources/win/icono_JVoice.ico"/>
          <bmp
             winSmallHigh="resources/win/icon_JVoice_16.bmp"
             winMediumHigh="resources/win/icon_JVoice_32.bmp"
@@ -33,7 +36,6 @@
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
    </vm>
-
 
    <plugins>
    </plugins>
