@@ -1,5 +1,6 @@
 package com.vectorsf.jvoice.ui.navigator;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.core.IType;
@@ -17,7 +18,6 @@ import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 import org.eclipse.ui.navigator.ICommonMenuConstants;
 import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
 
-import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
 
@@ -65,9 +65,10 @@ public class ComponentBeanActionProviderIVR extends CommonActionProvider {
 			if (firstElement instanceof ComponentBean) {
 				ComponentBean componente = (ComponentBean) firstElement;
 				Flow flujo = (Flow) componente.eContainer();
-				JVModule modulo = flujo.getOwnerPackage().getOwnerModule();
-				IProject project = (IProject) Platform.getAdapterManager()
-						.getAdapter(modulo, IProject.class);
+				IFile fileFlow = (IFile) Platform.getAdapterManager()
+						.getAdapter(flujo, IFile.class);
+
+				IProject project = fileFlow.getProject();
 
 				JavaProject javaProject = (JavaProject) JavaCore
 						.create(project);

@@ -45,15 +45,13 @@ import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionMenuPattern
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
+import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
-import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.Note;
-import com.vectorsf.jvoice.model.operations.PromptState;
-import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
@@ -296,7 +294,8 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
 		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(context.getInnerPictogramElement());
 
-		if (bo instanceof CallFlowState || bo instanceof LocutionState || bo instanceof CustomState) {
+		if (bo instanceof CallFlowState || bo instanceof LocutionState || bo instanceof CustomState
+				|| bo instanceof CallState) {
 
 			return new OpenEditorFeature(getFeatureProvider());
 		}

@@ -1,10 +1,12 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -12,6 +14,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.internal.core.JavaProject;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -20,6 +26,8 @@ import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 
 import com.isb.bks.ivr.voice.dsl.ui.internal.VoiceDslActivator;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
+import com.vectorsf.jvoice.model.operations.CallState;
+import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.LocutionState;
@@ -45,6 +53,9 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 		} else if (businessObject instanceof CustomState) {
 			CustomState customState = (CustomState) businessObject;
 			eObject = customState;
+		} else if (businessObject instanceof CallState) {
+			CallState callState = (CallState) businessObject;
+			eObject = callState;
 		}
 
 		if (eObject != null) {
@@ -64,6 +75,21 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 		}
 
 		try {
+			if (eObject instanceof CallState) {
+				CallState callstate = (CallState) eObject;
+				ComponentBean componente = callstate.getBean();
+				Flow flujo = (Flow) componente.eContainer();
+				IFile fileFlow = (IFile) Platform.getAdapterManager().getAdapter(flujo, IFile.class);
+
+				IProject project = fileFlow.getProject();
+
+				@SuppressWarnings("restriction")
+				JavaProject javaProject = (JavaProject) JavaCore.create(project);
+				@SuppressWarnings("restriction")
+				IType type = javaProject.findType(componente.getFqdn());
+				fileString = type.getResource().getFullPath().toString();
+			}
+
 			if (fileString != null) {
 				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileString));
 
@@ -88,7 +114,7 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 					IDE.openEditor(page, filecustom);
 				}
 			}
-		} catch (PartInitException e) {
+		} catch (PartInitException | JavaModelException e) {
 		}
 	}
 
