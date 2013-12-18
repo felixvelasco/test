@@ -157,6 +157,14 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 							hm.put(state, pe);
 						}
 
+					} else if (state instanceof CustomState) {
+						CustomState customice = (CustomState) state;
+						customice.setPath("");
+						targetFlow.getStates().add(customice);
+						ac.setLocation(context.getX(), context.getY());
+						ac.setTargetContainer(getDiagram());
+						PictogramElement pe = addGraphicalRepresentation(ac, copy);
+						hm.put(state, pe);
 					} else {
 						targetFlow.getStates().add(state);
 						ac.setLocation(context.getX(), context.getY());
