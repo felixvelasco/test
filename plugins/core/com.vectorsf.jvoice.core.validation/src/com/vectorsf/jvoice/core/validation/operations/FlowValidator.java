@@ -22,6 +22,22 @@ public class FlowValidator {
 		this.operationsValidator = operationsValidator;
 	}
 
+	public boolean validate_Flow_distintNameState(Flow flow) {
+		if (flow.getStates().size() > 1) {
+			for (int i = 0; i < flow.getStates().size() - 1; i++) {
+				String state1 = flow.getStates().get(i).getName();
+				for (int j = i + 1; j < flow.getStates().size(); j++) {
+					String state2 = flow.getStates().get(j).getName();
+
+					if (state1.equals(state2)) {
+						operationsValidator.error(flow, "Duplicate state \"" + state1 + "\" in flow " + flow.getName());
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 	public boolean validate_Flow_oneInitialState(Flow flow) {
 		int initialCount = 0;
 		for (State state : flow.getStates()) {
@@ -53,7 +69,7 @@ public class FlowValidator {
 			for (int i = 0; i < flow.getParameters().size() - 1; i++) {
 				String param1 = flow.getParameters().get(i);
 				for (int j = i + 1; j < flow.getParameters().size(); j++) {
-					String param2 = flow.getParameters().get(i);
+					String param2 = flow.getParameters().get(j);
 
 					if (param1.equals(param2)) {
 						operationsValidator.error(flow,
@@ -110,7 +126,7 @@ public class FlowValidator {
 			for (int i = 0; i < flow.getBeans().size() - 1; i++) {
 				ComponentBean bean1 = flow.getBeans().get(i);
 				for (int j = i + 1; j < flow.getBeans().size(); j++) {
-					ComponentBean bean2 = flow.getBeans().get(i);
+					ComponentBean bean2 = flow.getBeans().get(j);
 
 					if (bean2.getName().equals(bean1.getName())) {
 						operationsValidator.error(flow,
