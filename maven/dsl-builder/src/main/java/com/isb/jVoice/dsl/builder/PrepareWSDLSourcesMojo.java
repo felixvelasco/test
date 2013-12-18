@@ -91,14 +91,16 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 			generateDir(metaInf);
 
 			for (Plugin pl : project.getModel().getBuild().getPlugins()) {
-				if (pl.getKey().equals("org.codehaus.mojo:jaxws-maven-plugin")) {
+				if (pl.getKey().equals("org.jvnet.jax-ws-commons:jaxws-maven-plugin")) {
 					dom = (Xpp3Dom)pl.getExecutions().get(0).getConfiguration();
 					break;
 					
 				}
 			}
 			for (File file : files) {
-				locations = rellenarWsdlLocation(file, locations, dom.getChild("wsdlLocation").getValue());
+				if(dom!=null){
+					locations = rellenarWsdlLocation(file, locations, dom.getChild("wsdlLocation").getValue());
+				}
 			}
 
 			File targetFile = new File(metaInf, "jax-ws-catalog.xml");
@@ -124,7 +126,7 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 			String extension =fil.getName().substring(fil.getName().lastIndexOf("."));
 			if(extension.equalsIgnoreCase(".wsdl")){
 				file = fil;
-				ruta = ruta + file.getName().substring(0, file.getName().lastIndexOf(".")) + "/" + file.getName();
+				ruta = ruta.substring(0, ruta.length()-1) + "/"+file.getName().substring(0, file.getName().lastIndexOf(".")) + "/" + file.getName();
 				locations.add(ruta);
 			}
 		}

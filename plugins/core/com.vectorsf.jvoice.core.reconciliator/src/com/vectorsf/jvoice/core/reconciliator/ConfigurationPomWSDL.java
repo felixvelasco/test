@@ -130,9 +130,9 @@ public class ConfigurationPomWSDL {
 				.getDefaultWSDLPackageName(moduleName);
 
 		Plugin dsl_builder = new Plugin();
-		dsl_builder.setGroupId("org.codehaus.mojo");
+		dsl_builder.setGroupId("org.jvnet.jax-ws-commons");
 		dsl_builder.setArtifactId("jaxws-maven-plugin");
-		dsl_builder.setVersion("1.9");
+		dsl_builder.setVersion("2.3");
 		PluginExecution pexecution = new PluginExecution();
 		pexecution.addGoal("wsimport");
 
