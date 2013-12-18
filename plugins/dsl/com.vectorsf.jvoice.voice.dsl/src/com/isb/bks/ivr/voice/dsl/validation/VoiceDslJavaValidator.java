@@ -11,6 +11,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.validation.Check;
 
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 /**
@@ -40,6 +41,30 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 
 			if (!audioFile.exists()) {
 				warning("Audio file not found", VoiceDslPackage.Literals.AUDIO__SRC);
+			}
+		}
+	}
+
+	@Check
+	public void checkGrammarContainsProperSrc(Grammar grammar) {
+		if (grammar.getSrc() != null) {
+			URI uri = grammar.eResource().getURI();
+			File rawFile = null;
+			if (uri.isPlatformResource()) {
+				IPath rawPath = ResourcesPlugin.getWorkspace().getRoot().findMember(uri.toPlatformString(true))
+						.getRawLocation();
+
+				rawFile = rawPath.toFile();
+			} else {
+				rawFile = new File(uri.toFileString());
+			}
+			File projectFile = findProjectFile(rawFile);
+			File grammarsFolder = new File(projectFile, "src/main/resources/grammars");
+			String grammarName = grammar.getSrc() + ".grxml";
+			File audioFile = new File(grammarsFolder, grammarName);
+
+			if (!audioFile.exists()) {
+				warning("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
 			}
 		}
 	}

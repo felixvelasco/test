@@ -10,11 +10,6 @@ public class LocutionStateValidator {
 		this.operationsValidator = operationsValidator;
 	}
 
-	public boolean validate_LocutionState_checkWav(LocutionState lstate) {
-
-		return true;
-	}
-
 	public boolean validate_LocutionState_checkGrammars(LocutionState lstate) {
 
 		return true;
