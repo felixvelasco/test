@@ -31,7 +31,7 @@ public class SwitchStateValidator {
 		for (Case c : state.getCase()) {
 			if (!transitionsCases.contains(c.getEventName())) {
 				operationsValidator.error(state, "Switch state " + state.getName() + " with case \"" + c.getEventName()
-						+ "\" has no sate transition for this case.");
+						+ "\" has no state transition for this case.");
 			}
 		}
 
