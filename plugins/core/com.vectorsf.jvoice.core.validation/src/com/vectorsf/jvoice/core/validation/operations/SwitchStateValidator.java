@@ -58,7 +58,7 @@ public class SwitchStateValidator {
 				for (int j = i + 1; j < state.getCase().size(); j++) {
 					Case case2 = state.getCase().get(j);
 
-					if (case2.getEventName().equals(case2.getEventName())) {
+					if (case1.getEventName().equals(case2.getEventName())) {
 						operationsValidator.error(state, "Duplicate case \"" + case1.getEventName() + "\" in switch "
 								+ state.getName());
 					}

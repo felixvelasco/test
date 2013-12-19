@@ -38,16 +38,6 @@ public class StateValidator {
 		return true;
 	}
 
-	public boolean validate_State_atLeastTwoEventsSwitch(State state) {
-
-		return true;
-	}
-
-	public boolean validate_State_propertiesEventsSwitch(State state) {
-
-		return true;
-	}
-
 	public boolean validate_State_methodFlowExecutionState(State state) {
 
 		return true;
@@ -93,6 +83,19 @@ public class StateValidator {
 
 		}
 
+		return true;
+	}
+	
+	public boolean validate_State_eventOkOnlyState(State state) {
+		if (!(state instanceof SwitchState || state instanceof MenuState || state instanceof CallFlowState || state instanceof FinalState)) {
+			if (state.getOutgoingTransitions().size() > 1) {
+				operationsValidator.error(state, "State " + state.getName() + " has more than 1 output.");
+			} else {
+				if (!state.getOutgoingTransitions().get(0).getEventName().equalsIgnoreCase("OK")) {
+					operationsValidator.error(state, "State " + state.getName() + " must have an \"ok\" event.");
+				}
+			}
+		}
 		return true;
 	}
 }
