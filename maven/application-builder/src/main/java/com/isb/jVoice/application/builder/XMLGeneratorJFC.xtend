@@ -8,21 +8,21 @@ import static com.isb.jVoice.application.builder.Using.*
 
 class XMLGeneratorJFC {
 	
-	def static generate(File target) {
-		new XMLGeneratorJFC().generateXML(target);
+	def static generate(File target, String projectName) {
+		new XMLGeneratorJFC().generateXML(target,projectName);
 	}
 	
-	def generateXML(File file) {
+	def generateXML(File file, String projectName) {
 		using(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8")))[
-			it.append(doGenerate());
+			it.append(doGenerate(projectName));
 		]	
 	}
 	
-	def doGenerate() '''
-		«doGenerateWeb()»
+	def doGenerate(String projectName) '''
+		«doGenerateWeb(projectName)»
 	'''
 
-	def doGenerateWeb() '''
+	def doGenerateWeb(String projectName) '''
 	<?xml version="1.0" encoding="UTF-8"?>
 	<beans:beans xmlns="http://www.springframework.org/schema/mvc"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -92,6 +92,11 @@ class XMLGeneratorJFC {
 				</beans:map>
 			</beans:property>
 		</beans:bean>
+		
+		<beans:bean id="endpointProvider" class="com.vectorsf.jvoiceframework.core.service.ws.XMLBasedEndpointProvider">
+		   <beans:property name="resource" value="/resources/com/vectorsf/«projectName»/ws/ws-endpoints.xml" /> 
+		</beans:bean>
+		
 
 	</beans:beans>
 	'''

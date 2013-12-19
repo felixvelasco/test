@@ -53,6 +53,7 @@ public class CopyMojo extends AbstractMojo {
 	private File file;
 	private static final String ARCHIVE_FILE = "archive:file:/";
 	private static final String SEPARATOR2 = "\\";
+	private static final String WS = "ws";
 
 	/**
 	 * Location of the target directory.
@@ -60,6 +61,13 @@ public class CopyMojo extends AbstractMojo {
 	 * @parameter expression="${basedir}/src/main/webapp/WEB-INF"
 	 */
 	private File outputDirectory;
+
+	/**
+	 * Location of the ws-endpoints target directory.
+	 * 
+	 * @parameter expression="${basedir}/src/main/resources/com/vectorsf"
+	 */
+	private File endpointsDirectory;
 
 	/**
 	 * The Maven Project Object
@@ -74,12 +82,12 @@ public class CopyMojo extends AbstractMojo {
 	 */
 	private List<String> runtimeClasspathElements;
 	private List<JVModule> modules = new ArrayList<JVModule>();
+	String nameProject = null;
 
 	private void findFullPath(List<String> fileNameToSearch, File file) throws IOException {
 		ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
 		ZipEntry ze = null;
 		String ret = null;
-		String nameProject = null;
 		while ((ze = zip.getNextEntry()) != null) {
 			String entryName = ze.getName();
 			if (entryName.equals(".projectInformation")) {
@@ -160,7 +168,9 @@ public class CopyMojo extends AbstractMojo {
 		// Creamos el app-context.xml en dentro de la carpeta WEB-INF
 		File spring = new File(outputDirectory, "spring");
 		XMLGeneratorAPP.generate(new File(spring, "app-context.xml"), modules);
-		XMLGeneratorJFC.generate(new File(spring, "jvoiceframework-context.xml"));
+		XMLGeneratorJFC.generate(
+				new File(spring, "jvoiceframework-context.xml"),
+				modulo.getName());
 		XMLGeneratorRC.generate(new File(spring, "root-context.xml"));
 
 		// Creamos el web.xml en dentro de la carpeta WEB-INF
@@ -172,6 +182,14 @@ public class CopyMojo extends AbstractMojo {
 		XMLGeneratorRHTML.generate(new File(views, "renderHTML.jsp"));
 		XMLGeneratorRVXI.generate(new File(views, "renderVXI.jsp"));
 		copyFile("_init.jsp", new File(views, "_init.jsp"));
+
+
+		// Creamos el ws-endpoints.xml en dentro de la carpeta resources
+		File wsendpointsDirectory = new File(endpointsDirectory, SEPARATOR
+				+ modulo.getName() + SEPARATOR + WS);
+		wsendpointsDirectory.mkdirs();
+		XMLGeneratorENDP.generate(new File(wsendpointsDirectory,
+				"ws-endpoints.xml"));
 
 	}
 
