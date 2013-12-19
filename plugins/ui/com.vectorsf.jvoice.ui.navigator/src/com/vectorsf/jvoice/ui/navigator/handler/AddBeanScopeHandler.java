@@ -33,7 +33,8 @@ public class AddBeanScopeHandler extends AbstractModifyFlowHandler {
 		IProject project = getProject(flow);
 		Shell shell = HandlerUtil.getActiveShell(event);
 
-		BeanScopeAddDialog dialog = new BeanScopeAddDialog(shell, (IPackageFragment) findPackage(flow, project));
+		BeanScopeAddDialog dialog = new BeanScopeAddDialog(shell,
+				(IPackageFragment) findPackage(flow, project), project);
 		boolean ret = dialog.open() == Window.OK;
 		if (ret) {
 			componentBean = dialog.getComponentBean();
@@ -46,17 +47,20 @@ public class AddBeanScopeHandler extends AbstractModifyFlowHandler {
 		org.eclipse.jdt.internal.core.JavaProject javaProject = (org.eclipse.jdt.internal.core.JavaProject) JavaCore
 				.create(project);
 		try {
-			return javaProject.findPackageFragment(flow.getOwnerPackage().getOwnerModule().getComponentsPackage());
+			return javaProject.findPackageFragment(flow.getOwnerPackage()
+					.getOwnerModule().getComponentsPackage());
 		} catch (JavaModelException e) {
 			return null;
 		}
 	}
 
-	public class AddBeanScopeOperation extends AbstractFlowModificationOperation {
+	public class AddBeanScopeOperation extends
+			AbstractFlowModificationOperation {
 
 		@Override
 		protected Command getChangeCommand(EditingDomain domain, Flow flow) {
-			return AddCommand.create(domain, flow, OperationsPackage.eINSTANCE.getFlow_Beans(), componentBean);
+			return AddCommand.create(domain, flow,
+					OperationsPackage.eINSTANCE.getFlow_Beans(), componentBean);
 		}
 
 	}

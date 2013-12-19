@@ -1,15 +1,18 @@
 package com.vectorsf.jvoice.ui.navigator.handler;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jdt.core.IAnnotation;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IImportDeclaration;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMemberValuePair;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.ITypeRoot;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.ui.JavaElementLabelProvider;
 import org.eclipse.jdt.ui.StandardJavaElementContentProvider;
@@ -44,15 +47,17 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 	private Text beanNameText;
 	private IPackageFragment packageFragment;
 	private Shell shell;
+	private IProject project;
 
 	private ComponentBean bean;
 
 	public BeanScopeAddDialog(Shell parentShell,
-			IPackageFragment packageFragment) {
+			IPackageFragment packageFragment, IProject project) {
 		super(parentShell);
 		this.packageFragment = packageFragment;
 		this.shell = parentShell;
 		this.bean = OperationsFactory.eINSTANCE.createComponentBean();
+		this.project = project;
 	}
 
 	private Listener nameModifyListener = new Listener() {
@@ -65,19 +70,29 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 
 	private boolean validatePage() {
 		String text = getScopedName();
-		if (text.isEmpty()) {
-			setErrorMessage(null);
-			setMessage("Enter a scope name");
-			getButton(IDialogConstants.OK_ID).setEnabled(false);
-			return false;
-		}
+		IJavaProject jProject = JavaCore.create(project);
+		IType type;
 
-		IStatus status = ResourcesPlugin.getWorkspace().validateName(text,
-				IResource.FILE);
-		if (!status.isOK()) {
-			setErrorMessage(status.getMessage());
-			getButton(IDialogConstants.OK_ID).setEnabled(false);
-			return false;
+		try {
+			type = jProject.findType(bean.getFqdn());
+
+			if (text.isEmpty() && type.getAnnotation("Scope").exists()) {
+				setErrorMessage(null);
+				setMessage("Enter a scope name");
+				getButton(IDialogConstants.OK_ID).setEnabled(false);
+				return false;
+			}
+		} catch (JavaModelException e) {
+			e.printStackTrace();
+		}
+		if (!text.isEmpty()) {
+			IStatus status = ResourcesPlugin.getWorkspace().validateName(text,
+					IResource.FILE);
+			if (!status.isOK()) {
+				setErrorMessage(status.getMessage());
+				getButton(IDialogConstants.OK_ID).setEnabled(false);
+				return false;
+			}
 		}
 
 		String beanClass = getBeanClassName();
@@ -90,7 +105,11 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		setErrorMessage(null);
 		setMessage(null);
 		getButton(IDialogConstants.OK_ID).setEnabled(true);
-		updateComponent(scopedNameText.getText());
+		if (scopedNameText.getText().equals("")) {
+			updateComponent(beanNameText.getText());
+		} else {
+			updateComponent(scopedNameText.getText());
+		}
 		return true;
 	}
 
@@ -117,9 +136,9 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		container.setLayout(layout);
 
-		createName(container);
 		createLabelName(container);
 		createValueName(container);
+		createName(container);
 
 		setHelpAvailable(false);
 		return area;
@@ -135,9 +154,10 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		// dataName.horizontalSpan = 2;
 		scopedNameText = new Text(container, SWT.BORDER);
 		scopedNameText.setLayoutData(dataName);
+		scopedNameText.setEnabled(false);
 		scopedNameText.addListener(SWT.Modify, nameModifyListener);
 
-		new Label(container, SWT.NONE);
+		// new Label(container, SWT.NONE);
 	}
 
 	private void createLabelName(Composite container) {
@@ -170,9 +190,25 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 				if (dialog.open() == Window.OK) {
 					ITypeRoot typeRoot = (ITypeRoot) dialog.getFirstResult();
 					updateComponent(typeRoot);
+
+					IJavaProject jProject = JavaCore.create(project);
+					IType type;
+					try {
+						type = jProject.findType(bean.getFqdn());
+						if (type.getAnnotation("Scope").exists()) {
+							scopedNameText.setEnabled(true);
+						} else {
+							scopedNameText.setEnabled(false);
+							scopedNameText.setText("");
+						}
+
+					} catch (JavaModelException e1) {
+						e1.printStackTrace();
+					}
 					beanClassText.setText(bean.getFqdn());
 					beanNameText.setText(bean.getNameBean());
 				}
+
 				validatePage();
 			}
 
@@ -194,6 +230,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		beanNameText.setLayoutData(dataValueName);
 		beanNameText.setEditable(false);
 		beanNameText.setEnabled(false);
+		new Label(container, SWT.NONE);
 	}
 
 	@Override
