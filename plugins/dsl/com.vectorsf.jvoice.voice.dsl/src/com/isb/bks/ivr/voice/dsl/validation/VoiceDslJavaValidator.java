@@ -13,6 +13,7 @@ import org.eclipse.xtext.validation.Check;
 
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
@@ -67,8 +68,15 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 			File audioFile = new File(grammarsFolder, grammarName);
 
 			if (!audioFile.exists()) {
-				warning("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
+				error("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
 			}
+		}
+	}
+
+	@Check
+	public void checkAtLeastOneGrammar(Grammars grammars) {
+		if (grammars.getGrammatics().isEmpty()) {
+			error("At least one grammar is needed.", VoiceDslPackage.Literals.GRAMMARS__GRAMMATICS);
 		}
 	}
 
