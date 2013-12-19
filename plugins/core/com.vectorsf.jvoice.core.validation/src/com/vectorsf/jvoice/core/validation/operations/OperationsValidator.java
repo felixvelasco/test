@@ -15,6 +15,7 @@ public class OperationsValidator extends AbstractPolymorphicValidator {
 	private SwitchStateValidator switchStateValidator;
 	private NoteValidator noteValidator;
 	private MenuStateValidator menuStateValidator;
+	private ComponentBeanValidator componentBeanValidator;
 
 	public OperationsValidator() {
 		this.flowValidator = new FlowValidator(this);
@@ -28,6 +29,7 @@ public class OperationsValidator extends AbstractPolymorphicValidator {
 		this.switchStateValidator = new SwitchStateValidator(this);
 		this.noteValidator = new NoteValidator(this);
 		this.menuStateValidator = new MenuStateValidator(this);
+		this.componentBeanValidator = new ComponentBeanValidator(this);
 	}
 
 	public FlowValidator getFlowValidator() {
@@ -73,4 +75,9 @@ public class OperationsValidator extends AbstractPolymorphicValidator {
 	public MenuStateValidator getMenuStateValidator() {
 		return menuStateValidator;
 	}
+
+	public ComponentBeanValidator getComponentBeanValidator() {
+		return componentBeanValidator;
+	}
+
 }
