@@ -1,8 +1,11 @@
 package com.vectorsf.jvoice.core.validation.operations;
 
+import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InitialState;
+import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.SwitchState;
 
 public class StateValidator {
 
@@ -85,7 +88,7 @@ public class StateValidator {
 
 		return true;
 	}
-	
+
 	public boolean validate_State_eventOkOnlyState(State state) {
 		if (!(state instanceof SwitchState || state instanceof MenuState || state instanceof CallFlowState || state instanceof FinalState)) {
 			if (state.getOutgoingTransitions().size() > 1) {
