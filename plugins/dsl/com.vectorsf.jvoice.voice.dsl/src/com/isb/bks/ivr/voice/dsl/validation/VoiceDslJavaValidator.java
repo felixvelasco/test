@@ -4,6 +4,7 @@
 package com.isb.bks.ivr.voice.dsl.validation;
 
 import java.io.File;
+import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -12,6 +13,8 @@ import org.eclipse.xtext.validation.Check;
 
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 /**
@@ -78,4 +81,28 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 		}
 		return findProjectFile(file.getParentFile());
 	}
+
+	@Check
+	public void checkMenuOutputs(Outputs outputs) {
+		if (outputs != null) {
+			List<Output> outputList = outputs.getOutput();
+			if (outputList == null || outputList.isEmpty()) {
+				error("Menu must have one output at least.", VoiceDslPackage.Literals.OUTPUTS__OUTPUT);
+			}
+			if (outputList.size() > 1) {
+				for (int i = 0; i < outputList.size() - 1; i++) {
+					Output output1 = outputList.get(i);
+					for (int j = i + 1; j < outputList.size(); j++) {
+						Output output2 = outputList.get(j);
+
+						if (output1.getName().equals(output2.getName())) {
+							error("Duplicate Menu output name \"" + output1.getName() + "\".",
+									VoiceDslPackage.Literals.OUTPUTS__OUTPUT, j);
+						}
+					}
+				}
+			}
+		}
+	}
+
 }
