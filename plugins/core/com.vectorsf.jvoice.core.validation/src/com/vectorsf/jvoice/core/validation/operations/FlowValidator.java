@@ -137,4 +137,31 @@ public class FlowValidator {
 		}
 		return true;
 	}
+
+	public boolean validate_Flow_checkNameParameter(Flow flow) {
+		if (flow.getParameters().size() > 0) {
+			for (int i = 0; i < flow.getParameters().size(); i++) {
+				String name = flow.getParameters().get(i);
+				if (name.length() > 30) {
+					operationsValidator.error(flow, "Name of parameter " + name + " is too long.");
+				}
+
+				char initial = name.charAt(0);
+				if (!Character.isLetter(initial)) {
+					operationsValidator.error(flow, "Name of parameter " + name + " starts with a incorrect letter.");
+				}
+
+				for (int l = 0; l < name.length(); l++) {
+					char letter = name.charAt(l);
+					if (!(Character.isLetter(letter) || Character.isDigit(letter))) {
+						operationsValidator
+								.error(flow, "Name of  parameter " + name + " contains incorrect character.");
+						break;
+					}
+
+				}
+			}
+		}
+		return true;
+	}
 }
