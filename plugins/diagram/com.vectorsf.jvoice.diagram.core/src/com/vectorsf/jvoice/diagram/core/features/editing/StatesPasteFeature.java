@@ -85,6 +85,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 					// Si es una locution hay que copiar el voiceDsl al que
 					// apunta
 					if (isLocution(copy)) {
+						state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 						LocutionState locution = (LocutionState) state;
 						VoiceDsl voiceDsl = locution.getLocution();
 
@@ -129,6 +130,8 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 											}
 										}
 										if (hasMethod) {
+											state.eUnset(state.eClass().getEStructuralFeature(
+													BasePackage.JV_ELEMENT__ID));
 											targetFlow.getStates().add(state);
 											ac.setLocation(context.getX(), context.getY());
 											ac.setTargetContainer(getDiagram());
@@ -148,6 +151,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 						}
 						if (setNull) {
+							state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 							callState.setBean(null);
 							targetFlow.getStates().add(state);
 							ac.setLocation(context.getX(), context.getY());
@@ -206,19 +210,20 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 								}
 							}
 						}
+						customice.eUnset(customice.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 						targetFlow.getStates().add(customice);
 						ac.setLocation(context.getX(), context.getY());
 						ac.setTargetContainer(getDiagram());
 						PictogramElement pe = addGraphicalRepresentation(ac, copy);
 						hm.put(state, pe);
 					} else {
+						state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 						targetFlow.getStates().add(state);
 						ac.setLocation(context.getX(), context.getY());
 						ac.setTargetContainer(getDiagram());
 						PictogramElement pe = addGraphicalRepresentation(ac, copy);
 						hm.put(state, pe);
 					}
-					state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 
 				} else if (copy instanceof Note) {
 					Note note = (Note) copy;
