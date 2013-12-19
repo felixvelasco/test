@@ -80,7 +80,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			if (copy != null) {
 				if (isState(copy)) {
 					State state = (State) copy;
-					state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 					state.setName(generateName(((State) copy).getName(), context));
 					Flow targetFlow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 					// Si es una locution hay que copiar el voiceDsl al que
@@ -159,7 +158,54 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 					} else if (state instanceof CustomState) {
 						CustomState customice = (CustomState) state;
-						customice.setPath("");
+						Object[] originals = getFromClipboard();
+
+						for (Object original : originals) {
+							if (original instanceof CustomState) {
+								CustomState customOriginal = (CustomState) original;
+								if (customice.getId().equals(customOriginal.getId())) {
+									Flow flujoOriginal = (Flow) customOriginal.eContainer();
+									IFile fileFlujoOrigen = (IFile) Platform.getAdapterManager().getAdapter(
+											flujoOriginal, IFile.class);
+									IFolder folderOriginal = (IFolder) fileFlujoOrigen.getParent();
+									IPath pathJsp = new Path(flujoOriginal.getName() + ".resources");
+									IFolder folderResources = folderOriginal.getFolder(pathJsp);
+									if (folderResources.exists()) {
+										IFile jspBuscado = folderResources.getFile(customice.getPath());
+										if (jspBuscado.exists()) {
+											// encontramos el jsp asociado al custom, ahora hay que copiarlo
+											// a la carpeta resources del flujo destino
+											IFile fileFlujoDestino = (IFile) Platform.getAdapterManager().getAdapter(
+													targetFlow, IFile.class);
+											IFolder folderDestino = (IFolder) fileFlujoDestino.getParent();
+											IPath pathJspDestino = new Path(targetFlow.getName() + ".resources");
+											IFolder folderResourcesDestino = folderDestino.getFolder(pathJspDestino);
+											if (folderResourcesDestino.exists()) {
+												String newName = getNewName(folderResourcesDestino, customice.getPath());
+
+												IPath destinoFinal = folderResourcesDestino.getFullPath().append(
+														newName);
+												try {
+													jspBuscado.copy(destinoFinal, true, null);
+													customice.setPath(newName);
+												} catch (CoreException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+													customice.setPath("");
+												}
+
+											} else {
+												customice.setPath("");
+											}
+										} else {
+											customice.setPath("");
+										}
+									} else {
+										customice.setPath("");
+									}
+								}
+							}
+						}
 						targetFlow.getStates().add(customice);
 						ac.setLocation(context.getX(), context.getY());
 						ac.setTargetContainer(getDiagram());
@@ -172,6 +218,8 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 						PictogramElement pe = addGraphicalRepresentation(ac, copy);
 						hm.put(state, pe);
 					}
+					state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
+
 				} else if (copy instanceof Note) {
 					Note note = (Note) copy;
 					note.eUnset(note.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
@@ -424,5 +472,15 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private String getNewName(IFolder resourcesFolder, String name) {
+		String newName = name;
+		if (resourcesFolder.getFile(name).exists()) {
+			name = "CopyOf" + name;
+			name = getNewName(resourcesFolder, name);
+			newName = name;
+		}
+		return newName;
 	}
 }
