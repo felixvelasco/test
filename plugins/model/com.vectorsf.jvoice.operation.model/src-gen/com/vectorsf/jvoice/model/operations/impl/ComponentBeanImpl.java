@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl#getFqdn <em>Fqdn</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl#getNameBean <em>Name Bean</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl#isPrototype <em>Prototype</em>}</li>
  * </ul>
  * </p>
  *
@@ -67,6 +68,26 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 	 * @ordered
 	 */
 	protected String nameBean = NAME_BEAN_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isPrototype() <em>Prototype</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isPrototype()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean PROTOTYPE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isPrototype() <em>Prototype</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isPrototype()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean prototype = PROTOTYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -134,6 +155,27 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isPrototype() {
+		return prototype;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPrototype(boolean newPrototype) {
+		boolean oldPrototype = prototype;
+		prototype = newPrototype;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationsPackage.COMPONENT_BEAN__PROTOTYPE, oldPrototype, prototype));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -141,6 +183,8 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 				return getFqdn();
 			case OperationsPackage.COMPONENT_BEAN__NAME_BEAN:
 				return getNameBean();
+			case OperationsPackage.COMPONENT_BEAN__PROTOTYPE:
+				return isPrototype();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -158,6 +202,9 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 				return;
 			case OperationsPackage.COMPONENT_BEAN__NAME_BEAN:
 				setNameBean((String)newValue);
+				return;
+			case OperationsPackage.COMPONENT_BEAN__PROTOTYPE:
+				setPrototype((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -177,6 +224,9 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 			case OperationsPackage.COMPONENT_BEAN__NAME_BEAN:
 				setNameBean(NAME_BEAN_EDEFAULT);
 				return;
+			case OperationsPackage.COMPONENT_BEAN__PROTOTYPE:
+				setPrototype(PROTOTYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -193,6 +243,8 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 				return FQDN_EDEFAULT == null ? fqdn != null : !FQDN_EDEFAULT.equals(fqdn);
 			case OperationsPackage.COMPONENT_BEAN__NAME_BEAN:
 				return NAME_BEAN_EDEFAULT == null ? nameBean != null : !NAME_BEAN_EDEFAULT.equals(nameBean);
+			case OperationsPackage.COMPONENT_BEAN__PROTOTYPE:
+				return prototype != PROTOTYPE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -211,6 +263,8 @@ public class ComponentBeanImpl extends NamedElementImpl implements ComponentBean
 		result.append(fqdn);
 		result.append(", nameBean: ");
 		result.append(nameBean);
+		result.append(", prototype: ");
+		result.append(prototype);
 		result.append(')');
 		return result.toString();
 	}

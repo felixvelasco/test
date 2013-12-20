@@ -63,6 +63,7 @@ public class ComponentBeanItemProvider
 
 			addFqdnPropertyDescriptor(object);
 			addNameBeanPropertyDescriptor(object);
+			addPrototypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -112,6 +113,28 @@ public class ComponentBeanItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Prototype feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addPrototypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ComponentBean_prototype_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ComponentBean_prototype_feature", "_UI_ComponentBean_type"),
+				 OperationsPackage.Literals.COMPONENT_BEAN__PROTOTYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns ComponentBean.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -150,6 +173,7 @@ public class ComponentBeanItemProvider
 		switch (notification.getFeatureID(ComponentBean.class)) {
 			case OperationsPackage.COMPONENT_BEAN__FQDN:
 			case OperationsPackage.COMPONENT_BEAN__NAME_BEAN:
+			case OperationsPackage.COMPONENT_BEAN__PROTOTYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

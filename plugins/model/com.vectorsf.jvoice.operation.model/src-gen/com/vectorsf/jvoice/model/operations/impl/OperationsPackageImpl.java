@@ -646,6 +646,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getComponentBean_Prototype() {
+		return (EAttribute)componentBeanEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getParameterizedState() {
 		return parameterizedStateEClass;
 	}
@@ -749,6 +758,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		componentBeanEClass = createEClass(COMPONENT_BEAN);
 		createEAttribute(componentBeanEClass, COMPONENT_BEAN__FQDN);
 		createEAttribute(componentBeanEClass, COMPONENT_BEAN__NAME_BEAN);
+		createEAttribute(componentBeanEClass, COMPONENT_BEAN__PROTOTYPE);
 
 		parameterizedStateEClass = createEClass(PARAMETERIZED_STATE);
 		createEAttribute(parameterizedStateEClass, PARAMETERIZED_STATE__PARAMETERS);
@@ -870,6 +880,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEClass(componentBeanEClass, ComponentBean.class, "ComponentBean", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComponentBean_Fqdn(), ecorePackage.getEString(), "fqdn", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentBean_NameBean(), ecorePackage.getEString(), "nameBean", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponentBean_Prototype(), ecorePackage.getEBoolean(), "prototype", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterizedStateEClass, ParameterizedState.class, "ParameterizedState", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameterizedState_Parameters(), ecorePackage.getEString(), "parameters", null, 0, -1, ParameterizedState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

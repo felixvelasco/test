@@ -14,6 +14,7 @@ import com.vectorsf.jvoice.model.base.NamedElement;
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.ComponentBean#getFqdn <em>Fqdn</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.ComponentBean#getNameBean <em>Name Bean</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.ComponentBean#isPrototype <em>Prototype</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,5 +74,31 @@ public interface ComponentBean extends NamedElement {
 	 * @generated
 	 */
 	void setNameBean(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Prototype</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Prototype</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Prototype</em>' attribute.
+	 * @see #setPrototype(boolean)
+	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getComponentBean_Prototype()
+	 * @model
+	 * @generated
+	 */
+	boolean isPrototype();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.model.operations.ComponentBean#isPrototype <em>Prototype</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Prototype</em>' attribute.
+	 * @see #isPrototype()
+	 * @generated
+	 */
+	void setPrototype(boolean value);
 
 } // ComponentBean
