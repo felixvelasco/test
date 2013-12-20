@@ -3,13 +3,16 @@
 
 <product name="jVoice" uid="jVoice" id="com.vectorsf.jvoice.product.jVoice" application="org.eclipse.ui.ide.workbench" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
+   <aboutInfo>
+      <image path="/com.vectorsf.jvoice.repository/resources/win/about.png"/>
+   </aboutInfo>
 
    <configIni use="default">
    </configIni>
 
    <launcherArgs>
       <programArgsWin>-vm
-jre/bin/java</programArgsWin>
+jre/bin/javaw</programArgsWin>
       <vmArgs>-XX:MaxPermSize=256m -Xms48m -Xmx512m</vmArgs>
    </launcherArgs>
 
@@ -23,7 +26,7 @@ jre/bin/java</programArgsWin>
       <macosx icon="resources/mac/icon_JVoice_256.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/com.vectorsf.jvoice.repository/resources/win/icono_JVoice.ico"/>
+         <ico path="resources/win/icono_JVoice.ico"/>
          <bmp
             winSmallHigh="resources/win/icon_JVoice_16.bmp"
             winMediumHigh="resources/win/icon_JVoice_32.bmp"
