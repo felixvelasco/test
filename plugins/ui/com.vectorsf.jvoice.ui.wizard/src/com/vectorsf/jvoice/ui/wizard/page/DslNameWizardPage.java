@@ -240,7 +240,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		// Dsl label
 		Label projectLabel = new Label(projectGroup, SWT.NONE);
-		projectLabel.setText("DSL name:");
+		projectLabel.setText("Name:");
 		projectLabel.setFont(parent.getFont());
 
 		// Dsl name entry field
