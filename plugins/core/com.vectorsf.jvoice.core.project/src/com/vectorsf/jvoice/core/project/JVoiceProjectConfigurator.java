@@ -116,11 +116,10 @@ public final class JVoiceProjectConfigurator {
 		dsl_builder2.addExecution(voiceDSL2);
 		
 		Plugin dsl_builder3 = new Plugin();
-		dsl_builder3.setGroupId("llllll");
+		dsl_builder3.setGroupId("org.apache.maven.plugins");
 		dsl_builder3.setArtifactId("maven-compiler-plugin");
 		dsl_builder3.setVersion("2.3.2");
 
-		// dsl_builder3.setConfiguration();
 		Xpp3Dom configuration = new Xpp3Dom("configuration");
 
 		Xpp3Dom source = new Xpp3Dom("source");
@@ -136,12 +135,6 @@ public final class JVoiceProjectConfigurator {
 		configuration.addChild(encoding);
 
 		dsl_builder3.setConfiguration(configuration);
-		// PluginConfiguration voiceDSLpp3 = new PluginConfiguration();
-		// voiceDSLpp3.
-		// voiceDSL3.setSource("initialize");
-		// voiceDSL3.addGoal("prepareWSDLSources");
-		//
-		// dsl_builder3.addExecution(voiceDSL3);
 
 		Build build = new Build();
 		build.addPlugin(dsl_builder);
