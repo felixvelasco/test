@@ -169,6 +169,10 @@
          id="org.eclipse.rcp"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.m2e.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.antlr.runtime"
          download-size="0"
@@ -491,20 +495,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.m2e.core"
-         download-size="0"
-         install-size="0"
-         version="1.4.0.20130601-0317"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.maven.runtime"
-         download-size="0"
-         install-size="0"
-         version="1.4.0.20130531-2315"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.graphiti"
          download-size="0"
          install-size="0"
@@ -537,13 +527,6 @@
          download-size="0"
          install-size="0"
          version="3.6.100.v20130326-1250"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.jdt"
-         download-size="0"
-         install-size="0"
-         version="1.4.0.20130601-0317"
          unpack="false"/>
 
    <plugin
@@ -1111,8 +1094,27 @@
          version="1.2.0.v20130424-1801"
          unpack="false"/>
 
-   <plugin id="org.eclipse.equinox.security.win32.x86_64" fragment="true" ws="win32" os="win32" arch="x86_64" download-size="0" install-size="0" version="1.0.100.v20130327-1442" unpack="false"/>
-   <plugin id="org.eclipse.equinox.security.win32.x86" fragment="true" ws="win32" os="win32" arch="x86" download-size="0" install-size="0" version="1.0.300.v20130327-1442" unpack="false"/>
+   <plugin
+         id="org.eclipse.equinox.security.win32.x86_64"
+         os="win32"
+         ws="win32"
+         arch="x86_64"
+         download-size="0"
+         install-size="0"
+         version="1.0.100.v20130327-1442"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.security.win32.x86"
+         os="win32"
+         ws="win32"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="1.0.300.v20130327-1442"
+         fragment="true"
+         unpack="false"/>
 
    <plugin
          id="org.eclipse.emf.cheatsheets"
@@ -1471,34 +1473,6 @@
          unpack="false"/>
 
    <plugin
-         id="com.ning.async-http-client"
-         download-size="0"
-         install-size="0"
-         version="1.6.5.20130531-2315"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.archetype.common"
-         download-size="0"
-         install-size="0"
-         version="1.4.0.20130531-2315"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.maven.indexer"
-         download-size="0"
-         install-size="0"
-         version="1.4.0.20130531-2315"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.core.ui"
-         download-size="0"
-         install-size="0"
-         version="1.4.0.20130601-0317"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.equinox.simpleconfigurator.manipulator"
          download-size="0"
          install-size="0"
@@ -1597,13 +1571,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.jboss.netty"
-         download-size="0"
-         install-size="0"
-         version="3.2.5.Final-20130531-2315"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ant.launching"
          download-size="0"
          install-size="0"
@@ -1681,13 +1648,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.m2e.model.edit"
-         download-size="0"
-         install-size="0"
-         version="1.4.0.20130601-0317"
-         unpack="false"/>
-
-   <plugin
          id="org.w3c.dom.smil"
          download-size="0"
          install-size="0"
@@ -1744,13 +1704,6 @@
 
    <plugin
          id="org.eclipse.ui.net"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.m2e.launching"
          download-size="0"
          install-size="0"
          version="0.0.0"
