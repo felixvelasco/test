@@ -11,11 +11,13 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.validation.Check;
 
+import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 /**
@@ -110,6 +112,28 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 					}
 				}
 			}
+		}
+	}
+
+	@Check
+	public void checkNameDslLocutionState(VoiceDsl lstate) {
+		URI uri = lstate.eResource().getURI();
+		File rawFile = null;
+		if (uri.isPlatformResource()) {
+			IPath rawPath = ResourcesPlugin.getWorkspace().getRoot().findMember(uri.toPlatformString(true))
+					.getRawLocation();
+
+			rawFile = rawPath.toFile();
+		} else {
+			rawFile = new File(uri.toFileString());
+		}
+
+		String nameFile = rawFile.getName().substring(0, rawFile.getName().indexOf("."));
+
+		String nameVoice = lstate.getName();
+		if (!nameVoice.equals(nameFile)) {
+			error("Name of Locution " + nameVoice + " is not the same than the name of the file " + nameFile
+					+ ".voiceDsl.", BasePackage.Literals.NAMED_ELEMENT__NAME);
 		}
 	}
 
