@@ -146,7 +146,7 @@ public class TransitionPattern extends AbstractConnectionPattern {
 
 	@Override
 	public String getCreateName() {
-		return "Transition";
+		return "Ok";
 	}
 
 	@Override
