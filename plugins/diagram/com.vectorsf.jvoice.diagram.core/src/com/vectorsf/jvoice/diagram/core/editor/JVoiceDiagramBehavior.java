@@ -44,8 +44,6 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 	protected void editingDomainInitialized() {
 		super.editingDomainInitialized();
 		getResourceSet().getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, new VegaXMLURIHandlerImpl());
-		validator = new JVoiceValidationListener(this);
-		getEditingDomain().addResourceSetListener(validator);
 	}
 
 	@Override
@@ -61,6 +59,8 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 	@Override
 	protected void setInput(IDiagramEditorInput input) {
 		super.setInput(input);
+		validator = new JVoiceValidationListener(this);
+		getEditingDomain().addResourceSetListener(validator);
 		validator.validate();
 	}
 

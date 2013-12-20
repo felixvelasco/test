@@ -6,6 +6,7 @@ import java.util.Set;
 import org.apache.maven.plugin.MojoExecution;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
@@ -14,7 +15,9 @@ import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -28,6 +31,7 @@ import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.embedder.IMaven;
 import org.eclipse.m2e.core.project.configurator.MojoExecutionBuildParticipant;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
@@ -40,7 +44,7 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 
 	public JVoiceModuleBuildParticipant(MojoExecution execution) {
 		super(execution, true);
-		helper = new EditUIMarkerHelper();
+		helper = new ErrorLoggerMarkerHelper();
 	}
 
 	@Override
@@ -102,6 +106,24 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 			helper.deleteMarkers(getMavenProjectFacade().getProject());
 		}
 		delta.accept(new RemoveMarkersVisitor());
+	}
+
+	private static final class ErrorLoggerMarkerHelper extends EditUIMarkerHelper {
+
+		@Override
+		protected void adjustMarker(IMarker marker, Diagnostic diagnostic, Diagnostic parentDiagnostic)
+				throws CoreException {
+			super.adjustMarker(marker, diagnostic, parentDiagnostic);
+			if (diagnostic.getData() != null) {
+				for (Object element : diagnostic.getData()) {
+					if (element instanceof Throwable) {
+						IStatus status = new Status(IStatus.ERROR, "com.vectorsf.jvoice.m2e.builder",
+								diagnostic.getCode(), diagnostic.getMessage(), (Throwable) element);
+						StatusManager.getManager().handle(status);
+					}
+				}
+			}
+		}
 	}
 
 	public class RemoveMarkersVisitor implements IResourceDeltaVisitor {

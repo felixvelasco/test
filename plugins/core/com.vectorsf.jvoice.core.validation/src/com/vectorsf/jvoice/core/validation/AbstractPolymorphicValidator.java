@@ -17,12 +17,35 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.parsley.runtime.util.PolymorphicDispatcher;
+import org.eclipse.emf.parsley.runtime.util.PolymorphicDispatcher.ErrorHandler;
 
 import com.google.common.base.Predicate;
 
 public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 
-	private PolymorphicDispatcher.ErrorHandler<Boolean> errorHandler = new PolymorphicDispatcher.NullErrorHandler<Boolean>();
+	public class ValidationErrorHandler implements ErrorHandler<Boolean> {
+
+		@Override
+		public Boolean handle(Object[] params, Throwable throwable) {
+			error((EObject) params[0], "Error during validation, please see the error log", throwable);
+			return false;
+		}
+
+	}
+
+	public class ValidatorErrorHandler implements ErrorHandler<Boolean> {
+
+		@Override
+		public Boolean handle(Object[] params, Throwable throwable) {
+			EClass eclass = (EClass) params[0];
+			error(eclass, "Error obtaining validator for " + eclass.getName() + ", please see the error log", throwable);
+			return false;
+		}
+
+	}
+
+	private PolymorphicDispatcher.ErrorHandler<Boolean> errorValidatingHandler = new ValidationErrorHandler();
+	private PolymorphicDispatcher.ErrorHandler<Boolean> errorValidatorHandler = new ValidatorErrorHandler();
 	private DiagnosticChain currentDiagnostic;
 
 	@Override
@@ -45,13 +68,11 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 		Object polymorphicValidator = getPolymorphicValidator(eClass);
 		if (polymorphicValidator != null) {
 			PolymorphicDispatcher<Boolean> dispatcher = new PolymorphicDispatcher<Boolean>(
-					Collections.singletonList(polymorphicValidator), getValidatePredicate(eClass), errorHandler) {
+					Collections.singletonList(polymorphicValidator), getValidatePredicate(eClass),
+					errorValidatingHandler) {
 				@Override
 				protected Boolean handleNoSuchMethod(Object... params) {
-					if (PolymorphicDispatcher.NullErrorHandler.class.equals(errorHandler.getClass())) {
-						return true;
-					}
-					return super.handleNoSuchMethod(params);
+					return Boolean.TRUE;
 				}
 
 				@Override
@@ -66,11 +87,11 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 							if (e.getTargetException() instanceof Error) {
 								throw (Error) e.getTargetException();
 							}
-							return errorHandler.handle(params, e.getTargetException());
+							return errorValidatingHandler.handle(params, e.getTargetException());
 						} catch (IllegalArgumentException e) {
-							return errorHandler.handle(params, e);
+							return errorValidatingHandler.handle(params, e);
 						} catch (IllegalAccessException e) {
-							return errorHandler.handle(params, e);
+							return errorValidatingHandler.handle(params, e);
 						}
 					}
 					return acum;
@@ -88,14 +109,11 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 
 	private Object getPolymorphicValidator(EClass eClass) {
 		PolymorphicDispatcher<Boolean> dispatcher = new PolymorphicDispatcher<Boolean>(Collections.singletonList(this),
-				getValidatorPredicate(eClass), errorHandler) {
+				getValidatorPredicate(eClass), errorValidatorHandler) {
 
 			@Override
 			protected Boolean handleNoSuchMethod(Object... params) {
-				if (PolymorphicDispatcher.NullErrorHandler.class.equals(errorHandler.getClass())) {
-					return true;
-				}
-				return super.handleNoSuchMethod(params);
+				return Boolean.TRUE;
 			}
 
 		};
@@ -117,6 +135,11 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 	public void error(EObject eobject, String message) {
 		currentDiagnostic.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreUtil.getURI(eobject).toPlatformString(true),
 				-1, message, new Object[] { eobject }));
+	}
+
+	public void error(EObject eobject, String message, Throwable t) {
+		currentDiagnostic.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreUtil.getURI(eobject).toPlatformString(true),
+				-1, message, new Object[] { eobject, t }));
 	}
 
 	public void warning(EObject eobject, String message) {
