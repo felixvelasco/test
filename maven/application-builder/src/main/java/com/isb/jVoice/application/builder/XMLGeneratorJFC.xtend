@@ -70,7 +70,14 @@ class XMLGeneratorJFC {
 		<!-- Asociamos el resolutor de vistas al flow Executor -->
 		<webflow:flow-builder-services id="flowBuilderServices"
 			view-factory-creator="viewFactoryCreator" />
-	
+
+		«IF (false) /* TODO */»
+		<bean id="renderer" class="com.vectorsf.jvoiceframework.isban.logger.render.vxi.IsbanLoggerRenderer">
+		«ELSE»
+		<bean id="renderer" class="com.vectorsf.jvoiceframework.flow.render.vxi.VXIRenderer">
+		«ENDIF»
+			<property name="view" value="renderVXI"></property>
+		</bean>
 		<beans:bean id="viewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
 			<beans:property name="viewResolvers">
 				<beans:list>
