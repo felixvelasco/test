@@ -25,4 +25,13 @@ public class NoteValidator {
 		}
 		return true;
 	}
+
+	public boolean validate_Note_lenghtNotesState(Note note) {
+		if (note.getDescription().length() > 1000) {
+			operationsValidator.error(note, "Note containing \"" + note.getDescription()
+					+ "\" has more than of 1000 characters");
+		}
+
+		return true;
+	}
 }
