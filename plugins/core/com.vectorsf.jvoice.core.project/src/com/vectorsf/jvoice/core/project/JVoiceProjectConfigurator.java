@@ -9,6 +9,7 @@ import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
 import org.apache.maven.model.Repository;
+import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -113,10 +114,39 @@ public final class JVoiceProjectConfigurator {
 		voiceDSL2.addGoal("prepareWSDLSources");
 
 		dsl_builder2.addExecution(voiceDSL2);
+		
+		Plugin dsl_builder3 = new Plugin();
+		dsl_builder3.setGroupId("llllll");
+		dsl_builder3.setArtifactId("maven-compiler-plugin");
+		dsl_builder3.setVersion("2.3.2");
+
+		// dsl_builder3.setConfiguration();
+		Xpp3Dom configuration = new Xpp3Dom("configuration");
+
+		Xpp3Dom source = new Xpp3Dom("source");
+		source.setValue("1.7");
+		configuration.addChild(source);
+
+		Xpp3Dom target = new Xpp3Dom("target");
+		target.setValue("1.7");
+		configuration.addChild(target);
+
+		Xpp3Dom encoding = new Xpp3Dom("encoding");
+		encoding.setValue("UTF-8");
+		configuration.addChild(encoding);
+
+		dsl_builder3.setConfiguration(configuration);
+		// PluginConfiguration voiceDSLpp3 = new PluginConfiguration();
+		// voiceDSLpp3.
+		// voiceDSL3.setSource("initialize");
+		// voiceDSL3.addGoal("prepareWSDLSources");
+		//
+		// dsl_builder3.addExecution(voiceDSL3);
 
 		Build build = new Build();
 		build.addPlugin(dsl_builder);
 		build.addPlugin(dsl_builder2);
+		build.addPlugin(dsl_builder3);
 
 		model.setBuild(build);
 
