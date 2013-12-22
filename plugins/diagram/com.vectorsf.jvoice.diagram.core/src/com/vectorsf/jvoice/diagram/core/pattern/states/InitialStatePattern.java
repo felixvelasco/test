@@ -2,30 +2,37 @@ package com.vectorsf.jvoice.diagram.core.pattern.states;
 
 import java.util.List;
 
+import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
+import org.eclipse.graphiti.features.context.IMoveShapeContext;
+import org.eclipse.graphiti.features.context.IResizeShapeContext;
+import org.eclipse.graphiti.features.impl.Reason;
+import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
-import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.pattern.id.IdLayoutContext;
+import org.eclipse.graphiti.pattern.id.IdPattern;
+import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
-import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
+import org.eclipse.graphiti.util.IColorConstant;
 
-import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.State;
 
-public class InitialStatePattern extends StatePattern {
+public class InitialStatePattern extends IdPattern {
 
 	private static final String INITIAL = "Initial";
-	private static final int MIN_WIDTH = 60;
-	private static final int MIN_HEIGHT = 60;
+	private static final int WIDTH = 240;
+	private static final int HEIGHT = 5;
+	private static final String ID_ROUNDED_RECTANGLE = "roundedRectangle";
+	private static final IColorConstant BACKGROUND_COLOR = SimpleStatePattern.TEXT_BACKGROUND;
 
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
@@ -33,30 +40,17 @@ public class InitialStatePattern extends StatePattern {
 		IPeCreateService peCreateService = Graphiti.getPeCreateService();
 		IGaService gaService = Graphiti.getGaService();
 
-		ContainerShape outerContainerShape = peCreateService
-				.createContainerShape(getDiagram(), true);
+		ContainerShape outerContainerShape = peCreateService.createContainerShape(getDiagram(), true);
 
-		RoundedRectangle circle = gaService.createRoundedRectangle(
-				outerContainerShape, 60, 60);
-
-		setId(circle, ID_MAIN_FIGURE);
-		circle.setFilled(true);
-		gaService
-				.setRenderingStyle(
-						circle,
-						StatePredefinedColoredAreas
-								.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.LIGHT_GRAY_ID));
-		gaService.setLocationAndSize(circle, context.getX(), context.getY(),
-				Math.max(MIN_WIDTH, context.getWidth()),
-				Math.max(MIN_HEIGHT, context.getHeight()));
-
-		Text text = gaService.createText(circle, addedDomainObject.getName());
-		setId(text, ID_NAME_TEXT);
-		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
-		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
+		RoundedRectangle roundedRectangle = gaService.createPlainRoundedRectangle(outerContainerShape, HEIGHT / 2,
+				HEIGHT / 2);
+		setId(roundedRectangle, ID_ROUNDED_RECTANGLE);
+		roundedRectangle.setFilled(true);
+		roundedRectangle.setLineVisible(false);
+		roundedRectangle.setBackground(manageColor(BACKGROUND_COLOR));
+		gaService.setLocationAndSize(roundedRectangle, context.getX(), 0, WIDTH, HEIGHT);
 
 		peCreateService.createChopboxAnchor(outerContainerShape);
-
 		link(outerContainerShape, addedDomainObject);
 
 		return outerContainerShape;
@@ -98,6 +92,52 @@ public class InitialStatePattern extends StatePattern {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	protected boolean layout(IdLayoutContext context, String id) {
+		if (id.equals(ID_ROUNDED_RECTANGLE)) {
+			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
+			int midPoint = ga.getX() + WIDTH / 2;
+
+			InitialState state = (InitialState) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
+			State next = state.getOutgoingTransitions().isEmpty() ? null : state.getOutgoingTransitions().get(0)
+					.getTarget();
+			if (next == null) {
+				return false;
+			}
+
+			PictogramElement nextPe = Graphiti.getLinkService().getPictogramElements(getDiagram(), next).get(0);
+			GraphicsAlgorithm nextGa = nextPe.getGraphicsAlgorithm();
+			int nextMidPoint = nextGa.getX() + nextGa.getWidth() / 2;
+
+			int newX = ga.getX() + nextMidPoint - midPoint;
+			ga.setX(newX);
+
+			return newX != 0;
+
+		}
+		return false;
+	}
+
+	@Override
+	protected IReason updateNeeded(IdUpdateContext context, String id) {
+		return Reason.createFalseReason();
+	}
+
+	@Override
+	protected boolean update(IdUpdateContext context, String id) {
+		return false;
+	}
+
+	@Override
+	public boolean canResizeShape(IResizeShapeContext context) {
+		return false;
+	}
+
+	@Override
+	public boolean canMoveShape(IMoveShapeContext context) {
+		return super.canMoveShape(context) && context.getDeltaY() == 0;
 	}
 
 }
