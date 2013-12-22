@@ -49,6 +49,7 @@ import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
+import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.Note;
@@ -133,19 +134,6 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	protected void setGenericContextButtons(IContextButtonPadData data, PictogramElement pe, int identifiers) {
 		data.getGenericContextButtons().clear();
 
-		// update button
-		if ((identifiers & CONTEXT_BUTTON_UPDATE) != 0) {
-			IContextButtonEntry updateButton = ContextEntryHelper.createDefaultUpdateContextButton(
-					getFeatureProvider(), pe);
-			if (updateButton != null) {
-				data.getGenericContextButtons().add(updateButton);
-			}
-		}
-
-		// remove button
-		// Se elimina el remove para que no se muestre en los elementos del
-		// diagrama.
-
 		// delete button
 		if ((identifiers & CONTEXT_BUTTON_DELETE) != 0) {
 			IContextButtonEntry deleteButton = ContextEntryHelper.createDefaultDeleteContextButton(
@@ -164,7 +152,23 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		ContextButtonEntry button = new ContextButtonEntry(null, context);
 		if (bo instanceof State) {
 			State sta = (State) bo;
-			if (!(sta instanceof FinalState)) {
+			if (bo instanceof FinalState) {
+				FinalState finalState = (FinalState) sta;
+				boolean isFinal = finalState.isFinal();
+				if (!isFinal) {
+					IFeature feature = new FinalStateFinalFeature(getFeatureProvider());
+					ContextButtonEntry menuButton = new ContextButtonEntry(feature, context);
+					menuButton.setText("Exit");
+					menuButton.setIconId("set_final_pad");
+					data.getDomainSpecificContextButtons().add(menuButton);
+				} else {
+					IFeature feature = new FinalStateFinalFeature(getFeatureProvider());
+					ContextButtonEntry menuButton = new ContextButtonEntry(feature, context);
+					menuButton.setText("Unset exit");
+					menuButton.setIconId("unset_final_pad");
+					data.getDomainSpecificContextButtons().add(menuButton);
+				}
+			} else {
 				ICreateConnectionFeature feature = null;
 				if (sta instanceof SwitchState) {
 					SwitchState switchState = (SwitchState) sta;
@@ -236,6 +240,8 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 						menuButton.addDragAndDropFeature(feature);
 						data.getDomainSpecificContextButtons().add(menuButton);
 					}
+				} else if (sta instanceof InitialState) {
+					return null;
 				} else {
 					feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionPattern(
 							getFeatureProvider()));
@@ -247,24 +253,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 					data.getDomainSpecificContextButtons().add(button);
 				}
 
-			} else if (bo instanceof FinalState) {
-				FinalState finalState = (FinalState) sta;
-				boolean isFinal = finalState.isFinal();
-				if (!isFinal) {
-					IFeature feature = new FinalStateFinalFeature(getFeatureProvider());
-					ContextButtonEntry menuButton = new ContextButtonEntry(feature, context);
-					menuButton.setText("Exit");
-					menuButton.setIconId("set_final_pad");
-					data.getDomainSpecificContextButtons().add(menuButton);
-				} else {
-					IFeature feature = new FinalStateFinalFeature(getFeatureProvider());
-					ContextButtonEntry menuButton = new ContextButtonEntry(feature, context);
-					menuButton.setText("Unset exit");
-					menuButton.setIconId("unset_final_pad");
-					data.getDomainSpecificContextButtons().add(menuButton);
-				}
 			}
-
 		} else if (bo instanceof Note) {
 			Note note = (Note) bo;
 			ICreateConnectionFeature feature = null;
