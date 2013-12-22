@@ -3,6 +3,7 @@ package com.vectorsf.jvoice.diagram.core.pattern.states;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
+import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.impl.ResizeShapeContext;
@@ -29,7 +30,9 @@ import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
+import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.Transition;
 
 public abstract class SimpleStatePattern extends IdPattern {
 
@@ -278,5 +281,23 @@ public abstract class SimpleStatePattern extends IdPattern {
 	@Override
 	public boolean canResizeShape(IResizeShapeContext context) {
 		return false;
+	}
+
+	@Override
+	public boolean canDelete(IDeleteContext context) {
+		if (super.canDelete(context)) {
+			PictogramElement pictogramElement = context.getPictogramElement();
+			State bo = (State) getBusinessObjectForPictogramElement(pictogramElement);
+
+			for (Transition tr : bo.getIncomingTransitions()) {
+				if (tr.getSource() instanceof InitialState) {
+					return false;
+				}
+			}
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 }
