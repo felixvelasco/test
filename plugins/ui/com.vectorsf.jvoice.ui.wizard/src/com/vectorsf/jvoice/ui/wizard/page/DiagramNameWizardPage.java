@@ -551,7 +551,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 				Anchor initialAnchor = Graphiti.getPeService().getChopboxAnchor((AnchorContainer) initialPe);
 
 				FinalState fState = OperationsFactory.eINSTANCE.createFinalState();
-				fState.setName("Initial");
+				fState.setName("Final");
 				flow.getStates().add(fState);
 				addContext = new AddContext();
 				addContext.setTargetContainer(diagram);
