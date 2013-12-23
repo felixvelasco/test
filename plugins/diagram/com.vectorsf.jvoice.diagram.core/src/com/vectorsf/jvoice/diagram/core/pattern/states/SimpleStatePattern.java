@@ -48,11 +48,12 @@ import com.vectorsf.jvoice.model.operations.Transition;
 
 public abstract class SimpleStatePattern extends IdPattern {
 
-	private static final int DROPDOWN_SIZE = 12;
-	private static final int IMAGE_SIZE = 24;
+	protected static final int DROPDOWN_SIZE = 12;
+	protected static final int IMAGE_SIZE = 24;
 	protected static final String ID_NAME_TEXT = "nameText";
 	protected static final String ID_MAIN_FIGURE = "mainFigure";
 	protected static final String ID_TOP_RECTANGLE = "topRectangle";
+	protected static final String ID_STATE_IMAGE = "stateImage";
 
 	protected static final int CELL_WIDTH = 45;
 	protected static final int TOP_RECTANGLE_HEIGHT = 28;
@@ -72,7 +73,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 	protected static final String MAIN_TEXT_STYLE = "mainTextStyle";
 	protected static final String VERTICAL_LINE_STYLE = "verticalLineStyle";
 
-	private static IGaService gaService = Graphiti.getGaService();
+	protected static IGaService gaService = Graphiti.getGaService();
 
 	private Set<Transition> transitions = new HashSet<>();
 
@@ -114,6 +115,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 					Image image = gaService.createImage(imageBackgroundRectangle, getStateImageId());
 					gaService.setLocationAndSize(image, (CELL_WIDTH - IMAGE_SIZE) / 2,
 							(TOP_RECTANGLE_HEIGHT - IMAGE_SIZE) / 2, IMAGE_SIZE, IMAGE_SIZE);
+					setId(image, ID_STATE_IMAGE);
 				}
 
 				Text text = gaService.createPlainText(topRectangle, addedDomainObject.getName());
@@ -143,7 +145,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 	protected abstract String getStateImageId();
 
-	private Style getVerticalLineStyle() {
+	protected Style getVerticalLineStyle() {
 		Style style = gaService.findStyle(getDiagram(), VERTICAL_LINE_STYLE);
 		if (style == null) {
 			style = gaService.createPlainStyle(getDiagram(), VERTICAL_LINE_STYLE);
@@ -155,7 +157,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 		return style;
 	}
 
-	private Style getImageBackgroundRectangleStyle() {
+	protected Style getImageBackgroundRectangleStyle() {
 		Style style = gaService.findStyle(getDiagram(), IMAGE_RECTANGLE_STYLE);
 		if (style == null) {
 			style = gaService.createPlainStyle(getDiagram(), IMAGE_RECTANGLE_STYLE);
@@ -167,12 +169,12 @@ public abstract class SimpleStatePattern extends IdPattern {
 		return style;
 	}
 
-	private Style getMainTextStyle() {
+	protected Style getMainTextStyle() {
 		Style style = gaService.findStyle(getDiagram(), MAIN_TEXT_STYLE);
 		if (style == null) {
 			style = gaService.createPlainStyle(getDiagram(), MAIN_TEXT_STYLE);
 			style.setForeground(manageColor(IColorConstant.WHITE));
-			style.setFont(manageFont("HelveticaNeue Light", 12));
+			style.setFont(manageFont("Arial", 12));
 			style.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 			style.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
 			style.setLineVisible(false);
@@ -181,7 +183,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 		return style;
 	}
 
-	private Style getTopRectangleStyle() {
+	protected Style getTopRectangleStyle() {
 		Style style = gaService.findStyle(getDiagram(), TOP_RECTANGLE_STYLE);
 		if (style == null) {
 			style = gaService.createPlainStyle(getDiagram(), TOP_RECTANGLE_STYLE);
@@ -193,7 +195,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 		return style;
 	}
 
-	private Style getMainRectangleStyle() {
+	protected Style getMainRectangleStyle() {
 		Style style = gaService.findStyle(getDiagram(), MAIN_RECTANGLE_STYLE);
 		if (style == null) {
 			style = gaService.createPlainStyle(getDiagram(), MAIN_RECTANGLE_STYLE);
@@ -334,11 +336,11 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 	@Override
 	protected IRemoveFeature createRemoveFeature(IRemoveContext context) {
-		return new StateRemoveFeatur(getFeatureProvider());
+		return new StateRemoveFeature(getFeatureProvider());
 	}
 
-	private final class StateRemoveFeatur extends DefaultRemoveFeature {
-		private StateRemoveFeatur(IFeatureProvider fp) {
+	private final class StateRemoveFeature extends DefaultRemoveFeature {
+		private StateRemoveFeature(IFeatureProvider fp) {
 			super(fp);
 		}
 

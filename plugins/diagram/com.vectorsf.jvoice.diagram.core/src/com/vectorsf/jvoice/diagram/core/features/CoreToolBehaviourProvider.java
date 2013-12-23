@@ -9,13 +9,14 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
-import org.eclipse.graphiti.features.IFeature;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.IDoubleClickContext;
 import org.eclipse.graphiti.features.context.IPictogramElementContext;
+import org.eclipse.graphiti.features.context.ISingleClickContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.Image;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
@@ -35,7 +36,7 @@ import org.eclipse.graphiti.tb.ImageDecorator;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
-import com.vectorsf.jvoice.diagram.core.features.editing.FinalStateFinalFeature;
+import com.vectorsf.jvoice.diagram.core.features.editing.FinalStateHangToggleFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.note.CreateRelationFromPad;
 import com.vectorsf.jvoice.diagram.core.pattern.note.RelationPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.CreateTransitionFromPad;
@@ -151,108 +152,90 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		ContextButtonEntry button = new ContextButtonEntry(null, context);
 		if (bo instanceof State) {
 			State sta = (State) bo;
-			if (bo instanceof FinalState) {
-				FinalState finalState = (FinalState) sta;
-				boolean isFinal = finalState.isFinal();
-				if (!isFinal) {
-					IFeature feature = new FinalStateFinalFeature(getFeatureProvider());
-					ContextButtonEntry menuButton = new ContextButtonEntry(feature, context);
-					menuButton.setText("Exit");
-					menuButton.setIconId("set_final_pad");
-					data.getDomainSpecificContextButtons().add(menuButton);
-				} else {
-					IFeature feature = new FinalStateFinalFeature(getFeatureProvider());
-					ContextButtonEntry menuButton = new ContextButtonEntry(feature, context);
-					menuButton.setText("Unset exit");
-					menuButton.setIconId("unset_final_pad");
+
+			ICreateConnectionFeature feature = null;
+			if (sta instanceof SwitchState) {
+				SwitchState switchState = (SwitchState) sta;
+				List<Case> cases = switchState.getCase();
+				if (cases != null) {
+					ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
+					menuButton.setText("Transition");
+
+					for (Case cas : cases) {
+						feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionSwitchPattern(cas,
+								getFeatureProvider()));
+						menuButton.setIconId(getImageFor(sta, feature));
+						menuButton.addDragAndDropFeature(feature);
+					}
 					data.getDomainSpecificContextButtons().add(menuButton);
 				}
-			} else {
-				ICreateConnectionFeature feature = null;
-				if (sta instanceof SwitchState) {
-					SwitchState switchState = (SwitchState) sta;
-					List<Case> cases = switchState.getCase();
-					if (cases != null) {
+
+			} else if (sta instanceof MenuState) {
+				MenuState menuState = (MenuState) sta;
+				List<Output> outputs = new ArrayList<Output>();
+				VoiceDsl locution = menuState.getLocution();
+				if (locution != null) {
+					Outputs locutionOutputs = menuState.getLocution().getOutputs();
+					if (locutionOutputs != null) {
+						outputs = locutionOutputs.getOutput();
 						ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
 						menuButton.setText("Transition");
 
-						for (Case cas : cases) {
-							feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionSwitchPattern(
-									cas, getFeatureProvider()));
+						for (Output output : outputs) {
+							feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionMenuPattern(
+									output, getFeatureProvider()));
 							menuButton.setIconId(getImageFor(sta, feature));
 							menuButton.addDragAndDropFeature(feature);
 						}
 						data.getDomainSpecificContextButtons().add(menuButton);
 					}
-
-				} else if (sta instanceof MenuState) {
-					MenuState menuState = (MenuState) sta;
-					List<Output> outputs = new ArrayList<Output>();
-					VoiceDsl locution = menuState.getLocution();
-					if (locution != null) {
-						Outputs locutionOutputs = menuState.getLocution().getOutputs();
-						if (locutionOutputs != null) {
-							outputs = locutionOutputs.getOutput();
-							ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
-							menuButton.setText("Transition");
-
-							for (Output output : outputs) {
-								feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionMenuPattern(
-										output, getFeatureProvider()));
-								menuButton.setIconId(getImageFor(sta, feature));
-								menuButton.addDragAndDropFeature(feature);
-							}
-							data.getDomainSpecificContextButtons().add(menuButton);
-						}
-					}
-
-				} else if (sta instanceof CallFlowState) {
-					CallFlowState callFlowState = (CallFlowState) sta;
-					List<State> states = callFlowState.getSubflow().getStates();
-
-					if (states != null) {
-
-						ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
-						menuButton.setText("Transition");
-
-						for (State state : states) {
-							if (state instanceof FinalState) {
-								feature = new CreateTransitionFromPad(getFeatureProvider(),
-										new TransitionCallFlowPattern(state, getFeatureProvider()));
-								menuButton.setIconId(getImageFor(sta, feature));
-								menuButton.addDragAndDropFeature(feature);
-							}
-						}
-						if (menuButton.getIconId() != null) {
-							data.getDomainSpecificContextButtons().add(menuButton);
-						}
-					}
-
-				} else if (sta instanceof CustomState) {
-					CustomState customState = (CustomState) sta;
-					if (customState.getOutgoingTransitions().isEmpty()) {
-						ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
-						menuButton.setText("Transition");
-						feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionCallFlowPattern(
-								customState, getFeatureProvider()));
-						menuButton.setIconId(getImageFor(sta, feature));
-						menuButton.addDragAndDropFeature(feature);
-						data.getDomainSpecificContextButtons().add(menuButton);
-					}
-				} else if (sta instanceof InitialState) {
-					return null;
-				} else {
-					feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionPattern(
-							getFeatureProvider()));
-					button.setText(feature.getCreateName());
-					button.setDescription(feature.getCreateDescription());
-					button.setIconId(getImageFor(sta, feature));
-					button.addDragAndDropFeature(feature);
-
-					data.getDomainSpecificContextButtons().add(button);
 				}
 
+			} else if (sta instanceof CallFlowState) {
+				CallFlowState callFlowState = (CallFlowState) sta;
+				List<State> states = callFlowState.getSubflow().getStates();
+
+				if (states != null) {
+
+					ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
+					menuButton.setText("Transition");
+
+					for (State state : states) {
+						if (state instanceof FinalState) {
+							feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionCallFlowPattern(
+									state, getFeatureProvider()));
+							menuButton.setIconId(getImageFor(sta, feature));
+							menuButton.addDragAndDropFeature(feature);
+						}
+					}
+					if (menuButton.getIconId() != null) {
+						data.getDomainSpecificContextButtons().add(menuButton);
+					}
+				}
+
+			} else if (sta instanceof CustomState) {
+				CustomState customState = (CustomState) sta;
+				if (customState.getOutgoingTransitions().isEmpty()) {
+					ContextButtonEntry menuButton = new ContextButtonEntry(null, context);
+					menuButton.setText("Transition");
+					feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionCallFlowPattern(
+							customState, getFeatureProvider()));
+					menuButton.setIconId(getImageFor(sta, feature));
+					menuButton.addDragAndDropFeature(feature);
+					data.getDomainSpecificContextButtons().add(menuButton);
+				}
+			} else if (sta instanceof InitialState) {
+				return null;
+			} else if (!(sta instanceof FinalState)) {
+				feature = new CreateTransitionFromPad(getFeatureProvider(), new TransitionPattern(getFeatureProvider()));
+				button.setText(feature.getCreateName());
+				button.setDescription(feature.getCreateDescription());
+				button.setIconId(getImageFor(sta, feature));
+				button.addDragAndDropFeature(feature);
+
+				data.getDomainSpecificContextButtons().add(button);
 			}
+
 		} else if (bo instanceof Note) {
 			Note note = (Note) bo;
 			ICreateConnectionFeature feature = null;
@@ -325,5 +308,19 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 	public void setDiagnostic(Diagnostic diagnostic) {
 		this.diagnostic = diagnostic;
+	}
+
+	@Override
+	public ICustomFeature getSingleClickFeature(ISingleClickContext context) {
+		if (context.getInnerGraphicsAlgorithm() instanceof Image) {
+			PictogramElement pe = context.getInnerPictogramElement();
+			Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
+
+			if (bo instanceof FinalState) {
+				return new FinalStateHangToggleFeature(getFeatureProvider());
+			}
+		}
+
+		return super.getSingleClickFeature(context);
 	}
 }
