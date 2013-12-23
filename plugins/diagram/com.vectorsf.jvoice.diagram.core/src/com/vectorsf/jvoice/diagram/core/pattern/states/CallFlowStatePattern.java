@@ -15,17 +15,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
-import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
-import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
-import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.graphiti.services.IGaService;
-import org.eclipse.graphiti.services.IPeCreateService;
-import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
@@ -36,7 +26,6 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
-import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -47,40 +36,9 @@ import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
 import com.vectorsf.jvoice.ui.edit.validators.ValidatorSubFlow;
 import com.vectorsf.jvoice.ui.wizard.create.CreateDiagramJVoice;
 
-public class CallFlowStatePattern extends StatePattern implements ISelectionStatusValidator {
+public class CallFlowStatePattern extends SimpleStatePattern implements ISelectionStatusValidator {
 
 	private static final String CALL_FLOW = "SubFlow";
-	private static int MIN_WIDTH = 120;
-	private static int MIN_HEIGHT = 60;
-
-	@Override
-	protected PictogramElement doAdd(IAddContext context) {
-		CallFlowState addedDomainObject = (CallFlowState) context.getNewObject();
-		IPeCreateService peCreateService = Graphiti.getPeCreateService();
-		IGaService gaService = Graphiti.getGaService();
-
-		ContainerShape outerContainerShape = peCreateService.createContainerShape(getDiagram(), true);
-
-		RoundedRectangle mainRectangle = gaService.createRoundedRectangle(outerContainerShape, 25, 25);
-		setId(mainRectangle, ID_MAIN_FIGURE);
-		// mainRectangle.setFilled(true);
-		gaService.setRenderingStyle(mainRectangle, StatePredefinedColoredAreas
-				.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.COPPER_WHITE_GLOSS_ID));
-		gaService.setLocationAndSize(mainRectangle, context.getX(), context.getY(),
-				Math.max(MIN_WIDTH, context.getWidth()), Math.max(MIN_HEIGHT, context.getHeight()));
-
-		Text text = gaService.createText(mainRectangle, addedDomainObject.getName());
-		setId(text, ID_NAME_TEXT);
-		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
-		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
-
-		peCreateService.createChopboxAnchor(outerContainerShape);
-
-		link(outerContainerShape, addedDomainObject);
-
-		return outerContainerShape;
-
-	}
 
 	@Override
 	public Object[] create(ICreateContext context) {
@@ -133,14 +91,11 @@ public class CallFlowStatePattern extends StatePattern implements ISelectionStat
 			if (wizardDialog.open() == Window.OK) {
 				result = newWizard.getReturnFlow();
 				callFlowName = result.getName();
-
 			} else {
-				System.out.println("Cancel pressed");
+				throw new OperationCanceledException();
 			}
-			break;
 		case Dialog.CANCEL:
 			throw new OperationCanceledException();
-
 		default:
 			break;
 		}
@@ -150,16 +105,14 @@ public class CallFlowStatePattern extends StatePattern implements ISelectionStat
 			result = (Flow) flow.eResource().getResourceSet().getEObject(flowURI, true);
 
 			CallFlowState callFlowState = OperationsFactory.eINSTANCE.createCallFlowState();
-
 			callFlowState.setName(callFlowName);
 			callFlowState.setSubflow(result);
 
-			for (String parametro : result.getParameters()) {
+			for (int i = 0; i < result.getParameters().size(); i++) {
 				callFlowState.getParameters().add("");
 			}
 
 			flow.getStates().add(callFlowState);
-
 			addGraphicalRepresentation(context, callFlowState);
 
 			return new Object[] { callFlowState };
@@ -194,5 +147,10 @@ public class CallFlowStatePattern extends StatePattern implements ISelectionStat
 	@Override
 	public String getCreateImageId() {
 		return CoreImageProvider.IMG_PALETTE_SUBFLOW;
+	}
+
+	@Override
+	protected String getStateImageId() {
+		return CoreImageProvider.IMG_STATE_SUBFLOW;
 	}
 }

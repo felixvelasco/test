@@ -7,20 +7,9 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
-import org.eclipse.graphiti.mm.algorithms.Rectangle;
-import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
-import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.graphiti.services.IGaService;
-import org.eclipse.graphiti.services.IPeCreateService;
-import org.eclipse.graphiti.util.IPredefinedRenderingStyle;
 import org.eclipse.jdt.core.Flags;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.ILocalVariable;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
@@ -30,7 +19,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
-import com.vectorsf.jvoice.diagram.core.pattern.StatePredefinedColoredAreas;
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -41,41 +29,9 @@ import com.vectorsf.jvoice.ui.edit.provider.MethodsBeanContentProvider;
 import com.vectorsf.jvoice.ui.edit.provider.MethodsBeanLabelProvider;
 import com.vectorsf.jvoice.ui.edit.validators.ValidatorExecuteBean;
 
-public class CallStatePattern extends StatePattern {
+public class CallStatePattern extends SimpleStatePattern {
 
 	private static final String CALL = "Execution";
-	private static int MIN_WIDTH = 120;
-	private static int MIN_HEIGHT = 60;
-
-	@Override
-	protected PictogramElement doAdd(IAddContext context) {
-
-		CallState addedDomainObject = (CallState) context.getNewObject();
-		IPeCreateService peCreateService = Graphiti.getPeCreateService();
-		IGaService gaService = Graphiti.getGaService();
-
-		ContainerShape outerContainerShape = peCreateService.createContainerShape(getDiagram(), true);
-
-		Rectangle mainRectangle = gaService.createRectangle(outerContainerShape);
-		setId(mainRectangle, ID_MAIN_FIGURE);
-		mainRectangle.setFilled(true);
-		gaService.setRenderingStyle(mainRectangle, StatePredefinedColoredAreas
-				.getAdaptedGradientColoredAreas(IPredefinedRenderingStyle.BLUE_WHITE_GLOSS_ID));
-		gaService.setLocationAndSize(mainRectangle, context.getX(), context.getY(),
-				Math.max(MIN_WIDTH, context.getWidth()), Math.max(MIN_HEIGHT, context.getHeight()));
-
-		Text text = gaService.createText(mainRectangle, addedDomainObject.getName());
-		setId(text, ID_NAME_TEXT);
-		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
-		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
-
-		peCreateService.createChopboxAnchor(outerContainerShape);
-
-		link(outerContainerShape, addedDomainObject);
-
-		return outerContainerShape;
-
-	}
 
 	@Override
 	public Object[] create(ICreateContext context) {
@@ -121,7 +77,7 @@ public class CallStatePattern extends StatePattern {
 			cs.setDescription(methodResult.getElementName());
 
 			try {
-				for (ILocalVariable param : methodResult.getParameters()) {
+				for (int i = 0; i < methodResult.getParameters().length; i++) {
 					cs.getParameters().add("");
 				}
 			} catch (JavaModelException e) {
@@ -158,6 +114,11 @@ public class CallStatePattern extends StatePattern {
 		return CoreImageProvider.IMG_PALETTE_EXECUTION;
 	}
 
+	@Override
+	protected String getStateImageId() {
+		return CoreImageProvider.IMG_STATE_EXECUTION;
+	}
+
 	private boolean containsMethod(ComponentBean inCompBean, IMethod inMethod) {
 		URI uri = EcoreUtil.getURI(inCompBean);
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().findMember(uri.toPlatformString(true)).getProject();
@@ -179,5 +140,4 @@ public class CallStatePattern extends StatePattern {
 		}
 		return false;
 	}
-
 }
