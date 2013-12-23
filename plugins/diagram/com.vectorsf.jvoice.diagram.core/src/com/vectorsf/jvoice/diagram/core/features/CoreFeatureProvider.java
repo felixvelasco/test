@@ -90,7 +90,7 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 	}
 
 	@Override
-	public IDeleteFeature getDeleteFeature(IDeleteContext context) {
+	protected IDeleteFeature getDeleteFeatureAdditional(IDeleteContext context) {
 		return new TransitionsDeleteFeature(this);
 	}
 

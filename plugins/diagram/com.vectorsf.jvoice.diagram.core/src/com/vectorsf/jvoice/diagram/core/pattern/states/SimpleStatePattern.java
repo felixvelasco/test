@@ -1,12 +1,21 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
+import org.eclipse.graphiti.features.IRemoveFeature;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
+import org.eclipse.graphiti.features.context.IRemoveContext;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.impl.ResizeShapeContext;
+import org.eclipse.graphiti.features.impl.DefaultRemoveFeature;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.func.IDirectEditing;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
@@ -17,6 +26,8 @@ import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.algorithms.styles.Style;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
+import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
@@ -61,6 +72,8 @@ public abstract class SimpleStatePattern extends IdPattern {
 	protected static final String VERTICAL_LINE_STYLE = "verticalLineStyle";
 
 	private static IGaService gaService = Graphiti.getGaService();
+
+	private Set<Transition> transitions = new HashSet<>();
 
 	@Override
 	public boolean canAdd(IAddContext context) {
@@ -298,6 +311,59 @@ public abstract class SimpleStatePattern extends IdPattern {
 		} else {
 			return false;
 		}
+	}
 
+	@Override
+	protected IRemoveFeature createRemoveFeature(IRemoveContext context) {
+		return new StateRemoveFeatur(getFeatureProvider());
+	}
+
+	private final class StateRemoveFeatur extends DefaultRemoveFeature {
+		private StateRemoveFeatur(IFeatureProvider fp) {
+			super(fp);
+		}
+
+		@Override
+		public void preRemove(IRemoveContext context) {
+			super.preRemove(context);
+			SimpleStatePattern.this.preRemove(context);
+		}
+
+		@Override
+		public void postRemove(IRemoveContext context) {
+			SimpleStatePattern.this.postRemove(context);
+			super.postRemove(context);
+		}
+
+		@Override
+		protected void removeAllConnections(Anchor anchor) {
+			List<Connection> allConnections = Graphiti.getPeService().getAllConnections(anchor);
+			for (Connection connection : allConnections) {
+				Object bo = getBusinessObjectForPictogramElement(connection);
+				if (bo instanceof Transition) {
+					addTransitionToRemove((Transition) bo);
+				}
+			}
+			super.removeAllConnections(anchor);
+		}
+	}
+
+	public void addTransitionToRemove(Transition trans) {
+		transitions.add(trans);
+	}
+
+	@Override
+	public void preRemove(IRemoveContext context) {
+		super.preRemove(context);
+		transitions.clear();
+	}
+
+	@Override
+	public void postRemove(IRemoveContext context) {
+		super.postRemove(context);
+		for (Transition trans : transitions) {
+			EcoreUtil.delete(trans);
+		}
+		transitions.clear();
 	}
 }
