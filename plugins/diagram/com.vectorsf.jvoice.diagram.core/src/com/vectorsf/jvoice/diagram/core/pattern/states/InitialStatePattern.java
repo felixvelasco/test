@@ -57,6 +57,11 @@ public class InitialStatePattern extends IdPattern {
 	}
 
 	@Override
+	public boolean isPaletteApplicable() {
+		return false;
+	}
+
+	@Override
 	public Object[] create(ICreateContext context) {
 
 		InitialState is = OperationsFactory.eINSTANCE.createInitialState();
