@@ -12,6 +12,7 @@ import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
+import org.eclipse.graphiti.features.context.IMoveShapeContext;
 import org.eclipse.graphiti.features.context.IRemoveContext;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.impl.ResizeShapeContext;
@@ -289,6 +290,24 @@ public abstract class SimpleStatePattern extends IdPattern {
 			ss.setName(value);
 			updatePictogramElement(context.getPictogramElement());
 		}
+	}
+
+	@Override
+	protected void postMoveShape(IMoveShapeContext context) {
+		super.postMoveShape(context);
+		State state = (State) getBusinessObjectForPictogramElement(context.getPictogramElement());
+		InitialState initial = null;
+		for (Transition transition : state.getIncomingTransitions()) {
+			if (transition.getSource() instanceof InitialState) {
+				initial = (InitialState) transition.getSource();
+				break;
+			}
+		}
+
+		if (initial != null) {
+			layoutPictogramElement(Graphiti.getLinkService().getPictogramElements(getDiagram(), initial).get(0));
+		}
+
 	}
 
 	@Override
