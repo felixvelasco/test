@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.internal.utils.Messages;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -29,13 +28,20 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.graphiti.features.IFeatureProvider;
+import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
+import org.eclipse.graphiti.features.context.impl.AddContext;
+import org.eclipse.graphiti.features.context.impl.LayoutContext;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
+import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.PictogramLink;
 import org.eclipse.graphiti.mm.pictograms.PictogramsFactory;
 import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -55,8 +61,11 @@ import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
+import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
+import com.vectorsf.jvoice.model.operations.Transition;
 import com.vectorsf.jvoice.ui.wizard.Activator;
 
 public class DiagramNameWizardPage extends AbstractWizardPage {
@@ -66,15 +75,15 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	private static final Path PACKAGES_PATH = new Path(BaseModel.JV_PATH);
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
-	
+
 	Text textFieldDiagram;
 	Text textFieldProject;
 	Text textFieldPackage;
 
 	private Button browsePackage;
-	private int primeraVez;
+	private boolean first;
 	private boolean projectEnable = true;
-	private static Flow myFlow;
+	private Flow flow;
 
 	private Listener nameModifyListener = new Listener() {
 		@Override
@@ -96,7 +105,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
-		primeraVez = 0;
+		first = true;
 		this.projectEnable = projectEnable;
 		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_flow.png"));
 	}
@@ -189,14 +198,14 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		JVBean diagrama = paquete.getBean(text);
 
 		if (diagrama != null) {
-			if (primeraVez == 0) {
-				primeraVez++;
+			if (first) {
+				first = false;
 				return false;
 			}
 			setErrorMessage("Flow already exists");
 			return false;
 		}
-		primeraVez++;
+		first = false;
 		setSelection(paquete);
 		setErrorMessage(null);
 		setMessage(null);
@@ -500,7 +509,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		}
 	}
 
-	public static void createFile(URI diagramResourceUri, final Diagram diagram, final String diagramName) {
+	public void createFile(URI diagramResourceUri, final Diagram diagram, final String diagramName) {
 
 		// Create a resource set and EditingDomain
 		final TransactionalEditingDomain editingDomain = TransactionalEditingDomain.Factory.INSTANCE
@@ -509,24 +518,61 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		// Create a resource for this file.
 		final Resource resource = resourceSet.createResource(diagramResourceUri);
 		final CommandStack commandStack = editingDomain.getCommandStack();
+
 		commandStack.execute(new RecordingCommand(editingDomain) {
 
 			@Override
 			protected void doExecute() {
 				resource.setTrackingModification(true);
 				resource.getContents().add(diagram);
-				myFlow = OperationsFactory.eINSTANCE.createFlow();
-				myFlow.setDescription(diagramName);
-				myFlow.setName(diagramName);
+				flow = OperationsFactory.eINSTANCE.createFlow();
+				flow.setDescription(diagramName);
+				flow.setName(diagramName);
 
-				resource.getContents().add(myFlow);
+				resource.getContents().add(flow);
 
 				// create new link
 				PictogramLink link = PictogramsFactory.eINSTANCE.createPictogramLink();
 				link.setPictogramElement(diagram);
 				// add new link to diagram
 				diagram.getPictogramLinks().add(link);
-				link.getBusinessObjects().add(myFlow);
+				link.getBusinessObjects().add(flow);
+
+				IFeatureProvider featureProvider = GraphitiUi.getExtensionManager().createFeatureProvider(diagram);
+
+				InitialState iState = OperationsFactory.eINSTANCE.createInitialState();
+				iState.setName("Initial");
+				flow.getStates().add(iState);
+				AddContext addContext = new AddContext();
+				addContext.setTargetContainer(diagram);
+				addContext.setLocation(400, 0);
+				addContext.setNewObject(iState);
+				PictogramElement initialPe = featureProvider.addIfPossible(addContext);
+				Anchor initialAnchor = Graphiti.getPeService().getChopboxAnchor((AnchorContainer) initialPe);
+
+				FinalState fState = OperationsFactory.eINSTANCE.createFinalState();
+				fState.setName("Initial");
+				flow.getStates().add(fState);
+				addContext = new AddContext();
+				addContext.setTargetContainer(diagram);
+				addContext.setLocation(400, 200);
+				addContext.setNewObject(fState);
+				PictogramElement finalPe = featureProvider.addIfPossible(addContext);
+				Anchor finalAnchor = Graphiti.getPeService().getChopboxAnchor((AnchorContainer) finalPe);
+
+				Transition transition = OperationsFactory.eINSTANCE.createTransition();
+				transition.setSource(iState);
+				transition.setTarget(fState);
+				transition.setEventName("Ok");
+				flow.getTransitions().add(transition);
+
+				AddConnectionContext addContextInicial = new AddConnectionContext(initialAnchor, finalAnchor);
+				addContextInicial.setNewObject(transition);
+
+				PictogramElement connection = featureProvider.addIfPossible(addContextInicial);
+				featureProvider.layoutIfPossible(new LayoutContext(connection));
+				featureProvider.layoutIfPossible(new LayoutContext(finalPe));
+				featureProvider.layoutIfPossible(new LayoutContext(initialPe));
 			}
 		});
 
@@ -565,7 +611,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 	}
 
 	public Flow returnFlow() {
-		return myFlow;
+		return flow;
 	}
 
 	private String getFolderName(IFolder packageFolder, String dslName) {

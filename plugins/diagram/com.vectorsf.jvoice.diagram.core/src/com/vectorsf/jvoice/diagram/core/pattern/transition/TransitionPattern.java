@@ -115,11 +115,8 @@ public class TransitionPattern extends AbstractConnectionPattern {
 
 		Transition transition = OperationsFactory.eINSTANCE.createTransition();
 		transition.setSource(sourceState);
-		transition.setEventName(getCreateName());
 		transition.setTarget(targetState);
-
-		targetState.getIncomingTransitions().add(transition);
-		sourceState.getOutgoingTransitions().add(transition);
+		transition.setEventName(getCreateName());
 
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		flow.getTransitions().add(transition);
