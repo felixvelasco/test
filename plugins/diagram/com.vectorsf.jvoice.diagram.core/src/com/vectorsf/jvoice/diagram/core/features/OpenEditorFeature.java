@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.diagram.core.pattern.states;
+package com.vectorsf.jvoice.diagram.core.features;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -14,10 +14,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.internal.core.JavaProject;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -83,9 +83,7 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 
 				IProject project = fileFlow.getProject();
 
-				@SuppressWarnings("restriction")
-				JavaProject javaProject = (JavaProject) JavaCore.create(project);
-				@SuppressWarnings("restriction")
+				IJavaProject javaProject = JavaCore.create(project);
 				IType type = javaProject.findType(componente.getFqdn());
 				fileString = type.getResource().getFullPath().toString();
 			}

@@ -38,7 +38,6 @@ import org.eclipse.graphiti.util.IColorConstant;
 import com.vectorsf.jvoice.diagram.core.features.editing.FinalStateFinalFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.note.CreateRelationFromPad;
 import com.vectorsf.jvoice.diagram.core.pattern.note.RelationPattern;
-import com.vectorsf.jvoice.diagram.core.pattern.states.OpenEditorFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.CreateTransitionFromPad;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionCallFlowPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionMenuPattern;
