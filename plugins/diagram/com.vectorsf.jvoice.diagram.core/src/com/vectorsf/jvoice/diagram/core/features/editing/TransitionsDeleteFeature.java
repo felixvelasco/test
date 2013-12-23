@@ -18,6 +18,10 @@ import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultDeleteFeature;
 
+import com.vectorsf.jvoice.model.operations.InitialState;
+import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.Transition;
+
 public class TransitionsDeleteFeature extends DefaultDeleteFeature {
 
 	private boolean dialog = true;
@@ -46,9 +50,17 @@ public class TransitionsDeleteFeature extends DefaultDeleteFeature {
 
 	@Override
 	public boolean canDelete(IDeleteContext context) {
-
-		return context.getPictogramElement() instanceof FreeFormConnection;
-
+		PictogramElement pictogramElement = context.getPictogramElement();
+		if (pictogramElement instanceof FreeFormConnection) {
+			Object bo = getBusinessObjectForPictogramElement(pictogramElement);
+			if (bo instanceof Transition) {
+				State origin = ((Transition) bo).getSource();
+				return !(origin instanceof InitialState);
+			} else {
+				return true; // Connections from notes
+			}
+		}
+		return false;
 	}
 
 	public void deleteConnection(IDeleteContext context) {
