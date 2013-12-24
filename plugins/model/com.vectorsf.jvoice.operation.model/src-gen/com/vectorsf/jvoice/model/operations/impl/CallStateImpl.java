@@ -18,6 +18,7 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl#getMethodName <em>Method Name</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl#getBean <em>Bean</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl#getReferencedBean <em>Referenced Bean</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,6 +54,16 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @ordered
 	 */
 	protected ComponentBean bean;
+
+	/**
+	 * The cached value of the '{@link #getReferencedBean() <em>Referenced Bean</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReferencedBean()
+	 * @generated
+	 * @ordered
+	 */
+	protected ComponentBean referencedBean;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -130,6 +141,44 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ComponentBean getReferencedBean() {
+		if (referencedBean != null && referencedBean.eIsProxy()) {
+			InternalEObject oldReferencedBean = (InternalEObject)referencedBean;
+			referencedBean = (ComponentBean)eResolveProxy(oldReferencedBean);
+			if (referencedBean != oldReferencedBean) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationsPackage.CALL_STATE__REFERENCED_BEAN, oldReferencedBean, referencedBean));
+			}
+		}
+		return referencedBean;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ComponentBean basicGetReferencedBean() {
+		return referencedBean;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReferencedBean(ComponentBean newReferencedBean) {
+		ComponentBean oldReferencedBean = referencedBean;
+		referencedBean = newReferencedBean;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationsPackage.CALL_STATE__REFERENCED_BEAN, oldReferencedBean, referencedBean));
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -141,6 +190,9 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 			case OperationsPackage.CALL_STATE__BEAN:
 				if (resolve) return getBean();
 				return basicGetBean();
+			case OperationsPackage.CALL_STATE__REFERENCED_BEAN:
+				if (resolve) return getReferencedBean();
+				return basicGetReferencedBean();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -157,6 +209,9 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 				return;
 			case OperationsPackage.CALL_STATE__BEAN:
 				setBean((ComponentBean)newValue);
+				return;
+			case OperationsPackage.CALL_STATE__REFERENCED_BEAN:
+				setReferencedBean((ComponentBean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -175,6 +230,9 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 			case OperationsPackage.CALL_STATE__BEAN:
 				setBean((ComponentBean)null);
 				return;
+			case OperationsPackage.CALL_STATE__REFERENCED_BEAN:
+				setReferencedBean((ComponentBean)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -190,6 +248,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 				return METHOD_NAME_EDEFAULT == null ? methodName != null : !METHOD_NAME_EDEFAULT.equals(methodName);
 			case OperationsPackage.CALL_STATE__BEAN:
 				return bean != null;
+			case OperationsPackage.CALL_STATE__REFERENCED_BEAN:
+				return referencedBean != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -104,8 +104,9 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 	private void cleanMarkers(IResourceDelta delta) throws CoreException {
 		if (delta == null) {
 			helper.deleteMarkers(getMavenProjectFacade().getProject());
+		}else{
+			delta.accept(new RemoveMarkersVisitor());
 		}
-		delta.accept(new RemoveMarkersVisitor());
 	}
 
 	private static final class ErrorLoggerMarkerHelper extends EditUIMarkerHelper {

@@ -17,4 +17,8 @@ public interface CallStateValidator {
 
 	boolean validateMethodName(String value);
 	boolean validateBean(ComponentBean value);
+
+	boolean validateReferencedBean(ComponentBean value);
+
+	boolean validateReturnType(String value);
 }

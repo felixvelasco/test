@@ -484,6 +484,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getCallState_ReferencedBean() {
+		return (EReference)callStateEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCallFlowState() {
 		return callFlowStateEClass;
 	}
@@ -730,6 +739,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		callStateEClass = createEClass(CALL_STATE);
 		createEAttribute(callStateEClass, CALL_STATE__METHOD_NAME);
 		createEReference(callStateEClass, CALL_STATE__BEAN);
+		createEReference(callStateEClass, CALL_STATE__REFERENCED_BEAN);
 
 		callFlowStateEClass = createEClass(CALL_FLOW_STATE);
 		createEReference(callFlowStateEClass, CALL_FLOW_STATE__SUBFLOW);
@@ -852,6 +862,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEClass(callStateEClass, CallState.class, "CallState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCallState_MethodName(), ecorePackage.getEString(), "methodName", null, 0, 1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCallState_Bean(), this.getComponentBean(), null, "bean", null, 0, 1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCallState_ReferencedBean(), this.getComponentBean(), null, "referencedBean", null, 0, 1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(callFlowStateEClass, CallFlowState.class, "CallFlowState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCallFlowState_Subflow(), this.getFlow(), null, "subflow", null, 0, 1, CallFlowState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

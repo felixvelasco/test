@@ -59,6 +59,7 @@ public class CallStateItemProvider
 
 			addMethodNamePropertyDescriptor(object);
 			addBeanPropertyDescriptor(object);
+			addReferencedBeanPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -99,6 +100,28 @@ public class CallStateItemProvider
 				 getString("_UI_CallState_bean_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_CallState_bean_feature", "_UI_CallState_type"),
 				 OperationsPackage.Literals.CALL_STATE__BEAN,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Referenced Bean feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addReferencedBeanPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_CallState_referencedBean_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CallState_referencedBean_feature", "_UI_CallState_type"),
+				 OperationsPackage.Literals.CALL_STATE__REFERENCED_BEAN,
 				 true,
 				 false,
 				 true,

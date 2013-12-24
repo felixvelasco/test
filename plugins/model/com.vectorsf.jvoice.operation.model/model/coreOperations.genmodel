@@ -43,6 +43,7 @@
     <genClasses ecoreClass="coreOperations.ecore#//CallState">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute coreOperations.ecore#//CallState/methodName"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//CallState/bean"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//CallState/referencedBean"/>
     </genClasses>
     <genClasses ecoreClass="coreOperations.ecore#//CallFlowState">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference coreOperations.ecore#//CallFlowState/subflow"/>

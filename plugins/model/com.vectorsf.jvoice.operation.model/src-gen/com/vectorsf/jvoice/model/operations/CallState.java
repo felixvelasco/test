@@ -13,6 +13,7 @@ package com.vectorsf.jvoice.model.operations;
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.CallState#getMethodName <em>Method Name</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.CallState#getBean <em>Bean</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.CallState#getReferencedBean <em>Referenced Bean</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,5 +73,31 @@ public interface CallState extends ParameterizedState {
 	 * @generated
 	 */
 	void setBean(ComponentBean value);
+
+	/**
+	 * Returns the value of the '<em><b>Referenced Bean</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Referenced Bean</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Referenced Bean</em>' reference.
+	 * @see #setReferencedBean(ComponentBean)
+	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getCallState_ReferencedBean()
+	 * @model
+	 * @generated
+	 */
+	ComponentBean getReferencedBean();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.model.operations.CallState#getReferencedBean <em>Referenced Bean</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Referenced Bean</em>' reference.
+	 * @see #getReferencedBean()
+	 * @generated
+	 */
+	void setReferencedBean(ComponentBean value);
 
 } // CallState

@@ -51,7 +51,8 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 
 	private ComponentBean bean;
 
-	public BeanScopeAddDialog(Shell parentShell, IPackageFragment packageFragment, IProject project) {
+	public BeanScopeAddDialog(Shell parentShell,
+			IPackageFragment packageFragment, IProject project) {
 		super(parentShell);
 		this.packageFragment = packageFragment;
 		this.shell = parentShell;
@@ -92,7 +93,8 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 			e.printStackTrace();
 		}
 		if (!text.isEmpty()) {
-			IStatus status = ResourcesPlugin.getWorkspace().validateName(text, IResource.FILE);
+			IStatus status = ResourcesPlugin.getWorkspace().validateName(text,
+					IResource.FILE);
 			if (!status.isOK()) {
 				setErrorMessage(status.getMessage());
 				getButton(IDialogConstants.OK_ID).setEnabled(false);
@@ -176,10 +178,13 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				StandardJavaElementContentProvider contentProvider = new StandardJavaElementContentProvider(false);
-				ILabelProvider labelProvider = new JavaElementLabelProvider(JavaElementLabelProvider.SHOW_BASICS);
+				StandardJavaElementContentProvider contentProvider = new StandardJavaElementContentProvider(
+						false);
+				ILabelProvider labelProvider = new JavaElementLabelProvider(
+						JavaElementLabelProvider.SHOW_BASICS);
 
-				ComponentsSelectionDialog dialog = new ComponentsSelectionDialog(shell, labelProvider, contentProvider);
+				ComponentsSelectionDialog dialog = new ComponentsSelectionDialog(
+						shell, labelProvider, contentProvider);
 				dialog.setInput(packageFragment);
 				dialog.addFilter(new ComponentFilter());
 				if (dialog.open() == Window.OK) {
@@ -192,6 +197,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 						type = jProject.findType(bean.getFqdn());
 						if (type.getAnnotation("Scope").exists()) {
 							scopedNameText.setEnabled(true);
+							bean.setPrototype(true);
 						} else {
 							scopedNameText.setEnabled(false);
 							scopedNameText.setText("");
@@ -239,7 +245,8 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 
 		IAnnotation annotation = findAnnotation(typeRoot);
 		try {
-			IMemberValuePair[] memberValuePairs = annotation.getMemberValuePairs();
+			IMemberValuePair[] memberValuePairs = annotation
+					.getMemberValuePairs();
 			if (memberValuePairs.length > 0) {
 				name = (String) memberValuePairs[0].getValue();
 			}
@@ -277,15 +284,20 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		try {
 			for (IAnnotation annotation : type.getAnnotations()) {
 				String elementName = annotation.getElementName();
-				if (elementName.equals("org.springframework.stereotype.Component")) {
+				if (elementName
+						.equals("org.springframework.stereotype.Component")) {
 					return annotation;
-				} else if (elementName.equals("Component") && unit instanceof ICompilationUnit) {
-					for (IImportDeclaration _import : ((ICompilationUnit) unit).getImports()) {
+				} else if (elementName.equals("Component")
+						&& unit instanceof ICompilationUnit) {
+					for (IImportDeclaration _import : ((ICompilationUnit) unit)
+							.getImports()) {
 						String importedType = _import.getElementName();
-						if (importedType.equals("org.springframework.stereotype.Component")) {
+						if (importedType
+								.equals("org.springframework.stereotype.Component")) {
 							return annotation;
 						}
-						if (importedType.equals("org.springframework.stereotype.*")) {
+						if (importedType
+								.equals("org.springframework.stereotype.*")) {
 							return annotation;
 						}
 					}
@@ -301,7 +313,8 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 	public class ComponentFilter extends ViewerFilter {
 
 		@Override
-		public boolean select(Viewer viewer, Object parentElement, Object element) {
+		public boolean select(Viewer viewer, Object parentElement,
+				Object element) {
 			if (element instanceof ITypeRoot) {
 
 				return findAnnotation((ITypeRoot) element) != null;

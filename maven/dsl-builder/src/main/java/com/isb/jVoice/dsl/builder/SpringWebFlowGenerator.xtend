@@ -58,15 +58,32 @@ class SpringWebFlowGenerator {
 	
 	def generateScope() {
 		var beans = flow.beans
+		var hasPrototypes = false
 		if (beans.empty)
 			return "";
-	'''
-		<on-start>
-			«FOR bean: beans »
-			<evaluate expression="«bean.nameBean»" result="flowScope.«bean.name»"></evaluate>
-			«ENDFOR»
-		</on-start>
-	'''
+			
+		for(bean: beans){
+			if (bean.prototype){
+			hasPrototypes=true
+			}
+		}
+		
+		'''		
+		«IF (hasPrototypes)»
+			<on-start>
+		«ENDIF»
+		«FOR bean: beans »
+		  «IF (bean.prototype)»
+		     <evaluate expression="«bean.nameBean»" result="flowScope.«bean.name»"></evaluate>
+		  «ENDIF»
+		«ENDFOR»
+		
+		«IF (hasPrototypes)»
+			<on-start>
+		«ENDIF»
+
+     '''
+
 	}
 	
 	def generateInitialization() '''

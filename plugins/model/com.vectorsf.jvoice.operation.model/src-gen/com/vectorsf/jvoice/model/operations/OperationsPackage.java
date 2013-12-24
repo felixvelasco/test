@@ -824,13 +824,22 @@ public interface OperationsPackage extends EPackage {
 	int CALL_STATE__BEAN = PARAMETERIZED_STATE_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Referenced Bean</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_STATE__REFERENCED_BEAN = PARAMETERIZED_STATE_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Call State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE_FEATURE_COUNT = PARAMETERIZED_STATE_FEATURE_COUNT + 2;
+	int CALL_STATE_FEATURE_COUNT = PARAMETERIZED_STATE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Call State</em>' class.
@@ -2013,6 +2022,17 @@ public interface OperationsPackage extends EPackage {
 	EReference getCallState_Bean();
 
 	/**
+	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.CallState#getReferencedBean <em>Referenced Bean</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Referenced Bean</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.CallState#getReferencedBean()
+	 * @see #getCallState()
+	 * @generated
+	 */
+	EReference getCallState_ReferencedBean();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.CallFlowState <em>Call Flow State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2486,6 +2506,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CALL_STATE__BEAN = eINSTANCE.getCallState_Bean();
+
+		/**
+		 * The meta object literal for the '<em><b>Referenced Bean</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CALL_STATE__REFERENCED_BEAN = eINSTANCE.getCallState_ReferencedBean();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl <em>Call Flow State</em>}' class.
