@@ -9,11 +9,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
@@ -40,6 +44,15 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
  */
 public class CopyMojo extends AbstractMojo {
 
+	private static final String SRC_MAIN_RESOURCES = "/src/main/resources";
+	private static final String POM_PROPERTIES_EXT = "pom.properties";
+	private static final String STATIC = "/static/";
+	private static final String WAV_EXT = ".wav";
+	private static final String XML_EXT = ".xml";
+	private static final String JAR_EXT = ".jar";
+	private static final String PROJECT_INFORMATION = "projectInformation";
+	private static final String PROJECT_INFORMATION_EXT = ".projectInformation";
+	private static final String PROPERTIES_EXT = ".properties";
 	private static final String SEPARATOR = "/";
 	private static final String DOT = ".";
 	private static final String JVOICES = "jVoice";
@@ -50,7 +63,6 @@ public class CopyMojo extends AbstractMojo {
 	private static final String DESTINOWAV = "resources";
 	private static final String WAV = "wav";
 	private static final String XML = "xml";
-	private File file;
 	private static final String ARCHIVE_FILE = "archive:file:/";
 	private static final String SEPARATOR2 = "\\";
 	private static final String WS = "ws";
@@ -68,6 +80,7 @@ public class CopyMojo extends AbstractMojo {
 	 * @parameter expression="${basedir}/src/main/resources/com/vectorsf"
 	 */
 	private File endpointsDirectory;
+	
 
 	/**
 	 * The Maven Project Object
@@ -75,126 +88,113 @@ public class CopyMojo extends AbstractMojo {
 	 * @parameter expression="${project}"
 	 * @required
 	 */
-	protected MavenProject project;
+	protected MavenProject mavenProject;
 
 	/**
 	 * @parameter expression="${project.runtimeClasspathElements}"
 	 */
+	@SuppressWarnings("unused")
 	private List<String> runtimeClasspathElements;
 	private List<JVModule> modules = new ArrayList<JVModule>();
 	String nameProject = null;
-
-	private void findFullPath(List<String> fileNameToSearch, File file) throws IOException {
-		ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
-		ZipEntry ze = null;
-		String ret = null;
-		while ((ze = zip.getNextEntry()) != null) {
-			String entryName = ze.getName();
-			if (entryName.equals(".projectInformation")) {
-				JVModule module = getProject(entryName, file);
-				modules.add(module);
-				nameProject = module.getName();
-			}
-
-			int index = entryName.lastIndexOf(DOT);
-
-			if (index != -1) {
-				String entryNameDots = entryName.replace(SEPARATOR, DOT);
-				/*
-				 * Creamos un boolean inicializado a false y Recorremos la lista para comprobar la terminacion del
-				 * fichero. En el caso de que coincida la terminacion, el booleano se pondra a true, indicando que es un
-				 * tipo de fichero que necesitamos copiar del jar.
-				 */
-				boolean terminacion = false;
-				for (String element : fileNameToSearch) {
-					if (entryNameDots.endsWith(element)) {
-						terminacion = true;
-						break;
-					}
-				}
-				// Comprobamos si el archivo es xml o jVoices para proceder a su copia. El resto no se copia en la
-				// aplicacion.
-				if (terminacion && (entryNameDots.contains(JVOICES + DOT) || entryNameDots.contains(AUDIOS + DOT))) {
-					ZipFile zipFile = new ZipFile(file);
-					InputStream inputStream = zipFile.getInputStream(ze);
-					if (entryNameDots.endsWith(DOT + WAV)) {
-						ret = entryName;
-						copyFile(inputStream, ret, WAV, nameProject);
-					} else if (entryNameDots.endsWith(DOT + XML)) {
-						ret = entryName.substring(entryName.indexOf(SEPARATOR) + 1, entryName.length());
-						copyFile(inputStream, ret, JVOICES, null);
-					}
-
-					zipFile.close();
-				}
-			}
-		}
-		zip.close();
-	}
+	Properties pTotalProperties;
 
 	@Override
 	public void execute() throws MojoExecutionException {
 
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("projectInformation",
-				new XMIResourceFactoryImpl());
-		EPackage.Registry.INSTANCE.put(BasePackage.eNS_URI, BasePackage.eINSTANCE);
-		EPackage.Registry.INSTANCE.put(OperationsPackage.eNS_URI, OperationsPackage.eINSTANCE);
+		try {
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PROJECT_INFORMATION,
+					new XMIResourceFactoryImpl());
+			EPackage.Registry.INSTANCE.put(BasePackage.eNS_URI, BasePackage.eINSTANCE);
+			EPackage.Registry.INSTANCE.put(OperationsPackage.eNS_URI, OperationsPackage.eINSTANCE);
 
-		JVProject modulo = getProjectInformation();
-		File flows = new File(outputDirectory, DESTINO);
-		flows.mkdirs();
-		generateMainModule(modulo, flows);
+			JVProject modulo = getProjectInformation();
+			File flows = new File(outputDirectory, DESTINO);
+			flows.mkdirs();
+			generateMainModule(modulo, flows);
 
-		for (String element : runtimeClasspathElements) {
+			pTotalProperties = new Properties();
+			// copia los ficheros .wav y .xml, además recopila las propiedades de los módulos de los que depende, preferencia de las propiedades de los módulos por orden alfabetico del los nombres de los módulos.
+			searchInJarFiles();
+			// finalmente se cargan las propiedades de la aplicación sobreescribiendo las que se se llaman igual en los módulos, las propiedades de la app que deben estar en la carpeta /src/main/resources. Si hay más un archivo de propiedades se tomará el primero que se lea.
+			fillPropertiesApp();
+					
+			// Creamos la carpeta estatica spring/appServlet
+			File appServlet = new File(outputDirectory, APPSERVLET);
+			appServlet.mkdirs();
+			// Generamos el XML servlet-context.xml de la carpeta spring
+			XMLGeneratorServlet.generate(new File(appServlet, "servlet-context.xml"));
 
-			if (new File(element).toURI().toString().endsWith(".jar")) {
-				file = new File(element);
-				List<String> extensions = Arrays.asList(new String[] { ".xml", ".wav" });
-				try {
-					findFullPath(extensions, file);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			// Creamos el app-context.xml en dentro de la carpeta WEB-INF
+			File spring = new File(outputDirectory, "spring");
+			XMLGeneratorAPP.generate(new File(spring, "app-context.xml"), modules);
+			XMLGeneratorJFC.generate(
+					new File(spring, "jvoiceframework-context.xml"),
+					modulo.getName());
+			XMLGeneratorRC.generate(new File(spring, "root-context.xml"));
 
-			}
+			// Creamos el web.xml en dentro de la carpeta WEB-INF
+			XMLGeneratorWeb.generate(new File(outputDirectory, "web.xml"));
+
+			// Creamos la carpeta estatica views
+			File views = new File(outputDirectory, "views");
+			views.mkdirs();
+			XMLGeneratorRHTML.generate(new File(views, "renderHTML.jsp"));
+			XMLGeneratorRVXI.generate(new File(views, "renderVXI.jsp"));
+			copyFile("_init.jsp", new File(views, "_init.jsp"));
+
+
+			// Creamos el ws-endpoints.xml en dentro de la carpeta resources
+			File wsendpointsDirectory = new File(endpointsDirectory, SEPARATOR
+					+ modulo.getName() + SEPARATOR + WS);
+			wsendpointsDirectory.mkdirs();
+			XMLGeneratorENDP.generate(new File(wsendpointsDirectory,
+					"ws-endpoints.xml"));
+		} catch ( IOException e) 
+		{
+			throw new MojoExecutionException("Error in CopyMojo:execute()", e);
 		}
-		// Creamos la carpeta estatica spring/appServlet
-		File appServlet = new File(outputDirectory, APPSERVLET);
-		appServlet.mkdirs();
-		// Generamos el XML servlet-context.xml de la carpeta spring
-		XMLGeneratorServlet.generate(new File(appServlet, "servlet-context.xml"));
-
-		// Creamos el app-context.xml en dentro de la carpeta WEB-INF
-		File spring = new File(outputDirectory, "spring");
-		XMLGeneratorAPP.generate(new File(spring, "app-context.xml"), modules);
-		XMLGeneratorJFC.generate(
-				new File(spring, "jvoiceframework-context.xml"),
-				modulo.getName());
-		XMLGeneratorRC.generate(new File(spring, "root-context.xml"));
-
-		// Creamos el web.xml en dentro de la carpeta WEB-INF
-		XMLGeneratorWeb.generate(new File(outputDirectory, "web.xml"));
-
-		// Creamos la carpeta estatica views
-		File views = new File(outputDirectory, "views");
-		views.mkdirs();
-		XMLGeneratorRHTML.generate(new File(views, "renderHTML.jsp"));
-		XMLGeneratorRVXI.generate(new File(views, "renderVXI.jsp"));
-		copyFile("_init.jsp", new File(views, "_init.jsp"));
-
-
-		// Creamos el ws-endpoints.xml en dentro de la carpeta resources
-		File wsendpointsDirectory = new File(endpointsDirectory, SEPARATOR
-				+ modulo.getName() + SEPARATOR + WS);
-		wsendpointsDirectory.mkdirs();
-		XMLGeneratorENDP.generate(new File(wsendpointsDirectory,
-				"ws-endpoints.xml"));
 
 	}
 
+	private void fillPropertiesApp() throws FileNotFoundException, IOException 
+	{	
+		File fResourcesFolder = new File (mavenProject.getBasedir().getAbsolutePath()+SRC_MAIN_RESOURCES);
+		for (final File fileEntry : fResourcesFolder.listFiles()) 
+		{
+			if (isPropertiesProject(fileEntry.getAbsolutePath()))
+		    {
+				pTotalProperties.load(new FileInputStream(fileEntry));
+				break;
+		    }
+		}
+	}
+
+	private void searchInJarFiles() throws IOException {
+		
+			List<Artifact> lArti = getProjectArtifacts();
+			for (int i = 0; i < lArti.size(); i++) 
+			{
+				Artifact artifacti = lArti.get(i);
+				File file_ = artifacti.getFile();
+				if (file_!=null && file_.toURI().toString().endsWith(JAR_EXT)) 
+				{	
+					List<String> extensions = Arrays.asList(new String[] { XML_EXT, WAV_EXT });
+					findFullPath(extensions, file_);					
+				}
+		}
+	}
+		@SuppressWarnings("unchecked")
+		private List<Artifact> getProjectArtifacts() {
+			Set<Artifact> dependencyArtifacts = mavenProject
+					.getDependencyArtifacts();
+			 List<Artifact> listArt = new ArrayList<Artifact>(dependencyArtifacts);
+			Collections.sort(listArt);		
+			return listArt;
+		}
+
 	private void copyFile(String origName, File destFile) throws MojoExecutionException {
-		try (InputStream is = getClass().getResourceAsStream("/static/" + origName);
+		try (InputStream is = getClass().getResourceAsStream(STATIC + origName);
 				FileOutputStream fos = new FileOutputStream(destFile)) {
 			int read = -1;
 			byte[] buf = new byte[4096];
@@ -211,7 +211,7 @@ public class CopyMojo extends AbstractMojo {
 	 * Metodo que accede al projectInformation para obtener informacion de el.
 	 */
 	private JVProject getProjectInformation() {
-		String ruta = "file:///" + project.getBasedir().getAbsolutePath() + SEPARATOR + ".projectInformation";
+		String ruta = "file:///" + mavenProject.getBasedir().getAbsolutePath() + SEPARATOR + PROJECT_INFORMATION_EXT;
 		ResourceSet resSet = new ResourceSetImpl();
 		URI uri = URI.createURI(ruta.replace(SEPARATOR2, SEPARATOR));
 		Resource res = resSet.getResource(uri, true);
@@ -273,6 +273,86 @@ public class CopyMojo extends AbstractMojo {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void findFullPath(List<String> fileNameToSearch, File file) throws IOException {
+		ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
+		ZipEntry ze = null;
+		String ret = null;
+		
+		
+		while ((ze = zip.getNextEntry()) != null) {
+			String entryName = ze.getName();
+			if (entryName.equals(PROJECT_INFORMATION_EXT)) {
+				JVModule module = getProject(entryName, file);
+				modules.add(module);
+				nameProject = module.getName();
+			}
+
+			int index = entryName.lastIndexOf(DOT);
+
+			if (index != -1) {
+				String entryNameDots = entryName.replace(SEPARATOR, DOT);
+				
+				
+				if (isPropertiesProject(entryNameDots))
+				{
+					@SuppressWarnings("resource")
+					ZipFile zipFile = new ZipFile(file);
+					InputStream inputStream = zipFile.getInputStream(ze);
+					Properties pAux = new Properties();
+					pAux.load(inputStream);
+					pTotalProperties.putAll(pAux);					
+				}
+				else
+				{
+					/*
+					 * Creamos un boolean inicializado a false y Recorremos la lista para comprobar la terminacion del
+					 * fichero. En el caso de que coincida la terminacion, el booleano se pondra a true, indicando que es un
+					 * tipo de fichero que necesitamos copiar del jar.
+					 */
+					boolean terminacion = false;
+					for (String element : fileNameToSearch) {
+						if (entryNameDots.endsWith(element)) {
+							terminacion = true;
+							break;
+						}
+					}
+					// Comprobamos si el archivo es xml o jVoices para proceder a su copia. El resto no se copia en la
+					// aplicacion.
+					if (terminacion && (entryNameDots.contains(JVOICES + DOT) || entryNameDots.contains(AUDIOS + DOT))) {
+						ZipFile zipFile = new ZipFile(file);
+						InputStream inputStream = zipFile.getInputStream(ze);
+						if (entryNameDots.endsWith(DOT + WAV)) {
+							ret = entryName;
+							copyFile(inputStream, ret, WAV, nameProject);
+						} else if (entryNameDots.endsWith(DOT + XML)) {
+							ret = entryName.substring(entryName.indexOf(SEPARATOR) + 1, entryName.length());
+							copyFile(inputStream, ret, JVOICES, null);
+						}
+	
+						zipFile.close();
+					}
+				}
+			}
+		}
+		zip.close();
+		
+	}
+
+
+	
+
+	private boolean isPropertiesProject(String entryNameDots) 
+	{
+		boolean bIsPropertiesProject=false;
+		if (entryNameDots.endsWith(PROPERTIES_EXT)
+			&&
+			! entryNameDots.endsWith(POM_PROPERTIES_EXT))
+		{
+			bIsPropertiesProject=true;
+		}
+		return bIsPropertiesProject;
 	}
 
 	/**
