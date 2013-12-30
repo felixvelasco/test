@@ -79,7 +79,7 @@ class SpringWebFlowGenerator {
 		«ENDFOR»
 		
 		«IF (hasPrototypes)»
-			<on-start>
+			</on-start>
 		«ENDIF»
 
      '''
