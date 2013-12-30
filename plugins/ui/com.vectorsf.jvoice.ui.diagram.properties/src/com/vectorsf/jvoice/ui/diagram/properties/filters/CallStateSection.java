@@ -125,7 +125,11 @@ public class CallStateSection extends ParametrizableStateSection {
 			for (IMethod method : methods) {
 				if (method.getElementName().equals(state.getMethodName())) {
 					if (!method.getReturnType().equals("V")) {
-						metodoBuscado = method.getReturnType().substring(1, method.getReturnType().length() - 1);
+						if (method.getReturnType().length() > 1) {
+							metodoBuscado = method.getReturnType().substring(1, method.getReturnType().length() - 1);
+						} else {
+							metodoBuscado = method.getReturnType();
+						}
 						for (ComponentBean bean : flujo.getBeans()) {
 							String clase = bean.getFqdn().substring(bean.getFqdn().lastIndexOf(".") + 1,
 									bean.getFqdn().length());
