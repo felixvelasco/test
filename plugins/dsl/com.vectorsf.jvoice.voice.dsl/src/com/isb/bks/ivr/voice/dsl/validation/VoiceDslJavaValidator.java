@@ -54,23 +54,28 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 	@Check
 	public void checkGrammarContainsProperSrc(Grammar grammar) {
 		if (grammar.getSrc() != null) {
-			URI uri = grammar.eResource().getURI();
-			File rawFile = null;
-			if (uri.isPlatformResource()) {
-				IPath rawPath = ResourcesPlugin.getWorkspace().getRoot().findMember(uri.toPlatformString(true))
-						.getRawLocation();
+			String grammarSrc = grammar.getSrc();
+			if (!grammarSrc.trim().startsWith("builtin:")) {
+				// No builtin grammar. Validate if exists as a resource.
+				// If a builtin grammar no validation is needed.
+				URI uri = grammar.eResource().getURI();
+				File rawFile = null;
+				if (uri.isPlatformResource()) {
+					IPath rawPath = ResourcesPlugin.getWorkspace().getRoot().findMember(uri.toPlatformString(true))
+							.getRawLocation();
 
-				rawFile = rawPath.toFile();
-			} else {
-				rawFile = new File(uri.toFileString());
-			}
-			File projectFile = findProjectFile(rawFile);
-			File grammarsFolder = new File(projectFile, "src/main/resources/grammars");
-			String grammarName = grammar.getSrc() + ".grxml";
-			File audioFile = new File(grammarsFolder, grammarName);
+					rawFile = rawPath.toFile();
+				} else {
+					rawFile = new File(uri.toFileString());
+				}
+				File projectFile = findProjectFile(rawFile);
+				File grammarsFolder = new File(projectFile, "src/main/resources/grammars");
+				String grammarName = grammarSrc + ".grxml";
+				File audioFile = new File(grammarsFolder, grammarName);
 
-			if (!audioFile.exists()) {
-				error("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
+				if (!audioFile.exists()) {
+					error("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
+				}
 			}
 		}
 	}
