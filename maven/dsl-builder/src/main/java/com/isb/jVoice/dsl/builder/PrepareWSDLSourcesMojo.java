@@ -104,7 +104,10 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 			}
 
 			File targetFile = new File(metaInf, "jax-ws-catalog.xml");
-			XMLGeneratorWSDL.generate(targetFile, locations);
+			if (locations.size()>0)
+			{
+				XMLGeneratorWSDL.generate(targetFile, locations);
+			}
 		}
 
 	}
