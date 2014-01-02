@@ -126,7 +126,7 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 			String extension =fil.getName().substring(fil.getName().lastIndexOf("."));
 			if(extension.equalsIgnoreCase(".wsdl")){
 				file = fil;
-				ruta = ruta.substring(0, ruta.length()-1) + "/"+file.getName().substring(0, file.getName().lastIndexOf(".")) + "/" + file.getName();
+				ruta = ruta.substring(0, ruta.length()-1) + "."+file.getName().substring(0, file.getName().lastIndexOf(".")) + "/" + file.getName();
 				locations.add(ruta);
 			}
 		}
