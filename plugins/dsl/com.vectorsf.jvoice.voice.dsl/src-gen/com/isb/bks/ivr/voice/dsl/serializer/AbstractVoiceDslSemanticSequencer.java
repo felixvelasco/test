@@ -1416,7 +1416,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends XbaseWithAnnotat
 	
 	/**
 	 * Constraint:
-	 *     (name=ID properties+=Property* variables=Variables? conditions+=Condition* audios=Audios)
+	 *     (name=ID configuration=Configuration variables=Variables? conditions+=Condition* audios=Audios)
 	 */
 	protected void sequence_PromptDsl(EObject context, PromptDsl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

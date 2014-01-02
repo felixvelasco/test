@@ -59,8 +59,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final UnorderedGroup cUnorderedGroup_2 = (UnorderedGroup)cGroup.eContents().get(2);
-		private final Assignment cPropertiesAssignment_2_0 = (Assignment)cUnorderedGroup_2.eContents().get(0);
-		private final RuleCall cPropertiesPropertyParserRuleCall_2_0_0 = (RuleCall)cPropertiesAssignment_2_0.eContents().get(0);
+		private final Assignment cConfigurationAssignment_2_0 = (Assignment)cUnorderedGroup_2.eContents().get(0);
+		private final RuleCall cConfigurationConfigurationParserRuleCall_2_0_0 = (RuleCall)cConfigurationAssignment_2_0.eContents().get(0);
 		private final Assignment cVariablesAssignment_2_1 = (Assignment)cUnorderedGroup_2.eContents().get(1);
 		private final RuleCall cVariablesVariablesParserRuleCall_2_1_0 = (RuleCall)cVariablesAssignment_2_1.eContents().get(0);
 		private final Assignment cConditionsAssignment_2_2 = (Assignment)cUnorderedGroup_2.eContents().get(2);
@@ -69,10 +69,10 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAudiosAudiosParserRuleCall_3_0 = (RuleCall)cAudiosAssignment_3.eContents().get(0);
 		
 		//PromptDsl:
-		//	"outputname" name=ID (properties+=Property* & variables=Variables? & conditions+=Condition*) audios=Audios;
+		//	"outputname" name=ID (configuration=Configuration & variables=Variables? & conditions+=Condition*) audios=Audios;
 		public ParserRule getRule() { return rule; }
 
-		//"outputname" name=ID (properties+=Property* & variables=Variables? & conditions+=Condition*) audios=Audios
+		//"outputname" name=ID (configuration=Configuration & variables=Variables? & conditions+=Condition*) audios=Audios
 		public Group getGroup() { return cGroup; }
 
 		//"outputname"
@@ -84,14 +84,14 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//properties+=Property* & variables=Variables? & conditions+=Condition*
+		//configuration=Configuration & variables=Variables? & conditions+=Condition*
 		public UnorderedGroup getUnorderedGroup_2() { return cUnorderedGroup_2; }
 
-		//properties+=Property*
-		public Assignment getPropertiesAssignment_2_0() { return cPropertiesAssignment_2_0; }
+		//configuration=Configuration
+		public Assignment getConfigurationAssignment_2_0() { return cConfigurationAssignment_2_0; }
 
-		//Property
-		public RuleCall getPropertiesPropertyParserRuleCall_2_0_0() { return cPropertiesPropertyParserRuleCall_2_0_0; }
+		//Configuration
+		public RuleCall getConfigurationConfigurationParserRuleCall_2_0_0() { return cConfigurationConfigurationParserRuleCall_2_0_0; }
 
 		//variables=Variables?
 		public Assignment getVariablesAssignment_2_1() { return cVariablesAssignment_2_1; }
@@ -1101,8 +1101,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTtsSTRINGTerminalRuleCall_2_1_1_3_0 = (RuleCall)cTtsAssignment_2_1_1_3.eContents().get(0);
 		
 		//SimpleAudio returns Audio:
-		//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation ("(" format=STRING ")")?
-		//	tts=STRING)?);
+		//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation ("(" format=STRING
+		//	")")? tts=STRING)?);
 		public ParserRule getRule() { return rule; }
 
 		//{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation ("(" format=STRING ")")?
@@ -1330,8 +1330,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		public ParserRule getRule() { return rule; }
 
 		//{Member} annotations+=XAnnotation* ({Field.annotationInfo=current} (type=JvmTypeReference name=ID) ("="
-		//initialValue=XExpression)? ";"? | {Function.annotationInfo=current} ("public" => (returnType=JvmTypeReference name=ID))
-		//expression=XBlockExpression)
+		//initialValue=XExpression)? ";"? | {Function.annotationInfo=current} ("public" => (returnType=JvmTypeReference
+		//name=ID)) expression=XBlockExpression)
 		public Group getGroup() { return cGroup; }
 
 		//{Member}
@@ -1601,7 +1601,7 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PromptDsl:
-	//	"outputname" name=ID (properties+=Property* & variables=Variables? & conditions+=Condition*) audios=Audios;
+	//	"outputname" name=ID (configuration=Configuration & variables=Variables? & conditions+=Condition*) audios=Audios;
 	public PromptDslElements getPromptDslAccess() {
 		return (pPromptDsl != null) ? pPromptDsl : (pPromptDsl = new PromptDslElements());
 	}
@@ -1787,8 +1787,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SimpleAudio returns Audio:
-	//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation ("(" format=STRING ")")?
-	//	tts=STRING)?);
+	//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation ("(" format=STRING
+	//	")")? tts=STRING)?);
 	public SimpleAudioElements getSimpleAudioAccess() {
 		return (pSimpleAudio != null) ? pSimpleAudio : (pSimpleAudio = new SimpleAudioElements());
 	}
@@ -2146,8 +2146,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	({XMemberFeatureCall.memberCallTarget=current} ("." | nullSafe?="?." | explicitStatic?="::")) ("<"
 	//	typeArguments+=JvmArgumentTypeReference ("," typeArguments+=JvmArgumentTypeReference)* ">")?
 	//	feature=[types::JvmIdentifiableElement|FeatureCallID] (=> explicitOperationCall?="("
-	//	(memberCallArguments+=XShortClosure | memberCallArguments+=XExpression ("," memberCallArguments+=XExpression)*)? ")")?
-	//	memberCallArguments+=XClosure?)*;
+	//	(memberCallArguments+=XShortClosure | memberCallArguments+=XExpression ("," memberCallArguments+=XExpression)*)?
+	//	")")? memberCallArguments+=XClosure?)*;
 	public XbaseGrammarAccess.XMemberFeatureCallElements getXMemberFeatureCallAccess() {
 		return gaXbaseWithAnnotations.getXMemberFeatureCallAccess();
 	}
@@ -2157,9 +2157,9 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//XPrimaryExpression returns XExpression:
-	//	XConstructorCall | XBlockExpression | XSwitchExpression | XFeatureCall | XLiteral | XIfExpression | XForLoopExpression
-	//	| XWhileExpression | XDoWhileExpression | XThrowExpression | XReturnExpression | XTryCatchFinallyExpression |
-	//	XParenthesizedExpression;
+	//	XConstructorCall | XBlockExpression | XSwitchExpression | XFeatureCall | XLiteral | XIfExpression |
+	//	XForLoopExpression | XWhileExpression | XDoWhileExpression | XThrowExpression | XReturnExpression |
+	//	XTryCatchFinallyExpression | XParenthesizedExpression;
 	public XbaseGrammarAccess.XPrimaryExpressionElements getXPrimaryExpressionAccess() {
 		return gaXbaseWithAnnotations.getXPrimaryExpressionAccess();
 	}
@@ -2521,7 +2521,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Dummy rule, for "better" downwards compatibility, since GrammarAccess generates non-static inner classes, 
 	// * which makes downstream grammars break on classloading, when a rule is removed.
-	// * / StaticQualifier:
+	// * /
+	//StaticQualifier:
 	//	(ValidID "::")+;
 	public XbaseGrammarAccess.StaticQualifierElements getStaticQualifierAccess() {
 		return gaXbaseWithAnnotations.getStaticQualifierAccess();

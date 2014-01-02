@@ -187,22 +187,22 @@ rulePromptDsl returns [EObject current=null]
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getPromptDslAccess().getPropertiesPropertyParserRuleCall_2_0_0()); 
+	        newCompositeNode(grammarAccess.getPromptDslAccess().getConfigurationConfigurationParserRuleCall_2_0_0()); 
 	    }
-		lv_properties_3_0=ruleProperty		{
+		lv_configuration_3_0=ruleConfiguration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPromptDslRule());
 	        }
-       		add(
+       		set(
        			$current, 
-       			"properties",
-        		lv_properties_3_0, 
-        		"Property");
+       			"configuration",
+        		lv_configuration_3_0, 
+        		"Configuration");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))+
+))
 					{ 
 	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getPromptDslAccess().getUnorderedGroup_2());
 	 				}
@@ -269,7 +269,8 @@ rulePromptDsl returns [EObject current=null]
  				)
 			)  
 
-		)*	
+		)+
+	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getPromptDslAccess().getUnorderedGroup_2())}?	
 	)
 )
 	{ 
