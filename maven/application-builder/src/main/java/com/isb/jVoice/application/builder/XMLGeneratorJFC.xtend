@@ -72,12 +72,12 @@ class XMLGeneratorJFC {
 			view-factory-creator="viewFactoryCreator" />
 
 		«IF (false) /* TODO */»
-		<bean id="renderer" class="com.vectorsf.jvoiceframework.isban.logger.render.vxi.IsbanLoggerRenderer">
+		<beans:bean id="renderer" class="com.vectorsf.jvoiceframework.isban.logger.render.vxi.IsbanLoggerRenderer">
 		«ELSE»
-		<bean id="renderer" class="com.vectorsf.jvoiceframework.flow.render.vxi.VXIRenderer">
+		<beans:bean id="renderer" class="com.vectorsf.jvoiceframework.flow.render.vxi.VXIRenderer">
 		«ENDIF»
-			<property name="view" value="renderVXI"></property>
-		</bean>
+			<beans:property name="view" value="renderVXI"></beans:property>
+		</beans:bean>
 		<beans:bean id="viewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
 			<beans:property name="viewResolvers">
 				<beans:list>
