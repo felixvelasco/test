@@ -65,7 +65,7 @@ public class CopyMojo extends AbstractMojo {
 	private static final String XML = "xml";
 	private static final String ARCHIVE_FILE = "archive:file:/";
 	private static final String SEPARATOR2 = "\\";
-	private static final String WS = "ws";
+
 
 	/**
 	 * Location of the target directory.
@@ -73,14 +73,6 @@ public class CopyMojo extends AbstractMojo {
 	 * @parameter expression="${basedir}/src/main/webapp/WEB-INF"
 	 */
 	private File outputDirectory;
-
-	/**
-	 * Location of the ws-endpoints target directory.
-	 * 
-	 * @parameter expression="${basedir}/src/main/resources/com/vectorsf"
-	 */
-	private File endpointsDirectory;
-	
 
 	/**
 	 * The Maven Project Object
@@ -114,9 +106,16 @@ public class CopyMojo extends AbstractMojo {
 			generateMainModule(modulo, flows);
 
 			pTotalProperties = new Properties();
-			// copia los ficheros .wav y .xml, además recopila las propiedades de los módulos de los que depende, preferencia de las propiedades de los módulos por orden alfabetico del los nombres de los módulos.
+			// copia los ficheros .wav y .xml, además recopila las propiedades
+			// de los módulos de los que depende, preferencia de las propiedades
+			// de los módulos por orden alfabetico del los nombres de los
+			// módulos.
 			searchInJarFiles();
-			// finalmente se cargan las propiedades de la aplicación sobreescribiendo las que se se llaman igual en los módulos, las propiedades de la app que deben estar en la carpeta /src/main/resources. Si hay más un archivo de propiedades se tomará el primero que se lea.
+			// finalmente se cargan las propiedades de la aplicación
+			// sobreescribiendo las que se se llaman igual en los módulos, las
+			// propiedades de la app que deben estar en la carpeta
+			// /src/main/resources. Si hay más un archivo de propiedades se
+			// tomará el primero que se lea.
 			fillPropertiesApp();
 					
 			// Creamos la carpeta estatica spring/appServlet
@@ -144,12 +143,7 @@ public class CopyMojo extends AbstractMojo {
 			copyFile("_init.jsp", new File(views, "_init.jsp"));
 
 
-			// Creamos el ws-endpoints.xml en dentro de la carpeta resources
-			File wsendpointsDirectory = new File(endpointsDirectory, SEPARATOR
-					+ modulo.getName() + SEPARATOR + WS);
-			wsendpointsDirectory.mkdirs();
-			XMLGeneratorENDP.generate(new File(wsendpointsDirectory,
-					"ws-endpoints.xml"));
+
 		} catch ( IOException e) 
 		{
 			throw new MojoExecutionException("Error in CopyMojo:execute()", e);
