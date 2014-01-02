@@ -13,7 +13,7 @@ VoiceDsl:
 
 PromptDsl:
 	'outputname'  name = ID 
-       ((properties += Property*)& 
+       ((configuration = Configuration)& 
        	((variables = Variables)?)& 
 	    (conditions += Condition*))
   	     audios=Audios	

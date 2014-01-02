@@ -10,20 +10,36 @@ class OutputStateCodeXML {
 		var tranSalida =state.getOutgoingTransitions()
 		var audio = state.locution.audios
 		var properties = state.locution.properties
+		var configuration = state.locution.configuration
 
 '''
 		<action-state id="«state.name»">
 			<on-entry>
 				<evaluate expression="jVoiceArchOutput" result="flashScope.«state.name»"></evaluate>
-			«/*Falta especificar el bargein del propmp general  */»
+				«IF configuration != null» 
+					«FOR configValue : configuration.configValue»
+						«IF configValue.name != null && configValue.name.equals("bargein")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».bargein" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("flush")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».flush" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("catchHangup")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».catchHangup" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && !configValue.name.empty»
+							«IF configValue.value != null && !configValue.value.empty»
+								<evaluate name="flashScope.«state.name».properties.put('«configValue.name»','«configValue.value»')" />
+							«ENDIF»
+						«ENDIF»
+					«ENDFOR»
+        		«ENDIF»
 				«IF audio != null» 
 					«var audios = state.locution.audios.mainAudios»
-					«GeneralStateCodeXML.doGenerateGeneralState(state, audios,"audioItems", nameProject)»
-					«IF properties != null && properties.size>0 » 
-						«FOR property : properties »
-							<evaluate expression="flashScope.«state.name».properties.put('«property.name»','«property.value»')"/>
-						«ENDFOR»
-	        		«ENDIF» 
+					«GeneralStateCodeXML.doGenerateGeneralState(state, audios,"audioItems", nameProject)» 
         		«ENDIF»     
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flashScope.«state.name»)"/>
