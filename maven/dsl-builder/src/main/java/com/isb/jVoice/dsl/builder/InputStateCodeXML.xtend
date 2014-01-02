@@ -24,27 +24,41 @@ class InputStateCodeXML {
 				<evaluate expression="jVoiceArchInput" result="flashScope.«state.name»"></evaluate>
 				<set name="flashScope.«state.name».name" value="'«audioIn.name»'" />
 				«IF configuration != null»
-					«IF configuration.getValue("bargein") != null && !configuration.getValue("bargein").equals("")»
-						<set name="flashScope.«state.name».bargein" value="«configuration.getValue("bargein")»" />
-					«ENDIF»	
-					«IF configuration.getValue("maxAttempts") != null && !configuration.getValue("maxAttempts").equals("")»
-					<set name="flashScope.«state.name».maxAttempts" value="«configuration.getValue("maxAttempts")»" />
-					«ENDIF»
-					«IF configuration.getValue("timeout") != null && !configuration.getValue("timeout").equals("")»
-					<set name="flashScope.«state.name».timeout" value="'«configuration.getValue("timeout")»'" />
-					«ENDIF»
-					«IF configuration.getValue("interdigittimeout") != null && !configuration.getValue("interdigittimeout").equals("")»
-					<set name="flashScope.«state.name».interdigittimeout" value="'«configuration.getValue("interdigittimeout")»'" />
-					«ENDIF»
-					«IF configuration.getValue("confidence") != null && !configuration.getValue("confidence").equals("")»
-					<set name="flashScope.«state.name».confidence" value="'«configuration.getValue("confidence")»'" />
-					«ENDIF»
-					«IF configuration.getValue("maxNoInput") != null »
-					<set name="flashScope.«state.name».maxNoInput" value="«configuration.getValue("maxNoInput")»" />
-					«ENDIF»
-					«IF configuration.getValue("maxNoMatch") != null»
-					<set name="flashScope.«state.name».maxNoMatch" value="«configuration.getValue("maxNoMatch")»" />
-					«ENDIF»
+					«FOR configValue : configuration.configValue»
+						«IF configValue.name != null && configValue.name.equals("bargein")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».bargein" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("maxAttempts")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».maxAttempts" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("timeout")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».timeout" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("interdigittimeout")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».interdigittimeout" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("confidence")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».confidence" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("maxNoInput")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».maxNoInput" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("maxNoMatch")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».maxNoMatch" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && !configValue.name.empty»
+							«IF configValue.value != null && !configValue.value.empty»
+								<evaluate name="flashScope.«state.name».properties.put('«configValue.name»','«configValue.value»')" />
+							«ENDIF»
+						«ENDIF»
+					«ENDFOR»
 				«ENDIF»			
 				«/*Obtenemos las gramaticas de la locucion  */»
 				«IF grammars != null»
