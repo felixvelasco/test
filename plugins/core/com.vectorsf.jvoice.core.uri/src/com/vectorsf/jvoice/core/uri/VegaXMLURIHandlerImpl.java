@@ -124,14 +124,16 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 			Artifact artifacti = lArti.get(i);
 			if (artifacti.getArtifactId().equals(uri.authority())) {
 				File artifactJarFile = artifacti.getFile();
+				IResource resourceBaseURI = getBaseURIResource(uri);
+
+				// existing project
+				if (resourceBaseURI != null && resourceBaseURI.isAccessible()) {
+					vegaURI = getVegaURI(fileNameToSearch, resourceBaseURI, uri);
+				}
 				// jar file
-				if (artifactJarFile != null && artifactJarFile.isFile()) {
+				else if (artifactJarFile != null && artifactJarFile.isFile()) {
 					vegaURI = findInJarDependency(vegaURI, artifacti,
 							fileNameToSearch, artifactJarFile, uri);
-				}
-				// existing project
-				else {
-					vegaURI = findInExistingProject(uri, fileNameToSearch);
 				}
 				if (vegaURI != null) {
 					break;
@@ -154,21 +156,9 @@ public class VegaXMLURIHandlerImpl implements URIHandler {
 		return vegaURI;
 	}
 
-	private URI findInExistingProject(URI uri, String fileNameToSearch)
-			throws CoreException {
-		URI vegaURI;
-		IResource resourceBaseURI = getBaseURIResource();
-		vegaURI = getVegaURI(fileNameToSearch, resourceBaseURI, uri);
-		return vegaURI;
-	}
-
-	private IResource getBaseURIResource() {
+	private IResource getBaseURIResource(URI uri) {
 		IWorkspace ws = ResourcesPlugin.getWorkspace();
-		URI uriG = baseUri.trimFragment();
-		if (uriG.isPlatform()) {
-			uriG = URI.createURI(uriG.toPlatformString(true));
-		}
-		IResource resource = ws.getRoot().findMember(uriG.toString());
+		IResource resource = ws.getRoot().findMember(uri.authority());
 		return resource;
 	}
 
