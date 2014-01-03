@@ -26,4 +26,17 @@ public class CallStateValidator {
 
 		return true;
 	}
+
+	public boolean validate_CallState_noEmptyParams(CallState state) {
+		for (String param : state.getParameters()) {
+			if (param.trim().isEmpty()) {
+				operationsValidator.error(state, "Parameters in Call State must not be empty.");
+				// Se utiliza un "break" para que solo aparezca un mensaje por
+				// estado, ya que no se puede poner el nombre del parametro vacio
+				// y por tanto, no se puede poner un mensaje por parametro.
+				break;
+			}
+		}
+		return true;
+	}
 }

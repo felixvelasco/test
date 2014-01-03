@@ -10,6 +10,7 @@ import org.eclipse.emf.common.util.URI;
 
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.FinalState;
+import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
 
@@ -73,6 +74,20 @@ public class CallFlowStateValidator {
 			}
 		}
 
+		return true;
+	}
+
+	public boolean validate_CallFlowState_noEmptyParams(CallFlowState state) {
+		Flow flow = state.getSubflow();
+		List<String> paramNames = flow.getParameters();
+		List<String> paramValues = state.getParameters();
+
+		for (int i = 0; i < paramValues.size(); i++) {
+			if (paramValues.get(i).trim().isEmpty()) {
+				operationsValidator.error(state, "Parameter \"" + paramNames.get(i)
+						+ "\" in CallFlow State must not be empty.");
+			}
+		}
 		return true;
 	}
 }
