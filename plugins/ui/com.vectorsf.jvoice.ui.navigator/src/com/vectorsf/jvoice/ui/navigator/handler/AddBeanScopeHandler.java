@@ -34,7 +34,8 @@ public class AddBeanScopeHandler extends AbstractModifyFlowHandler {
 		Shell shell = HandlerUtil.getActiveShell(event);
 
 		BeanScopeAddDialog dialog = new BeanScopeAddDialog(shell,
-				(IPackageFragment) findPackage(flow, project), project);
+				operation.getPersistedFlow(), (IPackageFragment) findPackage(
+						flow, project), project);
 		boolean ret = dialog.open() == Window.OK;
 		if (ret) {
 			componentBean = dialog.getComponentBean();

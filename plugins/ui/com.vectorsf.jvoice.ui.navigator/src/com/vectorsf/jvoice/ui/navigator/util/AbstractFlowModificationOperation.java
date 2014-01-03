@@ -24,7 +24,8 @@ public abstract class AbstractFlowModificationOperation {
 	private EditingDomain editingDomain;
 	private boolean shouldSave;
 
-	protected abstract Command getChangeCommand(EditingDomain domain, Flow persistedFlow);
+	protected abstract Command getChangeCommand(EditingDomain domain,
+			Flow persistedFlow);
 
 	public void setOriginalFlow(Flow flow) {
 		this.flow = flow;
@@ -32,6 +33,12 @@ public abstract class AbstractFlowModificationOperation {
 
 	public Flow getOriginalFlow() {
 		return flow;
+	}
+
+	public Flow getPersistedFlow() {
+		URI uri = EcoreUtil.getURI(flow);
+		Flow persistedFlow = getModifiableFlow(uri);
+		return persistedFlow;
 	}
 
 	public void saveFlow() throws ExecutionException {
@@ -52,13 +59,16 @@ public abstract class AbstractFlowModificationOperation {
 
 	private Flow getModifiableFlow(URI uri) {
 		URIEditorInput input = new URIEditorInput(uri);
-		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findEditor(input);
+		IEditorPart editor = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage().findEditor(input);
 
 		if (editor == null || !(editor instanceof IEditingDomainProvider)) {
-			editingDomain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain();
+			editingDomain = TransactionalEditingDomain.Factory.INSTANCE
+					.createEditingDomain();
 			ResourceSet resourceSet = editingDomain.getResourceSet();
 			VegaXMLURIHandlerImpl vegaURIHandler = new VegaXMLURIHandlerImpl();
-			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, vegaURIHandler);
+			resourceSet.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER,
+					vegaURIHandler);
 			Flow persistedFlow = (Flow) resourceSet.getEObject(uri, true);
 			shouldSave = true;
 

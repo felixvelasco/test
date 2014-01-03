@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import com.vectorsf.jvoice.model.operations.ComponentBean;
+import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 
 public class BeanScopeAddDialog extends TitleAreaDialog {
@@ -48,16 +49,18 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 	private IPackageFragment packageFragment;
 	private Shell shell;
 	private IProject project;
+	private Flow flow;
 
 	private ComponentBean bean;
 
-	public BeanScopeAddDialog(Shell parentShell,
+	public BeanScopeAddDialog(Shell parentShell, Flow flow,
 			IPackageFragment packageFragment, IProject project) {
 		super(parentShell);
 		this.packageFragment = packageFragment;
 		this.shell = parentShell;
 		this.bean = OperationsFactory.eINSTANCE.createComponentBean();
 		this.project = project;
+		this.flow = flow;
 	}
 
 	private Listener nameModifyListener = new Listener() {
@@ -88,6 +91,14 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 				setMessage("Enter a scope name");
 				getButton(IDialogConstants.OK_ID).setEnabled(false);
 				return false;
+			} else if (!text.isEmpty() && type.getAnnotation("Scope").exists()) {
+				for (ComponentBean bean : flow.getBeans()) {
+					if (bean.getName().equals(text)) {
+						setMessage("Scope name already exists");
+						getButton(IDialogConstants.OK_ID).setEnabled(false);
+						return false;
+					}
+				}
 			}
 		} catch (JavaModelException e) {
 			e.printStackTrace();
@@ -151,13 +162,10 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		GridData dataName = new GridData();
 		dataName.grabExcessHorizontalSpace = true;
 		dataName.horizontalAlignment = GridData.FILL;
-		// dataName.horizontalSpan = 2;
 		scopedNameText = new Text(container, SWT.BORDER);
 		scopedNameText.setLayoutData(dataName);
 		scopedNameText.setEnabled(false);
 		scopedNameText.addListener(SWT.Modify, nameModifyListener);
-
-		// new Label(container, SWT.NONE);
 	}
 
 	private void createLabelName(Composite container) {
@@ -200,7 +208,8 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 							bean.setPrototype(true);
 						} else {
 							scopedNameText.setEnabled(false);
-							scopedNameText.setText("");
+							scopedNameText.setText(getSingletonName(type
+									.getElementName().toLowerCase()));
 						}
 
 					} catch (JavaModelException e1) {
@@ -218,6 +227,20 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 			}
 
 		});
+	}
+
+	protected String getSingletonName(String singletonName) {
+		String newName = singletonName;
+		int i = 0;
+		while (i < flow.getBeans().size()) {
+			if (flow.getBeans().get(i).getName().equals(newName)) {
+				newName = singletonName + (i + 1);
+				i = 0;
+			} else {
+				i++;
+			}
+		}
+		return newName;
 	}
 
 	private void createValueName(Composite container) {
