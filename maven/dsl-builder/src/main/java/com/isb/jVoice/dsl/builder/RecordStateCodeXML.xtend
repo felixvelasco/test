@@ -22,26 +22,40 @@ class RecordStateCodeXML {
 				<evaluate expression="jVoiceArchRecord" result="flashScope.«state.name»" />
 				<set name="flashScope.«state.name».fileName" value="'«dsl.fileName»'" />
 				«IF configuration != null»
-					«IF configuration.getValue("beep") != null && !configuration.getValue("beep").equals("")»
-					<set name="flashScope.«state.name».beep" value="«configuration.getValue("beep")»" />
-					«ENDIF»	
-					«IF configuration.getValue("dtmfterm") != null && !configuration.getValue("dtmfterm").equals("")»
-					<set name="flashScope.«state.name».dtmfterm" value="«configuration.getValue("dtmfterm")»" />
-					«ENDIF»
-					«IF configuration.getValue("maxtime") != null && !configuration.getValue("maxtime").equals("")»
-					<set name="flashScope.«state.name».maxtime" value="'«configuration.getValue("maxtime")»'" />
-					«ENDIF»
-					«IF configuration.getValue("finalsilence") != null && !configuration.getValue("finalsilence").equals("")»
-					<set name="flashScope.«state.name».finalsilence" value="'«configuration.getValue("finalsilence")»'" />
-					«ENDIF»
-					«IF configuration.getValue("fileName") != null && !configuration.getValue("fileName").equals("")»
-					<set name="flashScope.«state.name».fileName" value="'«configuration.getValue("fileName")»'" />
-					«ENDIF»
-					«IF configuration.getValue("keep") != null && !configuration.getValue("keep").equals("")»
-					<set name="flashScope.«state.name».keep" value="«configuration.getValue("keep")»" />
-					«ENDIF»
+					«FOR configValue : configuration.configValue»
+						«IF configValue.name != null && configValue.name.equals("beep")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».beep" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("dtmfterm")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».dtmfterm" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("maxtime")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».maxtime" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("finalsilence")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».finalsilence" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("keep")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».keep" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("filepath")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».filePath" value="«configValue.value»" />
+							«ENDIF»
+						«ELSEIF configValue.name != null && !configValue.name.empty»
+							«IF configValue.value != null && !configValue.value.empty»
+								<evaluate name="flashScope.«state.name».properties.put('«configValue.name»','«configValue.value»')" />
+							«ENDIF»
+						«ENDIF»
+					«ENDFOR»
+
 				«ENDIF»
-				<set name="flashScope.jVoiceArchRecFileName" value="flashScope.«state.name».fileName" />		
+				<set name="flowScope.jVoiceArchRecFileName" value="flashScope.«state.name».fileName" />
         «IF audios != null»
         «var mainAudios = recordIn.locution.audios.mainAudios»
         «var noMatchAudios = recordIn.locution.audios.noMatchAudios»
@@ -61,9 +75,13 @@ class RecordStateCodeXML {
 			«IF tranSalidaS != null && tranSalidaS.size>0»
 			    «FOR tranSalida : tranSalidaS» 
 			    	«IF tranSalida.target instanceof CustomState» 
-			    		<transition on="recorded" to="render_«tranSalida.target.name»"/>
+			    		<transition on="recorded" to="render_«tranSalida.target.name»">
+			    			<evaluate expression="recordingService.saveRecording(lastRecordResult.temprecording, flowScope.jVoiceArchRecFileName)"/>
+			    		</transition>
 			    	«ELSE»
-			    		<transition on="recorded" to="«tranSalida.target.name»"/>
+			    		<transition on="recorded" to="«tranSalida.target.name»">
+			    			<evaluate expression="recordingService.saveRecording(lastRecordResult.temprecording, flowScope.jVoiceArchRecFileName)"/>
+			    		</transition>
 			    	«ENDIF»
 			    «ENDFOR»
 			«ENDIF»	
