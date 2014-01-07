@@ -339,6 +339,11 @@ public abstract class SimpleStatePattern extends IdPattern {
 		return new StateRemoveFeature(getFeatureProvider());
 	}
 
+	@Override
+	protected boolean avoidNegativeCoordinates() {
+		return true;
+	}
+
 	private final class StateRemoveFeature extends DefaultRemoveFeature {
 		private StateRemoveFeature(IFeatureProvider fp) {
 			super(fp);
