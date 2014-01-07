@@ -33,12 +33,10 @@ public class CallFlowStateValidator {
 						.getRawLocation();
 
 				rawFile = rawPath.toFile();
-			} else {
-				rawFile = new File(uri.toFileString());
-			}
-			if (!rawFile.exists()) {
-				operationsValidator
-						.error(state, "State " + state.getName() + " has a subflow defined that not exists.");
+				if (!rawFile.exists()) {
+					operationsValidator.error(state, "State " + state.getName()
+							+ " has a subflow defined that not exists.");
+				}
 			}
 		}
 

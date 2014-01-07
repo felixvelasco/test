@@ -31,13 +31,14 @@ public class LocutionStateValidator {
 			operationsValidator.error(lstate, "Locution State " + lstate.getName() + " has not a dsl associated.");
 		} else {
 			File rawFile = getFileLocution(lstate);
+			if (rawFile != null) {
+				String name = rawFile.getName().substring(0, rawFile.getName().indexOf("."));
+				File file = new File(rawFile.getParent(), name + ".resources/" + lstate.getLocution().getName()
+						+ ".voiceDsl");
 
-			String name = rawFile.getName().substring(0, rawFile.getName().indexOf("."));
-			File file = new File(rawFile.getParent(), name + ".resources/" + lstate.getLocution().getName()
-					+ ".voiceDsl");
-
-			if (!file.exists()) {
-				operationsValidator.error(lstate, "Locution " + lstate.getLocution() + " does not exist.");
+				if (!file.exists()) {
+					operationsValidator.error(lstate, "Locution " + lstate.getLocution() + " does not exist.");
+				}
 			}
 
 		}
@@ -58,8 +59,6 @@ public class LocutionStateValidator {
 					.getRawLocation();
 
 			rawFile = rawPath.toFile();
-		} else {
-			rawFile = new File(uri.toFileString());
 		}
 		return rawFile;
 	}

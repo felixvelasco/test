@@ -39,14 +39,12 @@ public class CustomStateValidator {
 					.getRawLocation();
 
 			rawFile = rawPath.toFile();
-		} else {
-			rawFile = new File(uri.toFileString());
-		}
-		File parent = rawFile.getParentFile();
-		File resources = new File(parent, flujo.getName() + ".resources");
-		File jsp = new File(resources, state.getPath());
-		if (!jsp.exists()) {
-			operationsValidator.error(state, state.getPath() + " not found in " + resources.getPath());
+			File parent = rawFile.getParentFile();
+			File resources = new File(parent, flujo.getName() + ".resources");
+			File jsp = new File(resources, state.getPath());
+			if (!jsp.exists()) {
+				operationsValidator.error(state, state.getPath() + " not found in " + resources.getPath());
+			}
 		}
 
 		return true;
