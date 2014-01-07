@@ -92,22 +92,20 @@ public class FlowValidator {
 					.getRawLocation();
 
 			rawFile = rawPath.toFile();
-		} else {
-			rawFile = new File(uri.toFileString());
-		}
-		File projectFile = findProjectFile(rawFile);
 
-		String classbean;
-		for (ComponentBean bean : beans) {
-			classbean = bean.getFqdn();
-			File folder = new File(projectFile, PATH);
-			File filepack = new File(folder, classbean.replace(".", "/").concat(".java"));
+			File projectFile = findProjectFile(rawFile);
 
-			if (!filepack.exists()) {
-				operationsValidator.error(flow, "Bean class" + classbean + " not found");
+			String classbean;
+			for (ComponentBean bean : beans) {
+				classbean = bean.getFqdn();
+				File folder = new File(projectFile, PATH);
+				File filepack = new File(folder, classbean.replace(".", "/").concat(".java"));
+
+				if (!filepack.exists()) {
+					operationsValidator.error(flow, "Bean class" + classbean + " not found");
+				}
 			}
 		}
-
 		return true;
 	}
 
