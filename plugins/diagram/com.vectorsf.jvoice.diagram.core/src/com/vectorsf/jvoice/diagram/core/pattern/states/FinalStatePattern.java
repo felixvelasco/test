@@ -112,7 +112,7 @@ public class FinalStatePattern extends SimpleStatePattern {
 		} else if (id.equals(ID_STATE_IMAGE)) {
 			Image image = (Image) context.getGraphicsAlgorithm();
 			String currentImage = image.getId();
-			String newImage = finalState.isFinal() ? CoreImageProvider.IMG_STATE_EXECUTION
+			String newImage = finalState.isFinal() ? CoreImageProvider.IMG_STATE_HANGUP
 					: CoreImageProvider.IMG_STATE_FINAL;
 			if (currentImage.equals(newImage)) {
 				return false;

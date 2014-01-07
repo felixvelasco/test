@@ -30,6 +30,7 @@ public class CoreImageProvider extends AbstractImageProvider {
 	public static final String IMG_STATE_CUSTOM = "icon_comp_custom";
 	public static final String IMG_STATE_EXECUTION = "icon_comp_execution";
 	public static final String IMG_STATE_FINAL = "icon_comp_final";
+	public static final String IMG_STATE_HANGUP = "icon_comp_hangup";
 	public static final String IMG_STATE_INPUT = "icon_comp_input";
 	public static final String IMG_STATE_MENU = "icon_comp_menu";
 	public static final String IMG_STATE_PROMPT = "icon_comp_prompt";
@@ -62,6 +63,7 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath(IMG_STATE_CUSTOM, "icons/states/icon_comp_custom.png");
 		addImageFilePath(IMG_STATE_EXECUTION, "icons/states/icon_comp_execution.png");
 		addImageFilePath(IMG_STATE_FINAL, "icons/states/icon_comp_final.png");
+		addImageFilePath(IMG_STATE_HANGUP, "icons/states/icon_comp_hangup.png");
 		addImageFilePath(IMG_STATE_INPUT, "icons/states/icon_comp_input.png");
 		addImageFilePath(IMG_STATE_MENU, "icons/states/icon_comp_menu.png");
 		addImageFilePath(IMG_STATE_PROMPT, "icons/states/icon_comp_prompt.png");
