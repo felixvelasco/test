@@ -104,16 +104,6 @@ class XMLGeneratorJFC {
 		   <beans:property name="resource" value="/com/vectorsf/«projectName»/ws/ws-endpoints.xml" /> 
 		</beans:bean>
 		
-		<beans:bean id="app" class="com.vectorsf.jvoiceframework.core.admin.AppConfig">
-		   <beans:constructor-arg ref="appConfig"/>
-		</beans:bean>
-
-		<beans:bean id="appConfig" class="org.apache.commons.configuration.PropertiesConfiguration">
-		   <beans:constructor-arg type="java.lang.String">
-				<beans:value>application.properties</beans:value>
-			</beans:constructor-arg>
-		</beans:bean>
-
 	</beans:beans>
 	'''
 }
