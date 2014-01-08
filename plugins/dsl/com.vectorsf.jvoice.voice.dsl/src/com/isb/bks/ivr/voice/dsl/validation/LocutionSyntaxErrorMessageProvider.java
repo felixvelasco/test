@@ -3,8 +3,11 @@ package com.isb.bks.ivr.voice.dsl.validation;
 import org.antlr.runtime.MismatchedTokenException;
 import org.antlr.runtime.RecognitionException;
 import org.eclipse.xtext.AbstractElement;
+import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CompoundElement;
 import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.diagnostics.Diagnostic;
 import org.eclipse.xtext.nodemodel.SyntaxErrorMessage;
 import org.eclipse.xtext.parser.antlr.SyntaxErrorMessageProvider;
@@ -56,7 +59,18 @@ public class LocutionSyntaxErrorMessageProvider extends SyntaxErrorMessageProvid
 		if (abstractElement instanceof Keyword) {
 			return (Keyword) abstractElement;
 		} else if (abstractElement instanceof CompoundElement) {
-			return getFirstKeyword(((CompoundElement) abstractElement).getElements().get(0));
+
+			for (AbstractElement element : ((CompoundElement) abstractElement).getElements()) {
+				Keyword k = getFirstKeyword(element);
+				if (k != null) {
+					return k;
+				}
+			}
+		} else if (abstractElement instanceof Assignment) {
+			return getFirstKeyword(((Assignment) abstractElement).getTerminal());
+		} else if (abstractElement instanceof RuleCall) {
+			AbstractRule rule = ((RuleCall) abstractElement).getRule();
+			return getFirstKeyword(rule.getAlternatives());
 		}
 		return null;
 	}
