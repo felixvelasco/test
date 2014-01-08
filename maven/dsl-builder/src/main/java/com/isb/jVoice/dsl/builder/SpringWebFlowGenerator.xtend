@@ -74,7 +74,7 @@ class SpringWebFlowGenerator {
 		«ENDIF»
 		«FOR bean: beans »
 		  «IF (bean.prototype)»
-		     <evaluate expression="«bean.nameBean.toFirstUpper»" result="flowScope.«bean.name»"></evaluate>
+		     <evaluate expression="«bean.nameBean»" result="flowScope.«bean.name»"></evaluate>
 		  «ENDIF»
 		«ENDFOR»
 		
