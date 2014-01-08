@@ -28,6 +28,7 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 		@Override
 		public Boolean handle(Object[] params, Throwable throwable) {
 			error((EObject) params[0], "Error during validation, please see the error log", throwable);
+			throwable.printStackTrace();
 			return false;
 		}
 
@@ -46,7 +47,7 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 
 	private PolymorphicDispatcher.ErrorHandler<Boolean> errorValidatingHandler = new ValidationErrorHandler();
 	private PolymorphicDispatcher.ErrorHandler<Boolean> errorValidatorHandler = new ValidatorErrorHandler();
-	private DiagnosticChain currentDiagnostic;
+	private ThreadLocal<DiagnosticChain> currentDiagnostic = new ThreadLocal<>();
 
 	@Override
 	public final boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics,
@@ -98,9 +99,9 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 				}
 			};
 
-			this.currentDiagnostic = diagnostics;
+			this.currentDiagnostic.set(diagnostics);
 			Boolean invoke = dispatcher.invoke(eObject);
-			this.currentDiagnostic = null;
+			this.currentDiagnostic.set(null);
 			return invoke;
 		} else {
 			return true;
@@ -133,18 +134,21 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 	}
 
 	public void error(EObject eobject, String message) {
-		currentDiagnostic.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreUtil.getURI(eobject).toPlatformString(true),
-				-1, message, new Object[] { eobject }));
+		currentDiagnostic.get().add(
+				new BasicDiagnostic(Diagnostic.ERROR, EcoreUtil.getURI(eobject).toPlatformString(true), -1, message,
+						new Object[] { eobject }));
 	}
 
 	public void error(EObject eobject, String message, Throwable t) {
-		currentDiagnostic.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreUtil.getURI(eobject).toPlatformString(true),
-				-1, message, new Object[] { eobject, t }));
+		currentDiagnostic.get().add(
+				new BasicDiagnostic(Diagnostic.ERROR, EcoreUtil.getURI(eobject).toPlatformString(true), -1, message,
+						new Object[] { eobject, t }));
 	}
 
 	public void warning(EObject eobject, String message) {
-		currentDiagnostic.add(new BasicDiagnostic(Diagnostic.WARNING, EcoreUtil.getURI(eobject).toPlatformString(true),
-				-1, message, new Object[] { eobject }));
+		currentDiagnostic.get().add(
+				new BasicDiagnostic(Diagnostic.WARNING, EcoreUtil.getURI(eobject).toPlatformString(true), -1, message,
+						new Object[] { eobject }));
 	}
 
 	public static class PartialMethodNameFilter implements Predicate<Method> {
