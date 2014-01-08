@@ -20,9 +20,9 @@ class CallStateCodeXML extends StateCodeGenerator {
 			      «ENDIF»
 			   «ELSE»  
 			      «IF state.parameters.size>0»
-			         <evaluate expression="«state.bean.name».«state.methodName»(«state.parameters.join(", ")»)"
+			         <evaluate expression="«state.bean.nameBean».«state.methodName»(«state.parameters.join(", ")»)"
 			      «ELSE»
-			         <evaluate expression="«state.bean.name».«state.methodName»()"
+			         <evaluate expression="«state.bean.nameBean».«state.methodName»()"
 			      «ENDIF»
 			   «ENDIF»
 			   «IF state.referencedBean!=null»
