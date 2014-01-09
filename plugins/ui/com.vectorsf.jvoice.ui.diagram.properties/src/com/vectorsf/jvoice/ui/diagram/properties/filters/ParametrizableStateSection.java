@@ -166,4 +166,10 @@ public abstract class ParametrizableStateSection extends GFPropertySection {
 		}
 		callParameters.clear();
 	}
+
+	@Override
+	public boolean shouldUseExtraSpace() {
+		return true;
+	}
+
 }

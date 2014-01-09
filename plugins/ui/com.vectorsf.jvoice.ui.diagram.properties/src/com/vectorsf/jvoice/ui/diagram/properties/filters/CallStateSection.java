@@ -8,6 +8,7 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
+import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
@@ -31,6 +32,7 @@ public class CallStateSection extends ParametrizableStateSection {
 
 	private LabelAndText labelTextBean;
 	private LabelAndText labelTextMethod;
+	private Label returnLabel;
 	private CCombo combo;
 	private IFeatureProvider fp;
 
@@ -79,37 +81,48 @@ public class CallStateSection extends ParametrizableStateSection {
 		labelTextMethod = createLabelAndText("Method", "", null, -1);
 		labelTextMethod.text.setEnabled(false);
 
-		Label label = factory.createLabel(composite, "Reference");
-		label.setLayoutData(new GridData());
+	}
+
+	@Override
+	public void refresh() {
+		super.refresh();
+		if (returnLabel != null) {
+			returnLabel.dispose();
+		}
+		if (combo != null) {
+			combo.dispose();
+		}
+		returnLabel = factory.createLabel(composite, "Return");
+		returnLabel.setLayoutData(new GridData());
 
 		// Nombre del elemento
 		combo = factory.createCCombo(composite);
 		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
 		combo.setLayoutData(layoutData);
 		combo.addSelectionListener(new ChangeComboListener(this, combo));
-	}
 
-	@Override
-	public void refresh() {
-		super.refresh();
-		fp = getDiagramTypeProvider().getFeatureProvider();
 		combo.removeAll();
 		combo.add("");
-		if (((CallState) state).getBean() != null) {
-			labelTextBean.text.setText(((CallState) state).getBean().getNameBean());
-			if (((CallState) state).getMethodName() != null) {
-				labelTextMethod.text.setText(((CallState) state).getMethodName());
-				// cargamos combo con los beans que se puedan relacionar
+		state = (ParameterizedState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(
+				getSelectedPictogramElement());
+		if (state != null) {
+			if (((CallState) state).getBean() != null) {
+				labelTextBean.text.setText(((CallState) state).getBean().getNameBean());
+				if (((CallState) state).getMethodName() != null) {
+					labelTextMethod.text.setText(((CallState) state).getMethodName());
+					// cargamos combo con los beans que se puedan relacionar
 
-				loadCombo((CallState) state);
+					loadCombo((CallState) state);
+				} else {
+					labelTextMethod.text.setText("");
+				}
 			} else {
+				labelTextBean.text.setText("");
 				labelTextMethod.text.setText("");
 			}
-		} else {
-			labelTextBean.text.setText("");
-			labelTextMethod.text.setText("");
 		}
 
+		composite.layout(true, true);
 	}
 
 	private void loadCombo(CallState state) {
