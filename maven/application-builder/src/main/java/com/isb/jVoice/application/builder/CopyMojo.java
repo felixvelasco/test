@@ -148,7 +148,7 @@ public class CopyMojo extends AbstractMojo {
 
 	private void fillPropertiesApp() throws FileNotFoundException, IOException {
 		File fResourcesFolder = new File(mavenProject.getBasedir().getAbsolutePath() + SRC_MAIN_RESOURCES);
-		if (fResourcesFolder != null) {
+		if (fResourcesFolder.exists() && fResourcesFolder.isDirectory()) {
 			for (final File fileEntry : fResourcesFolder.listFiles()) {
 				if (isPropertiesProject(fileEntry.getAbsolutePath())) {
 					pTotalProperties.load(new FileInputStream(fileEntry));
