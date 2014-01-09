@@ -80,18 +80,43 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 			setMessage("Select a component");
 			getButton(IDialogConstants.OK_ID).setEnabled(false);
 			return false;
+		} else {
+			for (ComponentBean flowBean : flow.getBeans()) {
+				IJavaProject jProject = JavaCore.create(project);
+				IType type;
+				try {
+					type = jProject.findType(bean.getFqdn());
+
+					IMemberValuePair[] scopeValues = type
+							.getAnnotation("Scope").getMemberValuePairs();
+					if (flowBean.getFqdn().equals(beanClass)
+							&& !scopeValues[0].getValue().equals("prototype")) {
+						setMessage("Component already exists");
+						getButton(IDialogConstants.OK_ID).setEnabled(false);
+						return false;
+					}
+				} catch (JavaModelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
 		}
 
 		try {
 			IJavaProject jProject = JavaCore.create(project);
 			IType type = jProject.findType(bean.getFqdn());
 
-			if (text.isEmpty() && type.getAnnotation("Scope").exists()) {
+			IMemberValuePair[] scopeValues = type.getAnnotation("Scope")
+					.getMemberValuePairs();
+			if (text.isEmpty() && scopeValues[0].getValue().equals("prototype")) {
+
 				setErrorMessage(null);
 				setMessage("Enter a scope name");
 				getButton(IDialogConstants.OK_ID).setEnabled(false);
 				return false;
-			} else if (!text.isEmpty() && type.getAnnotation("Scope").exists()) {
+			} else if (!text.isEmpty()
+					&& scopeValues[0].getValue().equals("prototype")) {
 				for (ComponentBean bean : flow.getBeans()) {
 					if (bean.getName().equals(text)) {
 						setMessage("Scope name already exists");
@@ -203,13 +228,16 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 					IType type;
 					try {
 						type = jProject.findType(bean.getFqdn());
-						if (type.getAnnotation("Scope").exists()) {
+						IMemberValuePair[] scopeValues = type.getAnnotation(
+								"Scope").getMemberValuePairs();
+						if (scopeValues[0].getValue().equals("prototype")) {
 							scopedNameText.setEnabled(true);
 							bean.setPrototype(true);
 						} else {
 							scopedNameText.setEnabled(false);
-							scopedNameText.setText(getSingletonName(type
-									.getElementName().toLowerCase()));
+							scopedNameText.setText(Character.toLowerCase(type
+									.getElementName().charAt(0))
+									+ type.getElementName().substring(1));
 						}
 
 					} catch (JavaModelException e1) {
@@ -227,20 +255,6 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 			}
 
 		});
-	}
-
-	protected String getSingletonName(String singletonName) {
-		String newName = singletonName;
-		int i = 0;
-		while (i < flow.getBeans().size()) {
-			if (flow.getBeans().get(i).getName().equals(newName)) {
-				newName = singletonName + (i + 1);
-				i = 0;
-			} else {
-				i++;
-			}
-		}
-		return newName;
 	}
 
 	private void createValueName(Composite container) {
