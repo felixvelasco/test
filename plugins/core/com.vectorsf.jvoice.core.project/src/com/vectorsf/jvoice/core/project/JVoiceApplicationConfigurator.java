@@ -1,6 +1,10 @@
 package com.vectorsf.jvoice.core.project;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.maven.model.Build;
+import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
@@ -82,6 +86,19 @@ public final class JVoiceApplicationConfigurator {
 
 		model.setName(projectName);
 		model.setDescription(descProject);
+		
+		List<Dependency> dependencies = new ArrayList<Dependency>();
+		Dependency jvFlow = new Dependency();
+		jvFlow.setGroupId("com.vectorsf");
+		jvFlow.setArtifactId("jvoiceframework-flow");
+		jvFlow.setVersion("1.0-SNAPSHOT");
+		dependencies.add(jvFlow);
+		Dependency jvIsbanLogger = new Dependency();
+		jvIsbanLogger.setGroupId("com.vectorsf");
+		jvIsbanLogger.setArtifactId("jvoiceframework-isban-logger");
+		jvIsbanLogger.setVersion("1.0-SNAPSHOT");
+		dependencies.add(jvIsbanLogger);
+		model.setDependencies(dependencies);
 
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");

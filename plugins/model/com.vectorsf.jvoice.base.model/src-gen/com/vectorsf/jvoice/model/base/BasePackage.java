@@ -627,13 +627,22 @@ public interface BasePackage extends EPackage {
 	int JV_APPLICATION__MODULE = JV_PROJECT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Legacy Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JV_APPLICATION__LEGACY_LOGGER = JV_PROJECT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>JV Application</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JV_APPLICATION_FEATURE_COUNT = JV_PROJECT_FEATURE_COUNT + 1;
+	int JV_APPLICATION_FEATURE_COUNT = JV_PROJECT_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Referenced Projects</em>' operation.
@@ -1134,6 +1143,17 @@ public interface BasePackage extends EPackage {
 	EReference getJVApplication_Module();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.base.JVApplication#isLegacyLogger <em>Legacy Logger</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Legacy Logger</em>'.
+	 * @see com.vectorsf.jvoice.model.base.JVApplication#isLegacyLogger()
+	 * @see #getJVApplication()
+	 * @generated
+	 */
+	EAttribute getJVApplication_LegacyLogger();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.base.JVModule <em>JV Module</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1473,6 +1493,14 @@ public interface BasePackage extends EPackage {
 		 * @generated
 		 */
 		EReference JV_APPLICATION__MODULE = eINSTANCE.getJVApplication_Module();
+
+		/**
+		 * The meta object literal for the '<em><b>Legacy Logger</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute JV_APPLICATION__LEGACY_LOGGER = eINSTANCE.getJVApplication_LegacyLogger();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.base.impl.JVModuleImpl <em>JV Module</em>}' class.

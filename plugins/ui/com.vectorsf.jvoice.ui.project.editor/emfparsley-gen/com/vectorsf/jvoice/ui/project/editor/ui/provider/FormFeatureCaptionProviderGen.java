@@ -24,4 +24,8 @@ public class FormFeatureCaptionProviderGen extends FormFeatureCaptionProvider {
   public String text_JVModule_componentsPackage(final EStructuralFeature it) {
     return "Components package";
   }
+  
+  public String text_JVApplication_legacyLogger(final EStructuralFeature it) {
+    return "Uses legacy logger";
+  }
 }

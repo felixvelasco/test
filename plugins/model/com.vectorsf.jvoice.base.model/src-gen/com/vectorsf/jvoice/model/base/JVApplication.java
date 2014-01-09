@@ -13,6 +13,7 @@ import java.util.List;
  * The following features are supported:
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.base.JVApplication#getModule <em>Module</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.base.JVApplication#isLegacyLogger <em>Legacy Logger</em>}</li>
  * </ul>
  * </p>
  *
@@ -36,5 +37,32 @@ public interface JVApplication extends JVProject {
 	 * @generated
 	 */
 	List<JVModule> getModule();
+
+	/**
+	 * Returns the value of the '<em><b>Legacy Logger</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Legacy Logger</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Legacy Logger</em>' attribute.
+	 * @see #setLegacyLogger(boolean)
+	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVApplication_LegacyLogger()
+	 * @model default="true"
+	 * @generated
+	 */
+	boolean isLegacyLogger();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.model.base.JVApplication#isLegacyLogger <em>Legacy Logger</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Legacy Logger</em>' attribute.
+	 * @see #isLegacyLogger()
+	 * @generated
+	 */
+	void setLegacyLogger(boolean value);
 
 } // JVApplication

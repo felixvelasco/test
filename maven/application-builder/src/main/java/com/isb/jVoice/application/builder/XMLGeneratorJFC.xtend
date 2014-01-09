@@ -8,21 +8,21 @@ import static com.isb.jVoice.application.builder.Using.*
 
 class XMLGeneratorJFC {
 	
-	def static generate(File target, String projectName) {
-		new XMLGeneratorJFC().generateXML(target,projectName);
+	def static generate(File target, String projectName, boolean legacyLogger) {
+		new XMLGeneratorJFC().generateXML(target,projectName,legacyLogger);
 	}
 	
-	def generateXML(File file, String projectName) {
+	def generateXML(File file, String projectName, boolean legacyLogger) {
 		using(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8")))[
-			it.append(doGenerate(projectName));
+			it.append(doGenerate(projectName,legacyLogger));
 		]	
 	}
 	
-	def doGenerate(String projectName) '''
-		«doGenerateWeb(projectName)»
+	def doGenerate(String projectName, boolean legacyLogger) '''
+		«doGenerateWeb(projectName,legacyLogger)»
 	'''
 
-	def doGenerateWeb(String projectName) '''
+	def doGenerateWeb(String projectName, boolean legacyLogger) '''
 	<?xml version="1.0" encoding="UTF-8"?>
 	<beans:beans xmlns="http://www.springframework.org/schema/mvc"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -71,7 +71,7 @@ class XMLGeneratorJFC {
 		<webflow:flow-builder-services id="flowBuilderServices"
 			view-factory-creator="viewFactoryCreator" />
 
-		«IF (false) /* TODO */»
+		«IF (legacyLogger)»
 		<beans:bean id="renderer" class="com.vectorsf.jvoiceframework.isban.logger.render.vxi.IsbanLoggerRenderer">
 		«ELSE»
 		<beans:bean id="renderer" class="com.vectorsf.jvoiceframework.flow.render.vxi.VXIRenderer">

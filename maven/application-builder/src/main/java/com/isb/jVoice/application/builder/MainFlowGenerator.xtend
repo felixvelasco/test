@@ -2,20 +2,20 @@ package com.isb.jVoice.application.builder
 
 import com.vectorsf.jvoice.model.base.EventHandler
 import com.vectorsf.jvoice.model.base.JVBean
-import com.vectorsf.jvoice.model.base.JVProject
 import java.io.File
 import java.io.FileWriter
 
 import static com.isb.jVoice.application.builder.Using.*
 import java.util.List
+import com.vectorsf.jvoice.model.base.JVApplication
 
 class MainFlowGenerator {
 
-	JVProject module
+	JVApplication module
 	
 	val PATH = "src/main/resources/jv/"
 
-	new(JVProject module) {
+	new(JVApplication module) {
 		this.module = module
 	}
 
@@ -68,7 +68,7 @@ class MainFlowGenerator {
 		</flow> 
 	'''
 
-	def static compile(File target, JVProject project) {
+	def static compile(File target, JVApplication project) {
 		new MainFlowGenerator(project).generate(target);
 	}
 }

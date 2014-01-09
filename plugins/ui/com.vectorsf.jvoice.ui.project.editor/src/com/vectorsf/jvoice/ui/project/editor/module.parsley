@@ -10,7 +10,7 @@ module com.vectorsf.jvoice.ui.project.editor {
 	featuresProvider {
 		features {
 			JVModule -> name, componentsPackage, description
-			JVApplication -> name, description
+			JVApplication -> name, legacyLogger, description
 			EventHandler -> event, handler
 		}
 	}
@@ -22,6 +22,7 @@ module com.vectorsf.jvoice.ui.project.editor {
 			NamedElement:name -> "Name"
 			NamedElement:description -> "Description"
 			JVModule:componentsPackage -> "Components package"
+			JVApplication:legacyLogger -> "Uses legacy logger"
 		}
 	}
 	

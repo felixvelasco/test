@@ -87,14 +87,6 @@ public final class JVoiceProjectConfigurator {
 		model.setName(projectName);
 		model.setDescription(descriptionProject);
 
-		List<Dependency> dependencies = new ArrayList<Dependency>();
-		Dependency dep = new Dependency();
-		dep.setGroupId("com.vectorsf");
-		dep.setArtifactId("jvoiceframework-flow");
-		dep.setVersion("1.0-SNAPSHOT");
-		dependencies.add(dep);
-		model.setDependencies(dependencies);
-
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");
 		dsl_builder.setArtifactId("dsl-builder");

@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,8 +32,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import com.vectorsf.jvoice.model.base.BasePackage;
+import com.vectorsf.jvoice.model.base.JVApplication;
 import com.vectorsf.jvoice.model.base.JVModule;
-import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 
 /**
@@ -39,14 +42,13 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
  * @goal copyXML
  * 
  * @phase process-resources
- * 
  * @requiresDependencyResolution compile+runtime
  */
 public class CopyMojo extends AbstractMojo {
 
 	private static final String SRC_MAIN_RESOURCES = "/src/main/resources";
 	private static final String POM_PROPERTIES_EXT = "pom.properties";
-	private static final String STATIC = "/static/";
+	private static final String STATIC = "static/";
 	private static final String WAV_EXT = ".wav";
 	private static final String XML_EXT = ".xml";
 	private static final String JAR_EXT = ".jar";
@@ -65,6 +67,7 @@ public class CopyMojo extends AbstractMojo {
 	private static final String XML = "xml";
 	private static final String ARCHIVE_FILE = "archive:file:/";
 	private static final String SEPARATOR2 = "\\";
+	private static final String LOGGER_CONFIG_DIR = "/com/vectorsf/jvoiceframework/config/logger";
 
 	/**
 	 * Location of the target directory.
@@ -84,26 +87,50 @@ public class CopyMojo extends AbstractMojo {
 	/**
 	 * @parameter expression="${project.runtimeClasspathElements}"
 	 */
-	@SuppressWarnings("unused")
 	private List<String> runtimeClasspathElements;
 
 	private List<JVModule> modules = new ArrayList<JVModule>();
 	String nameProject = null;
 	Properties pTotalProperties = new Properties();
+	private ClassLoader runtimeClassLoader;
+
+	private URL[] buildURLs() {
+		List<URL> urls = new ArrayList<URL>(runtimeClasspathElements.size());
+		for (String element : runtimeClasspathElements) {
+
+			try {
+				urls.add(new File(element).toURI().toURL());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return urls.toArray(new URL[urls.size()]);
+	}
+
+	private ClassLoader createClassLoaderForProjectDependencies() {
+		URL[] urls = buildURLs();
+		return new URLClassLoader(urls, this.getClass().getClassLoader());
+	}
 
 	@Override
 	public void execute() throws MojoExecutionException {
+		
+		runtimeClassLoader = createClassLoaderForProjectDependencies();
 
 		try {
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(PROJECT_INFORMATION,
-					new XMIResourceFactoryImpl());
-			EPackage.Registry.INSTANCE.put(BasePackage.eNS_URI, BasePackage.eINSTANCE);
-			EPackage.Registry.INSTANCE.put(OperationsPackage.eNS_URI, OperationsPackage.eINSTANCE);
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
+					PROJECT_INFORMATION, new XMIResourceFactoryImpl());
+			EPackage.Registry.INSTANCE.put(BasePackage.eNS_URI,
+					BasePackage.eINSTANCE);
+			EPackage.Registry.INSTANCE.put(OperationsPackage.eNS_URI,
+					OperationsPackage.eINSTANCE);
 
-			JVProject modulo = getProjectInformation();
+			JVApplication application = getProjectInformation();
 			File flows = new File(outputDirectory, DESTINO);
 			flows.mkdirs();
-			generateMainModule(modulo, flows);
+			generateMainModule(application, flows);
 
 			pTotalProperties.clear();
 			// copia los ficheros .wav y .xml, además recopila las propiedades
@@ -122,12 +149,15 @@ public class CopyMojo extends AbstractMojo {
 			File appServlet = new File(outputDirectory, APPSERVLET);
 			appServlet.mkdirs();
 			// Generamos el XML servlet-context.xml de la carpeta spring
-			XMLGeneratorServlet.generate(new File(appServlet, "servlet-context.xml"));
+			XMLGeneratorServlet.generate(new File(appServlet,
+					"servlet-context.xml"));
 
 			// Creamos el app-context.xml en dentro de la carpeta WEB-INF
 			File spring = new File(outputDirectory, "spring");
-			XMLGeneratorAPP.generate(new File(spring, "app-context.xml"), modules);
-			XMLGeneratorJFC.generate(new File(spring, "jvoiceframework-context.xml"), modulo.getName());
+			XMLGeneratorAPP.generate(new File(spring, "app-context.xml"),
+					modules);
+			XMLGeneratorJFC.generate(new File(spring,
+					"jvoiceframework-context.xml"), application.getName(), application.isLegacyLogger());
 			XMLGeneratorRC.generate(new File(spring, "root-context.xml"));
 
 			// Creamos el web.xml en dentro de la carpeta WEB-INF
@@ -138,17 +168,62 @@ public class CopyMojo extends AbstractMojo {
 			views.mkdirs();
 			XMLGeneratorRHTML.generate(new File(views, "renderHTML.jsp"));
 			XMLGeneratorRVXI.generate(new File(views, "renderVXI.jsp"));
-			copyFile("_init.jsp", new File(views, "_init.jsp"));
+			copyFile("views/_init.jsp", new File(views, "_init.jsp"));
 
+			//Creamos la carpeta src/main/resources/com/vectorsf/jvoiceframework/config/logger
+			File configLogger = new File (mavenProject.getBasedir().getAbsolutePath() + SRC_MAIN_RESOURCES + LOGGER_CONFIG_DIR);
+			configLogger.mkdirs();
+			
+			//Generamos el archivo "padre" de configuración del logger (logback.xml) en la carpeta src/main/resources
+			XMLGeneratorLogback.generate(new File(mavenProject.getBasedir().getAbsolutePath() + SRC_MAIN_RESOURCES,"logback.xml"), application.isLegacyLogger());
+			
+			//Copiamos el archivo de configuración general del logger (logback-core.xml) en la carpeta src/main/resources/com/vectorsf/jvoiceframework/config/logger
+			copyFile("logback-core.xml", new File(configLogger,"logback-core.xml"));
+			
+			//Copiamos/borramos los archivos que necesita el isban logger en función de si se usa o no
+			handleIsbanLoggerFiles(application.isLegacyLogger(), configLogger);
+			
 		} catch (IOException e) {
 			throw new MojoExecutionException("Error in CopyMojo:execute()", e);
 		}
 
 	}
 
+	private void handleIsbanLoggerFiles(boolean legacyLogger, File configLogger) throws MojoExecutionException {
+		
+		File isbanLoggerConfig = new File(configLogger,"isban-logger-config.xml");
+		File logbackIsbanLogger =  new File(configLogger,"logback-isban-logger.xml");
+		File js = new File(outputDirectory, "js");
+		File isbanLoggerJs =  new File(js, "isban-logger.js");
+
+		if (legacyLogger) {
+			//Si se usa el isban logger:
+			//Copiamos los archivos de configuración necesarios en la carpeta src/main/resources/com/vectorsf/jvoiceframework/config/logger
+			copyFile("isban-logger-config.xml", isbanLoggerConfig);
+			copyFile("logback-isban-logger.xml", logbackIsbanLogger);
+			//Creamos la carpeta js dentro de WEB-INF
+			js.mkdirs();
+			//Copiamos el archivo isban-logger.js en ella
+			copyFile("isban-logger.js",isbanLoggerJs);
+		} else {
+			//Si no se usa el legacy logger, si están los archivos, se borran.
+			if (isbanLoggerConfig.exists()){
+				isbanLoggerConfig.delete();
+			}
+			if (logbackIsbanLogger.exists()){
+				logbackIsbanLogger.delete();
+			}
+			if (isbanLoggerJs.exists()){
+				isbanLoggerJs.delete();
+				js.delete();
+			}
+		}
+	}
+
 	private void fillPropertiesApp() throws FileNotFoundException, IOException {
-		File fResourcesFolder = new File(mavenProject.getBasedir().getAbsolutePath() + SRC_MAIN_RESOURCES);
-		if (fResourcesFolder.exists() && fResourcesFolder.isDirectory()) {
+		File fResourcesFolder = new File(mavenProject.getBasedir()
+				.getAbsolutePath() + SRC_MAIN_RESOURCES);
+		if (fResourcesFolder != null) {
 			for (final File fileEntry : fResourcesFolder.listFiles()) {
 				if (isPropertiesProject(fileEntry.getAbsolutePath())) {
 					pTotalProperties.load(new FileInputStream(fileEntry));
@@ -157,7 +232,7 @@ public class CopyMojo extends AbstractMojo {
 			}
 		}
 	}
-
+	
 	private void searchInJarFiles() throws IOException {
 
 		List<Artifact> lArti = getProjectArtifacts();
@@ -165,7 +240,8 @@ public class CopyMojo extends AbstractMojo {
 			Artifact artifacti = lArti.get(i);
 			File file_ = artifacti.getFile();
 			if (file_ != null && file_.toURI().toString().endsWith(JAR_EXT)) {
-				List<String> extensions = Arrays.asList(new String[] { XML_EXT, WAV_EXT });
+				List<String> extensions = Arrays.asList(new String[] { XML_EXT,
+						WAV_EXT });
 				findFullPath(extensions, file_);
 			}
 		}
@@ -173,14 +249,16 @@ public class CopyMojo extends AbstractMojo {
 
 	private List<Artifact> getProjectArtifacts() {
 		@SuppressWarnings("unchecked")
-		Set<Artifact> dependencyArtifacts = mavenProject.getDependencyArtifacts();
+		Set<Artifact> dependencyArtifacts = mavenProject
+				.getDependencyArtifacts();
 		List<Artifact> listArt = new ArrayList<Artifact>(dependencyArtifacts);
 		Collections.sort(listArt);
 		return listArt;
 	}
 
-	private void copyFile(String origName, File destFile) throws MojoExecutionException {
-		try (InputStream is = getClass().getResourceAsStream(STATIC + origName);
+	private void copyFile(String origName, File destFile)
+			throws MojoExecutionException {
+		try (InputStream is = runtimeClassLoader.getResourceAsStream(STATIC + origName);
 				FileOutputStream fos = new FileOutputStream(destFile)) {
 			int read = -1;
 			byte[] buf = new byte[4096];
@@ -196,47 +274,60 @@ public class CopyMojo extends AbstractMojo {
 	/**
 	 * Metodo que accede al projectInformation para obtener informacion de el.
 	 */
-	private JVProject getProjectInformation() {
-		String ruta = "file:///" + mavenProject.getBasedir().getAbsolutePath() + SEPARATOR + PROJECT_INFORMATION_EXT;
+	private JVApplication getProjectInformation() {
+		String ruta = "file:///" + mavenProject.getBasedir().getAbsolutePath()
+				+ SEPARATOR + PROJECT_INFORMATION_EXT;
 		ResourceSet resSet = new ResourceSetImpl();
 		URI uri = URI.createURI(ruta.replace(SEPARATOR2, SEPARATOR));
 		Resource res = resSet.getResource(uri, true);
-		JVProject project = (JVProject) res.getContents().get(0);
+		JVApplication project = (JVApplication) res.getContents().get(0);
 		return project;
 	}
 
-	private void generateMainModule(JVProject project, File mainFolder) {
-		File folder = new File(new File(mainFolder, "GlobalEventsHandlers"), "appGlobalTrans");
+	private void generateMainModule(JVApplication project, File mainFolder) {
+		File folder = new File(new File(mainFolder, "GlobalEventsHandlers"),
+				"appGlobalTrans");
 		folder.mkdirs();
-		MainFlowGenerator.compile(new File(folder, "appGlobalTrans-flow.xml"), project);
+		MainFlowGenerator.compile(new File(folder, "appGlobalTrans-flow.xml"),
+				project);
 	}
 
 	/**
 	 * @param name
 	 * 
 	 */
-	protected void copyFile(InputStream in, String name, String type, String nameProject) {
+	protected void copyFile(InputStream in, String name, String type,
+			String nameProject) {
 		File ruta = new File(name);
 
 		File pathname = null;
 		File destino = null;
-		// Se crea en rutas diferentes dependiendo de si se trata de un audio type= wav o un flujo type=jVoice
+		// Se crea en rutas diferentes dependiendo de si se trata de un audio
+		// type= wav o un flujo type=jVoice
 		if (type.equals(JVOICES)) {
-			pathname = new File(outputDirectory, DESTINO + SEPARATOR + name.replace(ruta.getName(), "").trim()
-					+ ruta.getName().substring(0, ruta.getName().indexOf(DOT)).trim());
+			pathname = new File(outputDirectory, DESTINO
+					+ SEPARATOR
+					+ name.replace(ruta.getName(), "").trim()
+					+ ruta.getName().substring(0, ruta.getName().indexOf(DOT))
+							.trim());
 			/*
-			 * Comprobamos que exista el directorio base donde vamos a crear los XML. Si no existe, se crea.
+			 * Comprobamos que exista el directorio base donde vamos a crear los
+			 * XML. Si no existe, se crea.
 			 */
 			pathname.mkdirs();
 
-			destino = new File(pathname, ruta.getName().substring(0, ruta.getName().indexOf(DOT)) + FLOW
+			destino = new File(pathname, ruta.getName().substring(0,
+					ruta.getName().indexOf(DOT))
+					+ FLOW
 					+ ruta.getName().substring(ruta.getName().indexOf(DOT)));
 
 		} else if (type.equals(WAV)) {
-			pathname = new File(outputDirectory.getParentFile(), DESTINOWAV + SEPARATOR
-					+ name.replace(ruta.getName(), "").trim() + SEPARATOR + nameProject);
+			pathname = new File(outputDirectory.getParentFile(), DESTINOWAV
+					+ SEPARATOR + name.replace(ruta.getName(), "").trim()
+					+ SEPARATOR + nameProject);
 			/*
-			 * Comprobamos que exista el directorio base donde vamos a crear los wav. Si no existe, se crea.
+			 * Comprobamos que exista el directorio base donde vamos a crear los
+			 * wav. Si no existe, se crea.
 			 */
 			pathname.mkdirs();
 
@@ -261,7 +352,8 @@ public class CopyMojo extends AbstractMojo {
 		}
 	}
 
-	private void findFullPath(List<String> fileNameToSearch, File file) throws IOException {
+	private void findFullPath(List<String> fileNameToSearch, File file)
+			throws IOException {
 		try (ZipInputStream zip = new ZipInputStream(new FileInputStream(file))) {
 			ZipEntry ze = null;
 			String ret = null;
@@ -281,30 +373,39 @@ public class CopyMojo extends AbstractMojo {
 
 					if (isPropertiesProject(entryNameDots)) {
 						try (ZipFile zipFile = new ZipFile(file)) {
-							InputStream inputStream = zipFile.getInputStream(ze);
+							InputStream inputStream = zipFile
+									.getInputStream(ze);
 							Properties pAux = new Properties();
 							pAux.load(inputStream);
 							pTotalProperties.putAll(pAux);
 						}
 					} else {
 						/*
-						 * Recorremos la lista para comprobar la extension del fichero. En el caso de que coincida, se
-						 * trata de un tipo de fichero que necesitamos copiar del jar.
+						 * Recorremos la lista para comprobar la extension del
+						 * fichero. En el caso de que coincida, se trata de un
+						 * tipo de fichero que necesitamos copiar del jar.
 						 */
 						for (String element : fileNameToSearch) {
 							if (entryNameDots.endsWith(element)) {
-								// Comprobamos si el archivo es xml o jVoices para proceder a su copia. El resto no se
+								// Comprobamos si el archivo es xml o jVoices
+								// para proceder a su copia. El resto no se
 								// copia en la plicacion.
-								if (entryNameDots.contains(JVOICES + DOT) || entryNameDots.contains(AUDIOS + DOT)) {
+								if (entryNameDots.contains(JVOICES + DOT)
+										|| entryNameDots.contains(AUDIOS + DOT)) {
 									try (ZipFile zipFile = new ZipFile(file)) {
-										InputStream inputStream = zipFile.getInputStream(ze);
+										InputStream inputStream = zipFile
+												.getInputStream(ze);
 										if (entryNameDots.endsWith(DOT + WAV)) {
 											ret = entryName;
-											copyFile(inputStream, ret, WAV, nameProject);
-										} else if (entryNameDots.endsWith(DOT + XML)) {
-											ret = entryName.substring(entryName.indexOf(SEPARATOR) + 1,
+											copyFile(inputStream, ret, WAV,
+													nameProject);
+										} else if (entryNameDots.endsWith(DOT
+												+ XML)) {
+											ret = entryName.substring(entryName
+													.indexOf(SEPARATOR) + 1,
 													entryName.length());
-											copyFile(inputStream, ret, JVOICES, null);
+											copyFile(inputStream, ret, JVOICES,
+													null);
 										}
 
 									}
@@ -322,7 +423,8 @@ public class CopyMojo extends AbstractMojo {
 
 	private boolean isPropertiesProject(String entryNameDots) {
 		boolean bIsPropertiesProject = false;
-		if (entryNameDots.endsWith(PROPERTIES_EXT) && !entryNameDots.endsWith(POM_PROPERTIES_EXT)) {
+		if (entryNameDots.endsWith(PROPERTIES_EXT)
+				&& !entryNameDots.endsWith(POM_PROPERTIES_EXT)) {
 			bIsPropertiesProject = true;
 		}
 		return bIsPropertiesProject;
@@ -333,7 +435,9 @@ public class CopyMojo extends AbstractMojo {
 	 */
 	protected JVModule getProject(String entryName, File file) {
 
-		String ruta = ARCHIVE_FILE + file.getAbsolutePath().replace(SEPARATOR2, SEPARATOR) + "!/" + entryName;
+		String ruta = ARCHIVE_FILE
+				+ file.getAbsolutePath().replace(SEPARATOR2, SEPARATOR) + "!/"
+				+ entryName;
 		ResourceSet resSet = new ResourceSetImpl();
 		URI uri = URI.createURI(ruta);
 
