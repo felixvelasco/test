@@ -13,10 +13,8 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -34,12 +32,8 @@ import org.eclipse.m2e.core.project.configurator.MojoExecutionBuildParticipant;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
-import com.vectorsf.jvoice.base.model.service.BaseModel;
-import com.vectorsf.jvoice.model.base.JVBean;
-
 public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant {
 
-	private IPath pkgPath = new Path(BaseModel.JV_PATH);
 	private MarkerHelper helper;
 
 	public JVoiceModuleBuildParticipant(MojoExecution execution) {
@@ -63,7 +57,6 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 					} catch (CoreException e) {
 					}
 				}
-
 			}
 		}
 
@@ -104,7 +97,7 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 	private void cleanMarkers(IResourceDelta delta) throws CoreException {
 		if (delta == null) {
 			helper.deleteMarkers(getMavenProjectFacade().getProject());
-		}else{
+		} else {
 			delta.accept(new RemoveMarkersVisitor());
 		}
 	}
@@ -131,7 +124,7 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 
 		@Override
 		public boolean visit(IResourceDelta delta) throws CoreException {
-			if (delta.getResource() instanceof IFile) {
+			if (delta.getResource() instanceof IFile && isInterestingDelta(delta)) {
 				helper.deleteMarkers(delta.getResource());
 				return false;
 			} else {
@@ -144,20 +137,26 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 	public class ValidateVisitor implements IResourceDeltaVisitor, IResourceVisitor {
 
 		private BasicDiagnostic chain = new BasicDiagnostic();
+		private boolean change = false;
 
 		@Override
 		public boolean visit(IResourceDelta delta) throws CoreException {
-			if (delta.getResource() instanceof IFile && delta.getKind() != IResourceDelta.REMOVED) {
-				IFile file = (IFile) delta.getResource();
-				chain.merge(validate(file));
-				return false;
-			} else {
-				return delta.getKind() != IResourceDelta.REMOVED;
+			if (isInterestingDelta(delta)) {
+				if (delta.getResource() instanceof IFile) {
+					IFile file = (IFile) delta.getResource();
+					chain.merge(validate(file));
+					change = true;
+					return false;
+				} else {
+					return true;
+				}
 			}
+			return false;
 		}
 
 		@Override
 		public boolean visit(IResource resource) throws CoreException {
+			change = true;
 			if (resource instanceof IFile) {
 				IFile file = (IFile) resource;
 				chain.merge(validate(file));
@@ -168,7 +167,7 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 		}
 
 		public boolean isValid() {
-			return chain.getSeverity() < Diagnostic.ERROR;
+			return change && chain.getSeverity() < Diagnostic.ERROR;
 		}
 
 		public Diagnostic getDiagnostic() {
@@ -200,21 +199,16 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 		return ret;
 	}
 
-	private IPath getRelativePath(IResource resource) {
-		if (pkgPath.isPrefixOf(resource.getProjectRelativePath()) && !pkgPath.equals(resource.getProjectRelativePath())) {
-			return resource.getProjectRelativePath().makeRelativeTo(pkgPath);
-		} else {
-			return null;
+	private boolean isInterestingDelta(IResourceDelta delta) {
+		if (delta.getKind() == IResourceDelta.ADDED) {
+			return true;
 		}
-	}
-
-	private JVBean getBeanFromResource(Resource eResource) {
-		for (EObject e : eResource.getContents()) {
-			if (e instanceof JVBean) {
-				return (JVBean) e;
+		if (delta.getKind() == IResourceDelta.CHANGED) {
+			if (delta.getResource() instanceof IFile) {
+				return (delta.getFlags() & IResourceDelta.CONTENT) != 0;
 			}
+			return true;
 		}
-		return null;
+		return false;
 	}
-
 }
