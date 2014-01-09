@@ -4,6 +4,7 @@
 package com.isb.bks.ivr.voice.dsl.validation;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -26,6 +27,14 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
  * see http://www.eclipse.org/Xtext/documentation.html#validation
  */
 public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.AbstractVoiceDslJavaValidator {
+
+	private static final List<String> GRAMMAR_EXTENSIONS = new ArrayList<String>();
+
+	static {
+		GRAMMAR_EXTENSIONS.add("grxml");
+		GRAMMAR_EXTENSIONS.add("bnf");
+		GRAMMAR_EXTENSIONS.add("gsl");
+	}
 
 	@Check
 	public void checkAudioContainsProperSrc(Audio audio) {
@@ -70,11 +79,24 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 				}
 				File projectFile = findProjectFile(rawFile);
 				File grammarsFolder = new File(projectFile, "src/main/resources/grammars");
-				String grammarName = grammarSrc + ".grxml";
-				File audioFile = new File(grammarsFolder, grammarName);
+				boolean extensionSupported = false;
+				for (String extension : GRAMMAR_EXTENSIONS) {
+					String[] grammarNameSplit = grammar.getSrc().split("\\.");
+					String grammarExtension = grammarNameSplit[grammarNameSplit.length - 1];
+					if (grammarExtension.equals(extension)) {
+						extensionSupported = true;
+					}
+				}
+				if (extensionSupported) {
+					if (grammarsFolder.exists()) {
+						File audioFile = new File(grammarsFolder, grammarSrc);
 
-				if (!audioFile.exists()) {
-					error("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
+						if (!audioFile.exists()) {
+							error("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
+						}
+					}
+				} else {
+					error("Grammar extension not supported", VoiceDslPackage.Literals.GRAMMAR__SRC);
 				}
 			}
 		}
