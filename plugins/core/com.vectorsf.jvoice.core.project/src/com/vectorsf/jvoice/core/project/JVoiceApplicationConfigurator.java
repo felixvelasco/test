@@ -6,6 +6,8 @@ import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
 import org.apache.maven.model.Repository;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspace;
@@ -18,6 +20,10 @@ import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.project.ProjectImportConfiguration;
 
 public final class JVoiceApplicationConfigurator {
+
+	private static final String WS_ENDPOINTS_XML = "ws-endpoints.xml";
+	private static final String ENDPOINTS_DIR = "src/main/resources/com/vectorsf/";
+	private static final String WS = "/ws";
 
 	private JVoiceApplicationConfigurator() {
 	}
@@ -41,9 +47,17 @@ public final class JVoiceApplicationConfigurator {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 				ProjectImportConfiguration configuration = new ProjectImportConfiguration();
 				configuration.getResolverConfiguration().setResolveWorkspaceProjects(false);
+				String wsFolderName = ENDPOINTS_DIR + projectName + WS;
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
-						getModel(groupId, artifactId, projectName, descProject), new String[] { "src/" },
+						getModel(groupId, artifactId, projectName, descProject), new String[] { wsFolderName },
 						configuration, monitor);
+
+				// Creamos el ws-endpoints.xml en dentro de la carpeta resources
+				IFolder folder = project.getFolder(wsFolderName);
+				IFile wsEndpoints = folder.getFile(WS_ENDPOINTS_XML);
+				wsEndpoints.create(
+						getClass().getResourceAsStream("/com/vectorsf/jvoice/core/project/ws-endpoints.xml"), true,
+						null);
 
 				result[0] = project;
 			}

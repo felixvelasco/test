@@ -1,9 +1,7 @@
 package com.vectorsf.jvoice.ui.wizard.create;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -20,9 +18,6 @@ public class CreateJVoiceApplicationWizard extends BasicNewResourceWizard {
 
 	private static final String PAGE_NAME_APPLICATION_NAME = "Application Project Name";
 	private static final String WIZARD_WINDOW_TITLE = "New Application Project";
-	private static final String ENDPOINTS_DIR = "src/main/resources/com/vectorsf/";
-	private static final String SEPARATOR = "/";
-	private static final String WS = "ws";
 
 	@Override
 	public void addPages() {
@@ -67,14 +62,8 @@ public class CreateJVoiceApplicationWizard extends BasicNewResourceWizard {
 				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 					try {
 						monitor.beginTask("Create application", 100);
-						IProject app = JVoiceApplicationConfigurator.createApplication(applicationName,
-								applicationName, applicationName, descriptionProject, monitor);
-						// Creamos el ws-endpoints.xml en dentro de la carpeta resources
-						String path = app.getLocationURI().toString();
-						File wsendpointsDirectory = new File(path.substring(6, path.length()), ENDPOINTS_DIR
-								+ SEPARATOR + applicationName + SEPARATOR + WS);
-						wsendpointsDirectory.mkdirs();
-						XMLGeneratorENDP.generate(new File(wsendpointsDirectory, "ws-endpoints.xml"));
+						JVoiceApplicationConfigurator.createApplication(applicationName, applicationName,
+								applicationName, descriptionProject, monitor);
 					} catch (CoreException e) {
 						throw new InvocationTargetException(e);
 					} finally {
