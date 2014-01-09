@@ -5,6 +5,7 @@ import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
 import org.apache.maven.model.Repository;
+import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspace;
@@ -77,9 +78,31 @@ public final class JVoiceApplicationConfigurator {
 		voiceDSL.addGoal("copyXML");
 
 		dsl_builder.addExecution(voiceDSL);
+		
+		Plugin dsl_builder2 = new Plugin();
+		dsl_builder2.setGroupId("org.apache.maven.plugins");
+		dsl_builder2.setArtifactId("maven-compiler-plugin");
+		dsl_builder2.setVersion("2.3.2");
+
+		Xpp3Dom configuration = new Xpp3Dom("configuration");
+
+		Xpp3Dom source = new Xpp3Dom("source");
+		source.setValue("1.7");
+		configuration.addChild(source);
+
+		Xpp3Dom target = new Xpp3Dom("target");
+		target.setValue("1.7");
+		configuration.addChild(target);
+
+		Xpp3Dom encoding = new Xpp3Dom("encoding");
+		encoding.setValue("UTF-8");
+		configuration.addChild(encoding);
+
+		dsl_builder2.setConfiguration(configuration);
 
 		Build build = new Build();
 		build.addPlugin(dsl_builder);
+		build.addPlugin(dsl_builder2);
 
 		model.setBuild(build);
 
