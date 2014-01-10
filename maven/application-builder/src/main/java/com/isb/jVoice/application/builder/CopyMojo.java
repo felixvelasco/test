@@ -68,6 +68,7 @@ public class CopyMojo extends AbstractMojo {
 	private static final String ARCHIVE_FILE = "archive:file:/";
 	private static final String SEPARATOR2 = "\\";
 	private static final String LOGGER_CONFIG_DIR = "/com/vectorsf/jvoiceframework/config/logger";
+	private static final String WEBAPP_RESOURCES = "/src/main/webapp/resources";
 
 	/**
 	 * Location of the target directory.
@@ -193,7 +194,7 @@ public class CopyMojo extends AbstractMojo {
 		
 		File isbanLoggerConfig = new File(configLogger,"isban-logger-config.xml");
 		File logbackIsbanLogger =  new File(configLogger,"logback-isban-logger.xml");
-		File js = new File(outputDirectory, "js");
+		File js = new File(mavenProject.getBasedir().getAbsolutePath() + WEBAPP_RESOURCES, "js");
 		File isbanLoggerJs =  new File(js, "isban-logger.js");
 
 		if (legacyLogger) {
@@ -201,7 +202,7 @@ public class CopyMojo extends AbstractMojo {
 			//Copiamos los archivos de configuración necesarios en la carpeta src/main/resources/com/vectorsf/jvoiceframework/config/logger
 			copyFile("isban-logger-config.xml", isbanLoggerConfig);
 			copyFile("logback-isban-logger.xml", logbackIsbanLogger);
-			//Creamos la carpeta js dentro de WEB-INF
+			//Creamos la carpeta js dentro de src/main/webapp/resources
 			js.mkdirs();
 			//Copiamos el archivo isban-logger.js en ella
 			copyFile("isban-logger.js",isbanLoggerJs);
