@@ -219,12 +219,7 @@ public class CopyMojo extends AbstractMojo {
 			Artifact artifacti = lArti.get(i);
 			File file_ = artifacti.getFile();
 			if (file_ != null && file_.toURI().toString().endsWith(JAR_EXT)) {
-<<<<<<< Upstream, based on master
-				List<String> extensions = Arrays.asList(new String[] { XML_EXT,
-						WAV_EXT });
-=======
 				List<String> extensions = Arrays.asList(new String[] { XML_EXT, WAV_EXT, GRXML_EXT });
->>>>>>> 1897cf1 Soporte para gramaticas grxml
 				findFullPath(extensions, file_);
 			}
 		}
@@ -373,32 +368,21 @@ public class CopyMojo extends AbstractMojo {
 								// Comprobamos si el archivo es xml o jVoices
 								// para proceder a su copia. El resto no se
 								// copia en la plicacion.
-<<<<<<< Upstream, based on master
-								if (entryNameDots.contains(JVOICES + DOT)
-										|| entryNameDots.contains(AUDIOS + DOT)) {
-=======
 								if (entryNameDots.contains(JVOICES + DOT) || entryNameDots.contains(AUDIOS + DOT) || entryNameDots.contains(GRAMMARS + DOT)) {
->>>>>>> 1897cf1 Soporte para gramaticas grxml
 									try (ZipFile zipFile = new ZipFile(file)) {
 										InputStream inputStream = zipFile
 												.getInputStream(ze);
 										if (entryNameDots.endsWith(DOT + WAV)) {
 											ret = entryName;
-<<<<<<< Upstream, based on master
 											copyFile(inputStream, ret, WAV,
 													nameProject);
+										} else if (entryNameDots.endsWith(DOT + GRXML)) {
+											ret = entryName;
+											copyFile(inputStream, ret, GRXML, nameProject);
 										} else if (entryNameDots.endsWith(DOT
 												+ XML)) {
 											ret = entryName.substring(entryName
 													.indexOf(SEPARATOR) + 1,
-=======
-											copyFile(inputStream, ret, WAV, nameProject);
-										} else if (entryNameDots.endsWith(DOT + GRXML)) {
-											ret = entryName;
-											copyFile(inputStream, ret, GRXML, nameProject);
-										} else if (entryNameDots.endsWith(DOT + XML)) {
-											ret = entryName.substring(entryName.indexOf(SEPARATOR) + 1,
->>>>>>> 1897cf1 Soporte para gramaticas grxml
 													entryName.length());
 											copyFile(inputStream, ret, JVOICES,
 													null);
