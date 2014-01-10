@@ -63,61 +63,62 @@ public class CallFlowStatePattern extends SimpleStatePattern implements ISelecti
 		URI res = flow.eResource().getURI();
 		String projectName = res.segment(1);
 		JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
-		List<JVProject> proj = project.getReferencedProjects();
-		dialog.setInput(proj);
+		if (project != null) {
+			List<JVProject> proj = project.getReferencedProjects();
+			dialog.setInput(proj);
 
-		dialog.open();
-		Flow result = null;
-		String callFlowName = null;
-		switch (dialog.getReturnCode()) {
-		case Dialog.OK:
-			Object[] results = dialog.getResult();
+			dialog.open();
+			Flow result = null;
+			String callFlowName = null;
+			switch (dialog.getReturnCode()) {
+			case Dialog.OK:
+				Object[] results = dialog.getResult();
 
-			result = (Flow) results[0];
-			callFlowName = result.getName();
-
-			break;
-		case IDialogConstants.PROCEED_ID:
-			IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
-
-			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-			IProject projectRoot = root.getProject(projectName);
-
-			IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath());
-			CreateDiagramJVoice newWizard = new CreateDiagramJVoice(folder);
-			WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getShell(), newWizard);
-
-			if (wizardDialog.open() == Window.OK) {
-				result = newWizard.getReturnFlow();
+				result = (Flow) results[0];
 				callFlowName = result.getName();
-			} else {
+
+				break;
+			case IDialogConstants.PROCEED_ID:
+				IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
+
+				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+				IProject projectRoot = root.getProject(projectName);
+
+				IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath());
+				CreateDiagramJVoice newWizard = new CreateDiagramJVoice(folder);
+				WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+						.getShell(), newWizard);
+
+				if (wizardDialog.open() == Window.OK) {
+					result = newWizard.getReturnFlow();
+					callFlowName = result.getName();
+				} else {
+					throw new OperationCanceledException();
+				}
+			case Dialog.CANCEL:
 				throw new OperationCanceledException();
-			}
-		case Dialog.CANCEL:
-			throw new OperationCanceledException();
-		default:
-			break;
-		}
-
-		if (callFlowName != null) {
-			URI flowURI = EcoreUtil.getURI(result);
-			result = (Flow) flow.eResource().getResourceSet().getEObject(flowURI, true);
-
-			CallFlowState callFlowState = OperationsFactory.eINSTANCE.createCallFlowState();
-			callFlowState.setName(callFlowName);
-			callFlowState.setSubflow(result);
-
-			for (int i = 0; i < result.getParameters().size(); i++) {
-				callFlowState.getParameters().add("");
+			default:
+				break;
 			}
 
-			flow.getStates().add(callFlowState);
-			addGraphicalRepresentation(context, callFlowState);
+			if (callFlowName != null) {
+				URI flowURI = EcoreUtil.getURI(result);
+				result = (Flow) flow.eResource().getResourceSet().getEObject(flowURI, true);
 
-			return new Object[] { callFlowState };
+				CallFlowState callFlowState = OperationsFactory.eINSTANCE.createCallFlowState();
+				callFlowState.setName(callFlowName);
+				callFlowState.setSubflow(result);
+
+				for (int i = 0; i < result.getParameters().size(); i++) {
+					callFlowState.getParameters().add("");
+				}
+
+				flow.getStates().add(callFlowState);
+				addGraphicalRepresentation(context, callFlowState);
+
+				return new Object[] { callFlowState };
+			}
 		}
-
 		return null;
 	}
 
