@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -47,14 +46,12 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
 public class CopyMojo extends AbstractMojo {
 
 	private static final String SRC_MAIN_RESOURCES = "/src/main/resources";
-	private static final String POM_PROPERTIES_EXT = "pom.properties";
 	private static final String STATIC = "static/";
 	private static final String WAV_EXT = ".wav";
 	private static final String XML_EXT = ".xml";
 	private static final String JAR_EXT = ".jar";
 	private static final String PROJECT_INFORMATION = "projectInformation";
 	private static final String PROJECT_INFORMATION_EXT = ".projectInformation";
-	private static final String PROPERTIES_EXT = ".properties";
 	private static final String SEPARATOR = "/";
 	private static final String DOT = ".";
 	private static final String JVOICES = "jVoice";
@@ -92,7 +89,6 @@ public class CopyMojo extends AbstractMojo {
 
 	private List<JVModule> modules = new ArrayList<JVModule>();
 	String nameProject = null;
-	Properties pTotalProperties = new Properties();
 	private ClassLoader runtimeClassLoader;
 
 	private URL[] buildURLs() {
@@ -102,7 +98,6 @@ public class CopyMojo extends AbstractMojo {
 			try {
 				urls.add(new File(element).toURI().toURL());
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -133,18 +128,11 @@ public class CopyMojo extends AbstractMojo {
 			flows.mkdirs();
 			generateMainModule(application, flows);
 
-			pTotalProperties.clear();
 			// copia los ficheros .wav y .xml, además recopila las propiedades
 			// de los módulos de los que depende, preferencia de las propiedades
 			// de los módulos por orden alfabetico del los nombres de los
 			// módulos.
 			searchInJarFiles();
-			// finalmente se cargan las propiedades de la aplicación
-			// sobreescribiendo las que se se llaman igual en los módulos, las
-			// propiedades de la app que deben estar en la carpeta
-			// /src/main/resources. Si hay más un archivo de propiedades se
-			// tomará el primero que se lea.
-			fillPropertiesApp();
 
 			// Creamos la carpeta estatica spring/appServlet
 			File appServlet = new File(outputDirectory, APPSERVLET);
@@ -221,19 +209,6 @@ public class CopyMojo extends AbstractMojo {
 		}
 	}
 
-	private void fillPropertiesApp() throws FileNotFoundException, IOException {
-		File fResourcesFolder = new File(mavenProject.getBasedir()
-				.getAbsolutePath() + SRC_MAIN_RESOURCES);
-		if (fResourcesFolder != null) {
-			for (final File fileEntry : fResourcesFolder.listFiles()) {
-				if (isPropertiesProject(fileEntry.getAbsolutePath())) {
-					pTotalProperties.load(new FileInputStream(fileEntry));
-					break;
-				}
-			}
-		}
-	}
-	
 	private void searchInJarFiles() throws IOException {
 
 		List<Artifact> lArti = getProjectArtifacts();
@@ -372,15 +347,6 @@ public class CopyMojo extends AbstractMojo {
 				if (index != -1) {
 					String entryNameDots = entryName.replace(SEPARATOR, DOT);
 
-					if (isPropertiesProject(entryNameDots)) {
-						try (ZipFile zipFile = new ZipFile(file)) {
-							InputStream inputStream = zipFile
-									.getInputStream(ze);
-							Properties pAux = new Properties();
-							pAux.load(inputStream);
-							pTotalProperties.putAll(pAux);
-						}
-					} else {
 						/*
 						 * Recorremos la lista para comprobar la extension del
 						 * fichero. En el caso de que coincida, se trata de un
@@ -412,7 +378,6 @@ public class CopyMojo extends AbstractMojo {
 									}
 								}
 								break;
-							}
 						}
 
 					}
@@ -422,14 +387,6 @@ public class CopyMojo extends AbstractMojo {
 
 	}
 
-	private boolean isPropertiesProject(String entryNameDots) {
-		boolean bIsPropertiesProject = false;
-		if (entryNameDots.endsWith(PROPERTIES_EXT)
-				&& !entryNameDots.endsWith(POM_PROPERTIES_EXT)) {
-			bIsPropertiesProject = true;
-		}
-		return bIsPropertiesProject;
-	}
 
 	/**
 	 * @param entryName
