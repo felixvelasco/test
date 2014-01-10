@@ -93,11 +93,6 @@ public final class JVoiceProjectConfigurator {
 		jvFlow.setArtifactId("jvoiceframework-flow");
 		jvFlow.setVersion("1.0-SNAPSHOT");
 		dependencies.add(jvFlow);
-		Dependency jvIsbanLogger = new Dependency();
-		jvIsbanLogger.setGroupId("com.vectorsf");
-		jvIsbanLogger.setArtifactId("jvoiceframework-isban-logger");
-		jvIsbanLogger.setVersion("1.0-SNAPSHOT");
-		dependencies.add(jvIsbanLogger);
 		model.setDependencies(dependencies);
 
 		Plugin dsl_builder = new Plugin();
