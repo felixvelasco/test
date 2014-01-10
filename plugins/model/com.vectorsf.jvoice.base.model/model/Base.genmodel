@@ -10,6 +10,24 @@
   <foreignModel>Base.ecore</foreignModel>
   <genPackages prefix="Base" basePackage="com.vectorsf.jvoice.model" disposableProviderFactory="true"
       ecorePackage="Base.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Base.ecore#//EventsEnum">
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/busy"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/connectionerror"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/error"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/far_end_disconnect"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/hangup"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/maxtime_disconnect"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/maxAttempts"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/maxNoInput"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/maxNoMatch"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/near_end_disconnect"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/network_busy"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/network_disconnect"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/noanswer"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/noresource"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/recordunsupported"/>
+      <genEnumLiterals ecoreEnumLiteral="Base.ecore#//EventsEnum/unknown"/>
+    </genEnums>
     <genClasses ecoreClass="Base.ecore#//NamedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Base.ecore#//NamedElement/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Base.ecore#//NamedElement/description"/>
@@ -51,9 +69,11 @@
     </genClasses>
     <genClasses ecoreClass="Base.ecore#//JVApplication">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Base.ecore#//JVApplication/module"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Base.ecore#//JVApplication/legacyLogger"/>
     </genClasses>
     <genClasses ecoreClass="Base.ecore#//JVModule">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Base.ecore#//JVModule/packages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Base.ecore#//JVModule/componentsPackage"/>
       <genOperations ecoreOperation="Base.ecore#//JVModule/getPackage">
         <genParameters ecoreParameter="Base.ecore#//JVModule/getPackage/name"/>
       </genOperations>

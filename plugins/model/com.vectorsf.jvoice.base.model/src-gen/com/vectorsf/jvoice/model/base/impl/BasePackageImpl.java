@@ -657,7 +657,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage {
 
 		initEClass(jvApplicationEClass, JVApplication.class, "JVApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVApplication_Module(), this.getJVModule(), null, "module", null, 0, -1, JVApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJVApplication_LegacyLogger(), ecorePackage.getEBoolean(), "legacyLogger", "true", 0, 1, JVApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getJVApplication_LegacyLogger(), ecorePackage.getEBoolean(), "legacyLogger", "false", 0, 1, JVApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(jvModuleEClass, JVModule.class, "JVModule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJVModule_Packages(), this.getJVPackage(), this.getJVPackage_OwnerModule(), "packages", null, 0, -1, JVModule.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

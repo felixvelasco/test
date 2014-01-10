@@ -40,7 +40,7 @@ public interface JVApplication extends JVProject {
 
 	/**
 	 * Returns the value of the '<em><b>Legacy Logger</b></em>' attribute.
-	 * The default value is <code>"true"</code>.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Legacy Logger</em>' attribute isn't clear,
@@ -50,7 +50,7 @@ public interface JVApplication extends JVProject {
 	 * @return the value of the '<em>Legacy Logger</em>' attribute.
 	 * @see #setLegacyLogger(boolean)
 	 * @see com.vectorsf.jvoice.model.base.BasePackage#getJVApplication_LegacyLogger()
-	 * @model default="true"
+	 * @model default="false"
 	 * @generated
 	 */
 	boolean isLegacyLogger();

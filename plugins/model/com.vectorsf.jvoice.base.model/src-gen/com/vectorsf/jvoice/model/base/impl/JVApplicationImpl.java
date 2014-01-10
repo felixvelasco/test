@@ -46,7 +46,7 @@ public class JVApplicationImpl extends JVProjectImpl implements JVApplication {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean LEGACY_LOGGER_EDEFAULT = true;
+	protected static final boolean LEGACY_LOGGER_EDEFAULT = false;
 	/**
 	 * The cached value of the '{@link #isLegacyLogger() <em>Legacy Logger</em>}' attribute.
 	 * <!-- begin-user-doc -->
