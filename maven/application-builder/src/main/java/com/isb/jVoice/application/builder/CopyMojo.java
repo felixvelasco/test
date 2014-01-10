@@ -50,6 +50,7 @@ public class CopyMojo extends AbstractMojo {
 	private static final String WAV_EXT = ".wav";
 	private static final String XML_EXT = ".xml";
 	private static final String JAR_EXT = ".jar";
+	private static final String GRXML_EXT = ".grxml";
 	private static final String PROJECT_INFORMATION = "projectInformation";
 	private static final String PROJECT_INFORMATION_EXT = ".projectInformation";
 	private static final String SEPARATOR = "/";
@@ -59,9 +60,11 @@ public class CopyMojo extends AbstractMojo {
 	private static final String APPSERVLET = "spring/appServlet";
 	private static final String FLOW = "-flow";
 	private static final String AUDIOS = "audios";
+	private static final String GRAMMARS = "grammars";
 	private static final String DESTINOWAV = "resources";
 	private static final String WAV = "wav";
 	private static final String XML = "xml";
+	private static final String GRXML = "grxml";
 	private static final String ARCHIVE_FILE = "archive:file:/";
 	private static final String SEPARATOR2 = "\\";
 	private static final String LOGGER_CONFIG_DIR = "/com/vectorsf/jvoiceframework/config/logger";
@@ -216,8 +219,12 @@ public class CopyMojo extends AbstractMojo {
 			Artifact artifacti = lArti.get(i);
 			File file_ = artifacti.getFile();
 			if (file_ != null && file_.toURI().toString().endsWith(JAR_EXT)) {
+<<<<<<< Upstream, based on master
 				List<String> extensions = Arrays.asList(new String[] { XML_EXT,
 						WAV_EXT });
+=======
+				List<String> extensions = Arrays.asList(new String[] { XML_EXT, WAV_EXT, GRXML_EXT });
+>>>>>>> 1897cf1 Soporte para gramaticas grxml
 				findFullPath(extensions, file_);
 			}
 		}
@@ -308,6 +315,15 @@ public class CopyMojo extends AbstractMojo {
 			pathname.mkdirs();
 
 			destino = new File(pathname, ruta.getName());
+		} else if (type.equals(GRXML)) {
+			pathname = new File(outputDirectory.getParentFile(), DESTINOWAV + SEPARATOR
+					+ name.replace(ruta.getName(), "").trim() + SEPARATOR + nameProject);
+			/*
+			 * Comprobamos que exista el directorio base donde vamos a crear los grxml. Si no existe, se crea.
+			 */
+			pathname.mkdirs();
+
+			destino = new File(pathname, ruta.getName());
 		}
 
 		try {
@@ -357,19 +373,32 @@ public class CopyMojo extends AbstractMojo {
 								// Comprobamos si el archivo es xml o jVoices
 								// para proceder a su copia. El resto no se
 								// copia en la plicacion.
+<<<<<<< Upstream, based on master
 								if (entryNameDots.contains(JVOICES + DOT)
 										|| entryNameDots.contains(AUDIOS + DOT)) {
+=======
+								if (entryNameDots.contains(JVOICES + DOT) || entryNameDots.contains(AUDIOS + DOT) || entryNameDots.contains(GRAMMARS + DOT)) {
+>>>>>>> 1897cf1 Soporte para gramaticas grxml
 									try (ZipFile zipFile = new ZipFile(file)) {
 										InputStream inputStream = zipFile
 												.getInputStream(ze);
 										if (entryNameDots.endsWith(DOT + WAV)) {
 											ret = entryName;
+<<<<<<< Upstream, based on master
 											copyFile(inputStream, ret, WAV,
 													nameProject);
 										} else if (entryNameDots.endsWith(DOT
 												+ XML)) {
 											ret = entryName.substring(entryName
 													.indexOf(SEPARATOR) + 1,
+=======
+											copyFile(inputStream, ret, WAV, nameProject);
+										} else if (entryNameDots.endsWith(DOT + GRXML)) {
+											ret = entryName;
+											copyFile(inputStream, ret, GRXML, nameProject);
+										} else if (entryNameDots.endsWith(DOT + XML)) {
+											ret = entryName.substring(entryName.indexOf(SEPARATOR) + 1,
+>>>>>>> 1897cf1 Soporte para gramaticas grxml
 													entryName.length());
 											copyFile(inputStream, ret, JVOICES,
 													null);
