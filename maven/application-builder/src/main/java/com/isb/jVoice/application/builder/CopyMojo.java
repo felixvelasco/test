@@ -8,18 +8,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
@@ -166,13 +165,17 @@ public class CopyMojo extends AbstractMojo {
 			File configLogger = new File (mavenProject.getBasedir().getAbsolutePath() + SRC_MAIN_RESOURCES + LOGGER_CONFIG_DIR);
 			configLogger.mkdirs();
 			
-			//Generamos el archivo "padre" de configuración del logger (logback.xml) en la carpeta src/main/resources
+			// Generamos el archivo "padre" de configuración del logger
+			// (logback.xml) en la carpeta src/main/resources
 			XMLGeneratorLogback.generate(new File(mavenProject.getBasedir().getAbsolutePath() + SRC_MAIN_RESOURCES,"logback.xml"), application.isLegacyLogger());
 			
-			//Copiamos el archivo de configuración general del logger (logback-core.xml) en la carpeta src/main/resources/com/vectorsf/jvoiceframework/config/logger
+			// Copiamos el archivo de configuración general del logger
+			// (logback-core.xml) en la carpeta
+			// src/main/resources/com/vectorsf/jvoiceframework/config/logger
 			copyFile("logback-core.xml", new File(configLogger,"logback-core.xml"));
 			
-			//Copiamos/borramos los archivos que necesita el isban logger en función de si se usa o no
+			// Copiamos/borramos los archivos que necesita el isban logger en
+			// función de si se usa o no
 			handleIsbanLoggerFiles(application.isLegacyLogger(), configLogger);
 			
 		} catch (IOException e) {
@@ -190,7 +193,8 @@ public class CopyMojo extends AbstractMojo {
 
 		if (legacyLogger) {
 			//Si se usa el isban logger:
-			//Copiamos los archivos de configuración necesarios en la carpeta src/main/resources/com/vectorsf/jvoiceframework/config/logger
+			// Copiamos los archivos de configuración necesarios en la carpeta
+			// src/main/resources/com/vectorsf/jvoiceframework/config/logger
 			copyFile("isban-logger-config.xml", isbanLoggerConfig);
 			copyFile("logback-isban-logger.xml", logbackIsbanLogger);
 			//Creamos la carpeta js dentro de src/main/webapp/resources
@@ -198,7 +202,7 @@ public class CopyMojo extends AbstractMojo {
 			//Copiamos el archivo isban-logger.js en ella
 			copyFile("isban-logger.js",isbanLoggerJs);
 		} else {
-			//Si no se usa el legacy logger, si están los archivos, se borran.
+			// Si no se usa el legacy logger, si están los archivos, se borran.
 			if (isbanLoggerConfig.exists()){
 				isbanLoggerConfig.delete();
 			}
@@ -212,26 +216,55 @@ public class CopyMojo extends AbstractMojo {
 		}
 	}
 
-	private void searchInJarFiles() throws IOException {
+	private void searchInJarFiles() throws IOException, MojoExecutionException {
 
-		List<Artifact> lArti = getProjectArtifacts();
-		for (int i = 0; i < lArti.size(); i++) {
-			Artifact artifacti = lArti.get(i);
-			File file_ = artifacti.getFile();
-			if (file_ != null && file_.toURI().toString().endsWith(JAR_EXT)) {
-				List<String> extensions = Arrays.asList(new String[] { XML_EXT, WAV_EXT, GRXML_EXT });
-				findFullPath(extensions, file_);
+		List<File> dependencies = getProjectDependencies();
+		for (File dependency : dependencies) {
+			if (dependency != null
+					&& dependency.toURI().toString().endsWith(JAR_EXT)) {
+				List<String> extensions = Arrays.asList(new String[] { XML_EXT,
+						WAV_EXT });
+				findFullPath(extensions, dependency);
 			}
 		}
 	}
 
-	private List<Artifact> getProjectArtifacts() {
-		@SuppressWarnings("unchecked")
-		Set<Artifact> dependencyArtifacts = mavenProject
-				.getDependencyArtifacts();
-		List<Artifact> listArt = new ArrayList<Artifact>(dependencyArtifacts);
-		Collections.sort(listArt);
-		return listArt;
+
+	private List<File> getProjectDependencies() throws MojoExecutionException {
+
+		List<File> dependencies = new ArrayList<File>();
+		
+		for (URL resource : buildURLs()) {
+			if (resource.toString().endsWith(JAR_EXT)) {
+				try (ZipInputStream zip = new ZipInputStream(
+						new FileInputStream(resource.getFile()));) {
+					if (zip != null) {
+						ZipEntry ze = null;
+						while ((ze = zip.getNextEntry()) != null) {
+							String entryName = ze.getName();
+							if (entryName.equals(PROJECT_INFORMATION_EXT)) {
+								File f;
+								try {
+									f = new File(resource.toURI());
+								} catch (URISyntaxException e) {
+									f = new File(resource.getPath());
+								}
+								dependencies.add(f);
+								break;
+							}
+						}
+					}
+				} catch (FileNotFoundException e) {
+					throw new MojoExecutionException(
+							"Error in CopyMojo:getProjectDependencies()", e);
+				} catch (IOException e1) {
+					throw new MojoExecutionException(
+							"Error in CopyMojo:getProjectDependencies()", e1);
+				}
+			}
+		}
+		Collections.sort(dependencies);
+		return dependencies;
 	}
 
 	private void copyFile(String origName, File destFile)
