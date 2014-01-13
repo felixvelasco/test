@@ -15,7 +15,6 @@ import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.IMoveShapeContext;
 import org.eclipse.graphiti.features.context.IRemoveContext;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
-import org.eclipse.graphiti.features.context.impl.ResizeShapeContext;
 import org.eclipse.graphiti.features.impl.DefaultRemoveFeature;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.func.IDirectEditing;
@@ -78,11 +77,6 @@ public abstract class SimpleStatePattern extends IdPattern {
 	private Set<Transition> transitions = new HashSet<>();
 
 	@Override
-	public boolean canAdd(IAddContext context) {
-		return super.canAdd(context);
-	}
-
-	@Override
 	protected PictogramElement doAdd(IAddContext context) {
 
 		State addedDomainObject = (State) context.getNewObject();
@@ -137,7 +131,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 	}
 
-	private Polyline createVerticalLine(Rectangle mainRectangle, int x0, int y0, int x1, int y1) {
+	protected Polyline createVerticalLine(Rectangle mainRectangle, int x0, int y0, int x1, int y1) {
 		Polyline poli = gaService.createPlainPolyline(mainRectangle, new int[] { x0, y0, x1, y1 });
 		poli.setStyle(getVerticalLineStyle());
 		return poli;
@@ -210,21 +204,6 @@ public abstract class SimpleStatePattern extends IdPattern {
 	}
 
 	@Override
-	public void resizeShape(IResizeShapeContext context) {
-		if (context.getWidth() < MAIN_RECTANGLE_WIDTH || context.getHeight() < MAIN_RECTANGLE_HEIGHT) {
-			ResizeShapeContext context2 = new ResizeShapeContext(context.getShape());
-			context2.setWidth(Math.max(MAIN_RECTANGLE_WIDTH, context.getWidth()));
-			context2.setHeight(Math.max(MAIN_RECTANGLE_HEIGHT, context.getHeight()));
-			context2.setX(context.getX());
-			context2.setY(context.getY());
-			context2.setDirection(context.getDirection());
-			super.resizeShape(context2);
-		} else {
-			super.resizeShape(context);
-		}
-	}
-
-	@Override
 	public boolean canCreate(ICreateContext context) {
 		return context.getTargetContainer() instanceof Diagram;
 	}
@@ -237,6 +216,24 @@ public abstract class SimpleStatePattern extends IdPattern {
 	@Override
 	public int getEditingType() {
 		return IDirectEditing.TYPE_TEXT;
+	}
+
+	@Override
+	protected String getInitialValue(IDirectEditingContext context, String id) {
+		if (id.equals(ID_NAME_TEXT)) {
+			State ss = (State) getBusinessObjectForPictogramElement(context.getPictogramElement());
+			return ss.getName();
+		}
+		return "";
+	}
+
+	@Override
+	protected void setValue(String value, IDirectEditingContext context, String id) {
+		if (id.equals(ID_NAME_TEXT)) {
+			State ss = (State) getBusinessObjectForPictogramElement(context.getPictogramElement());
+			ss.setName(value);
+			updatePictogramElement(context.getPictogramElement());
+		}
 	}
 
 	@Override
@@ -283,15 +280,6 @@ public abstract class SimpleStatePattern extends IdPattern {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	protected void setValue(String value, IDirectEditingContext context, String id) {
-		if (id.equals(ID_NAME_TEXT)) {
-			State ss = (State) getBusinessObjectForPictogramElement(context.getPictogramElement());
-			ss.setName(value);
-			updatePictogramElement(context.getPictogramElement());
-		}
 	}
 
 	@Override
