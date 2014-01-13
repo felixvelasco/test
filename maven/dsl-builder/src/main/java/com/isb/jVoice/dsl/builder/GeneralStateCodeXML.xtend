@@ -13,24 +13,25 @@ class GeneralStateCodeXML {
 		var ret = new StringBuilder()
 		if (mainAudios != null && mainAudios.size > 0) {
 			for (mainAudio : mainAudios) {
-				ret.append(
-					'''<evaluate expression="jVoiceArchAudioItem" result="flashScope.«state.name»«type»«i = i + 1»"/>''')
-
+				
 				if (mainAudio instanceof ConditionalAudio) {
+					
 					var ConditionalAudio condition = mainAudio as ConditionalAudio
 					for (audio : condition.simpleAudios) {
-						ret.append(writeAudio(mainAudio, state.name + type + i, projectName))
+						ret.append('''<evaluate expression="jVoiceArchAudioItem" result="flashScope.«state.name»«type»«i = i + 1»"/>''')
+						ret.append(writeAudio(audio, state.name + type + i, projectName))
 						if (condition.condit != null) {
 							ret.append(
 								'''<set name="flashScope.«state.name»«type»«i».condition" value="«condition.condit»"/>''')
 						}
-						i = i + 1
+						ret.append('''<evaluate expression="flashScope.«state.name».«type».add(flashScope.«state.name»«type»«i»)"/>''')
 					}
 				} else {
+					ret.append('''<evaluate expression="jVoiceArchAudioItem" result="flashScope.«state.name»«type»«i = i + 1»"/>''')
 					ret.append(writeAudio(mainAudio, state.name + type + i, projectName))
+					ret.append('''<evaluate expression="flashScope.«state.name».«type».add(flashScope.«state.name»«type»«i»)"/>''')
 				}
-				ret.append(
-					'''<evaluate expression="flashScope.«state.name».«type».add(flashScope.«state.name»«type»«i»)"/>''')
+				
 
 			}
 		}
