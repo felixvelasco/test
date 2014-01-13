@@ -174,9 +174,9 @@ public class CopyMojo extends AbstractMojo {
 			// src/main/resources/com/vectorsf/jvoiceframework/config/logger
 			copyFile("logback-core.xml", new File(configLogger,"logback-core.xml"));
 			
-			// Copiamos/borramos los archivos que necesita el isban logger en
+			// Copiamos/borramos los archivos que necesita el legacy logger en
 			// función de si se usa o no
-			handleIsbanLoggerFiles(application.isLegacyLogger(), configLogger);
+			handleLegacyLoggerFiles(application.isLegacyLogger(), configLogger);
 			
 		} catch (IOException e) {
 			throw new MojoExecutionException("Error in CopyMojo:execute()", e);
@@ -184,7 +184,7 @@ public class CopyMojo extends AbstractMojo {
 
 	}
 
-	private void handleIsbanLoggerFiles(boolean legacyLogger, File configLogger) throws MojoExecutionException {
+	private void handleLegacyLoggerFiles(boolean legacyLogger, File configLogger) throws MojoExecutionException {
 		
 		File isbanLoggerConfig = new File(configLogger,"isban-logger-config.xml");
 		File logbackIsbanLogger =  new File(configLogger,"logback-isban-logger.xml");
