@@ -79,24 +79,12 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 				}
 				File projectFile = findProjectFile(rawFile);
 				File grammarsFolder = new File(projectFile, "src/main/resources/grammars");
-				boolean extensionSupported = false;
 				for (String extension : GRAMMAR_EXTENSIONS) {
-					String[] grammarNameSplit = grammar.getSrc().split("\\.");
-					String grammarExtension = grammarNameSplit[grammarNameSplit.length - 1];
-					if (grammarExtension.equals(extension)) {
-						extensionSupported = true;
+					String fileGrammarName = grammar.getSrc() + "." + extension;
+					File audioFile = new File(grammarsFolder, fileGrammarName);
+					if (!audioFile.exists()) {
+						error("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
 					}
-				}
-				if (extensionSupported) {
-					if (grammarsFolder.exists()) {
-						File audioFile = new File(grammarsFolder, grammarSrc);
-
-						if (!audioFile.exists()) {
-							error("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
-						}
-					}
-				} else {
-					error("Grammar extension not supported", VoiceDslPackage.Literals.GRAMMAR__SRC);
 				}
 			}
 		}
