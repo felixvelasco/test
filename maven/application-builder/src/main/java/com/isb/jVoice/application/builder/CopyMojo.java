@@ -223,7 +223,7 @@ public class CopyMojo extends AbstractMojo {
 			if (dependency != null
 					&& dependency.toURI().toString().endsWith(JAR_EXT)) {
 				List<String> extensions = Arrays.asList(new String[] { XML_EXT,
-						WAV_EXT });
+						WAV_EXT, GRXML_EXT });
 				findFullPath(extensions, dependency);
 			}
 		}
