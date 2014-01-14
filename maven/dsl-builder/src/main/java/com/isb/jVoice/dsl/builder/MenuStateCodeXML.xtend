@@ -55,6 +55,10 @@ class MenuStateCodeXML {
 							«IF configValue.value != null && !configValue.value.empty»
 								<set name="flashScope.«state.name».maxNoMatch" value="«configValue.value»" />
 							«ENDIF»
+						«ELSEIF configValue.name != null && configValue.name.equals("recordutterance")»
+							«IF configValue.value != null && !configValue.value.empty»
+								<set name="flashScope.«state.name».recordutterance" value="«configValue.value»" />
+							«ENDIF»
 						«ELSEIF configValue.name != null && !configValue.name.empty»
 							«IF configValue.value != null && !configValue.value.empty»
 								<evaluate name="flashScope.«state.name».properties.put('«configValue.name»','«configValue.value»')" />
