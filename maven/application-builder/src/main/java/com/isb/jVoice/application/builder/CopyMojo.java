@@ -14,7 +14,10 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -45,6 +48,7 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
 public class CopyMojo extends AbstractMojo {
 
 	private static final String SRC_MAIN_RESOURCES = "/src/main/resources";
+	private static final String PROPERTIES_RESOURCES = "/src/main/resources/properties/";
 	private static final String STATIC = "static/";
 	private static final String WAV_EXT = ".wav";
 	private static final String XML_EXT = ".xml";
@@ -68,6 +72,9 @@ public class CopyMojo extends AbstractMojo {
 	private static final String SEPARATOR2 = "\\";
 	private static final String LOGGER_CONFIG_DIR = "/com/vectorsf/jvoiceframework/config/logger";
 	private static final String WEBAPP_RESOURCES = "/src/main/webapp/resources";
+	private static final String POM_PROPERTIES_EXT = "pom.properties";
+	private static final String PROPERTIES_EXT = ".properties";
+
 
 	/**
 	 * Location of the target directory.
@@ -183,6 +190,14 @@ public class CopyMojo extends AbstractMojo {
 		}
 
 	}
+	private boolean isPropertiesProject(String entryNameDots) {
+		boolean bIsPropertiesProject = false;
+		if (entryNameDots.endsWith(PROPERTIES_EXT)
+				&& !entryNameDots.endsWith(POM_PROPERTIES_EXT)) {
+			bIsPropertiesProject = true;
+		}
+		return bIsPropertiesProject;
+	}
 
 	private void handleLegacyLoggerFiles(boolean legacyLogger, File configLogger) throws MojoExecutionException {
 		
@@ -271,12 +286,15 @@ public class CopyMojo extends AbstractMojo {
 			throws MojoExecutionException {
 		try (InputStream is = runtimeClassLoader.getResourceAsStream(STATIC + origName);
 				FileOutputStream fos = new FileOutputStream(destFile)) {
+		if (is!=null)
+		{
 			int read = -1;
 			byte[] buf = new byte[4096];
 
 			while ((read = is.read(buf)) != -1) {
 				fos.write(buf, 0, read);
 			}
+		} 
 		} catch (IOException e) {
 			throw new MojoExecutionException("Error copying resources", e);
 		}
@@ -390,49 +408,119 @@ public class CopyMojo extends AbstractMojo {
 
 				if (index != -1) {
 					String entryNameDots = entryName.replace(SEPARATOR, DOT);
-
-						/*
-						 * Recorremos la lista para comprobar la extension del
-						 * fichero. En el caso de que coincida, se trata de un
-						 * tipo de fichero que necesitamos copiar del jar.
-						 */
-						for (String element : fileNameToSearch) {
-							if (entryNameDots.endsWith(element)) {
-								// Comprobamos si el archivo es xml o jVoices
-								// para proceder a su copia. El resto no se
-								// copia en la plicacion.
-								if (entryNameDots.contains(JVOICES + DOT) || entryNameDots.contains(AUDIOS + DOT) || entryNameDots.contains(GRAMMARS + DOT)) {
-									try (ZipFile zipFile = new ZipFile(file)) {
-										InputStream inputStream = zipFile
-												.getInputStream(ze);
-										if (entryNameDots.endsWith(DOT + WAV)) {
-											ret = entryName;
-											copyFile(inputStream, ret, WAV,
-													nameProject);
-										} else if (entryNameDots.endsWith(DOT + GRXML)) {
-											ret = entryName;
-											copyFile(inputStream, ret, GRXML, nameProject);
-										} else if (entryNameDots.endsWith(DOT
-												+ XML)) {
-											ret = entryName.substring(entryName
-													.indexOf(SEPARATOR) + 1,
-													entryName.length());
-											copyFile(inputStream, ret, JVOICES,
-													null);
-										}
-
-									}
-								}
-								break;
+					if (isPropertiesProject(entryNameDots)) 
+					{
+						try (ZipFile zipFile = new ZipFile(file)) {
+							manageProperties(zipFile
+									.getInputStream(ze),entryNameDots);
 						}
-
+					} else 
+					{	
+							/*
+							 * Recorremos la lista para comprobar la extension del
+							 * fichero. En el caso de que coincida, se trata de un
+							 * tipo de fichero que necesitamos copiar del jar.
+							 */
+							for (String element : fileNameToSearch) {
+								if (entryNameDots.endsWith(element)) {
+									// Comprobamos si el archivo es xml o jVoices
+									// para proceder a su copia. El resto no se
+									// copia en la plicacion.
+									if (entryNameDots.contains(JVOICES + DOT) || entryNameDots.contains(AUDIOS + DOT) || entryNameDots.contains(GRAMMARS + DOT)) {
+										try (ZipFile zipFile = new ZipFile(file)) {
+											InputStream inputStream = zipFile
+													.getInputStream(ze);
+											if (entryNameDots.endsWith(DOT + WAV)) {
+												ret = entryName;
+												copyFile(inputStream, ret, WAV,
+														nameProject);
+											} else if (entryNameDots.endsWith(DOT + GRXML)) {
+												ret = entryName;
+												copyFile(inputStream, ret, GRXML, nameProject);
+											} else if (entryNameDots.endsWith(DOT
+													+ XML)) {
+												ret = entryName.substring(entryName
+														.indexOf(SEPARATOR) + 1,
+														entryName.length());
+												copyFile(inputStream, ret, JVOICES,
+														null);
+											}
+	
+										}
+									}
+									break;
+							}
+	
+						}
 					}
 				}
 			}
 		}
 
 	}
+	
+	private void manageProperties(InputStream inputStream, String sFileName) 
+	{		 
+			
+		try {
+			
+			String pathDisProp = mavenProject.getBasedir().getAbsolutePath() +PROPERTIES_RESOURCES;
+			File dDirProperties = new File(pathDisProp);
+			if (!dDirProperties.exists())
+			{
+				dDirProperties.mkdirs();
+			}
+			
+			String pathFile = pathDisProp + sFileName;
+			File fFile = new File(pathFile);
+	
+			Properties pAux = new Properties();
+			pAux.load(inputStream);
+			Properties merged = new Properties();
+			merged.putAll(pAux);
+			
+			boolean bSave = false;
+			
+			if (fFile.exists())
+			{	
+				Properties pAuxDisk = new Properties();
+				pAuxDisk.load(new FileInputStream(pathFile));
+				
+				if (!contains(pAuxDisk,merged))
+				{
+					merged.putAll(pAuxDisk);
+					bSave = true;
+				}
+			}
+			else
+			{
+				bSave = true;
+			}
 
+			if (bSave)
+			{
+				// guardamos en disco el fichero properties			
+				merged.store(new FileOutputStream(pathFile), null); 
+			}
+			System.out.println("Done!");
+		} catch ( IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private boolean contains(Properties pDisk, Properties pJar)
+	{
+		for (Iterator<Entry<Object,Object>> iterator = pJar.entrySet().iterator(); iterator.hasNext();) 
+	    {
+			Entry<Object, Object> entry = (Entry<Object, Object>) iterator.next();
+			if (!pDisk.containsKey(entry.getKey()))
+			{
+				return false;
+			}
+		}    
+		return true;
+	}
 
 	/**
 	 * @param entryName
