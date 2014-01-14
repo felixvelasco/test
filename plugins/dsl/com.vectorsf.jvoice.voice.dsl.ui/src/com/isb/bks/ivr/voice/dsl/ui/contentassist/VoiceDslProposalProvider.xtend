@@ -17,9 +17,9 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 class VoiceDslProposalProvider extends AbstractVoiceDslProposalProvider {
 
 	static val OUTPUT_CONFIGURATION_KEYS = Sets.newHashSet("bargein");
-
+	
 	static val INPUT_CONFIGURATION_KEYS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts", "confidence", "bargein",
-		"timeout", "interdigittimeout");
+		"timeout", "interdigittimeout", "recordutterance");
 
 	static val RECORD_CONFIGURATION_KEYS = Sets.newHashSet("beep", "dtmfterm", "maxtime", "finalsilence", "keep");
 	
