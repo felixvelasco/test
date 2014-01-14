@@ -3,18 +3,6 @@
  */
 package com.vectorsf.jvoice.core.reconciliator.test;
 
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.CONFIG_PATH;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.JV_PATH;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFolders;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
-import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.fail;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -28,24 +16,43 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
+import org.eclipse.graphiti.mm.algorithms.AlgorithmsPackage;
+import org.eclipse.graphiti.mm.algorithms.styles.StylesPackage;
+import org.eclipse.graphiti.mm.pictograms.PictogramsPackage;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.osgi.framework.Bundle;
 
-import com.vectorsf.jvoice.base.test.SWTBotHelper;
+import com.google.inject.Injector;
+import com.isb.bks.ivr.voice.dsl.VoiceDslStandaloneSetup;
 import com.vectorsf.jvoice.core.reconciliator.MavenProjectCreator;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
+import com.vectorsf.jvoice.model.operations.OperationsPackage;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+
+import static org.junit.Assert.fail;
+
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.CONFIG_PATH;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.JV_PATH;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFolders;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
+import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
 
 /**
  * 
@@ -55,17 +62,13 @@ public class MavenProjectCreatorTest {
 
 	private static final String PAQ = "paq";
 	private static final String BASE = "base";
-	protected static SWTGefBot bot = new SWTGefBot();
 
-	public static final Bundle bundle = Platform
-			.getBundle("com.vectorsf.jvoice.core.reconciliator");
+	public static final Bundle bundle = Platform.getBundle("com.vectorsf.jvoice.core.reconciliator");
 
-	@BeforeClass
 	public static void setClassUp() {
-
-		SWTBotHelper.closeWelcomeView(bot);
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-				"xml", new XMIResourceFactoryImpl());
+		@SuppressWarnings("unused")
+		OperationsPackage einstance = OperationsPackage.eINSTANCE; // DO NOT DELETE
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xml", new XMIResourceFactoryImpl());
 	}
 
 	/**
@@ -84,14 +87,13 @@ public class MavenProjectCreatorTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects()) {
+		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 			try {
 				while (true) {
 					if (project.isSynchronized(2)) {
 						try {
 							deleteProject(project);
-						} catch (@SuppressWarnings("restriction") ResourceException re) {
+						} catch (ResourceException re) {
 							IStatus status = re.getStatus();
 							System.err.println(status);
 							if (status.getException() != null) {
@@ -112,47 +114,48 @@ public class MavenProjectCreatorTest {
 	}
 
 	@Test
-	public void testMavenProjectCreator() {
+	public void testMavenProjectCreator() throws IOException, URISyntaxException {
+
+		Injector injector = new VoiceDslStandaloneSetup().createInjectorAndDoEMFRegistration();
+
+		EPackage.Registry.INSTANCE.put(OperationsPackage.eNS_URI, OperationsPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put(PictogramsPackage.eNS_URI, PictogramsPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put(AlgorithmsPackage.eNS_URI, AlgorithmsPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put(StylesPackage.eNS_URI, StylesPackage.eINSTANCE);
+
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("jvflow", new XMIResourceFactoryImpl());
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("projectInformation",
+				new XMIResourceFactoryImpl());
 
 		MavenProjectCreator mpc = new MavenProjectCreator();
 
 		URL pluginLib;
 		String prefixPluginLib;
-		try {
-			pluginLib = FileLocator.resolve(FileLocator.find(Platform
-					.getBundle("com.vectorsf.jvoice.core.reconciliator"),
-					new Path("resources/modP-1.0.0.jar"), null));
 
-			pluginLib = new URL(pluginLib.toString().replace(" ", "%20")); //$NON-NLS-1$ //$NON-NLS-2$
-			File bundleFileLib = new File(pluginLib.toURI());
-			prefixPluginLib = bundleFileLib.getAbsolutePath();
+		pluginLib = FileLocator.resolve(FileLocator.find(Platform.getBundle("com.vectorsf.jvoice.core.reconciliator"),
+				new Path("resources/modP-1.0.0.jar"), null));
 
-			JVModule module = mpc.createProject(new Path(prefixPluginLib));
-			assertThat(module, is(not(nullValue())));
+		pluginLib = new URL(pluginLib.toString().replace(" ", "%20")); //$NON-NLS-1$ //$NON-NLS-2$
+		File bundleFileLib = new File(pluginLib.toURI());
+		prefixPluginLib = bundleFileLib.getAbsolutePath();
 
-			Matcher<Iterable<? super JVPackage>> hasPackageWithName = hasPackageWithName("pack1");
-			assertThat(module.getPackages(), hasPackageWithName);
-			hasPackageWithName = hasPackageWithName("pack2");
+		JVModule module = mpc.createProject(new Path(prefixPluginLib));
+		assertThat(module, is(not(nullValue())));
 
-			Matcher<Iterable<? super JVBean>> hasBeanWithName = hasBeanWithName("f1");
-			assertThat(module.getPackage("pack1").getBeans(), hasBeanWithName);
-			hasBeanWithName = hasBeanWithName("f2");
-			assertThat(module.getPackage("pack1").getBeans(), hasBeanWithName);
-			hasBeanWithName = hasBeanWithName("f3");
-			assertThat(module.getPackage("pack2").getBeans(), hasBeanWithName);
+		Matcher<Iterable<? super JVPackage>> hasPackageWithName = hasPackageWithName("pack1");
+		assertThat(module.getPackages(), hasPackageWithName);
+		hasPackageWithName = hasPackageWithName("pack2");
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Matcher<Iterable<? super JVBean>> hasBeanWithName = hasBeanWithName("f1");
+		assertThat(module.getPackage("pack1").getBeans(), hasBeanWithName);
+		hasBeanWithName = hasBeanWithName("f2");
+		assertThat(module.getPackage("pack1").getBeans(), hasBeanWithName);
+		hasBeanWithName = hasBeanWithName("f3");
+		assertThat(module.getPackage("pack2").getBeans(), hasBeanWithName);
 
 	}
 
-	private Matcher<Iterable<? super JVPackage>> hasPackageWithName(
-			String packName) {
+	private Matcher<Iterable<? super JVPackage>> hasPackageWithName(String packName) {
 		return Matchers.<JVPackage> hasItem(hasProperty("name", is(packName)));
 	}
 

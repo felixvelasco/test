@@ -30,6 +30,12 @@
 							<artifactId>com.vectorsf.jvoice.core.operation</artifactId>
 							<version>0.1.0</version>
 						</dependency>
+						<dependency>
+							<type>eclipse-plugin</type>
+							<groupId>com.vectorsf.jvoice.core</groupId>
+							<artifactId>com.vectorsf.jvoice.core.prompt</artifactId>
+							<version>0.1.0</version>
+						</dependency>
 					</dependencies>
 				</configuration>
 			</plugin>

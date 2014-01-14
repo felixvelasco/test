@@ -8,6 +8,7 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.runtime.CoreException;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.core.project.JVoiceApplicationNature;
 import com.vectorsf.jvoice.core.project.JVoiceModuleNature;
 import com.vectorsf.jvoice.model.base.JVApplication;
 import com.vectorsf.jvoice.model.base.JVModel;
@@ -34,24 +35,27 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener 
 				JVProject prj = model.getProject(name);
 				if (prj instanceof JVModule) {
 					updatePackages(child, (JVModule) prj);
-				}else if(prj instanceof JVApplication) {
+				} else if (prj instanceof JVApplication) {
 					updateApplication(child, (JVApplication) prj);
-				}else {
+				} else { // el modelo tiene proyectos, pero no encuentra el solicitado. Es nuevo
 					try {
 						IProject project = (IProject) res;
-						if (project.exists() && project.isOpen() && project.hasNature(JVoiceModuleNature.NATURE_ID)) {
-							// el modelo tiene proyectos, pero no encuentra el solicitado. Es nuevo
-							model.getProjects().add(JVoiceModelReconcilier.getInstance().createProject((IProject) res));
+						if (project.exists() && project.isOpen()) {
+							if (project.hasNature(JVoiceApplicationNature.NATURE_ID)) {
+								model.getProjects().add(
+										JVoiceModelReconcilier.getInstance().createApplication((IProject) res));
+							} else if (project.hasNature(JVoiceModuleNature.NATURE_ID)) {
+								model.getProjects().add(
+										JVoiceModelReconcilier.getInstance().createProject((IProject) res));
+							}
 						}
 					} catch (CoreException e) {
 						// CoreException is only launched on closed or non-existing projects, and we are guarded against
 						// both conditions
 					}
 				}
-
 			}
 		}
-
 	}
 
 	private void updateApplication(IResourceDelta child, JVApplication prj) {
@@ -62,7 +66,7 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener 
 			} catch (CoreException e) {
 			}
 		}
-		
+
 	}
 
 	public void updatePackages(IResourceDelta delta, JVModule prj) {
@@ -74,5 +78,4 @@ public class BaseModelResourceChangeListener implements IResourceChangeListener 
 			}
 		}
 	}
-
 }
