@@ -8,6 +8,7 @@
             contributorClass="com.vectorsf.jvoice.ui.project.editor.EditorExecutableExtensionFactory:org.eclipse.emf.parsley.editors.EmfParsleyEditorActionBarContributor"
             default="false"
             extensions="projectInformation"
+            icon="icons/obj16/icon_editor_project.png"
             id="com.vectorsf.jvoice.ui.project.editor.ProjectEditor"
             name="jVoice Project Editor">
       </editor>
