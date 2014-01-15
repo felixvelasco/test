@@ -159,8 +159,18 @@ public class CopyMojo extends AbstractMojo {
 			File spring = new File(outputDirectory, "spring");
 			XMLGeneratorAPP.generate(new File(spring, "app-context.xml"),
 					modules);
+			
+			String pathDisProp = mavenProject.getBasedir().getAbsolutePath() +PROPERTIES_RESOURCES;
+			File dDirProperties = new File(pathDisProp);
+			File[] listFolderProperties = {};
+			if (dDirProperties.exists())
+			{
+				listFolderProperties = dDirProperties.listFiles();
+			}
+			
+			
 			XMLGeneratorJFC.generate(new File(spring,
-					"jvoiceframework-context.xml"), application.getName(), application.isLegacyLogger());
+					"jvoiceframework-context.xml"), application.getName(), application.isLegacyLogger(),listFolderProperties);
 			XMLGeneratorRC.generate(new File(spring, "root-context.xml"));
 
 			// Creamos el web.xml en dentro de la carpeta WEB-INF
@@ -475,7 +485,6 @@ public class CopyMojo extends AbstractMojo {
 			{
 				dDirProperties.mkdirs();
 			}
-			
 			String pathFile = pathDisProp + sFileName;
 			File fFile = new File(pathFile);
 	
