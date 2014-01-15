@@ -137,6 +137,11 @@ public class CopyMojo extends AbstractMojo {
 			flows.mkdirs();
 			generateMainModule(application, flows);
 
+			File finalFlowFloder =  new File(outputDirectory+"/jVoiceArchFlows/jVoiceArchFlows/jVoiceArch-end");
+			finalFlowFloder.mkdirs();
+			
+			copyFile("flows/jVoiceArch-end-flow.xml", new File(finalFlowFloder, "jVoiceArch-end-flow.xml"));
+			
 			// copia los ficheros .wav y .xml, además recopila las propiedades
 			// de los módulos de los que depende, preferencia de las propiedades
 			// de los módulos por orden alfabetico del los nombres de los
@@ -502,7 +507,6 @@ public class CopyMojo extends AbstractMojo {
 				// guardamos en disco el fichero properties			
 				merged.store(new FileOutputStream(pathFile), null); 
 			}
-			System.out.println("Done!");
 		} catch ( IOException e) 
 		{
 			e.printStackTrace();
