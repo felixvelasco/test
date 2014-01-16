@@ -151,6 +151,11 @@ public class CallFlowStatePattern extends SimpleStatePattern implements ISelecti
 	}
 
 	@Override
+	public String getCreateLargeImageId() {
+		return CoreImageProvider.IMG_LARGE_PALETTE_SUBFLOW;
+	}
+
+	@Override
 	protected String getStateImageId() {
 		return CoreImageProvider.IMG_STATE_SUBFLOW;
 	}

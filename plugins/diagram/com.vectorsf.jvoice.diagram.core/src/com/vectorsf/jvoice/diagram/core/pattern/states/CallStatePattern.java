@@ -115,6 +115,11 @@ public class CallStatePattern extends SimpleStatePattern {
 	}
 
 	@Override
+	public String getCreateLargeImageId() {
+		return CoreImageProvider.IMG_LARGE_PALETTE_EXECUTION;
+	}
+
+	@Override
 	protected String getStateImageId() {
 		return CoreImageProvider.IMG_STATE_EXECUTION;
 	}

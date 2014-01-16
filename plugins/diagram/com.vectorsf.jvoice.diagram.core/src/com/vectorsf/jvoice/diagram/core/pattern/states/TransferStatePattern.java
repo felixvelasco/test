@@ -26,6 +26,11 @@ public class TransferStatePattern extends LocutionStatePattern {
 	}
 
 	@Override
+	public String getCreateLargeImageId() {
+		return CoreImageProvider.IMG_LARGE_PALETTE_TRANSFER;
+	}
+
+	@Override
 	protected String getStateImageId() {
 		return CoreImageProvider.IMG_STATE_TRANSFER;
 	}

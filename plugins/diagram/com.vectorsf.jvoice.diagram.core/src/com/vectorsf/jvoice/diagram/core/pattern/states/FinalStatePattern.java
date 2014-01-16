@@ -140,6 +140,11 @@ public class FinalStatePattern extends SimpleStatePattern {
 	}
 
 	@Override
+	public String getCreateLargeImageId() {
+		return CoreImageProvider.IMG_LARGE_PALETTE_FINAL;
+	}
+
+	@Override
 	protected String getStateImageId() {
 		return CoreImageProvider.IMG_STATE_FINAL;
 	}

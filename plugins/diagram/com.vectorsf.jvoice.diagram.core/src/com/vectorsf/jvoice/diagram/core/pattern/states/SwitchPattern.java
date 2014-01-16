@@ -137,4 +137,9 @@ public class SwitchPattern extends StatePattern {
 	public String getCreateImageId() {
 		return CoreImageProvider.IMG_PALETTE_SWITCH;
 	}
+
+	@Override
+	public String getCreateLargeImageId() {
+		return CoreImageProvider.IMG_LARGE_PALETTE_SWITCH;
+	}
 }

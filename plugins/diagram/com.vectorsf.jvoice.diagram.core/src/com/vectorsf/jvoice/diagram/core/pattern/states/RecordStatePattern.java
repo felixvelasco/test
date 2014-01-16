@@ -26,6 +26,11 @@ public class RecordStatePattern extends LocutionStatePattern {
 	}
 
 	@Override
+	public String getCreateLargeImageId() {
+		return CoreImageProvider.IMG_LARGE_PALETTE_RECORD;
+	}
+
+	@Override
 	protected String getStateImageId() {
 		return CoreImageProvider.IMG_STATE_RECORD;
 	}

@@ -35,6 +35,11 @@ public class MenuStatePattern extends LocutionStatePattern {
 	}
 
 	@Override
+	public String getCreateLargeImageId() {
+		return CoreImageProvider.IMG_LARGE_PALETTE_MENU;
+	}
+
+	@Override
 	protected String getStateImageId() {
 		return CoreImageProvider.IMG_STATE_MENU;
 	}

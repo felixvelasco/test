@@ -27,6 +27,18 @@ public class CoreImageProvider extends AbstractImageProvider {
 	public static final String IMG_PALETTE_TRANSFER = "icon_est_transfer";
 	public static final String IMG_PALETTE_NOTE = "icon_notes";
 
+	public static final String IMG_LARGE_PALETTE_CUSTOM = "large_icon_est_custom";
+	public static final String IMG_LARGE_PALETTE_EXECUTION = "large_icon_est_execution";
+	public static final String IMG_LARGE_PALETTE_FINAL = "large_icon_est_final";
+	public static final String IMG_LARGE_PALETTE_INPUT = "large_icon_est_input";
+	public static final String IMG_LARGE_PALETTE_MENU = "large_icon_est_menu";
+	public static final String IMG_LARGE_PALETTE_PROMPT = "large_icon_est_prompt";
+	public static final String IMG_LARGE_PALETTE_RECORD = "large_icon_est_record";
+	public static final String IMG_LARGE_PALETTE_SUBFLOW = "large_icon_est_subflow";
+	public static final String IMG_LARGE_PALETTE_SWITCH = "large_icon_est_switch";
+	public static final String IMG_LARGE_PALETTE_TRANSFER = "large_icon_est_transfer";
+	public static final String IMG_LARGE_PALETTE_NOTE = "large_icon_notes";
+
 	public static final String IMG_STATE_CUSTOM = "icon_comp_custom";
 	public static final String IMG_STATE_EXECUTION = "icon_comp_execution";
 	public static final String IMG_STATE_FINAL = "icon_comp_final";
@@ -59,6 +71,19 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath(IMG_PALETTE_TRANSFER, "icons/palette/icon_est_transfer.png");
 
 		addImageFilePath(IMG_PALETTE_NOTE, "icons/palette/icon_notes.png");
+
+		addImageFilePath(IMG_LARGE_PALETTE_CUSTOM, "icons/palette/large/icon_est_custom.png");
+		addImageFilePath(IMG_LARGE_PALETTE_EXECUTION, "icons/palette/large/icon_est_execution.png");
+		addImageFilePath(IMG_LARGE_PALETTE_FINAL, "icons/palette/large/icon_est_final.png");
+		addImageFilePath(IMG_LARGE_PALETTE_INPUT, "icons/palette/large/icon_est_input.png");
+		addImageFilePath(IMG_LARGE_PALETTE_MENU, "icons/palette/large/icon_est_menu.png");
+		addImageFilePath(IMG_LARGE_PALETTE_PROMPT, "icons/palette/large/icon_est_prompt.png");
+		addImageFilePath(IMG_LARGE_PALETTE_RECORD, "icons/palette/large/icon_est_record.png");
+		addImageFilePath(IMG_LARGE_PALETTE_SUBFLOW, "icons/palette/large/icon_est_subflow.png");
+		addImageFilePath(IMG_LARGE_PALETTE_SWITCH, "icons/palette/large/icon_est_switch.png");
+		addImageFilePath(IMG_LARGE_PALETTE_TRANSFER, "icons/palette/large/icon_est_transfer.png");
+
+		addImageFilePath(IMG_LARGE_PALETTE_NOTE, "icons/palette/large/icon_notes.png");
 
 		addImageFilePath(IMG_STATE_CUSTOM, "icons/states/icon_comp_custom.png");
 		addImageFilePath(IMG_STATE_EXECUTION, "icons/states/icon_comp_execution.png");
