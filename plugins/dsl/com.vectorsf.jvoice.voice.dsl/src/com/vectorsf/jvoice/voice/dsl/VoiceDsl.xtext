@@ -1,7 +1,6 @@
-grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.xbase.annotations.XbaseWithAnnotations
-import "http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl/1.0"
-import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
+grammar com.isb.bks.ivr.voice.dsl.VoiceDsl with org.eclipse.xtext.common.Terminals
 
+import "http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl/1.0"
 
 VoiceDsl:
 	InputDsl
@@ -12,66 +11,51 @@ VoiceDsl:
     ;
 
 PromptDsl:
-	'outputname'  name = ID 
+	'output' name = ID 
        ((configuration = Configuration)& 
-       	((variables = Variables)?)& 
 	    (conditions += Condition*))
   	     audios=Audios	
 ;
 
 MenuDsl:
-	'menuname'  name = ID
+	'menu' name = ID
 	   ((configuration = Configuration)& 
         (grammars = Grammars)&
-	    (properties += Property*)&
-	    ((variables = Variables)?)& 
 	    (conditions += Condition*))
 	     audios=Audios
   	     outputs=Outputs
 ;
 
 InputDsl:
-	'inputname'  name = ID
+	'input' name = ID
       ((configuration = Configuration)& 
  	   (grammars = Grammars)&
-	   (properties += Property*)&
-	   ((variables = Variables)?)&
 	   (conditions += Condition*))
   	    audios=Audios	
 ;
 
 RecordDsl:
-	'recordname' name = ID 'filename' fileName = STRING
+	'record' name = ID 'filename' fileName = STRING
       ((configuration = Configuration)& 
-	   (properties += Property*)&
-	   ((variables = Variables)?)&
 	   (conditions += Condition*))
   	    audios=Audios	
 ;
 
 TransferDsl:
-	'transfername' name = ID 'typeTransfer' typeTransfer = TypeTransfer
+	(
+	('blindTransfer' name = ID ) |
+	('consultationTransfer' name = ID) | 
+	('bridgeTransfer' name = ID )
+	
+	) 
 	   (('destination' destination = STRING )&
 		('audioTransfer' audioTransfer = STRING )?& 
 		('maxTime' maxTime = STRING )?&
 		('timeout' timeout = STRING )?)
-       ((properties += Property*)& 
-       	((variables = Variables)?)& 
-	    (conditions += Condition*))
+       (conditions += Condition*)?
   	     audios=Audios	
 ;
 	  
-Variables:
-	{Variables}
-	'variables' '{'
-	  variable += Variable*
-	 '}'
-;
-
-Variable:
-    name=ID '=' externalVar = ID '.' method = ID '()' ';'
-;
-
 Grammars:
 	{Grammars}
 	'grammars' '{'
@@ -88,14 +72,14 @@ Audios:
 	('nomatch' ':' (
 		    noMatchAudios += ConditionalAudio+))? &
 	('noinput' ':' (
-		    noInputAudios += ConditionalAudio+))? 
+		    noInputAudios += ConditionalAudio+))? &
 		     
     '}'
 ;
 
 Configuration:
 	{Configuration}
-	'configuration' '{'
+	 '{'
 	  configValue += ConfigValue*
 	 '}'
 ;
@@ -112,17 +96,13 @@ Grammar:
 	mode = ('voice'|'dtmf'|'voicedtmf') expr ?= 'expr'? src = STRING
 ;
 
-Property:
-	'property' name = QualifiedName value = STRING
-;
-
 Condition:
 	{Condition}
 	'condition' name = ID condition = INT 
 ;
 
 Outputs:
-	'outputs' '{' 
+	'options' '{' 
   		  output+=Output+
 	 '}'
 ;
@@ -162,28 +142,5 @@ ConditionalAudio returns Audio:
    (INT '.' INT)
 ;
 
-Type :
-  {Type} annotations+=XAnnotation*
-  (
-  	{Class.annotationInfo = current}
-    'variables' 
-    '{'
-    (members+=Member)*
-    '}'
-  )
-;
-
-Member :
-	{Member}
-   annotations+=XAnnotation*
-   (    
-  	{Field.annotationInfo = current}
-    ((type=JvmTypeReference) name=ID) ('=' initialValue=XExpression)? ';'?
-    
-    |
-     {Function.annotationInfo = current}
-    ('public' =>(returnType=JvmTypeReference name=ID ))   (expression=XBlockExpression)
-   
-) ;
 
 

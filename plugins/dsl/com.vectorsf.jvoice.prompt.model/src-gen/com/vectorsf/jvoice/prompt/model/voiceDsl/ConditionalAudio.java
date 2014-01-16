@@ -4,7 +4,6 @@ package com.vectorsf.jvoice.prompt.model.voiceDsl;
 
 import org.eclipse.emf.common.util.EList;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Conditional Audio</b></em>'.

@@ -4,8 +4,8 @@ package com.vectorsf.jvoice.prompt.model.voiceDsl.provider;
 
 
 import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
-
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
+
 import java.util.Collection;
 import java.util.List;
 

@@ -6,31 +6,7 @@ import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVElement;
 import com.vectorsf.jvoice.model.base.NamedElement;
 
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Audios;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Condition;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.ConfigValue;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Field;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Function;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Member;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.*;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -121,12 +97,6 @@ public class VoiceDslSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case VoiceDslPackage.PROPERTY: {
-				Property property = (Property)theEObject;
-				T result = caseProperty(property);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case VoiceDslPackage.CONDITION: {
 				Condition condition = (Condition)theEObject;
 				T result = caseCondition(condition);
@@ -173,51 +143,6 @@ public class VoiceDslSwitch<T> extends Switch<T> {
 			case VoiceDslPackage.OUTPUT: {
 				Output output = (Output)theEObject;
 				T result = caseOutput(output);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case VoiceDslPackage.VARIABLES: {
-				Variables variables = (Variables)theEObject;
-				T result = caseVariables(variables);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case VoiceDslPackage.VARIABLE: {
-				Variable variable = (Variable)theEObject;
-				T result = caseVariable(variable);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case VoiceDslPackage.TYPE: {
-				Type type = (Type)theEObject;
-				T result = caseType(type);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case VoiceDslPackage.MEMBER: {
-				Member member = (Member)theEObject;
-				T result = caseMember(member);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case VoiceDslPackage.CLASS: {
-				com.vectorsf.jvoice.prompt.model.voiceDsl.Class class_ = (com.vectorsf.jvoice.prompt.model.voiceDsl.Class)theEObject;
-				T result = caseClass(class_);
-				if (result == null) result = caseType(class_);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case VoiceDslPackage.FIELD: {
-				Field field = (Field)theEObject;
-				T result = caseField(field);
-				if (result == null) result = caseMember(field);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case VoiceDslPackage.FUNCTION: {
-				Function function = (Function)theEObject;
-				T result = caseFunction(function);
-				if (result == null) result = caseMember(function);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -332,21 +257,6 @@ public class VoiceDslSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseGrammar(Grammar object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Property</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Property</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseProperty(Property object) {
 		return null;
 	}
 
@@ -467,111 +377,6 @@ public class VoiceDslSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseOutput(Output object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Variables</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Variables</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVariables(Variables object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVariable(Variable object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Type</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseType(Type object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Member</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Member</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseMember(Member object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Class</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Class</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseClass(com.vectorsf.jvoice.prompt.model.voiceDsl.Class object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Field</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Field</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseField(Field object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Function</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Function</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseFunction(Function object) {
 		return null;
 	}
 

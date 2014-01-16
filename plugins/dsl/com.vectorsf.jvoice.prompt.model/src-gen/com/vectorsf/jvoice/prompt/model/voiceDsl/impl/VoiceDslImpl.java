@@ -3,23 +3,27 @@
 package com.vectorsf.jvoice.prompt.model.voiceDsl.impl;
 
 import com.vectorsf.jvoice.model.base.impl.JVBeanImpl;
+
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Audios;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Condition;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
+
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -31,12 +35,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getConfiguration <em>Configuration</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getConditions <em>Conditions</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getAudios <em>Audios</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getGrammars <em>Grammars</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getVariables <em>Variables</em>}</li>
- *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getTypes <em>Types</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.prompt.model.voiceDsl.impl.VoiceDslImpl#getOutputs <em>Outputs</em>}</li>
  * </ul>
  * </p>
@@ -53,16 +54,6 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 	 * @ordered
 	 */
 	protected Configuration configuration;
-
-	/**
-	 * The cached value of the '{@link #getProperties() <em>Properties</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getProperties()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Property> properties;
 
 	/**
 	 * The cached value of the '{@link #getConditions() <em>Conditions</em>}' containment reference list.
@@ -93,26 +84,6 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 	 * @ordered
 	 */
 	protected Grammars grammars;
-
-	/**
-	 * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVariables()
-	 * @generated
-	 * @ordered
-	 */
-	protected Variables variables;
-
-	/**
-	 * The cached value of the '{@link #getTypes() <em>Types</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTypes()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Type> types;
 
 	/**
 	 * The cached value of the '{@link #getOutputs() <em>Outputs</em>}' containment reference.
@@ -184,18 +155,6 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.VOICE_DSL__CONFIGURATION, newConfiguration, newConfiguration));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Property> getProperties() {
-		if (properties == null) {
-			properties = new EObjectContainmentEList<Property>(Property.class, this, VoiceDslPackage.VOICE_DSL__PROPERTIES);
-		}
-		return properties;
 	}
 
 	/**
@@ -344,78 +303,17 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Variables getVariables() {
-		return variables;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetVariables(Variables newVariables, NotificationChain msgs) {
-		Variables oldVariables = variables;
-		variables = newVariables;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, VoiceDslPackage.VOICE_DSL__VARIABLES, oldVariables, newVariables);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setVariables(Variables newVariables) {
-		if (newVariables != variables) {
-			NotificationChain msgs = null;
-			if (variables != null)
-				msgs = ((InternalEObject)variables).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.VOICE_DSL__VARIABLES, null, msgs);
-			if (newVariables != null)
-				msgs = ((InternalEObject)newVariables).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - VoiceDslPackage.VOICE_DSL__VARIABLES, null, msgs);
-			msgs = basicSetVariables(newVariables, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VoiceDslPackage.VOICE_DSL__VARIABLES, newVariables, newVariables));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Type> getTypes() {
-		if (types == null) {
-			types = new EObjectContainmentEList<Type>(Type.class, this, VoiceDslPackage.VOICE_DSL__TYPES);
-		}
-		return types;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
 				return basicSetConfiguration(null, msgs);
-			case VoiceDslPackage.VOICE_DSL__PROPERTIES:
-				return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
 			case VoiceDslPackage.VOICE_DSL__CONDITIONS:
 				return ((InternalEList<?>)getConditions()).basicRemove(otherEnd, msgs);
 			case VoiceDslPackage.VOICE_DSL__AUDIOS:
 				return basicSetAudios(null, msgs);
 			case VoiceDslPackage.VOICE_DSL__GRAMMARS:
 				return basicSetGrammars(null, msgs);
-			case VoiceDslPackage.VOICE_DSL__VARIABLES:
-				return basicSetVariables(null, msgs);
-			case VoiceDslPackage.VOICE_DSL__TYPES:
-				return ((InternalEList<?>)getTypes()).basicRemove(otherEnd, msgs);
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				return basicSetOutputs(null, msgs);
 		}
@@ -432,18 +330,12 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 		switch (featureID) {
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
 				return getConfiguration();
-			case VoiceDslPackage.VOICE_DSL__PROPERTIES:
-				return getProperties();
 			case VoiceDslPackage.VOICE_DSL__CONDITIONS:
 				return getConditions();
 			case VoiceDslPackage.VOICE_DSL__AUDIOS:
 				return getAudios();
 			case VoiceDslPackage.VOICE_DSL__GRAMMARS:
 				return getGrammars();
-			case VoiceDslPackage.VOICE_DSL__VARIABLES:
-				return getVariables();
-			case VoiceDslPackage.VOICE_DSL__TYPES:
-				return getTypes();
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				return getOutputs();
 		}
@@ -462,10 +354,6 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
 				setConfiguration((Configuration)newValue);
 				return;
-			case VoiceDslPackage.VOICE_DSL__PROPERTIES:
-				getProperties().clear();
-				getProperties().addAll((Collection<? extends Property>)newValue);
-				return;
 			case VoiceDslPackage.VOICE_DSL__CONDITIONS:
 				getConditions().clear();
 				getConditions().addAll((Collection<? extends Condition>)newValue);
@@ -475,13 +363,6 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 				return;
 			case VoiceDslPackage.VOICE_DSL__GRAMMARS:
 				setGrammars((Grammars)newValue);
-				return;
-			case VoiceDslPackage.VOICE_DSL__VARIABLES:
-				setVariables((Variables)newValue);
-				return;
-			case VoiceDslPackage.VOICE_DSL__TYPES:
-				getTypes().clear();
-				getTypes().addAll((Collection<? extends Type>)newValue);
 				return;
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				setOutputs((Outputs)newValue);
@@ -501,9 +382,6 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
 				setConfiguration((Configuration)null);
 				return;
-			case VoiceDslPackage.VOICE_DSL__PROPERTIES:
-				getProperties().clear();
-				return;
 			case VoiceDslPackage.VOICE_DSL__CONDITIONS:
 				getConditions().clear();
 				return;
@@ -512,12 +390,6 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 				return;
 			case VoiceDslPackage.VOICE_DSL__GRAMMARS:
 				setGrammars((Grammars)null);
-				return;
-			case VoiceDslPackage.VOICE_DSL__VARIABLES:
-				setVariables((Variables)null);
-				return;
-			case VoiceDslPackage.VOICE_DSL__TYPES:
-				getTypes().clear();
 				return;
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				setOutputs((Outputs)null);
@@ -536,18 +408,12 @@ public class VoiceDslImpl extends JVBeanImpl implements VoiceDsl {
 		switch (featureID) {
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
 				return configuration != null;
-			case VoiceDslPackage.VOICE_DSL__PROPERTIES:
-				return properties != null && !properties.isEmpty();
 			case VoiceDslPackage.VOICE_DSL__CONDITIONS:
 				return conditions != null && !conditions.isEmpty();
 			case VoiceDslPackage.VOICE_DSL__AUDIOS:
 				return audios != null;
 			case VoiceDslPackage.VOICE_DSL__GRAMMARS:
 				return grammars != null;
-			case VoiceDslPackage.VOICE_DSL__VARIABLES:
-				return variables != null;
-			case VoiceDslPackage.VOICE_DSL__TYPES:
-				return types != null && !types.isEmpty();
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
 				return outputs != null;
 		}

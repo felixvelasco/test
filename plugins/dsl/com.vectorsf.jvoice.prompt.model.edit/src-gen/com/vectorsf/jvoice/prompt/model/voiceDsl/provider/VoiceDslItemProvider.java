@@ -4,15 +4,21 @@ package com.vectorsf.jvoice.prompt.model.voiceDsl.provider;
 
 
 import com.vectorsf.jvoice.model.base.provider.JVBeanItemProvider;
+
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslFactory;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
+
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -128,12 +134,9 @@ public class VoiceDslItemProvider
 
 		switch (notification.getFeatureID(VoiceDsl.class)) {
 			case VoiceDslPackage.VOICE_DSL__CONFIGURATION:
-			case VoiceDslPackage.VOICE_DSL__PROPERTIES:
 			case VoiceDslPackage.VOICE_DSL__CONDITIONS:
 			case VoiceDslPackage.VOICE_DSL__AUDIOS:
 			case VoiceDslPackage.VOICE_DSL__GRAMMARS:
-			case VoiceDslPackage.VOICE_DSL__VARIABLES:
-			case VoiceDslPackage.VOICE_DSL__TYPES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case VoiceDslPackage.VOICE_DSL__OUTPUTS:
@@ -161,11 +164,6 @@ public class VoiceDslItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(VoiceDslPackage.Literals.VOICE_DSL__PROPERTIES,
-				 VoiceDslFactory.eINSTANCE.createProperty()));
-
-		newChildDescriptors.add
-			(createChildParameter
 				(VoiceDslPackage.Literals.VOICE_DSL__CONDITIONS,
 				 VoiceDslFactory.eINSTANCE.createCondition()));
 
@@ -178,21 +176,6 @@ public class VoiceDslItemProvider
 			(createChildParameter
 				(VoiceDslPackage.Literals.VOICE_DSL__GRAMMARS,
 				 VoiceDslFactory.eINSTANCE.createGrammars()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(VoiceDslPackage.Literals.VOICE_DSL__VARIABLES,
-				 VoiceDslFactory.eINSTANCE.createVariables()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(VoiceDslPackage.Literals.VOICE_DSL__TYPES,
-				 VoiceDslFactory.eINSTANCE.createType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(VoiceDslPackage.Literals.VOICE_DSL__TYPES,
-				 VoiceDslFactory.eINSTANCE.createClass()));
 
 		newChildDescriptors.add
 			(createChildParameter

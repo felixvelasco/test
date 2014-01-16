@@ -17,7 +17,7 @@ import com.google.inject.Injector;
 public class VoiceDslStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
-		org.eclipse.xtext.xbase.annotations.XbaseWithAnnotationsStandaloneSetup.doSetup();
+		org.eclipse.xtext.common.TerminalsStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);
@@ -35,7 +35,6 @@ public class VoiceDslStandaloneSetupGenerated implements ISetup {
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("voiceDsl", resourceFactory);
 		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("voiceDsl", serviceProvider);
 		
-
 
 
 

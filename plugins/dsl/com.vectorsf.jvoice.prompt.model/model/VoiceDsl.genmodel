@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.vectorsf.jvoice.prompt.model/src-gen" editDirectory="/com.vectorsf.jvoice.prompt.model.edit/src-gen"
     modelPluginID="com.vectorsf.jvoice.prompt.model" modelName="VoiceDsl" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
-    usedGenPackages="../../com.vectorsf.jvoice.base.model/model/Base.genmodel#//base ../../org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel#//types ../../org.eclipse.xtext.xbase/model/Xbase.genmodel#//xAnnotations ../../org.eclipse.xtext.xbase/model/Xbase.genmodel#//xbase"
+    usedGenPackages="../../com.vectorsf.jvoice.base.model/model/Base.genmodel#//base"
     operationReflection="true" importOrganizing="true">
   <foreignModel>VoiceDsl.ecore</foreignModel>
   <genPackages prefix="VoiceDsl" basePackage="com.vectorsf.jvoice.prompt.model" disposableProviderFactory="true"
@@ -18,19 +18,17 @@
       <genEnumLiterals ecoreEnumLiteral="VoiceDsl.ecore#//Interpretation/time"/>
       <genEnumLiterals ecoreEnumLiteral="VoiceDsl.ecore#//Interpretation/boolean"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="VoiceDsl.ecore#//TypeTransfer">
+      <genEnumLiterals ecoreEnumLiteral="VoiceDsl.ecore#//TypeTransfer/blind"/>
+      <genEnumLiterals ecoreEnumLiteral="VoiceDsl.ecore#//TypeTransfer/consultation"/>
+      <genEnumLiterals ecoreEnumLiteral="VoiceDsl.ecore#//TypeTransfer/bridge"/>
+    </genEnums>
     <genClasses ecoreClass="VoiceDsl.ecore#//VoiceDsl">
       <genFeatures property="None" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/configuration"/>
-      <genFeatures property="None" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/properties"/>
       <genFeatures property="None" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/conditions"/>
       <genFeatures property="None" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/audios"/>
       <genFeatures property="None" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/grammars"/>
-      <genFeatures property="None" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/variables"/>
-      <genFeatures property="None" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/types"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/inputDsl"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/promptDsl"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/menuDsl"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/outputs"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//VoiceDsl/recordDsl"/>
     </genClasses>
     <genClasses ecoreClass="VoiceDsl.ecore#//Configuration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Configuration/configValue"/>
@@ -46,10 +44,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Grammar/mode"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Grammar/src"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Grammar/expr"/>
-    </genClasses>
-    <genClasses ecoreClass="VoiceDsl.ecore#//Property">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Property/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Property/value"/>
     </genClasses>
     <genClasses ecoreClass="VoiceDsl.ecore#//Condition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Condition/condition"/>
@@ -69,7 +63,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Audio/format"/>
     </genClasses>
     <genClasses ecoreClass="VoiceDsl.ecore#//ConditionalAudio">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//ConditionalAudio/simpleA"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//ConditionalAudio/simpleAudios"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//ConditionalAudio/condit"/>
     </genClasses>
     <genClasses ecoreClass="VoiceDsl.ecore#//OutputValue">
@@ -85,53 +79,18 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Output/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Output/outputValue"/>
     </genClasses>
-    <genClasses ecoreClass="VoiceDsl.ecore#//Variables">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Variables/variable"/>
-    </genClasses>
-    <genClasses ecoreClass="VoiceDsl.ecore#//Variable">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Variable/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Variable/externalVar"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Variable/method"/>
-    </genClasses>
-    <genClasses ecoreClass="VoiceDsl.ecore#//Type">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Type/annotations"/>
-    </genClasses>
-    <genClasses ecoreClass="VoiceDsl.ecore#//Member">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Member/annotations"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Member/annotationInfo"/>
-    </genClasses>
-    <genClasses ecoreClass="VoiceDsl.ecore#//Class">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Class/annotationInfo"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Class/abstract"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Class/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Class/typeParameters"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Class/extends"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Class/implements"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Class/members"/>
-    </genClasses>
-    <genClasses ecoreClass="VoiceDsl.ecore#//Field">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Field/extension"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Field/final"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Field/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Field/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Field/static"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Field/initialValue"/>
-    </genClasses>
-    <genClasses ecoreClass="VoiceDsl.ecore#//Function">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Function/override"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Function/static"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Function/dispatch"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Function/typeParameters"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Function/returnType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//Function/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Function/exceptions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference VoiceDsl.ecore#//Function/expression"/>
-    </genClasses>
     <genClasses ecoreClass="VoiceDsl.ecore#//InputDsl"/>
     <genClasses ecoreClass="VoiceDsl.ecore#//MenuDsl"/>
     <genClasses ecoreClass="VoiceDsl.ecore#//PromptDsl"/>
     <genClasses ecoreClass="VoiceDsl.ecore#//RecordDsl">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//RecordDsl/fileName"/>
+    </genClasses>
+    <genClasses ecoreClass="VoiceDsl.ecore#//TransferDsl">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//TransferDsl/destination"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//TransferDsl/audioTransfer"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//TransferDsl/maxTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//TransferDsl/timeout"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute VoiceDsl.ecore#//TransferDsl/typeTransfer"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

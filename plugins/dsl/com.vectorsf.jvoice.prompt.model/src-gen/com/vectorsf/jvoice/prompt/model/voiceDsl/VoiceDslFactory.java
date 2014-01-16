@@ -58,15 +58,6 @@ public interface VoiceDslFactory extends EFactory {
 	Grammar createGrammar();
 
 	/**
-	 * Returns a new object of class '<em>Property</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Property</em>'.
-	 * @generated
-	 */
-	Property createProperty();
-
-	/**
 	 * Returns a new object of class '<em>Condition</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -137,69 +128,6 @@ public interface VoiceDslFactory extends EFactory {
 	 * @generated
 	 */
 	Output createOutput();
-
-	/**
-	 * Returns a new object of class '<em>Variables</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Variables</em>'.
-	 * @generated
-	 */
-	Variables createVariables();
-
-	/**
-	 * Returns a new object of class '<em>Variable</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Variable</em>'.
-	 * @generated
-	 */
-	Variable createVariable();
-
-	/**
-	 * Returns a new object of class '<em>Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Type</em>'.
-	 * @generated
-	 */
-	Type createType();
-
-	/**
-	 * Returns a new object of class '<em>Member</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Member</em>'.
-	 * @generated
-	 */
-	Member createMember();
-
-	/**
-	 * Returns a new object of class '<em>Class</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Class</em>'.
-	 * @generated
-	 */
-	Class createClass();
-
-	/**
-	 * Returns a new object of class '<em>Field</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Field</em>'.
-	 * @generated
-	 */
-	Field createField();
-
-	/**
-	 * Returns a new object of class '<em>Function</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Function</em>'.
-	 * @generated
-	 */
-	Function createFunction();
 
 	/**
 	 * Returns a new object of class '<em>Input Dsl</em>'.

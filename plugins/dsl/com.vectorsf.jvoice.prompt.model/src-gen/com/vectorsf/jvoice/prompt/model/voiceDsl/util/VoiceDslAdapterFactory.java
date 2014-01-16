@@ -6,31 +6,7 @@ import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVElement;
 import com.vectorsf.jvoice.model.base.NamedElement;
 
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Audio;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Audios;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Condition;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.ConditionalAudio;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.ConfigValue;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Configuration;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Field;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Function;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammar;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Grammars;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Member;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.OutputValue;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.PromptDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Property;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Type;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Variable;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Variables;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.*;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -112,10 +88,6 @@ public class VoiceDslAdapterFactory extends AdapterFactoryImpl {
 				return createGrammarAdapter();
 			}
 			@Override
-			public Adapter caseProperty(Property object) {
-				return createPropertyAdapter();
-			}
-			@Override
 			public Adapter caseCondition(Condition object) {
 				return createConditionAdapter();
 			}
@@ -146,34 +118,6 @@ public class VoiceDslAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseOutput(Output object) {
 				return createOutputAdapter();
-			}
-			@Override
-			public Adapter caseVariables(Variables object) {
-				return createVariablesAdapter();
-			}
-			@Override
-			public Adapter caseVariable(Variable object) {
-				return createVariableAdapter();
-			}
-			@Override
-			public Adapter caseType(Type object) {
-				return createTypeAdapter();
-			}
-			@Override
-			public Adapter caseMember(Member object) {
-				return createMemberAdapter();
-			}
-			@Override
-			public Adapter caseClass(com.vectorsf.jvoice.prompt.model.voiceDsl.Class object) {
-				return createClassAdapter();
-			}
-			@Override
-			public Adapter caseField(Field object) {
-				return createFieldAdapter();
-			}
-			@Override
-			public Adapter caseFunction(Function object) {
-				return createFunctionAdapter();
 			}
 			@Override
 			public Adapter caseInputDsl(InputDsl object) {
@@ -280,20 +224,6 @@ public class VoiceDslAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGrammarAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Property <em>Property</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Property
-	 * @generated
-	 */
-	public Adapter createPropertyAdapter() {
 		return null;
 	}
 
@@ -406,104 +336,6 @@ public class VoiceDslAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOutputAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variables <em>Variables</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Variables
-	 * @generated
-	 */
-	public Adapter createVariablesAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variable <em>Variable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Variable
-	 * @generated
-	 */
-	public Adapter createVariableAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Type <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Type
-	 * @generated
-	 */
-	public Adapter createTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Member <em>Member</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Member
-	 * @generated
-	 */
-	public Adapter createMemberAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class <em>Class</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Class
-	 * @generated
-	 */
-	public Adapter createClassAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Field <em>Field</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Field
-	 * @generated
-	 */
-	public Adapter createFieldAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function <em>Function</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see com.vectorsf.jvoice.prompt.model.voiceDsl.Function
-	 * @generated
-	 */
-	public Adapter createFunctionAdapter() {
 		return null;
 	}
 

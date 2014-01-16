@@ -30,5 +30,8 @@ Export-Package: com.isb.bks.ivr.voice.dsl,
  com.isb.bks.ivr.voice.dsl.parser.antlr.internal,
  com.isb.bks.ivr.voice.dsl.validation,
  com.isb.bks.ivr.voice.dsl.formatting,
- com.isb.bks.ivr.voice.dsl.jvmmodel
-Import-Package: org.apache.log4j
+ com.isb.bks.ivr.voice.dsl.jvmmodel,
+ com.isb.bks.ivr.voice.dsl.scoping,
+ com.isb.bks.ivr.voice.dsl.generator
+Import-Package: org.apache.log4j,
+ org.eclipse.xtext.xbase.lib

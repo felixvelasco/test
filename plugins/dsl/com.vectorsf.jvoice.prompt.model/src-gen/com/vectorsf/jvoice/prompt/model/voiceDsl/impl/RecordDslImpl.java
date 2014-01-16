@@ -6,7 +6,9 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -32,6 +34,7 @@ public class RecordDslImpl extends VoiceDslImpl implements RecordDsl {
 	 * @ordered
 	 */
 	protected static final String FILE_NAME_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getFileName() <em>File Name</em>}' attribute.
 	 * <!-- begin-user-doc -->

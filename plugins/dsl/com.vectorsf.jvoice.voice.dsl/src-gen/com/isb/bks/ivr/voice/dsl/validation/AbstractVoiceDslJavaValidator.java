@@ -8,16 +8,12 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
 
-public class AbstractVoiceDslJavaValidator extends org.eclipse.xtext.xbase.annotations.validation.XbaseWithAnnotationsJavaValidator {
+public class AbstractVoiceDslJavaValidator extends org.eclipse.xtext.validation.AbstractDeclarativeValidator {
 
 	@Override
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.isb.com/bks/ivr/voice/dsl/VoiceDsl/1.0"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/Xtext/Xbase/XAnnotations"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/xtext/xbase/Xbase"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/xtext/common/JavaVMTypes"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/xtext/xbase/Xtype"));
 		return result;
 	}
 

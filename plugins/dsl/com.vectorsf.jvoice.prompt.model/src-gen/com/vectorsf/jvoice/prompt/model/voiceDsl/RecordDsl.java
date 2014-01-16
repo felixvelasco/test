@@ -20,7 +20,6 @@ package com.vectorsf.jvoice.prompt.model.voiceDsl;
  * @generated
  */
 public interface RecordDsl extends VoiceDsl {
-
 	/**
 	 * Returns the value of the '<em><b>File Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -46,4 +45,5 @@ public interface RecordDsl extends VoiceDsl {
 	 * @generated
 	 */
 	void setFileName(String value);
+
 } // RecordDsl

@@ -164,29 +164,6 @@ public class VoiceDslItemProviderAdapterFactory extends VoiceDslAdapterFactory i
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Property} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected PropertyItemProvider propertyItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Property}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createPropertyAdapter() {
-		if (propertyItemProvider == null) {
-			propertyItemProvider = new PropertyItemProvider(this);
-		}
-
-		return propertyItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Condition} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -368,167 +345,6 @@ public class VoiceDslItemProviderAdapterFactory extends VoiceDslAdapterFactory i
 		}
 
 		return outputItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variables} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected VariablesItemProvider variablesItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variables}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createVariablesAdapter() {
-		if (variablesItemProvider == null) {
-			variablesItemProvider = new VariablesItemProvider(this);
-		}
-
-		return variablesItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variable} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected VariableItemProvider variableItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Variable}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createVariableAdapter() {
-		if (variableItemProvider == null) {
-			variableItemProvider = new VariableItemProvider(this);
-		}
-
-		return variableItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Type} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected TypeItemProvider typeItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Type}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createTypeAdapter() {
-		if (typeItemProvider == null) {
-			typeItemProvider = new TypeItemProvider(this);
-		}
-
-		return typeItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Member} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected MemberItemProvider memberItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Member}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createMemberAdapter() {
-		if (memberItemProvider == null) {
-			memberItemProvider = new MemberItemProvider(this);
-		}
-
-		return memberItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ClassItemProvider classItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Class}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createClassAdapter() {
-		if (classItemProvider == null) {
-			classItemProvider = new ClassItemProvider(this);
-		}
-
-		return classItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Field} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected FieldItemProvider fieldItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Field}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createFieldAdapter() {
-		if (fieldItemProvider == null) {
-			fieldItemProvider = new FieldItemProvider(this);
-		}
-
-		return fieldItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected FunctionItemProvider functionItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link com.vectorsf.jvoice.prompt.model.voiceDsl.Function}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createFunctionAdapter() {
-		if (functionItemProvider == null) {
-			functionItemProvider = new FunctionItemProvider(this);
-		}
-
-		return functionItemProvider;
 	}
 
 	/**
@@ -749,7 +565,6 @@ public class VoiceDslItemProviderAdapterFactory extends VoiceDslAdapterFactory i
 		if (configurationItemProvider != null) configurationItemProvider.dispose();
 		if (configValueItemProvider != null) configValueItemProvider.dispose();
 		if (grammarItemProvider != null) grammarItemProvider.dispose();
-		if (propertyItemProvider != null) propertyItemProvider.dispose();
 		if (conditionItemProvider != null) conditionItemProvider.dispose();
 		if (audiosItemProvider != null) audiosItemProvider.dispose();
 		if (audioItemProvider != null) audioItemProvider.dispose();
@@ -758,13 +573,6 @@ public class VoiceDslItemProviderAdapterFactory extends VoiceDslAdapterFactory i
 		if (outputsItemProvider != null) outputsItemProvider.dispose();
 		if (grammarsItemProvider != null) grammarsItemProvider.dispose();
 		if (outputItemProvider != null) outputItemProvider.dispose();
-		if (variablesItemProvider != null) variablesItemProvider.dispose();
-		if (variableItemProvider != null) variableItemProvider.dispose();
-		if (typeItemProvider != null) typeItemProvider.dispose();
-		if (memberItemProvider != null) memberItemProvider.dispose();
-		if (classItemProvider != null) classItemProvider.dispose();
-		if (fieldItemProvider != null) fieldItemProvider.dispose();
-		if (functionItemProvider != null) functionItemProvider.dispose();
 		if (inputDslItemProvider != null) inputDslItemProvider.dispose();
 		if (menuDslItemProvider != null) menuDslItemProvider.dispose();
 		if (promptDslItemProvider != null) promptDslItemProvider.dispose();
