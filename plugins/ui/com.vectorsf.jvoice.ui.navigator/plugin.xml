@@ -975,5 +975,36 @@
             type="com.vectorsf.jvoice.model.base.JVProject">
       </propertyTester>
    </extension>
+   <extension 
+         point="org.eclipse.ui.popupMenus"> 
+   <objectContribution id="com.vectorsf.jvoice.ui.navigator.mavenPlugin"
+                       objectClass="com.vectorsf.jvoice.model.base.JVProject"
+                       adaptable="true">
+      <menu
+         id="com.vectorsf.jvoice.ui.navigator.subMenu"
+         label="Maven"
+         path="additions">
+      <separator name="groupMaven"/>
+      </menu>
+         <action id="com.vectorsf.jvoice.ui.navigator.util.addPluginAction"
+                 class="com.vectorsf.jvoice.ui.navigator.util.AddPluginDependencyAction"
+                 label="%action.name.addMavenPlugin"
+                 style="push"
+                 menubarPath="com.vectorsf.jvoice.ui.navigator.subMenu/groupMaven"
+                 enablesFor="1"/>
+         <action id="com.vectorsf.jvoice.ui.navigator.util.addDependencyAction"
+                 class="com.vectorsf.jvoice.ui.navigator.util.AddMavenDependencyAction"
+                 label="%action.name.addMavenDependency"
+                 style="push"
+                 menubarPath="com.vectorsf.jvoice.ui.navigator.subMenu/groupMaven"
+                 enablesFor="1"/>
+         <visibility>
+           <and>
+             <objectState name="open" value="true"/>
+             <objectState name="nature" value="org.eclipse.m2e.core.maven2Nature"/>
+           </and>
+         </visibility>
+      </objectContribution>
+   </extension>
 
 </plugin>
