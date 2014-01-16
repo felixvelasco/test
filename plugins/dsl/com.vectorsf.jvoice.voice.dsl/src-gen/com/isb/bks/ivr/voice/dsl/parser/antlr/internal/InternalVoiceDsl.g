@@ -170,96 +170,55 @@ rulePromptDsl returns [EObject current=null]
 	    }
 
 )
-)(
-
-(
-	{ 
-	  getUnorderedGroupHelper().enter(grammarAccess.getPromptDslAccess().getUnorderedGroup_2());
-	}
-	(
-		(
-
-			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getPromptDslAccess().getUnorderedGroup_2(), 0)}?=>(
-					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getPromptDslAccess().getUnorderedGroup_2(), 0);
-	 				}
-					({true}?=>(
+)((
 (
 		{ 
 	        newCompositeNode(grammarAccess.getPromptDslAccess().getConfigurationConfigurationParserRuleCall_2_0_0()); 
 	    }
-		lv_configuration_3_0=ruleConfiguration		{
+		lv_configuration_2_0=ruleConfiguration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPromptDslRule());
 	        }
        		set(
        			$current, 
        			"configuration",
-        		lv_configuration_3_0, 
+        		lv_configuration_2_0, 
         		"Configuration");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
-					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getPromptDslAccess().getUnorderedGroup_2());
-	 				}
- 				)
-			)  |
-
-			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getPromptDslAccess().getUnorderedGroup_2(), 1)}?=>(
-					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getPromptDslAccess().getUnorderedGroup_2(), 1);
-	 				}
-					({true}?=>(
+)?(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getPromptDslAccess().getConditionsConditionParserRuleCall_2_1_0()); 
 	    }
-		lv_conditions_4_0=ruleCondition		{
+		lv_conditions_3_0=ruleCondition		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPromptDslRule());
 	        }
        		add(
        			$current, 
        			"conditions",
-        		lv_conditions_4_0, 
+        		lv_conditions_3_0, 
         		"Condition");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))+
-					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getPromptDslAccess().getUnorderedGroup_2());
-	 				}
- 				)
-			)  
-
-		)+
-	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getPromptDslAccess().getUnorderedGroup_2())}?	
-	)
-)
-	{ 
-	  getUnorderedGroupHelper().leave(grammarAccess.getPromptDslAccess().getUnorderedGroup_2());
-	}
-
-)(
+)*)(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getPromptDslAccess().getAudiosAudiosParserRuleCall_3_0()); 
 	    }
-		lv_audios_5_0=ruleAudios		{
+		lv_audios_4_0=ruleAudios		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPromptDslRule());
 	        }
        		set(
        			$current, 
        			"audios",
-        		lv_audios_5_0, 
+        		lv_audios_4_0, 
         		"Audios");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -309,53 +268,41 @@ ruleMenuDsl returns [EObject current=null]
 
 )
 )(
-
-(
-	{ 
-	  getUnorderedGroupHelper().enter(grammarAccess.getMenuDslAccess().getUnorderedGroup_2());
-	}
-	(
-		(
-
-			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getMenuDslAccess().getUnorderedGroup_2(), 0)}?=>(
-					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getMenuDslAccess().getUnorderedGroup_2(), 0);
-	 				}
-					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMenuDslAccess().getConfigurationConfigurationParserRuleCall_2_0_0()); 
+	        newCompositeNode(grammarAccess.getMenuDslAccess().getConfigurationConfigurationParserRuleCall_2_0()); 
 	    }
-		lv_configuration_3_0=ruleConfiguration		{
+		lv_configuration_2_0=ruleConfiguration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getMenuDslRule());
 	        }
        		set(
        			$current, 
        			"configuration",
-        		lv_configuration_3_0, 
+        		lv_configuration_2_0, 
         		"Configuration");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
-					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getMenuDslAccess().getUnorderedGroup_2());
-	 				}
- 				)
-			)  |
+)?(
+
+(
+	{ 
+	  getUnorderedGroupHelper().enter(grammarAccess.getMenuDslAccess().getUnorderedGroup_3());
+	}
+	(
+		(
 
 			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getMenuDslAccess().getUnorderedGroup_2(), 1)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getMenuDslAccess().getUnorderedGroup_3(), 0)}?=>(
 					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getMenuDslAccess().getUnorderedGroup_2(), 1);
+	 				  getUnorderedGroupHelper().select(grammarAccess.getMenuDslAccess().getUnorderedGroup_3(), 0);
 	 				}
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMenuDslAccess().getGrammarsGrammarsParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getMenuDslAccess().getGrammarsGrammarsParserRuleCall_3_0_0()); 
 	    }
 		lv_grammars_4_0=ruleGrammars		{
 	        if ($current==null) {
@@ -372,20 +319,20 @@ ruleMenuDsl returns [EObject current=null]
 )
 ))
 					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getMenuDslAccess().getUnorderedGroup_2());
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getMenuDslAccess().getUnorderedGroup_3());
 	 				}
  				)
 			)  |
 
 			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getMenuDslAccess().getUnorderedGroup_2(), 2)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getMenuDslAccess().getUnorderedGroup_3(), 1)}?=>(
 					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getMenuDslAccess().getUnorderedGroup_2(), 2);
+	 				  getUnorderedGroupHelper().select(grammarAccess.getMenuDslAccess().getUnorderedGroup_3(), 1);
 	 				}
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMenuDslAccess().getConditionsConditionParserRuleCall_2_2_0()); 
+	        newCompositeNode(grammarAccess.getMenuDslAccess().getConditionsConditionParserRuleCall_3_1_0()); 
 	    }
 		lv_conditions_5_0=ruleCondition		{
 	        if ($current==null) {
@@ -402,23 +349,23 @@ ruleMenuDsl returns [EObject current=null]
 )
 ))+
 					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getMenuDslAccess().getUnorderedGroup_2());
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getMenuDslAccess().getUnorderedGroup_3());
 	 				}
  				)
 			)  
 
 		)+
-	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getMenuDslAccess().getUnorderedGroup_2())}?	
+	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getMenuDslAccess().getUnorderedGroup_3())}?	
 	)
 )
 	{ 
-	  getUnorderedGroupHelper().leave(grammarAccess.getMenuDslAccess().getUnorderedGroup_2());
+	  getUnorderedGroupHelper().leave(grammarAccess.getMenuDslAccess().getUnorderedGroup_3());
 	}
 
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMenuDslAccess().getAudiosAudiosParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getMenuDslAccess().getAudiosAudiosParserRuleCall_4_0()); 
 	    }
 		lv_audios_6_0=ruleAudios		{
 	        if ($current==null) {
@@ -436,7 +383,7 @@ ruleMenuDsl returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMenuDslAccess().getOutputsOutputsParserRuleCall_4_0()); 
+	        newCompositeNode(grammarAccess.getMenuDslAccess().getOutputsOutputsParserRuleCall_5_0()); 
 	    }
 		lv_outputs_7_0=ruleOutputs		{
 	        if ($current==null) {
@@ -495,53 +442,41 @@ ruleInputDsl returns [EObject current=null]
 
 )
 )(
-
-(
-	{ 
-	  getUnorderedGroupHelper().enter(grammarAccess.getInputDslAccess().getUnorderedGroup_2());
-	}
-	(
-		(
-
-			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getInputDslAccess().getUnorderedGroup_2(), 0)}?=>(
-					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getInputDslAccess().getUnorderedGroup_2(), 0);
-	 				}
-					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getInputDslAccess().getConfigurationConfigurationParserRuleCall_2_0_0()); 
+	        newCompositeNode(grammarAccess.getInputDslAccess().getConfigurationConfigurationParserRuleCall_2_0()); 
 	    }
-		lv_configuration_3_0=ruleConfiguration		{
+		lv_configuration_2_0=ruleConfiguration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getInputDslRule());
 	        }
        		set(
        			$current, 
        			"configuration",
-        		lv_configuration_3_0, 
+        		lv_configuration_2_0, 
         		"Configuration");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
-					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getInputDslAccess().getUnorderedGroup_2());
-	 				}
- 				)
-			)  |
+)(
+
+(
+	{ 
+	  getUnorderedGroupHelper().enter(grammarAccess.getInputDslAccess().getUnorderedGroup_3());
+	}
+	(
+		(
 
 			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getInputDslAccess().getUnorderedGroup_2(), 1)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getInputDslAccess().getUnorderedGroup_3(), 0)}?=>(
 					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getInputDslAccess().getUnorderedGroup_2(), 1);
+	 				  getUnorderedGroupHelper().select(grammarAccess.getInputDslAccess().getUnorderedGroup_3(), 0);
 	 				}
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getInputDslAccess().getGrammarsGrammarsParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getInputDslAccess().getGrammarsGrammarsParserRuleCall_3_0_0()); 
 	    }
 		lv_grammars_4_0=ruleGrammars		{
 	        if ($current==null) {
@@ -558,20 +493,20 @@ ruleInputDsl returns [EObject current=null]
 )
 ))
 					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getInputDslAccess().getUnorderedGroup_2());
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getInputDslAccess().getUnorderedGroup_3());
 	 				}
  				)
 			)  |
 
 			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getInputDslAccess().getUnorderedGroup_2(), 2)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getInputDslAccess().getUnorderedGroup_3(), 1)}?=>(
 					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getInputDslAccess().getUnorderedGroup_2(), 2);
+	 				  getUnorderedGroupHelper().select(grammarAccess.getInputDslAccess().getUnorderedGroup_3(), 1);
 	 				}
 					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getInputDslAccess().getConditionsConditionParserRuleCall_2_2_0()); 
+	        newCompositeNode(grammarAccess.getInputDslAccess().getConditionsConditionParserRuleCall_3_1_0()); 
 	    }
 		lv_conditions_5_0=ruleCondition		{
 	        if ($current==null) {
@@ -588,23 +523,23 @@ ruleInputDsl returns [EObject current=null]
 )
 ))+
 					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getInputDslAccess().getUnorderedGroup_2());
+	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getInputDslAccess().getUnorderedGroup_3());
 	 				}
  				)
 			)  
 
 		)+
-	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getInputDslAccess().getUnorderedGroup_2())}?	
+	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getInputDslAccess().getUnorderedGroup_3())}?	
 	)
 )
 	{ 
-	  getUnorderedGroupHelper().leave(grammarAccess.getInputDslAccess().getUnorderedGroup_2());
+	  getUnorderedGroupHelper().leave(grammarAccess.getInputDslAccess().getUnorderedGroup_3());
 	}
 
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getInputDslAccess().getAudiosAudiosParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getInputDslAccess().getAudiosAudiosParserRuleCall_4_0()); 
 	    }
 		lv_audios_6_0=ruleAudios		{
 	        if ($current==null) {
@@ -685,95 +620,54 @@ ruleRecordDsl returns [EObject current=null]
 
 )
 )(
-
-(
-	{ 
-	  getUnorderedGroupHelper().enter(grammarAccess.getRecordDslAccess().getUnorderedGroup_4());
-	}
-	(
-		(
-
-			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup_4(), 0)}?=>(
-					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup_4(), 0);
-	 				}
-					({true}?=>(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRecordDslAccess().getConfigurationConfigurationParserRuleCall_4_0_0()); 
+	        newCompositeNode(grammarAccess.getRecordDslAccess().getConfigurationConfigurationParserRuleCall_4_0()); 
 	    }
-		lv_configuration_5_0=ruleConfiguration		{
+		lv_configuration_4_0=ruleConfiguration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRecordDslRule());
 	        }
        		set(
        			$current, 
        			"configuration",
-        		lv_configuration_5_0, 
+        		lv_configuration_4_0, 
         		"Configuration");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
-					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup_4());
-	 				}
- 				)
-			)  |
-
-			( 
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getRecordDslAccess().getUnorderedGroup_4(), 1)}?=>(
-					{ 
-	 				  getUnorderedGroupHelper().select(grammarAccess.getRecordDslAccess().getUnorderedGroup_4(), 1);
-	 				}
-					({true}?=>(
+)?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRecordDslAccess().getConditionsConditionParserRuleCall_4_1_0()); 
+	        newCompositeNode(grammarAccess.getRecordDslAccess().getConditionsConditionParserRuleCall_5_0()); 
 	    }
-		lv_conditions_6_0=ruleCondition		{
+		lv_conditions_5_0=ruleCondition		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRecordDslRule());
 	        }
        		add(
        			$current, 
        			"conditions",
-        		lv_conditions_6_0, 
+        		lv_conditions_5_0, 
         		"Condition");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))+
-					{ 
-	 				  getUnorderedGroupHelper().returnFromSelection(grammarAccess.getRecordDslAccess().getUnorderedGroup_4());
-	 				}
- 				)
-			)  
-
-		)+
-	  	{getUnorderedGroupHelper().canLeave(grammarAccess.getRecordDslAccess().getUnorderedGroup_4())}?	
-	)
-)
-	{ 
-	  getUnorderedGroupHelper().leave(grammarAccess.getRecordDslAccess().getUnorderedGroup_4());
-	}
-
-)(
+)*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRecordDslAccess().getAudiosAudiosParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getRecordDslAccess().getAudiosAudiosParserRuleCall_6_0()); 
 	    }
-		lv_audios_7_0=ruleAudios		{
+		lv_audios_6_0=ruleAudios		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRecordDslRule());
 	        }
        		set(
        			$current, 
        			"audios",
-        		lv_audios_7_0, 
+        		lv_audios_6_0, 
         		"Audios");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1024,16 +918,34 @@ ruleTransferDsl returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransferDslAccess().getConditionsConditionParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getConfigurationConfigurationParserRuleCall_2_0()); 
 	    }
-		lv_conditions_15_0=ruleCondition		{
+		lv_configuration_15_0=ruleConfiguration		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
+	        }
+       		set(
+       			$current, 
+       			"configuration",
+        		lv_configuration_15_0, 
+        		"Configuration");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getConditionsConditionParserRuleCall_3_0()); 
+	    }
+		lv_conditions_16_0=ruleCondition		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
 	        }
        		add(
        			$current, 
        			"conditions",
-        		lv_conditions_15_0, 
+        		lv_conditions_16_0, 
         		"Condition");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1042,16 +954,16 @@ ruleTransferDsl returns [EObject current=null]
 )?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransferDslAccess().getAudiosAudiosParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getAudiosAudiosParserRuleCall_4_0()); 
 	    }
-		lv_audios_16_0=ruleAudios		{
+		lv_audios_17_0=ruleAudios		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
 	        }
        		set(
        			$current, 
        			"audios",
-        		lv_audios_16_0, 
+        		lv_audios_17_0, 
         		"Audios");
 	        afterParserOrEnumRuleCall();
 	    }

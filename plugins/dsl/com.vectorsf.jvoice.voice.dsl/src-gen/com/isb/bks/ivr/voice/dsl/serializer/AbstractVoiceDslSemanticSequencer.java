@@ -242,7 +242,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	 * Constraint:
 	 *     (
 	 *         name=ID 
-	 *         configuration=Configuration 
+	 *         configuration=Configuration? 
 	 *         grammars=Grammars 
 	 *         conditions+=Condition* 
 	 *         audios=Audios 
@@ -283,7 +283,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	
 	/**
 	 * Constraint:
-	 *     (name=ID configuration=Configuration conditions+=Condition* audios=Audios)
+	 *     (name=ID configuration=Configuration? conditions+=Condition* audios=Audios)
 	 */
 	protected void sequence_PromptDsl(EObject context, PromptDsl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -292,7 +292,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	
 	/**
 	 * Constraint:
-	 *     (name=ID fileName=STRING configuration=Configuration conditions+=Condition* audios=Audios)
+	 *     (name=ID fileName=STRING configuration=Configuration? conditions+=Condition* audios=Audios)
 	 */
 	protected void sequence_RecordDsl(EObject context, RecordDsl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -316,6 +316,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	 *         audioTransfer=STRING? 
 	 *         maxTime=STRING? 
 	 *         timeout=STRING? 
+	 *         configuration=Configuration? 
 	 *         conditions+=Condition? 
 	 *         audios=Audios
 	 *     )

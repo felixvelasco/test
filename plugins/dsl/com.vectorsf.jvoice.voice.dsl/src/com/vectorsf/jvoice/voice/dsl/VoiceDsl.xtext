@@ -12,15 +12,15 @@ VoiceDsl:
 
 PromptDsl:
 	'output' name = ID 
-       ((configuration = Configuration)& 
+       ((configuration = Configuration)? 
 	    (conditions += Condition*))
   	     audios=Audios	
 ;
 
 MenuDsl:
 	'menu' name = ID
-	   ((configuration = Configuration)& 
-        (grammars = Grammars)&
+	   (configuration = Configuration)? 
+       ((grammars = Grammars)&
 	    (conditions += Condition*))
 	     audios=Audios
   	     outputs=Outputs
@@ -28,16 +28,16 @@ MenuDsl:
 
 InputDsl:
 	'input' name = ID
-      ((configuration = Configuration)& 
- 	   (grammars = Grammars)&
+      (configuration = Configuration) 
+ 	   ((grammars = Grammars)&
 	   (conditions += Condition*))
   	    audios=Audios	
 ;
 
 RecordDsl:
 	'record' name = ID 'filename' fileName = STRING
-      ((configuration = Configuration)& 
-	   (conditions += Condition*))
+       (configuration = Configuration)? 
+	    conditions += Condition*
   	    audios=Audios	
 ;
 
@@ -52,6 +52,7 @@ TransferDsl:
 		('audioTransfer' audioTransfer = STRING )?& 
 		('maxTime' maxTime = STRING )?&
 		('timeout' timeout = STRING )?)
+       (configuration = Configuration)? 
        (conditions += Condition*)?
   	     audios=Audios	
 ;
