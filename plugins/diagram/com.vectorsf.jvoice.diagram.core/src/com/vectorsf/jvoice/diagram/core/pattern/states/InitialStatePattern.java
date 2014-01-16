@@ -5,6 +5,7 @@ import java.util.List;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
+import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.features.context.IMoveShapeContext;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.impl.Reason;
@@ -143,6 +144,11 @@ public class InitialStatePattern extends IdPattern {
 	@Override
 	public boolean canMoveShape(IMoveShapeContext context) {
 		return super.canMoveShape(context) && context.getDeltaY() == 0;
+	}
+
+	@Override
+	public boolean canDelete(IDeleteContext context) {
+		return false;
 	}
 
 }
