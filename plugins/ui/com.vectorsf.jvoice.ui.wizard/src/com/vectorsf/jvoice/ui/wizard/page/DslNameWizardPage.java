@@ -146,7 +146,12 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		char initial = text.charAt(0);
 		if (Character.isDigit(initial)) {
-			setErrorMessage("The first letter of the locution name can't be a number.");
+			setErrorMessage("The first letter of the locution name cannot be a number.");
+			return false;
+		}
+
+		if (text.indexOf(' ') != -1) {
+			setErrorMessage("The name of the locution cannot contain spaces.");
 			return false;
 		}
 
