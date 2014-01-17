@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>application-builder</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
-	<repositories>
+	<!-- <repositories>
 		<repository>
 			<id>ivr</id>
 			<name>jVoice test repository</name>
@@ -20,7 +20,7 @@
 			<id>xtend</id>
 			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/xtend/</url>
 		</pluginRepository>
-	</pluginRepositories>
+	</pluginRepositories>-->
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -64,9 +64,9 @@
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.lib</artifactId>
-			<version>2.4.2</version>
+			<version>2.4.3</version>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext</artifactId>
 			<version>2.4.2-201306120542</version>
@@ -82,16 +82,16 @@
 			<artifactId>org.eclipse.xtext.common.types</artifactId>
 			<version>2.4.2.v201306120542</version>
 			<scope>runtime</scope>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
-			<artifactId>org.eclipse.xtext.xbase</artifactId>
-			<version>2.4.2.v201306120542</version>
+			<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+			<version>2.4.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>13.0</version>
+			<version>12.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>
@@ -149,7 +149,7 @@
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
-				<version>2.4.2</version>
+				<version>2.4.3</version>
 				<configuration>
 					<outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
 				</configuration>
