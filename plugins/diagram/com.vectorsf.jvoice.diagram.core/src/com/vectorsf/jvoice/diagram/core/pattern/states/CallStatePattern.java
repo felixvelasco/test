@@ -31,7 +31,7 @@ import com.vectorsf.jvoice.ui.edit.validators.ValidatorExecuteBean;
 
 public class CallStatePattern extends SimpleStatePattern {
 
-	private static final String CALL = "Execution";
+	private static final String CALL = "Execute";
 
 	@Override
 	public Object[] create(ICreateContext context) {
