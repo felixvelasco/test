@@ -38,7 +38,7 @@ public class LocutionItemProvider extends TransientFlowItemProvider {
 
 	@Override
 	public String getText(Object object) {
-		return "locutions";
+		return "definitions";
 	}
 
 	@Override

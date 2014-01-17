@@ -1,6 +1,10 @@
 package com.vectorsf.jvoice.prompt.model.voiceDsl.provider;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
@@ -12,7 +16,7 @@ public class ExtRecordDslItemProvider extends RecordDslItemProvider {
 
 	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/icon_nav_locution.png");
+		return getResourceLocator().getImage("full/obj16/icon_nav_record.png");
 	}
 
 	@Override
@@ -20,4 +24,11 @@ public class ExtRecordDslItemProvider extends RecordDslItemProvider {
 		return ((VoiceDsl) object).getName();
 	}
 
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
+			childrenFeatures = new ArrayList<>();
+		}
+		return childrenFeatures;
+	}
 }
