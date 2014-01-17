@@ -1005,6 +1005,30 @@
            </and>
          </visibility>
       </objectContribution>
+        <objectContribution
+            adaptable="false"
+            objectClass="com.vectorsf.jvoice.model.base.JVProject"
+            id="com.vectorsf.jvoice.ui.navigator.runMaven">
+         <action
+               label="%action.name.runAs "
+               class="com.vectorsf.jvoice.ui.navigator.util.RunContextualLaunchAction"
+               menubarPath="additions"
+               enablesFor="1"
+               id="com.vectorsf.jvoice.ui.navigator.util.RunContextualLaunchAction">
+         </action>
+      </objectContribution>
+       <objectContribution
+            adaptable="false"
+            objectClass="com.vectorsf.jvoice.model.base.JVProject"
+            id="com.vectorsf.jvoice.ui.navigator.debugMaven">
+         <action
+               label="%action.name.debugAs "
+               class="com.vectorsf.jvoice.ui.navigator.util.DebugContextualLaunchAction"
+               menubarPath="additions"
+               enablesFor="1"
+               id="com.vectorsf.jvoice.ui.navigator.util.DebugContextualLaunchAction">
+         </action>
+      </objectContribution>
    </extension>
 
 </plugin>
