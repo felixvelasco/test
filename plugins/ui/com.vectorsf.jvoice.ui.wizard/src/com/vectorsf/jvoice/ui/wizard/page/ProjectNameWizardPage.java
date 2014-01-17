@@ -98,6 +98,12 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
+		char initial = text.charAt(0);
+		if (Character.isDigit(initial)) {
+			setErrorMessage("The first letter of the project name can't be a number.");
+			return false;
+		}
+
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 
 		if (root.getProject(text).exists()) {

@@ -147,6 +147,11 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
+		char initial = text.charAt(0);
+		if (Character.isDigit(initial)) {
+			setErrorMessage("The first letter of the flow name can't be a number.");
+			return false;
+		}
 		String projectName = getProjectFieldValue();
 		if (projectName.isEmpty()) {
 			setErrorMessage("Enter a project name");

@@ -147,7 +147,7 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 		}
 
 		char initial = text.charAt(0);
-		if (!Character.isLetter(initial)) {
+		if (Character.isDigit(initial)) {
 			setErrorMessage("The first letter of the Custom name can't be a number.");
 			return false;
 		}
