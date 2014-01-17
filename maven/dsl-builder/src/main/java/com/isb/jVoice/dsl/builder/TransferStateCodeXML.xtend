@@ -15,7 +15,7 @@ class TransferStateCodeXML {
 		var TransferDsl dsl = transfer.locution as TransferDsl
 		
 		var audio = transfer.locution.audios
-		var properties = transfer.locution.properties
+		var configurations = transfer.locution.configuration
 		
 
 '''
@@ -46,9 +46,13 @@ class TransferStateCodeXML {
 			«IF audio != null» 
 					«var audios = transfer.locution.audios.mainAudios»
 					«GeneralStateCodeXML.doGenerateGeneralState(state, audios,"audioItems", nameProject)»
-					«IF properties != null && properties.size>0 » 
-						«FOR property : properties »
-							<evaluate expression="flashScope.«state.name».properties.put('«property.name»','«property.value»')"/>
+					«IF configurations != null» 
+						«FOR configValue : configurations.configValue »
+							«IF configValue.name != null && !configValue.name.empty»
+								«IF configValue.value != null && !configValue.value.empty»
+									<evaluate name="flashScope.«state.name».properties.put('«configValue.name»','«configValue.value»')" />
+								«ENDIF»
+							«ENDIF»
 						«ENDFOR»
 	        		«ENDIF» 
         		«ENDIF» 

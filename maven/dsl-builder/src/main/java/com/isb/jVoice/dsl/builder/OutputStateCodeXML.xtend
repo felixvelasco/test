@@ -9,7 +9,6 @@ class OutputStateCodeXML {
 			
 		var tranSalida =state.getOutgoingTransitions()
 		var audio = state.locution.audios
-		var properties = state.locution.properties
 		var configuration = state.locution.configuration
 
 '''
