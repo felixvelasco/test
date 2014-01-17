@@ -144,6 +144,12 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
+		char initial = text.charAt(0);
+		if (!Character.isLetter(initial)) {
+			setErrorMessage("The first letter of the locution name can't be a number.");
+			return false;
+		}
+
 		String projectName = getProjectFieldValue();
 		if (projectName.isEmpty()) {
 			setErrorMessage("Enter a project name");
