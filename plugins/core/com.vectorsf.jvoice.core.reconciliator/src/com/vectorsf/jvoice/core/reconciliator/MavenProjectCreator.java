@@ -20,56 +20,74 @@ public class MavenProjectCreator implements JVModelCreateProject {
 	@Override
 	public JVModule createProject(IPath resourcePath) {
 		JVModule module = BaseFactory.eINSTANCE.createJVModule();
-		try {
-			ZipInputStream inputStream = new ZipInputStream(new FileInputStream(resourcePath.toString()));
+		try (ZipInputStream inputStream = new ZipInputStream(
+				new FileInputStream(resourcePath.toString()))) {
+			// Sets module name
 			String[] jarName = resourcePath.lastSegment().split("-");
 			String projectName = jarName[0];
 			module.setName(projectName);
+			// Sets packages and flows names
 			while (inputStream.available() == 1) {
 				ZipEntry entry = inputStream.getNextEntry();
-				if (entry != null) {
-					if (!entry.isDirectory()
-							&& (entry.getName().endsWith(".jvflow") || entry.getName().endsWith(".voiceDsl"))
-							&& entry.getName().contains("/")) {
-						String[] segments = entry.getName().split("/");
-						if (segments.length > 2) {
-							String[] flowNameSegments = segments[2].split("\\.");
-							String flowName = flowNameSegments[0];
-							String packName = segments[1];
-							if (segments.length > 2) {
-								JVPackage pack = BaseFactory.eINSTANCE.createJVPackage();
-								pack.setName(packName);
-								String pathPrueba = resourcePath + "!/" + packName + "/" + segments[2];
-								URI uri = URI.createURI("archive:file:/" + resourcePath.toString() + "!/"
-										+ entry.getName());
+				if (entry != null && (!entry.isDirectory()
+						&& (entry.getName().endsWith(".jvflow") || entry.getName().endsWith(".voiceDsl"))
+						&& entry.getName().contains("/"))) {
 
-								JVBean flow = JVoiceModelReconcilier.getInstance().createBean(uri,
-										BaseModel.getInstance().getResourceSet());
-								if (flow != null) {
-									flow.setName(flowName);
-									if (module.getPackage(packName) == null) {
-										pack.getBeans().add(flow);
-										module.getPackages().add(pack);
-									} else {
-										if (module.getPackage(packName).getBean(flowName) == null) {
-											module.getPackage(packName).getBeans().add(flow);
-										}
-									}
+					String[] segments = entry.getName().split("/");
+					if (segments.length > 2) {
+						JVPackage pack = BaseFactory.eINSTANCE.createJVPackage();
+						pack.setName(getPackageName(segments));
+
+						URI uri = URI.createURI("archive:file:/"
+								+ resourcePath.toString() + "!/"
+								+ entry.getName());
+
+						JVBean flow = JVoiceModelReconcilier.getInstance()
+								.createBean(
+										uri,
+										BaseModel.getInstance()
+												.getResourceSet());
+						if (flow != null) {
+							flow.setName(getFlowName(segments));
+							if (module.getPackage(getPackageName(segments)) == null) {
+								pack.getBeans().add(flow);
+								module.getPackages().add(pack);
+							} else {
+								if (module.getPackage(getPackageName(segments))
+										.getBean(getFlowName(segments)) == null) {
+									module.getPackage(getPackageName(segments))
+											.getBeans().add(flow);
 								}
 							}
+
 						}
 					}
 				}
-
 			}
 
-			inputStream.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return module;
+	}
+
+	private String getFlowName(String[] segments) {
+		String[] flowNameSegments = segments[segments.length - 1].split("\\.");
+		return flowNameSegments[0];
+	}
+
+	protected String getPackageName(String[] segments) {
+		String packName = segments[1];
+		if (segments.length > 3) {
+			packName = packName + ".";
+			for (int i = 2; i < segments.length - 2; i++) {
+				packName = packName + segments[i] + ".";
+			}
+			packName = packName + segments[segments.length - 2];
+		}
+		return packName;
+
 	}
 }
