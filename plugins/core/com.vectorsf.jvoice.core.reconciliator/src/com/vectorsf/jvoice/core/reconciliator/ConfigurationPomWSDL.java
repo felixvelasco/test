@@ -117,7 +117,7 @@ public class ConfigurationPomWSDL {
 					Xpp3Dom wsdlFile = new Xpp3Dom("wsdlFile");
 					wsdlFile.setValue(target.getParent().getName() + "/"
 							+ target.getName());
-					conf.getChild(3).addChild(wsdlFile);
+					conf.getChild("wsdlFiles").addChild(wsdlFile);
 				}
 			}
 		}

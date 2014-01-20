@@ -102,7 +102,6 @@ public final class JVoiceProjectConfigurator {
 		PluginExecution voiceDSL = new PluginExecution();
 		voiceDSL.setPhase("generate-sources");
 		voiceDSL.addGoal("generateFlow");
-
 		dsl_builder.addExecution(voiceDSL);
 
 		Plugin dsl_builder2 = new Plugin();
@@ -136,10 +135,48 @@ public final class JVoiceProjectConfigurator {
 
 		dsl_builder3.setConfiguration(configuration);
 
+		Plugin ws_pol = new Plugin();
+		ws_pol.setGroupId("org.jvnet.jax-ws-commons");
+		ws_pol.setArtifactId("jaxws-maven-plugin");
+		ws_pol.setVersion("2.3");
+		PluginExecution pexecution = new PluginExecution();
+		pexecution.addGoal("wsimport");
+
+		Xpp3Dom configuration4 = new Xpp3Dom("configuration");
+
+		Xpp3Dom wsdlDirectory = new Xpp3Dom("wsdlDirectory");
+		wsdlDirectory.setValue("src/main/resources/META-INF/wsdl");
+		configuration4.addChild(wsdlDirectory);
+		String sPaquete = JVoiceModuleNature
+				.getDefaultWSDLPackageName(projectName);
+		Xpp3Dom wsdlLocation = new Xpp3Dom("wsdlLocation");
+		wsdlLocation.setValue("http://" + sPaquete + ".*");
+		configuration4.addChild(wsdlLocation);
+
+		Xpp3Dom sourceDestDir = new Xpp3Dom("sourceDestDir");
+		sourceDestDir.setValue("src/generated-sources/wsimport");
+		configuration4.addChild(sourceDestDir);
+
+		Xpp3Dom wsdlFiles = new Xpp3Dom("wsdlFiles");
+		pexecution.setConfiguration(wsdlFiles);
+
+		configuration4.addChild(wsdlFiles);
+
+		Xpp3Dom keep = new Xpp3Dom("keep");
+		keep.setValue("true");
+		configuration4.addChild(keep);
+
+		pexecution.setConfiguration(configuration4);
+
+		ws_pol.addExecution(pexecution);
+
+		
+		
 		Build build = new Build();
 		build.addPlugin(dsl_builder);
 		build.addPlugin(dsl_builder2);
 		build.addPlugin(dsl_builder3);
+		build.addPlugin(ws_pol);
 
 		model.setBuild(build);
 
