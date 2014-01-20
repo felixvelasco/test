@@ -62,7 +62,11 @@ public class FlowParameterAddDialog extends TitleAreaDialog {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				name = nameText.getText();
-				getButton(OK).setEnabled(!name.isEmpty() && !flow.getParameters().contains(name));
+				getButton(OK).setEnabled(isValidParameterName(name) && !flow.getParameters().contains(name));
+			}
+
+			private boolean isValidParameterName(String name) {
+				return !name.isEmpty() && name.matches("\\w*");
 			}
 		});
 

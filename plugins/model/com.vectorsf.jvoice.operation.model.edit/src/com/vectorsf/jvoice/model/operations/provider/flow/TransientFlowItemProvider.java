@@ -62,7 +62,7 @@ public class TransientFlowItemProvider extends ItemProviderAdapter implements IE
 		return super.getChildren(getLiveFlow());
 	}
 
-	private Flow getLiveFlow() {
+	public Flow getLiveFlow() {
 		URI uri = EcoreUtil.getURI(flow);
 		IEditorPart editor = findEditor(uri);
 

@@ -55,7 +55,7 @@ public abstract class AbstractModifyFlowHandler extends AbstractHandler {
 		if (currentSelection instanceof IStructuredSelection) {
 			Object firstElement = ((IStructuredSelection) currentSelection).getFirstElement();
 			if (firstElement instanceof TransientFlowItemProvider) {
-				return ((TransientFlowItemProvider) firstElement).getFlow();
+				return ((TransientFlowItemProvider) firstElement).getLiveFlow();
 			} else if (firstElement instanceof Flow) {
 				return (Flow) firstElement;
 			} else if (firstElement instanceof EObject) {
