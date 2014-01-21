@@ -1,0 +1,4 @@
+audios{
+	main:
+		say wording "TTS text"
+}

@@ -12,14 +12,14 @@ VoiceDsl:
 
 PromptDsl:
 	'output' name = ID 
-       ((configuration = Configuration)? 
+       ((configuration = OutputConfiguration)? 
 	    (conditions += Condition*))
   	     audios=Audios	
 ;
 
 MenuDsl:
 	'menu' name = ID
-	   (configuration = Configuration)? 
+	   (configuration = InputConfiguration)? 
        ((grammars = Grammars)&
 	    (conditions += Condition*))
 	     audios=Audios
@@ -28,31 +28,32 @@ MenuDsl:
 
 InputDsl:
 	'input' name = ID
-      (configuration = Configuration) 
+      (configuration = InputConfiguration)? 
  	   ((grammars = Grammars)&
 	   (conditions += Condition*))
   	    audios=Audios	
 ;
 
 RecordDsl:
-	'record' name = ID 'filename' fileName = STRING
-       (configuration = Configuration)? 
+	'record' name = ID 
+	'{'
+		(('filename' fileName = STRING)&
+        (configuration = RecordConfiguration)?)
+  	 '}'
 	    conditions += Condition*
-  	    audios=Audios	
+  	    audios=Audios
 ;
 
 TransferDsl:
-	(
-	('blindTransfer' name = ID ) |
-	('consultationTransfer' name = ID) | 
-	('bridgeTransfer' name = ID )
-	
-	) 
+	{TransferDsl}
+	typeTransfer=TypeTransfer name = ID 
+	'{'
 	   (('destination' destination = STRING )&
-		('audioTransfer' audioTransfer = STRING )?& 
-		('maxTime' maxTime = STRING )?&
-		('timeout' timeout = STRING )?)
-       (configuration = Configuration)? 
+		('transferaudio' audioTransfer = STRING )?& 
+		('maxtime' maxTime = STRING )?&
+		('timeout' timeout = STRING )?&
+		(configuration = TransferConfiguration)?)
+	'}'
        (conditions += Condition*)?
   	     audios=Audios	
 ;
@@ -85,12 +86,38 @@ Configuration:
 	 '}'
 ;
 
+OutputConfiguration returns Configuration:
+	{Configuration}
+	 '{'
+	  configValue += ConfigValue*
+	 '}'
+;
+
+InputConfiguration returns Configuration:
+	{Configuration}
+	 '{'
+	  configValue += ConfigValue*
+	 '}'
+;
+
+
+RecordConfiguration returns Configuration:
+	{Configuration}
+	  configValue += ConfigValue*
+;
+
+TransferConfiguration returns Configuration:
+	{Configuration}
+	  configValue += ConfigValue*
+;
+
+
 ConfigValue:
 	name = ID value=ConfigValueValue
 ;
 
 ConfigValueValue:
-	INT ('ms'|'s')?| FLOAT | 'true' | 'false' 
+	INT ('ms'|'s')?| FLOAT('ms'|'s')? | 'true' | 'false' | STRING
 ;
 
 Grammar:
@@ -130,7 +157,7 @@ enum Interpretation:
 ;
 
 enum TypeTransfer:
-	blind | consultation | bridge
+	blind =  'blindTransfer' | consultation = 'consultationTransfer' | bridge ='bridgeTransfer'
 ;
 
 ConditionalAudio returns Audio:

@@ -1,0 +1,13 @@
+grammars{
+	dtmf "builtin:dtmf/digits"
+}
+audios{
+
+	main:
+		say wording "TTS text"  
+}
+
+options{
+	optionName1 : "optionInterpretation1"
+	optionName2 : "optionInterpretation2"	
+}

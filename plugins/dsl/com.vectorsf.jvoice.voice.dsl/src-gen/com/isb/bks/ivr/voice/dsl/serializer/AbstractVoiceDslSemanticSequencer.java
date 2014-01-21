@@ -76,6 +76,22 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 					sequence_Configuration(context, (Configuration) semanticObject); 
 					return; 
 				}
+				else if(context == grammarAccess.getInputConfigurationRule()) {
+					sequence_InputConfiguration(context, (Configuration) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getOutputConfigurationRule()) {
+					sequence_OutputConfiguration(context, (Configuration) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getRecordConfigurationRule()) {
+					sequence_RecordConfiguration(context, (Configuration) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getTransferConfigurationRule()) {
+					sequence_TransferConfiguration(context, (Configuration) semanticObject); 
+					return; 
+				}
 				else break;
 			case VoiceDslPackage.GRAMMAR:
 				if(context == grammarAccess.getGrammarRule()) {
@@ -231,7 +247,16 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	
 	/**
 	 * Constraint:
-	 *     (name=ID configuration=Configuration grammars=Grammars conditions+=Condition* audios=Audios)
+	 *     (configValue+=ConfigValue*)
+	 */
+	protected void sequence_InputConfiguration(EObject context, Configuration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ID configuration=InputConfiguration? grammars=Grammars conditions+=Condition* audios=Audios)
 	 */
 	protected void sequence_InputDsl(EObject context, InputDsl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -242,7 +267,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	 * Constraint:
 	 *     (
 	 *         name=ID 
-	 *         configuration=Configuration? 
+	 *         configuration=InputConfiguration? 
 	 *         grammars=Grammars 
 	 *         conditions+=Condition* 
 	 *         audios=Audios 
@@ -250,6 +275,15 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	 *     )
 	 */
 	protected void sequence_MenuDsl(EObject context, MenuDsl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (configValue+=ConfigValue*)
+	 */
+	protected void sequence_OutputConfiguration(EObject context, Configuration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -283,7 +317,7 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	
 	/**
 	 * Constraint:
-	 *     (name=ID configuration=Configuration? conditions+=Condition* audios=Audios)
+	 *     (name=ID configuration=OutputConfiguration? conditions+=Condition* audios=Audios)
 	 */
 	protected void sequence_PromptDsl(EObject context, PromptDsl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -292,7 +326,16 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	
 	/**
 	 * Constraint:
-	 *     (name=ID fileName=STRING configuration=Configuration? conditions+=Condition* audios=Audios)
+	 *     (configValue+=ConfigValue*)
+	 */
+	protected void sequence_RecordConfiguration(EObject context, Configuration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ID fileName=STRING configuration=RecordConfiguration? conditions+=Condition* audios=Audios)
 	 */
 	protected void sequence_RecordDsl(EObject context, RecordDsl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -310,13 +353,23 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	
 	/**
 	 * Constraint:
+	 *     (configValue+=ConfigValue*)
+	 */
+	protected void sequence_TransferConfiguration(EObject context, Configuration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (
-	 *         (name=ID | name=ID | name=ID) 
+	 *         typeTransfer=TypeTransfer 
+	 *         name=ID 
 	 *         destination=STRING 
 	 *         audioTransfer=STRING? 
 	 *         maxTime=STRING? 
 	 *         timeout=STRING? 
-	 *         configuration=Configuration? 
+	 *         configuration=TransferConfiguration? 
 	 *         conditions+=Condition? 
 	 *         audios=Audios
 	 *     )

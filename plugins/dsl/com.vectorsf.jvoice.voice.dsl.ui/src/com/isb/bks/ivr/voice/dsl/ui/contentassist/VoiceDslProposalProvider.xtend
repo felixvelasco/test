@@ -16,16 +16,35 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
  */
 class VoiceDslProposalProvider extends AbstractVoiceDslProposalProvider {
 
-	static val CONFIGURATION_KEYS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts", "confidence", "bargein",
-		"timeout", "interdigittimeout", "beep", "dtmfterm", "maxtime", "finalsilence", "keep");
+	static val OUTPUT_CONFIGURATION_KEYS = Sets.newHashSet("bargein");
 
-	override completeConfiguration_ConfigValue(EObject model, Assignment assignment, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
+	static val INPUT_CONFIGURATION_KEYS = Sets.newHashSet("maxNoInput", "maxNoMatch", "maxAttempts", "confidence", "bargein",
+		"timeout", "interdigittimeout");
 
-		for (String keyword : CONFIGURATION_KEYS) {
+	static val RECORD_CONFIGURATION_KEYS = Sets.newHashSet("beep", "dtmfterm", "maxtime", "finalsilence", "keep");
+	
+	override completeRecordConfiguration_ConfigValue(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		
+		for (String keyword : RECORD_CONFIGURATION_KEYS) {
 			acceptor.accept(createCompletionProposal(keyword, keyword, null, context));
-		}
-		super.completeConfiguration_ConfigValue(model, assignment, context, acceptor);
+		}		
+		super.completeRecordConfiguration_ConfigValue(model, assignment, context, acceptor);	
+	}
+	
+	override completeInputConfiguration_ConfigValue(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		
+		for (String keyword : INPUT_CONFIGURATION_KEYS) {
+			acceptor.accept(createCompletionProposal(keyword, keyword, null, context));
+		}		
+		super.completeInputConfiguration_ConfigValue(model, assignment, context, acceptor);	
+	}
+
+	override completeOutputConfiguration_ConfigValue(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		
+		for (String keyword : OUTPUT_CONFIGURATION_KEYS) {
+			acceptor.accept(createCompletionProposal(keyword, keyword, null, context));
+		}		
+		super.completeOutputConfiguration_ConfigValue(model, assignment, context, acceptor);	
 	}
 
 	def completeSimpleAudio_Src(Audio audio, Assignment assignment, ContentAssistContext context,

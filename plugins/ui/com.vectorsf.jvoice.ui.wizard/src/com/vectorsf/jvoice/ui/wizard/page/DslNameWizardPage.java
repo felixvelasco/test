@@ -1,7 +1,10 @@
 package com.vectorsf.jvoice.ui.wizard.page;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.SequenceInputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,11 +91,9 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private String initialFlow = "";
 	private String initialPackage = "";
 	private String initialProject = "";
-	private String configuration = "configuration{\n //setting variables \n}\n";
-	private String grammars = "grammars{\n // User's grammar \n }\n";
-	private String outputs = "outputs{\n //Variables \n}";
-	private String audios = "audios{\n //Code \n}";
-	private String variables = "variables{\n // User's variables \n}\n";
+
+	private static String STATIC_DSLS_LOCATION = "res/voiceDsls/";
+	private static String STATIC_DSLS_EXT = ".voiceDsl";
 
 	public DslNameWizardPage(String pageName) {
 		this(pageName, null);
@@ -548,25 +549,39 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			dslFile = dslFolder.getFile(dslName + "." + editorExtension);
 
 			if (!dslFile.exists()) {
+				String resName;
 				if (seleccion.equals("Menu")) {
-					contents = "menuname " + dslName + "\n\n" + configuration + grammars + audios + outputs;
+					contents = "menu " + dslName + "\n\n";
+					resName = "basicMenu";
 
 				} else if (seleccion.equals("Input")) {
-					contents = "inputname " + dslName + "\n\n" + configuration + grammars + audios;
+					contents = "input " + dslName + "\n\n";
+					resName = "basicInput";
 
 				} else if (seleccion.equals("Output")) {
-					contents = "outputname " + dslName + "\n\n" + variables + audios;
+					contents = "output " + dslName + "\n\n";
+					resName = "basicOutput";
 
 				} else if (seleccion.equals("Record")) {
-					contents = "recordname " + dslName + "\n\n" + configuration + audios;
+					contents = "record " + dslName + "\n\n";
+					resName = "basicRecord";
 
-				} else if (seleccion.equals("Transfer")) {
-					contents = "transfername " + dslName + "\n\n" + variables + audios;
+				} else {
+					contents = "blindTransfer " + dslName + "\n\n";
+					resName = "basicBlindTransfer";
 
 				}
 
-				InputStream source = new ByteArrayInputStream(contents.getBytes());
-				dslFile.create(source, false, null);
+				try (InputStream resIs = getInputStreamFromFile(resName)) {
+					InputStream source = new ByteArrayInputStream(contents.getBytes());
+					if (resIs != null) {
+						source = new SequenceInputStream(source, resIs);
+					}
+					dslFile.create(source, false, null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
 			}
 
 		}
@@ -583,6 +598,22 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			ErrorDialog.openError(getShell(), error, null, status);
 			throw new CoreException(status);
 		}
+	}
+
+	private InputStream getInputStreamFromFile(String dslName) {
+
+		URL resUrl;
+		InputStream resIs = null;
+		resUrl = Platform.getBundle(Activator.PLUGIN_ID).getResource(STATIC_DSLS_LOCATION + dslName + STATIC_DSLS_EXT);
+		try {
+			if (resUrl != null) {
+				resIs = resUrl.openConnection().getInputStream();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return resIs;
 	}
 
 	private IFolder findLocutionFolder() {
