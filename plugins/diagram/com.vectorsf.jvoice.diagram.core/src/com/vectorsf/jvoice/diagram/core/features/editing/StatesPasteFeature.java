@@ -390,24 +390,27 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		if (pes.length != 0) {
 			if (pes[0] instanceof Diagram) {
 				Diagram diagram = (Diagram) pes[0];
-				String name = "CopyOf" + stateName;
+				String name = stateName;
 				int repeated = 0;
 				for (int i = 0; i < diagram.getChildren().size(); i++) {
 					Shape shape = diagram.getChildren().get(i);
 					if (getBusinessObjectForPictogramElement(shape) instanceof State) {
 						State state = (State) getBusinessObjectForPictogramElement(shape);
 						if (state.getName().equals(name)) {
-							int k = repeated + 2;
+							int k = repeated + 1;
 							name = "Copy" + k + "Of" + stateName;
 							repeated++;
 							i = 0;
+							if (repeated == 1) {
+								name = "CopyOf" + stateName;
+							}
 						}
 					}
 
 				}
 				return name;
 			} else {
-				String name = "CopyOf" + stateName;
+				String name = stateName;
 				int repeated = 0;
 				for (int i = 0; i < pes.length; i++) {
 					if (pes[i] instanceof Shape && !(pes[i] instanceof ConnectionDecorator)) {
@@ -415,10 +418,13 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 						State state = (State) getBusinessObjectForPictogramElement(shape);
 						if (state != null) {
 							if (state.getName().equals(name)) {
-								int k = repeated + 2;
+								int k = repeated + 1;
 								name = "Copy" + k + "Of" + stateName;
 								repeated++;
 								i = 0;
+								if (repeated == 1) {
+									name = "CopyOf" + stateName;
+								}
 							}
 						}
 					}
