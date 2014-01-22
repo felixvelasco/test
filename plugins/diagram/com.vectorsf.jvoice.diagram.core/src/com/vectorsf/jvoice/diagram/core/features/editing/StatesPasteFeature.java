@@ -64,7 +64,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	private IResource targetRes;
 	private boolean rename;
 	private String newName;
-	private VoiceDsl modificado;
+	private VoiceDsl modified;
 
 	public StatesPasteFeature(IFeatureProvider fp) {
 		super(fp);
@@ -80,7 +80,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			if (copy != null) {
 				if (isState(copy)) {
 					State state = (State) copy;
-					state.setName(generateName(((State) copy).getName(), context));
+					state.setName(generateStateName(((State) copy).getName(), context));
 					Flow targetFlow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 					// Si es una locution hay que copiar el voiceDsl al que
 					// apunta
@@ -96,7 +96,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 						// Redireccionamos el nuevo estado al
 						// voiceDsl que hemos copiado
-						locution.setLocution(modificado);
+						locution.setLocution(modified);
 						state = locution;
 
 						targetFlow.getStates().add(state);
@@ -288,7 +288,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 	protected void pasteVoiceDsl(VoiceDsl voiceDsl, State state, Flow flow) {
 		final IFile voiceDslFile = (IFile) Platform.getAdapterManager().getAdapter(voiceDsl, IFile.class);
-		modificado = voiceDsl;
+		modified = voiceDsl;
 
 		rename = false;
 		IFile targetFlow = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
@@ -296,7 +296,8 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		targetRes = targetFlow.getParent().getFolder(pathRecursos);
 		if (targetRes.exists()) {
 			// targetRes = (IResource) Platform.getAdapterManager().getAdapter(targetPackage, IResource.class);
-			newName = obtenerNuevoNombre((IFolder) targetRes, voiceDsl.getName() + ".voiceDsl");
+			newName = generateLocutionName((IFolder) targetRes, voiceDsl.getName() + ".voiceDsl", voiceDsl.getName()
+					+ ".voiceDsl", 1);
 			try {
 				if (!newName.equals(voiceDsl.getName() + ".voiceDsl")) {
 					rename = true;
@@ -333,13 +334,22 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 	}
 
-	private String obtenerNuevoNombre(IFolder targetRes2, String nombre) {
-		IFile buscado = targetRes2.getFile(nombre);
-		if (buscado.exists()) {
+	private String generateLocutionName(IFolder targetFolder, String name, String newName, int i) {
+		IFile file = targetFolder.getFile(newName);
+		if (file.exists()) {
 			rename = true;
-			nombre = obtenerNuevoNombre(targetRes2, "CopyOf" + nombre);
+			if (i == 1) {
+				return generateLocutionName(targetFolder, name, "CopyOf" + name, i + 1);
+			} else {
+				return generateLocutionName(targetFolder, name, "Copy" + i + "Of" + name, i + 1);
+			}
+		} else {
+			if (i == 1 && targetFolder.getFile(name).exists()) {
+				return "CopyOf" + name;
+			} else {
+				return newName;
+			}
 		}
-		return nombre;
 	}
 
 	@Override
@@ -384,8 +394,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		return object instanceof LocutionState;
 	}
 
-	private String generateName(String stateName, IPasteContext context) {
-
+	private String generateStateName(String stateName, IPasteContext context) {
 		PictogramElement[] pes = context.getPictogramElements();
 		if (pes.length != 0) {
 			if (pes[0] instanceof Diagram) {
@@ -448,7 +457,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			for (EObject obj : emfRes.getContents()) {
 				if (obj instanceof VoiceDsl) {
 					((VoiceDsl) obj).setName(newName);
-					modificado = (VoiceDsl) obj;
+					modified = (VoiceDsl) obj;
 				}
 			}
 			try {
@@ -471,7 +480,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 			for (EObject obj : emfRes.getContents()) {
 				if (obj instanceof VoiceDsl) {
-					modificado = (VoiceDsl) obj;
+					modified = (VoiceDsl) obj;
 
 				}
 			}
