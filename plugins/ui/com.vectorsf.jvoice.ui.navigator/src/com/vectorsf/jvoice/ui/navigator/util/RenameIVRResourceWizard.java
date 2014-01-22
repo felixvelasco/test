@@ -153,7 +153,10 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 		protected final void validatePage() {
 			String text = fNameField.getText();
 
+			char initial = text.charAt(0);
+
 			RefactoringStatus status = null;
+			RefactoringStatus statusName;
 			if (textoExtension != null) {
 
 				status = fRefactoringProcessor.validateNewElementName(text
@@ -163,7 +166,19 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 				status = fRefactoringProcessor.validateNewElementName(text);
 			}
 
+			statusName = evaluateName(initial);
+
+			status.merge(statusName);
 			setPageComplete(status);
+		}
+
+		private RefactoringStatus evaluateName(char initial) {
+			if (Character.isDigit(initial)) {
+				return RefactoringStatus
+						.createFatalErrorStatus("The first letter of name can not be a digit");
+			} else {
+				return null;
+			}
 		}
 
 		/*
