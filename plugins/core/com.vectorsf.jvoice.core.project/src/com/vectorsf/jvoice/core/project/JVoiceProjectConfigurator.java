@@ -147,6 +147,15 @@ public final class JVoiceProjectConfigurator {
 		Xpp3Dom wsdlDirectory = new Xpp3Dom("wsdlDirectory");
 		wsdlDirectory.setValue("src/main/resources/META-INF/wsdl");
 		configuration4.addChild(wsdlDirectory);
+		
+		Xpp3Dom wsdlXjcArgs = new Xpp3Dom("xjcArgs");
+		configuration4.addChild(wsdlXjcArgs);
+		
+		Xpp3Dom wsdlXjcArg = new Xpp3Dom("xjcArg");
+		wsdlXjcArg.setValue("-XautoNameResolution");
+		wsdlXjcArgs.addChild(wsdlXjcArg);
+		
+	
 		String sPaquete = JVoiceModuleNature
 				.getDefaultWSDLPackageName(projectName);
 		Xpp3Dom wsdlLocation = new Xpp3Dom("wsdlLocation");
