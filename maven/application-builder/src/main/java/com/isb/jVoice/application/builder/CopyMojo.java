@@ -264,21 +264,16 @@ public class CopyMojo extends AbstractMojo {
 
 		List<File> dependencies = new ArrayList<File>();
 		
-		for (URL resource : buildURLs()) {
-			if (resource.toString().endsWith(JAR_EXT)) {
+		for (String resource : runtimeClasspathElements) {
+			if (resource.endsWith(JAR_EXT)) {
 				try (ZipInputStream zip = new ZipInputStream(
-						new FileInputStream(resource.getFile()));) {
+						new FileInputStream(resource));) {
 					if (zip != null) {
 						ZipEntry ze = null;
 						while ((ze = zip.getNextEntry()) != null) {
 							String entryName = ze.getName();
 							if (entryName.equals(PROJECT_INFORMATION_EXT)) {
-								File f;
-								try {
-									f = new File(resource.toURI());
-								} catch (URISyntaxException e) {
-									f = new File(resource.getPath());
-								}
+								File f = new File(resource);
 								dependencies.add(f);
 								break;
 							}
