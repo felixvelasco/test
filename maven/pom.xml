@@ -11,6 +11,13 @@
   <artifactId>maven</artifactId>
   <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+  	<repositories>
+		<repository>
+			<id>cloudbees-JVoice</id>
+			<name>jVoice test repository</name>
+			<url>http://repository-felixvelasco.forge.cloudbees.com/release/</url>
+		</repository>
+	</repositories>
   <modules>
     <module>application-builder</module>
     <module>dsl-builder</module>

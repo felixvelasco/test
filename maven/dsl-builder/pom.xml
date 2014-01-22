@@ -11,13 +11,7 @@
 	<version>0.0.2-SNAPSHOT</version>
 	<name>dsl.builder Maven Mojo</name>
 	<url>http://maven.apache.org</url>
-	<repositories>
-		<repository>
-			<id>cloudbees-JVoice</id>
-			<name>jVoice test repository</name>
-			<url>https://repository-felixvelasco.force.cloudbees.com/release/</url>
-		</repository>
-	</repositories>
+
 	<!--<pluginRepositories> <pluginRepository> <id>xtend</id> <url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/xtend/</url> 
 		</pluginRepository> </pluginRepositories> -->
 	<properties>
