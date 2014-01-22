@@ -4,9 +4,11 @@ import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Image;
+import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
+import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.algorithms.styles.Style;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
@@ -28,6 +30,8 @@ public class FinalStatePattern extends SimpleStatePattern {
 
 	protected static final String ID_STATE_IMAGE = "stateImage";
 
+	protected static final String ID_STATE_POLYGON = "statePolygon";
+
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
 		State addedDomainObject = (State) context.getNewObject();
@@ -43,12 +47,16 @@ public class FinalStatePattern extends SimpleStatePattern {
 
 		{
 
-			Rectangle imageBackgroundRectangle = gaService.createPlainRectangle(mainRectangle);
-			imageBackgroundRectangle.setStyle(getImageBackgroundRectangleStyle());
-			gaService.setLocationAndSize(imageBackgroundRectangle, 0, 0, CELL_WIDTH, TOP_RECTANGLE_HEIGHT);
+			Polygon imageBackgroundPolygon = gaService.createPlainPolygon(mainRectangle, new int[] { 0, 0, CELL_WIDTH,
+					0, CELL_WIDTH, TOP_RECTANGLE_HEIGHT / 2 - 4, CELL_WIDTH + 3, TOP_RECTANGLE_HEIGHT / 2, CELL_WIDTH,
+					TOP_RECTANGLE_HEIGHT / 2 + 4, CELL_WIDTH, TOP_RECTANGLE_HEIGHT, 0, TOP_RECTANGLE_HEIGHT });
+
+			setId(imageBackgroundPolygon, ID_STATE_POLYGON);
+			imageBackgroundPolygon.setStyle(getImageBackgroundRectangleStyle());
+			gaService.setLocationAndSize(imageBackgroundPolygon, 0, 0, CELL_WIDTH + 3, TOP_RECTANGLE_HEIGHT);
 
 			{
-				Image image = gaService.createImage(imageBackgroundRectangle, getStateImageId());
+				Image image = gaService.createImage(imageBackgroundPolygon, getStateImageId());
 				gaService.setLocationAndSize(image, (CELL_WIDTH - IMAGE_SIZE) / 2,
 						(TOP_RECTANGLE_HEIGHT - IMAGE_SIZE) / 2, IMAGE_SIZE, IMAGE_SIZE);
 				setId(image, ID_STATE_IMAGE);
@@ -97,29 +105,43 @@ public class FinalStatePattern extends SimpleStatePattern {
 
 	@Override
 	protected boolean layout(IdLayoutContext context, String id) {
-		FinalState finalState = (FinalState) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
+		final FinalState finalState = (FinalState) getBusinessObjectForPictogramElement(context
+				.getRootPictogramElement());
+		final boolean isFinal = finalState.isFinal();
 
 		if (id.equals(ID_MAIN_FIGURE)) {
 			GraphicsAlgorithm gaOuter = context.getRootPictogramElement().getGraphicsAlgorithm();
 			int currentWidth = gaOuter.getWidth();
-			int newWidth = finalState.isFinal() ? CELL_WIDTH : MAIN_RECTANGLE_WIDTH;
+			int newWidth = isFinal ? CELL_WIDTH + 3 : MAIN_RECTANGLE_WIDTH;
 			if (newWidth == currentWidth) {
 				return false;
 			} else {
 				gaOuter.setWidth(newWidth);
+				gaOuter.setLineVisible(!isFinal);
 				return true;
 			}
 		} else if (id.equals(ID_STATE_IMAGE)) {
 			Image image = (Image) context.getGraphicsAlgorithm();
 			String currentImage = image.getId();
-			String newImage = finalState.isFinal() ? CoreImageProvider.IMG_STATE_HANGUP
-					: CoreImageProvider.IMG_STATE_FINAL;
+			String newImage = isFinal ? CoreImageProvider.IMG_STATE_HANGUP : CoreImageProvider.IMG_STATE_FINAL;
 			if (currentImage.equals(newImage)) {
 				return false;
 			} else {
 				image.setId(newImage);
 				return true;
 			}
+		} else if (id.equals(ID_STATE_POLYGON)) {
+			Polygon polygon = (Polygon) context.getGraphicsAlgorithm();
+			Point pivotPoint = polygon.getPoints().get(3);
+			int currentPosition = pivotPoint.getX();
+			int newPosition = isFinal ? CELL_WIDTH + 3 : CELL_WIDTH - 3;
+			if (newPosition == currentPosition) {
+				return false;
+			} else {
+				pivotPoint.setX(newPosition);
+				return true;
+			}
+
 		}
 		return false;
 	}

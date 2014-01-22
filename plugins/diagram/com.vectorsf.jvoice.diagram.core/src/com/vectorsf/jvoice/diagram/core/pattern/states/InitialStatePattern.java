@@ -10,7 +10,7 @@ import org.eclipse.graphiti.features.context.IMoveShapeContext;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
-import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
+import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
@@ -20,6 +20,7 @@ import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
+import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -30,10 +31,10 @@ import com.vectorsf.jvoice.model.operations.State;
 public class InitialStatePattern extends IdPattern {
 
 	private static final String INITIAL = "Initial";
-	private static final int WIDTH = 240;
-	private static final int HEIGHT = 5;
+	private static final int WIDTH = 556;
+	private static final int HEIGHT = 3;
 	private static final String ID_ROUNDED_RECTANGLE = "roundedRectangle";
-	private static final IColorConstant BACKGROUND_COLOR = SimpleStatePattern.TEXT_BACKGROUND;
+	private static final IColorConstant BACKGROUND_COLOR = new ColorConstant("0083a9");
 
 	@Override
 	protected PictogramElement doAdd(IAddContext context) {
@@ -43,13 +44,15 @@ public class InitialStatePattern extends IdPattern {
 
 		ContainerShape outerContainerShape = peCreateService.createContainerShape(getDiagram(), true);
 
-		RoundedRectangle roundedRectangle = gaService.createPlainRoundedRectangle(outerContainerShape, HEIGHT / 2,
-				HEIGHT / 2);
-		setId(roundedRectangle, ID_ROUNDED_RECTANGLE);
-		roundedRectangle.setFilled(true);
-		roundedRectangle.setLineVisible(false);
-		roundedRectangle.setBackground(manageColor(BACKGROUND_COLOR));
-		gaService.setLocationAndSize(roundedRectangle, context.getX(), 0, WIDTH, HEIGHT);
+		Polygon polygon = gaService.createPlainPolygon(outerContainerShape, new int[] { 0, 0, 556, 0, 553, 2, 284, 2,
+				278, 8, 272, 2, 2, 2 });
+
+		setId(polygon, ID_ROUNDED_RECTANGLE);
+		polygon.setBackground(manageColor(BACKGROUND_COLOR));
+		polygon.setFilled(true);
+		polygon.setLineVisible(false);
+		polygon.setLineWidth(0);
+		gaService.setLocationAndSize(polygon, context.getX(), 0, WIDTH, HEIGHT);
 
 		peCreateService.createChopboxAnchor(outerContainerShape);
 		link(outerContainerShape, addedDomainObject);
@@ -104,7 +107,7 @@ public class InitialStatePattern extends IdPattern {
 	protected boolean layout(IdLayoutContext context, String id) {
 		if (id.equals(ID_ROUNDED_RECTANGLE)) {
 			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
-			int midPoint = ga.getX() + WIDTH / 2;
+			int midPoint = ga.getX() + ga.getWidth() / 2;
 
 			InitialState state = (InitialState) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
 			State next = state.getOutgoingTransitions().isEmpty() ? null : state.getOutgoingTransitions().get(0)
