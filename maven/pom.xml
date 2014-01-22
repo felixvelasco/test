@@ -17,6 +17,11 @@
 			<name>jVoice test repository</name>
 			<url>http://repository-felixvelasco.forge.cloudbees.com/release/</url>
 		</repository>
+		<repository>
+			<id>ivr</id>
+			<name>jVoice test repository</name>
+			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/groups/jvoiceGroup/</url>
+		</repository>
 	</repositories>
   <modules>
     <module>application-builder</module>
