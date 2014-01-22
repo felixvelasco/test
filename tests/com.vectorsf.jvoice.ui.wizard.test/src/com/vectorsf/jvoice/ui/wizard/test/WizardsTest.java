@@ -29,7 +29,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
-import com.vectorsf.jvoice.ui.wizard.test.SWTBotHelper;
 
 public class WizardsTest {
 	private static final int LARGE_SLEEP = 3000;
@@ -72,7 +71,7 @@ public class WizardsTest {
 			if (shells[i].isOpen()) {
 				SWTBotShell shell = shells[i];
 				if (shell.getText().contains("Container")
-						|| shell.getText().contains("New Locution")
+						|| shell.getText().contains("New Definition")
 						|| shell.getText().contains("New Flow")) {
 					shell.close();
 				}
@@ -446,12 +445,14 @@ public class WizardsTest {
 		bot.sleep(LARGE_SLEEP);
 		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba");
 		bot.sleep(LARGE_SLEEP);
-		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
-		bot.shell("New Locution").activate();
-		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
-		final SWTBot dialogBot2 = bot.shell("New Locution").bot();
+		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba")
+				.getNode("newJVoice").contextMenu("New").menu("Definition")
+				.click();
+		bot.shell("New Definition").activate();
+		final SWTBotShell shellCreate2 = bot.shell("New Definition"); //$NON-NLS-1$
+		final SWTBot dialogBot2 = bot.shell("New Definition").bot();
 		assertThat(dialogBot2.label("DSL name:"), is(not(nullValue())));
-		assertThat(dialogBot2.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot2.text(0).getText(), is("newDefinition"));
 		assertThat(dialogBot2.label("Project name:"), is(not(nullValue())));
 		assertThat(dialogBot2.text(1).getText(), is("baseNavigator"));
 		assertThat(dialogBot2.label("Package name:"), is(not(nullValue())));
@@ -540,12 +541,14 @@ public class WizardsTest {
 			}
 		}, 3*60 * 1000);
 		
-		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
-		bot.shell("New Locution").activate();
-		final SWTBotShell shellCreate3 = bot.shell("New Locution"); //$NON-NLS-1$
+		view.bot().tree().getTreeItem("baseNavigator")
+				.expandNode("paquetePrueba").getNode("newJVoice")
+				.contextMenu("New").menu("Definition").click();
+		bot.shell("New Definition").activate();
+		final SWTBotShell shellCreate3 = bot.shell("New Definition"); //$NON-NLS-1$
 		final SWTBot dialogBot3 = shellCreate3.bot();
 		assertThat(dialogBot3.label("DSL name:"), is(not(nullValue())));
-		assertThat(dialogBot3.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot3.text(0).getText(), is("newDefinition"));
 		assertThat(dialogBot3.label("Project name:"), is(not(nullValue())));
 		assertThat(dialogBot3.text(1).getText(), is("baseNavigator"));
 		assertThat(dialogBot3.label("Package name:"), is(not(nullValue())));
@@ -569,12 +572,14 @@ public class WizardsTest {
 		}, 3*60 * 1000);
 		
 		
-		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
-		bot.shell("New Locution").activate();
-		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
-		final SWTBot dialogBot2 = bot.shell("New Locution").bot();
+		view.bot().tree().getTreeItem("baseNavigator")
+				.expandNode("paquetePrueba").getNode("newJVoice")
+				.contextMenu("New").menu("Definition").click();
+		bot.shell("New Definition").activate();
+		final SWTBotShell shellCreate2 = bot.shell("New Definition"); //$NON-NLS-1$
+		final SWTBot dialogBot2 = bot.shell("New Definition").bot();
 		assertThat(dialogBot2.label("DSL name:"), is(not(nullValue())));
-		assertThat(dialogBot2.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot2.text(0).getText(), is("newDefinition"));
 		assertThat(dialogBot2.label("Project name:"), is(not(nullValue())));
 		assertThat(dialogBot2.text(1).getText(), is("baseNavigator"));
 		assertThat(dialogBot2.label("Package name:"), is(not(nullValue())));
@@ -709,11 +714,11 @@ public class WizardsTest {
 		}, 3*60 * 1000);
 		
 		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
-		bot.shell("New Locution").activate();
-		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
-		final SWTBot dialogBot2 = bot.shell("New Locution").bot();
+		bot.shell("New Definition").activate();
+		final SWTBotShell shellCreate2 = bot.shell("New Definition"); //$NON-NLS-1$
+		final SWTBot dialogBot2 = bot.shell("New Definition").bot();
 		assertThat(dialogBot2.label("DSL name:"), is(not(nullValue())));
-		assertThat(dialogBot2.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot2.text(0).getText(), is("newDefinition"));
 		assertThat(dialogBot2.label("Project name:"), is(not(nullValue())));
 		assertThat(dialogBot2.text(1).getText(), is("baseNavigator"));
 		assertThat(dialogBot2.label("Package name:"), is(not(nullValue())));
@@ -801,10 +806,10 @@ public class WizardsTest {
 		}, 3*60 * 1000);
 		view.bot().tree().getTreeItem("baseNavigator").getNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
-		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBotShell shellCreate2 = bot.shell("New Definition"); //$NON-NLS-1$
 		final SWTBot dialogBot2 = bot.shell("New Locution").bot();
 		assertThat(dialogBot2.label("DSL name:"), is(not(nullValue())));
-		assertThat(dialogBot2.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot2.text(0).getText(), is("newDefinition"));
 		assertThat(dialogBot2.label("Project name:"), is(not(nullValue())));
 		assertThat(dialogBot2.text(1).getText(), is("baseNavigator"));
 		assertThat(dialogBot2.label("Package name:"), is(not(nullValue())));
@@ -874,10 +879,10 @@ public class WizardsTest {
 		}, 3*60 * 1000);
 		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
-		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBotShell shellCreate2 = bot.shell("New Definition"); //$NON-NLS-1$
 		final SWTBot dialogBot2 = shellCreate2.bot();
 		assertThat(dialogBot2.label("DSL name:"), is(not(nullValue())));
-		assertThat(dialogBot2.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot2.text(0).getText(), is("newDefinition"));
 		assertThat(dialogBot2.label("Project name:"), is(not(nullValue())));
 		assertThat(dialogBot2.text(1).getText(), is("baseNavigator"));
 		assertThat(dialogBot2.label("Package name:"), is(not(nullValue())));
@@ -969,10 +974,10 @@ public class WizardsTest {
 		
 		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
-		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBotShell shellCreate2 = bot.shell("New Definition"); //$NON-NLS-1$
 		final SWTBot dialogBot2 = bot.shell("New Locution").bot();
 		assertThat(dialogBot2.label("DSL name:"), is(not(nullValue())));
-		assertThat(dialogBot2.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot2.text(0).getText(), is("newDefinition"));
 		assertThat(dialogBot2.label("Project name:"), is(not(nullValue())));
 		assertThat(dialogBot2.text(1).getText(), is("baseNavigator"));
 		assertThat(dialogBot2.label("Package name:"), is(not(nullValue())));
@@ -1061,10 +1066,10 @@ public class WizardsTest {
 		}, 60 * 60 * 1000);
 		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
-		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBotShell shellCreate2 = bot.shell("New Definition"); //$NON-NLS-1$
 		final SWTBot dialogBot2 = bot.shell("New Locution").bot();
 		assertThat(dialogBot2.label("DSL name:"), is(not(nullValue())));
-		assertThat(dialogBot2.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot2.text(0).getText(), is("newDefinition"));
 		assertThat(dialogBot2.label("Project name:"), is(not(nullValue())));
 		assertThat(dialogBot2.text(1).getText(), is("baseNavigator"));
 		assertThat(dialogBot2.label("Package name:"), is(not(nullValue())));
@@ -1164,7 +1169,7 @@ public class WizardsTest {
 		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
 		final SWTBot dialogBot2 = bot.shell("New Locution").bot();
 		assertThat(dialogBot2.label("DSL name:"), is(not(nullValue())));
-		assertThat(dialogBot2.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot2.text(0).getText(), is("newDefinition"));
 		assertThat(dialogBot2.label("Project name:"), is(not(nullValue())));
 		assertThat(dialogBot2.text(1).getText(), is("baseNavigator"));
 		assertThat(dialogBot2.label("Package name:"), is(not(nullValue())));
@@ -1302,10 +1307,10 @@ public class WizardsTest {
 		
 		view.bot().tree().getTreeItem("baseNavigator").expandNode("paquetePrueba").getNode("newJVoice").contextMenu("New").menu("Locution").click();
 		bot.shell("New Locution").activate();
-		final SWTBotShell shellCreate2 = bot.shell("New Locution"); //$NON-NLS-1$
+		final SWTBotShell shellCreate2 = bot.shell("New Definition"); //$NON-NLS-1$
 		final SWTBot dialogBot2 = bot.shell("New Locution").bot();
 		assertThat(dialogBot2.label("DSL name:"), is(not(nullValue())));
-		assertThat(dialogBot2.text(0).getText(), is("newLocution"));
+		assertThat(dialogBot2.text(0).getText(), is("newDefinition"));
 		assertThat(dialogBot2.label("Project name:"), is(not(nullValue())));
 		assertThat(dialogBot2.text(1).getText(), is("baseNavigator"));
 		assertThat(dialogBot2.label("Package name:"), is(not(nullValue())));
