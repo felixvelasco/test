@@ -1,0 +1,35 @@
+<flow xmlns="http://www.springframework.org/schema/webflow"	
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
+xsi:schemaLocation="http://www.springframework.org/schema/webflow
+http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+parent="Login/errorHandler"
+start-state= "_jVoiceCheckInit" >
+
+<on-start>
+<evaluate expression="jwsAutenticaSevice" result="flowScope.jwsAutenticaService"></evaluate>
+
+</on-start>
+
+
+<action-state id="_jVoiceCheckInit">
+	<evaluate expression="jVoiceArchData.initialized" />
+		<transition on="no" to="_jVoiceInit"/>
+		<transition to="autenticacion"/>
+	</action-state>
+
+<view-state id="_jVoiceInit" view="_init" model="jVoiceArchData">
+	<transition to="autenticacion" >
+		<set name="jVoiceArchData.initialized" value="true"/>
+	</transition>
+</view-state>
+<end-state id="Final" view="#{flowProcessor.getRenderer().getView()}">
+	<output name="result" value="''" />
+</end-state>
+<action-state id="autenticacion">
+   <evaluate expression="flowScope.jwsAutenticaService.autenticacion()"
+   />
+   
+
+	<transition to="Final"></transition>
+</action-state>
+</flow> 
