@@ -149,7 +149,7 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 
 		String nameVoice = lstate.getName();
 		if (!nameVoice.equals(nameFile)) {
-			error("Name of Locution " + nameVoice + " is not the same than the name of the file " + nameFile
+			error("Name of Definition " + nameVoice + " is not the same than the name of the file " + nameFile
 					+ ".voiceDsl.", BasePackage.Literals.NAMED_ELEMENT__NAME);
 		}
 	}

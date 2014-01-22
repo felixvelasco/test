@@ -28,7 +28,7 @@ public class LocutionStateValidator {
 
 	public boolean validate_LocutionState_checkDslsLocutionState(LocutionState lstate) {
 		if (lstate.getLocution() == null) {
-			operationsValidator.error(lstate, "Locution State " + lstate.getName() + " has not a dsl associated.");
+			operationsValidator.error(lstate, "Definition State " + lstate.getName() + " has not a dsl associated.");
 		} else {
 			File rawFile = getFileLocution(lstate);
 			if (rawFile != null) {

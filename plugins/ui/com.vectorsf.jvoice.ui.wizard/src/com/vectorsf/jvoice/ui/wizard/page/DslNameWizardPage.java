@@ -56,8 +56,8 @@ import com.vectorsf.jvoice.ui.wizard.Activator;
 
 public class DslNameWizardPage extends AbstractWizardPage {
 
-	private static final String PAGE_DESC = "Enter a locution name";
-	private static final String PAGE_TITLE = "Create a Locution";
+	private static final String PAGE_DESC = "Enter a definition name";
+	private static final String PAGE_TITLE = "Create a Definition";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 
@@ -141,18 +141,18 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		String text = getTextFieldValue();
 		if (text.isEmpty()) {
 			setErrorMessage(null);
-			setMessage("Enter a locution name");
+			setMessage("Enter a definition name");
 			return false;
 		}
 
 		char initial = text.charAt(0);
 		if (Character.isDigit(initial)) {
-			setErrorMessage("The first letter of the locution name cannot be a number.");
+			setErrorMessage("The first letter of the definition name cannot be a number.");
 			return false;
 		}
 
 		if (text.indexOf(' ') != -1) {
-			setErrorMessage("The name of the locution cannot contain spaces.");
+			setErrorMessage("The name of the definition cannot contain spaces.");
 			return false;
 		}
 
@@ -213,7 +213,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 				primeraVez = false;
 				return false;
 			}
-			setErrorMessage("Locution already exists");
+			setErrorMessage("Definition already exists");
 			return false;
 		}
 
@@ -445,7 +445,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	}
 
 	private String getInitialTextFieldValue() {
-		return "newLocution"; //$NON-NLS-1$
+		return "newDefinition"; //$NON-NLS-1$
 	}
 
 	private String getInitialTextDiagramFieldValue() {

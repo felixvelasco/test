@@ -15,8 +15,8 @@ import com.vectorsf.jvoice.ui.wizard.page.DslNameWizardPage;
 
 public class CreateDslJVoice extends BasicNewResourceWizard {
 
-	private static final String PAGE_NAME_DSL_NAME = "Locution Name";
-	private static final String WIZARD_WINDOW_TITLE = "New Locution";
+	private static final String PAGE_NAME_DSL_NAME = "Definition Name";
+	private static final String WIZARD_WINDOW_TITLE = "New Definition";
 	private IFolder folder;
 	private Class<? extends VoiceDsl> targetClazz;
 	private DslNameWizardPage pageName;

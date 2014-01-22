@@ -17,7 +17,7 @@ public class TransferStateSection extends StateSection {
 		TabbedPropertySheetWidgetFactory factory = tabbedPropertySheetPage.getWidgetFactory();
 		Composite composite = factory.createFlatFormComposite(parent);
 		super.nombre_path(factory, composite);
-		super.subFlowPath(factory, composite, "Name locution:");
+		super.subFlowPath(factory, composite, "Name definition:");
 	}
 
 }
