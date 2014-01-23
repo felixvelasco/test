@@ -13,10 +13,12 @@ import org.eclipse.graphiti.ui.editor.DefaultUpdateBehavior;
 public class JVoiceUpdateBehavior extends DefaultUpdateBehavior {
 
 	private JVoiceDiagramBehavior jvoiceDiagramBehavior;
+	private TransactionalEditingDomain domain;
 
-	public JVoiceUpdateBehavior(JVoiceDiagramBehavior diagramBehavior) {
+	public JVoiceUpdateBehavior(JVoiceDiagramBehavior diagramBehavior, TransactionalEditingDomain domain) {
 		super(diagramBehavior);
 		this.jvoiceDiagramBehavior = diagramBehavior;
+		this.domain = domain;
 	}
 
 	@Override
@@ -28,6 +30,15 @@ public class JVoiceUpdateBehavior extends DefaultUpdateBehavior {
 			List<Resource> resources = new ArrayList<>(getEditingDomain().getResourceSet().getResources());
 			resources.remove(0);
 			reloadResources(resources);
+		}
+	}
+
+	@Override
+	protected void createEditingDomain() {
+		if (domain == null) {
+			super.createEditingDomain();
+		} else {
+			initializeEditingDomain(domain);
 		}
 	}
 
