@@ -48,6 +48,12 @@
 						<dependency>
 							<type>eclipse-plugin</type>
 							<groupId>com.vectorsf.jvoice.core</groupId>
+							<artifactId>com.vectorsf.jvoice.diagram.core</artifactId>
+							<version>0.1.0</version>
+						</dependency>
+						<dependency>
+							<type>eclipse-plugin</type>
+							<groupId>com.vectorsf.jvoice.core</groupId>
 							<artifactId>com.vectorsf.jvoice.operation.model.edit</artifactId>
 							<version>0.1.0</version>
 						</dependency>

@@ -12,6 +12,7 @@ import org.eclipse.ui.PlatformUI;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -27,6 +28,7 @@ import static org.hamcrest.Matchers.nullValue;
  * 
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
+@Ignore
 public class OpenIVRNavigatorTest {
 
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
