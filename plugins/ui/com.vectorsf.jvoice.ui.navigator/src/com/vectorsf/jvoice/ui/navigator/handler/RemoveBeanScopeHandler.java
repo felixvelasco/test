@@ -25,7 +25,8 @@ public class RemoveBeanScopeHandler extends AbstractModifyFlowHandler {
 	protected boolean canExecute(ExecutionEvent event) {
 		ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 		if (currentSelection instanceof IStructuredSelection) {
-			Object firstElement = ((IStructuredSelection) currentSelection).getFirstElement();
+			Object firstElement = ((IStructuredSelection) currentSelection)
+					.getFirstElement();
 			if (firstElement instanceof ComponentBean) {
 				selectedBean = (ComponentBean) firstElement;
 				return true;
@@ -34,10 +35,18 @@ public class RemoveBeanScopeHandler extends AbstractModifyFlowHandler {
 		return false;
 	}
 
-	public class RemoveBeanScopeOperation extends AbstractFlowModificationOperation {
+	public class RemoveBeanScopeOperation extends
+			AbstractFlowModificationOperation {
 
 		@Override
 		protected Command getChangeCommand(EditingDomain domain, Flow flow) {
+			for (ComponentBean bean : flow.getBeans()) {
+				if (bean == selectedBean
+						|| bean.getId().equals(selectedBean.getId())) {
+					return DeleteCommand.create(domain, bean);
+				}
+
+			}
 			return DeleteCommand.create(domain, selectedBean);
 		}
 	}
