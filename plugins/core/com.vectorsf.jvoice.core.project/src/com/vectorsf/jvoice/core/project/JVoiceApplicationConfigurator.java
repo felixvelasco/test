@@ -86,7 +86,7 @@ public final class JVoiceApplicationConfigurator {
 
 		model.setName(projectName);
 		model.setDescription(descProject);
-		
+
 		List<Dependency> dependencies = new ArrayList<Dependency>();
 		Dependency jvFlow = new Dependency();
 		jvFlow.setGroupId("com.vectorsf");
@@ -100,11 +100,11 @@ public final class JVoiceApplicationConfigurator {
 		dsl_builder.setArtifactId("application-builder");
 		dsl_builder.setVersion("0.0.2-SNAPSHOT");
 		PluginExecution voiceDSL = new PluginExecution();
-		voiceDSL.setPhase("process-resources");
+		voiceDSL.setPhase("generate-resources");
 		voiceDSL.addGoal("copyXML");
 
 		dsl_builder.addExecution(voiceDSL);
-		
+
 		Plugin dsl_builder2 = new Plugin();
 		dsl_builder2.setGroupId("org.apache.maven.plugins");
 		dsl_builder2.setArtifactId("maven-compiler-plugin");
