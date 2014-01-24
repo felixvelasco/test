@@ -37,13 +37,9 @@ public class LegacyLoggerPomHandler {
 		@Override
 		public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
 			Model mm = null;
+			if(pomFile.exists()){
 			try {
-				try {
 						mm = reader.read(pomFile.getContents());
-					} catch (IOException | XmlPullParserException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 				
 					//Si legacyLogger es true y no existe la dependencia, la añadimos
 					if (legacyLogger){
@@ -58,10 +54,10 @@ public class LegacyLoggerPomHandler {
 					writer.write(baos, mm);
 					pomFile.setContents(new ByteArrayInputStream(baos.toByteArray()), true, true, null);
 					
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (IOException | XmlPullParserException e) {
 				e.printStackTrace();
 			}
+		}
 			return Status.OK_STATUS;
 		}
 
