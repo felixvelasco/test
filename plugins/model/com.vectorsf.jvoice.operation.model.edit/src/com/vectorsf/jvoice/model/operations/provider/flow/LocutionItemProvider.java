@@ -1,24 +1,25 @@
 package com.vectorsf.jvoice.model.operations.provider.flow;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicates;
-import com.google.common.collect.Collections2;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.model.operations.LocutionState;
-import com.vectorsf.jvoice.model.operations.State;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslFactory;
 
 public class LocutionItemProvider extends TransientFlowItemProvider {
@@ -48,22 +49,27 @@ public class LocutionItemProvider extends TransientFlowItemProvider {
 
 	@Override
 	public Collection<?> getChildren(Object object) {
-		Function<State, VoiceDsl> collectLocutions = new Function<State, VoiceDsl>() {
-
-			@Override
-			public VoiceDsl apply(State input) {
-				if (input instanceof LocutionState) {
-					VoiceDsl locution = ((LocutionState) input).getLocution();
-					if (locution.eIsProxy()) {
-						locution = (VoiceDsl) EcoreUtil.resolve(locution, input);
+		IFile flowFile = (IFile) Platform.getAdapterManager().getAdapter(
+				getFlow(),
+				IFile.class);
+		Collection childrenCollection = new ArrayList();
+		if (flowFile.exists()){
+			IPath resourcesPath = flowFile.getFullPath().removeFileExtension()
+					.addFileExtension("resources");
+			IFolder resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace()
+					.getRoot().findMember(resourcesPath);
+			if (resourcesFolder.exists()) {
+				try {
+					for (IResource resourceFile:resourcesFolder.members()){
+						childrenCollection.add(resourceFile);
 					}
-					return locution;
+				} catch (CoreException e) {
+								e.printStackTrace();
 				}
-				return null;
-			};
-		};
-		return Collections2.filter(Collections2.transform(getFlow().getStates(), collectLocutions),
-				Predicates.<Object> notNull());
+			}
+		}
+
+		return childrenCollection;
 	}
 
 	@Override
