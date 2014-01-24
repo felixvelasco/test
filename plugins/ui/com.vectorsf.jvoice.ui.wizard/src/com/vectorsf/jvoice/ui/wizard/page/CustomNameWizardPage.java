@@ -102,7 +102,7 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 		primeraVez = 0;
 	}
 
-	public CustomNameWizardPage(String pageName, boolean projectEnable, String tipo) {
+	public CustomNameWizardPage(String pageName, boolean projectEnable) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);

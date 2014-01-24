@@ -17,15 +17,13 @@ public class CreateJspCustom extends BasicNewResourceWizard {
 	private static final String PAGE_NAME_DSL_NAME = "Custom Name";
 	private static final String WIZARD_WINDOW_TITLE = "New Custom";
 	private IFolder myPackage;
-	private String tipoDSL;
 	CustomNameWizardPage pageName;
 
 	public CreateJspCustom() {
 	}
 
-	public CreateJspCustom(IFolder ownerPackage, String tipo) {
+	public CreateJspCustom(IFolder ownerPackage) {
 		this.myPackage = ownerPackage;
-		this.tipoDSL = tipo;
 	}
 
 	@Override
@@ -41,7 +39,7 @@ public class CreateJspCustom extends BasicNewResourceWizard {
 			pageName.setSelection(getSelection().getFirstElement());
 			addPage(pageName);
 		} else {
-			pageName = new CustomNameWizardPage(PAGE_NAME_DSL_NAME, false, tipoDSL);
+			pageName = new CustomNameWizardPage(PAGE_NAME_DSL_NAME, false);
 			pageName.setSelection(myPackage);
 			addPage(pageName);
 		}
