@@ -294,43 +294,35 @@ public abstract class SimpleStatePattern extends IdPattern {
 	// Cambiamos el tamaño del rectángulo superior y la posición del icono
 	// del menú
 	if (id.equals(ID_TOP_RECTANGLE)) {
-	    int newWidth = MAIN_RECTANGLE_WIDTH;
-
 	    State state = (State) getBusinessObjectForPictogramElement(context
 		    .getRootPictogramElement());
 	    int numEvents = state.getFireableEvents().size();
 	    if (numEvents * IMAGE_SIZE > MAIN_RECTANGLE_WIDTH) {
-		newWidth = (IMAGE_SIZE + 2) * numEvents;
-		GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
-		gaService.setLocationAndSize(ga, 0, 0, newWidth,
-			TOP_RECTANGLE_HEIGHT);
-
-		// Colocamos el icono del menú
-		for (GraphicsAlgorithm ga2 : ga.getGraphicsAlgorithmChildren()) {
-		    if (ga2 instanceof ImageImpl) {
-			gaService.setLocationAndSize(ga2, newWidth - 24,
-				(TOP_RECTANGLE_HEIGHT - DROPDOWN_SIZE) / 2,
-				DROPDOWN_SIZE, DROPDOWN_SIZE);
-		    }
-		}
+		changeTopRectangleWidth(context, (IMAGE_SIZE + 2) * numEvents);
 	    } else {
-		GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
-		gaService.setLocationAndSize(ga, 0, 0, MAIN_RECTANGLE_WIDTH,
-			TOP_RECTANGLE_HEIGHT);
-
-		// Colocamos el icono del menú
-		for (GraphicsAlgorithm ga2 : ga.getGraphicsAlgorithmChildren()) {
-		    if (ga2 instanceof ImageImpl) {
-			gaService.setLocationAndSize(ga2, MAIN_RECTANGLE_WIDTH - 24,
-				(TOP_RECTANGLE_HEIGHT - DROPDOWN_SIZE) / 2,
-				DROPDOWN_SIZE, DROPDOWN_SIZE);
-		    }
-		}
-		changesDone = true;
+		changeTopRectangleWidth(context, MAIN_RECTANGLE_WIDTH);
 	    }
+	    changesDone = true;
 	}
 
 	return changesDone;
+    }
+
+    private void changeTopRectangleWidth(IdLayoutContext context, int newWidth) {
+	GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
+
+	// Cambiamos el tamaño del rectángulo superior
+	gaService.setLocationAndSize(ga, 0, 0, newWidth,
+		TOP_RECTANGLE_HEIGHT);
+
+	// Colocamos el icono del menú
+	for (GraphicsAlgorithm ga2 : ga.getGraphicsAlgorithmChildren()) {
+	    if (ga2 instanceof ImageImpl) {
+		gaService.setLocationAndSize(ga2, newWidth - 24,
+			(TOP_RECTANGLE_HEIGHT - DROPDOWN_SIZE) / 2,
+			DROPDOWN_SIZE, DROPDOWN_SIZE);
+	    }
+	}
     }
 
     /**
