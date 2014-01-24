@@ -27,7 +27,6 @@ public class EventsDialog extends Dialog {
 		super(parentShell);
 		this.title = dialogTitle;
 		this.options = options.toArray(new ButtonInfo[options.size()]);
-		// this.extraOptions = extraOptions.toArray(new ButtonInfo[extraOptions.size()]);
 		this.buttons = new ArrayList<Button>();
 	}
 
@@ -68,7 +67,6 @@ public class EventsDialog extends Dialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		// create composite
 		final Composite composite = (Composite) super.createDialogArea(parent);
 		Composite buttonComposite = new Composite(composite, SWT.WRAP);
 		GridData data = new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.HORIZONTAL_ALIGN_FILL
@@ -88,27 +86,9 @@ public class EventsDialog extends Dialog {
 			buttons.add(b);
 		}
 
-		// Composite textComposite = new Composite(composite, SWT.WRAP);
-		// data = new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.HORIZONTAL_ALIGN_FILL
-		// | GridData.VERTICAL_ALIGN_CENTER);
-		// textComposite.setLayoutData(data);
-		// textComposite.setLayout(new GridLayout(2, false));
-
-		// extraButtonComposite = new Composite(composite, SWT.WRAP);
-		// data = new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.HORIZONTAL_ALIGN_FILL
-		// | GridData.VERTICAL_ALIGN_CENTER);
-		// extraButtonComposite.setLayoutData(data);
-		// extraButtonComposite.setLayout(new GridLayout(3, false));
-
-		// for (int i = 0; i < extraOptions.length; i++) {
-		// addExtraButton(extraOptions[i]);
-		// }
-
 		errorMessageText = new Text(composite, SWT.READ_ONLY | SWT.WRAP);
 		errorMessageText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 		errorMessageText.setBackground(errorMessageText.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		// Set the error message text
-		// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=66292
 		setErrorMessage(errorMessage);
 
 		applyDialogFont(composite);
