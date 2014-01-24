@@ -174,8 +174,12 @@ public class GenerateFlowMojo extends AbstractMojo {
 			nameProject = modulo.getName();
 
 			generateMainModule(modulo, f);
-
-			processFlowFiles(resourceSet, f);
+			
+			//Si el módulo no tiene flujos, sourceDirectory puede no existir.
+			//Por lo que lo comprobamos y si no existe ni intentamos procesar los flujos.
+			if (sourceDirectory.exists()){
+				processFlowFiles(resourceSet, f);				
+			}
 			if (project != null) {
 				projectHelper.addResource(project, outputDirectory.getAbsolutePath(),
 						Collections.singletonList("jVoice/**/*.xml"), Collections.emptyList());
