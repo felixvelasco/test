@@ -1,5 +1,6 @@
 package com.vectorsf.jvoice.model.operations.provider.flow;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -18,8 +19,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDslFactory;
 
 public class LocutionItemProvider extends TransientFlowItemProvider {
@@ -58,13 +61,26 @@ public class LocutionItemProvider extends TransientFlowItemProvider {
 					.addFileExtension("resources");
 			IFolder resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace()
 					.getRoot().findMember(resourcesPath);
+
 			if (resourcesFolder.exists()) {
 				try {
 					for (IResource resourceFile:resourcesFolder.members()){
-						childrenCollection.add(resourceFile);
+						if (resourceFile.getName().toString()
+								.endsWith("voiceDsl")) {
+							org.eclipse.emf.common.util.URI emfURI = org.eclipse.emf.common.util.URI
+									.createPlatformResourceURI(resourceFile
+											.getFullPath().toString(), true);
+							EObject o = BaseModel.getInstance()
+									.getResourceSet().getResource(emfURI, true)
+									.getContents().get(0);
+							if (o != null && o instanceof VoiceDsl) {
+								VoiceDsl definition = (VoiceDsl) o;
+								childrenCollection.add(definition);
+							}
+						}
 					}
 				} catch (CoreException e) {
-								e.printStackTrace();
+					e.printStackTrace();
 				}
 			}
 		}
