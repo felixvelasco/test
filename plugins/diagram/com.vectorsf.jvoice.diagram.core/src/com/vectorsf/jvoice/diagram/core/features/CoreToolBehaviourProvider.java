@@ -21,6 +21,7 @@ import com.vectorsf.jvoice.diagram.core.features.editing.FinalStateHangToggleFea
 import com.vectorsf.jvoice.diagram.core.pattern.note.*;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.*;
 import com.vectorsf.jvoice.model.operations.*;
+import com.vectorsf.jvoice.model.operations.impl.*;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.*;
 
 public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
@@ -233,9 +234,10 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
 		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(context.getInnerPictogramElement());
 
-		// AL hacer doble click en el icono del menú sacamos el diálogo de eventos
+		// Al hacer doble click en el icono del menú sacamos el diálogo de eventos
 		GraphicsAlgorithm ga = context.getInnerGraphicsAlgorithm();
-		if (ga instanceof Image && ((Image) ga).getId().equals("icon_deco_dropdown")) {
+		if (ga instanceof Image && ((Image) ga).getId().equals("icon_deco_dropdown") &&
+			(bo instanceof CallFlowStateImpl || bo instanceof MenuStateImpl || bo instanceof SwitchStateImpl)) {
 			PictogramElement pe = context.getInnerPictogramElement();
 			return new AddMoreEventFeature(getFeatureProvider());
 		}
