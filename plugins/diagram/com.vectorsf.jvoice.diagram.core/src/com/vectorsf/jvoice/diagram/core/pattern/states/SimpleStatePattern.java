@@ -20,7 +20,6 @@ import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.model.operations.*;
 
 public abstract class SimpleStatePattern extends IdPattern {
-
     protected static final int DROPDOWN_SIZE = 12;
 
     protected static final int IMAGE_SIZE = 24;
@@ -68,6 +67,8 @@ public abstract class SimpleStatePattern extends IdPattern {
     protected static final String MAIN_TEXT_STYLE = "mainTextStyle";
 
     protected static final String VERTICAL_LINE_STYLE = "verticalLineStyle";
+
+    private static final String ID_MENU_IMAGE = "menuImage";
 
     protected static IGaService gaService = Graphiti.getGaService();
 
@@ -129,9 +130,11 @@ public abstract class SimpleStatePattern extends IdPattern {
 		gaService.setLocationAndSize(text, CELL_WIDTH, 0, TEXT_WIDTH,
 			TOP_RECTANGLE_HEIGHT);
 
-		Image image = gaService.createImage(topRectangle,
+		Image menuImage = gaService.createImage(topRectangle,
 			CoreImageProvider.IMG_DROPDOWN);
-		gaService.setLocationAndSize(image, MAIN_RECTANGLE_WIDTH - 24,
+		setId(menuImage, ID_MENU_IMAGE);
+		gaService.setLocationAndSize(menuImage,
+			MAIN_RECTANGLE_WIDTH - 24,
 			(TOP_RECTANGLE_HEIGHT - DROPDOWN_SIZE) / 2,
 			DROPDOWN_SIZE, DROPDOWN_SIZE);
 	    }
@@ -288,6 +291,32 @@ public abstract class SimpleStatePattern extends IdPattern {
 	    changesDone = true;
 	}
 
+	// Cambiamos el tamaño del rectángulo superior y la posición del icono
+	// del menú
+	if (id.equals(ID_TOP_RECTANGLE)) {
+	    int mainWidth = MAIN_RECTANGLE_WIDTH;
+
+	    State state = (State) getBusinessObjectForPictogramElement(context
+		    .getRootPictogramElement());
+	    int numEvents = state.getFireableEvents().size();
+	    if (numEvents * IMAGE_SIZE > MAIN_RECTANGLE_WIDTH) {
+		mainWidth = (IMAGE_SIZE + 2) * numEvents;
+		GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
+		gaService.setLocationAndSize(ga, 0, 0, mainWidth,
+			TOP_RECTANGLE_HEIGHT);
+
+		// Colocamos el icono del menú
+		for (GraphicsAlgorithm ga2 : ga.getGraphicsAlgorithmChildren()) {
+		    if (ga2 instanceof ImageImpl) {
+			gaService.setLocationAndSize(ga2, mainWidth - 24,
+				(TOP_RECTANGLE_HEIGHT - DROPDOWN_SIZE) / 2,
+				DROPDOWN_SIZE, DROPDOWN_SIZE);
+		    }
+		}
+		changesDone = true;
+	    }
+	}
+
 	return changesDone;
     }
 
@@ -302,13 +331,14 @@ public abstract class SimpleStatePattern extends IdPattern {
 	EList<String> fireableEvents = state.getFireableEvents();
 
 	// Ajustamos el tamaño del estado
-	if (fireableEvents.size() * IMAGE_SIZE > MAIN_RECTANGLE_WIDTH)
+	if (fireableEvents.size() * IMAGE_SIZE > MAIN_RECTANGLE_WIDTH) {
 	    Graphiti.getGaService().setLocationAndSize(ga, ga.getX(),
 		    ga.getY(), (IMAGE_SIZE + 2) * fireableEvents.size(),
 		    ga.getHeight());
-	else
+	} else {
 	    Graphiti.getGaService().setLocationAndSize(ga, ga.getX(),
 		    ga.getY(), MAIN_RECTANGLE_WIDTH, ga.getHeight());
+	}
 
 	// Borra los anchors del tipo FixPointAnchor que no tienen transiciones
 	// de salida
@@ -319,7 +349,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 	    if (!(anchor instanceof FixPointAnchor)) {
 		continue;
 	    }
-	    
+
 	    if (anchor.getOutgoingConnections().isEmpty()) {
 		anchorsToDelete.add(anchor);
 	    } else {
@@ -340,7 +370,9 @@ public abstract class SimpleStatePattern extends IdPattern {
 		continue;
 	    }
 
-	    FixPointAnchor anchor = Graphiti.getPeCreateService().createFixPointAnchor(
+	    FixPointAnchor anchor = Graphiti
+		    .getPeCreateService()
+		    .createFixPointAnchor(
 			    (AnchorContainer) context.getRootPictogramElement());
 	    anchor.setLocation(getImageLocation(cont++,
 		    context.getRootPictogramElement()));
@@ -354,7 +386,8 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 	// Reordenamos los anchors
 	cont = 0;
-	for (Anchor anchor : ((AnchorContainer) context.getRootPictogramElement()).getAnchors()) {
+	for (Anchor anchor : ((AnchorContainer) context
+		.getRootPictogramElement()).getAnchors()) {
 	    if (anchor instanceof FixPointAnchor) {
 		((FixPointAnchor) anchor).setLocation(getImageLocation(cont++,
 			context.getRootPictogramElement()));
