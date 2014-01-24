@@ -2,22 +2,14 @@ package com.vectorsf.jvoice.diagram.core.pattern.states;
 
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.graphiti.features.context.ICreateContext;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -27,9 +19,7 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.model.base.JVProject;
-import com.vectorsf.jvoice.model.operations.CallFlowState;
-import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.model.operations.OperationsFactory;
+import com.vectorsf.jvoice.model.operations.*;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogSubFlow;
 import com.vectorsf.jvoice.ui.edit.filters.FilterDialogSubFlow;
 import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;
@@ -68,6 +58,7 @@ public class CallFlowStatePattern extends SimpleStatePattern implements ISelecti
 			dialog.setInput(proj);
 
 			dialog.open();
+
 			Flow result = null;
 			String callFlowName = null;
 			switch (dialog.getReturnCode()) {

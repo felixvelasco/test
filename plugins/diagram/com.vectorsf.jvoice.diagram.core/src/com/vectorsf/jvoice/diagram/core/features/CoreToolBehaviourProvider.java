@@ -1,63 +1,27 @@
 package com.vectorsf.jvoice.diagram.core.features;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import org.eclipse.emf.common.util.BasicDiagnostic;
-import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.*;
+import org.eclipse.gef.SnapToGrid;
+import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
-import org.eclipse.graphiti.features.ICreateConnectionFeature;
-import org.eclipse.graphiti.features.IDirectEditingFeature;
-import org.eclipse.graphiti.features.context.ICustomContext;
-import org.eclipse.graphiti.features.context.IDirectEditingContext;
-import org.eclipse.graphiti.features.context.IDoubleClickContext;
-import org.eclipse.graphiti.features.context.IPictogramElementContext;
-import org.eclipse.graphiti.features.context.ISingleClickContext;
+import org.eclipse.graphiti.features.*;
+import org.eclipse.graphiti.features.context.*;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
-import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
-import org.eclipse.graphiti.mm.algorithms.Image;
-import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.pictograms.Connection;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.mm.algorithms.*;
+import org.eclipse.graphiti.mm.pictograms.*;
 import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
 import org.eclipse.graphiti.platform.IPlatformImageConstants;
-import org.eclipse.graphiti.tb.ConnectionSelectionInfoImpl;
-import org.eclipse.graphiti.tb.ContextButtonEntry;
-import org.eclipse.graphiti.tb.ContextEntryHelper;
-import org.eclipse.graphiti.tb.ContextMenuEntry;
-import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
-import org.eclipse.graphiti.tb.IConnectionSelectionInfo;
-import org.eclipse.graphiti.tb.IContextButtonEntry;
-import org.eclipse.graphiti.tb.IContextButtonPadData;
-import org.eclipse.graphiti.tb.IContextMenuEntry;
-import org.eclipse.graphiti.tb.IDecorator;
-import org.eclipse.graphiti.tb.ImageDecorator;
-import org.eclipse.graphiti.util.ColorConstant;
-import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.tb.*;
+import org.eclipse.graphiti.util.*;
 
 import com.vectorsf.jvoice.diagram.core.features.editing.FinalStateHangToggleFeature;
-import com.vectorsf.jvoice.diagram.core.pattern.note.CreateRelationFromPad;
-import com.vectorsf.jvoice.diagram.core.pattern.note.RelationPattern;
-import com.vectorsf.jvoice.diagram.core.pattern.transition.CreateTransitionFromPad;
-import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionCallFlowPattern;
-import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionMenuPattern;
-import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
-import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
-import com.vectorsf.jvoice.model.operations.CallFlowState;
-import com.vectorsf.jvoice.model.operations.CallState;
-import com.vectorsf.jvoice.model.operations.Case;
-import com.vectorsf.jvoice.model.operations.CustomState;
-import com.vectorsf.jvoice.model.operations.FinalState;
-import com.vectorsf.jvoice.model.operations.InitialState;
-import com.vectorsf.jvoice.model.operations.LocutionState;
-import com.vectorsf.jvoice.model.operations.MenuState;
-import com.vectorsf.jvoice.model.operations.Note;
-import com.vectorsf.jvoice.model.operations.State;
-import com.vectorsf.jvoice.model.operations.SwitchState;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.diagram.core.pattern.note.*;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.*;
+import com.vectorsf.jvoice.model.operations.*;
+import com.vectorsf.jvoice.prompt.model.voiceDsl.*;
 
 public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
@@ -92,6 +56,9 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		if (ga instanceof Text) {
 			return ((Text) ga).getValue();
 		} else {
+			String tooltip = Graphiti.getPeService().getPropertyValue(ga.getPictogramElement(), "TOOLTIP");
+			if(tooltip != null)
+				return tooltip;
 			return super.getToolTip(ga);
 		}
 	}
@@ -154,6 +121,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 			State sta = (State) bo;
 
 			ICreateConnectionFeature feature = null;
+
 			if (sta instanceof SwitchState) {
 				SwitchState switchState = (SwitchState) sta;
 				List<Case> cases = switchState.getCase();
@@ -264,6 +232,13 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	@Override
 	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
 		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(context.getInnerPictogramElement());
+
+		// AL hacer doble click en el icono del menú sacamos el diálogo de eventos
+		GraphicsAlgorithm ga = context.getInnerGraphicsAlgorithm();
+		if (ga instanceof Image && ((Image) ga).getId().equals("icon_deco_dropdown")) {
+			PictogramElement pe = context.getInnerPictogramElement();
+			return new AddMoreEventFeature(getFeatureProvider());
+		}
 
 		if (bo instanceof CallFlowState || bo instanceof LocutionState || bo instanceof CustomState
 				|| bo instanceof CallState) {

@@ -27,6 +27,8 @@ public class CoreImageProvider extends AbstractImageProvider {
 	public static final String IMG_PALETTE_TRANSFER = "icon_est_transfer";
 	public static final String IMG_PALETTE_NOTE = "icon_notes";
 
+	public static final String IMG_MORE_EVENTS_DIALOG = "icon_more_events_dialog";
+
 	public static final String IMG_LARGE_PALETTE_CUSTOM = "large_icon_est_custom";
 	public static final String IMG_LARGE_PALETTE_EXECUTION = "large_icon_est_execution";
 	public static final String IMG_LARGE_PALETTE_FINAL = "large_icon_est_final";
@@ -98,6 +100,29 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath(IMG_STATE_TRANSFER, "icons/states/icon_comp_transfer.png");
 
 		addImageFilePath(IMG_DROPDOWN, "icons/states/dropdown.png"); //$NON-NLS-1$
+
+		addImageFilePath(IMG_MORE_EVENTS_DIALOG, "icons/icon_more_events_dialog.png");
+
+		// Eventos que pueden lanzar los estados
+		addImageFilePath("busy", "icons/events/icon_event_busy.png");
+		addImageFilePath("conn_error", "icons/events/icon_event_conn_error.png");
+		addImageFilePath("error", "icons/events/icon_event_error.png");
+		addImageFilePath("far_end_disc", "icons/events/icon_event_far_end_disc.png");
+		addImageFilePath("hangup", "icons/events/icon_event_hangup.png");
+		addImageFilePath("match", "icons/events/icon_event_match.png");
+		addImageFilePath("maxatt", "icons/events/icon_event_maxatt.png");
+		addImageFilePath("maxtime", "icons/events/icon_event_maxtime.png");
+		addImageFilePath("netw_busy", "icons/events/icon_event_netw_busy.png");
+		addImageFilePath("netw_disconnect", "icons/events/icon_event_netw_disconnect.png");
+		addImageFilePath("noanswer", "icons/events/icon_event_noanswer.png");
+		addImageFilePath("noinput", "icons/events/icon_event_noimput.png");
+		addImageFilePath("nomatch", "icons/events/icon_event_nomatch.png");
+		addImageFilePath("noresource", "icons/events/icon_event_noresource.png");
+		addImageFilePath("recorded", "icons/events/icon_event_recorded.png");
+		addImageFilePath("record_unsup", "icons/events/icon_event_record_unsup.png");
+		addImageFilePath("success", "icons/events/icon_event_success.png");
+		addImageFilePath("transferred", "icons/events/icon_event_transferred.png");
+		addImageFilePath("unknown", "icons/events/icon_event_unknown.png");
 	}
 
 }

@@ -9,11 +9,7 @@ import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
 import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
-import org.eclipse.graphiti.mm.pictograms.Anchor;
-import org.eclipse.graphiti.mm.pictograms.Connection;
-import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
-import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.mm.pictograms.*;
 import org.eclipse.graphiti.pattern.AbstractConnectionPattern;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
@@ -124,7 +120,14 @@ public class TransitionPattern extends AbstractConnectionPattern {
 		AddConnectionContext addContextInicial = new AddConnectionContext(context.getSourceAnchor(),
 				context.getTargetAnchor());
 		addContextInicial.setNewObject(transition);
-		addContextInicial.setTargetContainer((ContainerShape) context.getSourcePictogramElement());
+		
+		PictogramElement pe = context.getSourcePictogramElement();
+		
+		// Al crear la transición desde el evento lo que llega es un FixPointAnchor 
+		if(pe instanceof FixPointAnchor)
+			addContextInicial.setTargetContainer((ContainerShape) pe.getGraphicsAlgorithm().getParentGraphicsAlgorithm());
+		else
+			addContextInicial.setTargetContainer((ContainerShape) pe);
 
 		Connection connection = (Connection) getFeatureProvider().addIfPossible(addContextInicial);
 		layoutPictogramElement(connection);
@@ -153,6 +156,7 @@ public class TransitionPattern extends AbstractConnectionPattern {
 
 	@Override
 	public boolean canCreate(ICreateConnectionContext context) {
+//		System.out.println("==>"+context.getTargetPictogramElement());
 		Object boTarget = featureProvider.getBusinessObjectForPictogramElement(context.getTargetPictogramElement());
 		Object boSource = featureProvider.getBusinessObjectForPictogramElement(context.getSourcePictogramElement());
 

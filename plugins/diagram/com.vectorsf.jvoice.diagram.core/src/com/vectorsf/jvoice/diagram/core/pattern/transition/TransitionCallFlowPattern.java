@@ -2,6 +2,8 @@ package com.vectorsf.jvoice.diagram.core.pattern.transition;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateConnectionContext;
+import org.eclipse.graphiti.mm.algorithms.impl.ImageImpl;
+import org.eclipse.graphiti.mm.pictograms.*;
 
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
@@ -9,6 +11,7 @@ import com.vectorsf.jvoice.model.operations.Transition;
 public class TransitionCallFlowPattern extends TransitionPattern {
 	protected State state;
 	private IFeatureProvider featureProvider;
+	private String eventName;
 
 	public TransitionCallFlowPattern(State stateFinal,
 			IFeatureProvider in_featureProvider) {
@@ -19,16 +22,25 @@ public class TransitionCallFlowPattern extends TransitionPattern {
 
 	@Override
 	public String getCreateName() {
-		return state.getName();
+		return eventName;
+//		return state.getName();
 	}
 
 	@Override
 	public boolean canCreate(ICreateConnectionContext context) {
 		if (state != null) {
 
+			PictogramElement pe = context.getSourcePictogramElement();
+			
+			// Al crear la transición desde el evento lo que llega es un FixPointAnchor 
+			if(pe instanceof FixPointAnchor)
+			{
+				eventName = ((ImageImpl)pe.getGraphicsAlgorithm()).getId();
+				pe = ((FixPointAnchor)pe).getParent();
+			}
+
 			Object boSource = featureProvider
-					.getBusinessObjectForPictogramElement(context
-							.getSourcePictogramElement());
+					.getBusinessObjectForPictogramElement(pe);
 
 			State stateOrigen = (State) boSource;
 
@@ -38,6 +50,7 @@ public class TransitionCallFlowPattern extends TransitionPattern {
 				}
 			}
 		}
+		
 		return super.canCreate(context);
 	}
 }
