@@ -310,27 +310,39 @@ public abstract class SimpleStatePattern extends IdPattern {
 	    Graphiti.getGaService().setLocationAndSize(ga, ga.getX(),
 		    ga.getY(), MAIN_RECTANGLE_WIDTH, ga.getHeight());
 
-	// Borra los anchors del tipo FixPointAnchor
+	// Borra los anchors del tipo FixPointAnchor que no tienen transiciones
+	// de salida
 	List<Anchor> anchorsToDelete = new ArrayList<Anchor>();
+	List<String> existingAnchors = new ArrayList<String>();
 	for (Anchor anchor : ((AnchorContainer) context
 		.getRootPictogramElement()).getAnchors()) {
-	    if (!(anchor instanceof FixPointAnchor))
+	    if (!(anchor instanceof FixPointAnchor)) {
 		continue;
-	    anchorsToDelete.add(anchor);
+	    }
+	    
+	    if (anchor.getOutgoingConnections().isEmpty()) {
+		anchorsToDelete.add(anchor);
+	    } else {
+		existingAnchors.add(((ImageImpl) anchor.getGraphicsAlgorithm())
+			.getId());
+	    }
 	}
-	
+
 	for (Anchor anchor : anchorsToDelete) {
 	    Graphiti.getPeService().deletePictogramElement(anchor);
 	}
 
-	// Creamos la imagen del evento
-	for (int i = 0; i < fireableEvents.size(); i++) {
-	    String event = fireableEvents.get(i);
-	    FixPointAnchor anchor = Graphiti
-		    .getPeCreateService()
-		    .createFixPointAnchor(
+	// Creamos el anchor y su imagen asociada
+	int cont = existingAnchors.size();
+	for (String event : fireableEvents) {
+	    // No creamos los anchors que ya existen
+	    if (existingAnchors.contains(event)) {
+		continue;
+	    }
+
+	    FixPointAnchor anchor = Graphiti.getPeCreateService().createFixPointAnchor(
 			    (AnchorContainer) context.getRootPictogramElement());
-	    anchor.setLocation(getImageLocation(i,
+	    anchor.setLocation(getImageLocation(cont++,
 		    context.getRootPictogramElement()));
 
 	    // Creamos la imagen del evento dentro del anchor
@@ -338,6 +350,15 @@ public abstract class SimpleStatePattern extends IdPattern {
 	    gaService.setLocationAndSize(image, 0, 0, IMAGE_SIZE, IMAGE_SIZE);
 	    image.setId(event);
 	    Graphiti.getPeService().setPropertyValue(anchor, "TOOLTIP", event);
+	}
+
+	// Reordenamos los anchors
+	cont = 0;
+	for (Anchor anchor : ((AnchorContainer) context.getRootPictogramElement()).getAnchors()) {
+	    if (anchor instanceof FixPointAnchor) {
+		((FixPointAnchor) anchor).setLocation(getImageLocation(cont++,
+			context.getRootPictogramElement()));
+	    }
 	}
     }
 
