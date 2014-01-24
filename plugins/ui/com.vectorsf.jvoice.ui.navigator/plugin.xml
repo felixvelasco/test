@@ -655,6 +655,9 @@
                         <instanceof
                               value="com.vectorsf.jvoice.model.base.JVPackage">
                         </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
                      </or>
                   </iterate>
                </with>
