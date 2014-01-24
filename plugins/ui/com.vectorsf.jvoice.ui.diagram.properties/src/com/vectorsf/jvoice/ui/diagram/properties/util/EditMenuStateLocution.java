@@ -3,7 +3,6 @@ package com.vectorsf.jvoice.ui.diagram.properties.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -21,12 +20,12 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
-import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
 import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -100,7 +99,6 @@ public class EditMenuStateLocution extends RecordingCommand {
 
 	}
 
-	@SuppressWarnings("restriction")
 	@Override
 	protected void doExecute() {
 
@@ -119,7 +117,7 @@ public class EditMenuStateLocution extends RecordingCommand {
 		try {
 			IResource[] resources = resourcesFolder.members();
 			for (IResource resource : resources) {
-				if (resource instanceof File) {
+				if (resource instanceof IFile) {
 					URI uri = URI.createPlatformResourceURI(resource.getFullPath().toString(), true);
 					EObject eObject = null;
 					if (!resource.getName().contains(".jsp")) {
@@ -274,7 +272,7 @@ public class EditMenuStateLocution extends RecordingCommand {
 		IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath() + "/" + flujo.getName()
 				+ ".resources");
 
-		BasicNewResourceWizard createWizard;
+		Wizard createWizard;
 
 		if (customState != null) {
 			// Si se quiere cambiar la jsp asociada a un estado custom creamos el wizard de creación de jsp.
