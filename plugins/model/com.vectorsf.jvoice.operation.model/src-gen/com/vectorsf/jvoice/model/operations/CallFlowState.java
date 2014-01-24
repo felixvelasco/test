@@ -2,6 +2,8 @@
  */
 package com.vectorsf.jvoice.model.operations;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -45,5 +47,14 @@ public interface CallFlowState extends ParameterizedState {
 	 * @generated
 	 */
 	void setSubflow(Flow value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='org.eclipse.emf.common.util.BasicEList<String> list = new org.eclipse.emf.common.util.BasicEList<String>();\r\nlist.add(\"a1\");\r\nlist.add(\"a2\");\r\nlist.add(\"a3\");\r\nreturn list;\r\n'"
+	 * @generated
+	 */
+	EList<String> getEvents();
 
 } // CallFlowState

@@ -3,16 +3,13 @@
 package com.vectorsf.jvoice.model.operations.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.*;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import com.vectorsf.jvoice.model.operations.CallState;
-import com.vectorsf.jvoice.model.operations.ComponentBean;
-import com.vectorsf.jvoice.model.operations.OperationsPackage;
+import com.vectorsf.jvoice.model.operations.*;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Call State</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Call State</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -24,11 +21,11 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
  *
  * @generated
  */
-public class CallStateImpl extends ParameterizedStateImpl implements CallState {
+public class CallStateImpl extends ParameterizedStateImpl implements CallState
+{
 	/**
 	 * The default value of the '{@link #getMethodName() <em>Method Name</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getMethodName()
 	 * @generated
 	 * @ordered
@@ -37,8 +34,7 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 
 	/**
 	 * The cached value of the '{@link #getMethodName() <em>Method Name</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getMethodName()
 	 * @generated
 	 * @ordered
@@ -46,9 +42,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	protected String methodName = METHOD_NAME_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getBean() <em>Bean</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
-	 * -->
-	 * 
+	 * The cached value of the '{@link #getBean() <em>Bean</em>}' reference.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getBean()
 	 * @generated
 	 * @ordered
@@ -57,8 +52,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 
 	/**
 	 * The cached value of the '{@link #getReferencedBean() <em>Referenced Bean</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getReferencedBean()
 	 * @generated
 	 * @ordered
@@ -69,7 +64,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected CallStateImpl() {
+	protected CallStateImpl()
+	{
 		super();
 	}
 
@@ -78,7 +74,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass() {
+	protected EClass eStaticClass()
+	{
 		return OperationsPackage.Literals.CALL_STATE;
 	}
 
@@ -87,7 +84,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @generated
 	 */
 	@Override
-	public String getMethodName() {
+	public String getMethodName()
+	{
 		return methodName;
 	}
 
@@ -96,7 +94,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @generated
 	 */
 	@Override
-	public void setMethodName(String newMethodName) {
+	public void setMethodName(String newMethodName)
+	{
 		String oldMethodName = methodName;
 		methodName = newMethodName;
 		if (eNotificationRequired())
@@ -108,7 +107,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @generated
 	 */
 	@Override
-	public ComponentBean getBean() {
+	public ComponentBean getBean()
+	{
 		if (bean != null && bean.eIsProxy()) {
 			InternalEObject oldBean = (InternalEObject)bean;
 			bean = (ComponentBean)eResolveProxy(oldBean);
@@ -124,7 +124,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ComponentBean basicGetBean() {
+	public ComponentBean basicGetBean()
+	{
 		return bean;
 	}
 
@@ -133,7 +134,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @generated
 	 */
 	@Override
-	public void setBean(ComponentBean newBean) {
+	public void setBean(ComponentBean newBean)
+	{
 		ComponentBean oldBean = bean;
 		bean = newBean;
 		if (eNotificationRequired())
@@ -141,11 +143,12 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ComponentBean getReferencedBean() {
+	@Override
+	public ComponentBean getReferencedBean()
+	{
 		if (referencedBean != null && referencedBean.eIsProxy()) {
 			InternalEObject oldReferencedBean = (InternalEObject)referencedBean;
 			referencedBean = (ComponentBean)eResolveProxy(oldReferencedBean);
@@ -158,20 +161,21 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ComponentBean basicGetReferencedBean() {
+	public ComponentBean basicGetReferencedBean()
+	{
 		return referencedBean;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setReferencedBean(ComponentBean newReferencedBean) {
+	@Override
+	public void setReferencedBean(ComponentBean newReferencedBean)
+	{
 		ComponentBean oldReferencedBean = referencedBean;
 		referencedBean = newReferencedBean;
 		if (eNotificationRequired())
@@ -183,7 +187,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
 		switch (featureID) {
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				return getMethodName();
@@ -202,7 +207,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue) {
+	public void eSet(int featureID, Object newValue)
+	{
 		switch (featureID) {
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				setMethodName((String)newValue);
@@ -222,7 +228,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
+	public void eUnset(int featureID)
+	{
 		switch (featureID) {
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				setMethodName(METHOD_NAME_EDEFAULT);
@@ -242,7 +249,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSet(int featureID)
+	{
 		switch (featureID) {
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				return METHOD_NAME_EDEFAULT == null ? methodName != null : !METHOD_NAME_EDEFAULT.equals(methodName);
@@ -259,7 +267,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * @generated
 	 */
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());

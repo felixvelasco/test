@@ -3,12 +3,19 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="operations" nsURI="http://jvoice.vectorsf.com/operations/1.0"
     nsPrefix="operations">
   <eClassifiers xsi:type="ecore:EClass" name="State" abstract="true" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//NamedElement">
+    <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="return new org.eclipse.emf.common.util.BasicEList&lt;String>();"/>
+      </eAnnotations>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingTransitions" upperBound="-1"
         eType="#//Transition" eOpposite="#//Transition/target"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" upperBound="-1"
         eType="#//Transition" eOpposite="#//Transition/source"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="notes" eType="#//Note"
         eOpposite="#//Note/referencedStates"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fireableEvents" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//JVElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
@@ -31,6 +38,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InitialState" eSuperTypes="#//State"/>
   <eClassifiers xsi:type="ecore:EClass" name="FinalState" eSuperTypes="#//State">
+    <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="return new org.eclipse.emf.common.util.BasicEList&lt;String>();"/>
+      </eAnnotations>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="final" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnExpression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral=""/>
@@ -55,6 +67,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="referencedBean" eType="#//ComponentBean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CallFlowState" eSuperTypes="#//ParameterizedState">
+    <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="org.eclipse.emf.common.util.BasicEList&lt;String> list = new org.eclipse.emf.common.util.BasicEList&lt;String>();&#xD;&#xA;list.add(&quot;a1&quot;);&#xD;&#xA;list.add(&quot;a2&quot;);&#xD;&#xA;list.add(&quot;a3&quot;);&#xD;&#xA;return list;&#xD;&#xA;"/>
+      </eAnnotations>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subflow" eType="#//Flow"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PromptState" eSuperTypes="#//LocutionState"/>

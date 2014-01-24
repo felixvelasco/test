@@ -123,13 +123,31 @@ public interface OperationsPackage extends EPackage {
 	int STATE__NOTES = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int STATE__FIREABLE_EVENTS = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+        /**
 	 * The number of structural features of the '<em>State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATE_FEATURE_COUNT = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 3;
+	int STATE_FEATURE_COUNT = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE___GET_EVENTS = BasePackage.NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>State</em>' class.
@@ -138,7 +156,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATE_OPERATION_COUNT = BasePackage.NAMED_ELEMENT_OPERATION_COUNT + 0;
+	int STATE_OPERATION_COUNT = BasePackage.NAMED_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.TransitionImpl <em>Transition</em>}' class.
@@ -378,6 +396,15 @@ public interface OperationsPackage extends EPackage {
 	int INITIAL_STATE__NOTES = STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int INITIAL_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The number of structural features of the '<em>Initial State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -385,6 +412,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int INITIAL_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INITIAL_STATE___GET_EVENTS = STATE___GET_EVENTS;
 
 	/**
 	 * The number of operations of the '<em>Initial State</em>' class.
@@ -460,6 +496,15 @@ public interface OperationsPackage extends EPackage {
 	int FINAL_STATE__NOTES = STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int FINAL_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Final</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -487,13 +532,22 @@ public interface OperationsPackage extends EPackage {
 	int FINAL_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FINAL_STATE___GET_EVENTS = STATE_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Final State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FINAL_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+	int FINAL_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.SwitchStateImpl <em>Switch State</em>}' class.
@@ -560,6 +614,15 @@ public interface OperationsPackage extends EPackage {
 	int SWITCH_STATE__NOTES = STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int SWITCH_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Case</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -576,6 +639,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int SWITCH_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_STATE___GET_EVENTS = STATE___GET_EVENTS;
 
 	/**
 	 * The operation id for the '<em>Get Case</em>' operation.
@@ -706,6 +778,15 @@ public interface OperationsPackage extends EPackage {
 	int PARAMETERIZED_STATE__NOTES = STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int PARAMETERIZED_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -722,6 +803,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_STATE___GET_EVENTS = STATE___GET_EVENTS;
 
 	/**
 	 * The number of operations of the '<em>Parameterized State</em>' class.
@@ -797,6 +887,15 @@ public interface OperationsPackage extends EPackage {
 	int CALL_STATE__NOTES = PARAMETERIZED_STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int CALL_STATE__FIREABLE_EVENTS = PARAMETERIZED_STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -840,6 +939,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int CALL_STATE_FEATURE_COUNT = PARAMETERIZED_STATE_FEATURE_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_STATE___GET_EVENTS = PARAMETERIZED_STATE___GET_EVENTS;
 
 	/**
 	 * The number of operations of the '<em>Call State</em>' class.
@@ -915,6 +1023,15 @@ public interface OperationsPackage extends EPackage {
 	int CALL_FLOW_STATE__NOTES = PARAMETERIZED_STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int CALL_FLOW_STATE__FIREABLE_EVENTS = PARAMETERIZED_STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -942,13 +1059,22 @@ public interface OperationsPackage extends EPackage {
 	int CALL_FLOW_STATE_FEATURE_COUNT = PARAMETERIZED_STATE_FEATURE_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_FLOW_STATE___GET_EVENTS = PARAMETERIZED_STATE_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Call Flow State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_FLOW_STATE_OPERATION_COUNT = PARAMETERIZED_STATE_OPERATION_COUNT + 0;
+	int CALL_FLOW_STATE_OPERATION_COUNT = PARAMETERIZED_STATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.LocutionStateImpl <em>Locution State</em>}' class.
@@ -1015,6 +1141,15 @@ public interface OperationsPackage extends EPackage {
 	int LOCUTION_STATE__NOTES = STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int LOCUTION_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1031,6 +1166,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int LOCUTION_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCUTION_STATE___GET_EVENTS = STATE___GET_EVENTS;
 
 	/**
 	 * The number of operations of the '<em>Locution State</em>' class.
@@ -1106,6 +1250,15 @@ public interface OperationsPackage extends EPackage {
 	int PROMPT_STATE__NOTES = LOCUTION_STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int PROMPT_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1122,6 +1275,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROMPT_STATE_FEATURE_COUNT = LOCUTION_STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE___GET_EVENTS = LOCUTION_STATE___GET_EVENTS;
 
 	/**
 	 * The number of operations of the '<em>Prompt State</em>' class.
@@ -1197,6 +1359,15 @@ public interface OperationsPackage extends EPackage {
 	int INPUT_STATE__NOTES = LOCUTION_STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int INPUT_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1213,6 +1384,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int INPUT_STATE_FEATURE_COUNT = LOCUTION_STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE___GET_EVENTS = LOCUTION_STATE___GET_EVENTS;
 
 	/**
 	 * The number of operations of the '<em>Input State</em>' class.
@@ -1288,6 +1468,15 @@ public interface OperationsPackage extends EPackage {
 	int MENU_STATE__NOTES = LOCUTION_STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int MENU_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1304,6 +1493,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int MENU_STATE_FEATURE_COUNT = LOCUTION_STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE___GET_EVENTS = LOCUTION_STATE___GET_EVENTS;
 
 	/**
 	 * The number of operations of the '<em>Menu State</em>' class.
@@ -1379,6 +1577,15 @@ public interface OperationsPackage extends EPackage {
 	int TRANSFER_STATE__NOTES = LOCUTION_STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int TRANSFER_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1395,6 +1602,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRANSFER_STATE_FEATURE_COUNT = LOCUTION_STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE___GET_EVENTS = LOCUTION_STATE___GET_EVENTS;
 
 	/**
 	 * The number of operations of the '<em>Transfer State</em>' class.
@@ -1470,6 +1686,15 @@ public interface OperationsPackage extends EPackage {
 	int RECORD_STATE__NOTES = LOCUTION_STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int RECORD_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1486,6 +1711,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int RECORD_STATE_FEATURE_COUNT = LOCUTION_STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE___GET_EVENTS = LOCUTION_STATE___GET_EVENTS;
 
 	/**
 	 * The number of operations of the '<em>Record State</em>' class.
@@ -1625,6 +1859,15 @@ public interface OperationsPackage extends EPackage {
 	int CUSTOM_STATE__NOTES = STATE__NOTES;
 
 	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+        int CUSTOM_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+
+        /**
 	 * The feature id for the '<em><b>Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1641,6 +1884,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int CUSTOM_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE___GET_EVENTS = STATE___GET_EVENTS;
 
 	/**
 	 * The number of operations of the '<em>Custom State</em>' class.
@@ -1775,6 +2027,27 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getState_Notes();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link com.vectorsf.jvoice.model.operations.State#getFireableEvents <em>Fireable Events</em>}'.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Fireable Events</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.State#getFireableEvents()
+	 * @see #getState()
+	 * @generated
+	 */
+        EAttribute getState_FireableEvents();
+
+        /**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.State#getEvents() <em>Get Events</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.State#getEvents()
+	 * @generated
+	 */
+	EOperation getState__GetEvents();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Transition <em>Transition</em>}'.
@@ -1927,6 +2200,16 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getFinalState_ReturnExpression();
 
 	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.FinalState#getEvents() <em>Get Events</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.FinalState#getEvents()
+	 * @generated
+	 */
+	EOperation getFinalState__GetEvents();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.SwitchState <em>Switch State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2052,6 +2335,16 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCallFlowState_Subflow();
+
+	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.CallFlowState#getEvents() <em>Get Events</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.CallFlowState#getEvents()
+	 * @generated
+	 */
+	EOperation getCallFlowState__GetEvents();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.PromptState <em>Prompt State</em>}'.
@@ -2310,6 +2603,22 @@ public interface OperationsPackage extends EPackage {
 		EReference STATE__NOTES = eINSTANCE.getState_Notes();
 
 		/**
+		 * The meta object literal for the '<em><b>Fireable Events</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+                 * <!-- end-user-doc -->
+		 * @generated
+		 */
+                EAttribute STATE__FIREABLE_EVENTS = eINSTANCE.getState_FireableEvents();
+
+                /**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation STATE___GET_EVENTS = eINSTANCE.getState__GetEvents();
+
+		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.TransitionImpl <em>Transition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2430,6 +2739,14 @@ public interface OperationsPackage extends EPackage {
 		EAttribute FINAL_STATE__RETURN_EXPRESSION = eINSTANCE.getFinalState_ReturnExpression();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation FINAL_STATE___GET_EVENTS = eINSTANCE.getFinalState__GetEvents();
+
+		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.SwitchStateImpl <em>Switch State</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2532,6 +2849,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CALL_FLOW_STATE__SUBFLOW = eINSTANCE.getCallFlowState_Subflow();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CALL_FLOW_STATE___GET_EVENTS = eINSTANCE.getCallFlowState__GetEvents();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.PromptStateImpl <em>Prompt State</em>}' class.

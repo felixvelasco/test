@@ -2,6 +2,8 @@
  */
 package com.vectorsf.jvoice.model.operations;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -74,4 +76,13 @@ public interface FinalState extends State {
 	 * @generated
 	 */
 	void setReturnExpression(String value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return new org.eclipse.emf.common.util.BasicEList<String>();'"
+	 * @generated
+	 */
+	EList<String> getEvents();
 } // FinalState

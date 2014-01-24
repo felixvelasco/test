@@ -3,24 +3,19 @@
 package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.base.impl.NamedElementImpl;
-
 import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
-
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -34,6 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.StateImpl#getNotes <em>Notes</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.StateImpl#getFireableEvents <em>Fireable Events</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,6 +67,16 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 	protected Note notes;
 
 	/**
+	 * The cached value of the '{@link #getFireableEvents() <em>Fireable Events</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @see #getFireableEvents()
+	 * @generated
+	 * @ordered
+	 */
+        protected EList<String> fireableEvents;
+
+        /**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -175,6 +181,28 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 
 	/**
 	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 */
+        public EList<String> getFireableEvents() {
+		if (fireableEvents == null) {
+			fireableEvents = new EDataTypeUniqueEList<String>(String.class, this, OperationsPackage.STATE__FIREABLE_EVENTS);
+		}
+		return fireableEvents;
+	}
+
+        /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getEvents()
+	{
+		return new org.eclipse.emf.common.util.BasicEList<String>();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -227,6 +255,8 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 			case OperationsPackage.STATE__NOTES:
 				if (resolve) return getNotes();
 				return basicGetNotes();
+			case OperationsPackage.STATE__FIREABLE_EVENTS:
+				return getFireableEvents();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -251,6 +281,10 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 			case OperationsPackage.STATE__NOTES:
 				setNotes((Note)newValue);
 				return;
+			case OperationsPackage.STATE__FIREABLE_EVENTS:
+				getFireableEvents().clear();
+				getFireableEvents().addAll((Collection<? extends String>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -272,6 +306,9 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 			case OperationsPackage.STATE__NOTES:
 				setNotes((Note)null);
 				return;
+			case OperationsPackage.STATE__FIREABLE_EVENTS:
+				getFireableEvents().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -290,8 +327,41 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 				return outgoingTransitions != null && !outgoingTransitions.isEmpty();
 			case OperationsPackage.STATE__NOTES:
 				return notes != null;
+			case OperationsPackage.STATE__FIREABLE_EVENTS:
+				return fireableEvents != null && !fireableEvents.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+	{
+		switch (operationID) {
+			case OperationsPackage.STATE___GET_EVENTS:
+				return getEvents();
+		}
+		return super.eInvoke(operationID, arguments);
+	}
+
+        /**
+	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 */
+        @Override
+        public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (fireableEvents: ");
+		result.append(fireableEvents);
+		result.append(')');
+		return result.toString();
 	}
 
 } //StateImpl

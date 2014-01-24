@@ -274,6 +274,25 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 	/**
 	 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+	 * @generated
+	 */
+        public EAttribute getState_FireableEvents() {
+		return (EAttribute)stateEClass.getEStructuralFeatures().get(3);
+	}
+
+        /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getState__GetEvents()
+	{
+		return stateEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -403,6 +422,16 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getFinalState__GetEvents()
+	{
+		return finalStateEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getSwitchState() {
 		return switchStateEClass;
 	}
@@ -504,6 +533,16 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 */
 	public EReference getCallFlowState_Subflow() {
 		return (EReference)callFlowStateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getCallFlowState__GetEvents()
+	{
+		return callFlowStateEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -709,6 +748,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEReference(stateEClass, STATE__INCOMING_TRANSITIONS);
 		createEReference(stateEClass, STATE__OUTGOING_TRANSITIONS);
 		createEReference(stateEClass, STATE__NOTES);
+		createEAttribute(stateEClass, STATE__FIREABLE_EVENTS);
+		createEOperation(stateEClass, STATE___GET_EVENTS);
 
 		transitionEClass = createEClass(TRANSITION);
 		createEReference(transitionEClass, TRANSITION__SOURCE);
@@ -727,6 +768,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		finalStateEClass = createEClass(FINAL_STATE);
 		createEAttribute(finalStateEClass, FINAL_STATE__FINAL);
 		createEAttribute(finalStateEClass, FINAL_STATE__RETURN_EXPRESSION);
+		createEOperation(finalStateEClass, FINAL_STATE___GET_EVENTS);
 
 		switchStateEClass = createEClass(SWITCH_STATE);
 		createEReference(switchStateEClass, SWITCH_STATE__CASE);
@@ -743,6 +785,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		callFlowStateEClass = createEClass(CALL_FLOW_STATE);
 		createEReference(callFlowStateEClass, CALL_FLOW_STATE__SUBFLOW);
+		createEOperation(callFlowStateEClass, CALL_FLOW_STATE___GET_EVENTS);
 
 		promptStateEClass = createEClass(PROMPT_STATE);
 
@@ -830,6 +873,9 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEReference(getState_IncomingTransitions(), this.getTransition(), this.getTransition_Target(), "incomingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getState_OutgoingTransitions(), this.getTransition(), this.getTransition_Source(), "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getState_Notes(), this.getNote(), this.getNote_ReferencedStates(), "notes", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getState_FireableEvents(), ecorePackage.getEString(), "fireableEvents", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTransition_Source(), this.getState(), this.getState_OutgoingTransitions(), "source", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -849,6 +895,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEAttribute(getFinalState_Final(), ecorePackage.getEBoolean(), "final", null, 0, 1, FinalState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFinalState_ReturnExpression(), ecorePackage.getEString(), "returnExpression", "", 0, 1, FinalState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEOperation(getFinalState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(switchStateEClass, SwitchState.class, "SwitchState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSwitchState_Case(), this.getCase(), null, "case", null, 0, -1, SwitchState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -866,6 +914,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		initEClass(callFlowStateEClass, CallFlowState.class, "CallFlowState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCallFlowState_Subflow(), this.getFlow(), null, "subflow", null, 0, 1, CallFlowState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getCallFlowState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(promptStateEClass, PromptState.class, "PromptState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
