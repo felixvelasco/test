@@ -124,10 +124,11 @@ public class TransitionPattern extends AbstractConnectionPattern {
 		PictogramElement pe = context.getSourcePictogramElement();
 		
 		// Al crear la transición desde el evento lo que llega es un FixPointAnchor 
-		if(pe instanceof FixPointAnchor)
-			addContextInicial.setTargetContainer((ContainerShape) pe.getGraphicsAlgorithm().getParentGraphicsAlgorithm());
-		else
-			addContextInicial.setTargetContainer((ContainerShape) pe);
+		if(pe instanceof FixPointAnchor) {
+		    addContextInicial.setTargetContainer((ContainerShape) pe.getGraphicsAlgorithm().getParentGraphicsAlgorithm());
+		} else {
+		    addContextInicial.setTargetContainer((ContainerShape) pe);
+		}
 
 		Connection connection = (Connection) getFeatureProvider().addIfPossible(addContextInicial);
 		layoutPictogramElement(connection);

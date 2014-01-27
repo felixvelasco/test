@@ -9,48 +9,49 @@ import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 public class TransitionCallFlowPattern extends TransitionPattern {
-	protected State state;
-	private IFeatureProvider featureProvider;
-	private String eventName;
+    protected State state;
+    private IFeatureProvider featureProvider;
+    private String eventName;
 
-	public TransitionCallFlowPattern(State stateFinal,
-			IFeatureProvider in_featureProvider) {
-		super(in_featureProvider);
-		state = stateFinal;
-		featureProvider = in_featureProvider;
-	}
+    public TransitionCallFlowPattern(State stateFinal,
+	    IFeatureProvider in_featureProvider) {
+	super(in_featureProvider);
+	state = stateFinal;
+	featureProvider = in_featureProvider;
+	eventName = state.getName();
+    }
 
-	@Override
-	public String getCreateName() {
-		return eventName;
-//		return state.getName();
-	}
+    @Override
+    public String getCreateName() {
+	return eventName;
+	// return state.getName();
+    }
 
-	@Override
-	public boolean canCreate(ICreateConnectionContext context) {
-		if (state != null) {
+    @Override
+    public boolean canCreate(ICreateConnectionContext context) {
+	if (state != null) {
 
-			PictogramElement pe = context.getSourcePictogramElement();
-			
-			// Al crear la transición desde el evento lo que llega es un FixPointAnchor 
-			if(pe instanceof FixPointAnchor)
-			{
-				eventName = ((ImageImpl)pe.getGraphicsAlgorithm()).getId();
-				pe = ((FixPointAnchor)pe).getParent();
-			}
+	    PictogramElement pe = context.getSourcePictogramElement();
 
-			Object boSource = featureProvider
-					.getBusinessObjectForPictogramElement(pe);
+	    // Al crear la transición desde el evento lo que llega es un
+	    // FixPointAnchor
+	    if (pe instanceof FixPointAnchor) {
+		eventName = ((ImageImpl) pe.getGraphicsAlgorithm()).getId();
+		pe = ((FixPointAnchor) pe).getParent();
+	    }
 
-			State stateOrigen = (State) boSource;
+	    Object boSource = featureProvider
+		    .getBusinessObjectForPictogramElement(pe);
 
-			for (Transition transition : stateOrigen.getOutgoingTransitions()) {
-				if (transition.getEventName().equals(state.getName())) {
-					return false;
-				}
-			}
+	    State stateOrigen = (State) boSource;
+
+	    for (Transition transition : stateOrigen.getOutgoingTransitions()) {
+		if (transition.getEventName().equals(state.getName())) {
+		    return false;
 		}
-		
-		return super.canCreate(context);
+	    }
 	}
+
+	return super.canCreate(context);
+    }
 }

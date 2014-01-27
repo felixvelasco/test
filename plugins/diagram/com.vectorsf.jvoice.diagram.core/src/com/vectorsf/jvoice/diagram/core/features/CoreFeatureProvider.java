@@ -21,111 +21,106 @@ import com.vectorsf.jvoice.diagram.core.features.editing.TransitionsUpdateFeatur
 import com.vectorsf.jvoice.diagram.core.pattern.note.RelationPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.*;
 import com.vectorsf.jvoice.model.operations.State;
-import com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl;
+import com.vectorsf.jvoice.model.operations.impl.*;
 
-public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns
-{
-	public static final String PATTERN_EXTENSIONS_ID = "com.vectorsf.jvoice.diagram.core.patternContributor"; //$NON-NLS-1$
+public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
+    public static final String PATTERN_EXTENSIONS_ID = "com.vectorsf.jvoice.diagram.core.patternContributor"; //$NON-NLS-1$
 
-	public CoreFeatureProvider(IDiagramTypeProvider dtp)
-	{
-		super(dtp);
-		IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			PATTERN_EXTENSIONS_ID);
+    public CoreFeatureProvider(IDiagramTypeProvider dtp) {
+	super(dtp);
+	IConfigurationElement[] config = Platform.getExtensionRegistry()
+		.getConfigurationElementsFor(PATTERN_EXTENSIONS_ID);
 
-		try
-		{
-			for (IConfigurationElement configEl : config)
-			{
-				Object o;
-				o = configEl.createExecutableExtension("patternContributorClass");
-				if (o instanceof IPattern)
-				{
-					IPattern patternContributor = (IPattern) o;
-					addPattern(patternContributor);
-				}
-			}
+	try {
+	    for (IConfigurationElement configEl : config) {
+		Object o;
+		o = configEl
+			.createExecutableExtension("patternContributorClass");
+		if (o instanceof IPattern) {
+		    IPattern patternContributor = (IPattern) o;
+		    addPattern(patternContributor);
 		}
-		catch (CoreException e)
-		{
-			Logger logger = Activator.getLogger();
-			if (logger != null)
-			{
-				logger.log(LogService.LOG_ERROR, "CoreFeatureProvider::CoreFeatureProvider, Error adding patterns", e);
-			}
-		}
-
-		addConnectionPattern(new RelationPattern(this));
-		addConnectionPattern(new TransitionPattern(this));
-		addConnectionPattern(new TransitionSwitchPattern(this));
-
+	    }
+	} catch (CoreException e) {
+	    Logger logger = Activator.getLogger();
+	    if (logger != null) {
+		logger.log(
+			LogService.LOG_ERROR,
+			"CoreFeatureProvider::CoreFeatureProvider, Error adding patterns",
+			e);
+	    }
 	}
 
-	@Override
-	public IDirectEditingFeature getDirectEditingFeature(IDirectEditingContext context)
-	{
-		PictogramElement pe = context.getPictogramElement();
-		if (pe instanceof ConnectionDecorator)
-		{
-			return new TextEventDirectEditFeature(this);
-		}
-		return super.getDirectEditingFeature(context);
+	addConnectionPattern(new RelationPattern(this));
+	addConnectionPattern(new TransitionPattern(this));
+	addConnectionPattern(new TransitionSwitchPattern(this));
+
+    }
+
+    @Override
+    public IDirectEditingFeature getDirectEditingFeature(
+	    IDirectEditingContext context) {
+	PictogramElement pe = context.getPictogramElement();
+	if (pe instanceof ConnectionDecorator) {
+	    return new TextEventDirectEditFeature(this);
+	}
+	return super.getDirectEditingFeature(context);
+    }
+
+    @Override
+    protected IUpdateFeature getUpdateFeatureAdditional(IUpdateContext context) {
+	return new TransitionsUpdateFeature(this);
+    }
+
+    @Override
+    public ICopyFeature getCopyFeature(ICopyContext context) {
+	return new StatesCopyFeature(this);
+
+    }
+
+    @Override
+    public IPasteFeature getPasteFeature(IPasteContext context) {
+	return new StatesPasteFeature(this);
+    }
+
+    @Override
+    protected IDeleteFeature getDeleteFeatureAdditional(IDeleteContext context) {
+	return new TransitionsDeleteFeature(this);
+    }
+
+    @Override
+    public IReconnectionFeature getReconnectionFeature(
+	    IReconnectionContext context) {
+
+	return new ReconnectTransitionFeature(this);
+    }
+
+    @Override
+    public IMoveAnchorFeature getMoveAnchorFeature(IMoveAnchorContext context) {
+	return null;
+    }
+
+    /**
+     * Se sobreescribe para que se puedan lanzar transiciones desde los eventos.
+     */
+    @Override
+    public IFeature[] getDragAndDropFeatures(IPictogramElementContext context) {
+	// Lanzamos transiciones desde los anchors de los eventos
+	PictogramElement pe = context.getPictogramElement();
+	if (pe instanceof FixPointAnchor) {
+	    State state = (State) getBusinessObjectForPictogramElement(((FixPointAnchor) pe)
+		    .getParent());
+
+	    if (state instanceof CallFlowStateImpl) {
+		return new IFeature[] { new CreateTransitionFromPad(this,
+			new TransitionCallFlowPattern(state, this)) };
+	    }
+//	    if (state instanceof MenuStateImpl) {
+//		return new IFeature[] { new CreateTransitionFromPad(this,
+//			new TransitionMenuPattern(state, this)) };
+//	    }
 	}
 
-	@Override
-	protected IUpdateFeature getUpdateFeatureAdditional(IUpdateContext context)
-	{
-		return new TransitionsUpdateFeature(this);
-	}
-
-	@Override
-	public ICopyFeature getCopyFeature(ICopyContext context)
-	{
-		return new StatesCopyFeature(this);
-
-	}
-
-	@Override
-	public IPasteFeature getPasteFeature(IPasteContext context)
-	{
-		return new StatesPasteFeature(this);
-	}
-
-	@Override
-	protected IDeleteFeature getDeleteFeatureAdditional(IDeleteContext context)
-	{
-		return new TransitionsDeleteFeature(this);
-	}
-
-	@Override
-	public IReconnectionFeature getReconnectionFeature(IReconnectionContext context)
-	{
-
-		return new ReconnectTransitionFeature(this);
-	}
-
-	@Override
-	public IMoveAnchorFeature getMoveAnchorFeature(IMoveAnchorContext context)
-	{
-		return null; 
-	}
-
-	/**
-	 * Se sobreescribe para que se puedan lanzar transiciones desde los eventos.
-	 */
-	@Override
-	public IFeature[] getDragAndDropFeatures(IPictogramElementContext context)
-	{
-		// Lanzamos transiciones desde los anchors de los eventos
-		PictogramElement pe = context.getPictogramElement();
-		if (pe instanceof FixPointAnchor)
-		{
-			State state = (State) getBusinessObjectForPictogramElement(((FixPointAnchor) pe).getParent());
-
-			if(state instanceof CallFlowStateImpl)
-				return new IFeature[] {new CreateTransitionFromPad(this, new TransitionCallFlowPattern(state, this))};
-		}
-		
-		return super.getDragAndDropFeatures(context);
-	}
+	return super.getDragAndDropFeatures(context);
+    }
 }
