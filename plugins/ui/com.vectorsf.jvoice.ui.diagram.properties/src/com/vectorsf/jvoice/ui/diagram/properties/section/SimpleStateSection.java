@@ -38,7 +38,12 @@ public abstract class SimpleStateSection extends GFPropertySection {
 	public void createControls(Composite parent, TabbedPropertySheetPage tabbedPropertySheetPage) {
 		factory = tabbedPropertySheetPage.getWidgetFactory();
 		composite = factory.createPlainComposite(parent, SWT.NONE);
-		composite.setLayout(new GridLayout(3, false));
+		GridLayout layout = new GridLayout(3, false);
+		layout.marginTop = 10;
+		layout.marginBottom = 10;
+		layout.verticalSpacing = 15;
+		layout.horizontalSpacing = 10;
+		composite.setLayout(layout);
 
 		nameText = createLabelAndText("Name:", "", BasePackage.eINSTANCE.getNamedElement_Name(),
 				CommandParameter.NO_INDEX);
