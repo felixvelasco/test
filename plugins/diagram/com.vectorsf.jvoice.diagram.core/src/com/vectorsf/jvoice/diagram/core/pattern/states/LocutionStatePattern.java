@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -29,6 +30,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
@@ -53,8 +55,18 @@ public abstract class LocutionStatePattern extends SimpleStatePattern {
 
 		if (dialogResult == Dialog.OK) {
 			LocutionState state = createMainState();
-			URI locationUri = getDialogResult();
-			VoiceDsl result = (VoiceDsl) flow.eResource().getResourceSet().getEObject(locationUri, true);
+			URI locutionUri = getDialogResult();
+			IResource resourceFile = getResourceFile(flow, locutionUri);
+			ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
+			Resource resource = resourceSet.getResource(locutionUri, false);
+			if (resource == null) {
+				resource = resourceSet.getResource(locutionUri, true);
+			} else if (resource.getTimeStamp() < resourceFile.getLocalTimeStamp()) {
+				resource.unload();
+				resource = resourceSet.getResource(locutionUri, true);
+			}
+
+			VoiceDsl result = (VoiceDsl) resource.getContents().get(0);
 
 			state.setName(result.getName());
 			state.setLocution(result);
@@ -67,6 +79,25 @@ public abstract class LocutionStatePattern extends SimpleStatePattern {
 		} else {
 			throw new OperationCanceledException();
 		}
+	}
+
+	private IResource getResourceFile(Flow flow, URI locationUri) {
+		IFile flowFile = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
+		IPath resourcesPath = flowFile.getFullPath().removeFileExtension().addFileExtension("resources");
+		IFolder resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace().getRoot().findMember(resourcesPath);
+		IResource resourceFile = null;
+		try {
+			for (IResource file : resourcesFolder.members()) {
+				if (file.getName().equals(locationUri.lastSegment())) {
+					resourceFile = file;
+					break;
+				}
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resourceFile;
 	}
 
 	private IPath getFlowFolderPath(Flow flow) {
