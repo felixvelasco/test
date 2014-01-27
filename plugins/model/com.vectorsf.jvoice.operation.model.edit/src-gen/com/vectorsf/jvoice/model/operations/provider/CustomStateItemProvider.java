@@ -58,6 +58,7 @@ public class CustomStateItemProvider
 			super.getPropertyDescriptors(object);
 
 			addPathPropertyDescriptor(object);
+			addBindingBeanPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -76,6 +77,28 @@ public class CustomStateItemProvider
 				 getString("_UI_CustomState_path_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_CustomState_path_feature", "_UI_CustomState_type"),
 				 OperationsPackage.Literals.CUSTOM_STATE__PATH,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Binding Bean feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addBindingBeanPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_CustomState_bindingBean_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CustomState_bindingBean_feature", "_UI_CustomState_type"),
+				 OperationsPackage.Literals.CUSTOM_STATE__BINDING_BEAN,
 				 true,
 				 false,
 				 false,
@@ -122,6 +145,7 @@ public class CustomStateItemProvider
 
 		switch (notification.getFeatureID(CustomState.class)) {
 			case OperationsPackage.CUSTOM_STATE__PATH:
+			case OperationsPackage.CUSTOM_STATE__BINDING_BEAN:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

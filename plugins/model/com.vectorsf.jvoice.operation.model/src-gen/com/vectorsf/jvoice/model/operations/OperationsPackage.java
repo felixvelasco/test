@@ -1634,13 +1634,22 @@ public interface OperationsPackage extends EPackage {
 	int CUSTOM_STATE__PATH = STATE_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Binding Bean</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_STATE__BINDING_BEAN = STATE_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Custom State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CUSTOM_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+	int CUSTOM_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Custom State</em>' class.
@@ -2189,6 +2198,17 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getCustomState_Path();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.CustomState#getBindingBean <em>Binding Bean</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Binding Bean</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.CustomState#getBindingBean()
+	 * @see #getCustomState()
+	 * @generated
+	 */
+	EAttribute getCustomState_BindingBean();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.ComponentBean <em>Component Bean</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2652,6 +2672,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CUSTOM_STATE__PATH = eINSTANCE.getCustomState_Path();
+
+		/**
+		 * The meta object literal for the '<em><b>Binding Bean</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CUSTOM_STATE__BINDING_BEAN = eINSTANCE.getCustomState_BindingBean();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl <em>Component Bean</em>}' class.

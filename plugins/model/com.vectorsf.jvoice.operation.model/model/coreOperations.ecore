@@ -73,6 +73,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomState" eSuperTypes="#//State">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bindingBean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ComponentBean" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fqdn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

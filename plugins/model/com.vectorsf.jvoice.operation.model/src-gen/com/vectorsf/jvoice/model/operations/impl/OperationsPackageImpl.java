@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.xtext.xbase.XbasePackage;
+import org.eclipse.xtext.xbase.annotations.xAnnotations.XAnnotationsPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -220,6 +222,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		// Initialize simple dependencies
 		VoiceDslPackage.eINSTANCE.eClass();
+		XAnnotationsPackage.eINSTANCE.eClass();
+		XbasePackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theOperationsPackage.createPackageContents();
@@ -628,6 +632,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getCustomState_BindingBean() {
+		return (EAttribute)customStateEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getComponentBean() {
 		return componentBeanEClass;
 	}
@@ -764,6 +777,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		customStateEClass = createEClass(CUSTOM_STATE);
 		createEAttribute(customStateEClass, CUSTOM_STATE__PATH);
+		createEAttribute(customStateEClass, CUSTOM_STATE__BINDING_BEAN);
 
 		componentBeanEClass = createEClass(COMPONENT_BEAN);
 		createEAttribute(componentBeanEClass, COMPONENT_BEAN__FQDN);
@@ -887,6 +901,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		initEClass(customStateEClass, CustomState.class, "CustomState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCustomState_Path(), ecorePackage.getEString(), "path", null, 0, 1, CustomState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCustomState_BindingBean(), ecorePackage.getEString(), "bindingBean", null, 0, 1, CustomState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(componentBeanEClass, ComponentBean.class, "ComponentBean", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComponentBean_Fqdn(), ecorePackage.getEString(), "fqdn", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

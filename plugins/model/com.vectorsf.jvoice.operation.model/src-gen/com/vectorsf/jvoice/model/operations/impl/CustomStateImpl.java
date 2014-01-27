@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CustomStateImpl#getPath <em>Path</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CustomStateImpl#getBindingBean <em>Binding Bean</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,6 +45,26 @@ public class CustomStateImpl extends StateImpl implements CustomState {
 	 * @ordered
 	 */
 	protected String path = PATH_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getBindingBean() <em>Binding Bean</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBindingBean()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String BINDING_BEAN_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getBindingBean() <em>Binding Bean</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBindingBean()
+	 * @generated
+	 * @ordered
+	 */
+	protected String bindingBean = BINDING_BEAN_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -90,11 +111,34 @@ public class CustomStateImpl extends StateImpl implements CustomState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getBindingBean() {
+		return bindingBean;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBindingBean(String newBindingBean) {
+		String oldBindingBean = bindingBean;
+		bindingBean = newBindingBean;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationsPackage.CUSTOM_STATE__BINDING_BEAN, oldBindingBean, bindingBean));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case OperationsPackage.CUSTOM_STATE__PATH:
 				return getPath();
+			case OperationsPackage.CUSTOM_STATE__BINDING_BEAN:
+				return getBindingBean();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -109,6 +153,9 @@ public class CustomStateImpl extends StateImpl implements CustomState {
 		switch (featureID) {
 			case OperationsPackage.CUSTOM_STATE__PATH:
 				setPath((String)newValue);
+				return;
+			case OperationsPackage.CUSTOM_STATE__BINDING_BEAN:
+				setBindingBean((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -125,6 +172,9 @@ public class CustomStateImpl extends StateImpl implements CustomState {
 			case OperationsPackage.CUSTOM_STATE__PATH:
 				setPath(PATH_EDEFAULT);
 				return;
+			case OperationsPackage.CUSTOM_STATE__BINDING_BEAN:
+				setBindingBean(BINDING_BEAN_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -139,6 +189,8 @@ public class CustomStateImpl extends StateImpl implements CustomState {
 		switch (featureID) {
 			case OperationsPackage.CUSTOM_STATE__PATH:
 				return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
+			case OperationsPackage.CUSTOM_STATE__BINDING_BEAN:
+				return BINDING_BEAN_EDEFAULT == null ? bindingBean != null : !BINDING_BEAN_EDEFAULT.equals(bindingBean);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -155,6 +207,8 @@ public class CustomStateImpl extends StateImpl implements CustomState {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (path: ");
 		result.append(path);
+		result.append(", bindingBean: ");
+		result.append(bindingBean);
 		result.append(')');
 		return result.toString();
 	}
