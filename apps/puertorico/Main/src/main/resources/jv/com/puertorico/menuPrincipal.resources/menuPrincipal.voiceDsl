@@ -1,6 +1,6 @@
-inputname menuPrincipal
+input menuPrincipal
 
-configuration{
+{
 	bargein true
 	maxAttempts 3
 	maxNoInput 3

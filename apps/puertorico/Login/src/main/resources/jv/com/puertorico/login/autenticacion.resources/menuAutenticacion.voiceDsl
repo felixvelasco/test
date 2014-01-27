@@ -1,6 +1,6 @@
-inputname menuAutenticacion
+input menuAutenticacion
 
-configuration{
+{
 	bargein true
 }
 grammars{

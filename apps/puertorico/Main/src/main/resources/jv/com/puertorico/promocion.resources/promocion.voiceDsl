@@ -1,6 +1,6 @@
-outputname promocion
+output promocion
 
-configuration{
+{
  // User's variables 
 }
 audios{
