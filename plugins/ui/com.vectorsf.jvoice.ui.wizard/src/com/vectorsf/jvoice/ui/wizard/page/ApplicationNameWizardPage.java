@@ -24,10 +24,10 @@ import com.vectorsf.jvoice.ui.wizard.Activator;
  * @author xIS14487
  * 
  */
-public class ProjectNameWizardPage extends AbstractWizardPage {
+public class ApplicationNameWizardPage extends AbstractWizardPage {
 
-	private static final String PAGE_DESC = "Enter a project name";
-	private static final String PAGE_TITLE = "Create a Project";
+	private static final String PAGE_DESC = "Enter application name";
+	private static final String PAGE_TITLE = "Create an Application";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
 	private static final int SIZING_TEXT_FIELD_HEIGHT = 50;
@@ -52,7 +52,7 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 		}
 	};
 
-	public ProjectNameWizardPage(String pageName, String imagePath) {
+	public ApplicationNameWizardPage(String pageName, String imagePath) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
@@ -94,20 +94,20 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 
 		String text = getTextFieldValue();
 		if (text.equals("")) { //$NON-NLS-1$
-			setMessage("Enter a project name");
+			setMessage("Enter application name");
 			return false;
 		}
 
 		char initial = text.charAt(0);
 		if (Character.isDigit(initial)) {
-			setErrorMessage("The first letter of the project name can't be a number.");
+			setErrorMessage("The first letter of the application name can't be a number.");
 			return false;
 		}
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 
 		if (root.getProject(text).exists()) {
-			setErrorMessage("Project name already exit");
+			setErrorMessage("Application name already exit");
 			return false;
 		}
 
@@ -142,7 +142,7 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 
 		// new project label
 		Label projectLabel = new Label(projectGroup, SWT.NONE);
-		projectLabel.setText("Project name:");
+		projectLabel.setText("Application name:");
 		projectLabel.setFont(parent.getFont());
 
 		textField = new Text(projectGroup, SWT.BORDER);
@@ -166,7 +166,6 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 		if (getInitialTextFieldValue() != null) {
 			textField.setText(getInitialTextFieldValue());
 		}
-
 		textField.addListener(SWT.Modify, nameModifyListener);
 		textField.addListener(SWT.FocusIn, nameModifyListener);
 	}
@@ -209,7 +208,7 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 	}
 
 	private String getInitialTextFieldValue() {
-		return "newProjectJVoice"; //$NON-NLS-1$
+		return "newApplicationJVoice"; //$NON-NLS-1$
 	}
 
 	private IStatus doWorkspaceValidation(IWorkspace workspace, String text) {

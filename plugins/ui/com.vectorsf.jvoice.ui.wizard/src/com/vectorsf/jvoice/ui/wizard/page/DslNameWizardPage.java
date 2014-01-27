@@ -8,6 +8,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.internal.runtime.CommonMessages;
+import org.eclipse.core.internal.runtime.IRuntimeConstants;
+import org.eclipse.core.internal.runtime.RuntimeLog;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -18,12 +21,16 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -578,8 +585,11 @@ public class DslNameWizardPage extends AbstractWizardPage {
 						source = new SequenceInputStream(source, resIs);
 					}
 					dslFile.create(source, false, null);
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (Exception e) {
+					handleException(e);
+					MessageDialog.openError(null, "Error", "A resource \"" + dslName
+							+ "\" exists with a different case. Please check Error Log.");
+					// return;
 				}
 
 			}
@@ -588,15 +598,42 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		IFile file = (IFile) Platform.getAdapterManager().getAdapter(dslFile, IFile.class);
-		miURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true).appendFragment("/0");
+		if (file.exists()) {
+			miURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true).appendFragment("/0");
 
-		try {
-			IDE.openEditor(page, file);
-		} catch (PartInitException e) {
-			String error = "error open editor";
-			IStatus status = new Status(IStatus.ERROR, "0", error, e);
-			ErrorDialog.openError(getShell(), error, null, status);
-			throw new CoreException(status);
+			try {
+				IDE.openEditor(page, file);
+			} catch (PartInitException e) {
+				String error = "error open editor";
+				IStatus status = new Status(IStatus.ERROR, "0", error, e);
+				ErrorDialog.openError(getShell(), error, null, status);
+				throw new CoreException(status);
+			}
+		}
+	}
+
+	private static void handleException(Throwable e) {
+		if (!(e instanceof OperationCanceledException)) {
+			// try to obtain the correct plug-in id for the bundle providing the safe runnable
+			Activator activator = Activator.getDefault();
+			String pluginId = null;
+			if (pluginId == null) {
+				pluginId = IRuntimeConstants.PI_COMMON;
+			}
+			String message = NLS.bind(CommonMessages.meta_pluginProblems, pluginId);
+			IStatus status;
+			if (e instanceof CoreException) {
+				status = new MultiStatus(pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
+				((MultiStatus) status).merge(((CoreException) e).getStatus());
+			} else {
+				status = new Status(IStatus.ERROR, pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
+			}
+			// Make sure user sees the exception: if the log is empty, log the exceptions on stderr
+			if (!RuntimeLog.isEmpty()) {
+				RuntimeLog.log(status);
+			} else {
+				e.printStackTrace();
+			}
 		}
 	}
 

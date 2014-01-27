@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.internal.runtime.Activator;
+import org.eclipse.core.internal.runtime.CommonMessages;
+import org.eclipse.core.internal.runtime.IRuntimeConstants;
+import org.eclipse.core.internal.runtime.RuntimeLog;
 import org.eclipse.core.internal.utils.Messages;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -17,11 +21,14 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -555,7 +562,9 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 				try {
 					customFile.create(source, false, null);
 				} catch (Exception e) {
-					validatePage();
+					handleException(e);
+					MessageDialog.openError(null, "Error", "A resource \"" + customName
+							+ "\" exists with a different case. Please check Error Log.");
 				}
 
 			}
@@ -572,6 +581,31 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 			IStatus status = new Status(IStatus.ERROR, "0", error, e);
 			ErrorDialog.openError(getShell(), error, null, status);
 			throw new CoreException(status);
+		}
+	}
+
+	private static void handleException(Throwable e) {
+		if (!(e instanceof OperationCanceledException)) {
+			// try to obtain the correct plug-in id for the bundle providing the safe runnable
+			Activator activator = Activator.getDefault();
+			String pluginId = null;
+			if (pluginId == null) {
+				pluginId = IRuntimeConstants.PI_COMMON;
+			}
+			String message = NLS.bind(CommonMessages.meta_pluginProblems, pluginId);
+			IStatus status;
+			if (e instanceof CoreException) {
+				status = new MultiStatus(pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
+				((MultiStatus) status).merge(((CoreException) e).getStatus());
+			} else {
+				status = new Status(IStatus.ERROR, pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
+			}
+			// Make sure user sees the exception: if the log is empty, log the exceptions on stderr
+			if (!RuntimeLog.isEmpty()) {
+				RuntimeLog.log(status);
+			} else {
+				e.printStackTrace();
+			}
 		}
 	}
 

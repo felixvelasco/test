@@ -56,26 +56,29 @@ public abstract class LocutionStatePattern extends SimpleStatePattern {
 		if (dialogResult == Dialog.OK) {
 			LocutionState state = createMainState();
 			URI locutionUri = getDialogResult();
-			IResource resourceFile = getResourceFile(flow, locutionUri);
-			ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
-			Resource resource = resourceSet.getResource(locutionUri, false);
-			if (resource == null) {
-				resource = resourceSet.getResource(locutionUri, true);
-			} else if (resource.getTimeStamp() < resourceFile.getLocalTimeStamp()) {
-				resource.unload();
-				resource = resourceSet.getResource(locutionUri, true);
+
+			if (locutionUri != null) {
+				IResource resourceFile = getResourceFile(flow, locutionUri);
+				ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
+				Resource resource = resourceSet.getResource(locutionUri, false);
+				if (resource == null) {
+					resource = resourceSet.getResource(locutionUri, true);
+				} else if (resourceFile != null & resource.getTimeStamp() < resourceFile.getLocalTimeStamp()) {
+					resource.unload();
+					resource = resourceSet.getResource(locutionUri, true);
+				}
+
+				VoiceDsl result = (VoiceDsl) resource.getContents().get(0);
+
+				state.setName(result.getName());
+				state.setLocution(result);
+				flow.getStates().add(state);
+
+				addGraphicalRepresentation(context, state);
+
+				return new Object[] { state };
 			}
-
-			VoiceDsl result = (VoiceDsl) resource.getContents().get(0);
-
-			state.setName(result.getName());
-			state.setLocution(result);
-			flow.getStates().add(state);
-
-			addGraphicalRepresentation(context, state);
-
-			return new Object[] { state };
-
+			return null;
 		} else {
 			throw new OperationCanceledException();
 		}
@@ -88,13 +91,14 @@ public abstract class LocutionStatePattern extends SimpleStatePattern {
 		IResource resourceFile = null;
 		try {
 			for (IResource file : resourcesFolder.members()) {
-				if (file.getName().equals(locationUri.lastSegment())) {
-					resourceFile = file;
-					break;
+				if (locationUri != null) {
+					if (file.getName().equals(locationUri.lastSegment())) {
+						resourceFile = file;
+						break;
+					}
 				}
 			}
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return resourceFile;
