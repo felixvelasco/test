@@ -20,6 +20,7 @@ import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.TransferState;
+import com.vectorsf.jvoice.ui.diagram.properties.filters.ParametrizableStateSection;
 import com.vectorsf.jvoice.ui.diagram.properties.filters.StateSection;
 import com.vectorsf.jvoice.ui.diagram.properties.util.AddCaseSwitch;
 import com.vectorsf.jvoice.ui.diagram.properties.util.DownCaseSwitch;
@@ -33,6 +34,7 @@ public class PropertiesListener implements Listener {
 	private Text nameSubFlow;
 	private TableViewer tableViewer;
 	private StateSection stateSection;
+	private ParametrizableStateSection stateSection2;
 
 	public PropertiesListener(StateSection stateSection, Text nameSubFlow) {
 		this.nameSubFlow = nameSubFlow;
@@ -44,9 +46,20 @@ public class PropertiesListener implements Listener {
 		this.tableViewer = tableViewer;
 	}
 
+	public PropertiesListener(ParametrizableStateSection stateSection, Text nameSubFlow) {
+		this.nameSubFlow = nameSubFlow;
+		this.stateSection2 = stateSection;
+	}
+
 	@Override
 	public void handleEvent(Event event) {
-		PictogramElement pe = stateSection.obtenerPe();
+		PictogramElement pe;
+		if (stateSection != null) {
+			pe = stateSection.obtenerPe();
+		} else {
+			pe = stateSection2.obtenerPe();
+		}
+
 		if (pe != null) {
 			Object bo = Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
 			// the filter assured, that it is a EClass
@@ -99,7 +112,12 @@ public class PropertiesListener implements Listener {
 				TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(custom);
 				dominio.getCommandStack().execute(new EditMenuStateLocution(dominio, custom, nameSubFlow));
 			}
-			stateSection.refresh();
+			if (stateSection != null) {
+				stateSection.refresh();
+			} else {
+				stateSection2.refresh();
+			}
+
 		}
 	}
 }

@@ -12,6 +12,7 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.graphiti.features.context.impl.UpdateContext;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
 import org.eclipse.swt.SWT;
@@ -19,6 +20,7 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -28,8 +30,12 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.ParameterizedState;
+import com.vectorsf.jvoice.ui.diagram.properties.Activator;
+import com.vectorsf.jvoice.ui.diagram.properties.listeners.PropertiesListener;
 
 public abstract class ParametrizableStateSection extends GFPropertySection {
+
+	private PictogramElement pe;
 
 	protected final class UpdatingFocusListener implements FocusListener {
 		private final EStructuralFeature feature;
@@ -80,6 +86,18 @@ public abstract class ParametrizableStateSection extends GFPropertySection {
 		}
 	}
 
+	protected class LabelAndTextAndButton {
+		public final Label label;
+		public final Text text;
+		public final Button button;
+
+		public LabelAndTextAndButton(Label label, Text text, Button button) {
+			this.label = label;
+			this.text = text;
+			this.button = button;
+		}
+	}
+
 	protected TabbedPropertySheetWidgetFactory factory;
 	protected Composite composite;
 	protected ParameterizedState state;
@@ -91,7 +109,8 @@ public abstract class ParametrizableStateSection extends GFPropertySection {
 	public void createControls(Composite parent, TabbedPropertySheetPage tabbedPropertySheetPage) {
 		factory = tabbedPropertySheetPage.getWidgetFactory();
 		composite = factory.createPlainComposite(parent, SWT.NONE);
-		composite.setLayout(new GridLayout(2, false));
+
+		composite.setLayout(new GridLayout(3, false));
 
 		nameText = createLabelAndText("Name:", "", BasePackage.eINSTANCE.getNamedElement_Name(),
 				CommandParameter.NO_INDEX);
@@ -105,10 +124,38 @@ public abstract class ParametrizableStateSection extends GFPropertySection {
 		// Nombre del elemento
 		Text text = factory.createText(composite, value);
 		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
+		layoutData.horizontalSpan = 2;
 		text.setLayoutData(layoutData);
 		text.addFocusListener(new UpdatingFocusListener(feature, text, index));
 
 		return new LabelAndText(label, text);
+	}
+
+	protected LabelAndTextAndButton createLabelAndTextAndButton(String labelText, String value,
+			final EStructuralFeature feature, final int index) {
+		Label label = factory.createLabel(composite, labelText);
+		label.setLayoutData(new GridData());
+
+		// Nombre del elemento
+		Text text = factory.createText(composite, value);
+		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
+		text.setLayoutData(layoutData);
+		text.addFocusListener(new UpdatingFocusListener(feature, text, index));
+
+		Button button = factory.createButton(composite, "", SWT.PUSH);
+		button.setImage(Activator.getDefault().getImageRegistry().get("imageModify"));
+		GridData layoutData2 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		layoutData2.heightHint = 23;
+		button.setLayoutData(layoutData2);
+
+		PropertiesListener propertielistener = new PropertiesListener(this, text);
+		button.addListener(SWT.Selection, propertielistener);
+
+		return new LabelAndTextAndButton(label, text, button);
+	}
+
+	public PictogramElement obtenerPe() {
+		return pe;
 	}
 
 	/**
@@ -125,6 +172,7 @@ public abstract class ParametrizableStateSection extends GFPropertySection {
 	@Override
 	public void refresh() {
 		super.refresh();
+		pe = getSelectedPictogramElement();
 
 		state = (ParameterizedState) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(
 				getSelectedPictogramElement());
