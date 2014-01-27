@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.model.operations.provider.flow;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -14,8 +13,11 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
@@ -52,27 +54,28 @@ public class LocutionItemProvider extends TransientFlowItemProvider {
 
 	@Override
 	public Collection<?> getChildren(Object object) {
-		IFile flowFile = (IFile) Platform.getAdapterManager().getAdapter(
-				getFlow(),
-				IFile.class);
-		Collection childrenCollection = new ArrayList();
-		if (flowFile.exists()){
-			IPath resourcesPath = flowFile.getFullPath().removeFileExtension()
-					.addFileExtension("resources");
-			IFolder resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace()
-					.getRoot().findMember(resourcesPath);
+		IFile flowFile = (IFile) Platform.getAdapterManager().getAdapter(getFlow(), IFile.class);
+		Collection<VoiceDsl> childrenCollection = new ArrayList<>();
+		ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
+		if (flowFile.exists()) {
+			IPath resourcesPath = flowFile.getFullPath().removeFileExtension().addFileExtension("resources");
+			IFolder resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace().getRoot().findMember(resourcesPath);
 
 			if (resourcesFolder.exists()) {
 				try {
-					for (IResource resourceFile:resourcesFolder.members()){
-						if (resourceFile.getName().toString()
-								.endsWith("voiceDsl")) {
-							org.eclipse.emf.common.util.URI emfURI = org.eclipse.emf.common.util.URI
-									.createPlatformResourceURI(resourceFile
-											.getFullPath().toString(), true);
-							EObject o = BaseModel.getInstance()
-									.getResourceSet().getResource(emfURI, true)
-									.getContents().get(0);
+					for (IResource resourceFile : resourcesFolder.members()) {
+						if (resourceFile.getName().toString().endsWith("voiceDsl")) {
+							URI emfURI = URI.createPlatformResourceURI(resourceFile.getFullPath().toString(), true);
+							Resource resource = resourceSet.getResource(emfURI, false);
+							if (resource == null) {
+								resource = resourceSet.getResource(emfURI, true);
+							} else if (resource.getTimeStamp() < resourceFile.getLocalTimeStamp()) {
+								resource.unload();
+								resource = resourceSet.getResource(emfURI, true);
+							}
+
+							EObject o = resource.getContents().get(0);
+
 							if (o != null && o instanceof VoiceDsl) {
 								VoiceDsl definition = (VoiceDsl) o;
 								childrenCollection.add(definition);
