@@ -11,21 +11,17 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Case;
-import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.TransferState;
-import com.vectorsf.jvoice.ui.diagram.properties.filters.ParametrizableStateSection;
 import com.vectorsf.jvoice.ui.diagram.properties.filters.StateSection;
 import com.vectorsf.jvoice.ui.diagram.properties.util.AddCaseSwitch;
 import com.vectorsf.jvoice.ui.diagram.properties.util.DownCaseSwitch;
 import com.vectorsf.jvoice.ui.diagram.properties.util.EditMenuStateLocution;
-import com.vectorsf.jvoice.ui.diagram.properties.util.EditarDominioSubFlow;
 import com.vectorsf.jvoice.ui.diagram.properties.util.RemoveCaseSwitch;
 import com.vectorsf.jvoice.ui.diagram.properties.util.UpCaseSwitch;
 
@@ -34,7 +30,6 @@ public class PropertiesListener implements Listener {
 	private Text nameSubFlow;
 	private TableViewer tableViewer;
 	private StateSection stateSection;
-	private ParametrizableStateSection stateSection2;
 
 	public PropertiesListener(StateSection stateSection, Text nameSubFlow) {
 		this.nameSubFlow = nameSubFlow;
@@ -46,18 +41,11 @@ public class PropertiesListener implements Listener {
 		this.tableViewer = tableViewer;
 	}
 
-	public PropertiesListener(ParametrizableStateSection stateSection, Text nameSubFlow) {
-		this.nameSubFlow = nameSubFlow;
-		this.stateSection2 = stateSection;
-	}
-
 	@Override
 	public void handleEvent(Event event) {
-		PictogramElement pe;
+		PictogramElement pe = null;
 		if (stateSection != null) {
 			pe = stateSection.obtenerPe();
-		} else {
-			pe = stateSection2.obtenerPe();
 		}
 
 		if (pe != null) {
@@ -67,11 +55,7 @@ public class PropertiesListener implements Listener {
 				return;
 			}
 
-			if (bo instanceof CallFlowState) {
-				CallFlowState callFlow = (CallFlowState) bo;
-				TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(callFlow);
-				dominio.getCommandStack().execute(new EditarDominioSubFlow(dominio, callFlow, nameSubFlow));
-			} else if (bo instanceof MenuState) {
+			if (bo instanceof MenuState) {
 				MenuState menuLocution = (MenuState) bo;
 				TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(menuLocution);
 				dominio.getCommandStack().execute(new EditMenuStateLocution(dominio, menuLocution, nameSubFlow));
@@ -107,15 +91,9 @@ public class PropertiesListener implements Listener {
 				} else if (event.widget.getData().equals("down")) {
 					dominio.getCommandStack().execute(new DownCaseSwitch(dominio, estadoSelection, casos, tableViewer));
 				}
-			} else if (bo instanceof CustomState) {
-				CustomState custom = (CustomState) bo;
-				TransactionalEditingDomain dominio = TransactionUtil.getEditingDomain(custom);
-				dominio.getCommandStack().execute(new EditMenuStateLocution(dominio, custom, nameSubFlow));
 			}
 			if (stateSection != null) {
 				stateSection.refresh();
-			} else {
-				stateSection2.refresh();
 			}
 
 		}

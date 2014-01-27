@@ -1,15 +1,17 @@
 package com.vectorsf.jvoice.ui.diagram.properties.filters;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import com.vectorsf.jvoice.model.operations.CallFlowState;
+import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.ParameterizedState;
+import com.vectorsf.jvoice.ui.diagram.properties.section.SubFlowChooser;
+import com.vectorsf.jvoice.ui.diagram.properties.section.helper.LabelAndText;
 
 public class CallFlowStateSection extends ParametrizableStateSection {
 
-	private LabelAndTextAndButton subFlow;
+	private LabelAndText subFlow;
 
 	public CallFlowStateSection() {
 	}
@@ -18,7 +20,8 @@ public class CallFlowStateSection extends ParametrizableStateSection {
 	public void createControls(Composite parent, TabbedPropertySheetPage atabbedPropertySheetPage) {
 		super.createControls(parent, atabbedPropertySheetPage);
 
-		subFlow = createLabelAndTextAndButton("Subflow", "", null, -1);
+		subFlow = createLabelTextAndButton("Subflow", "", OperationsPackage.eINSTANCE.getCallFlowState_Subflow(),
+				new SubFlowChooser());
 		subFlow.text.setEnabled(false);
 
 	}
@@ -39,11 +42,5 @@ public class CallFlowStateSection extends ParametrizableStateSection {
 	protected String[] getParameterNames(ParameterizedState state) {
 		CallFlowState subFlowState = (CallFlowState) state;
 		return subFlowState.getSubflow().getParameters().toArray(new String[0]);
-	}
-
-	@Override
-	protected LabelAndText createLabelAndText(String labelText, String value, final EStructuralFeature feature,
-			final int index) {
-		return super.createLabelAndText(labelText, value, feature, index);
 	}
 }
