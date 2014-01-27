@@ -53,23 +53,7 @@ public class ConfigurationPomWSDL {
 				throws CoreException {
 			Model mm = null;
 			try {
-				if (!pomContainsLine(pomFile, WSIMPORT)) {
-					try {
-						mm = reader.read(pomFile.getContents());
-					} catch (IOException | XmlPullParserException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-					addBuildToModel(mm, iproject.getName(), target);
-
-					MavenXpp3Writer writer = new MavenXpp3Writer();
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					writer.write(baos, mm);
-					pomFile.setContents(
-							new ByteArrayInputStream(baos.toByteArray()), true,
-							true, null);
-				} else {
+			
 					mm = reader.read(pomFile.getContents());
 
 					addFilewsdlToModel(mm, target);
@@ -81,7 +65,6 @@ public class ConfigurationPomWSDL {
 							new ByteArrayInputStream(baos.toByteArray()), true,
 							true, null);
 
-				}
 			} catch (IOException | XmlPullParserException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -93,7 +76,7 @@ public class ConfigurationPomWSDL {
 	}
 
 	private static final String POM_XML = "/pom.xml";
-	private static final String WSIMPORT = "jaxws-maven-plugin";
+	private static final String WSCXF = "cxf-codegen-plugin";
 
 	protected void modifyPom(final IProject iproject, final IFile target) {
 		final MavenXpp3Reader reader = new MavenXpp3Reader();
@@ -110,76 +93,23 @@ public class ConfigurationPomWSDL {
 		int index = plugins.size();
 		for (int i = 0; i < index; i++) {
 			Plugin plugin = plugins.get(i);
-			if (plugin.getArtifactId().equals("jaxws-maven-plugin")) {
+			if (plugin.getArtifactId().equals(WSCXF)) {
 				PluginExecution confi = plugin.getExecutions().get(0);
 				Xpp3Dom conf = (Xpp3Dom) confi.getConfiguration();
 				if (conf != null) {
-					Xpp3Dom wsdlFile = new Xpp3Dom("wsdlFile");
-					wsdlFile.setValue(target.getParent().getName() + "/"
-							+ target.getName());
-					conf.getChild("wsdlFiles").addChild(wsdlFile);
+					Xpp3Dom wsdlOption = new Xpp3Dom("wsdlOption");
+					Xpp3Dom wsdlLocation = new Xpp3Dom("wsdlLocation");
+					String nameTar = target.getName();
+					wsdlLocation.setValue("http://localhost/wsdl/" + nameTar);
+					Xpp3Dom wsdl = new Xpp3Dom("wsdl");
+					String nameWsdl = nameTar
+							.substring(0, nameTar.indexOf(".")) + "/" + nameTar;
+					wsdl.setValue("${wsdlRoot}/" + nameWsdl);
+					wsdlOption.addChild(wsdlLocation);
+					wsdlOption.addChild(wsdl);
+					conf.getChild("wsdlOptions").addChild(wsdlOption);
 				}
 			}
 		}
-
-	}
-
-	private void addBuildToModel(Model mm, String moduleName, IFile target) {
-
-		String paquete = JVoiceModuleNature
-				.getDefaultWSDLPackageName(moduleName);
-
-		Plugin dsl_builder = new Plugin();
-		dsl_builder.setGroupId("org.jvnet.jax-ws-commons");
-		dsl_builder.setArtifactId("jaxws-maven-plugin");
-		dsl_builder.setVersion("2.3");
-		PluginExecution pexecution = new PluginExecution();
-		pexecution.addGoal("wsimport");
-
-		Xpp3Dom configuration = new Xpp3Dom("configuration");
-
-		Xpp3Dom wsdlDirectory = new Xpp3Dom("wsdlDirectory");
-		wsdlDirectory.setValue("src/main/resources/META-INF/wsdl");
-		configuration.addChild(wsdlDirectory);
-
-		Xpp3Dom wsdlLocation = new Xpp3Dom("wsdlLocation");
-		wsdlLocation.setValue("http://" + paquete + ".*");
-		configuration.addChild(wsdlLocation);
-
-		Xpp3Dom sourceDestDir = new Xpp3Dom("sourceDestDir");
-		sourceDestDir.setValue("src/generated-sources/wsimport");
-		configuration.addChild(sourceDestDir);
-
-		Xpp3Dom wsdlFiles = new Xpp3Dom("wsdlFiles");
-		Xpp3Dom wsdlFile = new Xpp3Dom("wsdlFile");
-		wsdlFile.setValue(target.getParent().getName() + "/" + target.getName());
-		wsdlFiles.addChild(wsdlFile);
-		pexecution.setConfiguration(wsdlFiles);
-
-		configuration.addChild(wsdlFiles);
-
-		Xpp3Dom keep = new Xpp3Dom("keep");
-		keep.setValue("true");
-		configuration.addChild(keep);
-
-		pexecution.setConfiguration(configuration);
-
-		dsl_builder.addExecution(pexecution);
-		mm.getBuild().addPlugin(dsl_builder);
-
-	}
-
-	private boolean pomContainsLine(IFile pomFile, CharSequence in_line)
-			throws FileNotFoundException, CoreException {
-		Scanner fileScanner = new Scanner(pomFile.getContents());
-		boolean bExits = false;
-		while (fileScanner.hasNextLine() && !bExits) {
-			String line = fileScanner.nextLine();
-			if (line.contains(in_line)) {
-				bExits = true;
-			}
-		}
-		fileScanner.close();
-		return bExits;
 	}
 }
