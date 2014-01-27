@@ -577,6 +577,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getMenuState__GetEvents() {
+		return menuStateEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getLocutionState() {
 		return locutionStateEClass;
 	}
@@ -792,6 +801,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		inputStateEClass = createEClass(INPUT_STATE);
 
 		menuStateEClass = createEClass(MENU_STATE);
+		createEOperation(menuStateEClass, MENU_STATE___GET_EVENTS);
 
 		locutionStateEClass = createEClass(LOCUTION_STATE);
 		createEReference(locutionStateEClass, LOCUTION_STATE__LOCUTION);
@@ -922,6 +932,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEClass(inputStateEClass, InputState.class, "InputState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(menuStateEClass, MenuState.class, "MenuState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getMenuState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(locutionStateEClass, LocutionState.class, "LocutionState", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getLocutionState_Locution(), theVoiceDslPackage.getVoiceDsl(), null, "locution", null, 0, 1, LocutionState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

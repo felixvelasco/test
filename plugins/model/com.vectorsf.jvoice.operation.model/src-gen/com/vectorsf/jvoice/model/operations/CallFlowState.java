@@ -52,7 +52,7 @@ public interface CallFlowState extends ParameterizedState {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='org.eclipse.emf.common.util.BasicEList<String> list = new org.eclipse.emf.common.util.BasicEList<String>();\r\nlist.add(\"a1\");\r\nlist.add(\"a2\");\r\nlist.add(\"a3\");\r\nreturn list;\r\n'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='\t\torg.eclipse.emf.common.util.BasicEList<String> list = new org.eclipse.emf.common.util.BasicEList<String>();\r\n\t\tlist.add(\"busy\");\r\n\t\tlist.add(\"conn_error\");\r\n\t\tlist.add(\"error\");\r\n\t\tlist.add(\"far_end_disc\");\r\n\t\tlist.add(\"hangup\");\r\n\t\tlist.add(\"match\");\r\n\t\tlist.add(\"maxatt\");\r\n\t\tlist.add(\"maxtime\");\r\n\t\tlist.add(\"netw_busy\");\r\n\t\tlist.add(\"netw_disconnect\");\r\n\t\tlist.add(\"noanswer\");\r\n\t\tlist.add(\"noinput\");\r\n\t\tlist.add(\"nomatch\");\r\n\t\tlist.add(\"noresource\");\r\n\t\tlist.add(\"recorded\");\r\n\t\tlist.add(\"record_unsup\");\r\n\t\tlist.add(\"success\");\r\n\t\tlist.add(\"transferred\");\r\n\t\tlist.add(\"unknown\");\r\n\r\n\t\treturn list;\r\n'"
 	 * @generated
 	 */
 	EList<String> getEvents();

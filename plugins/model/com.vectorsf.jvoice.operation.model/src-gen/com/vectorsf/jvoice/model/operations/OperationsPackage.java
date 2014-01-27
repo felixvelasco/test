@@ -1501,7 +1501,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MENU_STATE___GET_EVENTS = LOCUTION_STATE___GET_EVENTS;
+	int MENU_STATE___GET_EVENTS = LOCUTION_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Menu State</em>' class.
@@ -1510,7 +1510,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MENU_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 0;
+	int MENU_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.TransferStateImpl <em>Transfer State</em>}' class.
@@ -2377,6 +2377,16 @@ public interface OperationsPackage extends EPackage {
 	EClass getMenuState();
 
 	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.MenuState#getEvents() <em>Get Events</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.MenuState#getEvents()
+	 * @generated
+	 */
+	EOperation getMenuState__GetEvents();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.LocutionState <em>Locution State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2887,6 +2897,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MENU_STATE = eINSTANCE.getMenuState();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation MENU_STATE___GET_EVENTS = eINSTANCE.getMenuState__GetEvents();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.LocutionStateImpl <em>Locution State</em>}' class.
