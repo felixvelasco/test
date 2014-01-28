@@ -2,7 +2,7 @@
 <endpoints>
 	<!-- 
 	namespace: wsdl targetNameSpace or tns
-	name: portType name 
+	name: service port name / endpoint name
 	url: target	endpoint
 	-->
 
