@@ -140,7 +140,7 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 				    cons=false;
 				}
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				return false;
 			}
 			return true;
 	}
