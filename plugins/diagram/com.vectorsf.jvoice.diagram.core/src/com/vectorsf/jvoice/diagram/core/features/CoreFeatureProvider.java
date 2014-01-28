@@ -20,7 +20,7 @@ import com.vectorsf.jvoice.diagram.core.features.editing.TransitionsDeleteFeatur
 import com.vectorsf.jvoice.diagram.core.features.editing.TransitionsUpdateFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.note.RelationPattern;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.*;
-import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.*;
 import com.vectorsf.jvoice.model.operations.impl.*;
 
 public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
@@ -111,14 +111,19 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 	    State state = (State) getBusinessObjectForPictogramElement(((FixPointAnchor) pe)
 		    .getParent());
 
-	    if (state instanceof CallFlowStateImpl) {
+	    if (state instanceof CallFlowState) {
 		return new IFeature[] { new CreateTransitionFromPad(this,
 			new TransitionCallFlowPattern(state, this)) };
 	    }
-//	    if (state instanceof MenuStateImpl) {
+	    if (state instanceof MenuState) {
 //		return new IFeature[] { new CreateTransitionFromPad(this,
 //			new TransitionMenuPattern(state, this)) };
-//	    }
+	    }
+
+	    if (state instanceof TransferState) {
+		return new IFeature[] { new CreateTransitionFromPad(this,
+			new TransitionPattern(this)) };
+	    }
 	}
 
 	return super.getDragAndDropFeatures(context);

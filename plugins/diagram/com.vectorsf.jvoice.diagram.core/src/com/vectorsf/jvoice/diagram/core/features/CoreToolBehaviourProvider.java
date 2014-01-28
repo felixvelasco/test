@@ -262,8 +262,8 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	GraphicsAlgorithm ga = context.getInnerGraphicsAlgorithm();
 	if (ga instanceof Image
 		&& ((Image) ga).getId().equals("icon_deco_dropdown")
-		&& (bo instanceof CallFlowStateImpl
-			|| bo instanceof MenuStateImpl || bo instanceof SwitchStateImpl)) {
+		&& (!(bo instanceof CallFlowStateImpl)
+			&& !(bo instanceof MenuStateImpl) && !(bo instanceof SwitchStateImpl))) {
 	    PictogramElement pe = context.getInnerPictogramElement();
 	    return new AddMoreEventFeature(getFeatureProvider());
 	}

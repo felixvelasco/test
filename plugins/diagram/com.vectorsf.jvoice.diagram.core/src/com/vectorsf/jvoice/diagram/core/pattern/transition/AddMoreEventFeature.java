@@ -6,7 +6,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
-import org.eclipse.graphiti.mm.algorithms.impl.ImageImpl;
 import org.eclipse.graphiti.mm.pictograms.*;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -94,7 +93,7 @@ public class AddMoreEventFeature extends AbstractCustomFeature {
 			if(!(anchor instanceof FixPointAnchor))
 				continue;
 			
-			String anchorName = ((ImageImpl)anchor.getGraphicsAlgorithm()).getId();
+			String anchorName = ((org.eclipse.graphiti.mm.algorithms.Image)anchor.getGraphicsAlgorithm()).getId();
 			if(anchorName.equals(eventName) && !anchor.getOutgoingConnections().isEmpty())
 				return true;
 		}

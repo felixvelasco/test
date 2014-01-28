@@ -2,7 +2,7 @@ package com.vectorsf.jvoice.diagram.core.pattern.transition;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateConnectionContext;
-import org.eclipse.graphiti.mm.algorithms.impl.ImageImpl;
+import org.eclipse.graphiti.mm.algorithms.*;
 import org.eclipse.graphiti.mm.pictograms.*;
 
 import com.vectorsf.jvoice.model.operations.State;
@@ -36,7 +36,12 @@ public class TransitionCallFlowPattern extends TransitionPattern {
 	    // Al crear la transición desde el evento lo que llega es un
 	    // FixPointAnchor
 	    if (pe instanceof FixPointAnchor) {
-		eventName = ((ImageImpl) pe.getGraphicsAlgorithm()).getId();
+		GraphicsAlgorithm ga = pe.getGraphicsAlgorithm();
+		
+		if(ga instanceof Image)
+			eventName = ((Image) ga).getId();
+		else
+			eventName = ((Text) ga).getValue();
 		pe = ((FixPointAnchor) pe).getParent();
 	    }
 
