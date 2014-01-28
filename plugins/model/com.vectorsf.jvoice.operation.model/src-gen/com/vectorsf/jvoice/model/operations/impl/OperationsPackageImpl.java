@@ -459,6 +459,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getSwitchState__GetEvents() {
+		return switchStateEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCase() {
 		return caseEClass;
 	}
@@ -522,6 +531,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getCallState__GetEvents() {
+		return callStateEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCallFlowState() {
 		return callFlowStateEClass;
 	}
@@ -559,8 +577,26 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getPromptState__GetEvents() {
+		return promptStateEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getInputState() {
 		return inputStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getInputState__GetEvents() {
+		return inputStateEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -613,8 +649,26 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getTransferState__GetEvents() {
+		return transferStateEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getRecordState() {
 		return recordStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getRecordState__GetEvents() {
+		return recordStateEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -782,6 +836,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		switchStateEClass = createEClass(SWITCH_STATE);
 		createEReference(switchStateEClass, SWITCH_STATE__CASE);
 		createEOperation(switchStateEClass, SWITCH_STATE___GET_CASE__STRING);
+		createEOperation(switchStateEClass, SWITCH_STATE___GET_EVENTS);
 
 		caseEClass = createEClass(CASE);
 		createEAttribute(caseEClass, CASE__CONDITION);
@@ -791,14 +846,17 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEAttribute(callStateEClass, CALL_STATE__METHOD_NAME);
 		createEReference(callStateEClass, CALL_STATE__BEAN);
 		createEReference(callStateEClass, CALL_STATE__REFERENCED_BEAN);
+		createEOperation(callStateEClass, CALL_STATE___GET_EVENTS);
 
 		callFlowStateEClass = createEClass(CALL_FLOW_STATE);
 		createEReference(callFlowStateEClass, CALL_FLOW_STATE__SUBFLOW);
 		createEOperation(callFlowStateEClass, CALL_FLOW_STATE___GET_EVENTS);
 
 		promptStateEClass = createEClass(PROMPT_STATE);
+		createEOperation(promptStateEClass, PROMPT_STATE___GET_EVENTS);
 
 		inputStateEClass = createEClass(INPUT_STATE);
+		createEOperation(inputStateEClass, INPUT_STATE___GET_EVENTS);
 
 		menuStateEClass = createEClass(MENU_STATE);
 		createEOperation(menuStateEClass, MENU_STATE___GET_EVENTS);
@@ -807,8 +865,10 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEReference(locutionStateEClass, LOCUTION_STATE__LOCUTION);
 
 		transferStateEClass = createEClass(TRANSFER_STATE);
+		createEOperation(transferStateEClass, TRANSFER_STATE___GET_EVENTS);
 
 		recordStateEClass = createEClass(RECORD_STATE);
+		createEOperation(recordStateEClass, RECORD_STATE___GET_EVENTS);
 
 		noteEClass = createEClass(NOTE);
 		createEAttribute(noteEClass, NOTE__DESCRIPTION);
@@ -913,6 +973,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		EOperation op = initEOperation(getSwitchState__GetCase__String(), this.getCase(), "getCase", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		initEOperation(getSwitchState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(caseEClass, Case.class, "Case", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCase_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCase_EventName(), ecorePackage.getEString(), "eventName", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -922,6 +984,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEReference(getCallState_Bean(), this.getComponentBean(), null, "bean", null, 0, 1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCallState_ReferencedBean(), this.getComponentBean(), null, "referencedBean", null, 0, 1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEOperation(getCallState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(callFlowStateEClass, CallFlowState.class, "CallFlowState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCallFlowState_Subflow(), this.getFlow(), null, "subflow", null, 0, 1, CallFlowState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -929,7 +993,11 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		initEClass(promptStateEClass, PromptState.class, "PromptState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		initEOperation(getPromptState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(inputStateEClass, InputState.class, "InputState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getInputState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(menuStateEClass, MenuState.class, "MenuState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -940,7 +1008,11 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		initEClass(transferStateEClass, TransferState.class, "TransferState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		initEOperation(getTransferState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(recordStateEClass, RecordState.class, "RecordState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getRecordState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(noteEClass, Note.class, "Note", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNote_Description(), ecorePackage.getEString(), "description", null, 0, 1, Note.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

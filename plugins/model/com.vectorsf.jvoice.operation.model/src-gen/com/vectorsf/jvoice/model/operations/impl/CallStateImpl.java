@@ -3,9 +3,12 @@
 package com.vectorsf.jvoice.model.operations.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.*;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import com.vectorsf.jvoice.model.operations.*;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -183,6 +186,21 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getEvents() {
+		EList<String> ret = new BasicEList<String>();
+		
+		ret.add("ok");
+		ret.add("error");
+		
+		
+		return ret;
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -260,6 +278,36 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState
 				return referencedBean != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == State.class) {
+			switch (baseOperationID) {
+				case OperationsPackage.STATE___GET_EVENTS: return OperationsPackage.CALL_STATE___GET_EVENTS;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OperationsPackage.CALL_STATE___GET_EVENTS:
+				return getEvents();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

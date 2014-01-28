@@ -2,23 +2,22 @@
  */
 package com.vectorsf.jvoice.model.operations;
 
-import com.vectorsf.jvoice.model.base.BasePackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
+import com.vectorsf.jvoice.model.base.BasePackage;
+
 /**
- * <!-- begin-user-doc -->
- * The <b>Package</b> for the model.
- * It contains accessors for the meta objects to represent
+ * <!-- begin-user-doc --> The <b>Package</b> for the model. It contains accessors for the meta objects to represent
  * <ul>
- *   <li>each class,</li>
- *   <li>each feature of each class,</li>
- *   <li>each operation of each class,</li>
- *   <li>each enum,</li>
- *   <li>and each data type</li>
+ * <li>each class,</li>
+ * <li>each feature of each class,</li>
+ * <li>each operation of each class,</li>
+ * <li>each enum,</li>
+ * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
  * @see com.vectorsf.jvoice.model.operations.OperationsFactory
@@ -28,40 +27,35 @@ import org.eclipse.emf.ecore.EReference;
 public interface OperationsPackage extends EPackage {
 	/**
 	 * The package name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNAME = "operations";
 
 	/**
 	 * The package namespace URI.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNS_URI = "http://jvoice.vectorsf.com/operations/1.0";
 
 	/**
 	 * The package namespace name.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNS_PREFIX = "operations";
 
 	/**
 	 * The singleton instance of the package.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	OperationsPackage eINSTANCE = com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl.init();
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.StateImpl <em>State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.StateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getState()
 	 * @generated
@@ -70,8 +64,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -79,8 +72,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -88,8 +80,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -97,8 +88,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -106,8 +97,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -115,8 +106,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -124,17 +114,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int STATE__FIREABLE_EVENTS = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 3;
+	int STATE__FIREABLE_EVENTS = BasePackage.NAMED_ELEMENT_FEATURE_COUNT + 3;
 
-        /**
+	/**
 	 * The number of structural features of the '<em>State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -142,8 +131,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -151,8 +139,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -160,8 +147,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.TransitionImpl <em>Transition</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.TransitionImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTransition()
 	 * @generated
@@ -170,8 +156,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -179,8 +164,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -188,8 +172,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -197,17 +180,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Event Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int TRANSITION__EVENT_NAME = BasePackage.JV_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The number of structural features of the '<em>Transition</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Transition</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -215,17 +197,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Transition</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int TRANSITION_OPERATION_COUNT = BasePackage.JV_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl <em>Flow</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl <em>Flow</em>}' class. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see com.vectorsf.jvoice.model.operations.impl.FlowImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getFlow()
 	 * @generated
@@ -234,8 +215,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -243,8 +223,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -252,8 +231,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -261,8 +239,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Owner Package</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -270,8 +248,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>States</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -279,8 +257,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Transitions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -288,8 +266,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -297,8 +275,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Beans</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -306,8 +284,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -315,8 +292,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Flow</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -324,8 +300,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Flow</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -333,8 +308,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.InitialStateImpl <em>Initial State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.InitialStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getInitialState()
 	 * @generated
@@ -343,8 +317,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -352,8 +325,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -361,8 +333,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -370,8 +341,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -379,8 +350,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -388,8 +359,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -397,17 +367,17 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int INITIAL_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+	int INITIAL_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The number of structural features of the '<em>Initial State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -415,8 +385,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -424,8 +393,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Initial State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -433,8 +401,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.FinalStateImpl <em>Final State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.FinalStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getFinalState()
 	 * @generated
@@ -443,8 +410,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -452,8 +418,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -461,8 +426,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -470,8 +434,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -479,8 +443,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -488,8 +452,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -497,35 +460,34 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int FINAL_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+	int FINAL_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Final</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int FINAL_STATE__FINAL = STATE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Return Expression</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The feature id for the '<em><b>Return Expression</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int FINAL_STATE__RETURN_EXPRESSION = STATE_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Final State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Final State</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -533,8 +495,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -542,8 +503,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Final State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -551,8 +511,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.SwitchStateImpl <em>Switch State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.SwitchStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getSwitchState()
 	 * @generated
@@ -561,8 +520,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -570,8 +528,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -579,8 +536,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -588,8 +544,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -597,8 +553,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -606,8 +562,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -615,62 +570,59 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int SWITCH_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+	int SWITCH_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Case</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int SWITCH_STATE__CASE = STATE_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Switch State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Switch State</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int SWITCH_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SWITCH_STATE___GET_EVENTS = STATE___GET_EVENTS;
-
-	/**
 	 * The operation id for the '<em>Get Case</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int SWITCH_STATE___GET_CASE__STRING = STATE_OPERATION_COUNT + 0;
 
 	/**
-	 * The number of operations of the '<em>Switch State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SWITCH_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 1;
+	int SWITCH_STATE___GET_EVENTS = STATE_OPERATION_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CaseImpl <em>Case</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of operations of the '<em>Switch State</em>' class.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SWITCH_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CaseImpl <em>Case</em>}' class. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see com.vectorsf.jvoice.model.operations.impl.CaseImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCase()
 	 * @generated
@@ -679,8 +631,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -688,8 +639,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Event Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -697,8 +647,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Case</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -706,8 +655,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Case</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -715,8 +663,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl <em>Parameterized State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getParameterizedState()
 	 * @generated
@@ -725,8 +672,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -734,8 +680,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -743,8 +688,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -752,8 +696,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -761,8 +705,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -770,8 +714,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -779,17 +722,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int PARAMETERIZED_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+	int PARAMETERIZED_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -797,8 +739,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Parameterized State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -806,17 +748,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int PARAMETERIZED_STATE___GET_EVENTS = STATE___GET_EVENTS;
 
 	/**
-	 * The number of operations of the '<em>Parameterized State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of operations of the '<em>Parameterized State</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -824,8 +765,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl <em>Call State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.CallStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCallState()
 	 * @generated
@@ -834,8 +774,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -843,8 +782,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -852,8 +790,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -861,8 +798,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -870,8 +807,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -879,8 +816,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -888,17 +824,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int CALL_STATE__FIREABLE_EVENTS = PARAMETERIZED_STATE__FIREABLE_EVENTS;
+	int CALL_STATE__FIREABLE_EVENTS = PARAMETERIZED_STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -906,8 +841,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -915,8 +849,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Bean</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -924,17 +857,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Referenced Bean</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int CALL_STATE__REFERENCED_BEAN = PARAMETERIZED_STATE_FEATURE_COUNT + 2;
 
 	/**
-	 * The number of structural features of the '<em>Call State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Call State</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -942,26 +874,23 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE___GET_EVENTS = PARAMETERIZED_STATE___GET_EVENTS;
+	int CALL_STATE___GET_EVENTS = PARAMETERIZED_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Call State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE_OPERATION_COUNT = PARAMETERIZED_STATE_OPERATION_COUNT + 0;
+	int CALL_STATE_OPERATION_COUNT = PARAMETERIZED_STATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl <em>Call Flow State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCallFlowState()
 	 * @generated
@@ -970,8 +899,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -979,8 +907,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -988,8 +915,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -997,8 +923,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1006,8 +932,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1015,8 +941,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1024,17 +949,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int CALL_FLOW_STATE__FIREABLE_EVENTS = PARAMETERIZED_STATE__FIREABLE_EVENTS;
+	int CALL_FLOW_STATE__FIREABLE_EVENTS = PARAMETERIZED_STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1042,8 +966,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Subflow</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1051,8 +974,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Call Flow State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1060,8 +983,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1069,8 +991,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Call Flow State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1078,8 +999,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.LocutionStateImpl <em>Locution State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.LocutionStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getLocutionState()
 	 * @generated
@@ -1088,8 +1008,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1097,8 +1016,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1106,8 +1024,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1115,8 +1032,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1124,8 +1041,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1133,8 +1050,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1142,17 +1058,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int LOCUTION_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+	int LOCUTION_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1160,8 +1075,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Locution State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1169,8 +1084,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1178,8 +1092,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Locution State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1187,8 +1100,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.PromptStateImpl <em>Prompt State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.PromptStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getPromptState()
 	 * @generated
@@ -1197,8 +1109,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1206,8 +1117,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1215,8 +1125,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1224,8 +1133,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1233,8 +1142,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1242,8 +1151,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1251,26 +1159,25 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int PROMPT_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
+	int PROMPT_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int PROMPT_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
 
 	/**
-	 * The number of structural features of the '<em>Prompt State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Prompt State</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1278,26 +1185,23 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROMPT_STATE___GET_EVENTS = LOCUTION_STATE___GET_EVENTS;
+	int PROMPT_STATE___GET_EVENTS = LOCUTION_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Prompt State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROMPT_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 0;
+	int PROMPT_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.InputStateImpl <em>Input State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.InputStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getInputState()
 	 * @generated
@@ -1306,8 +1210,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1315,8 +1218,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1324,8 +1226,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1333,8 +1234,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1342,8 +1243,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1351,8 +1252,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1360,26 +1260,25 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int INPUT_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
+	int INPUT_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int INPUT_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
 
 	/**
-	 * The number of structural features of the '<em>Input State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Input State</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1387,26 +1286,23 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INPUT_STATE___GET_EVENTS = LOCUTION_STATE___GET_EVENTS;
+	int INPUT_STATE___GET_EVENTS = LOCUTION_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Input State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INPUT_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 0;
+	int INPUT_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.MenuStateImpl <em>Menu State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.MenuStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getMenuState()
 	 * @generated
@@ -1415,8 +1311,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1424,8 +1319,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1433,8 +1327,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1442,8 +1335,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1451,8 +1344,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1460,8 +1353,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1469,26 +1361,25 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int MENU_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
+	int MENU_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int MENU_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
 
 	/**
-	 * The number of structural features of the '<em>Menu State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Menu State</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1496,8 +1387,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1505,8 +1395,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Menu State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1514,8 +1403,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.TransferStateImpl <em>Transfer State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.TransferStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTransferState()
 	 * @generated
@@ -1524,8 +1412,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1533,8 +1420,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1542,8 +1428,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1551,8 +1436,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1560,8 +1445,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1569,8 +1454,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1578,17 +1462,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int TRANSFER_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
+	int TRANSFER_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1596,8 +1479,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Transfer State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1605,26 +1488,23 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE___GET_EVENTS = LOCUTION_STATE___GET_EVENTS;
+	int TRANSFER_STATE___GET_EVENTS = LOCUTION_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Transfer State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSFER_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 0;
+	int TRANSFER_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.RecordStateImpl <em>Record State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.RecordStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getRecordState()
 	 * @generated
@@ -1633,8 +1513,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1642,8 +1521,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1651,8 +1529,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1660,8 +1537,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1669,8 +1546,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1678,8 +1555,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1687,26 +1563,25 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int RECORD_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
+	int RECORD_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int RECORD_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
 
 	/**
-	 * The number of structural features of the '<em>Record State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Record State</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1714,26 +1589,24 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_STATE___GET_EVENTS = LOCUTION_STATE___GET_EVENTS;
+	int RECORD_STATE___GET_EVENTS = LOCUTION_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Record State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RECORD_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 0;
+	int RECORD_STATE_OPERATION_COUNT = LOCUTION_STATE_OPERATION_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.NoteImpl <em>Note</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.NoteImpl <em>Note</em>}' class. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see com.vectorsf.jvoice.model.operations.impl.NoteImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getNote()
 	 * @generated
@@ -1742,8 +1615,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1751,8 +1623,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1760,8 +1631,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Referenced States</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1769,8 +1640,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1778,8 +1648,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Note</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1787,8 +1656,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Note</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1796,8 +1664,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CustomStateImpl <em>Custom State</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.CustomStateImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCustomState()
 	 * @generated
@@ -1806,8 +1673,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1815,8 +1681,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1824,8 +1689,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1833,8 +1697,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1842,8 +1706,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1851,8 +1715,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1860,26 +1723,25 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-        int CUSTOM_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
+	int CUSTOM_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
 
-        /**
+	/**
 	 * The feature id for the '<em><b>Path</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int CUSTOM_STATE__PATH = STATE_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Custom State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The number of structural features of the '<em>Custom State</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -1887,8 +1749,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1896,8 +1757,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Custom State</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1905,8 +1765,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl <em>Component Bean</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getComponentBean()
 	 * @generated
@@ -1915,8 +1774,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1924,8 +1782,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1933,8 +1790,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1942,8 +1798,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Fqdn</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1951,8 +1806,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Name Bean</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1960,8 +1814,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The feature id for the '<em><b>Prototype</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1969,8 +1822,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of structural features of the '<em>Component Bean</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -1978,17 +1831,16 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * The number of operations of the '<em>Component Bean</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int COMPONENT_BEAN_OPERATION_COUNT = BasePackage.NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.State <em>State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.State <em>State</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.State
 	 * @generated
@@ -1996,9 +1848,10 @@ public interface OperationsPackage extends EPackage {
 	EClass getState();
 
 	/**
-	 * Returns the meta object for the reference list '{@link com.vectorsf.jvoice.model.operations.State#getIncomingTransitions <em>Incoming Transitions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the reference list '
+	 * {@link com.vectorsf.jvoice.model.operations.State#getIncomingTransitions <em>Incoming Transitions</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference list '<em>Incoming Transitions</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.State#getIncomingTransitions()
 	 * @see #getState()
@@ -2007,9 +1860,10 @@ public interface OperationsPackage extends EPackage {
 	EReference getState_IncomingTransitions();
 
 	/**
-	 * Returns the meta object for the reference list '{@link com.vectorsf.jvoice.model.operations.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the reference list '
+	 * {@link com.vectorsf.jvoice.model.operations.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference list '<em>Outgoing Transitions</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.State#getOutgoingTransitions()
 	 * @see #getState()
@@ -2019,8 +1873,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.State#getNotes <em>Notes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Notes</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.State#getNotes()
 	 * @see #getState()
@@ -2029,20 +1882,20 @@ public interface OperationsPackage extends EPackage {
 	EReference getState_Notes();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link com.vectorsf.jvoice.model.operations.State#getFireableEvents <em>Fireable Events</em>}'.
-	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute list '
+	 * {@link com.vectorsf.jvoice.model.operations.State#getFireableEvents <em>Fireable Events</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute list '<em>Fireable Events</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.State#getFireableEvents()
 	 * @see #getState()
 	 * @generated
 	 */
-        EAttribute getState_FireableEvents();
+	EAttribute getState_FireableEvents();
 
-        /**
+	/**
 	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.State#getEvents() <em>Get Events</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Events</em>' operation.
 	 * @see com.vectorsf.jvoice.model.operations.State#getEvents()
 	 * @generated
@@ -2051,8 +1904,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Transition <em>Transition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Transition</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Transition
 	 * @generated
@@ -2061,8 +1913,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.Transition#getSource <em>Source</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Source</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Transition#getSource()
 	 * @see #getTransition()
@@ -2072,8 +1923,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.Transition#getTarget <em>Target</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Target</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Transition#getTarget()
 	 * @see #getTransition()
@@ -2083,8 +1933,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.Transition#getEventName <em>Event Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Event Name</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Transition#getEventName()
 	 * @see #getTransition()
@@ -2093,9 +1942,9 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getTransition_EventName();
 
 	/**
-	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Flow <em>Flow</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Flow <em>Flow</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Flow</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Flow
 	 * @generated
@@ -2104,8 +1953,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.operations.Flow#getStates <em>States</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>States</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Flow#getStates()
 	 * @see #getFlow()
@@ -2126,8 +1975,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.operations.Flow#getNotes <em>Notes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Notes</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Flow#getNotes()
 	 * @see #getFlow()
@@ -2137,8 +1986,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.operations.Flow#getBeans <em>Beans</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Beans</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Flow#getBeans()
 	 * @see #getFlow()
@@ -2148,8 +1997,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute list '{@link com.vectorsf.jvoice.model.operations.Flow#getParameters <em>Parameters</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Parameters</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Flow#getParameters()
 	 * @see #getFlow()
@@ -2159,8 +2007,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.InitialState <em>Initial State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Initial State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.InitialState
 	 * @generated
@@ -2169,8 +2016,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.FinalState <em>Final State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Final State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.FinalState
 	 * @generated
@@ -2179,8 +2025,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.FinalState#isFinal <em>Final</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Final</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.FinalState#isFinal()
 	 * @see #getFinalState()
@@ -2189,9 +2034,10 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getFinalState_Final();
 
 	/**
-	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.FinalState#getReturnExpression <em>Return Expression</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute '
+	 * {@link com.vectorsf.jvoice.model.operations.FinalState#getReturnExpression <em>Return Expression</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Return Expression</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.FinalState#getReturnExpression()
 	 * @see #getFinalState()
@@ -2201,8 +2047,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.FinalState#getEvents() <em>Get Events</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Events</em>' operation.
 	 * @see com.vectorsf.jvoice.model.operations.FinalState#getEvents()
 	 * @generated
@@ -2211,8 +2056,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.SwitchState <em>Switch State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Switch State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.SwitchState
 	 * @generated
@@ -2221,8 +2065,8 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link com.vectorsf.jvoice.model.operations.SwitchState#getCase <em>Case</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Case</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.SwitchState#getCase()
 	 * @see #getSwitchState()
@@ -2232,8 +2076,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.SwitchState#getCase(java.lang.String) <em>Get Case</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Case</em>' operation.
 	 * @see com.vectorsf.jvoice.model.operations.SwitchState#getCase(java.lang.String)
 	 * @generated
@@ -2241,9 +2084,18 @@ public interface OperationsPackage extends EPackage {
 	EOperation getSwitchState__GetCase__String();
 
 	/**
-	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Case <em>Case</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.SwitchState#getEvents() <em>Get Events</em>}' operation.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.SwitchState#getEvents()
+	 * @generated
+	 */
+	EOperation getSwitchState__GetEvents();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Case <em>Case</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Case</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Case
 	 * @generated
@@ -2252,8 +2104,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.Case#getCondition <em>Condition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Condition</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Case#getCondition()
 	 * @see #getCase()
@@ -2263,8 +2114,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.Case#getEventName <em>Event Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Event Name</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Case#getEventName()
 	 * @see #getCase()
@@ -2274,8 +2124,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.CallState <em>Call State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Call State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.CallState
 	 * @generated
@@ -2284,8 +2133,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.CallState#getMethodName <em>Method Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Method Name</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.CallState#getMethodName()
 	 * @see #getCallState()
@@ -2295,8 +2143,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.CallState#getBean <em>Bean</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Bean</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.CallState#getBean()
 	 * @see #getCallState()
@@ -2305,9 +2152,10 @@ public interface OperationsPackage extends EPackage {
 	EReference getCallState_Bean();
 
 	/**
-	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.CallState#getReferencedBean <em>Referenced Bean</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the reference '
+	 * {@link com.vectorsf.jvoice.model.operations.CallState#getReferencedBean <em>Referenced Bean</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference '<em>Referenced Bean</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.CallState#getReferencedBean()
 	 * @see #getCallState()
@@ -2316,9 +2164,18 @@ public interface OperationsPackage extends EPackage {
 	EReference getCallState_ReferencedBean();
 
 	/**
-	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.CallFlowState <em>Call Flow State</em>}'.
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.CallState#getEvents() <em>Get Events</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.CallState#getEvents()
+	 * @generated
+	 */
+	EOperation getCallState__GetEvents();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.CallFlowState <em>Call Flow State</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Call Flow State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.CallFlowState
 	 * @generated
@@ -2327,8 +2184,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.CallFlowState#getSubflow <em>Subflow</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Subflow</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.CallFlowState#getSubflow()
 	 * @see #getCallFlowState()
@@ -2338,8 +2194,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.CallFlowState#getEvents() <em>Get Events</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Events</em>' operation.
 	 * @see com.vectorsf.jvoice.model.operations.CallFlowState#getEvents()
 	 * @generated
@@ -2348,8 +2203,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.PromptState <em>Prompt State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Prompt State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.PromptState
 	 * @generated
@@ -2357,9 +2211,18 @@ public interface OperationsPackage extends EPackage {
 	EClass getPromptState();
 
 	/**
-	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.InputState <em>Input State</em>}'.
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.PromptState#getEvents() <em>Get Events</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.PromptState#getEvents()
+	 * @generated
+	 */
+	EOperation getPromptState__GetEvents();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.InputState <em>Input State</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Input State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.InputState
 	 * @generated
@@ -2367,9 +2230,18 @@ public interface OperationsPackage extends EPackage {
 	EClass getInputState();
 
 	/**
-	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.MenuState <em>Menu State</em>}'.
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.InputState#getEvents() <em>Get Events</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.InputState#getEvents()
+	 * @generated
+	 */
+	EOperation getInputState__GetEvents();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.MenuState <em>Menu State</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Menu State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.MenuState
 	 * @generated
@@ -2378,8 +2250,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.MenuState#getEvents() <em>Get Events</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Events</em>' operation.
 	 * @see com.vectorsf.jvoice.model.operations.MenuState#getEvents()
 	 * @generated
@@ -2388,8 +2259,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.LocutionState <em>Locution State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Locution State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.LocutionState
 	 * @generated
@@ -2398,8 +2268,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.LocutionState#getLocution <em>Locution</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Locution</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.LocutionState#getLocution()
 	 * @see #getLocutionState()
@@ -2409,8 +2278,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.TransferState <em>Transfer State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Transfer State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.TransferState
 	 * @generated
@@ -2418,9 +2286,18 @@ public interface OperationsPackage extends EPackage {
 	EClass getTransferState();
 
 	/**
-	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.RecordState <em>Record State</em>}'.
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.TransferState#getEvents() <em>Get Events</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.TransferState#getEvents()
+	 * @generated
+	 */
+	EOperation getTransferState__GetEvents();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.RecordState <em>Record State</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Record State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.RecordState
 	 * @generated
@@ -2428,9 +2305,19 @@ public interface OperationsPackage extends EPackage {
 	EClass getRecordState();
 
 	/**
-	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Note <em>Note</em>}'.
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.RecordState#getEvents() <em>Get Events</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.RecordState#getEvents()
+	 * @generated
+	 */
+	EOperation getRecordState__GetEvents();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.Note <em>Note</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Note</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Note
 	 * @generated
@@ -2439,8 +2326,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.Note#getDescription <em>Description</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Description</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Note#getDescription()
 	 * @see #getNote()
@@ -2449,9 +2335,10 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getNote_Description();
 
 	/**
-	 * Returns the meta object for the reference list '{@link com.vectorsf.jvoice.model.operations.Note#getReferencedStates <em>Referenced States</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the reference list '
+	 * {@link com.vectorsf.jvoice.model.operations.Note#getReferencedStates <em>Referenced States</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference list '<em>Referenced States</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Note#getReferencedStates()
 	 * @see #getNote()
@@ -2461,8 +2348,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.Note#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.Note#getName()
 	 * @see #getNote()
@@ -2472,8 +2358,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.CustomState <em>Custom State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Custom State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.CustomState
 	 * @generated
@@ -2482,8 +2367,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.CustomState#getPath <em>Path</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Path</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.CustomState#getPath()
 	 * @see #getCustomState()
@@ -2493,8 +2377,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.ComponentBean <em>Component Bean</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Component Bean</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.ComponentBean
 	 * @generated
@@ -2503,8 +2386,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.ComponentBean#getFqdn <em>Fqdn</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Fqdn</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.ComponentBean#getFqdn()
 	 * @see #getComponentBean()
@@ -2514,8 +2396,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.ComponentBean#getNameBean <em>Name Bean</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name Bean</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.ComponentBean#getNameBean()
 	 * @see #getComponentBean()
@@ -2525,8 +2406,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.ComponentBean#isPrototype <em>Prototype</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Prototype</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.ComponentBean#isPrototype()
 	 * @see #getComponentBean()
@@ -2536,8 +2416,7 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.ParameterizedState <em>Parameterized State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Parameterized State</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.ParameterizedState
 	 * @generated
@@ -2545,9 +2424,10 @@ public interface OperationsPackage extends EPackage {
 	EClass getParameterizedState();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link com.vectorsf.jvoice.model.operations.ParameterizedState#getParameters <em>Parameters</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Returns the meta object for the attribute list '
+	 * {@link com.vectorsf.jvoice.model.operations.ParameterizedState#getParameters <em>Parameters</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute list '<em>Parameters</em>'.
 	 * @see com.vectorsf.jvoice.model.operations.ParameterizedState#getParameters()
 	 * @see #getParameterizedState()
@@ -2557,22 +2437,20 @@ public interface OperationsPackage extends EPackage {
 
 	/**
 	 * Returns the factory that creates the instances of the model.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
 	OperationsFactory getOperationsFactory();
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * Defines literals for the meta objects that represent
+	 * <!-- begin-user-doc --> Defines literals for the meta objects that represent
 	 * <ul>
-	 *   <li>each class,</li>
-	 *   <li>each feature of each class,</li>
-	 *   <li>each operation of each class,</li>
-	 *   <li>each enum,</li>
-	 *   <li>and each data type</li>
+	 * <li>each class,</li>
+	 * <li>each feature of each class,</li>
+	 * <li>each operation of each class,</li>
+	 * <li>each enum,</li>
+	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2580,8 +2458,7 @@ public interface OperationsPackage extends EPackage {
 	interface Literals {
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.StateImpl <em>State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.StateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getState()
 		 * @generated
@@ -2589,49 +2466,48 @@ public interface OperationsPackage extends EPackage {
 		EClass STATE = eINSTANCE.getState();
 
 		/**
-		 * The meta object literal for the '<em><b>Incoming Transitions</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Incoming Transitions</b></em>' reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference STATE__INCOMING_TRANSITIONS = eINSTANCE.getState_IncomingTransitions();
 
 		/**
-		 * The meta object literal for the '<em><b>Outgoing Transitions</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Outgoing Transitions</b></em>' reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference STATE__OUTGOING_TRANSITIONS = eINSTANCE.getState_OutgoingTransitions();
 
 		/**
 		 * The meta object literal for the '<em><b>Notes</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference STATE__NOTES = eINSTANCE.getState_Notes();
 
 		/**
 		 * The meta object literal for the '<em><b>Fireable Events</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-                 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
-                EAttribute STATE__FIREABLE_EVENTS = eINSTANCE.getState_FireableEvents();
+		EAttribute STATE__FIREABLE_EVENTS = eINSTANCE.getState_FireableEvents();
 
-                /**
+		/**
 		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EOperation STATE___GET_EVENTS = eINSTANCE.getState__GetEvents();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.TransitionImpl <em>Transition</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.TransitionImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTransition()
 		 * @generated
@@ -2640,32 +2516,31 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Source</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference TRANSITION__SOURCE = eINSTANCE.getTransition_Source();
 
 		/**
 		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference TRANSITION__TARGET = eINSTANCE.getTransition_Target();
 
 		/**
 		 * The meta object literal for the '<em><b>Event Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute TRANSITION__EVENT_NAME = eINSTANCE.getTransition_EventName();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl <em>Flow</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.FlowImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getFlow()
 		 * @generated
@@ -2673,33 +2548,33 @@ public interface OperationsPackage extends EPackage {
 		EClass FLOW = eINSTANCE.getFlow();
 
 		/**
-		 * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>States</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference FLOW__STATES = eINSTANCE.getFlow_States();
 
 		/**
-		 * The meta object literal for the '<em><b>Transitions</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Transitions</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference FLOW__TRANSITIONS = eINSTANCE.getFlow_Transitions();
 
 		/**
-		 * The meta object literal for the '<em><b>Notes</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Notes</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference FLOW__NOTES = eINSTANCE.getFlow_Notes();
 
 		/**
-		 * The meta object literal for the '<em><b>Beans</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Beans</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference FLOW__BEANS = eINSTANCE.getFlow_Beans();
@@ -2714,8 +2589,7 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.InitialStateImpl <em>Initial State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.InitialStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getInitialState()
 		 * @generated
@@ -2724,8 +2598,7 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.FinalStateImpl <em>Final State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.FinalStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getFinalState()
 		 * @generated
@@ -2734,32 +2607,31 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Final</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute FINAL_STATE__FINAL = eINSTANCE.getFinalState_Final();
 
 		/**
 		 * The meta object literal for the '<em><b>Return Expression</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc
+		 * --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute FINAL_STATE__RETURN_EXPRESSION = eINSTANCE.getFinalState_ReturnExpression();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EOperation FINAL_STATE___GET_EVENTS = eINSTANCE.getFinalState__GetEvents();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.SwitchStateImpl <em>Switch State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.SwitchStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getSwitchState()
 		 * @generated
@@ -2767,25 +2639,32 @@ public interface OperationsPackage extends EPackage {
 		EClass SWITCH_STATE = eINSTANCE.getSwitchState();
 
 		/**
-		 * The meta object literal for the '<em><b>Case</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Case</b></em>' containment reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference SWITCH_STATE__CASE = eINSTANCE.getSwitchState_Case();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Case</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EOperation SWITCH_STATE___GET_CASE__STRING = eINSTANCE.getSwitchState__GetCase__String();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
+		 * @generated
+		 */
+		EOperation SWITCH_STATE___GET_EVENTS = eINSTANCE.getSwitchState__GetEvents();
+
+		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.CaseImpl <em>Case</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.CaseImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCase()
 		 * @generated
@@ -2794,24 +2673,23 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Condition</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute CASE__CONDITION = eINSTANCE.getCase_Condition();
 
 		/**
 		 * The meta object literal for the '<em><b>Event Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute CASE__EVENT_NAME = eINSTANCE.getCase_EventName();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl <em>Call State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.CallStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCallState()
 		 * @generated
@@ -2820,16 +2698,16 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Method Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute CALL_STATE__METHOD_NAME = eINSTANCE.getCallState_MethodName();
 
 		/**
 		 * The meta object literal for the '<em><b>Bean</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference CALL_STATE__BEAN = eINSTANCE.getCallState_Bean();
@@ -2843,9 +2721,16 @@ public interface OperationsPackage extends EPackage {
 		EReference CALL_STATE__REFERENCED_BEAN = eINSTANCE.getCallState_ReferencedBean();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
+		 * @generated
+		 */
+		EOperation CALL_STATE___GET_EVENTS = eINSTANCE.getCallState__GetEvents();
+
+		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl <em>Call Flow State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCallFlowState()
 		 * @generated
@@ -2854,24 +2739,23 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Subflow</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference CALL_FLOW_STATE__SUBFLOW = eINSTANCE.getCallFlowState_Subflow();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EOperation CALL_FLOW_STATE___GET_EVENTS = eINSTANCE.getCallFlowState__GetEvents();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.PromptStateImpl <em>Prompt State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.PromptStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getPromptState()
 		 * @generated
@@ -2879,9 +2763,16 @@ public interface OperationsPackage extends EPackage {
 		EClass PROMPT_STATE = eINSTANCE.getPromptState();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
+		 * @generated
+		 */
+		EOperation PROMPT_STATE___GET_EVENTS = eINSTANCE.getPromptState__GetEvents();
+
+		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.InputStateImpl <em>Input State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.InputStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getInputState()
 		 * @generated
@@ -2889,9 +2780,16 @@ public interface OperationsPackage extends EPackage {
 		EClass INPUT_STATE = eINSTANCE.getInputState();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
+		 * @generated
+		 */
+		EOperation INPUT_STATE___GET_EVENTS = eINSTANCE.getInputState__GetEvents();
+
+		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.MenuStateImpl <em>Menu State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.MenuStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getMenuState()
 		 * @generated
@@ -2900,16 +2798,22 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EOperation MENU_STATE___GET_EVENTS = eINSTANCE.getMenuState__GetEvents();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation. <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
+		 * 
+		 * @generated
+		 */
+
+		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.LocutionStateImpl <em>Locution State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.LocutionStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getLocutionState()
 		 * @generated
@@ -2918,16 +2822,15 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Locution</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EReference LOCUTION_STATE__LOCUTION = eINSTANCE.getLocutionState_Locution();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.TransferStateImpl <em>Transfer State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.TransferStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getTransferState()
 		 * @generated
@@ -2935,9 +2838,16 @@ public interface OperationsPackage extends EPackage {
 		EClass TRANSFER_STATE = eINSTANCE.getTransferState();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
+		 * @generated
+		 */
+		EOperation TRANSFER_STATE___GET_EVENTS = eINSTANCE.getTransferState__GetEvents();
+
+		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.RecordStateImpl <em>Record State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.RecordStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getRecordState()
 		 * @generated
@@ -2945,9 +2855,16 @@ public interface OperationsPackage extends EPackage {
 		EClass RECORD_STATE = eINSTANCE.getRecordState();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
+		 * @generated
+		 */
+		EOperation RECORD_STATE___GET_EVENTS = eINSTANCE.getRecordState__GetEvents();
+
+		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.NoteImpl <em>Note</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.NoteImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getNote()
 		 * @generated
@@ -2956,32 +2873,31 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute NOTE__DESCRIPTION = eINSTANCE.getNote_Description();
 
 		/**
-		 * The meta object literal for the '<em><b>Referenced States</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Referenced States</b></em>' reference list feature. <!--
+		 * begin-user-doc --> <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference NOTE__REFERENCED_STATES = eINSTANCE.getNote_ReferencedStates();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute NOTE__NAME = eINSTANCE.getNote_Name();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.CustomStateImpl <em>Custom State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.CustomStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getCustomState()
 		 * @generated
@@ -2990,16 +2906,15 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute CUSTOM_STATE__PATH = eINSTANCE.getCustomState_Path();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl <em>Component Bean</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getComponentBean()
 		 * @generated
@@ -3008,32 +2923,31 @@ public interface OperationsPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '<em><b>Fqdn</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute COMPONENT_BEAN__FQDN = eINSTANCE.getComponentBean_Fqdn();
 
 		/**
 		 * The meta object literal for the '<em><b>Name Bean</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute COMPONENT_BEAN__NAME_BEAN = eINSTANCE.getComponentBean_NameBean();
 
 		/**
 		 * The meta object literal for the '<em><b>Prototype</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!--
+		 * end-user-doc -->
 		 * @generated
 		 */
 		EAttribute COMPONENT_BEAN__PROTOTYPE = eINSTANCE.getComponentBean_Prototype();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl <em>Parameterized State</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getParameterizedState()
 		 * @generated
@@ -3050,4 +2964,4 @@ public interface OperationsPackage extends EPackage {
 
 	}
 
-} //OperationsPackage
+} // OperationsPackage

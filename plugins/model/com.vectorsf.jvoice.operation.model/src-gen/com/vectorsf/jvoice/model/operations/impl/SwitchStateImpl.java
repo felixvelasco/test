@@ -4,10 +4,12 @@ package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
+import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -82,6 +84,21 @@ public class SwitchStateImpl extends StateImpl implements SwitchState {
 		}
 				
 		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getEvents() {
+		EList<String> ret = new BasicEList<String>();
+		
+		for (Case current: getCase()) {
+			ret.add(current.getEventName());
+		}
+		
+		return ret;
 	}
 
 	/**
@@ -164,10 +181,28 @@ public class SwitchStateImpl extends StateImpl implements SwitchState {
 	 * @generated
 	 */
 	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == State.class) {
+			switch (baseOperationID) {
+				case OperationsPackage.STATE___GET_EVENTS: return OperationsPackage.SWITCH_STATE___GET_EVENTS;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case OperationsPackage.SWITCH_STATE___GET_CASE__STRING:
 				return getCase((String)arguments.get(0));
+			case OperationsPackage.SWITCH_STATE___GET_EVENTS:
+				return getEvents();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

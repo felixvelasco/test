@@ -4,10 +4,13 @@ package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
-
 import com.vectorsf.jvoice.model.operations.State;
+
 import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 
 /**
@@ -45,29 +48,17 @@ public class MenuStateImpl extends LocutionStateImpl implements MenuState {
 	 * @generated
 	 */
 	public EList<String> getEvents() {
-				org.eclipse.emf.common.util.BasicEList<String> list = new org.eclipse.emf.common.util.BasicEList<String>();
-				list.add("busy");
-				list.add("conn_error");
-				list.add("error");
-				list.add("far_end_disc");
-				list.add("hangup");
-				list.add("match");
-				list.add("maxatt");
-				list.add("maxtime");
-				list.add("netw_busy");
-				list.add("netw_disconnect");
-				list.add("noanswer");
-				list.add("noinput");
-				list.add("nomatch");
-				list.add("noresource");
-				list.add("recorded");
-				list.add("record_unsup");
-				list.add("success");
-				list.add("transferred");
-				list.add("unknown");
+		EList<String> ret = new BasicEList<String>();
 		
-				return list;
+		ret.add("ok");
+		ret.add("error");
+		ret.add("noresource");
+		ret.add("maxattempts");
+		ret.add("maxnoinput");
+		ret.add("maxnomatch");
+		ret.add("hangup");
 		
+		return ret;
 	}
 
 	/**

@@ -2,6 +2,8 @@
  */
 package com.vectorsf.jvoice.model.operations;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -99,5 +101,14 @@ public interface CallState extends ParameterizedState {
 	 * @generated
 	 */
 	void setReferencedBean(ComponentBean value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='EList<String> ret = new <%org.eclipse.emf.common.util.BasicEList%><String>();\n\nret.add(\"ok\");\nret.add(\"error\");\n\n\nreturn ret;'"
+	 * @generated
+	 */
+	EList<String> getEvents();
 
 } // CallState

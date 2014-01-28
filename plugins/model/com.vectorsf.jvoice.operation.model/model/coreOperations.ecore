@@ -54,6 +54,11 @@
       </eAnnotations>
       <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
+    <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="EList&lt;String> ret = new &lt;%org.eclipse.emf.common.util.BasicEList%>&lt;String>();&#xA;&#xA;for (Case current: getCase()) {&#xA;&#x9;ret.add(current.getEventName());&#xA;}&#xA;&#xA;return ret;"/>
+      </eAnnotations>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="case" upperBound="-1" eType="#//Case"
         containment="true"/>
   </eClassifiers>
@@ -62,6 +67,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CallState" eSuperTypes="#//ParameterizedState">
+    <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="EList&lt;String> ret = new &lt;%org.eclipse.emf.common.util.BasicEList%>&lt;String>();&#xA;&#xA;ret.add(&quot;ok&quot;);&#xA;ret.add(&quot;error&quot;);&#xA;&#xA;&#xA;return ret;"/>
+      </eAnnotations>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="methodName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bean" eType="#//ComponentBean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referencedBean" eType="#//ComponentBean"/>
@@ -69,25 +79,49 @@
   <eClassifiers xsi:type="ecore:EClass" name="CallFlowState" eSuperTypes="#//ParameterizedState">
     <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="body" value="&#x9;&#x9;org.eclipse.emf.common.util.BasicEList&lt;String> list = new org.eclipse.emf.common.util.BasicEList&lt;String>();&#xD;&#xA;&#x9;&#x9;list.add(&quot;busy&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;conn_error&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;error&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;far_end_disc&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;hangup&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;match&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;maxatt&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;maxtime&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;netw_busy&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;netw_disconnect&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;noanswer&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;noinput&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;nomatch&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;noresource&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;recorded&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;record_unsup&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;success&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;transferred&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;unknown&quot;);&#xD;&#xA;&#xD;&#xA;&#x9;&#x9;return list;&#xD;&#xA;"/>
+        <details key="body" value="EList&lt;String> list = new &lt;%org.eclipse.emf.common.util.BasicEList%>&lt;String>();&#xA;&#xA;for(State state: getSubflow().getStates()) {&#xA;&#x9;if (state instanceof FinalState &amp;&amp; !((FinalState)state).isFinal()) {&#xA;&#x9;&#x9;list.add(state.getName());&#xA;&#x9;}&#xA;}&#xA;return list;&#xD;&#xA;"/>
       </eAnnotations>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subflow" eType="#//Flow"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PromptState" eSuperTypes="#//LocutionState"/>
-  <eClassifiers xsi:type="ecore:EClass" name="InputState" eSuperTypes="#//LocutionState"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PromptState" eSuperTypes="#//LocutionState">
+    <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="EList&lt;String> ret = new &lt;%org.eclipse.emf.common.util.BasicEList%>&lt;String>();&#xA;&#xA;ret.add(&quot;ok&quot;);&#xA;ret.add(&quot;hangup&quot;);&#xA;&#xA;return ret;"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InputState" eSuperTypes="#//LocutionState">
+    <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="EList&lt;String> ret = new &lt;%org.eclipse.emf.common.util.BasicEList%>&lt;String>();&#xA;&#xA;ret.add(&quot;ok&quot;);&#xA;ret.add(&quot;error&quot;);&#xA;ret.add(&quot;noresource&quot;);&#xA;ret.add(&quot;maxattempts&quot;);&#xA;ret.add(&quot;maxnoinput&quot;);&#xA;ret.add(&quot;maxnomatch&quot;);&#xA;ret.add(&quot;hangup&quot;);&#xA;&#xA;return ret;"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MenuState" eSuperTypes="#//LocutionState">
     <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="body" value="&#x9;&#x9;org.eclipse.emf.common.util.BasicEList&lt;String> list = new org.eclipse.emf.common.util.BasicEList&lt;String>();&#xD;&#xA;&#x9;&#x9;list.add(&quot;busy&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;conn_error&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;error&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;far_end_disc&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;hangup&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;match&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;maxatt&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;maxtime&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;netw_busy&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;netw_disconnect&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;noanswer&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;noinput&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;nomatch&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;noresource&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;recorded&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;record_unsup&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;success&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;transferred&quot;);&#xD;&#xA;&#x9;&#x9;list.add(&quot;unknown&quot;);&#xD;&#xA;&#xD;&#xA;&#x9;&#x9;return list;&#xD;&#xA;"/>
+        <details key="body" value="EList&lt;String> ret = new &lt;%org.eclipse.emf.common.util.BasicEList%>&lt;String>();&#xA;&#xA;ret.add(&quot;ok&quot;);&#xA;ret.add(&quot;error&quot;);&#xA;ret.add(&quot;noresource&quot;);&#xA;ret.add(&quot;maxattempts&quot;);&#xA;ret.add(&quot;maxnoinput&quot;);&#xA;ret.add(&quot;maxnomatch&quot;);&#xA;ret.add(&quot;hangup&quot;);&#xA;&#xA;return ret;"/>
       </eAnnotations>
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocutionState" abstract="true" eSuperTypes="#//State">
     <eStructuralFeatures xsi:type="ecore:EReference" name="locution" eType="ecore:EClass ../../com.vectorsf.jvoice.prompt.model/model/VoiceDsl.ecore#//VoiceDsl"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TransferState" eSuperTypes="#//LocutionState"/>
-  <eClassifiers xsi:type="ecore:EClass" name="RecordState" eSuperTypes="#//LocutionState"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TransferState" eSuperTypes="#//LocutionState">
+    <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="EList&lt;String> ret = new &lt;%org.eclipse.emf.common.util.BasicEList%>&lt;String>();&#xA;&#xA;&lt;%com.vectorsf.jvoice.prompt.model.voiceDsl.TypeTransfer%> type = ((&lt;%com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl%>) getLocution()).getTypeTransfer();&#xA;&#xA;ret.add(&quot;ok&quot;);&#xA;ret.add(&quot;error&quot;);&#xA;ret.add(&quot;noresource&quot;);&#xA;ret.add(&quot;connectionerror&quot;);&#xA;ret.add(&quot;unknown&quot;);&#xA;ret.add(&quot;near_end_disconnect&quot;);&#xA;&#xA;if (type==TypeTransfer.CONSULTATION || type==TypeTransfer.BRIDGE) {&#xA;&#x9;ret.add(&quot;noanswer&quot;);&#xA;&#x9;ret.add(&quot;busy&quot;);&#xA;&#x9;ret.add(&quot;network_busy&quot;);&#xA;}&#xA;&#xA;if (type==TypeTransfer.BRIDGE) {&#xA;&#x9;ret.add(&quot;maxtime_disconnect&quot;);&#xA;&#x9;ret.add(&quot;network_disconnect&quot;);&#xA;&#x9;ret.add(&quot;far_end_disconnect&quot;);&#xA;}&#xA;&#xA;ret.add(&quot;hangup&quot;);&#xA;&#xA;return ret;"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RecordState" eSuperTypes="#//LocutionState">
+    <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="EList&lt;String> ret = new &lt;%org.eclipse.emf.common.util.BasicEList%>&lt;String>();&#xA;&#xA;ret.add(&quot;ok&quot;);&#xA;ret.add(&quot;error&quot;);&#xA;ret.add(&quot;noresource&quot;);&#xA;ret.add(&quot;recordunsupported&quot;);&#xA;ret.add(&quot;hangup&quot;);&#xA;&#xA;return ret;"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Note" eSuperTypes="../../com.vectorsf.jvoice.base.model/model/Base.ecore#//JVElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referencedStates" upperBound="-1"
