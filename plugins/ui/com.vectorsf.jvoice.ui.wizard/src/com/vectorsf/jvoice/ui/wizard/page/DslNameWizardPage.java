@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.internal.runtime.CommonMessages;
 import org.eclipse.core.internal.runtime.IRuntimeConstants;
 import org.eclipse.core.internal.runtime.RuntimeLog;
@@ -585,11 +586,12 @@ public class DslNameWizardPage extends AbstractWizardPage {
 						source = new SequenceInputStream(source, resIs);
 					}
 					dslFile.create(source, false, null);
-				} catch (Exception e) {
+				} catch (ResourceException e) {
 					handleException(e);
 					MessageDialog.openError(null, "Error", "A resource \"" + dslName
 							+ "\" exists with a different case. Please check Error Log.");
-					// return;
+				} catch (IOException e1) {
+					e1.printStackTrace();
 				}
 
 			}

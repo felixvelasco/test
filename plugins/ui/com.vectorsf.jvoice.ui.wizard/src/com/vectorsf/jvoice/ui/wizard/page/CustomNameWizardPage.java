@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.internal.runtime.Activator;
 import org.eclipse.core.internal.runtime.CommonMessages;
 import org.eclipse.core.internal.runtime.IRuntimeConstants;
@@ -561,7 +562,7 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 				InputStream source = new ByteArrayInputStream(contents.getBytes());
 				try {
 					customFile.create(source, false, null);
-				} catch (Exception e) {
+				} catch (ResourceException e) {
 					handleException(e);
 					MessageDialog.openError(null, "Error", "A resource \"" + customName
 							+ "\" exists with a different case. Please check Error Log.");
@@ -573,14 +574,15 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		file = customFile;
-
-		try {
-			IDE.openEditor(page, file);
-		} catch (PartInitException e) {
-			String error = "error open editor";
-			IStatus status = new Status(IStatus.ERROR, "0", error, e);
-			ErrorDialog.openError(getShell(), error, null, status);
-			throw new CoreException(status);
+		if (file.exists()) {
+			try {
+				IDE.openEditor(page, file);
+			} catch (PartInitException e) {
+				String error = "error open editor";
+				IStatus status = new Status(IStatus.ERROR, "0", error, e);
+				ErrorDialog.openError(getShell(), error, null, status);
+				throw new CoreException(status);
+			}
 		}
 	}
 
