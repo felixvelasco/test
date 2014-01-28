@@ -56,7 +56,6 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	private Text textField;
 	private Text packageField;
 	private Object selection;
-	private int primeraVez;
 
 	private Listener nameModifyListener = new Listener() {
 		@Override
@@ -71,7 +70,6 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
-		primeraVez = 0;
 		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_box.png"));
 	}
 
@@ -80,13 +78,6 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	}
 
 	protected boolean validatePage() {
-
-		// si es la primera vez no validamos, pero devolvemos false para que no pueda continuar
-		if (primeraVez == 0) {
-			primeraVez++;
-			return false;
-		}
-
 		String projectName = getProjectFieldValue();
 		if (projectName.equals("")) { //$NON-NLS-1$
 			setErrorMessage(null);
