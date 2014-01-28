@@ -18,7 +18,8 @@ public class PromptStatePattern extends LocutionStatePattern {
 
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
-		return mainBusinessObject instanceof PromptState;
+		return mainBusinessObject instanceof PromptState || mainBusinessObject instanceof PromptDsl
+				&& isDslFromTargetFlow((PromptDsl) mainBusinessObject);
 	}
 
 	@Override

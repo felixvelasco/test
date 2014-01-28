@@ -47,8 +47,12 @@ public class RelationPattern extends AbstractConnectionPattern {
 
 	@Override
 	public boolean canAdd(IAddContext context) {
-		Note sourceNote = getNote(((IConnectionContext) context).getSourceAnchor());
-		return sourceNote != null && context instanceof IAddConnectionContext;
+		if (context instanceof IConnectionContext) {
+			Note sourceNote = getNote(((IConnectionContext) context).getSourceAnchor());
+			return sourceNote != null && context instanceof IAddConnectionContext;
+		} else {
+			return false;
+		}
 
 	}
 

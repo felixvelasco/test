@@ -49,9 +49,13 @@ public class TransitionPattern extends AbstractConnectionPattern {
 
 	@Override
 	public boolean canAdd(IAddContext context) {
-		State sourceState = getState(((IConnectionContext) context).getSourceAnchor());
-		return context.getNewObject() instanceof Transition && !(sourceState instanceof SwitchState)
-				&& context instanceof IAddConnectionContext;
+		if (context instanceof IConnectionContext) {
+			State sourceState = getState(((IConnectionContext) context).getSourceAnchor());
+			return context.getNewObject() instanceof Transition && !(sourceState instanceof SwitchState)
+					&& context instanceof IAddConnectionContext;
+		} else {
+			return false;
+		}
 
 	}
 

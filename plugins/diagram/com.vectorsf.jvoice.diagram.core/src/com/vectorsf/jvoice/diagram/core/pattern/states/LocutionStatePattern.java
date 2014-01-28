@@ -21,7 +21,10 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
+import org.eclipse.graphiti.features.context.impl.AddContext;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
@@ -102,6 +105,46 @@ public abstract class LocutionStatePattern extends SimpleStatePattern {
 			e.printStackTrace();
 		}
 		return resourceFile;
+	}
+	
+	@Override
+	protected PictogramElement doAdd(IAddContext context) {
+
+		if (context.getNewObject() instanceof VoiceDsl) {
+			// Obtenemos el dsl que se ha arrastrado al editor
+			VoiceDsl dsl = (VoiceDsl) context.getNewObject();
+			String dslName = dsl.getName();
+
+			// Obtenemos el flujo al que se ha arrastrado.
+			Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+
+			// Creamos el estado a partir del dsl
+			LocutionState state = createMainState();
+			state.setName(getValidStateName(flow, dslName));
+			state.setLocution(dsl);
+
+			// Añadimos al flujo el estado creado.
+			flow.getStates().add(state);
+
+			// El padre necesita un estado en el contexto, así que creamos un nuevo contexto y le seteamos el estado.
+			AddContext newContext = new AddContext(context, state);
+
+			return super.doAdd(newContext);
+		} else {
+			return super.doAdd(context);
+		}
+	}
+
+	protected boolean isDslFromTargetFlow(VoiceDsl dsl) {
+		// Obtenemos el flujo al que se ha arrastrado el dsl.
+		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+
+		// Obtenemos el flujo al que pertenece el dsl arrastrado.
+		IFile file = (IFile) Platform.getAdapterManager().getAdapter(dsl, IFile.class);
+		String dslFlow = file.getParent().getName().substring(0, file.getParent().getName().indexOf(".resources"));
+
+		// Comparamos que sean el mismo flujo.
+		return dslFlow.equals(flow.getName());
 	}
 
 	private IPath getFlowFolderPath(Flow flow) {

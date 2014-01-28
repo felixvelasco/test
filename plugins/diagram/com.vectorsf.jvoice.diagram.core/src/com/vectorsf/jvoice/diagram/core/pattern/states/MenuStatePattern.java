@@ -21,7 +21,8 @@ public class MenuStatePattern extends LocutionStatePattern {
 
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
-		return mainBusinessObject instanceof MenuState;
+		return mainBusinessObject instanceof MenuState || mainBusinessObject instanceof MenuDsl
+				&& isDslFromTargetFlow((MenuDsl) mainBusinessObject);
 	}
 
 	@Override
