@@ -159,10 +159,14 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 	private List<String> rellenarWsdlLocation (File file, List<String> locations){
 		File[] files = file.listFiles();
 		for (File fil : files) {
-			String extension =fil.getName().substring(fil.getName().lastIndexOf("."));
-			if(extension.equalsIgnoreCase(".wsdl")){
-				file = fil;
-				locations.add("http://localhost/wsdl/" + fil.getName());
+			int nliDot = fil.getName().lastIndexOf(".");
+			if (nliDot!=-1)
+			{
+				String extension =fil.getName().substring(nliDot);
+				if(extension.equalsIgnoreCase(".wsdl")){
+					file = fil;
+					locations.add("http://localhost/wsdl/" + fil.getName());
+				}
 			}
 		}
 		return locations;
