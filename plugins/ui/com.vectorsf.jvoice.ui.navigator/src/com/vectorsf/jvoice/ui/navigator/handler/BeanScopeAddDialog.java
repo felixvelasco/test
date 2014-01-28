@@ -228,12 +228,21 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 					IType type;
 					try {
 						type = jProject.findType(bean.getFqdn());
-						IMemberValuePair[] scopeValues = type.getAnnotation(
-								"Scope").getMemberValuePairs();
-						if (scopeValues[0].getValue().equals("prototype")) {
-							scopedNameText.setEnabled(true);
-							bean.setPrototype(true);
-						} else {
+						try {
+							IMemberValuePair[] scopeValues = type
+									.getAnnotation("Scope")
+									.getMemberValuePairs();
+							if (scopeValues[0].getValue().equals("prototype")) {
+								scopedNameText.setEnabled(true);
+								bean.setPrototype(true);
+							} else {
+								scopedNameText.setEnabled(false);
+								scopedNameText.setText(Character
+										.toLowerCase(type.getElementName()
+												.charAt(0))
+										+ type.getElementName().substring(1));
+							}
+						} catch (JavaModelException e2) {
 							scopedNameText.setEnabled(false);
 							scopedNameText.setText(Character.toLowerCase(type
 									.getElementName().charAt(0))
