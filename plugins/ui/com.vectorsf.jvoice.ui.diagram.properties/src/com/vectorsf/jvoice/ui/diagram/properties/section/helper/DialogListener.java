@@ -24,12 +24,13 @@ public class DialogListener implements SelectionListener {
 
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-		Object bo = simpleStateSection.getDiagramTypeProvider().getFeatureProvider()
+		EObject bo = (EObject) simpleStateSection.getDiagramTypeProvider().getFeatureProvider()
 				.getBusinessObjectForPictogramElement(simpleStateSection.getSelectedPictogramElement());
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(bo);
-		Object newValue = chooser.getValue((EObject) bo, editingDomain);
+		Object newValue = chooser.getValue(bo, editingDomain);
+		Object oldValue = bo.eGet(feature);
 
-		if (newValue != null && true/* TODO Comprobar que haya cambios */) {
+		if (newValue != null && oldValue != newValue) {
 			editingDomain.getCommandStack().execute(SetCommand.create(editingDomain, bo, feature, newValue));
 		}
 		simpleStateSection.refresh();
