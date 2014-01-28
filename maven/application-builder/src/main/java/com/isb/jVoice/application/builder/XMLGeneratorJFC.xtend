@@ -72,7 +72,7 @@ class XMLGeneratorJFC {
 			view-factory-creator="viewFactoryCreator" />
 
 		«IF (legacyLogger)»
-		<beans:bean id="renderer" class="com.vectorsf.jvoiceframework.isban.logger.render.vxi.IsbanLoggerRenderer">
+		<beans:bean id="renderer" class="com.vectorsf.jvoiceframework.isban.logger.render.vxi.VXIIsbanLoggerRenderer">
 		«ELSE»
 		<beans:bean id="renderer" class="com.vectorsf.jvoiceframework.flow.render.vxi.VXIRenderer">
 		«ENDIF»
