@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -48,6 +49,7 @@ import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -57,11 +59,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.navigator.CommonNavigator;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
@@ -614,6 +619,20 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		};
 		try {
 			ResourcesPlugin.getWorkspace().run(wsRunnable, null);
+			for (Shell shell : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getShells()) {
+				if (shell.getText().contains("New Flow")) {
+					shell.close();
+				}
+			}
+			for (IViewPart view : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViews()) {
+				if (view.getTitle().equals("Navigator IVR")) {
+					CommonNavigator commmonNavigator = (CommonNavigator) view;
+					URI flowUri = resource.getURI().appendFragment("/1");
+					EObject eObject = BaseModel.getInstance().getResourceSet().getEObject(flowUri, false);
+					StructuredSelection structuredSelection = new StructuredSelection(eObject);
+					commmonNavigator.selectReveal(structuredSelection);
+				}
+			}
 		} catch (final CoreException e) {
 			final Throwable cause = e.getStatus().getException();
 			if (cause instanceof RuntimeException) {

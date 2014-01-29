@@ -15,13 +15,20 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.navigator.CommonNavigator;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.project.JVoiceApplicationConfigurator;
+import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.ui.wizard.page.ApplicationNameWizardPage;
 
 public class CreateJVoiceApplicationWizard extends BasicNewResourceWizard {
@@ -81,6 +88,21 @@ public class CreateJVoiceApplicationWizard extends BasicNewResourceWizard {
 					}
 				}
 			});
+
+			for (Shell shell : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getShells()) {
+				if (shell.getText().contains("New Application Project")) {
+					shell.close();
+				}
+			}
+
+			for (IViewPart view : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViews()) {
+				if (view.getTitle().equals("Navigator IVR")) {
+					CommonNavigator commonNavigator = (CommonNavigator) view;
+					JVProject project = BaseModel.getInstance().getModel().getProject(applicationName);
+					StructuredSelection structuredSelection = new StructuredSelection(project);
+					commonNavigator.selectReveal(structuredSelection);
+				}
+			}
 
 		} catch (InvocationTargetException | InterruptedException e) {
 			handleException(e);

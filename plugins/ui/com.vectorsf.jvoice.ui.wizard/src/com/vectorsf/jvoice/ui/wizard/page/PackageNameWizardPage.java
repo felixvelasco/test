@@ -6,6 +6,7 @@ package com.vectorsf.jvoice.ui.wizard.page;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.internal.runtime.CommonMessages;
 import org.eclipse.core.internal.runtime.IRuntimeConstants;
 import org.eclipse.core.internal.runtime.RuntimeLog;
@@ -24,11 +25,14 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -38,8 +42,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+import org.eclipse.ui.navigator.CommonNavigator;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVPackage;
@@ -244,7 +252,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 			public void run(IProgressMonitor monitor) throws CoreException {
 				try {
 					createRecursively(packageFolder, monitor);
-				} catch (Exception e) {
+				} catch (ResourceException e) {
 					handleException(e);
 					MessageDialog.openError(null, "Error", "A resource \"" + packageFolder.getName()
 							+ "\" exists with a different case. Please check Error Log.");
@@ -253,7 +261,26 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 
 		};
 		ResourcesPlugin.getWorkspace().run(runnable, packageFolder.getProject(), IWorkspace.AVOID_UPDATE, null);
-
+		for (Shell shell : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getShells()) {
+			if (shell.getText().contains("New Package")) {
+				shell.close();
+			}
+		}
+		for (IViewPart view : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViews()) {
+			if (view.getTitle().equals("Navigator IVR")) {
+				CommonNavigator commonNavigator = (CommonNavigator) view;
+				JVProject project = BaseModel.getInstance().getModel().getProject(packageFolder.getProject().getName());
+				for (EObject pack : project.eContents()) {
+					JVPackage packa = (JVPackage) Platform.getAdapterManager().getAdapter(pack, JVPackage.class);
+					if (packa != null) {
+						if (packa.getName().equals(packageFolder.getName())) {
+							StructuredSelection structuredSelection = new StructuredSelection(pack);
+							commonNavigator.selectReveal(structuredSelection);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private static void handleException(Throwable e) {
