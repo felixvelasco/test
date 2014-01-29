@@ -44,6 +44,7 @@ public class ValidateCase implements ICellEditorValidator {
 					throw new Exception(message);
 				}
 			}
+
 			if (!OS.isNameValid(valor)) {
 				message = NLS.bind(Messages.resources_invalidName, valor);
 				throw new Exception(message);
