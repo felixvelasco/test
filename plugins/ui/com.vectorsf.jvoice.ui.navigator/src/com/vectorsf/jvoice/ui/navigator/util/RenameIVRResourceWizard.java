@@ -336,5 +336,6 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 		public String getText() {
 			return newName;
 		}
+
 	}
 }

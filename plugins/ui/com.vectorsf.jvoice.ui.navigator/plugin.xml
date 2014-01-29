@@ -773,6 +773,26 @@
                </with>
             </visibleWhen>
          </command>
+            <command
+                  commandId="com.vectorsf.jvoice.ui.navigator.refreshBeanScope"
+                  label="Refresh Bean"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <or>
+                           <instanceof
+                                 value="com.vectorsf.jvoice.model.operations.ComponentBean">
+                           </instanceof>
+                        </or>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+            </command>
       </menuContribution>
    </extension>
    <extension
@@ -950,6 +970,11 @@
             defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.RenameFlowParameterHandler"
             id="com.vectorsf.jvoice.ui.navigator.renameFlowParameter"
             name="%command.name.renameParameter">
+      </command>
+      <command
+            defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.RefreshBeanScopeHandler"
+            id="com.vectorsf.jvoice.ui.navigator.refreshBeanScope"
+            name="refreshBeanScope">
       </command>
    </extension>
    <extension
