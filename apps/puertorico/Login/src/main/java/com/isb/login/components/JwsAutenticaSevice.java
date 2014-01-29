@@ -13,6 +13,7 @@ import com.ivrpr.ws.JwServiceAutenticaResponse2;
 import com.ivrpr.ws.ObjectFactory;
 import com.ivrpr.ws.WebServices;
 import com.vectorsf.jvoiceframework.core.service.ws.WebServiceProvider;
+import com.vectorsf.jvoiceframework.isban.logger.log.StatisticsLogger;
 
 @Component()
 @Scope("session")
@@ -58,6 +59,7 @@ public class JwsAutenticaSevice implements Serializable {
 			setResult(3);
 			e.printStackTrace();
 		}
+		
 	}
 
 	public int getResult() {

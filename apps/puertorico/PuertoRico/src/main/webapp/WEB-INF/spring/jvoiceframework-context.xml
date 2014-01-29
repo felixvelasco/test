@@ -75,6 +75,9 @@
 	   <beans:property name="resource" value="/com/vectorsf/PuertoRico/ws/ws-endpoints.xml" /> 
 	</beans:bean>
 	
+	<beans:bean id="jvoiceframework" class="com.vectorsf.jvoiceframework.core.admin.AppConfig">
+		<beans:property name="fileName" value="/properties/jvoiceframework.properties"/>
+	</beans:bean>				
 	
 	
 </beans:beans>

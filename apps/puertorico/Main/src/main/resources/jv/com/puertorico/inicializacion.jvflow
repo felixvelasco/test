@@ -29,7 +29,7 @@
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
       <properties key="org.eclipse.graphiti.pattern.patternType" value="org.eclipse.graphiti.pattern.idpattern"/>
-      <graphicsAlgorithm xsi:type="al:Rectangle" lineStyle="UNSPECIFIED" width="180" height="58" x="400" y="90" style="/0/@styles.0">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineStyle="UNSPECIFIED" width="180" height="58" x="400" y="80" style="/0/@styles.0">
         <properties key="org.eclipse.graphiti.pattern.id.id" value="mainFigure"/>
         <graphicsAlgorithmChildren xsi:type="al:Polyline" lineStyle="UNSPECIFIED" style="/0/@styles.3">
           <points x="45"/>
@@ -56,7 +56,7 @@
           <graphicsAlgorithmChildren xsi:type="al:Image" lineWidth="1" transparency="0.0" width="12" height="12" x="156" y="8" id="icon_deco_dropdown" stretchH="false" stretchV="false" proportional="false"/>
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
-      <link businessObjects="_H22CsIKXEeOKlPuNuAWTLg"/>
+      <link businessObjects="_UmXfwIdtEeOEO6B4iONhTA"/>
       <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.1" incomingConnections="/0/@connections.0"/>
     </children>
     <styles background="/0/@colors.4" foreground="/0/@colors.3" lineWidth="1" filled="true" lineVisible="true" id="mainRectangleStyle" horizontalAlignment="UNSPECIFIED" verticalAlignment="UNSPECIFIED"/>
@@ -84,7 +84,7 @@
     </connections>
     <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.2/@anchors.0" end="/0/@children.1/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.6" lineWidth="2" filled="false" transparency="0.0"/>
-      <link businessObjects="_IoT74IKXEeOKlPuNuAWTLg"/>
+      <link businessObjects="_Vhlx4IdtEeOEO6B4iONhTA"/>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
         <graphicsAlgorithm xsi:type="al:Polygon" background="/0/@colors.6" foreground="/0/@colors.6" lineWidth="1" filled="true" transparency="0.0">
           <points x="-7" y="4"/>
@@ -111,10 +111,10 @@
   </pi:Diagram>
   <operations:Flow id="_B33y9H3uEeO9afqplo0ESA" name="inicializacion" description="inicializacion">
     <states xsi:type="operations:InitialState" id="_B34aAH3uEeO9afqplo0ESA" name="Initial" outgoingTransitions="_B35oIH3uEeO9afqplo0ESA"/>
-    <states xsi:type="operations:FinalState" id="_B34aCH3uEeO9afqplo0ESA" name="Final" incomingTransitions="_IoT74IKXEeOKlPuNuAWTLg"/>
-    <states xsi:type="operations:CallState" id="_H22CsIKXEeOKlPuNuAWTLg" name="init" description="init" incomingTransitions="_B35oIH3uEeO9afqplo0ESA" outgoingTransitions="_IoT74IKXEeOKlPuNuAWTLg" methodName="init" bean="_CWSkMIKXEeOKlPuNuAWTLg"/>
-    <transitions id="_B35oIH3uEeO9afqplo0ESA" source="_B34aAH3uEeO9afqplo0ESA" target="_H22CsIKXEeOKlPuNuAWTLg" eventName="Ok"/>
-    <transitions id="_IoT74IKXEeOKlPuNuAWTLg" source="_H22CsIKXEeOKlPuNuAWTLg" target="_B34aCH3uEeO9afqplo0ESA" eventName="Ok"/>
-    <beans id="_CWSkMIKXEeOKlPuNuAWTLg" name="inicializacion" fqdn="com.isb.main.components.Inicializacion" nameBean="inicializacion" prototype="true"/>
+    <states xsi:type="operations:FinalState" id="_B34aCH3uEeO9afqplo0ESA" name="Final" incomingTransitions="_Vhlx4IdtEeOEO6B4iONhTA"/>
+    <states xsi:type="operations:CallState" id="_UmXfwIdtEeOEO6B4iONhTA" name="init" description="init" incomingTransitions="_B35oIH3uEeO9afqplo0ESA" outgoingTransitions="_Vhlx4IdtEeOEO6B4iONhTA" methodName="init" bean="_Tzkw4IdtEeOEO6B4iONhTA"/>
+    <transitions id="_B35oIH3uEeO9afqplo0ESA" source="_B34aAH3uEeO9afqplo0ESA" target="_UmXfwIdtEeOEO6B4iONhTA" eventName="Ok"/>
+    <transitions id="_Vhlx4IdtEeOEO6B4iONhTA" source="_UmXfwIdtEeOEO6B4iONhTA" target="_B34aCH3uEeO9afqplo0ESA" eventName="Ok"/>
+    <beans id="_Tzkw4IdtEeOEO6B4iONhTA" name="inicializacion" fqdn="com.isb.main.components.Inicializacion" nameBean="inicializacion"/>
   </operations:Flow>
 </xmi:XMI>

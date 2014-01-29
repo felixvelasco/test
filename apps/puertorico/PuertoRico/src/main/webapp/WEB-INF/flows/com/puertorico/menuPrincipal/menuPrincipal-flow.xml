@@ -70,20 +70,45 @@ start-state= "_jVoiceCheckInit" >
 </view-state>
 
 <action-state id="switchMenuPrincipal">
-	<evaluate expression="flowScope.lastInputResult.interpretation=='1'" />
+	<evaluate expression="lastInputResult.interpretation=='1'" />
 	<transition on="yes" to="isLogged1"/>
+	<transition to="switchMenuPrincipal_2_trxypagos"/>
+</action-state>
+<action-state id="switchMenuPrincipal_2_trxypagos">
+	<evaluate expression="lastInputResult.interpretation=='2'" />
+	<transition on="yes" to="isLogged2"/>
 	<transition to="Final"/>
 </action-state>
 
 <action-state id="isLogged1">
 	<evaluate expression="callData.user.logged" />
 	<transition on="yes" to="Final"/>
+	<transition to="loginMain1"/>
+</action-state>
+<subflow-state id="loginMain1" subflow="com/puertorico/login/loginMain">
+<input name="callData" value="callData" />
+ <transition to="Final">
+ 	<set name="flowScope.result" value="currentEvent.attributes.result" />
+ </transition>
+
+</subflow-state>
+
+<action-state id="isLogged2">
+	<evaluate expression="callData.user.logged" />
+	<transition on="yes" to="TrxYPagosMain"/>
 	<transition to="loginMain"/>
 </action-state>
 <subflow-state id="loginMain" subflow="com/puertorico/login/loginMain">
 <input name="callData" value="callData" />
-<transition to="Final">
-	<set name="flowScope.result" value="currentEvent.attributes.result" />
-</transition>
+ <transition to="TrxYPagosMain">
+ 	<set name="flowScope.result" value="currentEvent.attributes.result" />
+ </transition>
+
+</subflow-state>
+<subflow-state id="TrxYPagosMain" subflow="com/puertorico/trxypagos/TrxYPagosMain">
+ <transition to="menuPrincipal">
+ 	<set name="flowScope.result" value="currentEvent.attributes.result" />
+ </transition>
+
 </subflow-state>
 </flow> 

@@ -5,10 +5,7 @@ http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 parent="Login/errorHandler"
 start-state= "_jVoiceCheckInit" >
 
-<on-start>
-<evaluate expression="identificacion" result="flowScope.identificacion"></evaluate>
 
-</on-start>
 
 
 <action-state id="_jVoiceCheckInit">
@@ -76,10 +73,11 @@ start-state= "_jVoiceCheckInit" >
 	<transition on="match" to="setSsid"/>
 </view-state>
 <action-state id="setSsid">
-   <evaluate expression="flowScope.identificacion.setSsid(flowScope.lastInputResult.interpretation)"
+   <evaluate expression="identificacion.setSsid(lastInputResult.interpretation)"
    />
    
 
-	<transition to="Final"></transition>
+	 <transition to="Final"></transition>
+	
 </action-state>
 </flow> 
