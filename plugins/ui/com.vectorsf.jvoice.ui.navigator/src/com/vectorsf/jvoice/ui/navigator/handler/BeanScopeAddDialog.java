@@ -86,7 +86,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 				IType type;
 				try {
 					type = jProject.findType(bean.getFqdn());
-
+					try{
 					IMemberValuePair[] scopeValues = type
 							.getAnnotation("Scope").getMemberValuePairs();
 					if (flowBean.getFqdn().equals(beanClass)
@@ -95,9 +95,10 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 						getButton(IDialogConstants.OK_ID).setEnabled(false);
 						return false;
 					}
+					} catch (JavaModelException e) {
+						//Bean has no Scope annotation
+					}
 				} catch (JavaModelException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 
 			}
@@ -106,24 +107,28 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		try {
 			IJavaProject jProject = JavaCore.create(project);
 			IType type = jProject.findType(bean.getFqdn());
+			try {
+				IMemberValuePair[] scopeValues = type.getAnnotation("Scope")
+						.getMemberValuePairs();
+				if (text.isEmpty()
+						&& scopeValues[0].getValue().equals("prototype")) {
 
-			IMemberValuePair[] scopeValues = type.getAnnotation("Scope")
-					.getMemberValuePairs();
-			if (text.isEmpty() && scopeValues[0].getValue().equals("prototype")) {
-
-				setErrorMessage(null);
-				setMessage("Enter a scope name");
-				getButton(IDialogConstants.OK_ID).setEnabled(false);
-				return false;
-			} else if (!text.isEmpty()
-					&& scopeValues[0].getValue().equals("prototype")) {
-				for (ComponentBean bean : flow.getBeans()) {
-					if (bean.getName().equals(text)) {
-						setMessage("Scope name already exists");
-						getButton(IDialogConstants.OK_ID).setEnabled(false);
-						return false;
+					setErrorMessage(null);
+					setMessage("Enter a scope name");
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+					return false;
+				} else if (!text.isEmpty()
+						&& scopeValues[0].getValue().equals("prototype")) {
+					for (ComponentBean bean : flow.getBeans()) {
+						if (bean.getName().equals(text)) {
+							setMessage("Scope name already exists");
+							getButton(IDialogConstants.OK_ID).setEnabled(false);
+							return false;
+						}
 					}
 				}
+			} catch (JavaModelException e) {
+				// Bean has no Scope annotation
 			}
 		} catch (JavaModelException e) {
 			e.printStackTrace();
@@ -243,6 +248,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 										+ type.getElementName().substring(1));
 							}
 						} catch (JavaModelException e2) {
+							// Bean has no Scope annotation so it is singleton
 							scopedNameText.setEnabled(false);
 							scopedNameText.setText(Character.toLowerCase(type
 									.getElementName().charAt(0))
