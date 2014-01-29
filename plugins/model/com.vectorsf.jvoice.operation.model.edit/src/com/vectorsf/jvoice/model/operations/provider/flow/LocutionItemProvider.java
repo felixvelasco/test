@@ -61,7 +61,7 @@ public class LocutionItemProvider extends TransientFlowItemProvider {
 			IPath resourcesPath = flowFile.getFullPath().removeFileExtension().addFileExtension("resources");
 			IFolder resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace().getRoot().findMember(resourcesPath);
 
-			if (resourcesFolder.exists()) {
+			if (resourcesFolder != null && resourcesFolder.exists()) {
 				try {
 					for (IResource resourceFile : resourcesFolder.members()) {
 						if (resourceFile.getName().toString().endsWith("voiceDsl")) {

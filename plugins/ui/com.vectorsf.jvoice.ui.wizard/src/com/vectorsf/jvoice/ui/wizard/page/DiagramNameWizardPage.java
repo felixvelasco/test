@@ -515,6 +515,21 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		};
 
 		ResourcesPlugin.getWorkspace().run(runnable, resourcesFolder.getProject(), IWorkspace.AVOID_UPDATE, null);
+		// Reveal new flow on navigator
+		for (Shell shell : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getShells()) {
+			if (shell.getText().contains("New Flow")) {
+				shell.close();
+			}
+		}
+		for (IViewPart view : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViews()) {
+			if (view.getTitle().equals("Navigator IVR")) {
+				CommonNavigator commmonNavigator = (CommonNavigator) view;
+				URI flowUri = uri.appendFragment("/1");
+				EObject eObject = BaseModel.getInstance().getResourceSet().getEObject(flowUri, false);
+				StructuredSelection structuredSelection = new StructuredSelection(eObject);
+				commmonNavigator.selectReveal(structuredSelection);
+			}
+		}
 
 		try {
 			IDE.openEditor(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage(), diagramFile);
@@ -619,20 +634,6 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		};
 		try {
 			ResourcesPlugin.getWorkspace().run(wsRunnable, null);
-			for (Shell shell : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getShells()) {
-				if (shell.getText().contains("New Flow")) {
-					shell.close();
-				}
-			}
-			for (IViewPart view : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViews()) {
-				if (view.getTitle().equals("Navigator IVR")) {
-					CommonNavigator commmonNavigator = (CommonNavigator) view;
-					URI flowUri = resource.getURI().appendFragment("/1");
-					EObject eObject = BaseModel.getInstance().getResourceSet().getEObject(flowUri, false);
-					StructuredSelection structuredSelection = new StructuredSelection(eObject);
-					commmonNavigator.selectReveal(structuredSelection);
-				}
-			}
 		} catch (final CoreException e) {
 			final Throwable cause = e.getStatus().getException();
 			if (cause instanceof RuntimeException) {
