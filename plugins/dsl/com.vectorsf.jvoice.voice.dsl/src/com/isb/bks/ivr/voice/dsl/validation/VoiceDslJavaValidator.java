@@ -38,7 +38,8 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 
 	@Check
 	public void checkAudioContainsProperSrc(Audio audio) {
-		if (audio.getSrc() != null) {
+		String src = audio.getSrc();
+		if (src != null && src.indexOf("${") == -1) {
 			URI uri = audio.eResource().getURI();
 			File rawFile = null;
 			if (uri.isPlatformResource()) {
@@ -51,7 +52,7 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 			}
 			File projectFile = findProjectFile(rawFile);
 			File audiosFolder = new File(projectFile, "src/main/resources/audios");
-			String audioName = audio.getSrc() + ".wav";
+			String audioName = src + ".wav";
 			File audioFile = new File(audiosFolder, audioName);
 
 			if (!audioFile.exists()) {
@@ -79,14 +80,17 @@ public class VoiceDslJavaValidator extends com.isb.bks.ivr.voice.dsl.validation.
 				}
 				File projectFile = findProjectFile(rawFile);
 				File grammarsFolder = new File(projectFile, "src/main/resources/grammars");
+				boolean found = false;
 				for (String extension : GRAMMAR_EXTENSIONS) {
 					String fileGrammarName = grammar.getSrc() + "." + extension;
 					File audioFile = new File(grammarsFolder, fileGrammarName);
-					if (!audioFile.exists()) {
-						error("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
-					} else {
+					if (audioFile.exists()) {
+						found = true;
 						break;
 					}
+				}
+				if (!found) {
+					error("Grammar file not found", VoiceDslPackage.Literals.GRAMMAR__SRC);
 				}
 			}
 		}
