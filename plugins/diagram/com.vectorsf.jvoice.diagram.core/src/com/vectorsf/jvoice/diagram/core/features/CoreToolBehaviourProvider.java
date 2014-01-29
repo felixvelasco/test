@@ -146,7 +146,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 			menuButton.setIconId(getImageFor(sta, feature));
 			menuButton.addDragAndDropFeature(feature);
 		    }
-		    data.getDomainSpecificContextButtons().add(menuButton);
+//		    data.getDomainSpecificContextButtons().add(menuButton);
 		}
 
 	    } else if (sta instanceof MenuState) {
@@ -170,7 +170,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 			    menuButton.setIconId(getImageFor(sta, feature));
 			    menuButton.addDragAndDropFeature(feature);
 			}
-			data.getDomainSpecificContextButtons().add(menuButton);
+//			data.getDomainSpecificContextButtons().add(menuButton);
 		    }
 		}
 
@@ -195,7 +195,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 			}
 		    }
 		    if (menuButton.getIconId() != null) {
-			data.getDomainSpecificContextButtons().add(menuButton);
+//			data.getDomainSpecificContextButtons().add(menuButton);
 		    }
 		}
 
