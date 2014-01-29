@@ -110,20 +110,8 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 	if (pe instanceof FixPointAnchor) {
 	    State state = (State) getBusinessObjectForPictogramElement(((FixPointAnchor) pe)
 		    .getParent());
-
-	    if (state instanceof CallFlowState) {
-		return new IFeature[] { new CreateTransitionFromPad(this,
-			new TransitionCallFlowPattern(state, this)) };
-	    }
-	    if (state instanceof MenuState) {
-		return new IFeature[] { new CreateTransitionFromPad(this,
-			new TransitionCallFlowPattern(state, this)) };
-	    }
-
-	    if (state instanceof SwitchState) {
-		return new IFeature[] { new CreateTransitionFromPad(this,
-			new TransitionCallFlowPattern(state, this)) };
-	    }
+	    return new IFeature[] { new CreateTransitionFromPad(this,
+		    new TransitionCallFlowPattern(state, this)) };
 	}
 
 	return super.getDragAndDropFeatures(context);
