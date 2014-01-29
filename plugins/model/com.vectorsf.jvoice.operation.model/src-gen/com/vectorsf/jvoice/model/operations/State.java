@@ -90,29 +90,29 @@ public interface State extends NamedElement {
 	 */
 	void setNotes(Note value);
 
-        /**
+	/**
 	 * Returns the value of the '<em><b>Fireable Events</b></em>' attribute list.
 	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
-         * <p>
-         * If the meaning of the '<em>Fireable Events</em>' attribute list isn't clear,
-         * there really should be more of a description here...
-         * </p>
-         * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Fireable Events</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Fireable Events</em>' attribute list.
 	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getState_FireableEvents()
 	 * @model
 	 * @generated
 	 */
-        EList<String> getFireableEvents();
+	EList<String> getFireableEvents();
 
-        /**
+	/**
 	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model kind="operation"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return new org.eclipse.emf.common.util.BasicEList<String>();'"
 	 * @generated
 	 */
-        EList<String> getEvents();
+	EList<String> getEvents();
 
 } // State

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.actions.AlignmentAction;
@@ -35,9 +36,11 @@ import com.vectorsf.jvoice.core.uri.VegaXMLURIHandlerImpl;
 public class JVoiceDiagramBehavior extends DiagramBehavior {
 
 	private JVoiceValidationListener validator;
+	private TransactionalEditingDomain domain;
 
-	public JVoiceDiagramBehavior(IDiagramContainerUI diagramContainer) {
+	public JVoiceDiagramBehavior(IDiagramContainerUI diagramContainer, TransactionalEditingDomain domain) {
 		super(diagramContainer);
+		this.domain = domain;
 	}
 
 	@Override
@@ -53,7 +56,7 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 
 	@Override
 	protected DefaultUpdateBehavior createUpdateBehavior() {
-		return new JVoiceUpdateBehavior(this);
+		return new JVoiceUpdateBehavior(this, domain);
 	}
 
 	@Override

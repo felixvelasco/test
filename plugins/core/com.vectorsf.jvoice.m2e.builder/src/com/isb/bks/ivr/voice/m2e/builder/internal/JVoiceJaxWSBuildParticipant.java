@@ -29,7 +29,7 @@ public class JVoiceJaxWSBuildParticipant extends MojoExecutionBuildParticipant {
 
 		// tell m2e builder to refresh generated files
 		File generated = maven.getMojoParameterValue(getSession()
-				.getCurrentProject(), getMojoExecution(), "sourceDestDir",
+				.getCurrentProject(), getMojoExecution(), "sourceRoot",
 				File.class, monitor);
 		if (generated != null) {
 			buildContext.refresh(generated);

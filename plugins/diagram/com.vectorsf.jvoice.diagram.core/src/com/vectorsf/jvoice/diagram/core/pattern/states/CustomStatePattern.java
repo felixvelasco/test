@@ -107,7 +107,7 @@ public class CustomStatePattern extends SimpleStatePattern {
 
 			IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath() + "/" + flow.getName()
 					+ ".resources");
-			CreateJspCustom newWizard = new CreateJspCustom(folder, "Custom");
+			CreateJspCustom newWizard = new CreateJspCustom(folder);
 			WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 					.getShell(), newWizard);
 			if (wizardDialog.open() == Window.OK) {

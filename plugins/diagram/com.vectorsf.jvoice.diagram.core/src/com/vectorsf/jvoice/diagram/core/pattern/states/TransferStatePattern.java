@@ -17,7 +17,8 @@ public class TransferStatePattern extends LocutionStatePattern {
 
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
-		return mainBusinessObject instanceof TransferState;
+		return mainBusinessObject instanceof TransferState || mainBusinessObject instanceof TransferDsl
+				&& isDslFromTargetFlow((TransferDsl) mainBusinessObject);
 	}
 
 	@Override

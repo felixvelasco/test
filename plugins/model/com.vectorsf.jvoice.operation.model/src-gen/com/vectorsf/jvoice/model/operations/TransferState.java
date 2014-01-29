@@ -4,7 +4,6 @@ package com.vectorsf.jvoice.model.operations;
 
 import org.eclipse.emf.common.util.EList;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Transfer State</b></em>'.
@@ -16,7 +15,6 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface TransferState extends LocutionState {
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -32,7 +33,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.xtext.resource.SaveOptions;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
@@ -120,7 +123,7 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 				}
 			}
 
-			if (resource instanceof IFolder) {
+			if (resource instanceof IFolder || resource instanceof IProject) {
 				nombre = fRefactoringProcessor.getNewResourceName();
 			}
 
@@ -153,8 +156,6 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 		protected final void validatePage() {
 			String text = fNameField.getText();
 
-			char initial = text.charAt(0);
-
 			RefactoringStatus status = null;
 			RefactoringStatus statusName;
 			if (textoExtension != null) {
@@ -166,19 +167,34 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 				status = fRefactoringProcessor.validateNewElementName(text);
 			}
 
-			statusName = evaluateName(initial);
+			statusName = evaluateName(text);
 
 			status.merge(statusName);
 			setPageComplete(status);
 		}
 
-		private RefactoringStatus evaluateName(char initial) {
-			if (Character.isDigit(initial)) {
-				return RefactoringStatus
-						.createFatalErrorStatus("The first letter of name can not be a digit");
-			} else {
-				return null;
+		private RefactoringStatus evaluateName(String text) {
+			if (text != null) {
+				char initial = text.charAt(0);
+				if (Character.isDigit(initial)) {
+					return RefactoringStatus
+							.createFatalErrorStatus("The first letter of name can not be a digit");
+				} else if (!Character.isJavaLetter(initial)) {
+					return RefactoringStatus
+							.createFatalErrorStatus("The first letter of name is not valid");
+				} else {
+					for (int i = 1; i < text.length(); i++) {
+						char letter = text.charAt(i);
+						if (!Character.isJavaLetterOrDigit(letter)) {
+							return RefactoringStatus
+									.createFatalErrorStatus("Name contains incorrect character");
+						}
+
+					}
+					return null;
+				}
 			}
+			return null;
 		}
 
 		/*
@@ -198,9 +214,12 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 						initializeRefactoring();
 						if (resource instanceof IFile) {
 							renameBean(monitor);
+						} else if (resource instanceof IProject) {
+							renameProjec(monitor);
 						}
 						superPerformFinish();
 					}
+
 				};
 				ResourcesPlugin.getWorkspace().run(runnable, null);
 
@@ -238,6 +257,46 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 
 		}
 
+		private boolean renameProjec(IProgressMonitor monitor)
+				throws CoreException {
+			newName = fNameField.getText();
+
+			JVProject project = BaseModel.getInstance().getModel()
+					.getProject(resource.getName());
+
+			ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
+			Resource emfRes = resourceSetImpl.createResource(project
+					.eResource().getURI());
+
+			try {
+				emfRes.load(null);
+				for (EObject obj : emfRes.getContents()) {
+					if (obj instanceof JVProject) {
+						((JVProject) obj).setName(newName);
+					}
+
+					try {
+						emfRes.save(SaveOptions.newBuilder().noValidation()
+								.getOptions().toOptionsMap());
+
+					} catch (RuntimeException re) {
+						re.printStackTrace();
+					}
+
+				}
+
+				List<JVProject> projects = BaseModel.getInstance().getModel()
+						.getProjects();
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return true;
+
+		}
+
 		private boolean renameBean(IProgressMonitor monitor)
 				throws CoreException {
 			newName = fNameField.getText();
@@ -245,6 +304,7 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 			Resource emfRes = resourceSetImpl.createResource(URI
 					.createPlatformResourceURI(resource.getFullPath()
 							.toString(), true));
+
 			try {
 				emfRes.load(null);
 				for (EObject obj : emfRes.getContents()) {
@@ -287,5 +347,6 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 		public String getText() {
 			return newName;
 		}
+
 	}
 }

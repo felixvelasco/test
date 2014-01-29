@@ -282,42 +282,56 @@ public class StateSection extends GFPropertySection implements ITabbedPropertyCo
 				CallFlowState subFlow = (CallFlowState) bo;
 				if (subFlow.getSubflow().getName() != null) {
 					nameSubFlow.setText(subFlow.getSubflow().getName());
+				} else {
+					nameSubFlow.setText("");
 				}
 				addListenerSubflujos();
 			} else if (bo instanceof MenuState) {
 				MenuState menuLocution = (MenuState) bo;
 				if (menuLocution.getLocution().getName() != null) {
 					nameSubFlow.setText(menuLocution.getLocution().getName());
+				} else {
+					nameSubFlow.setText("");
 				}
 				addListenerSubflujos();
 			} else if (bo instanceof InputState) {
 				InputState inputLocution = (InputState) bo;
 				if (inputLocution.getLocution().getName() != null) {
 					nameSubFlow.setText(inputLocution.getLocution().getName());
+				} else {
+					nameSubFlow.setText("");
 				}
 				addListenerSubflujos();
 			} else if (bo instanceof PromptState) {
 				PromptState outputLocution = (PromptState) bo;
 				if (outputLocution.getLocution().getName() != null) {
 					nameSubFlow.setText(outputLocution.getLocution().getName());
+				} else {
+					nameSubFlow.setText("");
 				}
 				addListenerSubflujos();
 			} else if (bo instanceof RecordState) {
 				RecordState recordLocution = (RecordState) bo;
 				if (recordLocution.getLocution().getName() != null) {
 					nameSubFlow.setText(recordLocution.getLocution().getName());
+				} else {
+					nameSubFlow.setText("");
 				}
 				addListenerSubflujos();
 			} else if (bo instanceof CustomState) {
 				CustomState custom = (CustomState) bo;
 				if (custom.getPath() != null) {
 					nameSubFlow.setText(custom.getPath());
+				} else {
+					nameSubFlow.setText("");
 				}
 				addListenerSubflujos();
 			} else if (bo instanceof TransferState) {
 				TransferState transfer = (TransferState) bo;
 				if (transfer.getLocution().getName() != null) {
 					nameSubFlow.setText(transfer.getLocution().getName());
+				} else {
+					nameSubFlow.setText("");
 				}
 				addListenerSubflujos();
 			}

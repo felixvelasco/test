@@ -26,12 +26,18 @@ public class LegacyLoggerChangeListener implements IResourceChangeListener {
 	public void resourceChanged(IResourceChangeEvent event) {
 
 		//Obtenemos los proyectos que han cambiado
-		IResourceDelta[] affectedChildren = event.getDelta().getAffectedChildren(IResourceDelta.CHANGED);
+		IResourceDelta mainDelta = event.getDelta();
+		if(mainDelta == null) {
+			return;
+		}
+		
+		IResourceDelta[] affectedChildren = mainDelta.getAffectedChildren(IResourceDelta.CHANGED);
 		
 		//Por cada proyecto que ha cambiado, comprobamos si ha cambiado el .projectInformation (que es donde se guarda la información que buscamos chequear si ha cambiado)
 		for (IResourceDelta delta : affectedChildren) {
 			processDelta(delta);
 		}
+
 	}
 
 	private void processDelta(IResourceDelta delta) {

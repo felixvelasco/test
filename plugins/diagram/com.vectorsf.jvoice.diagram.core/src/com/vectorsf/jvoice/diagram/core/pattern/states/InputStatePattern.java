@@ -21,7 +21,8 @@ public class InputStatePattern extends LocutionStatePattern {
 
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
-		return mainBusinessObject instanceof InputState;
+		return mainBusinessObject instanceof InputState || mainBusinessObject instanceof InputDsl
+				&& isDslFromTargetFlow((InputDsl) mainBusinessObject);
 	}
 
 	@Override

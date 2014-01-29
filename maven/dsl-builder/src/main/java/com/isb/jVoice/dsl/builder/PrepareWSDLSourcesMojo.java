@@ -1,9 +1,11 @@
 package com.isb.jVoice.dsl.builder;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.apache.maven.model.Plugin;
@@ -91,7 +93,7 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 			generateDir(metaInf);
 
 			for (Plugin pl : project.getModel().getBuild().getPlugins()) {
-				if (pl.getKey().equals("org.jvnet.jax-ws-commons:jaxws-maven-plugin")) {
+				if (pl.getKey().equals("org.apache.cxf:cxf-codegen-plugin")) {
 					dom = (Xpp3Dom)pl.getExecutions().get(0).getConfiguration();
 					break;
 					
@@ -99,18 +101,50 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 			}
 			for (File file : files) {
 				if(dom!=null){
-					locations = rellenarWsdlLocation(file, locations, dom.getChild("wsdlLocation").getValue());
+					locations = rellenarWsdlLocation(file, locations);
 				}
 			}
 
 			File targetFile = new File(metaInf, "jax-ws-catalog.xml");
-			if (locations.size()>0)
+			
+			
+			if (locations.size()>0 && !containsLocationsInFile (locations,targetFile))
 			{
 				XMLGeneratorWSDL.generate(targetFile, locations);
 			}
 		}
 
 	}
+	
+
+	private boolean containsLocationsInFile(List<String> locations,
+			File file) 
+	{
+		    try {
+		    	boolean cons=false;
+				for (String loc : locations) 
+				{
+					Scanner scanner = new Scanner(file);
+				    while (scanner.hasNextLine()) 
+				    {
+				        String line = scanner.nextLine();
+				        if (line.contains(loc))
+				        {
+				        	cons = true;
+				        }
+				    }
+				    if(!cons)
+				    {
+				    	return false;
+				    }
+				    cons=false;
+				}
+			} catch (FileNotFoundException e) {
+				return false;
+			}
+			return true;
+	}
+
 
 	/**
 	 * @param meta2
@@ -122,15 +156,17 @@ public class PrepareWSDLSourcesMojo extends AbstractMojo {
 		}
 	}
 	
-	private List<String> rellenarWsdlLocation (File file, List<String> locations, String ruta){
-		ruta = ruta.substring(0, ruta.lastIndexOf("*"));
+	private List<String> rellenarWsdlLocation (File file, List<String> locations){
 		File[] files = file.listFiles();
 		for (File fil : files) {
-			String extension =fil.getName().substring(fil.getName().lastIndexOf("."));
-			if(extension.equalsIgnoreCase(".wsdl")){
-				file = fil;
-				ruta = ruta.substring(0, ruta.length()-1) + "."+file.getName().substring(0, file.getName().lastIndexOf(".")) + "/" + file.getName();
-				locations.add(ruta);
+			int nliDot = fil.getName().lastIndexOf(".");
+			if (nliDot!=-1)
+			{
+				String extension =fil.getName().substring(nliDot);
+				if(extension.equalsIgnoreCase(".wsdl")){
+					file = fil;
+					locations.add("http://localhost/wsdl/" + fil.getName());
+				}
 			}
 		}
 		return locations;

@@ -103,7 +103,17 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 			setErrorMessage("The first letter of the project name can't be a number.");
 			return false;
 		}
-
+		if (!Character.isJavaLetter(initial)) {
+			setErrorMessage("The first letter of the application is not valid.");
+			return false;
+		}
+		for (int i = 1; i < text.length(); i++) {
+			char letter = text.charAt(i);
+			if (!Character.isJavaLetterOrDigit(letter)) {
+				setErrorMessage("Name contains incorrect character");
+				return false;
+			}
+		}
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 
 		if (root.getProject(text).exists()) {
@@ -160,6 +170,12 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 		gd.widthHint = 0;
 		gd.heightHint = 0;
 		label.setLayoutData(gd);
+
+		// Set the initial value first before listener
+		// to avoid handling an event during the creation.
+		if (getInitialTextFieldValue() != null) {
+			textField.setText(getInitialTextFieldValue());
+		}
 
 		textField.addListener(SWT.Modify, nameModifyListener);
 		textField.addListener(SWT.FocusIn, nameModifyListener);

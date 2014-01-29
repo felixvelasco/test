@@ -4,7 +4,6 @@ package com.vectorsf.jvoice.model.operations;
 
 import org.eclipse.emf.common.util.EList;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Call Flow State</b></em>'.
@@ -52,7 +51,7 @@ public interface CallFlowState extends ParameterizedState {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='EList<String> list = new <%org.eclipse.emf.common.util.BasicEList%><String>();\n\nfor(State state: getSubflow().getStates()) {\n\tif (state instanceof FinalState && !((FinalState)state).isFinal()) {\n\t\tlist.add(state.getName());\n\t}\n}\nreturn list;\r\n'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='EList<String> list = new <%org.eclipse.emf.common.util.BasicEList%><String>();\r\n\r\nfor(State state: getSubflow().getStates()) {\r\n\tif (state instanceof <%com.vectorsf.jvoice.model.operations.FinalState%> && !((FinalState)state).isFinal()) {\r\n\t\tlist.add(state.getName());\r\n\t}\r\n}\r\nreturn list;\r\r\n'"
 	 * @generated
 	 */
 	EList<String> getEvents();

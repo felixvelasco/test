@@ -74,6 +74,7 @@ class MenuStateCodeXML {
 							<evaluate expression="jVoiceArchGrammar" result="flashScope.grammar«i=i+1»" />
 							<set name="flashScope.grammar«i».src" value="'«grammatic.src»'"/>
 							<set name="flashScope.grammar«i».mode" value="'«grammatic.mode»'"/>
+							<set name="flashScope.grammar«i».module" value="'«nameProject»'"/>
 							<evaluate expression="flashScope.«state.name».grammars.add(flashScope.grammar«i»)" />
 						«ENDFOR»
 	        		«ENDIF»

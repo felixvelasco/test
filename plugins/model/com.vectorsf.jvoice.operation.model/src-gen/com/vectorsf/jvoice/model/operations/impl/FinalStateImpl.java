@@ -2,16 +2,24 @@
  */
 package com.vectorsf.jvoice.model.operations.impl;
 
+import com.vectorsf.jvoice.model.operations.FinalState;
+import com.vectorsf.jvoice.model.operations.OperationsPackage;
+import com.vectorsf.jvoice.model.operations.State;
+
 import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.*;
+
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import com.vectorsf.jvoice.model.operations.*;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '
- * <em><b>Final State</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Final State</b></em>'.
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -22,11 +30,11 @@ import com.vectorsf.jvoice.model.operations.*;
  *
  * @generated
  */
-public class FinalStateImpl extends StateImpl implements FinalState
-{
+public class FinalStateImpl extends StateImpl implements FinalState {
 	/**
 	 * The default value of the '{@link #isFinal() <em>Final</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #isFinal()
 	 * @generated
 	 * @ordered
@@ -35,7 +43,8 @@ public class FinalStateImpl extends StateImpl implements FinalState
 
 	/**
 	 * The cached value of the '{@link #isFinal() <em>Final</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #isFinal()
 	 * @generated
 	 * @ordered
@@ -44,8 +53,8 @@ public class FinalStateImpl extends StateImpl implements FinalState
 
 	/**
 	 * The default value of the '{@link #getReturnExpression() <em>Return Expression</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getReturnExpression()
 	 * @generated
 	 * @ordered
@@ -54,8 +63,8 @@ public class FinalStateImpl extends StateImpl implements FinalState
 
 	/**
 	 * The cached value of the '{@link #getReturnExpression() <em>Return Expression</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getReturnExpression()
 	 * @generated
 	 * @ordered
@@ -63,41 +72,39 @@ public class FinalStateImpl extends StateImpl implements FinalState
 	protected String returnExpression = RETURN_EXPRESSION_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected FinalStateImpl()
-	{
+	protected FinalStateImpl() {
 		super();
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return OperationsPackage.Literals.FINAL_STATE;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public boolean isFinal()
-	{
+	public boolean isFinal() {
 		return final_;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setFinal(boolean newFinal)
-	{
+	public void setFinal(boolean newFinal) {
 		boolean oldFinal = final_;
 		final_ = newFinal;
 		if (eNotificationRequired())
@@ -105,22 +112,20 @@ public class FinalStateImpl extends StateImpl implements FinalState
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public String getReturnExpression()
-	{
+	public String getReturnExpression() {
 		return returnExpression;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setReturnExpression(String newReturnExpression)
-	{
+	public void setReturnExpression(String newReturnExpression) {
 		String oldReturnExpression = returnExpression;
 		returnExpression = newReturnExpression;
 		if (eNotificationRequired())
@@ -128,22 +133,21 @@ public class FinalStateImpl extends StateImpl implements FinalState
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public EList<String> getEvents()
-	{
+	public EList<String> getEvents() {
 		return new org.eclipse.emf.common.util.BasicEList<String>();
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case OperationsPackage.FINAL_STATE__FINAL:
 				return isFinal();
@@ -154,12 +158,12 @@ public class FinalStateImpl extends StateImpl implements FinalState
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case OperationsPackage.FINAL_STATE__FINAL:
 				setFinal((Boolean)newValue);
@@ -172,12 +176,12 @@ public class FinalStateImpl extends StateImpl implements FinalState
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
+	public void eUnset(int featureID) {
 		switch (featureID) {
 			case OperationsPackage.FINAL_STATE__FINAL:
 				setFinal(FINAL_EDEFAULT);
@@ -190,12 +194,12 @@ public class FinalStateImpl extends StateImpl implements FinalState
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case OperationsPackage.FINAL_STATE__FINAL:
 				return final_ != FINAL_EDEFAULT;
@@ -207,11 +211,11 @@ public class FinalStateImpl extends StateImpl implements FinalState
 
 	/**
 	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-        @Override
-        public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
 		if (baseClass == State.class) {
 			switch (baseOperationID) {
 				case OperationsPackage.STATE___GET_EVENTS: return OperationsPackage.FINAL_STATE___GET_EVENTS;
@@ -221,13 +225,13 @@ public class FinalStateImpl extends StateImpl implements FinalState
 		return super.eDerivedOperationID(baseOperationID, baseClass);
 	}
 
-        /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-	{
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case OperationsPackage.FINAL_STATE___GET_EVENTS:
 				return getEvents();
@@ -236,12 +240,12 @@ public class FinalStateImpl extends StateImpl implements FinalState
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
@@ -253,4 +257,4 @@ public class FinalStateImpl extends StateImpl implements FinalState
 		return result.toString();
 	}
 
-} // FinalStateImpl
+} //FinalStateImpl

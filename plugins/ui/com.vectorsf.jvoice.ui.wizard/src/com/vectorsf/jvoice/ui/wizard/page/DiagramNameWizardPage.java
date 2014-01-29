@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.internal.runtime.CommonMessages;
+import org.eclipse.core.internal.runtime.IRuntimeConstants;
+import org.eclipse.core.internal.runtime.RuntimeLog;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -17,11 +20,14 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -42,6 +48,9 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -50,11 +59,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.navigator.CommonNavigator;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
@@ -151,6 +163,18 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		if (Character.isDigit(initial)) {
 			setErrorMessage("The first letter of the flow name can't be a number.");
 			return false;
+		}
+		if (!Character.isJavaLetter(initial)) {
+			setErrorMessage("The first letter of the application is not valid.");
+			return false;
+		}
+		for (int i = 1; i < text.length(); i++) {
+			char letter = text.charAt(i);
+			if (!Character.isJavaLetterOrDigit(letter)) {
+				setErrorMessage("Name contains incorrect character");
+				return false;
+			}
+
 		}
 		String projectName = getProjectFieldValue();
 		if (projectName.isEmpty()) {
@@ -503,6 +527,21 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		};
 
 		ResourcesPlugin.getWorkspace().run(runnable, resourcesFolder.getProject(), IWorkspace.AVOID_UPDATE, null);
+		// Reveal new flow on navigator
+		for (Shell shell : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getShells()) {
+			if (shell.getText().contains("New Flow")) {
+				shell.close();
+			}
+		}
+		for (IViewPart view : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViews()) {
+			if (view.getTitle().equals("Navigator IVR")) {
+				CommonNavigator commmonNavigator = (CommonNavigator) view;
+				URI flowUri = uri.appendFragment("/1");
+				EObject eObject = BaseModel.getInstance().getResourceSet().getEObject(flowUri, false);
+				StructuredSelection structuredSelection = new StructuredSelection(eObject);
+				commmonNavigator.selectReveal(structuredSelection);
+			}
+		}
 
 		try {
 			IDE.openEditor(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage(), diagramFile);
@@ -591,7 +630,9 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 						try {
 							resource.save(null);
 						} catch (IOException e) {
-							throw new RuntimeException(e);
+							handleException(e);
+							MessageDialog.openError(null, "Error",
+									"A resource exists with a different case. Please check Error Log.");
 						}
 					}
 				};
@@ -654,4 +695,28 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		return packageFieldValue.replace('.', '/');
 	}
 
+	private static void handleException(Throwable e) {
+		if (!(e instanceof OperationCanceledException)) {
+			// try to obtain the correct plug-in id for the bundle providing the safe runnable
+			Activator activator = Activator.getDefault();
+			String pluginId = null;
+			if (pluginId == null) {
+				pluginId = IRuntimeConstants.PI_COMMON;
+			}
+			String message = NLS.bind(CommonMessages.meta_pluginProblems, pluginId);
+			IStatus status;
+			if (e instanceof CoreException) {
+				status = new MultiStatus(pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
+				((MultiStatus) status).merge(((CoreException) e).getStatus());
+			} else {
+				status = new Status(IStatus.ERROR, pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
+			}
+			// Make sure user sees the exception: if the log is empty, log the exceptions on stderr
+			if (!RuntimeLog.isEmpty()) {
+				RuntimeLog.log(status);
+			} else {
+				e.printStackTrace();
+			}
+		}
+	}
 }

@@ -6,7 +6,10 @@ package com.vectorsf.jvoice.ui.wizard.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.internal.utils.Messages;
+import org.eclipse.core.internal.resources.ResourceException;
+import org.eclipse.core.internal.runtime.CommonMessages;
+import org.eclipse.core.internal.runtime.IRuntimeConstants;
+import org.eclipse.core.internal.runtime.RuntimeLog;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -19,10 +22,17 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -32,8 +42,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+import org.eclipse.ui.navigator.CommonNavigator;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVPackage;
@@ -50,7 +64,6 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	private Text textField;
 	private Text packageField;
 	private Object selection;
-	private int primeraVez;
 
 	private Listener nameModifyListener = new Listener() {
 		@Override
@@ -65,7 +78,6 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
-		primeraVez = 0;
 		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_box.png"));
 	}
 
@@ -74,13 +86,6 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	}
 
 	protected boolean validatePage() {
-
-		// si es la primera vez no validamos, pero devolvemos false para que no pueda continuar
-		if (primeraVez == 0) {
-			primeraVez++;
-			return false;
-		}
-
 		String projectName = getProjectFieldValue();
 		if (projectName.equals("")) { //$NON-NLS-1$
 			setErrorMessage(null);
@@ -199,6 +204,10 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		packageField.setLayoutData(data);
 		packageField.setFont(parent.getFont());
 
+		// Set the initial value first before listener
+		// to avoid handling an event during the creation.
+		packageField.setText("newPackage");
+
 		packageField.addListener(SWT.Modify, nameModifyListener);
 		packageField.addListener(SWT.FocusIn, nameModifyListener);
 
@@ -236,15 +245,67 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 	@Override
 	public void createResource() throws CoreException {
 		final IFolder packageFolder = getFolder();
+
 		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
 
 			@Override
 			public void run(IProgressMonitor monitor) throws CoreException {
-				createRecursively(packageFolder, monitor);
+				try {
+					createRecursively(packageFolder, monitor);
+				} catch (ResourceException e) {
+					handleException(e);
+					MessageDialog.openError(null, "Error", "A resource \"" + packageFolder.getName()
+							+ "\" exists with a different case. Please check Error Log.");
+				}
 			}
-		};
 
+		};
 		ResourcesPlugin.getWorkspace().run(runnable, packageFolder.getProject(), IWorkspace.AVOID_UPDATE, null);
+		for (Shell shell : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getShells()) {
+			if (shell.getText().contains("New Package")) {
+				shell.close();
+			}
+		}
+		for (IViewPart view : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViews()) {
+			if (view.getTitle().equals("Navigator IVR")) {
+				CommonNavigator commonNavigator = (CommonNavigator) view;
+				JVProject project = BaseModel.getInstance().getModel().getProject(packageFolder.getProject().getName());
+				for (EObject pack : project.eContents()) {
+					JVPackage packa = (JVPackage) Platform.getAdapterManager().getAdapter(pack, JVPackage.class);
+					if (packa != null) {
+						if (packa.getName().equals(packageFolder.getName())) {
+							StructuredSelection structuredSelection = new StructuredSelection(pack);
+							commonNavigator.selectReveal(structuredSelection);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private static void handleException(Throwable e) {
+		if (!(e instanceof OperationCanceledException)) {
+			// try to obtain the correct plug-in id for the bundle providing the safe runnable
+			Activator activator = Activator.getDefault();
+			String pluginId = null;
+			if (pluginId == null) {
+				pluginId = IRuntimeConstants.PI_COMMON;
+			}
+			String message = NLS.bind(CommonMessages.meta_pluginProblems, pluginId);
+			IStatus status;
+			if (e instanceof CoreException) {
+				status = new MultiStatus(pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
+				((MultiStatus) status).merge(((CoreException) e).getStatus());
+			} else {
+				status = new Status(IStatus.ERROR, pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
+			}
+			// Make sure user sees the exception: if the log is empty, log the exceptions on stderr
+			if (!RuntimeLog.isEmpty()) {
+				RuntimeLog.log(status);
+			} else {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public IFolder getFolder() {

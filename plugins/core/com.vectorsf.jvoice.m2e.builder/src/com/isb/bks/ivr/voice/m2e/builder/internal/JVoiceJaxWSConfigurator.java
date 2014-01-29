@@ -23,7 +23,7 @@ AbstractSourcesGenerationProjectConfigurator {
 
 	@Override
 	protected String getOutputFolderParameterName() {
-		return "sourceDestDir";
+		return "sourceRoot";
 	}
 
 }

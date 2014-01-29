@@ -17,7 +17,8 @@ public class RecordStatePattern extends LocutionStatePattern {
 
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
-		return mainBusinessObject instanceof RecordState;
+		return mainBusinessObject instanceof RecordState || mainBusinessObject instanceof RecordDsl
+				&& isDslFromTargetFlow((RecordDsl) mainBusinessObject);
 	}
 
 	@Override

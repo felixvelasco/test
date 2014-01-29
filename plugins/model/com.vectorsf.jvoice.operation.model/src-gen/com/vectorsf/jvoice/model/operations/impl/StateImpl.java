@@ -3,18 +3,26 @@
 package com.vectorsf.jvoice.model.operations.impl;
 
 import com.vectorsf.jvoice.model.base.impl.NamedElementImpl;
+
 import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
+
 import java.lang.reflect.InvocationTargetException;
+
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -69,14 +77,14 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 	/**
 	 * The cached value of the '{@link #getFireableEvents() <em>Fireable Events</em>}' attribute list.
 	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getFireableEvents()
 	 * @generated
 	 * @ordered
 	 */
-        protected EList<String> fireableEvents;
+	protected EList<String> fireableEvents;
 
-        /**
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -181,23 +189,22 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 
 	/**
 	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-        public EList<String> getFireableEvents() {
+	public EList<String> getFireableEvents() {
 		if (fireableEvents == null) {
 			fireableEvents = new EDataTypeUniqueEList<String>(String.class, this, OperationsPackage.STATE__FIREABLE_EVENTS);
 		}
 		return fireableEvents;
 	}
 
-        /**
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getEvents()
-	{
+	public EList<String> getEvents() {
 		return new org.eclipse.emf.common.util.BasicEList<String>();
 	}
 
@@ -339,8 +346,7 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 	 * @generated
 	 */
 	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-	{
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case OperationsPackage.STATE___GET_EVENTS:
 				return getEvents();
@@ -348,13 +354,13 @@ public abstract class StateImpl extends NamedElementImpl implements State {
 		return super.eInvoke(operationID, arguments);
 	}
 
-        /**
+	/**
 	 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-        @Override
-        public String toString() {
+	@Override
+	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());

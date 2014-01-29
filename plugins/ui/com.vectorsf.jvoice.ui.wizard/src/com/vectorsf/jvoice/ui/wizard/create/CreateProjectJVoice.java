@@ -2,16 +2,33 @@ package com.vectorsf.jvoice.ui.wizard.create;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.internal.runtime.Activator;
+import org.eclipse.core.internal.runtime.CommonMessages;
+import org.eclipse.core.internal.runtime.IRuntimeConstants;
+import org.eclipse.core.internal.runtime.RuntimeLog;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.navigator.CommonNavigator;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.project.JVoiceProjectConfigurator;
+import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.ui.wizard.page.ProjectNameWizardPage;
 
 /**
@@ -68,12 +85,52 @@ public class CreateProjectJVoice extends BasicNewResourceWizard {
 					}
 				}
 			});
+			for (Shell shell : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getShells()) {
+				if (shell.getText().contains("New Module Project")) {
+					shell.close();
+				}
+			}
+			for (IViewPart view : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViews()) {
+				if (view.getTitle().equals("Navigator IVR")) {
+					CommonNavigator commonNavigator = (CommonNavigator) view;
+					JVProject project = BaseModel.getInstance().getModel().getProject(projectName);
+					StructuredSelection structuredSelection = new StructuredSelection(project);
+					commonNavigator.selectReveal(structuredSelection);
+				}
+			}
 		} catch (InvocationTargetException | InterruptedException e) {
-			e.printStackTrace();
+			handleException(e);
+			MessageDialog.openError(null, "Error", "A resource \"" + projectName
+					+ "\" exists with a different case. Please check Error Log.");
 			return false;
 		}
 
 		return true;
+	}
+
+	private static void handleException(Throwable e) {
+		if (!(e instanceof OperationCanceledException)) {
+			// try to obtain the correct plug-in id for the bundle providing the safe runnable
+			Activator activator = Activator.getDefault();
+			String pluginId = null;
+			if (pluginId == null) {
+				pluginId = IRuntimeConstants.PI_COMMON;
+			}
+			String message = NLS.bind(CommonMessages.meta_pluginProblems, pluginId);
+			IStatus status;
+			if (e instanceof CoreException) {
+				status = new MultiStatus(pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
+				((MultiStatus) status).merge(((CoreException) e).getStatus());
+			} else {
+				status = new Status(IStatus.ERROR, pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
+			}
+			// Make sure user sees the exception: if the log is empty, log the exceptions on stderr
+			if (!RuntimeLog.isEmpty()) {
+				RuntimeLog.log(status);
+			} else {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

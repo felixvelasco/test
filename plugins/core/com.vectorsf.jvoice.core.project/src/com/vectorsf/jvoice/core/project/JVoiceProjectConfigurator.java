@@ -2,6 +2,7 @@ package com.vectorsf.jvoice.core.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.maven.model.Build;
 import org.apache.maven.model.Dependency;
@@ -83,6 +84,9 @@ public final class JVoiceProjectConfigurator {
 		model.setArtifactId(artifactId);
 		model.setVersion("1.0.0-SNAPSHOT");
 		model.setPackaging("jar");
+		Properties pro = new Properties();
+		pro.put("wsdlRoot","src/main/resources/META-INF/wsdl");
+		model.setProperties(pro);
 
 		model.setName(projectName);
 		model.setDescription(descriptionProject);
@@ -134,46 +138,49 @@ public final class JVoiceProjectConfigurator {
 		configuration.addChild(encoding);
 
 		dsl_builder3.setConfiguration(configuration);
+		
+		
+		
 
 		Plugin ws_pol = new Plugin();
-		ws_pol.setGroupId("org.jvnet.jax-ws-commons");
-		ws_pol.setArtifactId("jaxws-maven-plugin");
-		ws_pol.setVersion("2.3");
+		ws_pol.setGroupId("org.apache.cxf");
+		ws_pol.setArtifactId("cxf-codegen-plugin");
+		ws_pol.setVersion("2.7.8");
 		PluginExecution pexecution = new PluginExecution();
-		pexecution.addGoal("wsimport");
+		pexecution.addGoal("wsdl2java");
+		pexecution.setId("generate-sources");
+		pexecution.setPhase("generate-sources");
 
 		Xpp3Dom configuration4 = new Xpp3Dom("configuration");
-
-		Xpp3Dom wsdlDirectory = new Xpp3Dom("wsdlDirectory");
-		wsdlDirectory.setValue("src/main/resources/META-INF/wsdl");
-		configuration4.addChild(wsdlDirectory);
 		
-		Xpp3Dom wsdlXjcArgs = new Xpp3Dom("xjcArgs");
-		configuration4.addChild(wsdlXjcArgs);
 		
-		Xpp3Dom wsdlXjcArg = new Xpp3Dom("xjcArg");
-		wsdlXjcArg.setValue("-XautoNameResolution");
-		wsdlXjcArgs.addChild(wsdlXjcArg);
 		
-	
-		String sPaquete = JVoiceModuleNature
-				.getDefaultWSDLPackageName(projectName);
-		Xpp3Dom wsdlLocation = new Xpp3Dom("wsdlLocation");
-		wsdlLocation.setValue("http://" + sPaquete + ".*");
-		configuration4.addChild(wsdlLocation);
 
-		Xpp3Dom sourceDestDir = new Xpp3Dom("sourceDestDir");
-		sourceDestDir.setValue("src/generated-sources/wsimport");
-		configuration4.addChild(sourceDestDir);
-
-		Xpp3Dom wsdlFiles = new Xpp3Dom("wsdlFiles");
-		pexecution.setConfiguration(wsdlFiles);
-
-		configuration4.addChild(wsdlFiles);
-
-		Xpp3Dom keep = new Xpp3Dom("keep");
-		keep.setValue("true");
-		configuration4.addChild(keep);
+		Xpp3Dom sourceRoot = new Xpp3Dom("sourceRoot");
+		sourceRoot.setValue("src/generated-sources/wsdl2java");
+		configuration4.addChild(sourceRoot);
+		
+		Xpp3Dom defaultOptions = new Xpp3Dom("defaultOptions");
+		configuration4.addChild(defaultOptions);
+		
+		Xpp3Dom extraargs = new Xpp3Dom("extraargs");
+		defaultOptions.addChild(extraargs);
+		
+		Xpp3Dom extraarg1 = new Xpp3Dom("extraarg");
+		extraarg1.setValue("-client");
+		extraargs.addChild(extraarg1);
+		
+		Xpp3Dom extraarg2 = new Xpp3Dom("extraarg");
+		extraarg2.setValue("-autoNameResolution");
+		extraargs.addChild(extraarg2);
+		
+		Xpp3Dom extraarg3 = new Xpp3Dom("extraarg");
+		extraarg3.setValue("-verbose");
+		extraargs.addChild(extraarg3);
+		
+		
+		Xpp3Dom wsdlOptions = new Xpp3Dom("wsdlOptions");
+		configuration4.addChild(wsdlOptions);
 
 		pexecution.setConfiguration(configuration4);
 

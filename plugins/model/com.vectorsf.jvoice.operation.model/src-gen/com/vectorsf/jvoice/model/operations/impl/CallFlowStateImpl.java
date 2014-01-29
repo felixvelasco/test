@@ -2,38 +2,42 @@
  */
 package com.vectorsf.jvoice.model.operations.impl;
 
-import java.lang.reflect.InvocationTargetException;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.State;
 
+import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 /**
- * <!-- begin-user-doc --> An implementation of the model object ' <em><b>Call Flow State</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Call Flow State</b></em>'.
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl#getSubflow <em>Subflow</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl#getSubflow <em>Subflow</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlowState {
 	/**
 	 * The cached value of the '{@link #getSubflow() <em>Subflow</em>}' reference.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #getSubflow()
 	 * @generated
 	 * @ordered
@@ -41,7 +45,8 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	protected Flow subflow;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected CallFlowStateImpl() {
@@ -49,7 +54,8 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -58,10 +64,10 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public Flow getSubflow() {
 		if (subflow != null && subflow.eIsProxy()) {
 			InternalEObject oldSubflow = (InternalEObject)subflow;
@@ -75,7 +81,8 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Flow basicGetSubflow() {
@@ -83,10 +90,10 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public void setSubflow(Flow newSubflow) {
 		Flow oldSubflow = subflow;
 		subflow = newSubflow;
@@ -95,10 +102,10 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	public EList<String> getEvents() {
 		EList<String> list = new BasicEList<String>();
 		
@@ -109,10 +116,12 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 		}
 		return list;
 		
+		
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -126,7 +135,8 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -140,7 +150,8 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -154,7 +165,8 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -167,7 +179,8 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -182,7 +195,8 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -194,4 +208,4 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 		return super.eInvoke(operationID, arguments);
 	}
 
-} // CallFlowStateImpl
+} //CallFlowStateImpl

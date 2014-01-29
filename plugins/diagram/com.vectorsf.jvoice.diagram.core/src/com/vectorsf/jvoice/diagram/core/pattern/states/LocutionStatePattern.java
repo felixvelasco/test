@@ -6,11 +6,13 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.*;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.graphiti.features.context.ICreateContext;
+import org.eclipse.graphiti.features.context.*;
+import org.eclipse.graphiti.features.context.impl.AddContext;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -18,6 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 
+import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.operations.*;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
@@ -41,22 +44,93 @@ public abstract class LocutionStatePattern extends SimpleStatePattern {
 
 		if (dialogResult == Dialog.OK) {
 			LocutionState state = createMainState();
-			URI locationUri = getDialogResult();
-			VoiceDsl result = (VoiceDsl) flow.eResource().getResourceSet().getEObject(locationUri, true);
+			URI locutionUri = getDialogResult();
 
-			if (result != null) {
+			if (locutionUri != null) {
+				IResource resourceFile = getResourceFile(flow, locutionUri);
+				ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
+				Resource resource = resourceSet.getResource(locutionUri, false);
+				if (resource == null) {
+					resource = resourceSet.getResource(locutionUri, true);
+				} else if (resourceFile != null & resource.getTimeStamp() < resourceFile.getLocalTimeStamp()) {
+					resource.unload();
+					resource = resourceSet.getResource(locutionUri, true);
+				}
+
+				VoiceDsl result = (VoiceDsl) resource.getContents().get(0);
+
 				state.setName(result.getName());
 				state.setLocution(result);
+				flow.getStates().add(state);
+
+				addGraphicalRepresentation(context, state);
+
+				return new Object[] { state };
 			}
-			flow.getStates().add(state);
-
-			addGraphicalRepresentation(context, state);
-
-			return new Object[] { state };
-
+			return null;
 		} else {
 			throw new OperationCanceledException();
 		}
+	}
+
+	private IResource getResourceFile(Flow flow, URI locationUri) {
+		IFile flowFile = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
+		IPath resourcesPath = flowFile.getFullPath().removeFileExtension().addFileExtension("resources");
+		IFolder resourcesFolder = (IFolder) ResourcesPlugin.getWorkspace().getRoot().findMember(resourcesPath);
+		IResource resourceFile = null;
+		try {
+			for (IResource file : resourcesFolder.members()) {
+				if (locationUri != null) {
+					if (file.getName().equals(locationUri.lastSegment())) {
+						resourceFile = file;
+						break;
+					}
+				}
+			}
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+		return resourceFile;
+	}
+
+	@Override
+	protected PictogramElement doAdd(IAddContext context) {
+
+		if (context.getNewObject() instanceof VoiceDsl) {
+			// Obtenemos el dsl que se ha arrastrado al editor
+			VoiceDsl dsl = (VoiceDsl) context.getNewObject();
+			String dslName = dsl.getName();
+
+			// Obtenemos el flujo al que se ha arrastrado.
+			Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+
+			// Creamos el estado a partir del dsl
+			LocutionState state = createMainState();
+			state.setName(getValidStateName(flow, dslName));
+			state.setLocution(dsl);
+
+			// A�adimos al flujo el estado creado.
+			flow.getStates().add(state);
+
+			// El padre necesita un estado en el contexto, as� que creamos un nuevo contexto y le seteamos el estado.
+			AddContext newContext = new AddContext(context, state);
+
+			return super.doAdd(newContext);
+		} else {
+			return super.doAdd(context);
+		}
+	}
+
+	protected boolean isDslFromTargetFlow(VoiceDsl dsl) {
+		// Obtenemos el flujo al que se ha arrastrado el dsl.
+		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+
+		// Obtenemos el flujo al que pertenece el dsl arrastrado.
+		IFile file = (IFile) Platform.getAdapterManager().getAdapter(dsl, IFile.class);
+		String dslFlow = file.getParent().getName().substring(0, file.getParent().getName().indexOf(".resources"));
+
+		// Comparamos que sean el mismo flujo.
+		return dslFlow.equals(flow.getName());
 	}
 
 	private IPath getFlowFolderPath(Flow flow) {

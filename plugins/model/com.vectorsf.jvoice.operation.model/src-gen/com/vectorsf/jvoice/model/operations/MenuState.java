@@ -4,7 +4,6 @@ package com.vectorsf.jvoice.model.operations;
 
 import org.eclipse.emf.common.util.EList;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Menu State</b></em>'.
@@ -16,7 +15,6 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface MenuState extends LocutionState {
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -25,4 +23,5 @@ public interface MenuState extends LocutionState {
 	 * @generated
 	 */
 	EList<String> getEvents();
+
 } // MenuState

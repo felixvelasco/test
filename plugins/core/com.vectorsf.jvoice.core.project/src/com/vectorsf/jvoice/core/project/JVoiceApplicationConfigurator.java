@@ -28,6 +28,8 @@ public final class JVoiceApplicationConfigurator {
 	private static final String WS_ENDPOINTS_XML = "ws-endpoints.xml";
 	private static final String ENDPOINTS_DIR = "src/main/resources/com/vectorsf/";
 	private static final String WS = "/ws";
+	protected static final String PROPERTIES_FOLDER = "src/main/resources/properties";
+	protected static final String PROPERTIES_FILENAME = "jvoiceframework.properties";
 
 	private JVoiceApplicationConfigurator() {
 	}
@@ -53,15 +55,21 @@ public final class JVoiceApplicationConfigurator {
 				configuration.getResolverConfiguration().setResolveWorkspaceProjects(false);
 				String wsFolderName = ENDPOINTS_DIR + projectName + WS;
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
-						getModel(groupId, artifactId, projectName, descProject), new String[] { wsFolderName },
-						configuration, monitor);
+						getModel(groupId, artifactId, projectName, descProject),
+						new String[] { wsFolderName, PROPERTIES_FOLDER }, configuration, monitor);
 
 				// Creamos el ws-endpoints.xml en dentro de la carpeta resources
 				IFolder folder = project.getFolder(wsFolderName);
 				IFile wsEndpoints = folder.getFile(WS_ENDPOINTS_XML);
 				wsEndpoints.create(
-						getClass().getResourceAsStream("/com/vectorsf/jvoice/core/project/ws-endpoints.xml"), true,
-						null);
+						getClass().getResourceAsStream("/com/vectorsf/jvoice/core/project/resources/ws-endpoints.xml"),
+						true, null);
+
+				IFolder propertiesFolder = project.getFolder(PROPERTIES_FOLDER);
+				IFile properties = propertiesFolder.getFile(PROPERTIES_FILENAME);
+				properties.create(
+						getClass().getResourceAsStream(
+								"/com/vectorsf/jvoice/core/project/resources/jvoiceframework.properties"), true, null);
 
 				result[0] = project;
 			}
@@ -86,7 +94,7 @@ public final class JVoiceApplicationConfigurator {
 
 		model.setName(projectName);
 		model.setDescription(descProject);
-		
+
 		List<Dependency> dependencies = new ArrayList<Dependency>();
 		Dependency jvFlow = new Dependency();
 		jvFlow.setGroupId("com.vectorsf");
@@ -100,11 +108,11 @@ public final class JVoiceApplicationConfigurator {
 		dsl_builder.setArtifactId("application-builder");
 		dsl_builder.setVersion("0.0.2-SNAPSHOT");
 		PluginExecution voiceDSL = new PluginExecution();
-		voiceDSL.setPhase("process-resources");
+		voiceDSL.setPhase("generate-resources");
 		voiceDSL.addGoal("copyXML");
 
 		dsl_builder.addExecution(voiceDSL);
-		
+
 		Plugin dsl_builder2 = new Plugin();
 		dsl_builder2.setGroupId("org.apache.maven.plugins");
 		dsl_builder2.setArtifactId("maven-compiler-plugin");
