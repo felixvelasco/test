@@ -41,7 +41,7 @@ class GeneralStateCodeXML {
 	def static writeAudio(Audio audio, String name, String projectName) '''
 		««« <set name="flashScope.«name».bargein" value="«audio.dontBargeIn.booleanValue»"/>
 		«IF audio.src != null» 
-			<set name="flashScope.«name».src" value="locutionProvider.getAudioSrc('«audio.src»','«projectName»')"/>
+			<set name="flashScope.«name».src" value="locutionProvider.getAudioSrc('«audio.src.expandCode»','«projectName»')"/>
 		«ENDIF»
 		«IF audio.tts != null»
 			<evaluate expression="jVoiceArchWording" result="flashScope.«name».wording"/>
