@@ -37,11 +37,12 @@ public class TransitionCallFlowPattern extends TransitionPattern {
 	    // FixPointAnchor
 	    if (pe instanceof FixPointAnchor) {
 		GraphicsAlgorithm ga = pe.getGraphicsAlgorithm();
-		
-		if(ga instanceof Image)
-			eventName = ((Image) ga).getId();
-		else
-			eventName = ((Text) ga).getValue();
+
+		if (ga instanceof Image) {
+		    eventName = ((Image) ga).getId();
+		} else {
+		    eventName = ((Text) ga).getValue();
+		}
 		pe = ((FixPointAnchor) pe).getParent();
 	    }
 
