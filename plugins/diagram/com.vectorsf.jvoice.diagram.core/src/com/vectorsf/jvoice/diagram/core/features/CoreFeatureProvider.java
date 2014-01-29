@@ -116,13 +116,13 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 			new TransitionCallFlowPattern(state, this)) };
 	    }
 	    if (state instanceof MenuState) {
-		// return new IFeature[] { new CreateTransitionFromPad(this,
-		// new TransitionMenuPattern(state, this)) };
+		return new IFeature[] { new CreateTransitionFromPad(this,
+			new TransitionCallFlowPattern(state, this)) };
 	    }
 
-	    if (state instanceof TransferState) {
+	    if (state instanceof SwitchState) {
 		return new IFeature[] { new CreateTransitionFromPad(this,
-			new TransitionPattern(this)) };
+			new TransitionCallFlowPattern(state, this)) };
 	    }
 	}
 
