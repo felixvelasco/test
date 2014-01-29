@@ -1,47 +1,24 @@
 package com.vectorsf.jvoice.ui.diagram.properties.filters;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
-import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
-import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
+import org.eclipse.swt.layout.*;
+import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.views.properties.tabbed.*;
 
-import com.vectorsf.jvoice.model.operations.CallFlowState;
-import com.vectorsf.jvoice.model.operations.Case;
-import com.vectorsf.jvoice.model.operations.CustomState;
-import com.vectorsf.jvoice.model.operations.InputState;
-import com.vectorsf.jvoice.model.operations.LocutionState;
-import com.vectorsf.jvoice.model.operations.MenuState;
-import com.vectorsf.jvoice.model.operations.PromptState;
-import com.vectorsf.jvoice.model.operations.RecordState;
-import com.vectorsf.jvoice.model.operations.State;
-import com.vectorsf.jvoice.model.operations.SwitchState;
-import com.vectorsf.jvoice.model.operations.TransferState;
+import com.vectorsf.jvoice.model.operations.*;
 import com.vectorsf.jvoice.ui.diagram.properties.Activator;
-import com.vectorsf.jvoice.ui.diagram.properties.editting.ConditionEditingSupport;
-import com.vectorsf.jvoice.ui.diagram.properties.editting.EventNameEditingSupport;
-import com.vectorsf.jvoice.ui.diagram.properties.listeners.ListenerIntentionName;
-import com.vectorsf.jvoice.ui.diagram.properties.listeners.PropertiesListener;
-import com.vectorsf.jvoice.ui.diagram.properties.provider.CaseContentProvider;
-import com.vectorsf.jvoice.ui.diagram.properties.provider.CaseLabelProvider;
+import com.vectorsf.jvoice.ui.diagram.properties.editting.*;
+import com.vectorsf.jvoice.ui.diagram.properties.listeners.*;
+import com.vectorsf.jvoice.ui.diagram.properties.provider.*;
 
 public class StateSection extends GFPropertySection implements ITabbedPropertyConstants {
 
@@ -101,7 +78,7 @@ public class StateSection extends GFPropertySection implements ITabbedPropertyCo
 		TableViewerColumn condition = createTableViewerColumn(CONDITION, 400);
 		condition.setEditingSupport(new ConditionEditingSupport(tableViewer));
 		TableViewerColumn eventName = createTableViewerColumn(NAME, 120);
-		eventName.setEditingSupport(new EventNameEditingSupport(tableViewer, error));
+		eventName.setEditingSupport(new EventNameEditingSupport(tableViewer, error, fp));
 
 		tableViewer.setContentProvider(new CaseContentProvider());
 		tableViewer.setLabelProvider(new CaseLabelProvider());
