@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.vectorsf.jvoice</groupId>
 		<artifactId>maven</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>dsl-builder</artifactId>
 	<packaging>maven-plugin</packaging>
@@ -97,17 +97,17 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.prompt.model</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.base.model</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.operation.model</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.graphiti</groupId>
@@ -117,7 +117,7 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.voice.dsl</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -127,7 +127,7 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.core.project</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.mojo</groupId>
@@ -138,7 +138,7 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.core.validation</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
