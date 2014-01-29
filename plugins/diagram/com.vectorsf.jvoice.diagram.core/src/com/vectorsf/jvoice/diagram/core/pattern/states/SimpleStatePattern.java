@@ -132,13 +132,17 @@ public abstract class SimpleStatePattern extends IdPattern {
 		gaService.setLocationAndSize(text, CELL_WIDTH, 0, TEXT_WIDTH,
 			TOP_RECTANGLE_HEIGHT);
 
-		Image menuImage = gaService.createImage(topRectangle,
-			CoreImageProvider.IMG_DROPDOWN);
-		setId(menuImage, ID_MENU_IMAGE);
-		gaService.setLocationAndSize(menuImage,
-			MAIN_RECTANGLE_WIDTH - 24,
-			(TOP_RECTANGLE_HEIGHT - DROPDOWN_SIZE) / 2,
-			DROPDOWN_SIZE, DROPDOWN_SIZE);
+		if (!(addedDomainObject instanceof CallFlowState)
+			&& !(addedDomainObject instanceof SwitchState) 
+			&& !(addedDomainObject instanceof MenuState)) {
+		    Image menuImage = gaService.createImage(topRectangle,
+			    CoreImageProvider.IMG_DROPDOWN);
+		    setId(menuImage, ID_MENU_IMAGE);
+		    gaService.setLocationAndSize(menuImage,
+			    MAIN_RECTANGLE_WIDTH - 24,
+			    (TOP_RECTANGLE_HEIGHT - DROPDOWN_SIZE) / 2,
+			    DROPDOWN_SIZE, DROPDOWN_SIZE);
+		}
 	    }
 
 	}
@@ -357,13 +361,15 @@ public abstract class SimpleStatePattern extends IdPattern {
 	PictogramElement rootPe = context.getRootPictogramElement();
 
 	for (Anchor anchor : ((AnchorContainer) rootPe).getAnchors()) {
-	    if (!(anchor instanceof FixPointAnchor))
+	    if (!(anchor instanceof FixPointAnchor)) {
 		continue;
-	    if (anchor.getOutgoingConnections().isEmpty())
+	    }
+	    if (anchor.getOutgoingConnections().isEmpty()) {
 		anchorsToDelete.add(anchor);
-	    else
+	    } else {
 		existingAnchors.add(((Image) anchor.getGraphicsAlgorithm())
 			.getId());
+	    }
 	}
 
 	for (Anchor anchor : anchorsToDelete) {
