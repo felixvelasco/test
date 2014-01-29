@@ -158,7 +158,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			setErrorMessage("The first letter of the definition name cannot be a number.");
 			return false;
 		}
-		if (Character.isJavaLetter(initial)) {
+		if (!Character.isJavaLetter(initial)) {
 			setErrorMessage("The first letter of the definition is not valid.");
 			return false;
 		}
