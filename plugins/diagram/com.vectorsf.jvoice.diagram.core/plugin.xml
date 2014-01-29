@@ -42,7 +42,7 @@
            patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.FinalStatePattern">
      </patternContributor>
      <patternContributor
-           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.SwitchPattern">
+           patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.SwitchStatePattern">
      </patternContributor>
      <patternContributor
            patternContributorClass="com.vectorsf.jvoice.diagram.core.pattern.states.CallStatePattern">
