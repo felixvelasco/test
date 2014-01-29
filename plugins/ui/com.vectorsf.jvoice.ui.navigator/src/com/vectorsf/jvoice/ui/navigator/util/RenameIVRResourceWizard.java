@@ -179,7 +179,18 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 				if (Character.isDigit(initial)) {
 					return RefactoringStatus
 							.createFatalErrorStatus("The first letter of name can not be a digit");
+				} else if (!Character.isJavaLetter(initial)) {
+					return RefactoringStatus
+							.createFatalErrorStatus("The first letter of name is not valid");
 				} else {
+					for (int i = 1; i < text.length(); i++) {
+						char letter = text.charAt(i);
+						if (!Character.isJavaLetterOrDigit(letter)) {
+							return RefactoringStatus
+									.createFatalErrorStatus("Name contains incorrect character");
+						}
+
+					}
 					return null;
 				}
 			}

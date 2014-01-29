@@ -75,14 +75,13 @@ public class StateValidator {
 		}
 
 		char initial = state.getName().charAt(0);
-		if (!(state.getName().startsWith("_") || Character.isLetter(initial))) {
+		if (!(state.getName().startsWith("_") || Character.isJavaLetter(initial))) {
 			operationsValidator.error(state, "Name of " + state.getName() + " starts with a incorrect letter.");
 		}
 
-		for (int i = 0; i < state.getName().length(); i++) {
+		for (int i = 1; i < state.getName().length(); i++) {
 			char letter = state.getName().charAt(i);
-			if (!(Character.isLetter(letter) || Character.isDigit(letter) || Character.toString(letter).equals(".")
-					|| Character.toString(letter).equals("_") || Character.toString(letter).equals("-"))) {
+			if (!Character.isJavaLetterOrDigit(letter)) {
 				operationsValidator.error(state, "Name of " + state.getName() + " contains incorrect character.");
 				break;
 			}

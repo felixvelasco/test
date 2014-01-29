@@ -164,6 +164,18 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			setErrorMessage("The first letter of the flow name can't be a number.");
 			return false;
 		}
+		if (!Character.isJavaLetter(initial)) {
+			setErrorMessage("The first letter of the application is not valid.");
+			return false;
+		}
+		for (int i = 1; i < text.length(); i++) {
+			char letter = text.charAt(i);
+			if (!Character.isJavaLetterOrDigit(letter)) {
+				setErrorMessage("Name contains incorrect character");
+				return false;
+			}
+
+		}
 		String projectName = getProjectFieldValue();
 		if (projectName.isEmpty()) {
 			setErrorMessage("Enter a project name");

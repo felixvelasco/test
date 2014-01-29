@@ -15,14 +15,14 @@ public class ComponentBeanValidator {
 		}
 
 		char initial = bean.getName().charAt(0);
-		if (!Character.isLetter(initial)) {
+		if (!Character.isJavaLetter(initial)) {
 			operationsValidator.error(bean, "Name of Component Bean" + bean.getName()
 					+ " starts with a incorrect letter.");
 		}
 
-		for (int i = 0; i < bean.getName().length(); i++) {
+		for (int i = 1; i < bean.getName().length(); i++) {
 			char letter = bean.getName().charAt(i);
-			if (!(Character.isLetter(letter) || Character.isDigit(letter))) {
+			if (!Character.isJavaLetterOrDigit(letter)) {
 				operationsValidator.error(bean, "Name of Component Bean " + bean.getName()
 						+ " contains incorrect character.");
 				break;

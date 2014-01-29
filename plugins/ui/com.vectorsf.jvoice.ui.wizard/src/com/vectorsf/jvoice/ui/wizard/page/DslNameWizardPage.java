@@ -158,10 +158,34 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			setErrorMessage("The first letter of the definition name cannot be a number.");
 			return false;
 		}
+		if (Character.isJavaLetter(initial)) {
+			setErrorMessage("The first letter of the definition is not valid.");
+			return false;
+		}
+		for (int i = 1; i < text.length(); i++) {
+			char letter = text.charAt(i);
+			if (!Character.isJavaLetterOrDigit(letter)) {
+				setErrorMessage("Name contains incorrect character");
+				return false;
+			}
+		}
 
 		if (text.indexOf(' ') != -1) {
 			setErrorMessage("The name of the definition cannot contain spaces.");
 			return false;
+		}
+
+		if (!Character.isJavaLetter(initial)) {
+			setErrorMessage("The first letter of the application is not valid.");
+			return false;
+		}
+		for (int i = 1; i < text.length(); i++) {
+			char letter = text.charAt(i);
+			if (!Character.isJavaLetterOrDigit(letter)) {
+				setErrorMessage("Name contains incorrect character");
+				return false;
+			}
+
 		}
 
 		String projectName = getProjectFieldValue();
