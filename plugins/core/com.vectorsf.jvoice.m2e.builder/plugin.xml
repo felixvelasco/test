@@ -4,13 +4,13 @@
 <extension
          point="org.eclipse.m2e.core.projectConfigurators">
       <configurator
-            class="com.isb.bks.ivr.voice.m2e.builder.internal.JVoiceProjectConfigurator"
-            id="com.isb.bks.ivr.voice.m2e.jVoiceConfigurator"
+            class="com.vectorsf.jvoice.m2e.builder.internal.JVoiceProjectConfigurator"
+            id="com.vectorsf.jvoice.m2e.jVoiceConfigurator"
             name="%configurator.name">
       </configurator>
       <configurator
-            class="com.isb.bks.ivr.voice.m2e.builder.internal.JVoiceJaxWSConfigurator"
-            id="com.isb.bks.ivr.voice.m2e.jVoiceJaxWSConfigurator"
+            class="com.vectorsf.jvoice.m2e.builder.internal.JVoiceJaxWSConfigurator"
+            id="com.vectorsf.jvoice.m2e.jVoiceJaxWSConfigurator"
             name="JaxWS">
       </configurator>
    </extension>

@@ -1,4 +1,4 @@
-package com.isb.bks.ivr.voice.m2e.builder.internal;
+package com.vectorsf.jvoice.m2e.builder.internal;
 
 import java.io.File;
 import java.util.Set;

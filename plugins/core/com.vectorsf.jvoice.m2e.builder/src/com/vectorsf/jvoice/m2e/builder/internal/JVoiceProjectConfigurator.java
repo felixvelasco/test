@@ -1,4 +1,4 @@
-package com.isb.bks.ivr.voice.m2e.builder.internal;
+package com.vectorsf.jvoice.m2e.builder.internal;
 
 import org.apache.maven.plugin.MojoExecution;
 import org.eclipse.core.runtime.CoreException;

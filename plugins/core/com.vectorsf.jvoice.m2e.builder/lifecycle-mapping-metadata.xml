@@ -5,28 +5,29 @@
 			<pluginExecutionFilter>
 				<groupId>com.vectorsf.jvoice</groupId>
 				<artifactId>dsl-builder</artifactId>
-				<versionRange>[0.0.1,)</versionRange>
+				<versionRange>[1.0.0,1.1.0)</versionRange>
 				<goals>
 					<goal>generateFlow</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>
 				<configurator>
-					<id>com.isb.bks.ivr.voice.m2e.jVoiceConfigurator</id>
+					<id>com.vectorsf.jvoice.m2e.jVoiceConfigurator</id>
 				</configurator>
 			</action>
-		</pluginExecution>		<pluginExecution>
+		</pluginExecution>
+		<pluginExecution>
 			<pluginExecutionFilter>
 				<groupId>com.vectorsf.jvoice</groupId>
 				<artifactId>dsl-builder</artifactId>
-				<versionRange>[0.0.1,)</versionRange>
+				<versionRange>[1.0.0,1.1.0)</versionRange>
 				<goals>
 					<goal>prepareWSDLSources</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>
 				<configurator>
-					<id>com.isb.bks.ivr.voice.m2e.jVoiceConfigurator</id>
+					<id>com.vectorsf.jvoice.m2e.jVoiceConfigurator</id>
 				</configurator>
 			</action>
 		</pluginExecution>
@@ -34,14 +35,14 @@
 			<pluginExecutionFilter>
 				<groupId>com.vectorsf.jvoice</groupId>
 				<artifactId>application-builder</artifactId>
-				<versionRange>[0.0.1,)</versionRange>
+				<versionRange>[1.0.0,1.1.0)</versionRange>
 				<goals>
 					<goal>copyXML</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>
 				<configurator>
-					<id>com.isb.bks.ivr.voice.m2e.jVoiceConfigurator</id>
+					<id>com.vectorsf.jvoice.m2e.jVoiceConfigurator</id>
 				</configurator>
 			</action>
 		</pluginExecution>
@@ -56,7 +57,7 @@
 			</pluginExecutionFilter>
 			<action>
 				<configurator>
-					<id>com.isb.bks.ivr.voice.m2e.jVoiceJaxWSConfigurator</id>
+					<id>com.vectorsf.jvoice.m2e.jVoiceJaxWSConfigurator</id>
 				</configurator>
 			</action>
 		</pluginExecution>
