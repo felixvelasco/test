@@ -116,7 +116,6 @@ public class MenuStatePattern extends LocutionStatePattern {
 	protected boolean layout(IdLayoutContext context, String id) {
 		boolean changesDone = false;
 
-		GraphicsAlgorithm gaOuter = context.getRootPictogramElement().getGraphicsAlgorithm();
 		if (id.equals(ID_MAIN_FIGURE)) {
 			updateFireableEvents(context);
 			changesDone = true;
@@ -237,27 +236,13 @@ public class MenuStatePattern extends LocutionStatePattern {
 				optionNames.add(c.getName());
 			}
 
-			// Obtenemos los nombres de los anchors
-			Set<String> anchorNames = new HashSet<String>();
-			PictogramElement pe = context.getRootPictogramElement();
-			for (Anchor anchor : ((AnchorContainer) pe).getAnchors()) {
-				if (!(anchor instanceof FixPointAnchor)) {
-					continue;
-				}
-				GraphicsAlgorithm ga = anchor.getGraphicsAlgorithm();
-				if (ga instanceof Image) {
-					anchorNames.add(((Image) ga).getId());
-				} else {
-					anchorNames.add(((Text) ga).getValue());
-				}
-			}
-
 			// Si se modifica las options en el fichero hay que actualizar el estado.
-			if (!optionNames.equals(anchorNames)) {
+			if (!optionNames.equals(SimpleStatePattern.getAnchorNames(context))) {
 				return Reason.createTrueReason();
 			}
 		}
 
 		return super.updateNeeded(context, id);
 	}
+
 }

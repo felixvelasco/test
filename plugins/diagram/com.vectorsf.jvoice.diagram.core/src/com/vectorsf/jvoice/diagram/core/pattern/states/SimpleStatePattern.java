@@ -284,8 +284,6 @@ public abstract class SimpleStatePattern extends IdPattern {
 	protected boolean layout(IdLayoutContext context, String id) {
 		boolean changesDone = false;
 
-		GraphicsAlgorithm gaOuter = context.getRootPictogramElement().getGraphicsAlgorithm();
-
 		// TODO : Resize state if name is too long
 		// if (id.equals(ID_MAIN_FIGURE) || id.equals(ID_NAME_TEXT)) {
 		// GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
@@ -567,6 +565,25 @@ public abstract class SimpleStatePattern extends IdPattern {
 			validName = name + counter;
 			counter++;
 		}
+	}
+
+	public static Set<String> getAnchorNames(IdUpdateContext context) {
+		Set<String> anchorNames = new HashSet<String>();
+
+		PictogramElement pe = context.getRootPictogramElement();
+		for (Anchor anchor : ((AnchorContainer) pe).getAnchors()) {
+			if (!(anchor instanceof FixPointAnchor)) {
+				continue;
+			}
+			GraphicsAlgorithm ga = anchor.getGraphicsAlgorithm();
+			if (ga instanceof Image) {
+				anchorNames.add(((Image) ga).getId());
+			} else {
+				anchorNames.add(((Text) ga).getValue());
+			}
+		}
+
+		return anchorNames;
 	}
 
 }
