@@ -2,8 +2,7 @@ package com.vectorsf.jvoice.diagram.core.features;
 
 import org.eclipse.graphiti.ui.platform.AbstractImageProvider;
 
-public class CoreImageProvider extends AbstractImageProvider
-{
+public class CoreImageProvider extends AbstractImageProvider {
 
 	// States
 	public static final String IMG_TRANSACTION_PAD = "transition_pad"; //$NON-NLS-1$
@@ -84,9 +83,54 @@ public class CoreImageProvider extends AbstractImageProvider
 
 	public static final String IMG_STATE_TRANSFER = "icon_comp_transfer";
 
+	public static final String IMG_EVENT_BUSY = "busy";
+
+	public static final String IMG_EVENT_CONNECTIONERROR = "connectionerror";
+
+	public static final String IMG_EVENT_ERROR = "error";
+
+	public static final String IMG_EVENT_FAR_END_DISCONNECT = "far_end_disconnect";
+
+	public static final String IMG_EVENT_HANGUP = "hangup";
+
+	public static final String IMG_EVENT_MATCH = "match";
+
+	public static final String IMG_EVENT_MAXATTEMPTS = "maxattempts";
+
+	public static final String IMG_EVENT_MAXTIME_DISCONNECT = "maxtime_disconnect";
+
+	public static final String IMG_EVENT_NEAR_END_DISCONNECT = "near_end_disconnect";
+
+	public static final String IMG_EVENT_NETWORK_BUSY = "network_busy";
+
+	public static final String IMG_EVENT_NETWORK_DISCONNECT = "network_disconnect";
+
+	public static final String IMG_EVENT_NOANSWER = "noanswer";
+
+	public static final String IMG_EVENT_MAXNOINPUT = "maxnoinput";
+
+	public static final String IMG_EVENT_MAXNOMATCH = "maxnomatch";
+
+	public static final String IMG_EVENT_NORESOURCE = "noresource";
+
+	public static final String IMG_EVENT_RECORDED = "recorded";
+
+	public static final String IMG_EVENT_RECORDUNSUPPORTED = "recordunsupported";
+
+	public static final String IMG_EVENT_SUCCESS = "success";
+
+	public static final String IMG_EVENT_TRANSFERRED = "transferred";
+
+	public static final String IMG_EVENT_UNKNOWN = "unknown";
+
+	public static final String IMG_EVENT_OK = "ok";
+
+	public static final String IMG_EVENT_ON_EXT = "_on";
+
+	public static final String IMG_EVENT_OFF_EXT = "_off";
+
 	@Override
-	protected void addAvailableImages()
-	{
+	protected void addAvailableImages() {
 
 		addImageFilePath(IMG_TRANSACTION_PAD, "icons/transition.gif"); //$NON-NLS-1$
 		addImageFilePath(IMG_RELATION_PAD, "icons/relation.gif"); //$NON-NLS-1$
@@ -135,90 +179,83 @@ public class CoreImageProvider extends AbstractImageProvider
 
 		addImageFilePath(IMG_MORE_EVENTS_DIALOG, "icons/icon_more_events_dialog.png");
 
-		// Eventos que pueden lanzar los estados
-		addImageFilePath("busy", "icons/events/icon_event_busy.png");
-		addImageFilePath("conn_error", "icons/events/icon_event_conn_error.png");
-		addImageFilePath("error", "icons/events/icon_event_error.png");
-		addImageFilePath("far_end_disc", "icons/events/icon_event_far_end_disc.png");
-		addImageFilePath("hangup", "icons/events/icon_event_hangup.png");
-		addImageFilePath("match", "icons/events/icon_event_match.png");
-		addImageFilePath("maxatt", "icons/events/icon_event_maxatt.png");
-		addImageFilePath("maxtime", "icons/events/icon_event_maxtime.png");
-		addImageFilePath("netw_busy", "icons/events/icon_event_netw_busy.png");
-		addImageFilePath("netw_disconnect", "icons/events/icon_event_netw_disconnect.png");
-		addImageFilePath("noanswer", "icons/events/icon_event_noanswer.png");
-		addImageFilePath("noinput", "icons/events/icon_event_noimput.png");
-		addImageFilePath("nomatch", "icons/events/icon_event_nomatch.png");
-		addImageFilePath("noresource", "icons/events/icon_event_noresource.png");
-		addImageFilePath("recorded", "icons/events/icon_event_recorded.png");
-		addImageFilePath("record_unsup", "icons/events/icon_event_record_unsup.png");
-		addImageFilePath("success", "icons/events/icon_event_success.png");
-		addImageFilePath("transferred", "icons/events/icon_event_transferred.png");
-		addImageFilePath("unknown", "icons/events/icon_event_unknown.png");
+		// Iconos para los eventos predefinidos en caso de estar seleccionados.
+		addImageFilePath(IMG_EVENT_BUSY + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_busy_on.png");
+		addImageFilePath(IMG_EVENT_CONNECTIONERROR + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_conn_error_on.png");
+		addImageFilePath(IMG_EVENT_ERROR + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_error_on.png");
+		addImageFilePath(IMG_EVENT_FAR_END_DISCONNECT + IMG_EVENT_ON_EXT,
+				"icons/events/on/icon_event_far_end_disc_on.png");
+		addImageFilePath(IMG_EVENT_HANGUP + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_hangup_on.png");
+		addImageFilePath(IMG_EVENT_MATCH + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_match_on.png");
+		addImageFilePath(IMG_EVENT_MAXATTEMPTS + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_maxatt_on.png");
+		addImageFilePath(IMG_EVENT_MAXTIME_DISCONNECT + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_maxtime_on.png");
+		addImageFilePath(IMG_EVENT_NEAR_END_DISCONNECT + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_hangup_on.png");
+		addImageFilePath(IMG_EVENT_NETWORK_BUSY + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_netw_busy_on.png");
+		addImageFilePath(IMG_EVENT_NOANSWER + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_noanswer_on.png");
+		addImageFilePath(IMG_EVENT_MAXNOINPUT + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_maxnoinput_on.png");
+		addImageFilePath(IMG_EVENT_MAXNOMATCH + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_maxnomatch_on.png");
+		addImageFilePath(IMG_EVENT_NETWORK_DISCONNECT + IMG_EVENT_ON_EXT,
+				"icons/events/on/icon_event_netw_disconnect_on.png");
+		addImageFilePath(IMG_EVENT_NORESOURCE + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_noresource_on.png");
+		addImageFilePath(IMG_EVENT_RECORDED + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_recorded_on.png");
+		addImageFilePath(IMG_EVENT_SUCCESS + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_success_on.png");
+		addImageFilePath(IMG_EVENT_RECORDUNSUPPORTED + IMG_EVENT_ON_EXT,
+				"icons/events/on/icon_event_record_unsup_on.png");
+		addImageFilePath(IMG_EVENT_TRANSFERRED + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_transferred_on.png");
+		addImageFilePath(IMG_EVENT_UNKNOWN + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_unknown_on.png");
+		addImageFilePath(IMG_EVENT_OK + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_success_on.png");
 
-		
-		
-//		addImageFilePath("account_on", "icon/events/icon_event_account_on.png");
-//		addImageFilePath("alta_on", "icon/events/icon_event_alta_on.png");
-//		addImageFilePath("baja_on", "icon/events/icon_event_baja_on.png");
-//		addImageFilePath("broker_on", "icon/events/icon_event_broker_on.png");
-//		addImageFilePath("busy_on", "icon/events/icon_event_busy_on.png");
-//		addImageFilePath("card_on", "icon/events/icon_event_card_on.png");
-//		addImageFilePath("conn_error_on", "icon/events/icon_event_conn_error_on.png");
-//		addImageFilePath("consulta_on", "icon/events/icon_event_consulta_on.png");
-//		addImageFilePath("editar_on", "icon/events/icon_event_editar_on.png");
-//		addImageFilePath("error_on", "icon/events/icon_event_error_on.png");
-//		addImageFilePath("far_end_disc_on", "icon/events/icon_event_far_end_disc_on.png");
-//		addImageFilePath("hangup_on", "icon/events/icon_event_hangup_on.png");
-//		addImageFilePath("loans_on", "icon/events/icon_event_loans_on.png");
-//		addImageFilePath("match_on", "icon/events/icon_event_match_on.png");
-//		addImageFilePath("maxatt_on", "icon/events/icon_event_maxatt_on.png");
-//		addImageFilePath("maxtime_on", "icon/events/icon_event_maxtime_on.png");
-//		addImageFilePath("mortgages_on", "icon/events/icon_event_mortgages_on.png");
-//		addImageFilePath("netw_busy_on", "icon/events/icon_event_netw_busy_on.png");
-//		addImageFilePath("netw_disconnect_on", "icon/events/icon_event_netw_disconnect_on.png");
-//		addImageFilePath("noanswer_on", "icon/events/icon_event_noanswer_on.png");
-//		addImageFilePath("noimput_on", "icon/events/icon_event_noimput_on.png");
-//		addImageFilePath("nomatch_on", "icon/events/icon_event_nomatch_on.png");
-//		addImageFilePath("noresource_on", "icon/events/icon_event_noresource_on.png");
-//		addImageFilePath("payments_on", "icon/events/icon_event_payments_on.png");
-//		addImageFilePath("pinManagement_on", "icon/events/icon_event_pinManagement_on.png");
-//		addImageFilePath("recorded_on", "icon/events/icon_event_recorded_on.png");
-//		addImageFilePath("record_unsup_on", "icon/events/icon_event_record_unsup_on.png");
-//		addImageFilePath("success_on", "icon/events/icon_event_success_on.png");
-//		addImageFilePath("transferred_on", "icon/events/icon_event_transferred_on.png");
-//		addImageFilePath("unknown_on", "icon/events/icon_event_unknown_on.png");
-//		
-//		addImageFilePath("account_off", "icon/events/icon_event_account_off.png");
-//		addImageFilePath("alta_off", "icon/events/icon_event_alta_off.png");
-//		addImageFilePath("baja_off", "icon/events/icon_event_baja_off.png");
-//		addImageFilePath("broker_off", "icon/events/icon_event_broker_off.png");
-//		addImageFilePath("busy_off", "icon/events/icon_event_busy_off.png");
-//		addImageFilePath("card_off", "icon/events/icon_event_card_off.png");
-//		addImageFilePath("conn_error_off", "icon/events/icon_event_conn_error_off.png");
-//		addImageFilePath("consulta_off", "icon/events/icon_event_consulta_off.png");
-//		addImageFilePath("editar_off", "icon/events/icon_event_editar_off.png");
-//		addImageFilePath("error_off", "icon/events/icon_event_error_off.png");
-//		addImageFilePath("far_end_disc_off", "icon/events/icon_event_far_end_disc_off.png");
-//		addImageFilePath("hangup_off", "icon/events/icon_event_hangup_off.png");
-//		addImageFilePath("loans_off", "icon/events/icon_event_loans_off.png");
-//		addImageFilePath("match_off", "icon/events/icon_event_match_off.png");
-//		addImageFilePath("maxatt_off", "icon/events/icon_event_maxatt_off.png");
-//		addImageFilePath("maxtime_off", "icon/events/icon_event_maxtime_off.png");
-//		addImageFilePath("mortgages_off", "icon/events/icon_event_mortgages_off.png");
-//		addImageFilePath("netw_busy_off", "icon/events/icon_event_netw_busy_off.png");
-//		addImageFilePath("netw_disconnect_off", "icon/events/icon_event_netw_disconnect_off.png");
-//		addImageFilePath("noanswer_off", "icon/events/icon_event_noanswer_off.png");
-//		addImageFilePath("noimput_off", "icon/events/icon_event_noimput_off.png");
-//		addImageFilePath("nomatch_off", "icon/events/icon_event_nomatch_off.png");
-//		addImageFilePath("noresource_off", "icon/events/icon_event_noresource_off.png");
-//		addImageFilePath("payments_off", "icon/events/icon_event_payments_off.png");
-//		addImageFilePath("pinManagement_off", "icon/events/icon_event_pinManagement_off.png");
-//		addImageFilePath("recorded_off", "icon/events/icon_event_recorded_off.png");
-//		addImageFilePath("record_unsup_off", "icon/events/icon_event_record_unsup_off.png");
-//		addImageFilePath("success_off", "icon/events/icon_event_success_off.png");
-//		addImageFilePath("transferred_off", "icon/events/icon_event_transferred_off.png");
-//		addImageFilePath("unknown_off", "icon/events/icon_event_unknown_off.png");
-		
+		// Iconos para los eventos predefinidos en caso de no estar seleccionados.
+		addImageFilePath(IMG_EVENT_BUSY + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_busy_off.png");
+		addImageFilePath(IMG_EVENT_CONNECTIONERROR + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_conn_error_off.png");
+		addImageFilePath(IMG_EVENT_ERROR + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_error_off.png");
+		addImageFilePath(IMG_EVENT_FAR_END_DISCONNECT + IMG_EVENT_OFF_EXT,
+				"icons/events/on/icon_event_far_end_disc_off.png");
+		addImageFilePath(IMG_EVENT_HANGUP + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_hangup_off.png");
+		addImageFilePath(IMG_EVENT_MATCH + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_match_off.png");
+		addImageFilePath(IMG_EVENT_MAXATTEMPTS + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_maxatt_off.png");
+		addImageFilePath(IMG_EVENT_MAXTIME_DISCONNECT + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_maxtime_off.png");
+		addImageFilePath(IMG_EVENT_NEAR_END_DISCONNECT + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_hangup_off.png");
+		addImageFilePath(IMG_EVENT_NETWORK_BUSY + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_netw_busy_off.png");
+		addImageFilePath(IMG_EVENT_NOANSWER + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_noanswer_off.png");
+		addImageFilePath(IMG_EVENT_MAXNOINPUT + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_maxnoinput_off.png");
+		addImageFilePath(IMG_EVENT_MAXNOMATCH + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_maxnomatch_off.png");
+		addImageFilePath(IMG_EVENT_NETWORK_DISCONNECT + IMG_EVENT_OFF_EXT,
+				"icons/events/on/icon_event_netw_disconnect_off.png");
+		addImageFilePath(IMG_EVENT_NORESOURCE + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_noresource_off.png");
+		addImageFilePath(IMG_EVENT_RECORDED + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_recorded_off.png");
+		addImageFilePath(IMG_EVENT_SUCCESS + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_success_off.png");
+		addImageFilePath(IMG_EVENT_RECORDUNSUPPORTED + IMG_EVENT_OFF_EXT,
+				"icons/events/on/icon_event_record_unsup_off.png");
+		addImageFilePath(IMG_EVENT_TRANSFERRED + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_transferred_off.png");
+		addImageFilePath(IMG_EVENT_UNKNOWN + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_unknown_off.png");
+		addImageFilePath(IMG_EVENT_OK + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_success_off.png");
+
+		// Iconos para las opciones de menú más usuales en caso de estar seleccionadas.
+		addImageFilePath("account_on", "icons/events/on/icon_event_account_on.png");
+		addImageFilePath("alta_on", "icons/events/on/icon_event_alta_on.png");
+		addImageFilePath("baja_on", "icons/events/on/icon_event_baja_on.png");
+		addImageFilePath("broker_on", "icons/events/on/icon_event_broker_on.png");
+		addImageFilePath("card_on", "icons/events/on/icon_event_card_on.png");
+		addImageFilePath("consulta_on", "icons/events/on/icon_event_consulta_on.png");
+		addImageFilePath("editar_on", "icons/events/on/icon_event_editar_on.png");
+		addImageFilePath("loans_on", "icons/events/on/icon_event_loans_on.png");
+		addImageFilePath("mortgages_on", "icons/events/on/icon_event_mortgages_on.png");
+		addImageFilePath("payments_on", "icons/events/on/icon_event_payments_on.png");
+		addImageFilePath("pinManagement_on", "icons/events/on/icon_event_pinManagement_on.png");
+
+		// Iconos para las opciones de menú más usuales en caso de NO estar seleccionadas.
+		addImageFilePath("account_on", "icons/events/on/icon_event_account_on.png");
+		addImageFilePath("alta_on", "icons/events/on/icon_event_alta_on.png");
+		addImageFilePath("baja_on", "icons/events/on/icon_event_baja_on.png");
+		addImageFilePath("broker_on", "icons/events/on/icon_event_broker_on.png");
+		addImageFilePath("card_on", "icons/events/on/icon_event_card_on.png");
+		addImageFilePath("consulta_on", "icons/events/on/icon_event_consulta_on.png");
+		addImageFilePath("editar_on", "icons/events/on/icon_event_editar_on.png");
+		addImageFilePath("loans_on", "icons/events/on/icon_event_loans_on.png");
+		addImageFilePath("mortgages_on", "icons/events/on/icon_event_mortgages_on.png");
+		addImageFilePath("payments_on", "icons/events/on/icon_event_payments_on.png");
+		addImageFilePath("pinManagement_on", "icons/events/on/icon_event_pinManagement_on.png");
+
 	}
 }

@@ -1,12 +1,16 @@
 package com.vectorsf.jvoice.diagram.core.pattern.transition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
-import org.eclipse.graphiti.mm.pictograms.*;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
+import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
+import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.graphics.Image;
@@ -63,10 +67,14 @@ public class AddMoreEventFeature extends AbstractCustomFeature {
 
 		// Creamos los botones del di√°logo
 		for (String event : events) {
+			// Como el icono a mostrar en el dialogo siempre ser· el asociado al "on",
+			// el imageId es el evento m·s el sufijo de on.
 			Image image = GraphitiUi.getImageService().getImageForId(
-					getDiagramBehavior().getDiagramContainer().getDiagramTypeProvider().getProviderId(), event);
+					getDiagramBehavior().getDiagramContainer().getDiagramTypeProvider().getProviderId(),
+					event + CoreImageProvider.IMG_EVENT_ON_EXT);
 
-			stateEvents.add(new ButtonInfo(event, image, state.getFireableEvents().contains(event), !isEventUsed(pe, event)));
+			stateEvents.add(new ButtonInfo(event, image, state.getFireableEvents().contains(event), !isEventUsed(pe,
+					event)));
 		}
 
 		EventsDialog dialog = new EventsDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
@@ -86,16 +94,16 @@ public class AddMoreEventFeature extends AbstractCustomFeature {
 
 	}
 
-	private boolean isEventUsed(PictogramElement pe, String eventName)
-	{
-		for (Anchor anchor : ((AnchorContainer) pe).getAnchors())
-		{
-			if(!(anchor instanceof FixPointAnchor))
+	private boolean isEventUsed(PictogramElement pe, String eventName) {
+		for (Anchor anchor : ((AnchorContainer) pe).getAnchors()) {
+			if (!(anchor instanceof FixPointAnchor)) {
 				continue;
-			
-			String anchorName = ((org.eclipse.graphiti.mm.algorithms.Image)anchor.getGraphicsAlgorithm()).getId();
-			if(anchorName.equals(eventName) && !anchor.getOutgoingConnections().isEmpty())
+			}
+
+			String anchorName = ((org.eclipse.graphiti.mm.algorithms.Image) anchor.getGraphicsAlgorithm()).getId();
+			if (anchorName.equals(eventName) && !anchor.getOutgoingConnections().isEmpty()) {
 				return true;
+			}
 		}
 		return false;
 	}

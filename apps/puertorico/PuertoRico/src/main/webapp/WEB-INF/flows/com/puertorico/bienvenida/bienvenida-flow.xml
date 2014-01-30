@@ -37,19 +37,22 @@ start-state= "_jVoiceCheckInit" >
 </action-state>
 
 <subflow-state id="promocion" subflow="com/puertorico/promocion">
-<transition to="menuPrincipal">
-	<set name="flowScope.result" value="currentEvent.attributes.result" />
-</transition>
+ <transition to="menuPrincipal">
+ 	<set name="flowScope.result" value="currentEvent.attributes.result" />
+ </transition>
+
 </subflow-state>
 <subflow-state id="inicializacion" subflow="com/puertorico/inicializacion">
-<transition to="bienvenida">
-	<set name="flowScope.result" value="currentEvent.attributes.result" />
-</transition>
+ <transition to="bienvenida">
+ 	<set name="flowScope.result" value="currentEvent.attributes.result" />
+ </transition>
+
 </subflow-state>
 <subflow-state id="menuPrincipal" subflow="com/puertorico/menuPrincipal">
 <input name="callData" value="callData" />
-<transition to="Final">
-	<set name="flowScope.result" value="currentEvent.attributes.result" />
-</transition>
+ <transition to="Final">
+ 	<set name="flowScope.result" value="currentEvent.attributes.result" />
+ </transition>
+
 </subflow-state>
 </flow> 

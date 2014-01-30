@@ -2,8 +2,12 @@ package com.vectorsf.jvoice.core.validation.operations;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
+
 import com.vectorsf.jvoice.model.operations.CallFlowState;
+import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.FinalState;
+import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.State;
@@ -75,18 +79,37 @@ public class StateValidator {
 		}
 
 		char initial = state.getName().charAt(0);
-		if (!(state.getName().startsWith("_") || Character.isJavaLetter(initial))) {
+		if (!(state.getName().startsWith("_") || Character.isJavaIdentifierStart(initial))) {
 			operationsValidator.error(state, "Name of " + state.getName() + " starts with a incorrect letter.");
+		}
+
+		Flow flow = (Flow) state.eContainer();
+
+		URI uri = flow.eResource().getURI();
+
+		if (uri.isPlatformResource()) {
+			List<ComponentBean> beans = flow.getBeans();
+
+			String classbean;
+			for (ComponentBean bean : beans) {
+				classbean = bean.getName();
+				if (classbean.equals(state.getName())) {
+					operationsValidator.error(state, "Name of state " + state.getName() + " exists as bean");
+				}
+			}
+
 		}
 
 		for (int i = 1; i < state.getName().length(); i++) {
 			char letter = state.getName().charAt(i);
-			if (!Character.isJavaLetterOrDigit(letter)) {
+			if (!Character.isJavaIdentifierPart(letter)) {
 				operationsValidator.error(state, "Name of " + state.getName() + " contains incorrect character.");
 				break;
 			}
 
 		}
+
+		// Se crea un validacion nueva para que el nombre no coincida con ningun nombre de niguna clase del modulo.
 
 		return true;
 	}
@@ -104,4 +127,5 @@ public class StateValidator {
 		}
 		return true;
 	}
+
 }

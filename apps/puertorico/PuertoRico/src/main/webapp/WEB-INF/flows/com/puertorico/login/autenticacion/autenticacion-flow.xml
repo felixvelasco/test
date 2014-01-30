@@ -5,10 +5,7 @@ http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 parent="Login/errorHandler"
 start-state= "_jVoiceCheckInit" >
 
-<on-start>
-<evaluate expression="autenticacion" result="flowScope.autenticacion"></evaluate>
 
-</on-start>
 
 
 <action-state id="_jVoiceCheckInit">
@@ -76,10 +73,11 @@ start-state= "_jVoiceCheckInit" >
 	<transition on="match" to="setPin"/>
 </view-state>
 <action-state id="setPin">
-   <evaluate expression="flowScope.autenticacion.setPin(flowScope.lastInputResult.interpretation)"
+   <evaluate expression="autenticacion.setPin(lastInputResult.interpretation)"
    />
    
 
-	<transition to="Final"></transition>
+	 <transition to="Final"></transition>
+	
 </action-state>
 </flow> 

@@ -1,22 +1,58 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.graphiti.features.*;
-import org.eclipse.graphiti.features.context.*;
-import org.eclipse.graphiti.features.impl.*;
+import org.eclipse.graphiti.features.IFeatureProvider;
+import org.eclipse.graphiti.features.IReason;
+import org.eclipse.graphiti.features.IRemoveFeature;
+import org.eclipse.graphiti.features.context.IAddContext;
+import org.eclipse.graphiti.features.context.ICreateContext;
+import org.eclipse.graphiti.features.context.IDeleteContext;
+import org.eclipse.graphiti.features.context.IDirectEditingContext;
+import org.eclipse.graphiti.features.context.IMoveShapeContext;
+import org.eclipse.graphiti.features.context.IRemoveContext;
+import org.eclipse.graphiti.features.context.IResizeShapeContext;
+import org.eclipse.graphiti.features.impl.DefaultRemoveFeature;
+import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.func.IDirectEditing;
-import org.eclipse.graphiti.mm.algorithms.*;
-import org.eclipse.graphiti.mm.algorithms.styles.*;
-import org.eclipse.graphiti.mm.pictograms.*;
-import org.eclipse.graphiti.pattern.id.*;
-import org.eclipse.graphiti.services.*;
-import org.eclipse.graphiti.util.*;
+import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.Image;
+import org.eclipse.graphiti.mm.algorithms.Polyline;
+import org.eclipse.graphiti.mm.algorithms.Rectangle;
+import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
+import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
+import org.eclipse.graphiti.mm.algorithms.styles.Point;
+import org.eclipse.graphiti.mm.algorithms.styles.Style;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
+import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
+import org.eclipse.graphiti.mm.pictograms.Connection;
+import org.eclipse.graphiti.mm.pictograms.ContainerShape;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.pattern.id.IdLayoutContext;
+import org.eclipse.graphiti.pattern.id.IdPattern;
+import org.eclipse.graphiti.pattern.id.IdUpdateContext;
+import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.services.IGaService;
+import org.eclipse.graphiti.services.IPeCreateService;
+import org.eclipse.graphiti.util.ColorConstant;
+import org.eclipse.graphiti.util.IColorConstant;
 
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
-import com.vectorsf.jvoice.model.operations.*;
+import com.vectorsf.jvoice.model.operations.CallFlowState;
+import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.model.operations.InitialState;
+import com.vectorsf.jvoice.model.operations.MenuState;
+import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.SwitchState;
+import com.vectorsf.jvoice.model.operations.Transition;
 
 public abstract class SimpleStatePattern extends IdPattern {
 	protected static final int DROPDOWN_SIZE = 12;
@@ -345,7 +381,9 @@ public abstract class SimpleStatePattern extends IdPattern {
 			}
 
 			FixPointAnchor anchor = Graphiti.getPeCreateService().createFixPointAnchor((AnchorContainer) rootPe);
-			Image image = gaService.createImage(anchor, event);
+			// TODO Implementar que cuando haya flecha asociada al icono se muestre el icono de on y se no, el de off.
+			// El imageId es el evento más el sufijo de on.
+			Image image = gaService.createImage(anchor, event + CoreImageProvider.IMG_EVENT_ON_EXT);
 			gaService.setLocationAndSize(image, 0, 0, IMAGE_SIZE, IMAGE_SIZE);
 			Graphiti.getPeService().setPropertyValue(anchor, "TOOLTIP", event);
 		}

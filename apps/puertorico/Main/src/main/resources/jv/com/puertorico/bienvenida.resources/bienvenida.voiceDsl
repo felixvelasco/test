@@ -1,6 +1,6 @@
-outputname bienvenida
+output bienvenida
 
-configuration {
+ {
 
 }
 audios{
