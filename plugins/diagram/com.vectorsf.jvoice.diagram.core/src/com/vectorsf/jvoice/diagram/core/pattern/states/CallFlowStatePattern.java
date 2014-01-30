@@ -22,13 +22,6 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.Reason;
-import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
-import org.eclipse.graphiti.mm.algorithms.Image;
-import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.pictograms.Anchor;
-import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
-import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.id.IdLayoutContext;
 import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.jface.dialogs.Dialog;
@@ -230,23 +223,8 @@ public class CallFlowStatePattern extends SpecialEventStatePattern implements IS
 				}
 			}
 
-			// Obtenemos los nombres de los anchors
-			Set<String> anchorNames = new HashSet<String>();
-			PictogramElement pe = context.getRootPictogramElement();
-			for (Anchor anchor : ((AnchorContainer) pe).getAnchors()) {
-				if (!(anchor instanceof FixPointAnchor)) {
-					continue;
-				}
-				GraphicsAlgorithm ga = anchor.getGraphicsAlgorithm();
-				if (ga instanceof Image) {
-					anchorNames.add(((Image) ga).getId());
-				} else {
-					anchorNames.add(((Text) ga).getValue());
-				}
-			}
-
 			// Si se modifica las options en el fichero hay que actualizar el estado.
-			if (!finalStateNames.equals(anchorNames)) {
+			if (!finalStateNames.equals(SimpleStatePattern.getAnchorNames(context))) {
 				return Reason.createTrueReason();
 			}
 		}
