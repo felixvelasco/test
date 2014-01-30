@@ -1,8 +1,5 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
-import org.eclipse.graphiti.features.context.ICreateContext;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
-
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.LocutionState;
@@ -23,11 +20,6 @@ public class InputStatePattern extends LocutionStatePattern {
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
 		return mainBusinessObject instanceof InputState || mainBusinessObject instanceof InputDsl
 				&& isDslFromTargetFlow((InputDsl) mainBusinessObject);
-	}
-
-	@Override
-	public boolean canCreate(ICreateContext context) {
-		return context.getTargetContainer() instanceof Diagram;
 	}
 
 	@Override
