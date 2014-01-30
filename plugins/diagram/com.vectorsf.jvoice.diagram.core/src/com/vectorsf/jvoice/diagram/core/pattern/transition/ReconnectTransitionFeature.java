@@ -9,11 +9,8 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 
 import com.vectorsf.jvoice.diagram.core.features.CoreFeatureProvider;
-import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InitialState;
-import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.State;
-import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
@@ -41,33 +38,7 @@ public class ReconnectTransitionFeature extends DefaultReconnectionFeature {
 		Object targetBO = getBusinessObjectForPictogramElement(targetPictogramElement);
 
 		if (context.getReconnectType().equals(ReconnectionContext.RECONNECT_SOURCE)) {
-
-			if (!(targetPictogramElement instanceof ContainerShape)) {
-				return false;
-			}
-
-			State finalState = transition.getTarget();
-
-			if (!(targetBO instanceof State)) {
-				return false;
-			}
-
-			if ((State) targetBO == finalState) {
-				return false;
-			}
-
-			if (oldTargetState instanceof LocutionState || targetBO instanceof LocutionState) {
-				return false;
-			} else if (oldTargetState instanceof SwitchState || targetBO instanceof SwitchState) {
-				return false;
-			} else if (targetBO instanceof FinalState) {
-				return false;
-			} else if (oldTargetState instanceof InitialState || targetBO instanceof InitialState) {
-				return false;
-			} else {
-				return super.canReconnect(context);
-			}
-
+			return false;
 		}
 
 		if (!(targetPictogramElement instanceof ContainerShape)) {
