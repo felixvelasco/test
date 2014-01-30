@@ -40,6 +40,6 @@ public class CoreDiagramTypeProvider extends AbstractDiagramTypeProvider {
 	 */
 	@Override
 	public boolean isAutoUpdateAtStartup() {
-		return super.isAutoUpdateAtStartup();
+		return true;
 	}
 }
