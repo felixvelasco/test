@@ -189,7 +189,8 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath(IMG_EVENT_MATCH + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_match_on.png");
 		addImageFilePath(IMG_EVENT_MAXATTEMPTS + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_maxatt_on.png");
 		addImageFilePath(IMG_EVENT_MAXTIME_DISCONNECT + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_maxtime_on.png");
-		addImageFilePath(IMG_EVENT_NEAR_END_DISCONNECT + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_hangup_on.png");
+		addImageFilePath(IMG_EVENT_NEAR_END_DISCONNECT + IMG_EVENT_ON_EXT,
+				"icons/events/on/icon_event_near_end_disc_on.png");
 		addImageFilePath(IMG_EVENT_NETWORK_BUSY + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_netw_busy_on.png");
 		addImageFilePath(IMG_EVENT_NOANSWER + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_noanswer_on.png");
 		addImageFilePath(IMG_EVENT_MAXNOINPUT + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_maxnoinput_on.png");
@@ -206,30 +207,33 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath(IMG_EVENT_OK + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_success_on.png");
 
 		// Iconos para los eventos predefinidos en caso de no estar seleccionados.
-		addImageFilePath(IMG_EVENT_BUSY + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_busy_off.png");
-		addImageFilePath(IMG_EVENT_CONNECTIONERROR + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_conn_error_off.png");
-		addImageFilePath(IMG_EVENT_ERROR + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_error_off.png");
+		addImageFilePath(IMG_EVENT_BUSY + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_busy_off.png");
+		addImageFilePath(IMG_EVENT_CONNECTIONERROR + IMG_EVENT_OFF_EXT,
+				"icons/events/off/icon_event_conn_error_off.png");
+		addImageFilePath(IMG_EVENT_ERROR + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_error_off.png");
 		addImageFilePath(IMG_EVENT_FAR_END_DISCONNECT + IMG_EVENT_OFF_EXT,
-				"icons/events/on/icon_event_far_end_disc_off.png");
-		addImageFilePath(IMG_EVENT_HANGUP + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_hangup_off.png");
-		addImageFilePath(IMG_EVENT_MATCH + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_match_off.png");
-		addImageFilePath(IMG_EVENT_MAXATTEMPTS + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_maxatt_off.png");
-		addImageFilePath(IMG_EVENT_MAXTIME_DISCONNECT + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_maxtime_off.png");
-		addImageFilePath(IMG_EVENT_NEAR_END_DISCONNECT + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_hangup_off.png");
-		addImageFilePath(IMG_EVENT_NETWORK_BUSY + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_netw_busy_off.png");
-		addImageFilePath(IMG_EVENT_NOANSWER + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_noanswer_off.png");
-		addImageFilePath(IMG_EVENT_MAXNOINPUT + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_maxnoinput_off.png");
-		addImageFilePath(IMG_EVENT_MAXNOMATCH + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_maxnomatch_off.png");
+				"icons/events/off/icon_event_far_end_disc_off.png");
+		addImageFilePath(IMG_EVENT_HANGUP + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_hangup_off.png");
+		addImageFilePath(IMG_EVENT_MATCH + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_match_off.png");
+		addImageFilePath(IMG_EVENT_MAXATTEMPTS + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_maxatt_off.png");
+		addImageFilePath(IMG_EVENT_MAXTIME_DISCONNECT + IMG_EVENT_OFF_EXT,
+				"icons/events/off/icon_event_maxtime_off.png");
+		addImageFilePath(IMG_EVENT_NEAR_END_DISCONNECT + IMG_EVENT_OFF_EXT,
+				"icons/events/off/icon_event_near_end_disc_off.png");
+		addImageFilePath(IMG_EVENT_NETWORK_BUSY + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_netw_busy_off.png");
+		addImageFilePath(IMG_EVENT_NOANSWER + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_noanswer_off.png");
+		addImageFilePath(IMG_EVENT_MAXNOINPUT + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_maxnoinput_off.png");
+		addImageFilePath(IMG_EVENT_MAXNOMATCH + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_maxnomatch_off.png");
 		addImageFilePath(IMG_EVENT_NETWORK_DISCONNECT + IMG_EVENT_OFF_EXT,
-				"icons/events/on/icon_event_netw_disconnect_off.png");
-		addImageFilePath(IMG_EVENT_NORESOURCE + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_noresource_off.png");
-		addImageFilePath(IMG_EVENT_RECORDED + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_recorded_off.png");
-		addImageFilePath(IMG_EVENT_SUCCESS + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_success_off.png");
+				"icons/events/off/icon_event_netw_disconnect_off.png");
+		addImageFilePath(IMG_EVENT_NORESOURCE + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_noresource_off.png");
+		addImageFilePath(IMG_EVENT_RECORDED + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_recorded_off.png");
+		addImageFilePath(IMG_EVENT_SUCCESS + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_success_off.png");
 		addImageFilePath(IMG_EVENT_RECORDUNSUPPORTED + IMG_EVENT_OFF_EXT,
-				"icons/events/on/icon_event_record_unsup_off.png");
-		addImageFilePath(IMG_EVENT_TRANSFERRED + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_transferred_off.png");
-		addImageFilePath(IMG_EVENT_UNKNOWN + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_unknown_off.png");
-		addImageFilePath(IMG_EVENT_OK + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_success_off.png");
+				"icons/events/off/icon_event_record_unsup_off.png");
+		addImageFilePath(IMG_EVENT_TRANSFERRED + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_transferred_off.png");
+		addImageFilePath(IMG_EVENT_UNKNOWN + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_unknown_off.png");
+		addImageFilePath(IMG_EVENT_OK + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_success_off.png");
 
 		// Iconos para las opciones de menú más usuales en caso de estar seleccionadas.
 		addImageFilePath("account_on", "icons/events/on/icon_event_account_on.png");

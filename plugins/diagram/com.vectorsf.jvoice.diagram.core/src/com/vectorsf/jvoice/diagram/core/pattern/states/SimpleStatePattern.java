@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
@@ -31,6 +30,7 @@ import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.algorithms.styles.Style;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
+import org.eclipse.graphiti.mm.pictograms.ChopboxAnchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
@@ -42,6 +42,7 @@ import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
+import org.eclipse.graphiti.services.IPeService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
@@ -54,6 +55,8 @@ import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 public abstract class SimpleStatePattern extends IdPattern {
+	protected static final String EVENT_NAME = "EVENT_NAME";
+
 	protected static final int DROPDOWN_SIZE = 12;
 
 	protected static final int IMAGE_SIZE = 24;
@@ -63,6 +66,8 @@ public abstract class SimpleStatePattern extends IdPattern {
 	protected static final String ID_MAIN_FIGURE = "mainFigure";
 
 	protected static final String ID_TOP_RECTANGLE = "topRectangle";
+
+	protected static final String ID_EVENT_IMAGE = "eventImage";
 
 	protected static final String ID_STATE_IMAGE = "stateImage";
 
@@ -297,6 +302,55 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 		if (id.equals(ID_MAIN_FIGURE)) {
 			updateFireableEvents(context);
+			if (id.equals(ID_MAIN_FIGURE)) {
+				State ss = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
+				ContainerShape cs = (ContainerShape) context.getRootPictogramElement();
+				for (Anchor anchor : cs.getAnchors()) {
+					if (anchor instanceof ChopboxAnchor) {
+						continue;
+					}
+					Image image = (Image) anchor.getGraphicsAlgorithm();
+					if (image.getId().endsWith(CoreImageProvider.IMG_EVENT_OFF_EXT)) {
+						if (ss.getOutgoingTransitions().isEmpty()) {
+							changesDone = true;
+							image.setId(image.getId().replace(CoreImageProvider.IMG_EVENT_ON_EXT,
+									CoreImageProvider.IMG_EVENT_OFF_EXT));
+
+						} else {
+							for (Transition outTransitions : ss.getOutgoingTransitions()) {
+								if (outTransitions.getEventName().equals(
+										Graphiti.getPeService().getPropertyValue(anchor, EVENT_NAME))) {
+									changesDone = true;
+									image.setId(image.getId().replace(CoreImageProvider.IMG_EVENT_OFF_EXT,
+											CoreImageProvider.IMG_EVENT_ON_EXT));
+								}
+							}
+						}
+
+					} else {
+						if (ss.getOutgoingTransitions().isEmpty()) {
+							changesDone = true;
+							image.setId(image.getId().replace(CoreImageProvider.IMG_EVENT_ON_EXT,
+									CoreImageProvider.IMG_EVENT_OFF_EXT));
+						} else {
+							boolean hay = false;
+							for (Transition outTransitions : ss.getOutgoingTransitions()) {
+								if (outTransitions.getEventName().equals(
+										Graphiti.getPeService().getPropertyValue(anchor, EVENT_NAME))) {
+									hay = true;
+									break;
+								}
+							}
+							if (!hay) {
+								changesDone = true;
+								image.setId(image.getId().replace(CoreImageProvider.IMG_EVENT_ON_EXT,
+										CoreImageProvider.IMG_EVENT_OFF_EXT));
+							}
+						}
+
+					}
+				}
+			}
 			changesDone = true;
 		}
 
@@ -316,7 +370,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 		return changesDone;
 	}
 
-	public EList<String> getFireableEvents(State state) {
+	public List<String> getFireableEvents(State state) {
 		return state.getFireableEvents();
 	}
 
@@ -339,10 +393,11 @@ public abstract class SimpleStatePattern extends IdPattern {
 	 * Actualiza la barra de eventos que puede disparar el estado.
 	 */
 	public void updateFireableEvents(IdLayoutContext context) {
+		IPeService peService = Graphiti.getPeService();
 		GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
 
 		State state = (State) getBusinessObjectForPictogramElement(ga.getPictogramElement());
-		EList<String> fireableEvents = getFireableEvents(state);
+		List<String> fireableEvents = getFireableEvents(state);
 
 		// Ajustamos el tamaño del estado
 		if (fireableEvents.size() * IMAGE_SIZE > MAIN_RECTANGLE_WIDTH) {
@@ -362,15 +417,16 @@ public abstract class SimpleStatePattern extends IdPattern {
 			if (!(anchor instanceof FixPointAnchor)) {
 				continue;
 			}
-			if (anchor.getOutgoingConnections().isEmpty()) {
+			String eventName = peService.getPropertyValue(anchor, EVENT_NAME);
+			if (anchor.getOutgoingConnections().isEmpty() && !fireableEvents.contains(eventName)) {
 				anchorsToDelete.add(anchor);
 			} else {
-				existingAnchors.add(((Image) anchor.getGraphicsAlgorithm()).getId());
+				existingAnchors.add(eventName);
 			}
 		}
 
 		for (Anchor anchor : anchorsToDelete) {
-			Graphiti.getPeService().deletePictogramElement(anchor);
+			peService.deletePictogramElement(anchor);
 		}
 
 		// Creamos el anchor y su imagen asociada
@@ -383,9 +439,12 @@ public abstract class SimpleStatePattern extends IdPattern {
 			FixPointAnchor anchor = Graphiti.getPeCreateService().createFixPointAnchor((AnchorContainer) rootPe);
 			// TODO Implementar que cuando haya flecha asociada al icono se muestre el icono de on y se no, el de off.
 			// El imageId es el evento m�s el sufijo de on.
-			Image image = gaService.createImage(anchor, event + CoreImageProvider.IMG_EVENT_ON_EXT);
+			Image image = gaService.createImage(anchor, event + CoreImageProvider.IMG_EVENT_OFF_EXT);
 			gaService.setLocationAndSize(image, 0, 0, IMAGE_SIZE, IMAGE_SIZE);
-			Graphiti.getPeService().setPropertyValue(anchor, "TOOLTIP", event);
+			peService.setPropertyValue(anchor, "TOOLTIP", event);
+			peService.setPropertyValue(anchor, EVENT_NAME, event);
+			setId(anchor, ID_EVENT_IMAGE);
+
 		}
 
 		// Reordenamos los anchors
