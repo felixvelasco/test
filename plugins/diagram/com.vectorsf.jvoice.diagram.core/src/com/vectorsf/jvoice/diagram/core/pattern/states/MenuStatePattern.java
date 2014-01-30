@@ -187,7 +187,12 @@ public class MenuStatePattern extends LocutionStatePattern {
 			if (anchor.getOutgoingConnections().isEmpty()) {
 				anchorsToDelete.add(anchor);
 			} else {
-				existingAnchors.add(((Image) anchor.getGraphicsAlgorithm()).getId());
+				GraphicsAlgorithm ga2 = anchor.getGraphicsAlgorithm();
+				if (ga2 instanceof Image) {
+					existingAnchors.add(((Image) ga2).getId());
+				} else {
+					existingAnchors.add(((Text) ga2).getValue());
+				}
 			}
 		}
 
