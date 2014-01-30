@@ -111,7 +111,7 @@ public final class JVoiceProjectConfigurator {
 		Plugin dsl_builder2 = new Plugin();
 		dsl_builder2.setGroupId("com.vectorsf.jvoice");
 		dsl_builder2.setArtifactId("dsl-builder");
-		dsl_builder2.setVersion("0.0.2-SNAPSHOT");
+		dsl_builder2.setVersion("1.0.0");
 		PluginExecution voiceDSL2 = new PluginExecution();
 		voiceDSL2.setPhase("initialize");
 		voiceDSL2.addGoal("prepareWSDLSources");
