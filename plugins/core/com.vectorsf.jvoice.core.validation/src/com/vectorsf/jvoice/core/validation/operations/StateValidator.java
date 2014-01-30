@@ -4,15 +4,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 
-import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
-import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.State;
-import com.vectorsf.jvoice.model.operations.SwitchState;
-import com.vectorsf.jvoice.model.operations.Transition;
 
 public class StateValidator {
 
@@ -111,20 +107,6 @@ public class StateValidator {
 
 		// Se crea un validacion nueva para que el nombre no coincida con ningun nombre de niguna clase del modulo.
 
-		return true;
-	}
-
-	public boolean validate_State_eventOkOnlyState(State state) {
-		if (!(state instanceof SwitchState || state instanceof MenuState || state instanceof CallFlowState || state instanceof FinalState)) {
-			List<Transition> transitions = state.getOutgoingTransitions();
-			if (transitions.size() > 1) {
-				operationsValidator.error(state, "State " + state.getName() + " has more than 1 outgoing transitions.");
-			} else {
-				if (!transitions.isEmpty() && !transitions.get(0).getEventName().equalsIgnoreCase("OK")) {
-					operationsValidator.error(state, "State " + state.getName() + " must have an \"ok\" event.");
-				}
-			}
-		}
 		return true;
 	}
 
