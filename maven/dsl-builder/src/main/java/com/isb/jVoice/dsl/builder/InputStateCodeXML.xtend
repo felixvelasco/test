@@ -7,7 +7,7 @@ import com.vectorsf.jvoice.model.operations.State
 class InputStateCodeXML {
 	
 	def static doGenerateInputState(State state, String nameProject){
-			
+		
 		var tranSalidaS =state.getOutgoingTransitions()
 		var InputState audioIn = state as InputState
 		
@@ -96,10 +96,18 @@ class InputStateCodeXML {
 		<view-state id="render_«state.name»" view="#{flowProcessor.getRenderer().getView()}" model="lastInputResult">
 			«IF tranSalidaS != null && tranSalidaS.size>0»
 			    «FOR tranSalida : tranSalidaS» 
-			    	«IF tranSalida.target instanceof CustomState» 
+			    	«IF tranSalida.target instanceof CustomState»
+			    		«IF tranSalida.eventName == "ok"»	 
 			    		<transition on="match" to="render_«tranSalida.target.name»"/>
+			    		«ELSE»
+			    		<transition on="«tranSalida.eventName»" to="render_«tranSalida.target.name»"/>
+			    		«ENDIF»			    		
 			    	«ELSE»
+			    		«IF tranSalida.eventName == "ok"»	 
 			    		<transition on="match" to="«tranSalida.target.name»"/>
+			    		«ELSE»
+			    		<transition on="«tranSalida.eventName»" to="«tranSalida.target.name»"/>
+			    		«ENDIF»			    		
 			    	«ENDIF»
 			    «ENDFOR»
 			«ENDIF»	
