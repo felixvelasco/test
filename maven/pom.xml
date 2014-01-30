@@ -26,6 +26,5 @@
   <modules>
     <module>application-builder</module>
     <module>dsl-builder</module>
-    <module>jaxws-maven-plugin</module>
   </modules>
 </project>

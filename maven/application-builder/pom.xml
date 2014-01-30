@@ -7,20 +7,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>application-builder</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
-	<!-- <repositories>
-		<repository>
-			<id>ivr</id>
-			<name>jVoice test repository</name>
-			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/groups/jvoiceGroup/</url>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>xtend</id>
-			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/xtend/</url>
-		</pluginRepository>
-	</pluginRepositories>-->
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -66,23 +53,6 @@
 			<artifactId>org.eclipse.xtend.lib</artifactId>
 			<version>2.4.3</version>
 		</dependency>
-		<!--<dependency>
-			<groupId>org.eclipse.xtext</groupId>
-			<artifactId>org.eclipse.xtext</artifactId>
-			<version>2.4.2-201306120542</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.xtext</groupId>
-			<artifactId>org.eclipse.xtext.util</artifactId>
-			<version>2.4.2.v201306120542</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.xtext</groupId>
-			<artifactId>org.eclipse.xtext.common.types</artifactId>
-			<version>2.4.2.v201306120542</version>
-			<scope>runtime</scope>
-		</dependency>-->
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
@@ -164,7 +134,6 @@
 		</plugins>
 	</build>
 	<packaging>maven-plugin</packaging>
-	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
