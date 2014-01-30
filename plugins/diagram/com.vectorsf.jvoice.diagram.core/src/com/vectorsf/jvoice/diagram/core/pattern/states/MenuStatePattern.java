@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Image;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.id.IdLayoutContext;
@@ -40,6 +42,11 @@ public class MenuStatePattern extends LocutionStatePattern {
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
 		return mainBusinessObject instanceof MenuState || mainBusinessObject instanceof MenuDsl
 				&& isDslFromTargetFlow((MenuDsl) mainBusinessObject);
+	}
+
+	@Override
+	public boolean canCreate(ICreateContext context) {
+		return context.getTargetContainer() instanceof Diagram;
 	}
 
 	@Override
@@ -209,5 +216,4 @@ public class MenuStatePattern extends LocutionStatePattern {
 			}
 		}
 	}
-
 }
