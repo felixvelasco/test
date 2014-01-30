@@ -56,7 +56,7 @@ import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 public abstract class SimpleStatePattern extends IdPattern {
-	protected static final String EVENT_NAME = "EVENT_NAME";
+	public static final String EVENT_NAME = "EVENT_NAME";
 
 	protected static final int DROPDOWN_SIZE = 12;
 

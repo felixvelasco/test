@@ -9,6 +9,7 @@ import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 
+import com.vectorsf.jvoice.diagram.core.pattern.states.SimpleStatePattern;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
 
@@ -17,17 +18,15 @@ public class TransitionCallFlowPattern extends TransitionPattern {
 	private IFeatureProvider featureProvider;
 	private String eventName;
 
-	public TransitionCallFlowPattern(State stateFinal, IFeatureProvider in_featureProvider) {
-		super(in_featureProvider);
-		state = stateFinal;
-		featureProvider = in_featureProvider;
-		eventName = state.getName();
+	public TransitionCallFlowPattern(State state, IFeatureProvider featureProvider) {
+		super(featureProvider);
+		this.state = state;
+		this.featureProvider = featureProvider;
 	}
 
 	@Override
 	public String getCreateName() {
 		return eventName;
-		// return state.getName();
 	}
 
 	@Override
@@ -42,7 +41,7 @@ public class TransitionCallFlowPattern extends TransitionPattern {
 				GraphicsAlgorithm ga = pe.getGraphicsAlgorithm();
 
 				if (ga instanceof Image) {
-					eventName = Graphiti.getPeService().getPropertyValue(pe, "TOOLTIP");
+					eventName = Graphiti.getPeService().getPropertyValue(pe, SimpleStatePattern.EVENT_NAME);
 				} else {
 					eventName = ((Text) ga).getValue();
 				}
