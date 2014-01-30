@@ -1,8 +1,10 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -30,7 +32,6 @@ import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.algorithms.styles.Style;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
-import org.eclipse.graphiti.mm.pictograms.ChopboxAnchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
@@ -302,55 +303,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 		if (id.equals(ID_MAIN_FIGURE)) {
 			updateFireableEvents(context);
-			if (id.equals(ID_MAIN_FIGURE)) {
-				State ss = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-				ContainerShape cs = (ContainerShape) context.getRootPictogramElement();
-				for (Anchor anchor : cs.getAnchors()) {
-					if (anchor instanceof ChopboxAnchor) {
-						continue;
-					}
-					Image image = (Image) anchor.getGraphicsAlgorithm();
-					if (image.getId().endsWith(CoreImageProvider.IMG_EVENT_OFF_EXT)) {
-						if (ss.getOutgoingTransitions().isEmpty()) {
-							changesDone = true;
-							image.setId(image.getId().replace(CoreImageProvider.IMG_EVENT_ON_EXT,
-									CoreImageProvider.IMG_EVENT_OFF_EXT));
 
-						} else {
-							for (Transition outTransitions : ss.getOutgoingTransitions()) {
-								if (outTransitions.getEventName().equals(
-										Graphiti.getPeService().getPropertyValue(anchor, EVENT_NAME))) {
-									changesDone = true;
-									image.setId(image.getId().replace(CoreImageProvider.IMG_EVENT_OFF_EXT,
-											CoreImageProvider.IMG_EVENT_ON_EXT));
-								}
-							}
-						}
-
-					} else {
-						if (ss.getOutgoingTransitions().isEmpty()) {
-							changesDone = true;
-							image.setId(image.getId().replace(CoreImageProvider.IMG_EVENT_ON_EXT,
-									CoreImageProvider.IMG_EVENT_OFF_EXT));
-						} else {
-							boolean hay = false;
-							for (Transition outTransitions : ss.getOutgoingTransitions()) {
-								if (outTransitions.getEventName().equals(
-										Graphiti.getPeService().getPropertyValue(anchor, EVENT_NAME))) {
-									hay = true;
-									break;
-								}
-							}
-							if (!hay) {
-								changesDone = true;
-								image.setId(image.getId().replace(CoreImageProvider.IMG_EVENT_ON_EXT,
-										CoreImageProvider.IMG_EVENT_OFF_EXT));
-							}
-						}
-
-					}
-				}
-			}
 			changesDone = true;
 		}
 
@@ -409,8 +362,8 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 		// Borra los anchors del tipo FixPointAnchor que no tienen transiciones
 		// de salida
-		List<Anchor> anchorsToDelete = new ArrayList<Anchor>();
-		List<String> existingAnchors = new ArrayList<String>();
+		List<Anchor> anchorsToDelete = new ArrayList<>();
+		Map<String, Anchor> existingAnchors = new HashMap<>();
 		PictogramElement rootPe = context.getRootPictogramElement();
 
 		for (Anchor anchor : ((AnchorContainer) rootPe).getAnchors()) {
@@ -421,7 +374,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 			if (anchor.getOutgoingConnections().isEmpty() && !fireableEvents.contains(eventName)) {
 				anchorsToDelete.add(anchor);
 			} else {
-				existingAnchors.add(eventName);
+				existingAnchors.put(eventName, anchor);
 			}
 		}
 
@@ -431,20 +384,32 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 		// Creamos el anchor y su imagen asociada
 		for (String event : fireableEvents) {
-			// No creamos los anchors que ya existen
-			if (existingAnchors.contains(event)) {
-				continue;
+			// No creamos los anchors que ya existen, solo actualizamos su imagen
+			if (existingAnchors.containsKey(event)) {
+				boolean found = false;
+				for (Transition outTransitions : state.getOutgoingTransitions()) {
+					if (outTransitions.getEventName().equals(event)) {
+						found = true;
+						break;
+					}
+				}
+				Image image = (Image) existingAnchors.get(event).getGraphicsAlgorithm();
+				if (found && image.getId().endsWith(CoreImageProvider.IMG_EVENT_OFF_EXT)) {
+					image.setId(image.getId().replace(CoreImageProvider.IMG_EVENT_OFF_EXT,
+							CoreImageProvider.IMG_EVENT_ON_EXT));
+				} else if (!found && image.getId().endsWith(CoreImageProvider.IMG_EVENT_ON_EXT)) {
+					image.setId(image.getId().replace(CoreImageProvider.IMG_EVENT_ON_EXT,
+							CoreImageProvider.IMG_EVENT_OFF_EXT));
+				}
+			} else {
+
+				FixPointAnchor anchor = Graphiti.getPeCreateService().createFixPointAnchor((AnchorContainer) rootPe);
+				Image image = gaService.createImage(anchor, event + CoreImageProvider.IMG_EVENT_OFF_EXT);
+				gaService.setLocationAndSize(image, 0, 0, IMAGE_SIZE, IMAGE_SIZE);
+				peService.setPropertyValue(anchor, "TOOLTIP", event);
+				peService.setPropertyValue(anchor, EVENT_NAME, event);
+				setId(anchor, ID_EVENT_IMAGE);
 			}
-
-			FixPointAnchor anchor = Graphiti.getPeCreateService().createFixPointAnchor((AnchorContainer) rootPe);
-			// TODO Implementar que cuando haya flecha asociada al icono se muestre el icono de on y se no, el de off.
-			// El imageId es el evento m�s el sufijo de on.
-			Image image = gaService.createImage(anchor, event + CoreImageProvider.IMG_EVENT_OFF_EXT);
-			gaService.setLocationAndSize(image, 0, 0, IMAGE_SIZE, IMAGE_SIZE);
-			peService.setPropertyValue(anchor, "TOOLTIP", event);
-			peService.setPropertyValue(anchor, EVENT_NAME, event);
-			setId(anchor, ID_EVENT_IMAGE);
-
 		}
 
 		// Reordenamos los anchors
