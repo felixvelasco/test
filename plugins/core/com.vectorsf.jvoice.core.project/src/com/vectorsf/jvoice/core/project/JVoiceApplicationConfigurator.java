@@ -99,14 +99,14 @@ public final class JVoiceApplicationConfigurator {
 		Dependency jvFlow = new Dependency();
 		jvFlow.setGroupId("com.vectorsf");
 		jvFlow.setArtifactId("jvoiceframework-flow");
-		jvFlow.setVersion("1.0-SNAPSHOT");
+		jvFlow.setVersion("1.0.0");
 		dependencies.add(jvFlow);
 		model.setDependencies(dependencies);
 
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");
 		dsl_builder.setArtifactId("application-builder");
-		dsl_builder.setVersion("0.0.2-SNAPSHOT");
+		dsl_builder.setVersion("1.0.0");
 		PluginExecution voiceDSL = new PluginExecution();
 		voiceDSL.setPhase("generate-resources");
 		voiceDSL.addGoal("copyXML");
