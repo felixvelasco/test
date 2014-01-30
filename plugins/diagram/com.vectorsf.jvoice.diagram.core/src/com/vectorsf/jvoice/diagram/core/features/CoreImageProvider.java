@@ -235,31 +235,31 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath(IMG_EVENT_UNKNOWN + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_unknown_off.png");
 		addImageFilePath(IMG_EVENT_OK + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_success_off.png");
 
-		// Iconos para las opciones de menú más usuales en caso de estar seleccionadas.
-		addImageFilePath("account_on", "icons/events/on/icon_event_account_on.png");
-		addImageFilePath("alta_on", "icons/events/on/icon_event_alta_on.png");
-		addImageFilePath("baja_on", "icons/events/on/icon_event_baja_on.png");
-		addImageFilePath("broker_on", "icons/events/on/icon_event_broker_on.png");
-		addImageFilePath("card_on", "icons/events/on/icon_event_card_on.png");
-		addImageFilePath("consulta_on", "icons/events/on/icon_event_consulta_on.png");
-		addImageFilePath("editar_on", "icons/events/on/icon_event_editar_on.png");
-		addImageFilePath("loans_on", "icons/events/on/icon_event_loans_on.png");
-		addImageFilePath("mortgages_on", "icons/events/on/icon_event_mortgages_on.png");
-		addImageFilePath("payments_on", "icons/events/on/icon_event_payments_on.png");
-		addImageFilePath("pinManagement_on", "icons/events/on/icon_event_pinManagement_on.png");
+		// Iconos para las opciones de menï¿½ mï¿½s usuales en caso de estar seleccionadas.
+		addImageFilePath("account" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_account_on.png");
+		addImageFilePath("create" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_alta_on.png");
+		addImageFilePath("delete" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_baja_on.png");
+		addImageFilePath("broker" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_broker_on.png");
+		addImageFilePath("card" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_card_on.png");
+		addImageFilePath("show" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_consulta_on.png");
+		addImageFilePath("edit" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_editar_on.png");
+		addImageFilePath("loans" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_loans_on.png");
+		addImageFilePath("mortgages" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_mortgages_on.png");
+		addImageFilePath("payments" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_payments_on.png");
+		addImageFilePath("pinManagement" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_pinManagement_on.png");
 
-		// Iconos para las opciones de menú más usuales en caso de NO estar seleccionadas.
-		addImageFilePath("account_on", "icons/events/on/icon_event_account_on.png");
-		addImageFilePath("alta_on", "icons/events/on/icon_event_alta_on.png");
-		addImageFilePath("baja_on", "icons/events/on/icon_event_baja_on.png");
-		addImageFilePath("broker_on", "icons/events/on/icon_event_broker_on.png");
-		addImageFilePath("card_on", "icons/events/on/icon_event_card_on.png");
-		addImageFilePath("consulta_on", "icons/events/on/icon_event_consulta_on.png");
-		addImageFilePath("editar_on", "icons/events/on/icon_event_editar_on.png");
-		addImageFilePath("loans_on", "icons/events/on/icon_event_loans_on.png");
-		addImageFilePath("mortgages_on", "icons/events/on/icon_event_mortgages_on.png");
-		addImageFilePath("payments_on", "icons/events/on/icon_event_payments_on.png");
-		addImageFilePath("pinManagement_on", "icons/events/on/icon_event_pinManagement_on.png");
+		// Iconos para las opciones de menï¿½ mï¿½s usuales en caso de NO estar seleccionadas.
+		addImageFilePath("account" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_account_on.png");
+		addImageFilePath("create" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_alta_on.png");
+		addImageFilePath("delete" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_baja_on.png");
+		addImageFilePath("broker" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_broker_on.png");
+		addImageFilePath("card" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_card_on.png");
+		addImageFilePath("show" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_consulta_on.png");
+		addImageFilePath("edit" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_editar_on.png");
+		addImageFilePath("loans" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_loans_on.png");
+		addImageFilePath("mortgages" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_mortgages_on.png");
+		addImageFilePath("payments" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_payments_on.png");
+		addImageFilePath("pinManagement" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_pinManagement_on.png");
 
 	}
 }
