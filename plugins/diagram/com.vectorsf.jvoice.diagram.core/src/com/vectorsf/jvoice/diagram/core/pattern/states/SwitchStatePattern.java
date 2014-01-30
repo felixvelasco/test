@@ -11,6 +11,11 @@ import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.Image;
+import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
+import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
+import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
@@ -19,7 +24,6 @@ import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
-import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 
 public class SwitchStatePattern extends SpecialEventStatePattern implements ISelectionStatusValidator {
@@ -100,34 +104,46 @@ public class SwitchStatePattern extends SpecialEventStatePattern implements ISel
 
 	@Override
 	protected IReason updateNeeded(IdUpdateContext context, String id) {
-
 		if (id.equals(ID_NAME_TEXT)) {
+			// Obtenemos los nombres de los casos
 			SwitchState state = (SwitchState) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-
-			Set<String> set = new HashSet<String>();
+			Set<String> caseNames = new HashSet<String>();
 			for (Case c : state.getCase()) {
-				set.add(c.getEventName());
+				caseNames.add(c.getEventName());
 			}
 
+			// Obtenemos los nombres de los anchors
+			Set<String> anchorNames = new HashSet<String>();
 			PictogramElement pe = context.getRootPictogramElement();
-			EList<GraphicsAlgorithm> children = pe.getGraphicsAlgorithm().getGraphicsAlgorithmChildren();
-			for (GraphicsAlgorithm ga : children) {
-				System.out.println("=>" + ga);
+			for (Anchor anchor : ((AnchorContainer) pe).getAnchors()) {
+				if (!(anchor instanceof FixPointAnchor)) {
+					continue;
+				}
+				GraphicsAlgorithm ga = anchor.getGraphicsAlgorithm();
+				if (ga instanceof Image) {
+					anchorNames.add(((Image) ga).getId());
+				} else {
+					anchorNames.add(((Text) ga).getValue());
+				}
 			}
 
-			return Reason.createTrueReason();
+			// Si se modificann los Eventnames de los casos o se
+			// añaden o se borran casos hay que actualizar el estado.
+			if (!caseNames.equals(anchorNames)) {
+				return Reason.createTrueReason();
+			}
 		}
 
 		return super.updateNeeded(context, id);
 	}
 
-	@Override
-	protected boolean update(IdUpdateContext context, String id) {
-		if (id.equals(ID_NAME_TEXT)) {
-			State ss = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-			return true;
-		}
-
-		return false;
-	}
+	// @Override
+	// protected boolean update(IdUpdateContext context, String id) {
+	// if (id.equals(ID_NAME_TEXT)) {
+	// State ss = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
+	// return false;
+	// }
+	//
+	// return false;
+	// }
 }

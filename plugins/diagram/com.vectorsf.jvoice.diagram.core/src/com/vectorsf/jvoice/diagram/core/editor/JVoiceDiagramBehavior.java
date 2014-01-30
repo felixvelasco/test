@@ -17,6 +17,7 @@ import org.eclipse.gef.ui.actions.ZoomOutAction;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.ISaveImageFeature;
 import org.eclipse.graphiti.ui.editor.DefaultPersistencyBehavior;
+import org.eclipse.graphiti.ui.editor.DefaultRefreshBehavior;
 import org.eclipse.graphiti.ui.editor.DefaultUpdateBehavior;
 import org.eclipse.graphiti.ui.editor.DiagramBehavior;
 import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
@@ -135,5 +136,13 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 	@Override
 	public void enableAdapters() {
 		super.enableAdapters();
+	}
+
+	/**
+	 * Para que refresque los estados al arrancar el editor. Por ejemplo, que actualice los options del estado Menu.
+	 */
+	@Override
+	protected DefaultRefreshBehavior createRefreshBehavior() {
+		return new JVoiceRefreshBehavior(this);
 	}
 }

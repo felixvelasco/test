@@ -2,11 +2,15 @@ package com.vectorsf.jvoice.ui.diagram.properties.editting;
 
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.graphiti.features.IFeatureProvider;
-import org.eclipse.jface.viewers.*;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.custom.CLabel;
 
-import com.vectorsf.jvoice.model.operations.*;
+import com.vectorsf.jvoice.model.operations.Case;
+import com.vectorsf.jvoice.model.operations.SwitchState;
+import com.vectorsf.jvoice.ui.diagram.properties.filters.StateSection;
 
 public class EventNameEditingSupport extends EditingSupport {
 
@@ -14,13 +18,13 @@ public class EventNameEditingSupport extends EditingSupport {
 	private Case caso;
 	private String eventName;
 	private CLabel error;
-	private IFeatureProvider fp;
+	private StateSection stateSection;
 
-	public EventNameEditingSupport(TableViewer viewer, CLabel error, IFeatureProvider fp) {
+	public EventNameEditingSupport(TableViewer viewer, CLabel error, StateSection stateSection) {
 		super(viewer);
 		this.viewer = viewer;
 		this.error = error;
-		this.fp = fp;
+		this.stateSection = stateSection;
 	}
 
 	@Override
@@ -55,7 +59,8 @@ public class EventNameEditingSupport extends EditingSupport {
 		eventName = String.valueOf(value).trim();
 		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(caso);
 		domain.getCommandStack().execute(
-				new RenameTransitionCommand(domain, (SwitchState) caso.eContainer(), caso, eventName, viewer, fp));
+				new RenameTransitionCommand(domain, (SwitchState) caso.eContainer(), caso, eventName, viewer,
+						stateSection));
 	}
 
 }

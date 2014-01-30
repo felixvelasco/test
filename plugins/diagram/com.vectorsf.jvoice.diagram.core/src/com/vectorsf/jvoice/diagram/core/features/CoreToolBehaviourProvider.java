@@ -49,7 +49,6 @@ import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.LocutionState;
-import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 
@@ -182,7 +181,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		// eventos
 		GraphicsAlgorithm ga = context.getInnerGraphicsAlgorithm();
 		if (ga instanceof Image && ((Image) ga).getId().equals(CoreImageProvider.IMG_DROPDOWN)
-				&& !(bo instanceof CallFlowState) && !(bo instanceof MenuState) && !(bo instanceof SwitchState)) {
+				&& !(bo instanceof CallFlowState) && !(bo instanceof SwitchState)) {
 			return new AddMoreEventFeature(getFeatureProvider());
 		}
 

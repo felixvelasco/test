@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Image;
@@ -16,6 +17,7 @@ import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.id.IdLayoutContext;
+import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
@@ -215,5 +217,10 @@ public class MenuStatePattern extends LocutionStatePattern {
 				((FixPointAnchor) anchor).setLocation(getAnchorLocation(cont++, rootPe, anchor));
 			}
 		}
+	}
+
+	@Override
+	protected IReason updateNeeded(IdUpdateContext context, String id) {
+		return super.updateNeeded(context, id);
 	}
 }

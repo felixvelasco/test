@@ -2,33 +2,36 @@ package com.vectorsf.jvoice.ui.diagram.properties.editting;
 
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.transaction.*;
-import org.eclipse.graphiti.features.IFeatureProvider;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.graphiti.features.context.impl.UpdateContext;
 import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.pictograms.*;
-import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.mm.pictograms.Connection;
+import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.jface.viewers.TableViewer;
 
-import com.vectorsf.jvoice.model.operations.*;
+import com.vectorsf.jvoice.model.operations.Case;
+import com.vectorsf.jvoice.model.operations.SwitchState;
+import com.vectorsf.jvoice.model.operations.Transition;
+import com.vectorsf.jvoice.ui.diagram.properties.filters.StateSection;
 
 class RenameTransitionCommand extends RecordingCommand {
 	private final SwitchState switchState;
 	private String eventName;
 	private Case cas;
 	private final TableViewer viewer;
-	private IFeatureProvider fp;
+	private StateSection stateSection;
 
 	public RenameTransitionCommand(TransactionalEditingDomain domain, SwitchState switchState, Case cas,
-			String eventName, TableViewer viewer, IFeatureProvider fp) {
+			String eventName, TableViewer viewer, StateSection stateSection) {
 		super(domain);
 		this.switchState = switchState;
 		this.cas = cas;
 		this.eventName = eventName;
 		this.viewer = viewer;
-		this.fp = fp;
+		this.stateSection = stateSection;
 	}
 
 	@Override
@@ -69,13 +72,7 @@ class RenameTransitionCommand extends RecordingCommand {
 			}
 		}
 
-		Diagram diagram = (Diagram) cas.eResource().getContents().get(0);
-		List<PictogramElement> pictogramElements = Graphiti.getLinkService().getPictogramElements(diagram, switchState);
-		EList<Shape> children = diagram.getChildren();
-		for (PictogramElement pictogramElement : children) {
-			System.out.println("==>" + pictogramElement);
-		}
-		fp.updateIfPossibleAndNeeded(new UpdateContext(pictogramElements.get(0)));
-
+		// Refrescamos el estado
+		stateSection.obtenerFeatureProvider().updateIfPossibleAndNeeded(new UpdateContext(stateSection.obtenerPe()));
 	}
 }
