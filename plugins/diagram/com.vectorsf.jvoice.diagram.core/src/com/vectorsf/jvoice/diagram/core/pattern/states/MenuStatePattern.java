@@ -1,12 +1,15 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.ICreateContext;
+import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Image;
 import org.eclipse.graphiti.mm.algorithms.Text;
@@ -226,6 +229,35 @@ public class MenuStatePattern extends LocutionStatePattern {
 
 	@Override
 	protected IReason updateNeeded(IdUpdateContext context, String id) {
+		if (id.equals(ID_NAME_TEXT)) {
+			// Obtenemos los nombres de las options
+			MenuState state = (MenuState) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
+			Set<String> optionNames = new HashSet<String>();
+			for (Output c : state.getLocution().getOutputs().getOutput()) {
+				optionNames.add(c.getName());
+			}
+
+			// Obtenemos los nombres de los anchors
+			Set<String> anchorNames = new HashSet<String>();
+			PictogramElement pe = context.getRootPictogramElement();
+			for (Anchor anchor : ((AnchorContainer) pe).getAnchors()) {
+				if (!(anchor instanceof FixPointAnchor)) {
+					continue;
+				}
+				GraphicsAlgorithm ga = anchor.getGraphicsAlgorithm();
+				if (ga instanceof Image) {
+					anchorNames.add(((Image) ga).getId());
+				} else {
+					anchorNames.add(((Text) ga).getValue());
+				}
+			}
+
+			// Si se modifica las options en el fichero hay que actualizar el estado.
+			if (!optionNames.equals(anchorNames)) {
+				return Reason.createTrueReason();
+			}
+		}
+
 		return super.updateNeeded(context, id);
 	}
 }
