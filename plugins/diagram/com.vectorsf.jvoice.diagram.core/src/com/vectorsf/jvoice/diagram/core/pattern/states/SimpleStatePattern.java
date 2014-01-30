@@ -49,7 +49,6 @@ import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
-import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
@@ -149,8 +148,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 				text.setStyle(getMainTextStyle());
 				gaService.setLocationAndSize(text, CELL_WIDTH, 0, TEXT_WIDTH, TOP_RECTANGLE_HEIGHT);
 
-				if (!(addedDomainObject instanceof CallFlowState) && !(addedDomainObject instanceof SwitchState)
-						&& !(addedDomainObject instanceof MenuState)) {
+				if (!(addedDomainObject instanceof CallFlowState) && !(addedDomainObject instanceof SwitchState)) {
 					Image menuImage = gaService.createImage(topRectangle, CoreImageProvider.IMG_DROPDOWN);
 					setId(menuImage, ID_MENU_IMAGE);
 					gaService.setLocationAndSize(menuImage, MAIN_RECTANGLE_WIDTH - 24,
@@ -382,7 +380,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 			FixPointAnchor anchor = Graphiti.getPeCreateService().createFixPointAnchor((AnchorContainer) rootPe);
 			// TODO Implementar que cuando haya flecha asociada al icono se muestre el icono de on y se no, el de off.
-			// El imageId es el evento más el sufijo de on.
+			// El imageId es el evento mï¿½s el sufijo de on.
 			Image image = gaService.createImage(anchor, event + CoreImageProvider.IMG_EVENT_ON_EXT);
 			gaService.setLocationAndSize(image, 0, 0, IMAGE_SIZE, IMAGE_SIZE);
 			Graphiti.getPeService().setPropertyValue(anchor, "TOOLTIP", event);

@@ -7,6 +7,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
+import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
 import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
@@ -67,8 +69,8 @@ public class AddMoreEventFeature extends AbstractCustomFeature {
 
 		// Creamos los botones del diÃ¡logo
 		for (String event : events) {
-			// Como el icono a mostrar en el dialogo siempre será el asociado al "on",
-			// el imageId es el evento más el sufijo de on.
+			// Como el icono a mostrar en el dialogo siempre serï¿½ el asociado al "on",
+			// el imageId es el evento mï¿½s el sufijo de on.
 			Image image = GraphitiUi.getImageService().getImageForId(
 					getDiagramBehavior().getDiagramContainer().getDiagramTypeProvider().getProviderId(),
 					event + CoreImageProvider.IMG_EVENT_ON_EXT);
@@ -100,7 +102,13 @@ public class AddMoreEventFeature extends AbstractCustomFeature {
 				continue;
 			}
 
-			String anchorName = ((org.eclipse.graphiti.mm.algorithms.Image) anchor.getGraphicsAlgorithm()).getId();
+			GraphicsAlgorithm ga = anchor.getGraphicsAlgorithm();
+			String anchorName = "";
+			if (ga instanceof Text) {
+				anchorName = ((Text) ga).getValue();
+			} else {
+				anchorName = ((org.eclipse.graphiti.mm.algorithms.Image) ga).getId();
+			}
 			if (anchorName.equals(eventName) && !anchor.getOutgoingConnections().isEmpty()) {
 				return true;
 			}

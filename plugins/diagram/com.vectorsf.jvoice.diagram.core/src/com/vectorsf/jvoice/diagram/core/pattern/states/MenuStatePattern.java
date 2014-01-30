@@ -85,7 +85,7 @@ public class MenuStatePattern extends LocutionStatePattern {
 	}
 
 	/**
-	 * Sobreescribe el método porque los eventos del estado Switch son los eventos de los Cases asociados.
+	 * Los eventos del estado Menu son los outputs más los eventos especiales.
 	 */
 	@Override
 	public EList<String> getFireableEvents(State state) {
@@ -101,6 +101,8 @@ public class MenuStatePattern extends LocutionStatePattern {
 				}
 			}
 		}
+
+		outputNames.addAll(state.getFireableEvents());
 
 		return outputNames;
 	}
