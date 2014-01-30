@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="jVoice" uid="jVoice" id="com.vectorsf.jvoice.product.jVoice" application="org.eclipse.ui.ide.workbench" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="jVoice" uid="jVoiceProduct" id="com.vectorsf.jvoice.product.jVoice" application="org.eclipse.ui.ide.workbench" version="1.0.0" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/com.vectorsf.jvoice.repository/resources/win/about.png"/>
@@ -13,7 +13,7 @@
    <launcherArgs>
       <programArgsWin>-vm
 jre/bin/javaw</programArgsWin>
-      <vmArgs>-XX:MaxPermSize=256m -Xms48m -Xmx512m</vmArgs>
+      <vmArgs>-XX:MaxPermSize=256m -Xms48m -Xmx1024m</vmArgs>
    </launcherArgs>
 
    <windowImages i16="resources/win/icon_JVoice_16.png" i32="resources/win/icon_JVoice_32.png" i48="resources/win/icon_JVoice_48.png" i64="resources/win/icon_JVoice_64.png"/>
@@ -35,7 +35,6 @@ jre/bin/javaw</programArgsWin>
       </win>
    </launcher>
 
-
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
    </vm>
@@ -44,7 +43,7 @@ jre/bin/javaw</programArgsWin>
    </plugins>
 
    <features>
-      <feature id="com.vectorsf.jvoice.feature" version="1.0.0"/>
+      <feature id="com.vectorsf.jvoice.feature"/>
       <feature id="com.vectorsf.jvoice.platform.feature" version="1.0.0"/>
    </features>
 
@@ -54,6 +53,7 @@ jre/bin/javaw</programArgsWin>
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <plugin id="com.vectorsf.jvoice.core.validation" autoStart="true" startLevel="4" />
       <property name="org.eclipse.update.reconcile" value="false" />
    </configurations>
 
