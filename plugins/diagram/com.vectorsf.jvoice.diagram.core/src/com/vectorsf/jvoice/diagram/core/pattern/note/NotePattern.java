@@ -63,6 +63,10 @@ public class NotePattern extends IdPattern {
 
 	@Override
 	public boolean canCreate(ICreateContext context) {
+		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+		if (flow.eResource().getURI().scheme().equals("archive")) {
+			return false;
+		}
 		return context.getTargetContainer() instanceof Diagram;
 	}
 
