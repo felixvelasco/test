@@ -3,6 +3,9 @@ package com.isb.jVoice.dsl.builder
 import com.vectorsf.jvoice.model.operations.State
 import com.vectorsf.jvoice.model.operations.MenuState
 import com.vectorsf.jvoice.model.operations.CustomState
+import org.eclipse.emf.common.util.EList
+import com.vectorsf.jvoice.prompt.model.voiceDsl.Output
+import java.util.List
 
 class MenuStateCodeXML {
 	
@@ -17,8 +20,10 @@ class MenuStateCodeXML {
 		var audios = audioIn.locution.audios
 
 		var outputs = audioIn.locution.outputs
+		var outputsList = audioIn.locution.outputs.output
 		
 		var i=0
+		
 		
 '''
 		<action-state id="«state.name»">
@@ -83,7 +88,7 @@ class MenuStateCodeXML {
         			«var mainAudios = audioIn.locution.audios.mainAudios»
 	        		«var noMatchAudios = audioIn.locution.audios.noMatchAudios»
 	        		«var noInputAudios = audioIn.locution.audios.noInputAudios»
-	        		«var matchAudios = audioIn.locution.audios.matchAudios»		   	
+	        		«var matchAudios = audioIn.locution.audios.matchAudios»
 			        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios", nameProject)»
 			       	«GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios", nameProject)»
 			      	«GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios", nameProject)»
@@ -91,36 +96,54 @@ class MenuStateCodeXML {
 		      	«ENDIF»
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flashScope.«state.name»)"/>
-			<transition to="render_«state.name»"></transition>				
+			<transition to="render_«state.name»"></transition>
 		</action-state>
 		
 		<view-state id="render_«state.name»" view="#{flowProcessor.getRenderer().getView()}" model="lastInputResult">
-		    <transition on="match" to="render_decision_«state.name»"/>
+			<transition on="match" to="render_decision_«state.name»"/>
+			«IF outputs != null && tranSalidaS != null && tranSalidaS.size>0 && outputsList !=null && outputsList.size>0»
+			   	«FOR tranSalida : tranSalidaS»
+				   	«IF isEventTransition(tranSalida.eventName, outputsList)»
+				   		«IF tranSalida.target instanceof CustomState»
+				   			<transition on="«tranSalida.eventName»" to="render_«tranSalida.target.name»"/>
+				   		«ELSE»
+				   			<transition on="«tranSalida.eventName»" to="«tranSalida.target.name»"/>
+						«ENDIF»			   	
+				   	«ENDIF»
+			   	«ENDFOR»
+			«ENDIF»			
 		</view-state>
 			
 		<action-state id="render_decision_«state.name»">
 			<evaluate expression="lastInputResult.interpretation"></evaluate>
-			«IF outputs != null» 
-				«var output = audioIn.locution.outputs.output» 
-				«IF tranSalidaS != null && output !=null && output.size>0 && tranSalidaS.size>0»
-				   		«FOR out :output»
-				   			«FOR tranSalida : tranSalidaS»
-				   				«IF out.name.equals(tranSalida.eventName)»	
-				   					«FOR outputValue : out.outputValue»
-				   						«IF tranSalida.target instanceof CustomState» 
-				   							<transition on="«outputValue.value»" to="render_«tranSalida.target.name»"/>
-				   						«ELSE»
-				   							<transition on="«outputValue.value»" to="«tranSalida.target.name»"/>
-				   						«ENDIF»
-				   					«ENDFOR»
-				   				«ENDIF»
-				   			«ENDFOR»
-				   		«ENDFOR»
-				«ENDIF»
+			«IF outputs != null && tranSalidaS != null && outputsList !=null && outputsList.size>0 && tranSalidaS.size>0»
+			   		«FOR out : outputsList»
+			   			«FOR tranSalida : tranSalidaS»
+			   				«IF out.name.equals(tranSalida.eventName)»	
+			   					«FOR outputValue : out.outputValue»
+			   						«IF tranSalida.target instanceof CustomState» 
+			   							<transition on="«outputValue.value»" to="render_«tranSalida.target.name»"/>
+			   						«ELSE»
+			   							<transition on="«outputValue.value»" to="«tranSalida.target.name»"/>
+			   						«ENDIF»
+			   					«ENDFOR»
+			   				«ENDIF»
+			   			«ENDFOR»
+			   		«ENDFOR»
 			«ENDIF»
 		</action-state>
 '''
 	}
+	
+	def static isEventTransition(String transition, List<Output> list) {
+		for (Output output: list) {
+			if (output.name.equals(transition)) {
+				return false;
+			}
+		}
+		true;
+	}
+	
 }
 
 

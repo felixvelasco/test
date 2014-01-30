@@ -74,14 +74,22 @@ class RecordStateCodeXML {
 		<view-state id="render_«state.name»" view="#{flowProcessor.getRenderer().getView()}" model="lastRecordResult">
 			«IF tranSalidaS != null && tranSalidaS.size>0»
 			    «FOR tranSalida : tranSalidaS» 
-			    	«IF tranSalida.target instanceof CustomState» 
+			    	«IF tranSalida.target instanceof CustomState»
+			    		«IF tranSalida.eventName == "ok"»	 			    	 
 			    		<transition on="recorded" to="render_«tranSalida.target.name»">
 			    			<evaluate expression="recordingService.saveRecording(lastRecordResult.temprecording, flowScope.jVoiceArchRecFileName)"/>
 			    		</transition>
+			    		«ELSE»
+			    		<transition on="«tranSalida.eventName»" to="render_«tranSalida.target.name»"/>
+			    		«ENDIF»
 			    	«ELSE»
+			    		«IF tranSalida.eventName == "ok"»	 			    	 
 			    		<transition on="recorded" to="«tranSalida.target.name»">
 			    			<evaluate expression="recordingService.saveRecording(lastRecordResult.temprecording, flowScope.jVoiceArchRecFileName)"/>
 			    		</transition>
+			    		«ELSE»
+			    		<transition on="«tranSalida.eventName»" to="«tranSalida.target.name»"/>
+			    		«ENDIF»
 			    	«ENDIF»
 			    «ENDFOR»
 			«ENDIF»	

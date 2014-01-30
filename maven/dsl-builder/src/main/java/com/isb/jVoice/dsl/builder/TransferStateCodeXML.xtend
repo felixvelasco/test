@@ -65,11 +65,21 @@ class TransferStateCodeXML {
 		<view-state id="render_«transfer.name»" view="#{flowProcessor.getRenderer().getView()}" model="lastTransferResult">
 		
 		«IF tranSalidaS != null && tranSalidaS.size>0»
-			«IF tranSalidaS.get(0).target instanceof CustomState»
-					<transition on="transferred" to="render_«tranSalidaS.get(0).target.name»"/>
+			«FOR tranSalida : tranSalidaS» 			
+				«IF tranSalida.target instanceof CustomState»
+					«IF tranSalida.eventName == "ok"»	 			    	 					
+					<transition on="transferred" to="render_«tranSalida.target.name»"/>
+					«ELSE»
+					<transition on="«tranSalida.eventName»" to="render_«tranSalida.target.name»"/>
+					«ENDIF»
 				«ELSE»
-					<transition on="transferred" to="«tranSalidaS.get(0).target.name»"/>
+					«IF tranSalida.eventName == "ok"»	 			    	 					
+					<transition on="transferred" to="«tranSalida.target.name»"/>
+					«ELSE»
+					<transition on="«tranSalida.eventName»" to="«tranSalida.target.name»"/>
+					«ENDIF»					
 				«ENDIF»
+			«ENDFOR»
 		«ENDIF»
 		
 		</view-state>
