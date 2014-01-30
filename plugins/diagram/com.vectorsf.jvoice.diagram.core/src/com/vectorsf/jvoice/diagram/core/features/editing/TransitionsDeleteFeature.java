@@ -12,6 +12,7 @@ import org.eclipse.graphiti.features.context.IRemoveContext;
 import org.eclipse.graphiti.features.context.impl.DeleteContext;
 import org.eclipse.graphiti.features.context.impl.MultiDeleteInfo;
 import org.eclipse.graphiti.features.context.impl.RemoveContext;
+import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
 import org.eclipse.graphiti.mm.pictograms.CompositeConnection;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
@@ -94,6 +95,7 @@ public class TransitionsDeleteFeature extends DefaultDeleteFeature {
 		preDelete(context);
 
 		Connection connection = (Connection) pe;
+		AnchorContainer originPe = connection.getStart().getParent();
 		DeleteContext ctx = new DeleteContext(connection);
 		ctx.setMultiDeleteInfo(new MultiDeleteInfo(false, false, 1));
 		IDeleteFeature deleteFeature = getFeatureProvider().getDeleteFeature(ctx);
@@ -125,7 +127,7 @@ public class TransitionsDeleteFeature extends DefaultDeleteFeature {
 		}
 
 		deleteBusinessObjects(businessObjectsForPictogramElement);
-
+		layoutPictogramElement(originPe);
 		postDelete(context);
 	}
 
