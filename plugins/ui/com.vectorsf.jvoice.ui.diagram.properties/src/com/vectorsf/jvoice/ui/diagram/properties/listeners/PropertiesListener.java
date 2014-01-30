@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.graphiti.features.context.impl.UpdateContext;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.jface.viewers.TableViewer;
@@ -82,10 +83,18 @@ public class PropertiesListener implements Listener {
 
 				if (event.widget.getData().equals("add")) {
 					dominio.getCommandStack().execute(new AddCaseSwitch(dominio, estadoSelection, casos, tableViewer));
+
+					// Refrescamos el estado
+					stateSection.obtenerFeatureProvider().updateIfPossibleAndNeeded(new UpdateContext(stateSection.obtenerPe()));
+
 				} else if (event.widget.getData().equals("remove")) {
 					dominio.getCommandStack().execute(
 							new RemoveCaseSwitch(stateSection.obtenerFeatureProvider(), dominio, estadoSelection,
 									casos, tableViewer));
+
+					// Refrescamos el estado
+					stateSection.obtenerFeatureProvider().updateIfPossibleAndNeeded(new UpdateContext(stateSection.obtenerPe()));
+					
 				} else if (event.widget.getData().equals("up")) {
 					dominio.getCommandStack().execute(new UpCaseSwitch(dominio, estadoSelection, casos, tableViewer));
 				} else if (event.widget.getData().equals("down")) {
