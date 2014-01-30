@@ -25,7 +25,7 @@ public class JVoiceRefreshBehavior extends DefaultRefreshBehavior {
 		Diagram diagram = diagramTypeProvider.getDiagram();
 
 		for (Shape shape : diagram.getChildren()) {
-			fp.updateIfPossible(new UpdateContext(shape));
+			fp.updateIfPossibleAndNeeded(new UpdateContext(shape));
 		}
 
 		refresh();
