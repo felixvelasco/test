@@ -445,8 +445,6 @@ public abstract class SimpleStatePattern extends IdPattern {
 			return true;
 		}
 
-		// updateFireableEvents(context);
-
 		return false;
 	}
 

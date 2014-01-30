@@ -35,4 +35,11 @@ public class CoreDiagramTypeProvider extends AbstractDiagramTypeProvider {
 		return false;
 	}
 
+	/**
+	 * Para que refresque los estados al arrancar el editor. Por ejemplo, que actualice los options del estado Menu.
+	 */
+	@Override
+	public boolean isAutoUpdateAtStartup() {
+		return super.isAutoUpdateAtStartup();
+	}
 }
