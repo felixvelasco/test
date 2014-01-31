@@ -49,6 +49,7 @@ import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.LocutionState;
+import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.Note;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 
@@ -130,6 +131,16 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	@Override
 	protected void setGenericContextButtons(IContextButtonPadData data, PictogramElement pe, int identifiers) {
 		data.getGenericContextButtons().clear();
+
+		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
+		// update button
+		if (bo instanceof MenuState && (identifiers & CONTEXT_BUTTON_UPDATE) != 0) {
+			IContextButtonEntry updateButton = ContextEntryHelper.createDefaultUpdateContextButton(
+					getFeatureProvider(), pe);
+			if (updateButton != null) {
+				data.getGenericContextButtons().add(updateButton);
+			}
+		}
 
 		// delete button
 		if ((identifiers & CONTEXT_BUTTON_DELETE) != 0) {
