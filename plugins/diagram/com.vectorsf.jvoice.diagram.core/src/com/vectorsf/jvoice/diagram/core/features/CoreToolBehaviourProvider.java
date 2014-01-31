@@ -135,7 +135,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
 		// update button
-		if (bo instanceof MenuState && (identifiers & CONTEXT_BUTTON_UPDATE) != 0) {
+		if ((bo instanceof MenuState || bo instanceof CallFlowState) && (identifiers & CONTEXT_BUTTON_UPDATE) != 0) {
 			IContextButtonEntry updateButton = ContextEntryHelper.createDefaultUpdateContextButton(
 					getFeatureProvider(), pe);
 			if (updateButton != null) {

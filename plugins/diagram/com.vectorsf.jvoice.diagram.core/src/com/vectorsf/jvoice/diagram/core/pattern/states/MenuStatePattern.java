@@ -26,8 +26,6 @@ import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IPeService;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
-import org.eclipse.graphiti.util.ColorConstant;
-import org.eclipse.graphiti.util.IColorConstant;
 
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.model.operations.LocutionState;
@@ -40,14 +38,15 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
+import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.FONT_NAME;
+import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.FONT_SIZE;
+import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.MARGIN;
+import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.TEXT_COLOR_OFF;
+import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.TEXT_COLOR_ON;
+
 public class MenuStatePattern extends LocutionStatePattern {
 
 	private static final String MENU = "Menu";
-	private static final String FONT_NAME = "Arial";
-	private static final int FONT_SIZE = 8;
-	private static final int MARGIN = 10;
-	private static final IColorConstant TEXT_COLOR_ON = new ColorConstant("7b91a4");
-	private static final IColorConstant TEXT_COLOR_OFF = new ColorConstant("afc1d1");
 	private int acum = 0;
 
 	@Override
@@ -280,8 +279,6 @@ public class MenuStatePattern extends LocutionStatePattern {
 			for (Output c : state.getLocution().getOutputs().getOutput()) {
 				optionNames.add(c.getName());
 			}
-
-			optionNames.addAll(state.getFireableEvents());
 
 			// Si se modifica las options en el fichero hay que actualizar el estado.
 			Set<String> anchorNames = SimpleStatePattern.getAnchorNames(context);

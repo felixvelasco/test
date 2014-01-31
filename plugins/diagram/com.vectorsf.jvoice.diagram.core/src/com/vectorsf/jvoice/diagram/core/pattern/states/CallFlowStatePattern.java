@@ -22,7 +22,6 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.Reason;
-import org.eclipse.graphiti.pattern.id.IdLayoutContext;
 import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -187,30 +186,6 @@ public class CallFlowStatePattern extends SpecialEventStatePattern implements IS
 	}
 
 	@Override
-	protected boolean layout(IdLayoutContext context, String id) {
-		boolean changesDone = false;
-
-		if (id.equals(ID_MAIN_FIGURE)) {
-			updateFireableEvents(context);
-			changesDone = true;
-		}
-
-		// Cambiamos el tamaño del rectángulo superior y la posición del icono
-		// del menú
-		if (id.equals(ID_TOP_RECTANGLE)) {
-			State state = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-			if (getStateWith(state) > MAIN_RECTANGLE_WIDTH) {
-				changeTopRectangleWidth(context, getStateWith(state));
-			} else {
-				changeTopRectangleWidth(context, MAIN_RECTANGLE_WIDTH);
-			}
-			changesDone = true;
-		}
-
-		return changesDone;
-	}
-
-	@Override
 	protected IReason updateNeeded(IdUpdateContext context, String id) {
 		if (id.equals(ID_NAME_TEXT)) {
 			// Obtenemos los nombres de los estados finales del flujo llamado
@@ -223,9 +198,11 @@ public class CallFlowStatePattern extends SpecialEventStatePattern implements IS
 				}
 			}
 
-			// Si se modifica las options en el fichero hay que actualizar el estado.
-			if (!finalStateNames.equals(SimpleStatePattern.getAnchorNames(context))) {
-				return Reason.createTrueReason();
+			Set<String> anchorNames = SimpleStatePattern.getAnchorNames(context);
+			anchorNames.removeAll(state.getFireableEvents());
+			if (!finalStateNames.equals(anchorNames)) {
+				return Reason
+						.createTrueReason("The final states of the referred diagram have changed, please update the state");
 			}
 		}
 
