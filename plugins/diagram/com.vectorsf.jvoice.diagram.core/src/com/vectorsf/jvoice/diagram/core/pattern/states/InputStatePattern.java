@@ -39,7 +39,9 @@ public class InputStatePattern extends LocutionStatePattern {
 
 	@Override
 	protected LocutionState createMainState() {
-		return OperationsFactory.eINSTANCE.createInputState();
+		InputState cs = OperationsFactory.eINSTANCE.createInputState();
+		cs.getFireableEvents().add("ok");
+		return cs;
 	}
 
 	@Override

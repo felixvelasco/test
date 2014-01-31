@@ -38,7 +38,9 @@ public class TransferStatePattern extends LocutionStatePattern {
 
 	@Override
 	protected LocutionState createMainState() {
-		return OperationsFactory.eINSTANCE.createTransferState();
+		TransferState cs = OperationsFactory.eINSTANCE.createTransferState();
+		cs.getFireableEvents().add("ok");
+		return cs;
 	}
 
 	@Override
