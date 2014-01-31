@@ -188,11 +188,10 @@ public class MenuStatePattern extends LocutionStatePattern {
 
 		// Ajustamos el tamaño del estado
 		int stateWidth = getStateWidth(state);
-		if (stateWidth > MAIN_RECTANGLE_WIDTH) {
-			Graphiti.getGaService().setLocationAndSize(ga, ga.getX(), ga.getY(), stateWidth, ga.getHeight());
-		} else {
-			Graphiti.getGaService().setLocationAndSize(ga, ga.getX(), ga.getY(), MAIN_RECTANGLE_WIDTH, ga.getHeight());
-		}
+		stateWidth = stateWidth > MAIN_RECTANGLE_WIDTH ? stateWidth : MAIN_RECTANGLE_WIDTH;
+		gaService.setLocationAndSize(ga, ga.getX(), ga.getY(), stateWidth, ga.getHeight());
+		GraphicsAlgorithm gaText = (GraphicsAlgorithm) findById(context.getRootPictogramElement(), ID_NAME_TEXT);
+		gaService.setSize(gaText, stateWidth - TEXT_MARGIN, gaText.getHeight());
 
 		// Borra los anchors del tipo FixPointAnchor que no tienen transiciones
 		// de salida
