@@ -88,6 +88,7 @@ public class CustomStatePattern extends SimpleStatePattern {
 		String CustomStateName = null;
 		IFile result = null;
 		CustomState customState = OperationsFactory.eINSTANCE.createCustomState();
+		customState.getFireableEvents().add("ok");
 
 		switch (dialog.getReturnCode()) {
 		case Dialog.OK:
