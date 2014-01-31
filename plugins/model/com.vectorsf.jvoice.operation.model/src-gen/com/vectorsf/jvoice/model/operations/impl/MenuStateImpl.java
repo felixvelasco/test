@@ -50,7 +50,6 @@ public class MenuStateImpl extends LocutionStateImpl implements MenuState {
 	public EList<String> getEvents() {
 		EList<String> ret = new BasicEList<String>();
 		
-		ret.add("ok");
 		ret.add("error");
 		ret.add("noresource");
 		ret.add("maxattempts");
