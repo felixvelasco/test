@@ -199,7 +199,8 @@ public final class JVoiceProjectConfigurator {
 		Repository repository = new Repository();
 		repository.setId("jvoice");
 		repository.setName("JVoice repository");
-		repository.setUrl("http://isbks208510504s.scisb.isban.corp/nexus/content/groups/jvoiceGroup/");
+		repository.setUrl("https://repository-felixvelasco.forge.cloudbees.com/release");
+
 
 		model.addRepository(repository);
 		model.addPluginRepository(repository);
