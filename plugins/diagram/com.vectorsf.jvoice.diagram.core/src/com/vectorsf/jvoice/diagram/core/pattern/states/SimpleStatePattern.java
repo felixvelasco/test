@@ -85,7 +85,9 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 	protected static final int MAIN_RECTANGLE_HEIGHT = TOP_RECTANGLE_HEIGHT + 30;
 
-	protected static final int TEXT_WIDTH = MAIN_RECTANGLE_WIDTH - CELL_WIDTH - DROPDOWN_SIZE - 12;
+	public static final int TEXT_MARGIN = CELL_WIDTH + DROPDOWN_SIZE + 22;
+
+	protected static final int TEXT_WIDTH = MAIN_RECTANGLE_WIDTH - TEXT_MARGIN;
 
 	protected static final IColorConstant MAIN_RECTANGLE_BACKGROUND = new ColorConstant("eeeeee");
 
@@ -157,7 +159,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 				Text text = gaService.createPlainText(topRectangle, addedDomainObject.getName());
 				setId(text, ID_NAME_TEXT);
 				text.setStyle(getMainTextStyle());
-				gaService.setLocationAndSize(text, CELL_WIDTH, 0, TEXT_WIDTH, TOP_RECTANGLE_HEIGHT);
+				gaService.setLocationAndSize(text, CELL_WIDTH + 10, 0, TEXT_WIDTH, TOP_RECTANGLE_HEIGHT);
 
 				if (!(addedDomainObject instanceof CallFlowState) && !(addedDomainObject instanceof SwitchState)) {
 					Image menuImage = gaService.createImage(topRectangle, CoreImageProvider.IMG_DROPDOWN);
@@ -215,7 +217,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 			style = gaService.createPlainStyle(getDiagram(), MAIN_TEXT_STYLE);
 			style.setForeground(manageColor(IColorConstant.WHITE));
 			style.setFont(manageFont(MAIN_FONT_TEXT, MAIN_FONT_SIZE));
-			style.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
+			style.setHorizontalAlignment(Orientation.ALIGNMENT_LEFT);
 			style.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
 			style.setLineVisible(false);
 			style.setFilled(false);
