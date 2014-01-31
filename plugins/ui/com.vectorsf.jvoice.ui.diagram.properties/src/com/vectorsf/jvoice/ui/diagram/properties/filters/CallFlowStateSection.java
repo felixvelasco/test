@@ -30,7 +30,7 @@ public class CallFlowStateSection extends ParametrizableStateSection {
 	public void refresh() {
 		super.refresh();
 
-		if (((CallFlowState) state).getSubflow().getName() != null) {
+		if (state != null && ((CallFlowState) state).getSubflow().getName() != null) {
 			subFlow.text.setText(((CallFlowState) state).getSubflow().getName());
 		} else {
 			subFlow.text.setText("");
