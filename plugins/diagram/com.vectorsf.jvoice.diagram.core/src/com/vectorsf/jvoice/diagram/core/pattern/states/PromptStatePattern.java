@@ -39,7 +39,9 @@ public class PromptStatePattern extends LocutionStatePattern {
 
 	@Override
 	protected LocutionState createMainState() {
-		return OperationsFactory.eINSTANCE.createPromptState();
+		PromptState cs = OperationsFactory.eINSTANCE.createPromptState();
+		cs.getFireableEvents().add("ok");
+		return cs;
 	}
 
 	@Override

@@ -75,6 +75,7 @@ public class CallStatePattern extends SimpleStatePattern {
 			CallState cs = OperationsFactory.eINSTANCE.createCallState();
 			cs.setName(methodResult.getElementName());
 			cs.setDescription(methodResult.getElementName());
+			cs.getFireableEvents().add("ok");
 
 			try {
 				for (int i = 0; i < methodResult.getParameters().length; i++) {

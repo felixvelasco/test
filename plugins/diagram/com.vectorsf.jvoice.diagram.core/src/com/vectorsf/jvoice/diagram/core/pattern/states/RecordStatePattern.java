@@ -38,7 +38,9 @@ public class RecordStatePattern extends LocutionStatePattern {
 
 	@Override
 	protected LocutionState createMainState() {
-		return OperationsFactory.eINSTANCE.createRecordState();
+		RecordState cs = OperationsFactory.eINSTANCE.createRecordState();
+		cs.getFireableEvents().add("ok");
+		return cs;
 	}
 
 	@Override
