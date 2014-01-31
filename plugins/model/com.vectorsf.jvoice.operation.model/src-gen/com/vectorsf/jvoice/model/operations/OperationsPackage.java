@@ -1902,7 +1902,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CUSTOM_STATE___GET_EVENTS = STATE___GET_EVENTS;
+	int CUSTOM_STATE___GET_EVENTS = STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Custom State</em>' class.
@@ -1911,7 +1911,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CUSTOM_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
+	int CUSTOM_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl <em>Component Bean</em>}' class.
@@ -2574,6 +2574,16 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getCustomState_BindingBean();
 
 	/**
+	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.CustomState#getEvents() <em>Get Events</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Events</em>' operation.
+	 * @see com.vectorsf.jvoice.model.operations.CustomState#getEvents()
+	 * @generated
+	 */
+	EOperation getCustomState__GetEvents();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.ComponentBean <em>Component Bean</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3133,6 +3143,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CUSTOM_STATE__BINDING_BEAN = eINSTANCE.getCustomState_BindingBean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CUSTOM_STATE___GET_EVENTS = eINSTANCE.getCustomState__GetEvents();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.ComponentBeanImpl <em>Component Bean</em>}' class.

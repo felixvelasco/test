@@ -2,6 +2,8 @@
  */
 package com.vectorsf.jvoice.model.operations;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -72,5 +74,14 @@ public interface CustomState extends State {
 	 * @generated
 	 */
 	void setBindingBean(String value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='EList<String> ret = new <%org.eclipse.emf.common.util.BasicEList%><String>();\r\n\r\nret.add(\"ok\");\r\n\r\nreturn ret;'"
+	 * @generated
+	 */
+	EList<String> getEvents();
 
 } // CustomState
