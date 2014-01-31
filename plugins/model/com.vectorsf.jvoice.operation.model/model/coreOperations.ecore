@@ -101,7 +101,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="MenuState" eSuperTypes="#//LocutionState">
     <eOperations name="getEvents" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="body" value="EList&lt;String> ret = new &lt;%org.eclipse.emf.common.util.BasicEList%>&lt;String>();&#xA;&#xA;ret.add(&quot;ok&quot;);&#xA;ret.add(&quot;error&quot;);&#xA;ret.add(&quot;noresource&quot;);&#xA;ret.add(&quot;maxattempts&quot;);&#xA;ret.add(&quot;maxnoinput&quot;);&#xA;ret.add(&quot;maxnomatch&quot;);&#xA;ret.add(&quot;hangup&quot;);&#xA;&#xA;return ret;"/>
+        <details key="body" value="EList&lt;String> ret = new &lt;%org.eclipse.emf.common.util.BasicEList%>&lt;String>();&#xD;&#xA;&#xD;&#xA;ret.add(&quot;error&quot;);&#xD;&#xA;ret.add(&quot;noresource&quot;);&#xD;&#xA;ret.add(&quot;maxattempts&quot;);&#xD;&#xA;ret.add(&quot;maxnoinput&quot;);&#xD;&#xA;ret.add(&quot;maxnomatch&quot;);&#xD;&#xA;ret.add(&quot;hangup&quot;);&#xD;&#xA;&#xD;&#xA;return ret;"/>
       </eAnnotations>
     </eOperations>
   </eClassifiers>
