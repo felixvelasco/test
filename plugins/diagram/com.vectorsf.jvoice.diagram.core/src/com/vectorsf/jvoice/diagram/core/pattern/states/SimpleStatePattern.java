@@ -56,6 +56,11 @@ import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 public abstract class SimpleStatePattern extends IdPattern {
+
+	protected static final int MAIN_FONT_SIZE = 10;
+
+	protected static final String MAIN_FONT_TEXT = "Arial";
+
 	public static final String EVENT_NAME = "EVENT_NAME";
 
 	protected static final int DROPDOWN_SIZE = 12;
@@ -209,7 +214,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 		if (style == null) {
 			style = gaService.createPlainStyle(getDiagram(), MAIN_TEXT_STYLE);
 			style.setForeground(manageColor(IColorConstant.WHITE));
-			style.setFont(manageFont("Arial", 12));
+			style.setFont(manageFont(MAIN_FONT_TEXT, MAIN_FONT_SIZE));
 			style.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 			style.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
 			style.setLineVisible(false);
@@ -402,7 +407,6 @@ public abstract class SimpleStatePattern extends IdPattern {
 							CoreImageProvider.IMG_EVENT_OFF_EXT));
 				}
 			} else {
-
 				FixPointAnchor anchor = Graphiti.getPeCreateService().createFixPointAnchor((AnchorContainer) rootPe);
 				Image image = gaService.createImage(anchor, event + CoreImageProvider.IMG_EVENT_OFF_EXT);
 				gaService.setLocationAndSize(image, 0, 0, IMAGE_SIZE, IMAGE_SIZE);
@@ -599,12 +603,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 			if (!(anchor instanceof FixPointAnchor)) {
 				continue;
 			}
-			GraphicsAlgorithm ga = anchor.getGraphicsAlgorithm();
-			if (ga instanceof Image) {
-				anchorNames.add(((Image) ga).getId());
-			} else {
-				anchorNames.add(((Text) ga).getValue());
-			}
+			anchorNames.add(Graphiti.getPeService().getPropertyValue(anchor, EVENT_NAME));
 		}
 
 		return anchorNames;
