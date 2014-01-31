@@ -7,11 +7,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
-import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
-import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.pictograms.Anchor;
-import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
-import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -21,6 +16,7 @@ import org.eclipse.ui.PlatformUI;
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.diagram.core.pattern.transition.EventsDialog.ButtonInfo;
 import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.Transition;
 
 public class AddMoreEventFeature extends AbstractCustomFeature {
 
@@ -32,9 +28,6 @@ public class AddMoreEventFeature extends AbstractCustomFeature {
 
 	@Override
 	public boolean canExecute(ICustomContext context) {
-		PictogramElement pe = context.getPictogramElements()[0];
-		Object bo = getBusinessObjectForPictogramElement(pe);
-
 		return true;
 	}
 
@@ -75,7 +68,7 @@ public class AddMoreEventFeature extends AbstractCustomFeature {
 					getDiagramBehavior().getDiagramContainer().getDiagramTypeProvider().getProviderId(),
 					event + CoreImageProvider.IMG_EVENT_ON_EXT);
 
-			stateEvents.add(new ButtonInfo(event, image, state.getFireableEvents().contains(event), !isEventUsed(pe,
+			stateEvents.add(new ButtonInfo(event, image, state.getFireableEvents().contains(event), !isEventUsed(state,
 					event)));
 		}
 
@@ -96,20 +89,9 @@ public class AddMoreEventFeature extends AbstractCustomFeature {
 
 	}
 
-	private boolean isEventUsed(PictogramElement pe, String eventName) {
-		for (Anchor anchor : ((AnchorContainer) pe).getAnchors()) {
-			if (!(anchor instanceof FixPointAnchor)) {
-				continue;
-			}
-
-			GraphicsAlgorithm ga = anchor.getGraphicsAlgorithm();
-			String anchorName = "";
-			if (ga instanceof Text) {
-				anchorName = ((Text) ga).getValue();
-			} else {
-				anchorName = ((org.eclipse.graphiti.mm.algorithms.Image) ga).getId();
-			}
-			if (anchorName.equals(eventName) && !anchor.getOutgoingConnections().isEmpty()) {
+	private boolean isEventUsed(State state, String eventName) {
+		for (Transition trans : state.getOutgoingTransitions()) {
+			if (trans.getEventName().equals(eventName)) {
 				return true;
 			}
 		}
