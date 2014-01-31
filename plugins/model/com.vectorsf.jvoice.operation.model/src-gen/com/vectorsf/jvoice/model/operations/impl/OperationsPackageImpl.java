@@ -740,6 +740,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getCustomState__GetEvents() {
+		return customStateEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getComponentBean() {
 		return componentBeanEClass;
 	}
@@ -888,6 +897,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		customStateEClass = createEClass(CUSTOM_STATE);
 		createEAttribute(customStateEClass, CUSTOM_STATE__PATH);
 		createEAttribute(customStateEClass, CUSTOM_STATE__BINDING_BEAN);
+		createEOperation(customStateEClass, CUSTOM_STATE___GET_EVENTS);
 
 		componentBeanEClass = createEClass(COMPONENT_BEAN);
 		createEAttribute(componentBeanEClass, COMPONENT_BEAN__FQDN);
@@ -1033,6 +1043,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEClass(customStateEClass, CustomState.class, "CustomState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCustomState_Path(), ecorePackage.getEString(), "path", null, 0, 1, CustomState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCustomState_BindingBean(), ecorePackage.getEString(), "bindingBean", null, 0, 1, CustomState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getCustomState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(componentBeanEClass, ComponentBean.class, "ComponentBean", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComponentBean_Fqdn(), ecorePackage.getEString(), "fqdn", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
