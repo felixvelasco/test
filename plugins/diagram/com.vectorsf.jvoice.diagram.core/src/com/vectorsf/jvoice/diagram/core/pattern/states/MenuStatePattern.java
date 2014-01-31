@@ -239,8 +239,10 @@ public class MenuStatePattern extends LocutionStatePattern {
 			optionNames.addAll(state.getFireableEvents());
 
 			// Si se modifica las options en el fichero hay que actualizar el estado.
-			if (!optionNames.equals(SimpleStatePattern.getAnchorNames(context))) {
-				return Reason.createTrueReason();
+			Set<String> anchorNames = SimpleStatePattern.getAnchorNames(context);
+			anchorNames.removeAll(state.getFireableEvents());
+			if (!optionNames.equals(anchorNames)) {
+				return Reason.createTrueReason("The menu options have changed, please update the state");
 			}
 		}
 
