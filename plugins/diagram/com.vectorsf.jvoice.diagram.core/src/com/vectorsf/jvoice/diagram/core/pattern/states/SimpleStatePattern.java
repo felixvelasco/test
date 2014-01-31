@@ -382,10 +382,6 @@ public abstract class SimpleStatePattern extends IdPattern {
 			peService.deletePictogramElement(anchor);
 		}
 
-		if (((AnchorContainer) rootPe).getAnchors().size() == 1 && fireableEvents.isEmpty()) {
-			fireableEvents.add("ok");
-		}
-
 		// Creamos el anchor y su imagen asociada
 		for (String event : fireableEvents) {
 			// No creamos los anchors que ya existen, solo actualizamos su imagen
