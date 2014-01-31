@@ -1,17 +1,19 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.graphiti.datatypes.IDimension;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
-import org.eclipse.graphiti.mm.algorithms.Image;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
@@ -22,12 +24,17 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.id.IdLayoutContext;
 import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.services.IPeService;
+import org.eclipse.graphiti.ui.services.GraphitiUi;
+import org.eclipse.graphiti.util.ColorConstant;
+import org.eclipse.graphiti.util.IColorConstant;
 
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.State;
+import com.vectorsf.jvoice.model.operations.Transition;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
@@ -36,7 +43,12 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 public class MenuStatePattern extends LocutionStatePattern {
 
 	private static final String MENU = "Menu";
-	private int cont = 0;
+	private static final String FONT_NAME = "Arial";
+	private static final int FONT_SIZE = 8;
+	private static final int MARGIN = 10;
+	private static final IColorConstant TEXT_COLOR_ON = new ColorConstant("7b91a4");
+	private static final IColorConstant TEXT_COLOR_OFF = new ColorConstant("afc1d1");
+	private int acum = 0;
 
 	@Override
 	public String getCreateName() {
@@ -125,8 +137,9 @@ public class MenuStatePattern extends LocutionStatePattern {
 		// del menú
 		if (id.equals(ID_TOP_RECTANGLE)) {
 			State state = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-			if (getStateWith(state) > MAIN_RECTANGLE_WIDTH) {
-				changeTopRectangleWidth(context, getStateWith(state));
+			int stateWidth = getStateWidth(state);
+			if (stateWidth > MAIN_RECTANGLE_WIDTH) {
+				changeTopRectangleWidth(context, stateWidth);
 			} else {
 				changeTopRectangleWidth(context, MAIN_RECTANGLE_WIDTH);
 			}
@@ -136,23 +149,26 @@ public class MenuStatePattern extends LocutionStatePattern {
 		return changesDone;
 	}
 
-	public int getStateWith(State state) {
-		int numLetters = 0;
+	public int getStateWidth(State state) {
+		int size = MARGIN;
 		for (String string : getFireableEvents(state)) {
-			numLetters += string.length();
+			size += calculateTextWidth(string);
+			size += MARGIN;
 		}
 
-		return numLetters * 7;
+		return size;
 	}
 
 	@Override
-	public Point getAnchorLocation(int point, PictogramElement pe, Anchor anchor) {
-		int x = point * 26;
+	public Point getAnchorLocation(int index, PictogramElement pe, Anchor anchor) {
+		int x = acum;
 
 		GraphicsAlgorithm ga = anchor.getGraphicsAlgorithm();
 		if (ga instanceof Text) {
-			x = cont;
-			cont += ((Text) ga).getValue().length() * 7;
+			acum += calculateTextWidth((Text) ga);
+			acum += MARGIN;
+		} else {
+			acum += 26;
 		}
 
 		int y = pe.getGraphicsAlgorithm().getHeight() - 16 - 10;
@@ -166,12 +182,15 @@ public class MenuStatePattern extends LocutionStatePattern {
 	@Override
 	public void updateFireableEvents(IdLayoutContext context) {
 		GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
+		IPeService peService = Graphiti.getPeService();
 
 		State state = (State) getBusinessObjectForPictogramElement(ga.getPictogramElement());
+		List<String> fireableEvents = getFireableEvents(state);
 
 		// Ajustamos el tamaño del estado
-		if (getStateWith(state) > MAIN_RECTANGLE_WIDTH) {
-			Graphiti.getGaService().setLocationAndSize(ga, ga.getX(), ga.getY(), getStateWith(state), ga.getHeight());
+		int stateWidth = getStateWidth(state);
+		if (stateWidth > MAIN_RECTANGLE_WIDTH) {
+			Graphiti.getGaService().setLocationAndSize(ga, ga.getX(), ga.getY(), stateWidth, ga.getHeight());
 		} else {
 			Graphiti.getGaService().setLocationAndSize(ga, ga.getX(), ga.getY(), MAIN_RECTANGLE_WIDTH, ga.getHeight());
 		}
@@ -179,51 +198,77 @@ public class MenuStatePattern extends LocutionStatePattern {
 		// Borra los anchors del tipo FixPointAnchor que no tienen transiciones
 		// de salida
 		List<Anchor> anchorsToDelete = new ArrayList<Anchor>();
-		List<String> existingAnchors = new ArrayList<String>();
+		Map<String, Anchor> existingAnchors = new HashMap<>();
 		PictogramElement rootPe = context.getRootPictogramElement();
 
 		for (Anchor anchor : ((AnchorContainer) rootPe).getAnchors()) {
 			if (!(anchor instanceof FixPointAnchor)) {
 				continue;
 			}
-			if (anchor.getOutgoingConnections().isEmpty()) {
+			String eventName = peService.getPropertyValue(anchor, EVENT_NAME);
+			if (anchor.getOutgoingConnections().isEmpty() && !fireableEvents.contains(eventName)) {
 				anchorsToDelete.add(anchor);
 			} else {
-				GraphicsAlgorithm ga2 = anchor.getGraphicsAlgorithm();
-				if (ga2 instanceof Image) {
-					existingAnchors.add(((Image) ga2).getId());
-				} else {
-					existingAnchors.add(((Text) ga2).getValue());
-				}
+				existingAnchors.put(eventName, anchor);
 			}
 		}
 
 		for (Anchor anchor : anchorsToDelete) {
-			Graphiti.getPeService().deletePictogramElement(anchor);
+			peService.deletePictogramElement(anchor);
 		}
 
 		// Creamos el anchor y su imagen asociada
-		for (String event : getFireableEvents(state)) {
+		for (String event : fireableEvents) {
 			// No creamos los anchors que ya existen
-			if (existingAnchors.contains(event)) {
-				continue;
+			if (existingAnchors.containsKey(event)) {
+				boolean found = false;
+				for (Transition outTransitions : state.getOutgoingTransitions()) {
+					if (outTransitions.getEventName().equals(event)) {
+						found = true;
+						break;
+					}
+				}
+				Text text = (Text) existingAnchors.get(event).getGraphicsAlgorithm();
+				if (found) {
+					text.setForeground(manageColor(TEXT_COLOR_ON));
+				} else if (!found) {
+					text.setForeground(manageColor(TEXT_COLOR_OFF));
+				}
+			} else {
+
+				FixPointAnchor anchor = Graphiti.getPeCreateService().createFixPointAnchor((AnchorContainer) rootPe);
+
+				// Creamos la imagen o el texto del evento dentro del anchor
+				Text text = gaService.createText(anchor, event);
+				text.setFont(manageFont(FONT_NAME, FONT_SIZE));
+				text.setForeground(manageColor(TEXT_COLOR_OFF));
+				int textWidth = calculateTextWidth(text);
+
+				gaService.setLocationAndSize(text, 0, 0, textWidth, IMAGE_SIZE);
+				peService.setPropertyValue(anchor, "TOOLTIP", event);
+				peService.setPropertyValue(anchor, EVENT_NAME, event);
 			}
-
-			FixPointAnchor anchor = Graphiti.getPeCreateService().createFixPointAnchor((AnchorContainer) rootPe);
-
-			// Creamos la imagen o el texto del evento dentro del anchor
-			Text text = gaService.createText(anchor, event);
-			gaService.setLocationAndSize(text, 0, 0, event.length() * 7, IMAGE_SIZE);
-			Graphiti.getPeService().setPropertyValue(anchor, "TOOLTIP", event);
 		}
 
 		// Reordenamos los anchors
-		cont = 0;
+		acum = MARGIN;
+		int index = 0;
 		for (Anchor anchor : ((AnchorContainer) rootPe).getAnchors()) {
 			if (anchor instanceof FixPointAnchor) {
-				((FixPointAnchor) anchor).setLocation(getAnchorLocation(cont++, rootPe, anchor));
+				((FixPointAnchor) anchor).setLocation(getAnchorLocation(index++, rootPe, anchor));
 			}
 		}
+	}
+
+	private int calculateTextWidth(Text text) {
+		IDimension textDimension = GraphitiUi.getUiLayoutService().calculateTextSize(text.getValue(), text.getFont());
+		return textDimension.getWidth();
+	}
+
+	private int calculateTextWidth(String text) {
+		IDimension textDimension = GraphitiUi.getUiLayoutService().calculateTextSize(text,
+				manageFont(FONT_NAME, FONT_SIZE));
+		return textDimension.getWidth();
 	}
 
 	@Override
