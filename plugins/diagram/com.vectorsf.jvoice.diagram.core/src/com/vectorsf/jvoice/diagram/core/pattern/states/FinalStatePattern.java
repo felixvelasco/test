@@ -81,7 +81,7 @@ public class FinalStatePattern extends SimpleStatePattern {
 		if (style == null) {
 			style = gaService.createPlainStyle(getDiagram(), FINAL_TEXT_STYLE);
 			style.setForeground(manageColor(TEXT_BACKGROUND));
-			style.setFont(manageFont("Arial", 12));
+			style.setFont(manageFont(MAIN_FONT_TEXT, MAIN_FONT_SIZE));
 			style.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 			style.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
 			style.setLineVisible(false);
