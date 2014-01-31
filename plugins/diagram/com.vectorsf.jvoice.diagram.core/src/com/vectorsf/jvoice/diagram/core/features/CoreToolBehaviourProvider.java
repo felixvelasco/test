@@ -58,6 +58,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	public static final String PAD_CONTEXT_MENU_ENTRY = "padContextMenuEntry"; //$NON-NLS-1$
 	public static final String PAD_CONTEXT_SUB_MENU_ENTRY = "padContextSubMenuEntry"; //$NON-NLS-1$
 	public static final String CONTEXT_MENU_ENTRY = "contextMenuEntry"; //$NON-NLS-1$
+	public static final IColorConstant SELECTION_COLOR = new ColorConstant("01c2e5");
 	private Diagnostic diagnostic;
 
 	public CoreToolBehaviourProvider(IDiagramTypeProvider diagramTypeProvider) {
@@ -178,7 +179,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	@Override
 	public IShapeSelectionInfo getSelectionInfoForShape(Shape shape) {
 		IShapeSelectionInfo si = new ShapeSelectionInfoImpl();
-		si.setColor(IColorConstant.RED);
+		si.setColor(SELECTION_COLOR);
 		si.setLineStyle(LineStyle.DASH);
 		return si;
 
