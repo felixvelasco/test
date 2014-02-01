@@ -95,14 +95,14 @@ public final class JVoiceProjectConfigurator {
 		Dependency jvFlow = new Dependency();
 		jvFlow.setGroupId("com.vectorsf");
 		jvFlow.setArtifactId("jvoiceframework-flow");
-		jvFlow.setVersion("1.0.1");
+		jvFlow.setVersion(AbstractJVoiceNature.JVOICE_FRAMEWORK_VERSION);
 		dependencies.add(jvFlow);
 		model.setDependencies(dependencies);
 
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");
 		dsl_builder.setArtifactId("dsl-builder");
-		dsl_builder.setVersion("1.0.1");
+		dsl_builder.setVersion(AbstractJVoiceNature.JVOICE_COMPILER_VERSION);
 		PluginExecution voiceDSL = new PluginExecution();
 		voiceDSL.setPhase("generate-sources");
 		voiceDSL.addGoal("generateFlow");
@@ -111,7 +111,7 @@ public final class JVoiceProjectConfigurator {
 		Plugin dsl_builder2 = new Plugin();
 		dsl_builder2.setGroupId("com.vectorsf.jvoice");
 		dsl_builder2.setArtifactId("dsl-builder");
-		dsl_builder2.setVersion("1.0.1");
+		dsl_builder2.setVersion(AbstractJVoiceNature.JVOICE_COMPILER_VERSION);
 		PluginExecution voiceDSL2 = new PluginExecution();
 		voiceDSL2.setPhase("initialize");
 		voiceDSL2.addGoal("prepareWSDLSources");
@@ -138,9 +138,6 @@ public final class JVoiceProjectConfigurator {
 		configuration.addChild(encoding);
 
 		dsl_builder3.setConfiguration(configuration);
-		
-		
-		
 
 		Plugin ws_pol = new Plugin();
 		ws_pol.setGroupId("org.apache.cxf");
@@ -152,9 +149,6 @@ public final class JVoiceProjectConfigurator {
 		pexecution.setPhase("generate-sources");
 
 		Xpp3Dom configuration4 = new Xpp3Dom("configuration");
-		
-		
-		
 
 		Xpp3Dom sourceRoot = new Xpp3Dom("sourceRoot");
 		sourceRoot.setValue("src/generated-sources/wsdl2java");
@@ -199,7 +193,7 @@ public final class JVoiceProjectConfigurator {
 		Repository repository = new Repository();
 		repository.setId("jvoice");
 		repository.setName("JVoice repository");
-		repository.setUrl("https://repository-felixvelasco.forge.cloudbees.com/release");
+		repository.setUrl(AbstractJVoiceNature.JVOICE_REPOSITORY_URL);
 
 
 		model.addRepository(repository);
