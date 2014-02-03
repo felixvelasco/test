@@ -1,48 +1,16 @@
 input menuSelComercio
 {
 	bargein true
-	maxAttempts 3
-	maxNoInput 2
-	maxNoMatch 2
+	maxAttempts 1
+	maxNoInput 1
+	maxNoMatch 1
 }
 grammars{
 	dtmf "builtin:dtmf/digits"
 }
 audios{
  	main: 
- 		when("menuSelComercio.condPrompt(0)") {
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-A-PT1" wording "Para realizar un pago a"
- 			say wording "${menuSelComercio.condTTS(0)}"
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-C-PT1" wording "presione"
- 			say wording "uno."
- 		}
- 		when("menuSelComercio.condPrompt(1)") {
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-A-PT1" wording "Para realizar un pago a"
- 			say wording "${menuSelComercio.condTTS(1)}"
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-C-PT1" wording "presione"
- 			say wording "dos."
- 		}
- 		when("menuSelComercio.condPrompt(2)") {
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-A-PT1" wording "Para realizar un pago a"
- 			say wording "${menuSelComercio.condTTS(2)}"
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-C-PT1" wording "presione"
- 			say wording "tres."
- 		}
- 		when("menuSelComercio.condPrompt(3)") {
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-A-PT1" wording "Para realizar un pago a"
- 			say wording "${menuSelComercio.condTTS(3)}"
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-C-PT1" wording "presione"
- 			say wording "cuatro."
- 		}
- 		when("menuSelComercio.condPrompt(4)") {
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-A-PT1" wording "Para realizar un pago a"
- 			say wording "${menuSelComercio.condTTS(4)}"
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-C-PT1" wording "presione"
- 			say wording "cinco."
- 		}
- 		when("pagoComercio.listaComercios.size() &gt; 6") {
- 			say src "puerto_rico-es-US-SAN-BC-MENU-SELECT-COMERCIO-E-PT1" wording "Para escuchar los siguientes, presione 6."
- 		}
+ 		say wording "${menuSelComercio.getTts()}"
  	noinput:
  		say src "puerto_rico-es-US-SAN-BC-NI" wording "No ha seleccionado una opción."
  	nomatch:

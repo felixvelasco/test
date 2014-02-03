@@ -15,8 +15,8 @@ public class MenuSelComercio implements Serializable {
 	
 	@Inject
 	private PagoComercio pagoComercio;
-	
 	private int paginaSel;
+	private boolean moreOptions;
 
 	public int getPaginaSel() {
 		return paginaSel;
@@ -33,17 +33,32 @@ public class MenuSelComercio implements Serializable {
 	public void setPagoComercio(PagoComercio pagoComercio) {
 		this.pagoComercio = pagoComercio;
 	}
-	
-	public String condPrompt(int index) {
-		return String.valueOf( getPaginaSel() * 5 + index < pagoComercio.getListaComercios().size());
-	}
-	
-	public String condTTS(int index) {
-		if( getPaginaSel() * 5 + index < pagoComercio.getListaComercios().size()) {
-			return pagoComercio.getListaComercios().get(getPaginaSel() * 5 + index).getMerchantName();
-		} else {
-			return "";
+
+	public String getTts() {
+		StringBuilder sb = new StringBuilder();
+		for(int i= 0; i < 5; i++ ) {
+			if(paginaSel * 5 + i >= pagoComercio.getListaComercios().size()) {
+				break;
+			}
+			Comercio comercio = pagoComercio.getListaComercios().get(paginaSel * 5 + i);
+			sb.append("Para realizar un pago a ");
+			sb.append(comercio.getMerchantName());
+			sb.append(" presione ");
+			sb.append(String.valueOf(i+1));
+			sb.append(". ");
 		}
-		
+		if(moreOptions) {
+			sb.append("Para escuchar los siguientes, presione 6.");
+		}
+		return sb.toString();
 	}
+
+	public boolean isMoreOptions() {
+		return moreOptions;
+	}
+
+	public void setMoreOptions(boolean moreOptions) {
+		this.moreOptions = moreOptions;
+	}
+
 }

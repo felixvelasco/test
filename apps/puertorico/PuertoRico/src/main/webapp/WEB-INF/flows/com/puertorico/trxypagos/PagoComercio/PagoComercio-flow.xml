@@ -37,6 +37,28 @@ start-state= "_jVoiceCheckInit" >
 	<transition to="Final"/>
 </action-state>
 <subflow-state id="MenuSelComercio" subflow="com/puertorico/trxypagos/MenuSelComercio">
+ <transition to="setComercioSel">
+ 	<set name="flowScope.result" value="currentEvent.attributes.result" />
+ </transition>
+
+</subflow-state>
+<action-state id="setComercioSel">
+   <evaluate expression="pagoComercio.setComercioSel(flowScope.result)"
+   />
+   
+
+	 <transition to="MenuConfComercio"></transition>
+	
+</action-state>
+<subflow-state id="MenuConfComercio" subflow="com/puertorico/trxypagos/MenuConfComercio">
+<transition on="Final" to="SelCuentaComercio">
+	<set name="flowScope.result" value="currentEvent.attributes.result" />
+</transition>
+<transition on="ReselectComercio" to="MenuSelComercio">
+	<set name="flowScope.result" value="currentEvent.attributes.result" />
+</transition>
+</subflow-state>
+<subflow-state id="SelCuentaComercio" subflow="com/puertorico/accountselection/SelCuentaComercio">
  <transition to="Final">
  	<set name="flowScope.result" value="currentEvent.attributes.result" />
  </transition>

@@ -29,6 +29,7 @@ public class PagoComercio implements Serializable {
 	
 	private int wsMerchantListResult;
 	private List<Comercio> listaComercios;
+	private Comercio comercioSel;
 	
 	public void wsMerchantList() {
 		setWsMerchantListResult(0);
@@ -73,5 +74,13 @@ public class PagoComercio implements Serializable {
 
 	public void setListaComercios(List<Comercio> listaComercios) {
 		this.listaComercios = listaComercios;
+	}
+
+	public Comercio getComercioSel() {
+		return comercioSel;
+	}
+
+	public void setComercioSel(Comercio comercioSel) {
+		this.comercioSel = comercioSel;
 	}
 }
