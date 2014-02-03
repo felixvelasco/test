@@ -91,6 +91,7 @@ public class StateSection extends GFPropertySection implements ITabbedPropertyCo
 		data.left = new FormAttachment(nameText, 0, SWT.LEFT);
 		data.right = new FormAttachment(nameText, -120, SWT.RIGHT);
 		data.top = new FormAttachment(nameText, 10);
+		data.height = 110;
 		table.setLayoutData(data);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
