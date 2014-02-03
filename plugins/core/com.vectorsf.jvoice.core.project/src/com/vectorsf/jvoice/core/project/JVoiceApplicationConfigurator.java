@@ -106,7 +106,7 @@ public final class JVoiceApplicationConfigurator {
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");
 		dsl_builder.setArtifactId("application-builder");
-		dsl_builder.setVersion(AbstractJVoiceNature.JVOICE_FRAMEWORK_VERSION);
+		dsl_builder.setVersion(AbstractJVoiceNature.JVOICE_COMPILER_VERSION);
 		PluginExecution voiceDSL = new PluginExecution();
 		voiceDSL.setPhase("generate-resources");
 		voiceDSL.addGoal("copyXML");
