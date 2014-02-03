@@ -114,7 +114,7 @@ public class TransitionPattern extends AbstractConnectionPattern {
 		State sourceState = getState(context.getSourceAnchor());
 		State targetState = getState(context.getTargetAnchor());
 
-		if (sourceState == null || targetState == null) {
+		if (sourceState == null || targetState == null || sourceState.equals(targetState)) {
 			return null;
 		}
 
