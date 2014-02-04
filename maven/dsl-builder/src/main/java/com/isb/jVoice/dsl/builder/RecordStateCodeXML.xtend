@@ -49,7 +49,7 @@ class RecordStateCodeXML {
 							«ENDIF»
 						«ELSEIF configValue.name != null && !configValue.name.empty»
 							«IF configValue.value != null && !configValue.value.empty»
-								<evaluate name="flashScope.«state.name».properties.put('«configValue.name»','«configValue.value»')" />
+								<evaluate expression="flashScope.«state.name».properties.put('«configValue.name»','«configValue.value»')" />
 							«ENDIF»
 						«ENDIF»
 					«ENDFOR»
