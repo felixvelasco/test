@@ -58,13 +58,7 @@ class RecordStateCodeXML {
 				<set name="flowScope.jVoiceArchRecFileName" value="flashScope.«state.name».fileName" />
         «IF audios != null»
         «var mainAudios = recordIn.locution.audios.mainAudios»
-        «var noMatchAudios = recordIn.locution.audios.noMatchAudios»
-        «var noInputAudios = recordIn.locution.audios.noInputAudios»
-       	«var matchAudios = recordIn.locution.audios.matchAudios»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios", nameProject)»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios", nameProject)»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios", nameProject)»
-        «GeneralStateCodeXML.doGenerateGeneralState(state, matchAudios, "matchAudios", nameProject)»
+        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "audioItems", nameProject)»
 		«ENDIF»
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flashScope.«state.name»)"/>			
