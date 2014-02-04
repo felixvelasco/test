@@ -18,6 +18,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 
+import com.vectorsf.jvoice.core.project.AbstractJVoiceNature;
+
 public class LegacyLoggerPomHandler {
 	
 	public final class LegacyLoggerPomHandlerJob extends WorkspaceJob {
@@ -90,7 +92,7 @@ public class LegacyLoggerPomHandler {
 			Dependency jvIsbLogger = new Dependency();
 			jvIsbLogger.setGroupId("com.vectorsf");
 			jvIsbLogger.setArtifactId("jvoiceframework-isban-logger");
-			jvIsbLogger.setVersion("1.0-SNAPSHOT");
+			jvIsbLogger.setVersion(AbstractJVoiceNature.JVOICE_FRAMEWORK_VERSION);
 			dependencies.add(jvIsbLogger);
 			
 			mm.setDependencies(dependencies);
