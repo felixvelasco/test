@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.vectorsf.jvoice.core</groupId>
   <artifactId>jvoice</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <properties>
     <tycho-version>0.18.1</tycho-version>
@@ -61,8 +61,8 @@
   <modules>
     <module>plugins</module>
     <module>tests</module>
-    <module>maven</module>
     <module>releng</module>
+    <module>maven</module>
   </modules>
   <build>
     <plugins>

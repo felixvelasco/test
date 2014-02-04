@@ -5,11 +5,10 @@
   <parent>
     <groupId>com.vectorsf.jvoice.core</groupId>
     <artifactId>jvoice</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.vectorsf.jvoice.core</groupId>
   <artifactId>releng</artifactId>
-  <version>1.0.0</version>
   <packaging>pom</packaging>
   <modules>
     <module>com.vectorsf.jvoice.feature</module>

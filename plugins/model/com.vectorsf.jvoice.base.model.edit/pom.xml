@@ -6,10 +6,9 @@
     <groupId>com.vectorsf.jvoice.core</groupId>
     <artifactId>plugins</artifactId>
     <relativePath>../..</relativePath>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.vectorsf.jvoice.core</groupId>
   <artifactId>com.vectorsf.jvoice.base.model.edit</artifactId>
-  <version>1.0.0</version>
   <packaging>eclipse-plugin</packaging>
 </project>

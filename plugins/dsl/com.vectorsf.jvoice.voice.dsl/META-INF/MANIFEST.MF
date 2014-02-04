@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-Vendor: %Bundle-Vendor
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1.qualifier
 Bundle-SymbolicName: com.vectorsf.jvoice.voice.dsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;bundle-version="[2.4.2,2.5.0)";visibility:=reexport,
@@ -23,15 +23,11 @@ Require-Bundle: org.eclipse.xtext;bundle-version="[2.4.2,2.5.0)";visibility:=ree
  org.eclipse.core.resources;bundle-version="3.8.100";resolution:=optional,
  org.eclipse.core.runtime;bundle-version="3.9.0";resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: com.isb.bks.ivr.voice.dsl,
- com.isb.bks.ivr.voice.dsl.services,
- com.isb.bks.ivr.voice.dsl.serializer,
- com.isb.bks.ivr.voice.dsl.parser.antlr,
- com.isb.bks.ivr.voice.dsl.parser.antlr.internal,
- com.isb.bks.ivr.voice.dsl.validation,
- com.isb.bks.ivr.voice.dsl.formatting,
- com.isb.bks.ivr.voice.dsl.jvmmodel,
- com.isb.bks.ivr.voice.dsl.scoping,
- com.isb.bks.ivr.voice.dsl.generator
+Export-Package: com.isb.bks.ivr.voice.dsl,com.isb.bks.ivr.voice.dsl.se
+ rvices,com.isb.bks.ivr.voice.dsl.serializer,com.isb.bks.ivr.voice.dsl
+ .parser.antlr,com.isb.bks.ivr.voice.dsl.parser.antlr.internal,com.isb
+ .bks.ivr.voice.dsl.validation,com.isb.bks.ivr.voice.dsl.formatting,co
+ m.isb.bks.ivr.voice.dsl.jvmmodel,com.isb.bks.ivr.voice.dsl.scoping,co
+ m.isb.bks.ivr.voice.dsl.generator
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib

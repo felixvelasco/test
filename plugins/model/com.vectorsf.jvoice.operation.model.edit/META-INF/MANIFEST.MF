@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: com.vectorsf.jvoice.operation.model.edit;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: com.vectorsf.jvoice.model.operations.provider.CoreOperationsEditPlugin$Implementation
 Bundle-Vendor: %providerName
@@ -22,5 +22,5 @@ Require-Bundle: com.vectorsf.jvoice.operation.model;visibility:=reexport;bundle-
  org.eclipse.ui.workbench;bundle-version="3.105.0",
  org.eclipse.core.resources
 Bundle-ActivationPolicy: lazy
-Export-Package: com.vectorsf.jvoice.model.operations.provider,
- com.vectorsf.jvoice.model.operations.provider.flow
+Export-Package: com.vectorsf.jvoice.model.operations.provider,com.vect
+ orsf.jvoice.model.operations.provider.flow
