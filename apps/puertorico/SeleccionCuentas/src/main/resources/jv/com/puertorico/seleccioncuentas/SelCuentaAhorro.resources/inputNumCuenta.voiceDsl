@@ -1,0 +1,10 @@
+input inputNumCuenta
+
+grammars{
+	dtmf "builtin:dtmf/digits"
+}
+audios{
+ 	main: 
+ 		say wording "" 
+}
+

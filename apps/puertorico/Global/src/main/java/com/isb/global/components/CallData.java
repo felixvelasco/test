@@ -1,6 +1,7 @@
 package com.isb.global.components;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -17,6 +18,7 @@ public class CallData implements Serializable {
 	private boolean promoActive;
 	@Inject
 	private User user;
+	private List<Account> listaCuentas;
 	
 	public void init() {
 		this.application = "retail";
@@ -45,6 +47,14 @@ public class CallData implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Account> getListaCuentas() {
+		return listaCuentas;
+	}
+
+	public void setListaCuentas(List<Account> listaCuentas) {
+		this.listaCuentas = listaCuentas;
 	}
 	
 	
