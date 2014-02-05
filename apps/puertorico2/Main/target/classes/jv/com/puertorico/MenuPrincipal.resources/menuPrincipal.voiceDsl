@@ -5,6 +5,7 @@ input menuPrincipal
 	maxAttempts 3
 	maxNoInput 3
 	maxNoMatch 3
+	hola "que tal"
 }
 grammars{
 	dtmf "builtin:dtmf/digits?length=1"
