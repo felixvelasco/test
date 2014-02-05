@@ -65,17 +65,23 @@ Grammars:
 	    '}'
 ;
 
-Audios: 
-	'audios' '{' 
-	('main' ':' (
-			mainAudios += ConditionalAudio+))? &
-	('match' ':' (
-			matchAudios += ConditionalAudio+))? &
-	('nomatch' ':' (
-		    noMatchAudios += ConditionalAudio+))? &
-	('noinput' ':' (
-		    noInputAudios += ConditionalAudio+))? &
-		     
+Audios:
+	{Audios}
+	'audios' '{'
+	( 
+		('main' ':' 
+				mainAudios += ConditionalAudio+
+				)? &
+		('match' ':' 
+				matchAudios += ConditionalAudio+
+				)? &
+		('nomatch' ':' 
+			    noMatchAudios += ConditionalAudio+
+			    )? &
+		('noinput' ':' 
+			    noInputAudios += ConditionalAudio+
+			    )? 
+	)     
     '}'
 ;
 
