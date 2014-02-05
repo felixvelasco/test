@@ -5,7 +5,6 @@ input menuPrincipal
 	maxAttempts 3
 	maxNoInput 3
 	maxNoMatch 3
-	pepe 2
 }
 grammars{
 	dtmf "builtin:dtmf/digits?length=1"
@@ -23,8 +22,8 @@ audios{
 			say wording "Para información sobre sus cuentas, tarjetas o préstamos, presione 1. Para realizar pagos o transacciones en sus cuentas, presione 2. Para solicitar un préstamo personal o una  tarjeta de crédito o para verificar el estado de su solicitud , presione 3 . Para información sobre servicio de internet, presione 4. Para cambiar su número secreto, presione 5. Para información de seguros, presione 6."
 		}
 	nomatch:
-		say src "puerto_rico-es-US-SAN-BC-NM" wording "La opción que usted seleccionó no es válida."
+		say wording "La opción que usted seleccionó no es válida."
 	noinput:
-		say src "puerto_rico-es-US-SAN-BC-NI" wording "No ha seleccionado una opción."
+		say wording "No ha seleccionado una opción."
 }
 

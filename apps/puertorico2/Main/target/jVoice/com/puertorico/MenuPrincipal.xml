@@ -28,7 +28,6 @@ start-state= "_jVoiceCheckInit" >
 		<set name="flashScope.menuPrincipal.maxAttempts" value="3" />
 		<set name="flashScope.menuPrincipal.maxNoInput" value="3" />
 		<set name="flashScope.menuPrincipal.maxNoMatch" value="3" />
-		<evaluate name="flashScope.menuPrincipal.properties.put('pepe','2')" />
 		
 		<evaluate expression="jVoiceArchGrammar" result="flashScope.grammar1" />
 		<set name="flashScope.grammar1.src" value="'builtin:dtmf/digits?length=1'"/>
@@ -49,12 +48,10 @@ start-state= "_jVoiceCheckInit" >
         <set name="flashScope.menuPrincipalmainAudios2.condition" value="'attempts==1'"/><evaluate expression="flashScope.menuPrincipal.mainAudios.add(flashScope.menuPrincipalmainAudios2)"/><evaluate expression="jVoiceArchAudioItem" result="flashScope.menuPrincipalmainAudios3"/><evaluate expression="jVoiceArchWording" result="flashScope.menuPrincipalmainAudios3.wording"/>
         <set name="flashScope.menuPrincipalmainAudios3.wording.text" value="'Para información sobre sus cuentas, tarjetas o préstamos, presione 1. Para realizar pagos o transacciones en sus cuentas, presione 2. Para solicitar un préstamo personal o una  tarjeta de crédito o para verificar el estado de su solicitud , presione 3 . Para información sobre servicio de internet, presione 4. Para cambiar su número secreto, presione 5. Para información de seguros, presione 6.'"/>
         <set name="flashScope.menuPrincipalmainAudios3.condition" value="'attempts==2'"/><evaluate expression="flashScope.menuPrincipal.mainAudios.add(flashScope.menuPrincipalmainAudios3)"/>
-        <evaluate expression="jVoiceArchAudioItem" result="flashScope.menuPrincipalnoMatchAudios1"/><set name="flashScope.menuPrincipalnoMatchAudios1.src" value="locutionProvider.getAudioSrc(''puerto_rico-es-US-SAN-BC-NM'','Main')"/>
-        <evaluate expression="jVoiceArchWording" result="flashScope.menuPrincipalnoMatchAudios1.wording"/>
+        <evaluate expression="jVoiceArchAudioItem" result="flashScope.menuPrincipalnoMatchAudios1"/><evaluate expression="jVoiceArchWording" result="flashScope.menuPrincipalnoMatchAudios1.wording"/>
         <set name="flashScope.menuPrincipalnoMatchAudios1.wording.text" value="'La opción que usted seleccionó no es válida.'"/>
         <evaluate expression="flashScope.menuPrincipal.noMatchAudios.add(flashScope.menuPrincipalnoMatchAudios1)"/>
-        <evaluate expression="jVoiceArchAudioItem" result="flashScope.menuPrincipalnoInputAudios1"/><set name="flashScope.menuPrincipalnoInputAudios1.src" value="locutionProvider.getAudioSrc(''puerto_rico-es-US-SAN-BC-NI'','Main')"/>
-        <evaluate expression="jVoiceArchWording" result="flashScope.menuPrincipalnoInputAudios1.wording"/>
+        <evaluate expression="jVoiceArchAudioItem" result="flashScope.menuPrincipalnoInputAudios1"/><evaluate expression="jVoiceArchWording" result="flashScope.menuPrincipalnoInputAudios1.wording"/>
         <set name="flashScope.menuPrincipalnoInputAudios1.wording.text" value="'No ha seleccionado una opción.'"/>
         <evaluate expression="flashScope.menuPrincipal.noInputAudios.add(flashScope.menuPrincipalnoInputAudios1)"/>
 	</on-entry>
