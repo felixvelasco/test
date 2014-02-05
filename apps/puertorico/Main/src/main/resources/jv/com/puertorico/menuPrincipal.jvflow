@@ -691,7 +691,7 @@
       <case eventName="default"/>
     </states>
     <states xsi:type="operations:SwitchState" id="_RhxZ0H4LEeO01cG0nKjPWw" name="isLogged1" incomingTransitions="_dpzxYH4FEeO01cG0nKjPWw" outgoingTransitions="_gcMxwH4LEeO01cG0nKjPWw _hRR_oH4LEeO01cG0nKjPWw">
-      <case condition="callData.user.logged" eventName="si"/>
+      <case condition="user.logged" eventName="si"/>
       <case eventName="default"/>
     </states>
     <states xsi:type="operations:CallFlowState" id="_jIJewH7IEeOq5-avvfS4Xg" name="loginMain1" incomingTransitions="_hRR_oH4LEeO01cG0nKjPWw" outgoingTransitions="_EtSM4H7KEeOq5-avvfS4Xg">
@@ -699,7 +699,7 @@
       <subflow href="vega://Login/com/puertorico/login/loginMain#_HXclwH4JEeO01cG0nKjPWw"/>
     </states>
     <states xsi:type="operations:SwitchState" id="_x_WPIIdxEeOEO6B4iONhTA" name="isLogged2" incomingTransitions="_1269oIdxEeOEO6B4iONhTA" outgoingTransitions="__TwEcIdxEeOEO6B4iONhTA __qAoUIdxEeOEO6B4iONhTA">
-      <case condition="callData.user.logged" eventName="si"/>
+      <case condition="user.logged" eventName="si"/>
       <case eventName="default"/>
     </states>
     <states xsi:type="operations:CallFlowState" id="_-ap5QIdxEeOEO6B4iONhTA" name="loginMain" incomingTransitions="__TwEcIdxEeOEO6B4iONhTA" outgoingTransitions="_cj0FMIdyEeOEO6B4iONhTA">

@@ -28,7 +28,6 @@ start-state= "_jVoiceCheckInit" >
 		<set name="flashScope.menuPrincipal.maxAttempts" value="3" />
 		<set name="flashScope.menuPrincipal.maxNoInput" value="3" />
 		<set name="flashScope.menuPrincipal.maxNoMatch" value="3" />
-		<evaluate name="flashScope.menuPrincipal.properties.put('hola','"que tal"')" />
 		
 		<evaluate expression="jVoiceArchGrammar" result="flashScope.grammar1" />
 		<set name="flashScope.grammar1.src" value="'builtin:dtmf/digits?length=1'"/>

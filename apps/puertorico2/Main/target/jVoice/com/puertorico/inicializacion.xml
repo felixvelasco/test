@@ -11,18 +11,18 @@ start-state= "_jVoiceCheckInit" >
 <action-state id="_jVoiceCheckInit">
 	<evaluate expression="jVoiceArchData.initialized" />
 		<transition on="no" to="_jVoiceInit"/>
-		<transition to="init"/>
+		<transition to="initialize"/>
 	</action-state>
 
 <view-state id="_jVoiceInit" view="_init" model="jVoiceArchData">
-	<transition to="init" >
+	<transition to="initialize" >
 		<set name="jVoiceArchData.initialized" value="true"/>
 	</transition>
 </view-state>
 <end-state id="Final" view="#{flowProcessor.getRenderer().getView()}">
 	<output name="result" value="''" />
 </end-state>
-<action-state id="init">
+<action-state id="initialize">
    <evaluate expression="init.init()"
    />
    

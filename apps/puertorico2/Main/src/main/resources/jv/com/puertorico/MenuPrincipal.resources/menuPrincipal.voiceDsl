@@ -26,4 +26,3 @@ audios{
 	noinput:
 		say wording "No ha seleccionado una opción."
 }
-

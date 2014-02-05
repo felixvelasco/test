@@ -53,7 +53,7 @@
               <properties key="org.eclipse.graphiti.pattern.id.id" value="stateImage"/>
             </graphicsAlgorithmChildren>
           </graphicsAlgorithmChildren>
-          <graphicsAlgorithmChildren xsi:type="al:Text" lineStyle="UNSPECIFIED" width="101" height="28" x="55" style="/0/@styles.4" horizontalAlignment="UNSPECIFIED" verticalAlignment="UNSPECIFIED" value="init">
+          <graphicsAlgorithmChildren xsi:type="al:Text" lineStyle="UNSPECIFIED" width="101" height="28" x="55" style="/0/@styles.4" horizontalAlignment="UNSPECIFIED" verticalAlignment="UNSPECIFIED" value="initialize">
             <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
           </graphicsAlgorithmChildren>
           <graphicsAlgorithmChildren xsi:type="al:Image" lineWidth="1" transparency="0.0" width="12" height="12" x="156" y="8" id="icon_deco_dropdown" stretchH="false" stretchV="false" proportional="false">
@@ -124,7 +124,7 @@
   <operations:Flow id="_8uAGxIzuEeOeZMx_diJRwA" name="inicializacion" description="inicializacion">
     <states xsi:type="operations:InitialState" id="_8uAt0YzuEeOeZMx_diJRwA" name="Initial" outgoingTransitions="_8uB79IzuEeOeZMx_diJRwA"/>
     <states xsi:type="operations:FinalState" id="_8uAt4IzuEeOeZMx_diJRwA" name="Final" incomingTransitions="_CVmpMI2DEeOaHqABZZaIIw"/>
-    <states xsi:type="operations:CallState" id="_A3iIsI2DEeOaHqABZZaIIw" name="init" description="init" incomingTransitions="_8uB79IzuEeOeZMx_diJRwA" outgoingTransitions="_CVmpMI2DEeOaHqABZZaIIw" methodName="init" bean="_2nyXMI2CEeOaHqABZZaIIw">
+    <states xsi:type="operations:CallState" id="_A3iIsI2DEeOaHqABZZaIIw" name="initialize" description="init" incomingTransitions="_8uB79IzuEeOeZMx_diJRwA" outgoingTransitions="_CVmpMI2DEeOaHqABZZaIIw" methodName="init" bean="_2nyXMI2CEeOaHqABZZaIIw">
       <fireableEvents>ok</fireableEvents>
     </states>
     <transitions id="_8uB79IzuEeOeZMx_diJRwA" source="_8uAt0YzuEeOeZMx_diJRwA" target="_A3iIsI2DEeOaHqABZZaIIw" eventName="Ok"/>
