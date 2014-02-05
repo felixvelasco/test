@@ -35,20 +35,18 @@ public class RefreshBeanScopeHandler extends AbstractModifyFlowHandler {
 	}
 
 	@Override
-	protected boolean canExecute(ExecutionEvent event)
-			throws ExecutionException {
+	protected boolean canExecute(ExecutionEvent event) throws ExecutionException {
 		ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 		if (currentSelection instanceof IStructuredSelection) {
-			Object firstElement = ((IStructuredSelection) currentSelection)
-					.getFirstElement();
+			Object firstElement = ((IStructuredSelection) currentSelection).getFirstElement();
 			if (firstElement instanceof ComponentBean) {
 				Shell shell = HandlerUtil.getActiveShell(event);
 				selectedBean = (ComponentBean) firstElement;
 				Flow flow = operation.getOriginalFlow();
 
 				IProject project = getProject(flow);
-				BeanScopeAddDialog dialog = new BeanScopeAddDialog(shell, flow,
-						findPackage(project), project, selectedBean);
+				BeanScopeAddDialog dialog = new BeanScopeAddDialog(shell, flow, findPackage(project), project,
+						selectedBean);
 				boolean ret = dialog.open() == Window.OK;
 				if (ret) {
 					changeBean = dialog.getComponentBean();
@@ -65,38 +63,29 @@ public class RefreshBeanScopeHandler extends AbstractModifyFlowHandler {
 		org.eclipse.jdt.internal.core.JavaProject javaProject = (org.eclipse.jdt.internal.core.JavaProject) JavaCore
 				.create(project);
 		try {
-			String pack = ((JVModule) BaseModel.getInstance().getModel()
-					.getProject(project.getName())).getComponentsPackage();
+			String pack = ((JVModule) BaseModel.getInstance().getModel().getProject(project.getName()))
+					.getComponentsPackage();
 			return (IPackageFragment) javaProject.findPackageFragment(pack);
 		} catch (JavaModelException e) {
 			return null;
 		}
 	}
 
-	public class RefreshBeanScopeOperation extends
-			AbstractFlowModificationOperation {
+	public class RefreshBeanScopeOperation extends AbstractFlowModificationOperation {
 
 		@Override
 		protected Command getChangeCommand(EditingDomain domain, Flow flow) {
 			for (ComponentBean bean : flow.getBeans()) {
-				if (bean == selectedBean
-						|| bean.getId().equals(selectedBean.getId())) {
+				if (bean == selectedBean || bean.getId().equals(selectedBean.getId())) {
 					CompoundCommand commandrefresh = new CompoundCommand();
 
-					Command prototype = SetCommand.create(domain, selectedBean,
-							OperationsPackage.eINSTANCE
-									.getComponentBean_Prototype(), changeBean
-									.isPrototype());
-					Command fqdn = SetCommand
-							.create(domain, bean, OperationsPackage.eINSTANCE
-									.getComponentBean_Fqdn(), changeBean
-									.getFqdn());
+					Command prototype = SetCommand.create(domain, bean,
+							OperationsPackage.eINSTANCE.getComponentBean_Prototype(), changeBean.isPrototype());
+					Command fqdn = SetCommand.create(domain, bean, OperationsPackage.eINSTANCE.getComponentBean_Fqdn(),
+							changeBean.getFqdn());
 					Command namebean = SetCommand.create(domain, bean,
-							OperationsPackage.eINSTANCE
-									.getComponentBean_NameBean(), changeBean
-									.getNameBean());
-					Command name = SetCommand.create(domain, bean,
-							BasePackage.eINSTANCE.getNamedElement_Name(),
+							OperationsPackage.eINSTANCE.getComponentBean_NameBean(), changeBean.getNameBean());
+					Command name = SetCommand.create(domain, bean, BasePackage.eINSTANCE.getNamedElement_Name(),
 							changeBean.getName());
 					commandrefresh.appendIfCanExecute(prototype);
 					commandrefresh.appendIfCanExecute(namebean);
