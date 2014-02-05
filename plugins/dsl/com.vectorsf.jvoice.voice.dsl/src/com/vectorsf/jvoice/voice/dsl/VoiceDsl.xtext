@@ -51,7 +51,7 @@ TransferDsl:
 	   (('destination' destination = STRING )&
 		('transferaudio' audioTransfer = STRING )?& 
 		('maxtime' maxTime = STRING )?&
-		('timeout' timeout = STRING )?&
+		('transferTimeout' timeout = STRING )?&
 		(configuration = TransferConfiguration)?)
 	'}'
        (conditions += Condition*)?
@@ -113,11 +113,11 @@ TransferConfiguration returns Configuration:
 
 
 ConfigValue:
-	name = ID value=ConfigValueValue
+	name = QualifiedName (value=STRING | value=ConfigValueValue)
 ;
 
 ConfigValueValue:
-	INT ('ms'|'s')?| FLOAT('ms'|'s')? | 'true' | 'false' | STRING
+	INT ('ms'|'s')?| Float('ms'|'s')? | 'true' | 'false'
 ;
 
 Grammar:
@@ -166,9 +166,11 @@ ConditionalAudio returns Audio:
     |SimpleAudio
  ;
  
- terminal FLOAT :
+ Float :
    (INT '.' INT)
 ;
 
-
+QualifiedName :
+  ID ('.' ID)*
+;
 
