@@ -43,6 +43,13 @@ import com.vectorsf.jvoice.model.operations.OperationsFactory;
 
 public class BeanScopeAddDialog extends TitleAreaDialog {
 
+	private static final String PROTOTYPE = "prototype";
+	public static final String SPRING_COMPONENT_ANNOTATION_PACKAGE = "org.springframework.stereotype";
+	public static final String SPRING_COMPONENT_ANNOTATION_NAME = "Component";
+
+	public static final String SPRING_SCOPE_ANNOTATION_PACKAGE = "org.springframework.context.annotation";
+	public static final String SPRING_SCOPE_ANNOTATION_NAME = "Scope";
+
 	private Text scopedNameText;
 	private Text beanClassText;
 	private Text beanNameText;
@@ -52,23 +59,15 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 	private Flow flow;
 
 	private ComponentBean bean;
-	private ComponentBean beanold;
+	private ComponentBean originalBean;
 
-	public BeanScopeAddDialog(Shell parentShell, Flow flow,
-			IPackageFragment packageFragment, IProject project) {
-		super(parentShell);
-		this.packageFragment = packageFragment;
-		this.shell = parentShell;
-		this.bean = OperationsFactory.eINSTANCE.createComponentBean();
-		this.project = project;
-		this.flow = flow;
-		this.beanold = null;
+	public BeanScopeAddDialog(Shell parentShell, Flow flow, IPackageFragment packageFragment, IProject project) {
+		this(parentShell, flow, packageFragment, project, null);
 	}
 
-	// Añadido nuevo constructor para poder hacer el refresh ya que se usa el
+	// AÃ±adido nuevo constructor para poder hacer el refresh ya que se usa el
 	// mismo cuadro de dialogo
-	public BeanScopeAddDialog(Shell parentShell, Flow flow,
-			IPackageFragment packageFragment, IProject project,
+	public BeanScopeAddDialog(Shell parentShell, Flow flow, IPackageFragment packageFragment, IProject project,
 			ComponentBean beanold) {
 		super(parentShell);
 		this.packageFragment = packageFragment;
@@ -76,7 +75,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		this.bean = OperationsFactory.eINSTANCE.createComponentBean();
 		this.project = project;
 		this.flow = flow;
-		this.beanold = beanold;
+		this.originalBean = beanold;
 	}
 
 	private Listener nameModifyListener = new Listener() {
@@ -91,6 +90,24 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		String text = getScopedName();
 
 		String beanClass = getBeanClassName();
+		IJavaProject jProject = JavaCore.create(project);
+		IType type = null;
+		ITypeRoot typeRoot = null;
+
+		try {
+			type = jProject.findType(bean.getFqdn());
+			typeRoot = type.getTypeRoot();
+
+		} catch (JavaModelException e) {
+			e.printStackTrace();
+			setErrorMessage(null);
+			setMessage("Error loading " + bean.getFqdn());
+			getButton(IDialogConstants.OK_ID).setEnabled(false);
+
+			return false;
+		}
+
+		boolean prototypeSelected = isPrototype(typeRoot);
 		if (beanClass.isEmpty()) {
 			setErrorMessage(null);
 			setMessage("Select a component");
@@ -98,67 +115,39 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 			return false;
 		} else {
 			for (ComponentBean flowBean : flow.getBeans()) {
-				IJavaProject jProject = JavaCore.create(project);
-				IType type;
-				try {
-
-					type = jProject.findType(bean.getFqdn());
-					try {
-						IMemberValuePair[] scopeValues = type.getAnnotation(
-								"Scope").getMemberValuePairs();
-						if (flowBean.getFqdn().equals(beanClass)
-								&& !scopeValues[0].getValue().equals(
-										"prototype")) {
-							setMessage("Component already exists");
-							getButton(IDialogConstants.OK_ID).setEnabled(false);
-							return false;
-						}
-					} catch (JavaModelException e) {
-						// Bean has no Scope annotation
-					}
-				} catch (JavaModelException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (flowBean == originalBean) {
+					continue;
 				}
-
-			}
-		}
-
-		try {
-			IJavaProject jProject = JavaCore.create(project);
-			IType type;
-
-			type = jProject.findType(bean.getFqdn());
-			try {
-				IMemberValuePair[] scopeValues = type.getAnnotation("Scope")
-						.getMemberValuePairs();
-				if (text.isEmpty()
-						&& scopeValues[0].getValue().equals("prototype")) {
-
-					setErrorMessage(null);
-					setMessage("Enter a scope name");
+				if (flowBean.getFqdn().equals(beanClass) && !prototypeSelected) {
+					setMessage("Component already exists");
 					getButton(IDialogConstants.OK_ID).setEnabled(false);
 					return false;
-				} else if (!text.isEmpty()
-						&& scopeValues[0].getValue().equals("prototype")) {
-					for (ComponentBean bean : flow.getBeans()) {
-						if (bean.getName().equals(text)) {
-							setMessage("Scope name already exists");
-							getButton(IDialogConstants.OK_ID).setEnabled(false);
-							return false;
-						}
-					}
 				}
-			} catch (JavaModelException e) {
-				// Bean has no Scope annotation
-			}
 
-		} catch (JavaModelException e) {
-			e.printStackTrace();
+			}
 		}
+
+		if (text.isEmpty() && prototypeSelected) {
+
+			setErrorMessage(null);
+			setMessage("Enter a scope name");
+			getButton(IDialogConstants.OK_ID).setEnabled(false);
+			return false;
+		} else if (!text.isEmpty() && prototypeSelected) {
+			for (ComponentBean bean : flow.getBeans()) {
+				if (bean == originalBean) {
+					continue;
+				}
+				if (bean.getName().equals(text)) {
+					setMessage("Scope name already exists");
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+					return false;
+				}
+			}
+		}
+
 		if (!text.isEmpty()) {
-			IStatus status = ResourcesPlugin.getWorkspace().validateName(text,
-					IResource.FILE);
+			IStatus status = ResourcesPlugin.getWorkspace().validateName(text, IResource.FILE);
 			if (!status.isOK()) {
 				setErrorMessage(status.getMessage());
 				getButton(IDialogConstants.OK_ID).setEnabled(false);
@@ -180,7 +169,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 	@Override
 	public void create() {
 		super.create();
-		if (beanold != null) {
+		if (originalBean != null) {
 			setTitle("Refresh Bean to Scope");
 			setMessage("Refresh Bean", IMessageProvider.INFORMATION);
 		} else {
@@ -193,9 +182,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 	@Override
 	protected Control createContents(Composite parent) {
 		super.createContents(parent);
-		if (beanold == null) {
-			getButton(IDialogConstants.OK_ID).setEnabled(false);
-		}
+		getButton(IDialogConstants.OK_ID).setEnabled(originalBean != null);
 
 		return parent;
 	}
@@ -209,12 +196,19 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		container.setLayout(layout);
 
-		if (beanold != null) {
-			bean.setFqdn(beanold.getFqdn());
-			bean.setName(beanold.getName());
-			bean.setNameBean(beanold.getNameBean());
-			bean.setPrototype(beanold.isPrototype());
-			bean.setId(beanold.getId());
+		if (originalBean != null) {
+
+			IJavaProject jProject = JavaCore.create(project);
+			IType type;
+			try {
+				type = jProject.findType(originalBean.getFqdn());
+				ITypeRoot typeRoot = type.getTypeRoot();
+				updateComponent(typeRoot);
+				bean.setName(originalBean.getName());
+				bean.setId(originalBean.getId());
+			} catch (JavaModelException e) {
+				e.printStackTrace();
+			}
 		}
 
 		createLabelName(container);
@@ -224,6 +218,13 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		setHelpAvailable(false);
 
 		return area;
+	}
+
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Control superControl = super.createButtonBar(parent);
+		updateFields();
+		return superControl;
 	}
 
 	private void createName(Composite container) {
@@ -236,10 +237,6 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		scopedNameText = new Text(container, SWT.BORDER);
 		scopedNameText.setLayoutData(dataName);
 		scopedNameText.setEnabled(false);
-		if (beanold != null) {
-			scopedNameText.setText(beanold.getName());
-			fillScopeNameText(bean);
-		}
 		scopedNameText.addListener(SWT.Modify, nameModifyListener);
 
 	}
@@ -254,9 +251,6 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		beanClassText = new Text(container, SWT.BORDER);
 		beanClassText.setLayoutData(dataJavaName);
 		beanClassText.setEditable(false);
-		if (beanold != null) {
-			beanClassText.setText(beanold.getFqdn());
-		}
 
 		// browse button on right
 		Button browse = new Button(container, SWT.PUSH);
@@ -265,22 +259,16 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				StandardJavaElementContentProvider contentProvider = new StandardJavaElementContentProvider(
-						false);
-				ILabelProvider labelProvider = new JavaElementLabelProvider(
-						JavaElementLabelProvider.SHOW_BASICS);
+				StandardJavaElementContentProvider contentProvider = new StandardJavaElementContentProvider(false);
+				ILabelProvider labelProvider = new JavaElementLabelProvider(JavaElementLabelProvider.SHOW_BASICS);
 
-				ComponentsSelectionDialog dialog = new ComponentsSelectionDialog(
-						shell, labelProvider, contentProvider);
+				ComponentsSelectionDialog dialog = new ComponentsSelectionDialog(shell, labelProvider, contentProvider);
 				dialog.setInput(packageFragment);
 				dialog.addFilter(new ComponentFilter());
 				if (dialog.open() == Window.OK) {
 					ITypeRoot typeRoot = (ITypeRoot) dialog.getFirstResult();
 					updateComponent(typeRoot);
-
-					fillScopeNameText(bean);
-					beanClassText.setText(bean.getFqdn());
-					beanNameText.setText(bean.getNameBean());
+					updateFields();
 				}
 
 				validatePage();
@@ -305,9 +293,6 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		beanNameText.setEditable(false);
 		beanNameText.setEnabled(false);
 		new Label(container, SWT.NONE);
-		if (beanold != null) {
-			beanNameText.setText(beanold.getNameBean());
-		}
 	}
 
 	@Override
@@ -319,18 +304,42 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		IType type = typeRoot.findPrimaryType();
 		String name = firstToLowercase(type.getElementName());
 
-		IAnnotation annotation = findAnnotation(typeRoot);
+		IAnnotation annotation = findAnnotation(typeRoot, SPRING_COMPONENT_ANNOTATION_PACKAGE,
+				SPRING_COMPONENT_ANNOTATION_NAME);
 		try {
-			IMemberValuePair[] memberValuePairs = annotation
-					.getMemberValuePairs();
+			IMemberValuePair[] memberValuePairs = annotation.getMemberValuePairs();
 			if (memberValuePairs.length > 0) {
 				name = (String) memberValuePairs[0].getValue();
 			}
 		} catch (JavaModelException e) {
 		}
 
+		bean.setPrototype(isPrototype(typeRoot));
+
 		bean.setFqdn(type.getFullyQualifiedName());
 		bean.setNameBean(name);
+		bean.setName(Character.toLowerCase(type.getElementName().charAt(0)) + type.getElementName().substring(1));
+	}
+
+	private boolean isPrototype(ITypeRoot typeRoot) {
+		try {
+			IAnnotation annotation = findAnnotation(typeRoot, SPRING_SCOPE_ANNOTATION_PACKAGE,
+					SPRING_SCOPE_ANNOTATION_NAME);
+			if (annotation == null) {
+				return false;
+			}
+
+			IMemberValuePair[] scopeValues = annotation.getMemberValuePairs();
+			for (IMemberValuePair pair : scopeValues) {
+				if (pair.getMemberName().equals("value")) {
+					return pair.getValue().equals(PROTOTYPE);
+				}
+			}
+
+		} catch (JavaModelException e) {
+			// bean has no scope annotation, equivalent to Singleton
+		}
+		return false;
 	}
 
 	private String firstToLowercase(String elementName) {
@@ -350,7 +359,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		bean.setName(componentName);
 	}
 
-	private IAnnotation findAnnotation(ITypeRoot unit) {
+	private IAnnotation findAnnotation(ITypeRoot unit, String annotationPackage, String annotationName) {
 		IType type = unit.findPrimaryType();
 
 		if (type == null) {
@@ -360,20 +369,15 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 		try {
 			for (IAnnotation annotation : type.getAnnotations()) {
 				String elementName = annotation.getElementName();
-				if (elementName
-						.equals("org.springframework.stereotype.Component")) {
+				if (elementName.equals(annotationPackage + "." + annotationName)) {
 					return annotation;
-				} else if (elementName.equals("Component")
-						&& unit instanceof ICompilationUnit) {
-					for (IImportDeclaration _import : ((ICompilationUnit) unit)
-							.getImports()) {
+				} else if (elementName.equals(annotationName) && unit instanceof ICompilationUnit) {
+					for (IImportDeclaration _import : ((ICompilationUnit) unit).getImports()) {
 						String importedType = _import.getElementName();
-						if (importedType
-								.equals("org.springframework.stereotype.Component")) {
+						if (importedType.equals(annotationPackage + "." + annotationName)) {
 							return annotation;
 						}
-						if (importedType
-								.equals("org.springframework.stereotype.*")) {
+						if (importedType.equals(annotationPackage + ".*")) {
 							return annotation;
 						}
 					}
@@ -389,50 +393,14 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 	public class ComponentFilter extends ViewerFilter {
 
 		@Override
-		public boolean select(Viewer viewer, Object parentElement,
-				Object element) {
+		public boolean select(Viewer viewer, Object parentElement, Object element) {
 			if (element instanceof ITypeRoot) {
 
-				return findAnnotation((ITypeRoot) element) != null;
+				return findAnnotation((ITypeRoot) element, SPRING_COMPONENT_ANNOTATION_PACKAGE,
+						SPRING_COMPONENT_ANNOTATION_NAME) != null;
 
 			}
 			return false;
-		}
-	}
-
-	private void fillScopeNameText(ComponentBean bean) {
-		IJavaProject jProject = JavaCore.create(project);
-		IType type;
-		try {
-			type = jProject.findType(bean.getFqdn());
-			try {
-				IMemberValuePair[] scopeValues = type.getAnnotation("Scope")
-						.getMemberValuePairs();
-				if (scopeValues[0].getValue().equals("prototype")) {
-					scopedNameText.setEnabled(true);
-					bean.setPrototype(true);
-				} else {
-					scopedNameText.setEnabled(false);
-					scopedNameText.setText(Character.toLowerCase(type
-							.getElementName().charAt(0))
-							+ type.getElementName().substring(1));
-					// Se cogen los datos del dialogo
-					bean.setName(scopedNameText.getText());
-					bean.setNameBean(beanNameText.getText());
-					bean.setFqdn(beanClassText.getText());
-					bean.setPrototype(false);
-
-				}
-			} catch (JavaModelException e2) {
-				// bean has no scope annotation
-				scopedNameText.setEnabled(false);
-				scopedNameText.setText(Character.toLowerCase(type
-						.getElementName().charAt(0))
-						+ type.getElementName().substring(1));
-			}
-
-		} catch (JavaModelException e1) {
-			e1.printStackTrace();
 		}
 	}
 
@@ -452,6 +420,25 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 			return ""; //$NON-NLS-1$
 		}
 		return beanClassText.getText().trim();
+	}
+
+	private void updateFields() {
+		if (bean.isPrototype()) {
+			scopedNameText.setEnabled(true);
+		} else {
+			scopedNameText.setEnabled(false);
+		}
+		if (bean.getName() != null) {
+			scopedNameText.setText(bean.getName());
+		}
+
+		if (bean.getFqdn() != null) {
+			beanClassText.setText(bean.getFqdn());
+		}
+
+		if (bean.getNameBean() != null) {
+			beanNameText.setText(bean.getNameBean());
+		}
 	}
 
 }
