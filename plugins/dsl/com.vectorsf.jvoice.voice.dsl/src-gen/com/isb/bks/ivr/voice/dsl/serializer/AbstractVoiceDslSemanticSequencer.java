@@ -201,20 +201,10 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	
 	/**
 	 * Constraint:
-	 *     (name=ID value=ConfigValueValue)
+	 *     (name=QualifiedName (value=STRING | value=ConfigValueValue))
 	 */
 	protected void sequence_ConfigValue(EObject context, ConfigValue semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, VoiceDslPackage.Literals.CONFIG_VALUE__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, VoiceDslPackage.Literals.CONFIG_VALUE__NAME));
-			if(transientValues.isValueTransient(semanticObject, VoiceDslPackage.Literals.CONFIG_VALUE__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, VoiceDslPackage.Literals.CONFIG_VALUE__VALUE));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getConfigValueAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getConfigValueAccess().getValueConfigValueValueParserRuleCall_1_0(), semanticObject.getValue());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

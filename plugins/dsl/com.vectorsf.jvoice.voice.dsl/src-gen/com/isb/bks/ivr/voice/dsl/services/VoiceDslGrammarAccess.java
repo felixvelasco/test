@@ -333,7 +333,7 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cMaxTimeAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
 		private final RuleCall cMaxTimeSTRINGTerminalRuleCall_4_2_1_0 = (RuleCall)cMaxTimeAssignment_4_2_1.eContents().get(0);
 		private final Group cGroup_4_3 = (Group)cUnorderedGroup_4.eContents().get(3);
-		private final Keyword cTimeoutKeyword_4_3_0 = (Keyword)cGroup_4_3.eContents().get(0);
+		private final Keyword cTransferTimeoutKeyword_4_3_0 = (Keyword)cGroup_4_3.eContents().get(0);
 		private final Assignment cTimeoutAssignment_4_3_1 = (Assignment)cGroup_4_3.eContents().get(1);
 		private final RuleCall cTimeoutSTRINGTerminalRuleCall_4_3_1_0 = (RuleCall)cTimeoutAssignment_4_3_1.eContents().get(0);
 		private final Assignment cConfigurationAssignment_4_4 = (Assignment)cUnorderedGroup_4.eContents().get(4);
@@ -346,12 +346,12 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TransferDsl:
 		//	{TransferDsl} typeTransfer=TypeTransfer name=ID "{" ("destination" destination=STRING & ("transferaudio"
-		//	audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? & ("timeout" timeout=STRING)? &
+		//	audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? & ("transferTimeout" timeout=STRING)? &
 		//	configuration=TransferConfiguration?) "}" conditions+=Condition? audios=Audios;
 		public ParserRule getRule() { return rule; }
 
 		//{TransferDsl} typeTransfer=TypeTransfer name=ID "{" ("destination" destination=STRING & ("transferaudio"
-		//audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? & ("timeout" timeout=STRING)? &
+		//audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? & ("transferTimeout" timeout=STRING)? &
 		//configuration=TransferConfiguration?) "}" conditions+=Condition? audios=Audios
 		public Group getGroup() { return cGroup; }
 
@@ -373,8 +373,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 
-		//"destination" destination=STRING & ("transferaudio" audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? & ("timeout"
-		//timeout=STRING)? & configuration=TransferConfiguration?
+		//"destination" destination=STRING & ("transferaudio" audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? &
+		//("transferTimeout" timeout=STRING)? & configuration=TransferConfiguration?
 		public UnorderedGroup getUnorderedGroup_4() { return cUnorderedGroup_4; }
 
 		//"destination" destination=STRING
@@ -413,11 +413,11 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getMaxTimeSTRINGTerminalRuleCall_4_2_1_0() { return cMaxTimeSTRINGTerminalRuleCall_4_2_1_0; }
 
-		//("timeout" timeout=STRING)?
+		//("transferTimeout" timeout=STRING)?
 		public Group getGroup_4_3() { return cGroup_4_3; }
 
-		//"timeout"
-		public Keyword getTimeoutKeyword_4_3_0() { return cTimeoutKeyword_4_3_0; }
+		//"transferTimeout"
+		public Keyword getTransferTimeoutKeyword_4_3_0() { return cTransferTimeoutKeyword_4_3_0; }
 
 		//timeout=STRING
 		public Assignment getTimeoutAssignment_4_3_1() { return cTimeoutAssignment_4_3_1; }
@@ -741,28 +741,40 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConfigValue");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cValueConfigValueValueParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		private final RuleCall cNameQualifiedNameParserRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Assignment cValueAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final RuleCall cValueSTRINGTerminalRuleCall_1_0_0 = (RuleCall)cValueAssignment_1_0.eContents().get(0);
+		private final Assignment cValueAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
+		private final RuleCall cValueConfigValueValueParserRuleCall_1_1_0 = (RuleCall)cValueAssignment_1_1.eContents().get(0);
 		
 		//ConfigValue:
-		//	name=ID value=ConfigValueValue;
+		//	name=QualifiedName (value=STRING | value=ConfigValueValue);
 		public ParserRule getRule() { return rule; }
 
-		//name=ID value=ConfigValueValue
+		//name=QualifiedName (value=STRING | value=ConfigValueValue)
 		public Group getGroup() { return cGroup; }
 
-		//name=ID
+		//name=QualifiedName
 		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		//QualifiedName
+		public RuleCall getNameQualifiedNameParserRuleCall_0_0() { return cNameQualifiedNameParserRuleCall_0_0; }
+
+		//value=STRING | value=ConfigValueValue
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//value=STRING
+		public Assignment getValueAssignment_1_0() { return cValueAssignment_1_0; }
+
+		//STRING
+		public RuleCall getValueSTRINGTerminalRuleCall_1_0_0() { return cValueSTRINGTerminalRuleCall_1_0_0; }
 
 		//value=ConfigValueValue
-		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
+		public Assignment getValueAssignment_1_1() { return cValueAssignment_1_1; }
 
 		//ConfigValueValue
-		public RuleCall getValueConfigValueValueParserRuleCall_1_0() { return cValueConfigValueValueParserRuleCall_1_0; }
+		public RuleCall getValueConfigValueValueParserRuleCall_1_1_0() { return cValueConfigValueValueParserRuleCall_1_1_0; }
 	}
 
 	public class ConfigValueValueElements extends AbstractParserRuleElementFinder {
@@ -774,19 +786,18 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cMsKeyword_0_1_0 = (Keyword)cAlternatives_0_1.eContents().get(0);
 		private final Keyword cSKeyword_0_1_1 = (Keyword)cAlternatives_0_1.eContents().get(1);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final RuleCall cFLOATTerminalRuleCall_1_0 = (RuleCall)cGroup_1.eContents().get(0);
+		private final RuleCall cFloatParserRuleCall_1_0 = (RuleCall)cGroup_1.eContents().get(0);
 		private final Alternatives cAlternatives_1_1 = (Alternatives)cGroup_1.eContents().get(1);
 		private final Keyword cMsKeyword_1_1_0 = (Keyword)cAlternatives_1_1.eContents().get(0);
 		private final Keyword cSKeyword_1_1_1 = (Keyword)cAlternatives_1_1.eContents().get(1);
 		private final Keyword cTrueKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
 		private final Keyword cFalseKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
-		private final RuleCall cSTRINGTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//ConfigValueValue:
-		//	INT ("ms" | "s")? | FLOAT ("ms" | "s")? | "true" | "false" | STRING;
+		//	INT ("ms" | "s")? | Float ("ms" | "s")? | "true" | "false";
 		public ParserRule getRule() { return rule; }
 
-		//INT ("ms" | "s")? | FLOAT ("ms" | "s")? | "true" | "false" | STRING
+		//INT ("ms" | "s")? | Float ("ms" | "s")? | "true" | "false"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//INT ("ms" | "s")?
@@ -804,11 +815,11 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//"s"
 		public Keyword getSKeyword_0_1_1() { return cSKeyword_0_1_1; }
 
-		//FLOAT ("ms" | "s")?
+		//Float ("ms" | "s")?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//FLOAT
-		public RuleCall getFLOATTerminalRuleCall_1_0() { return cFLOATTerminalRuleCall_1_0; }
+		//Float
+		public RuleCall getFloatParserRuleCall_1_0() { return cFloatParserRuleCall_1_0; }
 
 		//("ms" | "s")?
 		public Alternatives getAlternatives_1_1() { return cAlternatives_1_1; }
@@ -824,9 +835,6 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"false"
 		public Keyword getFalseKeyword_3() { return cFalseKeyword_3; }
-
-		//STRING
-		public RuleCall getSTRINGTerminalRuleCall_4() { return cSTRINGTerminalRuleCall_4; }
 	}
 
 	public class GrammarElements extends AbstractParserRuleElementFinder {
@@ -1049,8 +1057,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTtsSTRINGTerminalRuleCall_2_1_1_3_0 = (RuleCall)cTtsAssignment_2_1_1_3.eContents().get(0);
 		
 		//SimpleAudio returns Audio:
-		//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation ("(" format=STRING
-		//	")")? tts=STRING)?);
+		//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation ("(" format=STRING ")")?
+		//	tts=STRING)?);
 		public ParserRule getRule() { return rule; }
 
 		//{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation ("(" format=STRING ")")?
@@ -1186,6 +1194,58 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleAudio
 		public RuleCall getSimpleAudioParserRuleCall_1() { return cSimpleAudioParserRuleCall_1; }
 	}
+
+	public class FloatElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Float");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cINTTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Keyword cFullStopKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final RuleCall cINTTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		
+		//Float:
+		//	INT "." INT;
+		public ParserRule getRule() { return rule; }
+
+		//INT "." INT
+		public Group getGroup() { return cGroup; }
+
+		//INT
+		public RuleCall getINTTerminalRuleCall_0() { return cINTTerminalRuleCall_0; }
+
+		//"."
+		public Keyword getFullStopKeyword_1() { return cFullStopKeyword_1; }
+
+		//INT
+		public RuleCall getINTTerminalRuleCall_2() { return cINTTerminalRuleCall_2; }
+	}
+
+	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedName");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		
+		//QualifiedName:
+		//	ID ("." ID)*;
+		public ParserRule getRule() { return rule; }
+
+		//ID ("." ID)*
+		public Group getGroup() { return cGroup; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+
+		//("." ID)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"."
+		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
+	}
 	
 	
 	public class InterpretationElements extends AbstractEnumRuleElementFinder {
@@ -1316,7 +1376,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	private InterpretationElements unknownRuleInterpretation;
 	private TypeTransferElements unknownRuleTypeTransfer;
 	private ConditionalAudioElements pConditionalAudio;
-	private TerminalRule tFLOAT;
+	private FloatElements pFloat;
+	private QualifiedNameElements pQualifiedName;
 	
 	private final Grammar grammar;
 
@@ -1410,7 +1471,7 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TransferDsl:
 	//	{TransferDsl} typeTransfer=TypeTransfer name=ID "{" ("destination" destination=STRING & ("transferaudio"
-	//	audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? & ("timeout" timeout=STRING)? &
+	//	audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? & ("transferTimeout" timeout=STRING)? &
 	//	configuration=TransferConfiguration?) "}" conditions+=Condition? audios=Audios;
 	public TransferDslElements getTransferDslAccess() {
 		return (pTransferDsl != null) ? pTransferDsl : (pTransferDsl = new TransferDslElements());
@@ -1492,7 +1553,7 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ConfigValue:
-	//	name=ID value=ConfigValueValue;
+	//	name=QualifiedName (value=STRING | value=ConfigValueValue);
 	public ConfigValueElements getConfigValueAccess() {
 		return (pConfigValue != null) ? pConfigValue : (pConfigValue = new ConfigValueElements());
 	}
@@ -1502,7 +1563,7 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ConfigValueValue:
-	//	INT ("ms" | "s")? | FLOAT ("ms" | "s")? | "true" | "false" | STRING;
+	//	INT ("ms" | "s")? | Float ("ms" | "s")? | "true" | "false";
 	public ConfigValueValueElements getConfigValueValueAccess() {
 		return (pConfigValueValue != null) ? pConfigValueValue : (pConfigValueValue = new ConfigValueValueElements());
 	}
@@ -1562,8 +1623,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SimpleAudio returns Audio:
-	//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation ("(" format=STRING
-	//	")")? tts=STRING)?);
+	//	{Audio} "say" (("src" src=STRING)? ("wording" tts=STRING | "as" interpretation=Interpretation ("(" format=STRING ")")?
+	//	tts=STRING)?);
 	public SimpleAudioElements getSimpleAudioAccess() {
 		return (pSimpleAudio != null) ? pSimpleAudio : (pSimpleAudio = new SimpleAudioElements());
 	}
@@ -1602,11 +1663,25 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionalAudioAccess().getRule();
 	}
 
-	//terminal FLOAT:
+	//Float:
 	//	INT "." INT;
-	public TerminalRule getFLOATRule() {
-		return (tFLOAT != null) ? tFLOAT : (tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "FLOAT"));
-	} 
+	public FloatElements getFloatAccess() {
+		return (pFloat != null) ? pFloat : (pFloat = new FloatElements());
+	}
+	
+	public ParserRule getFloatRule() {
+		return getFloatAccess().getRule();
+	}
+
+	//QualifiedName:
+	//	ID ("." ID)*;
+	public QualifiedNameElements getQualifiedNameAccess() {
+		return (pQualifiedName != null) ? pQualifiedName : (pQualifiedName = new QualifiedNameElements());
+	}
+	
+	public ParserRule getQualifiedNameRule() {
+		return getQualifiedNameAccess().getRule();
+	}
 
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;

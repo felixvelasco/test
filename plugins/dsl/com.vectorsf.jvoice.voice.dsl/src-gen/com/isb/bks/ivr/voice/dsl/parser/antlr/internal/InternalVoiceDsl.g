@@ -905,9 +905,9 @@ ruleTransferDsl returns [EObject current=null]
 					{ 
 	 				  getUnorderedGroupHelper().select(grammarAccess.getTransferDslAccess().getUnorderedGroup_4(), 3);
 	 				}
-					({true}?=>(	otherlv_11='timeout' 
+					({true}?=>(	otherlv_11='transferTimeout' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getTransferDslAccess().getTimeoutKeyword_4_3_0());
+    	newLeafNode(otherlv_11, grammarAccess.getTransferDslAccess().getTransferTimeoutKeyword_4_3_0());
     }
 (
 (
@@ -1504,9 +1504,27 @@ ruleConfigValue returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
-		lv_name_0_0=RULE_ID
+		{ 
+	        newCompositeNode(grammarAccess.getConfigValueAccess().getNameQualifiedNameParserRuleCall_0_0()); 
+	    }
+		lv_name_0_0=ruleQualifiedName		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getConfigValueRule());
+	        }
+       		set(
+       			$current, 
+       			"name",
+        		lv_name_0_0, 
+        		"QualifiedName");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)((
+(
+		lv_value_1_0=RULE_STRING
 		{
-			newLeafNode(lv_name_0_0, grammarAccess.getConfigValueAccess().getNameIDTerminalRuleCall_0_0()); 
+			newLeafNode(lv_value_1_0, grammarAccess.getConfigValueAccess().getValueSTRINGTerminalRuleCall_1_0_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1514,31 +1532,32 @@ ruleConfigValue returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"name",
-        		lv_name_0_0, 
-        		"ID");
+       			"value",
+        		lv_value_1_0, 
+        		"STRING");
 	    }
 
 )
-)(
+)
+    |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConfigValueAccess().getValueConfigValueValueParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getConfigValueAccess().getValueConfigValueValueParserRuleCall_1_1_0()); 
 	    }
-		lv_value_1_0=ruleConfigValueValue		{
+		lv_value_2_0=ruleConfigValueValue		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConfigValueRule());
 	        }
        		set(
        			$current, 
        			"value",
-        		lv_value_1_0, 
+        		lv_value_2_0, 
         		"ConfigValueValue");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
+)))
 ;
 
 
@@ -1580,12 +1599,16 @@ ruleConfigValueValue returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRu
         newLeafNode(kw, grammarAccess.getConfigValueValueAccess().getSKeyword_0_1_1()); 
     }
 )?)
-    |(    this_FLOAT_3=RULE_FLOAT    {
-		$current.merge(this_FLOAT_3);
+    |(
+    { 
+        newCompositeNode(grammarAccess.getConfigValueValueAccess().getFloatParserRuleCall_1_0()); 
+    }
+    this_Float_3=ruleFloat    {
+		$current.merge(this_Float_3);
     }
 
     { 
-    newLeafNode(this_FLOAT_3, grammarAccess.getConfigValueValueAccess().getFLOATTerminalRuleCall_1_0()); 
+        afterParserOrEnumRuleCall();
     }
 (
 	kw='ms' 
@@ -1613,14 +1636,6 @@ ruleConfigValueValue returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRu
     {
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getConfigValueValueAccess().getFalseKeyword_3()); 
-    }
-
-    |    this_STRING_8=RULE_STRING    {
-		$current.merge(this_STRING_8);
-    }
-
-    { 
-    newLeafNode(this_STRING_8, grammarAccess.getConfigValueValueAccess().getSTRINGTerminalRuleCall_4()); 
     }
 )
     ;
@@ -2216,6 +2231,88 @@ ruleConditionalAudio returns [EObject current=null]
 
 
 
+// Entry rule entryRuleFloat
+entryRuleFloat returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getFloatRule()); } 
+	 iv_ruleFloat=ruleFloat 
+	 { $current=$iv_ruleFloat.current.getText(); }  
+	 EOF 
+;
+
+// Rule Float
+ruleFloat returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(    this_INT_0=RULE_INT    {
+		$current.merge(this_INT_0);
+    }
+
+    { 
+    newLeafNode(this_INT_0, grammarAccess.getFloatAccess().getINTTerminalRuleCall_0()); 
+    }
+
+	kw='.' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getFloatAccess().getFullStopKeyword_1()); 
+    }
+    this_INT_2=RULE_INT    {
+		$current.merge(this_INT_2);
+    }
+
+    { 
+    newLeafNode(this_INT_2, grammarAccess.getFloatAccess().getINTTerminalRuleCall_2()); 
+    }
+)
+    ;
+
+
+
+
+
+// Entry rule entryRuleQualifiedName
+entryRuleQualifiedName returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getQualifiedNameRule()); } 
+	 iv_ruleQualifiedName=ruleQualifiedName 
+	 { $current=$iv_ruleQualifiedName.current.getText(); }  
+	 EOF 
+;
+
+// Rule QualifiedName
+ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(    this_ID_0=RULE_ID    {
+		$current.merge(this_ID_0);
+    }
+
+    { 
+    newLeafNode(this_ID_0, grammarAccess.getQualifiedNameAccess().getIDTerminalRuleCall_0()); 
+    }
+(
+	kw='.' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getQualifiedNameAccess().getFullStopKeyword_1_0()); 
+    }
+    this_ID_2=RULE_ID    {
+		$current.merge(this_ID_2);
+    }
+
+    { 
+    newLeafNode(this_ID_2, grammarAccess.getQualifiedNameAccess().getIDTerminalRuleCall_1_1()); 
+    }
+)*)
+    ;
+
+
+
+
+
 // Rule Interpretation
 ruleInterpretation returns [Enumerator current=null] 
     @init { enterRule(); }
@@ -2289,8 +2386,6 @@ ruleTypeTransfer returns [Enumerator current=null]
 ));
 
 
-
-RULE_FLOAT : RULE_INT '.' RULE_INT;
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 

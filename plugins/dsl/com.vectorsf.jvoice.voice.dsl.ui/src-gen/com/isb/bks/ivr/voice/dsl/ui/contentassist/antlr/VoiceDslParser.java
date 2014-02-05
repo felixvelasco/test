@@ -38,6 +38,7 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getVoiceDslAccess().getAlternatives(), "rule__VoiceDsl__Alternatives");
+					put(grammarAccess.getConfigValueAccess().getAlternatives_1(), "rule__ConfigValue__Alternatives_1");
 					put(grammarAccess.getConfigValueValueAccess().getAlternatives(), "rule__ConfigValueValue__Alternatives");
 					put(grammarAccess.getConfigValueValueAccess().getAlternatives_0_1(), "rule__ConfigValueValue__Alternatives_0_1");
 					put(grammarAccess.getConfigValueValueAccess().getAlternatives_1_1(), "rule__ConfigValueValue__Alternatives_1_1");
@@ -84,6 +85,9 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSimpleAudioAccess().getGroup_2_1_1(), "rule__SimpleAudio__Group_2_1_1__0");
 					put(grammarAccess.getSimpleAudioAccess().getGroup_2_1_1_2(), "rule__SimpleAudio__Group_2_1_1_2__0");
 					put(grammarAccess.getConditionalAudioAccess().getGroup_0(), "rule__ConditionalAudio__Group_0__0");
+					put(grammarAccess.getFloatAccess().getGroup(), "rule__Float__Group__0");
+					put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
+					put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
 					put(grammarAccess.getPromptDslAccess().getNameAssignment_1(), "rule__PromptDsl__NameAssignment_1");
 					put(grammarAccess.getPromptDslAccess().getConfigurationAssignment_2_0(), "rule__PromptDsl__ConfigurationAssignment_2_0");
 					put(grammarAccess.getPromptDslAccess().getConditionsAssignment_2_1(), "rule__PromptDsl__ConditionsAssignment_2_1");
@@ -124,7 +128,8 @@ public class VoiceDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRecordConfigurationAccess().getConfigValueAssignment_1(), "rule__RecordConfiguration__ConfigValueAssignment_1");
 					put(grammarAccess.getTransferConfigurationAccess().getConfigValueAssignment_1(), "rule__TransferConfiguration__ConfigValueAssignment_1");
 					put(grammarAccess.getConfigValueAccess().getNameAssignment_0(), "rule__ConfigValue__NameAssignment_0");
-					put(grammarAccess.getConfigValueAccess().getValueAssignment_1(), "rule__ConfigValue__ValueAssignment_1");
+					put(grammarAccess.getConfigValueAccess().getValueAssignment_1_0(), "rule__ConfigValue__ValueAssignment_1_0");
+					put(grammarAccess.getConfigValueAccess().getValueAssignment_1_1(), "rule__ConfigValue__ValueAssignment_1_1");
 					put(grammarAccess.getGrammarAccess().getModeAssignment_0(), "rule__Grammar__ModeAssignment_0");
 					put(grammarAccess.getGrammarAccess().getExprAssignment_1(), "rule__Grammar__ExprAssignment_1");
 					put(grammarAccess.getGrammarAccess().getSrcAssignment_2(), "rule__Grammar__SrcAssignment_2");
