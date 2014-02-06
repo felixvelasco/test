@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.core.project;
+package com.vectorsf.jvoice.core.validation;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecore.EValidator;
@@ -10,7 +10,7 @@ import com.vectorsf.jvoice.model.operations.OperationsPackage;
 public class Activator extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "com.vectorsf.jvoice.core.project"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "com.vectorsf.jvoice.core.validation"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
