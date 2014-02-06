@@ -140,20 +140,17 @@ public class FlowValidator {
 		if (flow.getParameters().size() > 0) {
 			for (int i = 0; i < flow.getParameters().size(); i++) {
 				String name = flow.getParameters().get(i);
-				if (name.length() > 30) {
-					operationsValidator.error(flow, "Name of parameter " + name + " is too long.");
-				}
 
 				char initial = name.charAt(0);
-				if (!Character.isJavaLetter(initial)) {
-					operationsValidator.error(flow, "Name of parameter " + name + " starts with a incorrect letter.");
+				if (!Character.isJavaIdentifierStart(initial)) {
+					operationsValidator.error(flow, "Name of parameter " + name + " starts with an invalid character.");
 				}
 
 				for (int l = 1; l < name.length(); l++) {
 					char letter = name.charAt(l);
-					if (!Character.isJavaLetterOrDigit(letter)) {
-						operationsValidator
-								.error(flow, "Name of  parameter " + name + " contains incorrect character.");
+					if (!Character.isJavaIdentifierPart(letter)) {
+						operationsValidator.error(flow, "Name of  parameter " + name
+								+ " contains the invalid character '" + letter + "'.");
 						break;
 					}
 
