@@ -167,7 +167,11 @@ public class TransitionPattern extends AbstractConnectionPattern {
 
 	@Override
 	public boolean canCreate(ICreateConnectionContext context) {
-		// System.out.println("==>"+context.getTargetPictogramElement());
+		// Sólo deja una transición por evento
+		if (!context.getSourceAnchor().getOutgoingConnections().isEmpty()) {
+			return false;
+		}
+
 		Object boTarget = featureProvider.getBusinessObjectForPictogramElement(context.getTargetPictogramElement());
 		Object boSource = featureProvider.getBusinessObjectForPictogramElement(context.getSourcePictogramElement());
 
