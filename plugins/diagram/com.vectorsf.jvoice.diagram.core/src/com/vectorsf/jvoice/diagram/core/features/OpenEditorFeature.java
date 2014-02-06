@@ -85,7 +85,9 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 
 				IJavaProject javaProject = JavaCore.create(project);
 				IType type = javaProject.findType(componente.getFqdn());
-				fileString = type.getResource().getFullPath().toString();
+				if (type != null) {
+					fileString = type.getResource().getFullPath().toString();
+				}
 			}
 
 			if (fileString != null) {

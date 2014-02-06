@@ -99,14 +99,14 @@ public final class JVoiceApplicationConfigurator {
 		Dependency jvFlow = new Dependency();
 		jvFlow.setGroupId("com.vectorsf");
 		jvFlow.setArtifactId("jvoiceframework-flow");
-		jvFlow.setVersion("1.1.0-SNAPSHOT");
+		jvFlow.setVersion(AbstractJVoiceNature.JVOICE_FRAMEWORK_VERSION);
 		dependencies.add(jvFlow);
 		model.setDependencies(dependencies);
 
 		Plugin dsl_builder = new Plugin();
 		dsl_builder.setGroupId("com.vectorsf.jvoice");
 		dsl_builder.setArtifactId("application-builder");
-		dsl_builder.setVersion("1.1.0-SNAPSHOT");
+		dsl_builder.setVersion(AbstractJVoiceNature.JVOICE_COMPILER_VERSION);
 		PluginExecution voiceDSL = new PluginExecution();
 		voiceDSL.setPhase("generate-resources");
 		voiceDSL.addGoal("copyXML");
@@ -141,9 +141,9 @@ public final class JVoiceApplicationConfigurator {
 		model.setBuild(build);
 
 		Repository repository = new Repository();
-		repository.setId("jvoice");
-		repository.setName("JVoice repository");
-		repository.setUrl("https://repository-felixvelasco.forge.cloudbees.com/release");
+		repository.setId(AbstractJVoiceNature.JVOICE_REPOSITORY_ID);
+		repository.setName(AbstractJVoiceNature.JVOICE_REPOSITORY_NAME);
+		repository.setUrl(AbstractJVoiceNature.JVOICE_REPOSITORY_URL);
 
 		model.addPluginRepository(repository);
 		model.addRepository(repository);

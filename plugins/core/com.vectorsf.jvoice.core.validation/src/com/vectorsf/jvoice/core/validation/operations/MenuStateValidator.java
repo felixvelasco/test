@@ -22,8 +22,8 @@ public class MenuStateValidator {
 
 		for (Output o : state.getLocution().getOutputs().getOutput()) {
 			if (!transitions.contains(o.getName())) {
-				operationsValidator.error(state, "Menu state " + state.getName() + " with output \"" + o.getName()
-						+ "\" has no transition for this output.");
+				operationsValidator.error(state, "Missing transition for option '" + o.getName() + "' in state '"
+						+ state.getName() + "'.");
 			}
 		}
 

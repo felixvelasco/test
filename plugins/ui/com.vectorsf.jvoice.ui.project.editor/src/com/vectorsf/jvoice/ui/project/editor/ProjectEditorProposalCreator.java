@@ -24,8 +24,13 @@ public class ProjectEditorProposalCreator extends ProposalCreator {
 	}
 
 	public List<Object> proposals_EventHandler_handler(EventHandler handler) {
-		List<Object> allInstances = new ArrayList<>();
 		JVProject project = (JVProject) handler.eContainer();
+
+		return getAllFlows(project);
+	}
+
+	private List<Object> getAllFlows(JVProject project) {
+		List<Object> allInstances = new ArrayList<>();
 		if (project instanceof JVModule) {
 			for (JVPackage pck : ((JVModule) project).getPackages()) {
 				for (JVBean bean : pck.getBeans()) {
@@ -35,7 +40,12 @@ public class ProjectEditorProposalCreator extends ProposalCreator {
 				}
 			}
 		} else if (project instanceof JVApplication) {
-			// TODO
+			List<JVProject> visibleProjects = project.getReferencedProjects();
+			for (JVProject subProject : visibleProjects) {
+				if (subProject instanceof JVModule) {
+					allInstances.addAll(getAllFlows(subProject));
+				}
+			}
 		}
 
 		return allInstances;

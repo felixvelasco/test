@@ -1,5 +1,11 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
+import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.FONT_NAME;
+import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.FONT_SIZE;
+import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.MARGIN;
+import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.TEXT_COLOR_OFF;
+import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.TEXT_COLOR_ON;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,12 +43,6 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
-
-import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.FONT_NAME;
-import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.FONT_SIZE;
-import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.MARGIN;
-import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.TEXT_COLOR_OFF;
-import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.TEXT_COLOR_ON;
 
 public class MenuStatePattern extends LocutionStatePattern {
 
@@ -274,6 +274,10 @@ public class MenuStatePattern extends LocutionStatePattern {
 		if (id.equals(ID_NAME_TEXT)) {
 			// Obtenemos los nombres de las options
 			MenuState state = (MenuState) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
+			if (state == null || state.getLocution() == null || state.getLocution().getOutputs() == null) {
+				return super.updateNeeded(context, id);
+			}
+
 			Set<String> optionNames = new HashSet<String>();
 			for (Output c : state.getLocution().getOutputs().getOutput()) {
 				optionNames.add(c.getName());

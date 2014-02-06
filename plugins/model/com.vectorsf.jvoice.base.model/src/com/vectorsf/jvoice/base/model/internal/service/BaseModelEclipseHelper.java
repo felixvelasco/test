@@ -32,14 +32,12 @@ public class BaseModelEclipseHelper {
 	private static final String CLASS_ATTRIBUTE = "class";
 	private static final String PRIORITY_ATTRIBUTE = "priority";
 	private static final String MAVEN2_CLASSPATH_CONTAINER = "org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER";
-	private static Set<IConfigurationElement> elements;
-
-	private static Map<IConfigurationElement, JVModelCreateProject> modelCreateProjectsCache;
+	private static Map<IConfigurationElement, JVModelCreateProject> modelCreateProjectsCache = Collections
+			.synchronizedMap(new HashMap<IConfigurationElement, JVModelCreateProject>());
 
 	public static List<JVProject> getVisibleProjects(JVProject jvproject) {
-		elements = new TreeSet<>(new Sorter());
-		modelCreateProjectsCache = new HashMap<>();
-		readConfiguration();
+		Set<IConfigurationElement> elements = new TreeSet<>(new Sorter());
+		Collections.addAll(elements, readConfiguration());
 		List<JVProject> ret = new ArrayList<>();
 		ret.add(jvproject);
 		JVModel model = BaseModel.getInstance().getModel();
@@ -70,7 +68,7 @@ public class BaseModelEclipseHelper {
 								if (modelCreateProject != null) {
 									JVProject referencedProject = modelCreateProject.createProject(classPathEntry
 											.getPath());
-									if (((JVModule)referencedProject).getPackages().size() >0) {
+									if (((JVModule) referencedProject).getPackages().size() > 0) {
 										ret.add(referencedProject);
 									}
 								}
@@ -91,12 +89,12 @@ public class BaseModelEclipseHelper {
 	private BaseModelEclipseHelper() {
 	}
 
-	private static void readConfiguration() {
+	private static IConfigurationElement[] readConfiguration() {
 
 		final IConfigurationElement[] configurationElements = RegistryFactory.getRegistry()
 				.getConfigurationElementsFor(BUNDLE_ID, LISTENER_EXTENSION_POINT_NAME);
 
-		Collections.addAll(elements, configurationElements);
+		return configurationElements;
 	}
 
 	private static JVModelCreateProject getModelCreateProject(IConfigurationElement element) {
