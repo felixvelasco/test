@@ -1,6 +1,0 @@
-output outRobos
-
-audios{
-	main:
-		say wording "Para reportar robos o estravios presione asterisco"
-}
