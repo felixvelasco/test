@@ -24,6 +24,8 @@ public abstract class AbstractJVoiceNature implements IProjectNature {
 	public static final String JVOICE_FRAMEWORK_VERSION = "1.0.2-SNAPSHOT";
 	public static final String JVOICE_COMPILER_VERSION = "1.0.1-SNAPSHOT";
 	public static final String JVOICE_REPOSITORY_URL = "http://repository-felixvelasco.forge.cloudbees.com/snapshot";
+	public static final String JVOICE_REPOSITORY_NAME = "Jvoice snapshot repository";
+	public static final String JVOICE_REPOSITORY_ID = "jvoiceSnapshot";
 
 	private IProject project;
 

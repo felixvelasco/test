@@ -141,8 +141,8 @@ public final class JVoiceApplicationConfigurator {
 		model.setBuild(build);
 
 		Repository repository = new Repository();
-		repository.setId("jvoice");
-		repository.setName("JVoice repository");
+		repository.setId(AbstractJVoiceNature.JVOICE_REPOSITORY_ID);
+		repository.setName(AbstractJVoiceNature.JVOICE_REPOSITORY_NAME);
 		repository.setUrl(AbstractJVoiceNature.JVOICE_REPOSITORY_URL);
 
 		model.addPluginRepository(repository);
