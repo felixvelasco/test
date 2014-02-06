@@ -33,7 +33,19 @@ public class StateValidator {
 		if (!(state instanceof FinalState)) {
 
 			if (state.getOutgoingTransitions().isEmpty()) {
-				operationsValidator.error(state, "State " + state.getName() + " does not have outgoing transitions");
+				operationsValidator.error(state, "State '" + state.getName() + "' does not have outgoing transitions");
+			}
+		}
+		return true;
+	}
+
+	public boolean validate_State_nameUnique(State state) {
+
+		Flow flow = (Flow) state.eContainer();
+
+		for (State other : flow.getStates()) {
+			if (other != state && state.getName().equals(other.getName())) {
+				operationsValidator.error(state, "Duplicated state name '" + state.getName() + "'");
 			}
 		}
 		return true;
@@ -70,13 +82,10 @@ public class StateValidator {
 	}
 
 	public boolean validate_State_formatNameState(State state) {
-		if (state.getName().length() > 30) {
-			operationsValidator.error(state, "Name of " + state.getName() + " is too long.");
-		}
 
 		char initial = state.getName().charAt(0);
 		if (!(state.getName().startsWith("_") || Character.isJavaIdentifierStart(initial))) {
-			operationsValidator.error(state, "Name of " + state.getName() + " starts with a incorrect letter.");
+			operationsValidator.error(state, "State '" + state.getName() + "' starts with an invalid character.");
 		}
 
 		Flow flow = (Flow) state.eContainer();
@@ -90,7 +99,8 @@ public class StateValidator {
 			for (ComponentBean bean : beans) {
 				classbean = bean.getName();
 				if (classbean.equals(state.getName())) {
-					operationsValidator.error(state, "Name of state " + state.getName() + " exists as bean");
+					operationsValidator.error(state, "State '" + state.getName()
+							+ "' has the same name than an scoped bean.");
 				}
 			}
 
@@ -99,7 +109,8 @@ public class StateValidator {
 		for (int i = 1; i < state.getName().length(); i++) {
 			char letter = state.getName().charAt(i);
 			if (!Character.isJavaIdentifierPart(letter)) {
-				operationsValidator.error(state, "Name of " + state.getName() + " contains incorrect character.");
+				operationsValidator.error(state, "State '" + state.getName() + "' contains the invalid character '"
+						+ letter + "'.");
 				break;
 			}
 
