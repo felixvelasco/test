@@ -135,6 +135,10 @@ public class CallStateSection extends ParametrizableStateSection {
 		String metodoBuscado = null;
 		try {
 			type = jProject.findType(state.getBean().getFqdn());
+			if (type == null) {
+				return;
+			}
+
 			IMethod[] methods = type.getMethods();
 			for (IMethod method : methods) {
 				if (method.getElementName().equals(state.getMethodName())) {
@@ -180,6 +184,9 @@ public class CallStateSection extends ParametrizableStateSection {
 				IJavaProject jProject = JavaCore.create(project);
 
 				IType type = jProject.findType(callState.getBean().getFqdn());
+				if (type == null) {
+					return parameterNames;
+				}
 
 				IMethod[] methods = type.getMethods();
 				for (IMethod method : methods) {
