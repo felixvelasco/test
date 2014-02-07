@@ -44,9 +44,10 @@ public class IVRUpdater extends AbstractHandler {
 	private static final String XPATH_COMPILER_VERSION = "//plugin[groupId/text() = 'com.vectorsf.jvoice' and artifactId/text() = 'dsl-builder']/version/text()";
 	private static final String XPATH_APPLICATION_COMPILER_VERSION = "//plugin[groupId/text() = 'com.vectorsf.jvoice' and artifactId/text() = 'application-builder']/version/text()";
 
-	public DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 	private String frameworkVersion = AbstractJVoiceNature.JVOICE_FRAMEWORK_VERSION;
 	private String compilerVersion = AbstractJVoiceNature.JVOICE_COMPILER_VERSION;
+
+	public DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -55,8 +56,8 @@ public class IVRUpdater extends AbstractHandler {
 		String[] projects = getProjectsToUpdate();
 		if (projects.length == 0) {
 			MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-					"Actualizador", "Todos los proyectos están actualizados\n\nVersión del framework="
-							+ frameworkVersion + "\nVersión del compilador=" + compilerVersion);
+					"Actualizador", "Todos los proyectos están actualizados\n\nVersión del framework: "
+							+ frameworkVersion + "\nVersión del compilador: " + compilerVersion);
 			return null;
 		}
 
@@ -88,6 +89,11 @@ public class IVRUpdater extends AbstractHandler {
 				}
 
 				File file = new File(prj.getFile("pom.xml").getLocation().toOSString());
+				if (!file.exists()) {
+					log("No existe el fichero pom.xml en el proyecto " + prjName);
+					return;
+				}
+
 				Document doc = domFactory.newDocumentBuilder().parse(file);
 
 				// Actualizamos el nodo de la versión del framework de los módulos
@@ -120,7 +126,7 @@ public class IVRUpdater extends AbstractHandler {
 	}
 
 	/**
-	 * Buscamos los proyectos que hay que actualizar para mostrarlos en el diÃ¡logo.
+	 * Buscamos los proyectos que hay que actualizar para mostrarlos en el diálogo.
 	 */
 	private String[] getProjectsToUpdate() {
 		List<String> projects = new ArrayList<String>();
@@ -162,7 +168,7 @@ public class IVRUpdater extends AbstractHandler {
 	}
 
 	/**
-	 * Devuelve el nodo que indica la expresión pasada
+	 * Devuelve el nodo número "itemNumber" que indica la expresión XPath pasada.
 	 */
 	private Node getNode(Document doc, String prjName, String xpathExpression, int itemNumber) throws Exception {
 		XPathExpression expr = XPathFactory.newInstance().newXPath().compile(xpathExpression);
@@ -172,7 +178,7 @@ public class IVRUpdater extends AbstractHandler {
 		if (nodes.getLength() > itemNumber) {
 			return nodes.item(itemNumber);
 		} else {
-			log("No se encuentran en '" + prjName + "' nodos del tipo '" + xpathExpression);
+			System.err.println("No se encuentran en '" + prjName + "' nodos del tipo '" + xpathExpression);
 		}
 
 		return null;
