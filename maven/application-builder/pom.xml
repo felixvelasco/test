@@ -81,17 +81,17 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.base.model</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.operation.model</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.prompt.model</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2</version>
 		</dependency>
 	</dependencies>
 	<build>
