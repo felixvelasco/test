@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.vectorsf.jvoice</groupId>
 		<artifactId>maven</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.2</version>
 	</parent>
 	<artifactId>dsl-builder</artifactId>
 	<packaging>maven-plugin</packaging>

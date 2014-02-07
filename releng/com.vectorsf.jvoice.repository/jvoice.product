@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="jVoice" uid="jVoiceProduct" id="com.vectorsf.jvoice.product.jVoice" application="org.eclipse.ui.ide.workbench" version="1.0.1.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="jVoice" uid="jVoiceProduct" id="com.vectorsf.jvoice.product.jVoice" application="org.eclipse.ui.ide.workbench" version="1.0.2" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/com.vectorsf.jvoice.repository/resources/win/about.png"/>
@@ -44,7 +44,7 @@ jre/bin/javaw</programArgsWin>
 
    <features>
       <feature id="com.vectorsf.jvoice.feature"/>
-      <feature id="com.vectorsf.jvoice.platform.feature" version="1.0.1.qualifier"/>
+      <feature id="com.vectorsf.jvoice.platform.feature" version="1.0.2"/>
    </features>
 
    <configurations>
