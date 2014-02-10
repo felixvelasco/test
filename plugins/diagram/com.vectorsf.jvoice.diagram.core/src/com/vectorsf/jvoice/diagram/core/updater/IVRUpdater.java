@@ -189,9 +189,8 @@ public class IVRUpdater extends AbstractHandler {
 			String oldVersion = node.getNodeValue();
 
 			if (!oldVersion.equals(newVersion)) {
-				String changeType = newVersion.equals(frameworkVersion) ? "framework" : "compilador";
-				changedProjects.append(prjName + ": Versión del " + changeType + " actualizado de " + oldVersion
-						+ "  a  " + newVersion + "\n");
+				changedProjects
+						.append(prjName + ": Versión actualizada de " + oldVersion + "  a  " + newVersion + "\n");
 				node.setNodeValue(newVersion);
 			}
 		} else {
