@@ -1,18 +1,45 @@
 package com.vectorsf.jvoice.diagram.core.features;
 
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.log.Logger;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
-import org.eclipse.graphiti.features.*;
-import org.eclipse.graphiti.features.context.*;
-import org.eclipse.graphiti.mm.pictograms.*;
-import org.eclipse.graphiti.pattern.*;
+import org.eclipse.graphiti.features.ICopyFeature;
+import org.eclipse.graphiti.features.IDeleteFeature;
+import org.eclipse.graphiti.features.IDirectEditingFeature;
+import org.eclipse.graphiti.features.IFeature;
+import org.eclipse.graphiti.features.IMoveAnchorFeature;
+import org.eclipse.graphiti.features.IPasteFeature;
+import org.eclipse.graphiti.features.IReconnectionFeature;
+import org.eclipse.graphiti.features.IUpdateFeature;
+import org.eclipse.graphiti.features.context.ICopyContext;
+import org.eclipse.graphiti.features.context.IDeleteContext;
+import org.eclipse.graphiti.features.context.IDirectEditingContext;
+import org.eclipse.graphiti.features.context.IMoveAnchorContext;
+import org.eclipse.graphiti.features.context.IPasteContext;
+import org.eclipse.graphiti.features.context.IPictogramElementContext;
+import org.eclipse.graphiti.features.context.IReconnectionContext;
+import org.eclipse.graphiti.features.context.IUpdateContext;
+import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
+import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.pattern.DefaultFeatureProviderWithPatterns;
+import org.eclipse.graphiti.pattern.IPattern;
 import org.osgi.service.log.LogService;
 
 import com.vectorsf.jvoice.diagram.core.Activator;
-import com.vectorsf.jvoice.diagram.core.features.editing.*;
+import com.vectorsf.jvoice.diagram.core.features.editing.StatesCopyFeature;
+import com.vectorsf.jvoice.diagram.core.features.editing.StatesPasteFeature;
+import com.vectorsf.jvoice.diagram.core.features.editing.TextEventDirectEditFeature;
+import com.vectorsf.jvoice.diagram.core.features.editing.TransitionsDeleteFeature;
+import com.vectorsf.jvoice.diagram.core.features.editing.TransitionsUpdateFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.note.RelationPattern;
-import com.vectorsf.jvoice.diagram.core.pattern.transition.*;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.CreateTransitionFromPad;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.ReconnectTransitionFeature;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionCallFlowPattern;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionPattern;
+import com.vectorsf.jvoice.diagram.core.pattern.transition.TransitionSwitchPattern;
 import com.vectorsf.jvoice.model.operations.State;
 
 public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
@@ -95,7 +122,8 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 		PictogramElement pe = context.getPictogramElement();
 		if (pe instanceof FixPointAnchor) {
 			State state = (State) getBusinessObjectForPictogramElement(((FixPointAnchor) pe).getParent());
-			return new IFeature[] { new CreateTransitionFromPad(this, new TransitionCallFlowPattern(state, this)) };
+			return new IFeature[] { new CreateTransitionFromPad(this, new TransitionCallFlowPattern(state, this)),
+					new SwapFixPointAnchorFeature(this) };
 		}
 
 		return super.getDragAndDropFeatures(context);
