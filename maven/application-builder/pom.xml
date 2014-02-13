@@ -4,23 +4,9 @@
 	<parent>
 		<groupId>com.vectorsf.jvoice</groupId>
 		<artifactId>maven</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>1.1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>application-builder</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
-	<!-- <repositories>
-		<repository>
-			<id>ivr</id>
-			<name>jVoice test repository</name>
-			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/groups/jvoiceGroup/</url>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>xtend</id>
-			<url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/xtend/</url>
-		</pluginRepository>
-	</pluginRepositories>-->
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -111,17 +97,17 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.base.model</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>1.1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.operation.model</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>1.1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.prompt.model</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>1.1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>

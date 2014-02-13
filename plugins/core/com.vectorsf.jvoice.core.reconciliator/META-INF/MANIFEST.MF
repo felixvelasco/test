@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.vectorsf.jvoice.core.reconciliator;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.core.resources;bundle-version="3.8.100",
@@ -12,8 +12,8 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.8.100",
  com.vectorsf.jvoice.core.project;bundle-version="0.1.0",
  com.vectorsf.jvoice.prompt.model,
  org.eclipse.emf.ecore.xmi
-Export-Package: com.vectorsf.jvoice.core.factory,
- com.vectorsf.jvoice.core.reconciliator
+Export-Package: com.vectorsf.jvoice.core.factory,com.vectorsf.jvoice.c
+ ore.reconciliator
 Import-Package: org.apache.maven.model,
  org.apache.maven.model.io.xpp3,
  org.codehaus.plexus.util.xml,
