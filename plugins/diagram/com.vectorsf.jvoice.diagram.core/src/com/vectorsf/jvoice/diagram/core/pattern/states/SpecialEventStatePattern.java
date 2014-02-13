@@ -32,8 +32,8 @@ public class SpecialEventStatePattern extends SimpleStatePattern {
 	public static final String FONT_NAME = "Arial";
 	public static final int FONT_SIZE = 8;
 	public static final int MARGIN = 10;
-	public static final IColorConstant TEXT_COLOR_ON = new ColorConstant("7b91a4");
-	public static final IColorConstant TEXT_COLOR_OFF = new ColorConstant("afc1d1");
+	public static final IColorConstant TEXT_COLOR_ON = new ColorConstant("000000");
+	public static final IColorConstant TEXT_COLOR_OFF = new ColorConstant("777777");
 
 	public int acum;
 
