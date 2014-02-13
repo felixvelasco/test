@@ -15,6 +15,7 @@ import org.eclipse.graphiti.features.context.ISingleClickContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Image;
+import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
 import org.eclipse.graphiti.mm.pictograms.Connection;
@@ -55,6 +56,7 @@ import com.vectorsf.jvoice.model.operations.SwitchState;
 
 public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
+	private static final int LINE_SELECTION_WIDTH = 15;
 	public static final String PAD_CONTEXT_MENU_ENTRY = "padContextMenuEntry"; //$NON-NLS-1$
 	public static final String PAD_CONTEXT_SUB_MENU_ENTRY = "padContextSubMenuEntry"; //$NON-NLS-1$
 	public static final String CONTEXT_MENU_ENTRY = "contextMenuEntry"; //$NON-NLS-1$
@@ -68,6 +70,21 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	@Override
 	public boolean isShowGuides() {
 		return true;
+	}
+
+	@Override
+	public boolean isShowSelectionTool() {
+		return false;
+	}
+
+	@Override
+	public boolean isShowMarqueeTool() {
+		return false;
+	}
+
+	@Override
+	public int getLineSelectionWidth(Polyline polyline) {
+		return LINE_SELECTION_WIDTH;
 	}
 
 	@Override
