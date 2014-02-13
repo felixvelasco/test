@@ -207,6 +207,7 @@ public class PackageNameWizardPage extends AbstractWizardPage {
 		// Set the initial value first before listener
 		// to avoid handling an event during the creation.
 		packageField.setText("newPackage");
+		packageField.selectAll();
 
 		packageField.addListener(SWT.Modify, nameModifyListener);
 		packageField.addListener(SWT.FocusIn, nameModifyListener);

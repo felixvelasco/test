@@ -175,6 +175,7 @@ public class ProjectNameWizardPage extends AbstractWizardPage {
 		// to avoid handling an event during the creation.
 		if (getInitialTextFieldValue() != null) {
 			textField.setText(getInitialTextFieldValue());
+			textField.selectAll();
 		}
 
 		textField.addListener(SWT.Modify, nameModifyListener);

@@ -455,6 +455,7 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		// to avoid handling an event during the creation.
 		if (getInitialTextFieldValue() != null) {
 			textFieldDSL.setText(getInitialTextFieldValue());
+			textFieldDSL.selectAll();
 		}
 		textFieldDSL.addListener(SWT.Modify, nameModifyListener);
 

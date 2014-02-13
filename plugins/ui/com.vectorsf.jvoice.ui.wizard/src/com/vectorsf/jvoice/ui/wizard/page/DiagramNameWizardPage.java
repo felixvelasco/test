@@ -391,6 +391,7 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 		// to avoid handling an event during the creation.
 		if (getInitialTextFieldValue() != null) {
 			textFieldDiagram.setText(getInitialTextFieldValue());
+			textFieldDiagram.selectAll();
 		}
 		textFieldDiagram.addListener(SWT.Modify, nameModifyListener);
 
