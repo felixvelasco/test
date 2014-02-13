@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -43,6 +44,7 @@ public class IVRUpdater extends AbstractHandler {
 	private static final String XPATH_FRAMEWORK_VERSION = "//dependency[groupId/text() = 'com.vectorsf' and artifactId/text() = 'jvoiceframework-flow']/version/text()";
 	private static final String XPATH_COMPILER_VERSION = "//plugin[groupId/text() = 'com.vectorsf.jvoice' and artifactId/text() = 'dsl-builder']/version/text()";
 	private static final String XPATH_APPLICATION_COMPILER_VERSION = "//plugin[groupId/text() = 'com.vectorsf.jvoice' and artifactId/text() = 'application-builder']/version/text()";
+	private static final String XPATH_LOGGER_VERSION = "//dependency[groupId/text() = 'com.vectorsf' and artifactId/text() = 'jvoiceframework-isban-logger']/version/text()";
 
 	public DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 	private String frameworkVersion = AbstractJVoiceNature.JVOICE_FRAMEWORK_VERSION;
@@ -55,8 +57,8 @@ public class IVRUpdater extends AbstractHandler {
 		String[] projects = getProjectsToUpdate();
 		if (projects.length == 0) {
 			MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-					"Actualizador", "Todos los proyectos están actualizados\n\nVersión del framework="
-							+ frameworkVersion + "\nVersión del compilador=" + compilerVersion);
+					"Actualizador", "Todos los proyectos están actualizados\n\nVersión del framework: "
+							+ frameworkVersion + "\nVersión del compilador: " + compilerVersion);
 			return null;
 		}
 
@@ -75,7 +77,7 @@ public class IVRUpdater extends AbstractHandler {
 	 * Actualizamos el nodo dependency/version del pom de los proyectos pasados.
 	 */
 	private void updatePomFile(Object[] selectedProjects) {
-		StringBuffer changedProjects = new StringBuffer();
+		StringBuffer changedProjectsText = new StringBuffer();
 
 		try {
 			for (Object project : selectedProjects) {
@@ -92,19 +94,23 @@ public class IVRUpdater extends AbstractHandler {
 
 				// Actualizamos el nodo de la versión del framework de los módulos
 				Node node = getNode(doc, prjName, XPATH_FRAMEWORK_VERSION, 0);
-				updateNode(node, prjName, frameworkVersion, changedProjects);
+				updateNode(node, prjName, frameworkVersion, changedProjectsText);
 
 				// Actualizamos el primer nodo de la versión del compilador de los módulos
 				node = getNode(doc, prjName, XPATH_COMPILER_VERSION, 0);
-				updateNode(node, prjName, compilerVersion, changedProjects);
+				updateNode(node, prjName, compilerVersion, changedProjectsText);
 
 				// Actualizamos el segundo nodo de la versión del compilador de los módulos
 				node = getNode(doc, prjName, XPATH_COMPILER_VERSION, 1);
-				updateNode(node, prjName, compilerVersion, changedProjects);
+				updateNode(node, prjName, compilerVersion, changedProjectsText);
+
+				// Actualizamos el nodo de la versión del logger de los módulos
+				node = getNode(doc, prjName, XPATH_LOGGER_VERSION, 0);
+				updateNode(node, prjName, frameworkVersion, changedProjectsText);
 
 				// Actualizamos el nodo de la versión del compilador de las aplicaciones
 				node = getNode(doc, prjName, XPATH_APPLICATION_COMPILER_VERSION, 0);
-				updateNode(node, prjName, compilerVersion, changedProjects);
+				updateNode(node, prjName, compilerVersion, changedProjectsText);
 
 				// Grabamos el fichero
 				Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -115,8 +121,10 @@ public class IVRUpdater extends AbstractHandler {
 			return;
 		}
 
-		MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-				"Proyectos actualizados", changedProjects.toString());
+		if (changedProjectsText.length() > 0) {
+			MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+					"Proyectos actualizados", changedProjectsText.toString());
+		}
 	}
 
 	/**
@@ -127,7 +135,8 @@ public class IVRUpdater extends AbstractHandler {
 
 		try {
 			for (IProject prj : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-				if (!prj.hasNature(JVoiceModuleNature.NATURE_ID) && !prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
+				if (!prj.isAccessible() || !prj.hasNature(JVoiceModuleNature.NATURE_ID)
+						&& !prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
 					continue;
 				}
 
@@ -151,6 +160,13 @@ public class IVRUpdater extends AbstractHandler {
 				// Buscamos la versión del compilador en las aplicaciones
 				versioNode = getNode(doc, prj.getName(), XPATH_APPLICATION_COMPILER_VERSION, 0);
 				if (versioNode != null && !compilerVersion.equals(versioNode.getNodeValue())) {
+					projects.add(prj.getName() + " (" + versioNode.getNodeValue() + ")");
+					continue;
+				}
+
+				// Buscamos la versión del logger en los módulos
+				versioNode = getNode(doc, prj.getName(), XPATH_LOGGER_VERSION, 0);
+				if (versioNode != null && !frameworkVersion.equals(versioNode.getNodeValue())) {
 					projects.add(prj.getName() + " (" + versioNode.getNodeValue() + ")");
 				}
 			}
@@ -179,17 +195,25 @@ public class IVRUpdater extends AbstractHandler {
 	}
 
 	private void updateNode(Node node, String prjName, String newVersion, StringBuffer changedProjects) {
-		if (node != null) {
+		if (node == null) {
+			System.err.println("No se ha encontrado el nodo versión del framework en '" + prjName + "'");
+			return;
+		}
+
+		try {
 			String oldVersion = node.getNodeValue();
+			Node artifactIdNode = ((Element) node.getParentNode().getParentNode()).getElementsByTagName("artifactId")
+					.item(0);
 
 			if (!oldVersion.equals(newVersion)) {
-				String changeType = newVersion.equals(frameworkVersion) ? "framework" : "compilador";
-				changedProjects.append(prjName + ": Versión del " + changeType + " actualizado de " + oldVersion
-						+ "  a  " + newVersion + "\n");
+				changedProjects.append(prjName + ": Versión actualizada de '"
+						+ artifactIdNode.getFirstChild().getNodeValue() + "' de '" + oldVersion + "'  a  '"
+						+ newVersion + "'\n");
 				node.setNodeValue(newVersion);
 			}
-		} else {
-			System.err.println("No se ha encontrado el nodo versión del framework en '" + prjName + "'");
+		} catch (Exception e) {
+			changedProjects.append(prjName + " actualizado a " + newVersion);
+			System.err.println("IVRUpdater.updateNode(): " + e);
 		}
 	}
 
