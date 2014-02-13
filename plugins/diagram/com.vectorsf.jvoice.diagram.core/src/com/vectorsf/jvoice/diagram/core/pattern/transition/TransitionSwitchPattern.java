@@ -33,8 +33,7 @@ public class TransitionSwitchPattern extends TransitionPattern {
 	protected IGaService gaService;
 	protected Case cas;
 
-	protected final IColorConstant CONNECTION_COLOR = new ColorConstant(
-			"bcbcbc");
+	protected final IColorConstant CONNECTION_COLOR = new ColorConstant("bcbcbc");
 	private IFeatureProvider featureProvider;
 
 	public TransitionSwitchPattern(Case ca, IFeatureProvider in_featureProvider) {
@@ -59,8 +58,7 @@ public class TransitionSwitchPattern extends TransitionPattern {
 
 	@Override
 	public boolean canAdd(IAddContext context) {
-		return context.getNewObject() instanceof Transition
-				&& context instanceof IAddConnectionContext;
+		return context.getNewObject() instanceof Transition && context instanceof IAddConnectionContext;
 
 	}
 
@@ -73,20 +71,16 @@ public class TransitionSwitchPattern extends TransitionPattern {
 			Anchor anchor = ((IAddConnectionContext) context).getSourceAnchor();
 			//
 			if (anchor == null) {
-				Anchor chopboxAnchor = peService.getChopboxAnchor(context
-						.getTargetContainer());
+				Anchor chopboxAnchor = peService.getChopboxAnchor(context.getTargetContainer());
 				if (chopboxAnchor != null) {
 					anchor = chopboxAnchor;
 				} else {
-					anchor = peService.createChopboxAnchor(context
-							.getTargetContainer());
+					anchor = peService.createChopboxAnchor(context.getTargetContainer());
 				}
 			}
-			Connection connection = peService
-					.createFreeFormConnection(getDiagram());
+			Connection connection = peService.createFreeFormConnection(getDiagram());
 			connection.setStart(anchor);
-			connection.setEnd(((IAddConnectionContext) context)
-					.getTargetAnchor());
+			connection.setEnd(((IAddConnectionContext) context).getTargetAnchor());
 
 			Polyline polylineFinal = gaService.createPolyline(connection);
 			polylineFinal.setLineWidth(2);
@@ -94,11 +88,10 @@ public class TransitionSwitchPattern extends TransitionPattern {
 			polylineFinal.setForeground(manageColor(CONNECTION_COLOR));
 
 			ConnectionDecorator cd;
-			cd = peService.createConnectionDecorator(connection, false, 1.0,
-					true);
+			cd = peService.createConnectionDecorator(connection, false, 1.0, true);
 			createArrow(cd);
 
-			createTextEvent(context, connection);
+			// createTextEvent(context, connection);
 
 			link(connection, transition);
 			return connection;
@@ -108,8 +101,7 @@ public class TransitionSwitchPattern extends TransitionPattern {
 
 	private void createTextEvent(IAddContext context, Connection connection) {
 		ConnectionDecorator cdEvent;
-		cdEvent = peService.createConnectionDecorator(connection, true, 0.5,
-				true);
+		cdEvent = peService.createConnectionDecorator(connection, true, 0.5, true);
 		Transition trans = (Transition) context.getNewObject();
 
 		Text text = gaService.createText(cdEvent, trans.getEventName());
@@ -122,9 +114,8 @@ public class TransitionSwitchPattern extends TransitionPattern {
 
 	@Override
 	protected Polyline createArrow(GraphicsAlgorithmContainer gaContainer) {
-		Polygon polyligone = gaService.createPolygon(gaContainer,
-				new int[] { -7, 4, 2, 0, -7, -4, -1, 0, -7, 4, -3, 0, -7, -4,
-						-5, 0, -7, 4 });
+		Polygon polyligone = gaService.createPolygon(gaContainer, new int[] { -7, 4, 2, 0, -7, -4, -1, 0, -7, 4, -3, 0,
+				-7, -4, -5, 0, -7, 4 });
 
 		polyligone.setForeground(manageColor(CONNECTION_COLOR));
 		polyligone.setBackground(manageColor(CONNECTION_COLOR));
@@ -156,11 +147,10 @@ public class TransitionSwitchPattern extends TransitionPattern {
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		flow.getTransitions().add(transition);
 
-		AddConnectionContext addContextInicial = new AddConnectionContext(
-				context.getSourceAnchor(), context.getTargetAnchor());
+		AddConnectionContext addContextInicial = new AddConnectionContext(context.getSourceAnchor(),
+				context.getTargetAnchor());
 		addContextInicial.setNewObject(transition);
-		addContextInicial.setTargetContainer((ContainerShape) context
-				.getSourcePictogramElement());
+		addContextInicial.setTargetContainer((ContainerShape) context.getSourcePictogramElement());
 
 		Connection connection = (Connection) add(addContextInicial);
 		layoutPictogramElement(connection);
@@ -172,8 +162,7 @@ public class TransitionSwitchPattern extends TransitionPattern {
 	protected State getState(Anchor anchor) {
 
 		if (anchor != null) {
-			State object = (State) getBusinessObjectForPictogramElement(anchor
-					.getParent());
+			State object = (State) getBusinessObjectForPictogramElement(anchor.getParent());
 			return object;
 		}
 		return null;
@@ -197,9 +186,7 @@ public class TransitionSwitchPattern extends TransitionPattern {
 	public boolean canCreate(ICreateConnectionContext context) {
 
 		if (cas != null) {
-			Object boSource = featureProvider
-					.getBusinessObjectForPictogramElement(context
-							.getSourcePictogramElement());
+			Object boSource = featureProvider.getBusinessObjectForPictogramElement(context.getSourcePictogramElement());
 
 			State stateOrigen = (State) boSource;
 
