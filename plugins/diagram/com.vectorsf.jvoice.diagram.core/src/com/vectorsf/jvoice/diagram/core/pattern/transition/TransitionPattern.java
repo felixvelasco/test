@@ -126,18 +126,25 @@ public class TransitionPattern extends AbstractConnectionPattern {
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		flow.getTransitions().add(transition);
 
-		AddConnectionContext addContextInicial = new AddConnectionContext(context.getSourceAnchor(),
-				context.getTargetAnchor());
-		addContextInicial.setNewObject(transition);
+		PictogramElement peSource = context.getSourcePictogramElement();
+		PictogramElement peTarget = context.getTargetPictogramElement();
 
-		PictogramElement pe = context.getSourcePictogramElement();
+		AddConnectionContext addContextInicial = null;
+		if (peTarget instanceof FixPointAnchor) {
+			Anchor chopboxAnchor = Graphiti.getPeService().getChopboxAnchor(((Anchor) peTarget).getParent());
+			addContextInicial = new AddConnectionContext(context.getSourceAnchor(), chopboxAnchor);
+		} else {
+			addContextInicial = new AddConnectionContext(context.getSourceAnchor(), context.getTargetAnchor());
+		}
 
 		// Al crear la transición desde el evento lo que llega es un FixPointAnchor
-		if (pe instanceof FixPointAnchor) {
-			addContextInicial.setTargetContainer((ContainerShape) ((Anchor) pe).getParent());
+		if (peSource instanceof FixPointAnchor) {
+			addContextInicial.setTargetContainer((ContainerShape) ((Anchor) peSource).getParent());
 		} else {
-			addContextInicial.setTargetContainer((ContainerShape) pe);
+			addContextInicial.setTargetContainer((ContainerShape) peSource);
 		}
+
+		addContextInicial.setNewObject(transition);
 
 		Connection connection = (Connection) getFeatureProvider().addIfPossible(addContextInicial);
 		layoutPictogramElement(connection);
@@ -174,6 +181,12 @@ public class TransitionPattern extends AbstractConnectionPattern {
 
 		Object boTarget = featureProvider.getBusinessObjectForPictogramElement(context.getTargetPictogramElement());
 		Object boSource = featureProvider.getBusinessObjectForPictogramElement(context.getSourcePictogramElement());
+
+		if (boTarget == null && context.getTargetAnchor() instanceof FixPointAnchor) {
+			boTarget = featureProvider.getBusinessObjectForPictogramElement(context.getTargetAnchor().getParent());
+		}
+
+		System.out.println("Target: " + boTarget);
 
 		if (boTarget instanceof State) {
 			State finalTarget = (State) boTarget;
