@@ -212,8 +212,6 @@ public class IVRUpdater extends AbstractHandler {
 					.item(0);
 
 			if (!oldVersion.equals(newVersion)) {
-				changedProjects
-						.append(prjName + ": Versión actualizada de " + oldVersion + "  a  " + newVersion + "\n");
 				changedProjects.append(prjName + ": Versión actualizada de '"
 						+ artifactIdNode.getFirstChild().getNodeValue() + "' de '" + oldVersion + "'  a  '"
 						+ newVersion + "'\n");
