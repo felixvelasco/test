@@ -311,6 +311,10 @@
                   </instanceof>
                </or></possibleDropTargets>
          </dropAssistant>
+         <commonSorter
+               class="com.vectorsf.jvoice.ui.navigator.sort.SimpleSorter"
+               id="com.vectorsf.jvoice.ui.navigator.Sorter">
+         </commonSorter>
       </navigatorContent>
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.edit.provider.MavenContentProvider"
