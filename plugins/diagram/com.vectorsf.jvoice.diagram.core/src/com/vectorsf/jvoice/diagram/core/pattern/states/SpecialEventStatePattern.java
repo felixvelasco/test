@@ -7,8 +7,8 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.graphiti.datatypes.IDimension;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
@@ -18,9 +18,6 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.id.IdLayoutContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IPeService;
-import org.eclipse.graphiti.ui.services.GraphitiUi;
-import org.eclipse.graphiti.util.ColorConstant;
-import org.eclipse.graphiti.util.IColorConstant;
 
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.State;
@@ -28,12 +25,6 @@ import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 public class SpecialEventStatePattern extends SimpleStatePattern {
-
-	public static final String FONT_NAME = "Arial";
-	public static final int FONT_SIZE = 8;
-	public static final int MARGIN = 10;
-	public static final IColorConstant TEXT_COLOR_ON = new ColorConstant("000000");
-	public static final IColorConstant TEXT_COLOR_OFF = new ColorConstant("777777");
 
 	public int acum;
 
@@ -62,8 +53,7 @@ public class SpecialEventStatePattern extends SimpleStatePattern {
 		// Cambiamos el tamaño del rectángulo superior y la posición del icono
 		// del menú
 		if (id.equals(ID_TOP_RECTANGLE)) {
-			State state = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-			int stateWidth = getStateWidth(state);
+			int stateWidth = getStateWidth(context);
 			if (stateWidth > MAIN_RECTANGLE_WIDTH) {
 				changeTopRectangleWidth(context, stateWidth);
 			} else {
@@ -75,7 +65,8 @@ public class SpecialEventStatePattern extends SimpleStatePattern {
 		return changesDone;
 	}
 
-	public int getStateWidth(State state) {
+	@Override
+	public int getEventsWidth(State state) {
 		int size = MARGIN;
 		for (String string : getFireableEvents(state)) {
 			size += calculateTextWidth(string);
@@ -110,11 +101,8 @@ public class SpecialEventStatePattern extends SimpleStatePattern {
 		GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
 		IPeService peService = Graphiti.getPeService();
 
-		State state = (State) getBusinessObjectForPictogramElement(ga.getPictogramElement());
-		List<String> fireableEvents = getFireableEvents(state);
-
 		// Ajustamos el tamaño del estado
-		int stateWidth = getStateWidth(state);
+		int stateWidth = getStateWidth(context);
 		stateWidth = stateWidth > MAIN_RECTANGLE_WIDTH ? stateWidth : MAIN_RECTANGLE_WIDTH;
 		gaService.setLocationAndSize(ga, ga.getX(), ga.getY(), stateWidth, ga.getHeight());
 		GraphicsAlgorithm gaText = (GraphicsAlgorithm) findById(context.getRootPictogramElement(), ID_NAME_TEXT);
@@ -125,6 +113,9 @@ public class SpecialEventStatePattern extends SimpleStatePattern {
 		List<Anchor> anchorsToDelete = new ArrayList<Anchor>();
 		Map<String, Anchor> existingAnchors = new HashMap<>();
 		PictogramElement rootPe = context.getRootPictogramElement();
+
+		State state = (State) getBusinessObjectForPictogramElement(ga.getPictogramElement());
+		List<String> fireableEvents = getFireableEvents(state);
 
 		for (Anchor anchor : ((AnchorContainer) rootPe).getAnchors()) {
 			if (!(anchor instanceof FixPointAnchor)) {
@@ -185,15 +176,9 @@ public class SpecialEventStatePattern extends SimpleStatePattern {
 		}
 	}
 
-	private int calculateTextWidth(Text text) {
-		IDimension textDimension = GraphitiUi.getUiLayoutService().calculateTextSize(text.getValue(), text.getFont());
-		return textDimension.getWidth();
-	}
-
-	private int calculateTextWidth(String text) {
-		IDimension textDimension = GraphitiUi.getUiLayoutService().calculateTextSize(text,
-				manageFont(FONT_NAME, FONT_SIZE));
-		return textDimension.getWidth();
+	@Override
+	protected void createVerticalLine(Rectangle mainRectangle, int index) {
+		// Do nothing
 	}
 
 	@Override

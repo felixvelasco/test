@@ -1,11 +1,5 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
-import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.FONT_NAME;
-import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.FONT_SIZE;
-import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.MARGIN;
-import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.TEXT_COLOR_OFF;
-import static com.vectorsf.jvoice.diagram.core.pattern.states.SpecialEventStatePattern.TEXT_COLOR_ON;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,11 +9,11 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.graphiti.datatypes.IDimension;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
@@ -31,7 +25,6 @@ import org.eclipse.graphiti.pattern.id.IdLayoutContext;
 import org.eclipse.graphiti.pattern.id.IdUpdateContext;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IPeService;
-import org.eclipse.graphiti.ui.services.GraphitiUi;
 
 import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.model.operations.LocutionState;
@@ -135,8 +128,7 @@ public class MenuStatePattern extends LocutionStatePattern {
 		// Cambiamos el tamaño del rectángulo superior y la posición del icono
 		// del menú
 		if (id.equals(ID_TOP_RECTANGLE)) {
-			State state = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-			int stateWidth = getStateWidth(state);
+			int stateWidth = getStateWidth(context);
 			if (stateWidth > MAIN_RECTANGLE_WIDTH) {
 				changeTopRectangleWidth(context, stateWidth);
 			} else {
@@ -148,7 +140,8 @@ public class MenuStatePattern extends LocutionStatePattern {
 		return changesDone;
 	}
 
-	public int getStateWidth(State state) {
+	@Override
+	public int getEventsWidth(State state) {
 		int size = MARGIN;
 		for (String string : getFireableEvents(state)) {
 			size += calculateTextWidth(string);
@@ -175,6 +168,11 @@ public class MenuStatePattern extends LocutionStatePattern {
 		return Graphiti.getGaCreateService().createPoint(x, y);
 	}
 
+	@Override
+	protected void createVerticalLine(Rectangle mainRectangle, int index) {
+		// Do nothing
+	}
+
 	/**
 	 * Actualiza la barra de eventos que puede disparar el estado.
 	 */
@@ -183,11 +181,8 @@ public class MenuStatePattern extends LocutionStatePattern {
 		GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
 		IPeService peService = Graphiti.getPeService();
 
-		State state = (State) getBusinessObjectForPictogramElement(ga.getPictogramElement());
-		List<String> fireableEvents = getFireableEvents(state);
-
 		// Ajustamos el tamaño del estado
-		int stateWidth = getStateWidth(state);
+		int stateWidth = getStateWidth(context);
 		stateWidth = stateWidth > MAIN_RECTANGLE_WIDTH ? stateWidth : MAIN_RECTANGLE_WIDTH;
 		gaService.setLocationAndSize(ga, ga.getX(), ga.getY(), stateWidth, ga.getHeight());
 		GraphicsAlgorithm gaText = (GraphicsAlgorithm) findById(context.getRootPictogramElement(), ID_NAME_TEXT);
@@ -198,6 +193,9 @@ public class MenuStatePattern extends LocutionStatePattern {
 		List<Anchor> anchorsToDelete = new ArrayList<Anchor>();
 		Map<String, Anchor> existingAnchors = new HashMap<>();
 		PictogramElement rootPe = context.getRootPictogramElement();
+
+		State state = (State) getBusinessObjectForPictogramElement(ga.getPictogramElement());
+		List<String> fireableEvents = getFireableEvents(state);
 
 		for (Anchor anchor : ((AnchorContainer) rootPe).getAnchors()) {
 			if (!(anchor instanceof FixPointAnchor)) {
@@ -256,17 +254,6 @@ public class MenuStatePattern extends LocutionStatePattern {
 				((FixPointAnchor) anchor).setLocation(getAnchorLocation(index++, rootPe, anchor));
 			}
 		}
-	}
-
-	private int calculateTextWidth(Text text) {
-		IDimension textDimension = GraphitiUi.getUiLayoutService().calculateTextSize(text.getValue(), text.getFont());
-		return textDimension.getWidth();
-	}
-
-	private int calculateTextWidth(String text) {
-		IDimension textDimension = GraphitiUi.getUiLayoutService().calculateTextSize(text,
-				manageFont(FONT_NAME, FONT_SIZE));
-		return textDimension.getWidth();
 	}
 
 	@Override

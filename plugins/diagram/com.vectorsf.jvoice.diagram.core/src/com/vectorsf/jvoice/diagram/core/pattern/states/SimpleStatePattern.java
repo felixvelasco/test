@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.graphiti.datatypes.IDimension;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.IRemoveFeature;
@@ -21,6 +22,7 @@ import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.impl.DefaultRemoveFeature;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.func.IDirectEditing;
+import org.eclipse.graphiti.mm.PropertyContainer;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Image;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
@@ -44,6 +46,7 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.services.IPeService;
+import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
@@ -58,58 +61,42 @@ import com.vectorsf.jvoice.model.operations.Transition;
 public abstract class SimpleStatePattern extends IdPattern {
 
 	protected static final int MAIN_FONT_SIZE = 10;
-
 	protected static final String MAIN_FONT_TEXT = "Arial";
-
 	public static final String EVENT_NAME = "EVENT_NAME";
-
 	protected static final int DROPDOWN_SIZE = 12;
-
 	protected static final int IMAGE_SIZE = 24;
 
 	protected static final String ID_NAME_TEXT = "nameText";
-
 	protected static final String ID_MAIN_FIGURE = "mainFigure";
-
 	protected static final String ID_TOP_RECTANGLE = "topRectangle";
-
 	protected static final String ID_EVENT_IMAGE = "eventImage";
-
 	protected static final String ID_STATE_IMAGE = "stateImage";
 
 	protected static final int CELL_WIDTH = 45;
-
 	protected static final int TOP_RECTANGLE_HEIGHT = 28;
-
-	protected static final int MAIN_RECTANGLE_WIDTH = CELL_WIDTH * 4;
-
+	protected static final int MAIN_RECTANGLE_WIDTH = CELL_WIDTH * 3;
 	protected static final int MAIN_RECTANGLE_HEIGHT = TOP_RECTANGLE_HEIGHT + 30;
-
 	public static final int TEXT_MARGIN = CELL_WIDTH + DROPDOWN_SIZE + 22;
-
 	protected static final int TEXT_WIDTH = MAIN_RECTANGLE_WIDTH - TEXT_MARGIN;
 
 	protected static final IColorConstant MAIN_RECTANGLE_BACKGROUND = new ColorConstant("eeeeee");
-
 	protected static final IColorConstant MAIN_RECTANGLE_BORDER = new ColorConstant("5878a1");
-
 	protected static final IColorConstant MAIN_RECTANGLE_SEPARATOR_COLOR = new ColorConstant("dedede");
-
 	protected static final IColorConstant IMAGE_BACKGROUND = new ColorConstant("294c7b");
-
 	protected static final IColorConstant TEXT_BACKGROUND = new ColorConstant("3564a2");
 
 	protected static final String MAIN_RECTANGLE_STYLE = "mainRectangleStyle";
-
 	protected static final String TOP_RECTANGLE_STYLE = "topRectangleStyle";
-
 	protected static final String IMAGE_RECTANGLE_STYLE = "imageRectangleStyle";
-
 	protected static final String MAIN_TEXT_STYLE = "mainTextStyle";
-
 	protected static final String VERTICAL_LINE_STYLE = "verticalLineStyle";
-
 	private static final String ID_MENU_IMAGE = "menuImage";
+
+	protected static final String FONT_NAME = "Arial";
+	protected static final int FONT_SIZE = 8;
+	protected static final int MARGIN = 10;
+	protected static final IColorConstant TEXT_COLOR_ON = new ColorConstant("000000");
+	protected static final IColorConstant TEXT_COLOR_OFF = new ColorConstant("777777");
 
 	protected static IGaService gaService = Graphiti.getGaService();
 
@@ -132,12 +119,9 @@ public abstract class SimpleStatePattern extends IdPattern {
 				MAIN_RECTANGLE_HEIGHT);
 
 		{
-			// createVerticalLine(mainRectangle, CELL_WIDTH, 0, CELL_WIDTH,
-			// MAIN_RECTANGLE_HEIGHT);
-			// createVerticalLine(mainRectangle, CELL_WIDTH * 2, 0, CELL_WIDTH *
-			// 2, MAIN_RECTANGLE_HEIGHT);
-			// createVerticalLine(mainRectangle, CELL_WIDTH * 3, 0, CELL_WIDTH *
-			// 3, MAIN_RECTANGLE_HEIGHT);
+			for (int i = 1; i < 10; i++) {
+				createVerticalLine(mainRectangle, i);
+			}
 
 			Rectangle topRectangle = gaService.createPlainRectangle(mainRectangle);
 			setId(topRectangle, ID_TOP_RECTANGLE);
@@ -179,10 +163,10 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 	}
 
-	protected Polyline createVerticalLine(Rectangle mainRectangle, int x0, int y0, int x1, int y1) {
-		Polyline poli = gaService.createPlainPolyline(mainRectangle, new int[] { x0, y0, x1, y1 });
+	protected void createVerticalLine(Rectangle mainRectangle, int index) {
+		Polyline poli = gaService.createPlainPolyline(mainRectangle, new int[] { CELL_WIDTH * index, 0,
+				CELL_WIDTH * index, MAIN_RECTANGLE_HEIGHT });
 		poli.setStyle(getVerticalLineStyle());
-		return poli;
 	}
 
 	protected abstract String getStateImageId();
@@ -297,18 +281,25 @@ public abstract class SimpleStatePattern extends IdPattern {
 	protected boolean layout(IdLayoutContext context, String id) {
 		boolean changesDone = false;
 
-		// TODO : Resize state if name is too long
-		// if (id.equals(ID_MAIN_FIGURE) || id.equals(ID_NAME_TEXT)) {
-		// GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
-		// if (ga.getWidth() != gaOuter.getWidth() || ga.getHeight() !=
-		// gaOuter.getHeight()) {
-		// Graphiti.getGaService().setLocationAndSize(ga, 0, 0,
-		// gaOuter.getWidth(), gaOuter.getHeight());
-		// changesDone = true;
-		// }
-		// }
+		if (id.equals(ID_NAME_TEXT)) {
+			int width = getStateWidth(context) - TEXT_MARGIN;
+
+			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
+			if (ga.getWidth() != width) {
+				gaService.setSize(ga, width, ga.getHeight());
+				changesDone = true;
+			}
+		}
 
 		if (id.equals(ID_MAIN_FIGURE)) {
+			int width = getStateWidth(context);
+
+			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
+			if (ga.getWidth() != width) {
+				gaService.setSize(ga, width, ga.getHeight());
+				changesDone = true;
+			}
+
 			updateFireableEvents(context);
 
 			changesDone = true;
@@ -317,17 +308,28 @@ public abstract class SimpleStatePattern extends IdPattern {
 		// Cambiamos el tamaño del rectángulo superior y la posición del icono
 		// del menú
 		if (id.equals(ID_TOP_RECTANGLE)) {
-			State state = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-			int numEvents = getFireableEvents(state).size();
-			if (numEvents * IMAGE_SIZE > MAIN_RECTANGLE_WIDTH) {
-				changeTopRectangleWidth(context, (IMAGE_SIZE + 2) * numEvents);
-			} else {
-				changeTopRectangleWidth(context, MAIN_RECTANGLE_WIDTH);
+			int width = getStateWidth(context);
+
+			GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
+			if (width != ga.getWidth()) {
+				changeTopRectangleWidth(context, width);
+				changesDone = true;
 			}
-			changesDone = true;
 		}
 
 		return changesDone;
+	}
+
+	private int getTextBasedWidth(IdLayoutContext context) {
+		Text text = (Text) findById(context.getRootPictogramElement(), ID_NAME_TEXT);
+		int width = Math.max(calculateTextWidth(text), TEXT_WIDTH) + TEXT_MARGIN;
+
+		int mod = width % CELL_WIDTH;
+		if (mod != 0) {
+			width += CELL_WIDTH - mod;
+		}
+
+		return width;
 	}
 
 	public List<String> getFireableEvents(State state) {
@@ -338,14 +340,12 @@ public abstract class SimpleStatePattern extends IdPattern {
 		GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
 
 		// Cambiamos el tamaño del rectángulo superior
-		gaService.setLocationAndSize(ga, 0, 0, newWidth, TOP_RECTANGLE_HEIGHT);
+		gaService.setSize(ga, newWidth, TOP_RECTANGLE_HEIGHT);
 
 		// Colocamos el icono del menú
-		for (GraphicsAlgorithm ga2 : ga.getGraphicsAlgorithmChildren()) {
-			if (ga2 instanceof Image) {
-				gaService.setLocationAndSize(ga2, newWidth - 24, (TOP_RECTANGLE_HEIGHT - DROPDOWN_SIZE) / 2,
-						DROPDOWN_SIZE, DROPDOWN_SIZE);
-			}
+		PropertyContainer dropdown = findById(context.getRootPictogramElement(), ID_MENU_IMAGE);
+		if (dropdown instanceof Image) {
+			gaService.setLocation((Image) dropdown, newWidth - 24, (TOP_RECTANGLE_HEIGHT - DROPDOWN_SIZE) / 2);
 		}
 	}
 
@@ -358,14 +358,6 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 		State state = (State) getBusinessObjectForPictogramElement(ga.getPictogramElement());
 		List<String> fireableEvents = getFireableEvents(state);
-
-		// Ajustamos el tamaño del estado
-		if (fireableEvents.size() * IMAGE_SIZE > MAIN_RECTANGLE_WIDTH) {
-			Graphiti.getGaService().setLocationAndSize(ga, ga.getX(), ga.getY(),
-					(IMAGE_SIZE + 2) * fireableEvents.size(), ga.getHeight());
-		} else {
-			Graphiti.getGaService().setLocationAndSize(ga, ga.getX(), ga.getY(), MAIN_RECTANGLE_WIDTH, ga.getHeight());
-		}
 
 		// Borra los anchors del tipo FixPointAnchor que no tienen transiciones
 		// de salida
@@ -428,26 +420,19 @@ public abstract class SimpleStatePattern extends IdPattern {
 	}
 
 	public Point getAnchorLocation(int point, PictogramElement pe, Anchor anchor) {
-		int x = point * 26;
+		// Calculamos la posición relativa, en celdas, desde el centro
+		int index = point + 1;
+		int sign = index % 2 == 0 ? -1 : 1;
+		int position = sign * (index / 2);
 
-		GraphicsAlgorithm ga = anchor.getGraphicsAlgorithm();
-		if (ga instanceof Text) {
-			x = cont;
-			cont += ((Text) ga).getValue().length() * 7;
-		}
+		// Calculamos el número de celdas, y el punto medio, sumandolo a la
+		// posición relativa de las celdas
+		int cells = pe.getGraphicsAlgorithm().getWidth() / CELL_WIDTH;
+		position += (cells + 0.5) / 2;
 
+		// La posición real hay que ajustarla c on el ncho de la image.
+		int x = position * CELL_WIDTH + (CELL_WIDTH - IMAGE_SIZE) / 2;
 		int y = pe.getGraphicsAlgorithm().getHeight() - 16 - 10;
-
-		return Graphiti.getGaCreateService().createPoint(x, y);
-	}
-
-	public static Point createOutPoint2(int point, PictogramElement pe) {
-		// Valores: 16 del tamaño del icono y 7 del margen derecho
-		int middle = (pe.getGraphicsAlgorithm().getWidth() - 16) / 2;
-
-		int signo = point % 2 == 0 ? 1 : -1;
-		int x = middle + signo * ((point + 1) / 2) * 26;
-		int y = pe.getGraphicsAlgorithm().getHeight() - 16 - 7;
 
 		return Graphiti.getGaCreateService().createPoint(x, y);
 	}
@@ -609,6 +594,32 @@ public abstract class SimpleStatePattern extends IdPattern {
 		}
 
 		return anchorNames;
+	}
+
+	public int getStateWidth(IdLayoutContext context) {
+		State state = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
+
+		return Math.max(getEventsWidth(state), getTextBasedWidth(context));
+	}
+
+	public int getEventsWidth(State state) {
+		int size = state.getFireableEvents().size();
+		if (size % 2 == 0) {
+			size += 1;
+		}
+		return CELL_WIDTH * size;
+	}
+
+	protected int calculateTextWidth(Text text) {
+		IDimension textDimension = GraphitiUi.getUiLayoutService().calculateTextSize(text.getValue(),
+				gaService.getFont(text, true));
+		return textDimension.getWidth();
+	}
+
+	protected int calculateTextWidth(String text) {
+		IDimension textDimension = GraphitiUi.getUiLayoutService().calculateTextSize(text,
+				manageFont(FONT_NAME, FONT_SIZE));
+		return textDimension.getWidth();
 	}
 
 }
