@@ -34,7 +34,6 @@ public class MethodsBeanLabelProvider implements ILabelProvider {
 
 	@Override
 	public boolean isLabelProperty(Object element, String property) {
-		// TODO Auto-generated method stub
 		return aflp.isLabelProperty(element, property);
 	}
 
@@ -45,7 +44,6 @@ public class MethodsBeanLabelProvider implements ILabelProvider {
 
 	@Override
 	public Image getImage(Object element) {
-		// TODO Auto-generated method stub
 		return aflp.getImage(element);
 	}
 
@@ -56,9 +54,7 @@ public class MethodsBeanLabelProvider implements ILabelProvider {
 				return ((ComponentBean) element).getName();
 			} else if (element instanceof IMethod) {
 				IMethod elementMethod = (IMethod) element;
-				return elementMethod.getElementName() + "("
-						+ getParameters(elementMethod.getParameterNames())
-						+ ")";
+				return getParameters(elementMethod);
 			}
 		} catch (JavaModelException e) {
 			e.printStackTrace();
@@ -66,13 +62,14 @@ public class MethodsBeanLabelProvider implements ILabelProvider {
 		return aflp.getText(element);
 	}
 
-	private String getParameters(String[] parameterNames) {
-		String sComma = "";
-		String sTotalParams = "";
-		for (String par : parameterNames) {
-			sTotalParams += sComma + par;
-			sComma = ",";
+	private String getParameters(IMethod method) throws JavaModelException {
+		String join = "(";
+		StringBuilder signature = new StringBuilder(method.getElementName());
+		for (String par : method.getParameterNames()) {
+			signature.append(join).append(par);
+			join = ",";
 		}
-		return sTotalParams;
+		signature.append(')');
+		return signature.toString();
 	}
 }

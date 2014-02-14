@@ -13,12 +13,21 @@ public class ExtComponentBeanItemProvider extends ComponentBeanItemProvider {
 
 	@Override
 	public Object getImage(Object object) {
-		return getResourceLocator().getImage("full/obj16/icon_nav_bean.png");
+		ComponentBean cBean = (ComponentBean) object;
+		if (cBean.isPrototype()) {
+			return getResourceLocator().getImage("full/obj16/icon_nav_bean.png");
+		} else {
+			return getResourceLocator().getImage("full/obj16/icon_nav_externalbean.png");
+		}
 	}
 
 	@Override
 	public String getText(Object object) {
 		ComponentBean cBean = (ComponentBean) object;
-		return cBean.getName() + " - " + cBean.getNameBean();
+		if (cBean.isPrototype()) {
+			return cBean.getName() + " - " + cBean.getNameBean();
+		} else {
+			return cBean.getNameBean();
+		}
 	}
 }
