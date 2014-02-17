@@ -371,7 +371,6 @@ public class NavigatorActionsTest {
 		assertThat(project1.getPackages(), hasPackageNamed("several.packages.inside.here"));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("one"));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("two"));
-		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("newLocution"));
 
 		bot.sleep(MEDIUM_SLEEP);
 		view.bot().tree().getTreeItem("testNavigator").getNode("several.packages.inside").select("one", "two");
@@ -395,7 +394,6 @@ public class NavigatorActionsTest {
 		bot.sleep(MEDIUM_SLEEP);
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("one")));
 		assertThat(project1.getPackage("several.packages.inside").getBeans(), not(hasBeanNamed("two")));
-		assertThat(project1.getPackage("several.packages.inside").getBeans(), hasBeanNamed("newLocution"));
 
 		deleteWindow();
 
