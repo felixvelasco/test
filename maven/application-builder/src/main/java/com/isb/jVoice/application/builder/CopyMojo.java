@@ -168,7 +168,8 @@ public class CopyMojo extends AbstractMojo {
 			views.mkdirs();
 			XMLGeneratorRHTML.generate(new File(views, "renderHTML.jsp"));
 			XMLGeneratorRVXI.generate(new File(views, "renderVXI.jsp"));
-			copyFile("views/_init.jsp", new File(views, "_init.jsp"));
+			copyFile("views/_initHTML.jsp", new File(views, "_initHTML.jsp"));
+			copyFile("views/_initVXI.jsp", new File(views, "_initVXI.jsp"));
 
 			// Creamos la carpeta src/main/resources/com/vectorsf/jvoiceframework/config/logger
 			File configLogger = new File(mavenProject.getBasedir().getAbsolutePath() + SRC_MAIN_RESOURCES

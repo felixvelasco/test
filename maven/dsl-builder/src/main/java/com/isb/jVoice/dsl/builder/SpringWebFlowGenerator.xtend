@@ -94,7 +94,7 @@ class SpringWebFlowGenerator {
 				<transition to="«GetNameTransOut.Name(initialState)»"/>
 			</action-state>
 		
-		<view-state id="_jVoiceInit" view="_init" model="jVoiceArchData">
+		<view-state id="_jVoiceInit" view="#{flowProcessor.getRenderer().getInitView()}" model="jVoiceArchData">
 			<transition to="«GetNameTransOut.Name(initialState)»" >
 				<set name="jVoiceArchData.initialized" value="true"/>
 			</transition>

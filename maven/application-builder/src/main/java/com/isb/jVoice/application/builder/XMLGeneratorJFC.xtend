@@ -77,6 +77,7 @@ class XMLGeneratorJFC {
 		<beans:bean id="renderer" class="com.vectorsf.jvoiceframework.flow.render.vxi.VXIRenderer">
 		«ENDIF»
 			<beans:property name="view" value="renderVXI"></beans:property>
+			<beans:property name="initView" value="_initVXI"></beans:property>
 		</beans:bean>
 		<beans:bean id="viewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
 			<beans:property name="viewResolvers">

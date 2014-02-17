@@ -28,7 +28,7 @@ class XMLGeneratorRHTML {
 <script type="text/javascript" src="resources/javascript/HTMLRenderer.js"></script>
 <link href="resources/css/HTMLRenderer.css" rel="stylesheet"/>
  	
-${flowProcessor.render(FlowExecutionUrl)}
+${flowProcessor.render(flowExecutionUrl, pageContext.request.contextPath)}
 	'''
 }
 
