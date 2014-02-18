@@ -12,9 +12,9 @@
   <packaging>pom</packaging>
   	<repositories>
 		<repository>
-			<id>cloudbees-JVoice</id>
+			<id>jvoiceSnapshot</id>
 			<name>jVoice test repository</name>
-			<url>http://repository-felixvelasco.forge.cloudbees.com/release/</url>
+			<url>http://repository-felixvelasco.forge.cloudbees.com/snapshot/</url>
 		</repository>
 	</repositories>
   <modules>
