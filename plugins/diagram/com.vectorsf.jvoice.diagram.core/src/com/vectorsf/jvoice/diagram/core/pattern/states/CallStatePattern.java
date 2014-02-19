@@ -73,7 +73,7 @@ public class CallStatePattern extends SimpleStatePattern {
 		}
 		if (methodResult != null) {
 			CallState cs = OperationsFactory.eINSTANCE.createCallState();
-			cs.setName(methodResult.getElementName());
+			cs.setName(getValidStateName(flow, methodResult.getElementName()));
 			cs.setDescription(methodResult.getElementName());
 			cs.getFireableEvents().add("ok");
 
@@ -91,7 +91,6 @@ public class CallStatePattern extends SimpleStatePattern {
 				}
 			}
 
-			flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 			flow.getStates().add(cs);
 
 			addGraphicalRepresentation(context, cs);

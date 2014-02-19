@@ -127,7 +127,7 @@ public class CustomStatePattern extends SimpleStatePattern {
 
 		customState.setPath(result.getName());
 
-		customState.setName(result.getName().replace(".jsp", ""));
+		customState.setName(getValidStateName(flow, result.getName().replace(".jsp", "")));
 		flow.getStates().add(customState);
 
 		addGraphicalRepresentation(context, customState);

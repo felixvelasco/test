@@ -94,8 +94,8 @@ public class FinalStatePattern extends SimpleStatePattern {
 	public Object[] create(ICreateContext context) {
 
 		FinalState fs = OperationsFactory.eINSTANCE.createFinalState();
-		fs.setName(FINAL);
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+		fs.setName(getValidStateName(flow, FINAL));
 		flow.getStates().add(fs);
 
 		addGraphicalRepresentation(context, fs);

@@ -273,11 +273,6 @@ public abstract class SimpleStatePattern extends IdPattern {
 	}
 
 	@Override
-	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
-		return false;
-	}
-
-	@Override
 	protected boolean layout(IdLayoutContext context, String id) {
 		boolean changesDone = false;
 

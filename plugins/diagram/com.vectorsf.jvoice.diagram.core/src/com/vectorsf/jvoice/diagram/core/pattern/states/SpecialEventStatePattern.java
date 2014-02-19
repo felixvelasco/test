@@ -24,7 +24,7 @@ import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
-public class SpecialEventStatePattern extends SimpleStatePattern {
+public abstract class SpecialEventStatePattern extends SimpleStatePattern {
 
 	public int acum;
 

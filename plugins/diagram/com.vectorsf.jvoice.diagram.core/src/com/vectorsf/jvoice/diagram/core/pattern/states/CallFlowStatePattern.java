@@ -116,7 +116,7 @@ public class CallFlowStatePattern extends SpecialEventStatePattern implements IS
 				result = (Flow) flow.eResource().getResourceSet().getEObject(flowURI, true);
 
 				CallFlowState callFlowState = OperationsFactory.eINSTANCE.createCallFlowState();
-				callFlowState.setName(callFlowName);
+				callFlowState.setName(getValidStateName(flow, callFlowName));
 				callFlowState.setSubflow(result);
 
 				for (int i = 0; i < result.getParameters().size(); i++) {

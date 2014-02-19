@@ -28,7 +28,7 @@ public class SwitchStatePattern extends SpecialEventStatePattern implements ISel
 	public Object[] create(ICreateContext context) {
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 		SwitchState ss = OperationsFactory.eINSTANCE.createSwitchState();
-		ss.setName(SWITCH);
+		ss.setName(getValidStateName(flow, SWITCH));
 		flow.getStates().add(ss);
 
 		addGraphicalRepresentation(context, ss);
