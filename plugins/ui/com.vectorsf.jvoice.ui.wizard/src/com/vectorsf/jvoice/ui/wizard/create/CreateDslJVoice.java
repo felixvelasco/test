@@ -10,7 +10,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
-import com.vectorsf.jvoice.ui.wizard.page.AbstractWizardPage;
 import com.vectorsf.jvoice.ui.wizard.page.DslNameWizardPage;
 
 public class CreateDslJVoice extends BasicNewResourceWizard {
@@ -59,7 +58,7 @@ public class CreateDslJVoice extends BasicNewResourceWizard {
 	public boolean performFinish() {
 
 		try {
-			((AbstractWizardPage) getPage(PAGE_NAME_DSL_NAME)).createResource();
+			pageName.createResource();
 		} catch (CoreException e) {
 			e.printStackTrace();
 			return false;

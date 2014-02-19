@@ -47,7 +47,11 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.xtext.Keyword;
 
+import com.google.inject.Injector;
+import com.isb.bks.ivr.voice.dsl.services.VoiceDslGrammarAccess;
+import com.isb.bks.ivr.voice.dsl.ui.internal.VoiceDslActivator;
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModule;
@@ -560,6 +564,10 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	// Equivalente al performFinish
 	@Override
 	public void createResource() throws CoreException {
+		Injector injector = VoiceDslActivator.getInstance().getInjector(
+				VoiceDslActivator.COM_ISB_BKS_IVR_VOICE_DSL_VOICEDSL);
+		VoiceDslGrammarAccess access = injector.getInstance(VoiceDslGrammarAccess.class);
+
 		String dslName = getText();
 		IFolder dslFolder = null;
 		String editorExtension = "voiceDsl";
@@ -583,24 +591,26 @@ public class DslNameWizardPage extends AbstractWizardPage {
 
 			if (!dslFile.exists()) {
 				String resName;
+				List<Keyword> findKeywords = access.findKeywords(dslName);
+				String escapedName = findKeywords.isEmpty() ? dslName : "^" + dslName;
 				if (seleccion.equals("Menu")) {
-					contents = "menu " + dslName + "\n\n";
+					contents = "menu " + escapedName + "\n\n";
 					resName = "basicMenu";
 
 				} else if (seleccion.equals("Input")) {
-					contents = "input " + dslName + "\n\n";
+					contents = "input " + escapedName + "\n\n";
 					resName = "basicInput";
 
 				} else if (seleccion.equals("Output")) {
-					contents = "output " + dslName + "\n\n";
+					contents = "output " + escapedName + "\n\n";
 					resName = "basicOutput";
 
 				} else if (seleccion.equals("Record")) {
-					contents = "record " + dslName + "\n\n";
+					contents = "record " + escapedName + "\n\n";
 					resName = "basicRecord";
 
 				} else {
-					contents = "blindTransfer " + dslName + "\n\n";
+					contents = "blindTransfer " + escapedName + "\n\n";
 					resName = "basicBlindTransfer";
 
 				}
