@@ -471,8 +471,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	}
 
 	private void changeURI(IPath targetPath) {
-		String newName = targetPath.lastSegment();
-		newName = newName.substring(0, newName.lastIndexOf('.'));
 		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
 		Resource emfRes = resourceSetImpl.createResource(URI.createPlatformResourceURI(targetPath.toString(), true));
 		try {
