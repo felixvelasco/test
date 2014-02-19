@@ -247,7 +247,7 @@ public class IVRDiagramContextButtonsTest {
 
 	@Test
 	public void testDeleteCallState() throws Exception {
-		deleteState("Call");
+		cannotDeleteState("Call");
 	}
 
 	@Test
@@ -458,6 +458,38 @@ public class IVRDiagramContextButtonsTest {
 
 	}
 
+	private void cannotDeleteState(String stateName) throws Exception {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+
+		IProject project = createProject("testNavigator");
+		IFile file = createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/five.jvflow",
+				getInputStreamResource(bundle, "five.jvflow"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/empty.jvflow",
+				getInputStreamResource(bundle, "empty.jvflow"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Menu.voiceDsl",
+				getInputStreamResource(bundle, "Menu.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Input.voiceDsl",
+				getInputStreamResource(bundle, "Input.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Prompt.voiceDsl",
+				getInputStreamResource(bundle, "Prompt.voiceDsl"));
+
+		openFile(file);
+		bot.sleep(LARGE_SLEEP);
+
+		editor = getGefEditor();
+		gefViewer = editor.getSWTBotGefViewer();
+
+		SWTBotGefEditPart entity = editor.getEditPart(stateName);
+		entity.click();
+		ContextButton delete = getContextButton(entity, "Delete");
+		assertThat(!delete.isEnabled(), is(true));
+	}
+
 	private Matcher<Iterable<? super Transition>> hasTransitionWithState(
 			String stateName) {
 		return Matchers.<Transition> hasItem(either(
@@ -569,6 +601,23 @@ public class IVRDiagramContextButtonsTest {
 			}
 		}
 		return contextButtonPad;
+	}
+
+	private ContextButton getContextButton(SWTBotGefEditPart part,
+			String contextButtonName) {
+		editor.click(0, 0);
+		editor.click(part);
+
+		ContextButtonPad contextButtonPad = getContextButtonPad();
+		assertThat(contextButtonPad, notNullValue());
+		for (final Object button : contextButtonPad.getChildren()) {
+			if (((ContextButton) button).getEntry().getText()
+					.equals(contextButtonName)) {
+				return (ContextButton) button;
+
+			}
+		}
+		return null;
 	}
 
 	public SWTBotGefEditor getGefEditor() {
