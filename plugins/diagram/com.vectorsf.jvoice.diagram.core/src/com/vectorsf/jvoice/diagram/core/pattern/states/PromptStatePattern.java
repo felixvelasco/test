@@ -46,12 +46,12 @@ public class PromptStatePattern extends LocutionStatePattern {
 
 	@Override
 	protected String getTitle() {
-		return "Prompt Selection";
+		return "Output Selection";
 	}
 
 	@Override
 	protected String getDescription() {
-		return "Select a prompt:";
+		return "Select an output:";
 	}
 
 	@Override
