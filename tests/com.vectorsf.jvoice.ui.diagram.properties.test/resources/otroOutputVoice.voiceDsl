@@ -1,8 +1,6 @@
-outputname otroOutputVoice
+output otroOutputVoice
 
-variables{
- // User's variables 
-}
 audios{
- //Code 
+	main:
+		say wording "TTS text"
 }

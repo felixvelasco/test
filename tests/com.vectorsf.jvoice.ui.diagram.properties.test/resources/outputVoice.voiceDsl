@@ -1,8 +1,6 @@
-outputname outputVoice
+output outputVoice
 
-variables{
- // User's variables 
-}
 audios{
- //Code 
+	main:
+		say wording "TTS text"
 }

@@ -1,0 +1,10 @@
+record otroRecord
+
+{
+	filename "recordFileName" 
+} 
+
+audios{ 
+	main:
+		say wording "TTS Text"	
+}

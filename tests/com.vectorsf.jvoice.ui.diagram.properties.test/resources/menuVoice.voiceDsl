@@ -1,13 +1,14 @@
-menuname menuVoice
+menu menuVoice
 
-configuration{
- //setting variables 
-}
 grammars{
- // User's grammar 
- }
+	dtmf "builtin:dtmf/digits"
+}
 audios{
- //Code 
-}outputs{
- patata : "1"
+
+	main:
+		say wording "TTS text"  
+}
+
+options{
+	patata :"1"
 }

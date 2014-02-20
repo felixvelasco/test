@@ -1,13 +1,14 @@
-menuname otroMenuVoice
+menu otroMenuVoice
 
-configuration{
- //setting variables 
-}
 grammars{
- // User's grammar 
- }
+	dtmf "builtin:dtmf/digits"
+}
 audios{
- //Code 
-}outputs{
- lechuga : "1"
+
+	main:
+		say wording "TTS text"  
+}
+
+options{
+	lechuga : "1"	
 }

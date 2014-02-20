@@ -1,11 +1,10 @@
-inputname inputVoice
+input inputVoice
 
-configuration{
- //setting variables 
-}
 grammars{
- // User's grammar 
- }
-audios{
- //Code 
+	dtmf "builtin:dtmf/digits"
 }
+audios{
+ 	main: 
+ 		say wording "TTS text" 
+}
+
