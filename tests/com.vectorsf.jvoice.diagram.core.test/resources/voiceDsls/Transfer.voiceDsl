@@ -1,0 +1,10 @@
+blindTransfer Transfer
+
+{	
+	destination "tel:xxx"	
+}
+
+audios{
+	main:
+		say wording "TTS text"
+}
