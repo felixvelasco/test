@@ -44,7 +44,7 @@ class XMLGeneratorJFC {
 		<!-- Beans jVoice Framework -->
 		<context:component-scan base-package="com.vectorsf.jvoiceframework"/>
 	
-		<!-- Aspectos. Usamos JDK proxys frente a CGLIB -->
+		<!-- Aspectos. Usamos CGLIB -->
 		<aop:aspectj-autoproxy proxy-target-class="true"/> 
 		
 	    <beans:bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
@@ -107,6 +107,7 @@ class XMLGeneratorJFC {
 		
 		«FOR fileProperties : listFolderProperties »
 		<beans:bean id="«fileProperties.name.substring(0,fileProperties.name.indexOf("."))»" class="com.vectorsf.jvoiceframework.core.admin.AppConfig">
+		    <aop:scoped-proxy/>
 			<beans:property name="fileName" value="/properties/«fileProperties.name.substring(0,fileProperties.name.indexOf("."))».properties"/>
 		</beans:bean>				
 		«ENDFOR»
