@@ -186,8 +186,6 @@ public class TransitionPattern extends AbstractConnectionPattern {
 			boTarget = featureProvider.getBusinessObjectForPictogramElement(context.getTargetAnchor().getParent());
 		}
 
-		System.out.println("Target: " + boTarget);
-
 		if (boTarget instanceof State) {
 			State finalTarget = (State) boTarget;
 			State initialSource = (State) boSource;
