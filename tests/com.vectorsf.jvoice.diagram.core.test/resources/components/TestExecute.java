@@ -1,4 +1,4 @@
-package com.isb.sWTTests.components;
+package com.isb.testNavigator.components;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
