@@ -20,7 +20,7 @@
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
       <properties key="org.eclipse.graphiti.pattern.patternType" value="org.eclipse.graphiti.pattern.idpattern"/>
-      <graphicsAlgorithm xsi:type="al:Rectangle" lineStyle="UNSPECIFIED" width="180" height="28" x="231" y="290" style="/0/@styles.0">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineStyle="UNSPECIFIED" lineVisible="true" width="135" height="28" x="231" y="290" style="/0/@styles.0">
         <properties key="org.eclipse.graphiti.pattern.id.id" value="mainFigure"/>
         <graphicsAlgorithmChildren xsi:type="al:Polygon" lineStyle="UNSPECIFIED" width="48" height="28" style="/0/@styles.1">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="statePolygon"/>
@@ -35,7 +35,7 @@
           <points x="45" y="28"/>
           <points y="28"/>
         </graphicsAlgorithmChildren>
-        <graphicsAlgorithmChildren xsi:type="al:Text" lineStyle="UNSPECIFIED" width="101" height="28" x="45" style="/0/@styles.2" horizontalAlignment="UNSPECIFIED" verticalAlignment="UNSPECIFIED" value="Final">
+        <graphicsAlgorithmChildren xsi:type="al:Text" lineStyle="UNSPECIFIED" width="101" height="28" x="45" style="/0/@styles.2" horizontalAlignment="UNSPECIFIED" verticalAlignment="UNSPECIFIED" value="FinalState">
           <properties key="org.eclipse.graphiti.pattern.id.id" value="nameText"/>
         </graphicsAlgorithmChildren>
       </graphicsAlgorithm>
@@ -232,7 +232,7 @@
   </pi:Diagram>
   <operations:Flow id="_YiNj4Jh8EeOzParzpRcMHA" name="five" description="five">
     <states xsi:type="operations:InitialState" id="_Y2_hEJh8EeOzParzpRcMHA" name="Initial" outgoingTransitions="_Y378QJh8EeOzParzpRcMHA"/>
-    <states xsi:type="operations:FinalState" id="_Y36HEJh8EeOzParzpRcMHA" name="Final" incomingTransitions="_6VzaMJh8EeOzParzpRcMHA _6jdbsJh8EeOzParzpRcMHA"/>
+    <states xsi:type="operations:FinalState" id="_Y36HEJh8EeOzParzpRcMHA" name="FinalState" incomingTransitions="_6VzaMJh8EeOzParzpRcMHA _6jdbsJh8EeOzParzpRcMHA"/>
     <states xsi:type="operations:CallState" id="_pSwI4Jh8EeOzParzpRcMHA" name="Call" description="setName" incomingTransitions="_Y378QJh8EeOzParzpRcMHA" outgoingTransitions="_seynEJh8EeOzParzpRcMHA" methodName="setName" bean="_nqjcAJh8EeOzParzpRcMHA">
       <fireableEvents>ok</fireableEvents>
       <parameters></parameters>

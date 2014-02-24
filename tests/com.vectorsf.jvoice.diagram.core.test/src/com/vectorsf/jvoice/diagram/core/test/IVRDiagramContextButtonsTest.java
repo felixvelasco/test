@@ -83,6 +83,7 @@ public class IVRDiagramContextButtonsTest {
 	private static final int SMALL_SLEEP = 200;
 	private static final int LARGE_SLEEP = 1000;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
+	private static final String PROJECT_NAME = "testProject";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
 	private SWTBotGefEditor editor;
@@ -203,13 +204,7 @@ public class IVRDiagramContextButtonsTest {
 
 	@Test
 	public void testCancelDeleteFinalState() throws Exception {
-		cancelDeleteState("Final");
-
-	}
-
-	@Test
-	public void testCancelDeleteInitialState() throws Exception {
-		cancelDeleteState("Initial");
+		cancelDeleteState("FinalState");
 
 	}
 
@@ -225,18 +220,12 @@ public class IVRDiagramContextButtonsTest {
 
 	@Test
 	public void testCancelDeleteCallFlowState() throws Exception {
-		cancelDeleteState("empty");
+		cancelDeleteState("Subflow");
 	}
 
 	@Test
 	public void testDeleteFinalState() throws Exception {
-		deleteState("Final");
-
-	}
-
-	@Test
-	public void testDeleteInitialState() throws Exception {
-		deleteState("Initial");
+		deleteState("FinalState");
 
 	}
 
@@ -252,27 +241,27 @@ public class IVRDiagramContextButtonsTest {
 
 	@Test
 	public void testDeleteCallFlowState() throws Exception {
-		deleteState("empty");
+		deleteState("Subflow");
 	}
 
 	@Test
-	public void testCreateTransitionCallPrompt() throws Exception {
-		createTransition("Call", "Prompt", 375, 79, 116, 210);
+	public void testCreateTransitionCallOutput() throws Exception {
+		createTransition("Call", "Output", 375, 79, 116, 210);
 	}
 
 	@Test
-	public void testCreateTransitionPromptMenu() throws Exception {
-		createTransition("Prompt", "Menu", 221, 185, 330, 310);
+	public void testCreateTransitionOutputMenu() throws Exception {
+		createTransition("Output", "Menu", 221, 185, 330, 310);
 	}
 
 	@Test
 	public void testCreateTransitionInputMenu() throws Exception {
-		createTransition("Input", "Menu", 400, 185, 330, 310);
+		createTransition("Input", "Menu", 450, 155, 360, 155);
 	}
 
 	@Test
-	public void testCreateTransitionEmptyPrompt() throws Exception {
-		createTransition("empty", "Prompt", 550, 70, 116, 210);
+	public void testCreateTransitionEmptyOutput() throws Exception {
+		createTransition("empty", "Output", 550, 70, 116, 210);
 	}
 
 	@Test
@@ -286,8 +275,8 @@ public class IVRDiagramContextButtonsTest {
 	}
 
 	@Test
-	public void testCreateTransitionInitialPrompt() throws Exception {
-		createTransition("Initial", "Prompt", 181, 81, 120, 210);
+	public void testCreateTransitionInitialOutput() throws Exception {
+		createTransition("Initial", "Output", 181, 81, 120, 210);
 	}
 
 	public void createTransition(final String sourceName, String targetName,
@@ -308,19 +297,19 @@ public class IVRDiagramContextButtonsTest {
 		} else {
 			file = createFile(project, BaseModel.JV_PATH
 					+ "/several/packages/inside/six.jvflow",
-					getInputStreamResource(bundle, "six.jvflow"));
+					getInputStreamResource(bundle, "flows/six.jvflow"));
 			createFile(project, BaseModel.JV_PATH
 					+ "/several/packages/inside/empty.jvflow",
-					getInputStreamResource(bundle, "empty.jvflow"));
+					getInputStreamResource(bundle, "flows/empty.jvflow"));
 			createFile(project, BaseModel.JV_PATH
 					+ "/several/packages/inside/Menu.voiceDsl",
-					getInputStreamResource(bundle, "Menu.voiceDsl"));
+					getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
 			createFile(project, BaseModel.JV_PATH
 					+ "/several/packages/inside/Input.voiceDsl",
-					getInputStreamResource(bundle, "Input.voiceDsl"));
+					getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
 			createFile(project, BaseModel.JV_PATH
-					+ "/several/packages/inside/Prompt.voiceDsl",
-					getInputStreamResource(bundle, "Prompt.voiceDsl"));
+					+ "/several/packages/inside/Output.voiceDsl",
+					getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
 		}
 		openFile(file);
 		bot.sleep(LARGE_SLEEP);
@@ -373,13 +362,12 @@ public class IVRDiagramContextButtonsTest {
 					robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 
 					robot.mouseMove(p.x + finalx, p.y + finaly);
-
+					bot.sleep(SMALL_SLEEP);
 					robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 				} catch (AWTException e) {
 				}
 			}
 		});
-
 		editor.save();
 
 		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
@@ -408,22 +396,23 @@ public class IVRDiagramContextButtonsTest {
 	public void deleteState(String stateName) throws Exception {
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
-		IProject project = createProject("testNavigator");
+		// Creamos el proyecto
+		IProject project = createProject(PROJECT_NAME);
 		IFile file = createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "five.jvflow"));
+				getInputStreamResource(bundle, "flows/five.jvflow"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "empty.jvflow"));
+				getInputStreamResource(bundle, "flows/empty.jvflow"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/Menu.voiceDsl",
-				getInputStreamResource(bundle, "Menu.voiceDsl"));
+				getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/Input.voiceDsl",
-				getInputStreamResource(bundle, "Input.voiceDsl"));
+				getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
 		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Prompt.voiceDsl",
-				getInputStreamResource(bundle, "Prompt.voiceDsl"));
+				+ "/several/packages/inside/Output.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
 
 		openFile(file);
 		bot.sleep(LARGE_SLEEP);
@@ -464,19 +453,19 @@ public class IVRDiagramContextButtonsTest {
 		IProject project = createProject("testNavigator");
 		IFile file = createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "five.jvflow"));
+				getInputStreamResource(bundle, "flows/five.jvflow"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "empty.jvflow"));
+				getInputStreamResource(bundle, "flows/empty.jvflow"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/Menu.voiceDsl",
-				getInputStreamResource(bundle, "Menu.voiceDsl"));
+				getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/Input.voiceDsl",
-				getInputStreamResource(bundle, "Input.voiceDsl"));
+				getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
 		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Prompt.voiceDsl",
-				getInputStreamResource(bundle, "Prompt.voiceDsl"));
+				+ "/several/packages/inside/Output.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
 
 		openFile(file);
 		bot.sleep(LARGE_SLEEP);
@@ -504,19 +493,19 @@ public class IVRDiagramContextButtonsTest {
 		IProject project = createProject("testNavigator");
 		IFile file = createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "five.jvflow"));
+				getInputStreamResource(bundle, "flows/five.jvflow"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "empty.jvflow"));
+				getInputStreamResource(bundle, "flows/empty.jvflow"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/Menu.voiceDsl",
-				getInputStreamResource(bundle, "Menu.voiceDsl"));
+				getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/Input.voiceDsl",
-				getInputStreamResource(bundle, "Input.voiceDsl"));
+				getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
 		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Prompt.voiceDsl",
-				getInputStreamResource(bundle, "Prompt.voiceDsl"));
+				+ "/several/packages/inside/Output.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
 
 		openFile(file);
 		bot.sleep(LARGE_SLEEP);
@@ -541,7 +530,7 @@ public class IVRDiagramContextButtonsTest {
 		entity.click();
 		pressEntityContextButton(entity, "Delete");
 
-		bot.waitUntil(shellIsActive("Confirm Delete"), 10000);
+		bot.waitUntil(shellIsActive("Confirm Delete"), 20000);
 		SWTBotShell shell = bot.shell("Confirm Delete");
 
 		shell.bot().button("No").click();
