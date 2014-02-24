@@ -63,8 +63,10 @@ public class MethodsBeanLabelProvider implements ILabelProvider {
 	}
 
 	private String getParameters(IMethod method) throws JavaModelException {
-		String join = "(";
 		StringBuilder signature = new StringBuilder(method.getElementName());
+		signature.append("(");
+
+		String join = "";
 		for (String par : method.getParameterNames()) {
 			signature.append(join).append(par);
 			join = ",";
