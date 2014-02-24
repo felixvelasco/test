@@ -1,8 +1,5 @@
 package com.vectorsf.jvoice.diagram.core.pattern.note;
 
-//import IDirectEditingInfo;
-//import LNote;
-
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;

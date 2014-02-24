@@ -8,8 +8,6 @@ import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
 import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
-import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
@@ -91,25 +89,10 @@ public class TransitionSwitchPattern extends TransitionPattern {
 			cd = peService.createConnectionDecorator(connection, false, 1.0, true);
 			createArrow(cd);
 
-			// createTextEvent(context, connection);
-
 			link(connection, transition);
 			return connection;
 		}
 		return null;
-	}
-
-	private void createTextEvent(IAddContext context, Connection connection) {
-		ConnectionDecorator cdEvent;
-		cdEvent = peService.createConnectionDecorator(connection, true, 0.5, true);
-		Transition trans = (Transition) context.getNewObject();
-
-		Text text = gaService.createText(cdEvent, trans.getEventName());
-		text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
-		text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
-
-		link(cdEvent, cas);
-
 	}
 
 	@Override

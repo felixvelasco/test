@@ -17,6 +17,7 @@ public class BaseModel {
 
 	public static final String JV_PATH = "src/main/resources/jv";
 	public static final String PROPERTIES_PATH = "src/main/config/properties";
+	public static final String JAVA_SOURCES_PATH = "src/main/java";
 
 	private static final BaseModel baseModel;
 

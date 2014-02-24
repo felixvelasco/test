@@ -39,7 +39,6 @@ public class ExtFlowItemProvider extends FlowItemProvider {
 			children.add(new LocutionItemProvider(adapterFactory, flow));
 			children.add(new ScopeItemProvider(adapterFactory, flow));
 			children.add(new ParametersItemProvider(adapterFactory, flow));
-			// children.add(new CustomPageItemProvider(adapterFactory, flow));
 		}
 		return children;
 	}

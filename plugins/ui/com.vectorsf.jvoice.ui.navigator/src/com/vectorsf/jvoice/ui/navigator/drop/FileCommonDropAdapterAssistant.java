@@ -24,133 +24,125 @@ import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.ui.navigator.activator.Activator;
 
 public abstract class FileCommonDropAdapterAssistant extends
-		CommonDropAdapterAssistant {
+	CommonDropAdapterAssistant {
 
-	private String mType;
-	private String mDirBase;
-	private IProject iproject;
+    private String mType;
+    private String mDirBase;
+    private IProject iproject;
 
-	public FileCommonDropAdapterAssistant(String inType, String inDirBase) {
-		mType = inType;
-		mDirBase = inDirBase;
+    public FileCommonDropAdapterAssistant(String inType, String inDirBase) {
+	mType = inType;
+	mDirBase = inDirBase;
+    }
+
+    @Override
+    public IStatus validateDrop(Object target, int operation,
+	    TransferData transferType) {
+
+	if (operation != DND.DROP_COPY) {
+	    return Status.CANCEL_STATUS;
 	}
 
-	@Override
-	public IStatus validateDrop(Object target, int operation,
-			TransferData transferType) {
-
-		if (operation != DND.DROP_COPY) {
-			return Status.CANCEL_STATUS;
-		}
-
-		// Check the file extension
-		FileTransfer instance = FileTransfer.getInstance();
-		if (instance.isSupportedType(transferType)) {
-			String[] resources = (String[]) instance.nativeToJava(transferType);
-			if (resources != null) {
-				for (String recurso : resources) {
-					if (recurso.contains(".")
-							&& recurso.length() - 1 > recurso.lastIndexOf(".")) {
-						String sExt = recurso.substring(recurso
-								.lastIndexOf(".") + 1);
-						if (!sExt.equalsIgnoreCase(mType)) {
-							return Status.CANCEL_STATUS;
-						}
-					} else {
-						return Status.CANCEL_STATUS;
-					}
-				}
-				return Status.OK_STATUS;
+	// Check the file extension
+	FileTransfer instance = FileTransfer.getInstance();
+	if (instance.isSupportedType(transferType)) {
+	    String[] resources = (String[]) instance.nativeToJava(transferType);
+	    if (resources != null) {
+		for (String recurso : resources) {
+		    if (recurso.contains(".")
+			    && recurso.length() - 1 > recurso.lastIndexOf(".")) {
+			String sExt = recurso.substring(recurso
+				.lastIndexOf(".") + 1);
+			if (!sExt.equalsIgnoreCase(mType)) {
+			    return Status.CANCEL_STATUS;
 			}
-		}
-
-		return Status.CANCEL_STATUS;
-	}
-
-	@Override
-	public IStatus handleDrop(CommonDropAdapter aDropAdapter,
-			DropTargetEvent aDropTargetEvent, Object aTarget) {
-		aDropTargetEvent.detail = DND.DROP_NONE;
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-
-		IFolder targetFolder;
-		if (aTarget instanceof JVModule) {
-			JVModule target = (JVModule) aTarget;
-			iproject = root.getProject(target.getName());
-			// Mirar direcciones generadas para copiar
-			targetFolder = root.getProject(target.getName())
-					.getFolder(mDirBase);
-
-		} else if (aTarget instanceof JVPackage) {
-			JVPackage target = (JVPackage) aTarget;
-			iproject = root.getProject(target.getOwnerModule().getName());
-			targetFolder = root.getProject(target.getOwnerModule().getName())
-					.getFolder(mDirBase);
-		} else if (aTarget instanceof IFolder) {
-			IFolder target = (IFolder) aTarget;
-			iproject = target.getProject();
-			targetFolder = target.getProject().getFolder(mDirBase);
-		} else {
+		    } else {
 			return Status.CANCEL_STATUS;
+		    }
 		}
-
-		String[] dataruta = (String[]) aDropTargetEvent.data;
-		for (String dato : dataruta) {
-			String ruta = dato;
-			File originalFile = new File(ruta);
-
-			try {
-				/*
-				 * En caso de que se trate de un wsdl se va a generar una
-				 * carpeta con el nombre del wsdl correspondiente donde se
-				 * almacenara el wsdl seleccionado y la carpeta schemas en caso
-				 * de tenerla.
-				 */
-				if ("wsdl".equalsIgnoreCase(mType)) {
-					targetFolder = iproject.getFolder(mDirBase
-							+ "/"
-							+ originalFile.getName().substring(0,
-									originalFile.getName().indexOf(".")));
-				}
-				// Si no existe la carpeta padre, la crea.
-				if (!targetFolder.exists()) {
-					recursivelyCreate(targetFolder);
-				}
-
-				// Comprobamos que el archivo ya no existe en el Modulo.
-				IFile target = targetFolder.getFile(originalFile.getName());
-				if (target.exists()) {
-					return Status.CANCEL_STATUS;
-				}
-
-				FileInputStream source = new FileInputStream(originalFile);
-				target.create(source, true, null);
-
-				// En caso de ser un wsdl añadimos plugin al pom
-				// if ("wsdl".equalsIgnoreCase(mType)) {
-				// ConfigurationPomWSDL configurate = new
-				// ConfigurationPomWSDL();
-				// configurate.initial(iproject, target);
-				// }
-
-			} catch (CoreException | FileNotFoundException e) {
-				return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-						"Error copying resources", e);
-			}
-		}
-
 		return Status.OK_STATUS;
+	    }
 	}
 
-	private void recursivelyCreate(IFolder container) throws CoreException {
-		if (!container.getParent().exists()) {
-			recursivelyCreate((IFolder) container.getParent());
+	return Status.CANCEL_STATUS;
+    }
+
+    @Override
+    public IStatus handleDrop(CommonDropAdapter aDropAdapter,
+	    DropTargetEvent aDropTargetEvent, Object aTarget) {
+	aDropTargetEvent.detail = DND.DROP_NONE;
+	IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+
+	IFolder targetFolder;
+	if (aTarget instanceof JVModule) {
+	    JVModule target = (JVModule) aTarget;
+	    iproject = root.getProject(target.getName());
+	    // Mirar direcciones generadas para copiar
+	    targetFolder = root.getProject(target.getName())
+		    .getFolder(mDirBase);
+
+	} else if (aTarget instanceof JVPackage) {
+	    JVPackage target = (JVPackage) aTarget;
+	    iproject = root.getProject(target.getOwnerModule().getName());
+	    targetFolder = root.getProject(target.getOwnerModule().getName())
+		    .getFolder(mDirBase);
+	} else if (aTarget instanceof IFolder) {
+	    IFolder target = (IFolder) aTarget;
+	    iproject = target.getProject();
+	    targetFolder = target.getProject().getFolder(mDirBase);
+	} else {
+	    return Status.CANCEL_STATUS;
+	}
+
+	String[] dataruta = (String[]) aDropTargetEvent.data;
+	for (String dato : dataruta) {
+	    String ruta = dato;
+	    File originalFile = new File(ruta);
+
+	    try {
+		/*
+		 * En caso de que se trate de un wsdl se va a generar una
+		 * carpeta con el nombre del wsdl correspondiente donde se
+		 * almacenara el wsdl seleccionado y la carpeta schemas en caso
+		 * de tenerla.
+		 */
+		if ("wsdl".equalsIgnoreCase(mType)) {
+		    targetFolder = iproject.getFolder(mDirBase
+			    + "/"
+			    + originalFile.getName().substring(0,
+				    originalFile.getName().indexOf(".")));
 		}
-		container.create(true, true, null);
+		// Si no existe la carpeta padre, la crea.
+		if (!targetFolder.exists()) {
+		    recursivelyCreate(targetFolder);
+		}
+
+		// Comprobamos que el archivo ya no existe en el Modulo.
+		IFile target = targetFolder.getFile(originalFile.getName());
+		if (target.exists()) {
+		    return Status.CANCEL_STATUS;
+		}
+
+		FileInputStream source = new FileInputStream(originalFile);
+		target.create(source, true, null);
+	    } catch (CoreException | FileNotFoundException e) {
+		return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+			"Error copying resources", e);
+	    }
 	}
 
-	@Override
-	public boolean isSupportedType(TransferData aTransferType) {
-		return FileTransfer.getInstance().isSupportedType(aTransferType);
+	return Status.OK_STATUS;
+    }
+
+    private void recursivelyCreate(IFolder container) throws CoreException {
+	if (!container.getParent().exists()) {
+	    recursivelyCreate((IFolder) container.getParent());
 	}
+	container.create(true, true, null);
+    }
+
+    @Override
+    public boolean isSupportedType(TransferData aTransferType) {
+	return FileTransfer.getInstance().isSupportedType(aTransferType);
+    }
 }

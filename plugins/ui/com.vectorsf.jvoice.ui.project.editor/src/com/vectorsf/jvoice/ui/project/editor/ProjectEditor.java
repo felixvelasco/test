@@ -73,8 +73,6 @@ public class ProjectEditor extends EmfAbstractEditor {
 				}
 			}
 		});
-
-		// updateProblemIndication();
 	}
 
 	@Override
