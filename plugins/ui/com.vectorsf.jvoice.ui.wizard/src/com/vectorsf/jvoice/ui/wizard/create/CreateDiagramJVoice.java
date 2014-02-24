@@ -18,6 +18,8 @@ package com.vectorsf.jvoice.ui.wizard.create;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -25,6 +27,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.ui.wizard.Activator;
 import com.vectorsf.jvoice.ui.wizard.page.AbstractWizardPage;
 import com.vectorsf.jvoice.ui.wizard.page.DiagramNameWizardPage;
 
@@ -40,7 +43,7 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 
 	public CreateDiagramJVoice() {
 	}
-	
+
 	public CreateDiagramJVoice(IFolder ownerPackage) {
 		myPackage = ownerPackage;
 	}
@@ -48,19 +51,16 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 	@Override
 	public void addPages() {
 		IWizardContainer container = getContainer();
-		if (container instanceof WizardDialog)
-		{
+		if (container instanceof WizardDialog) {
 			((WizardDialog) container).setHelpAvailable(false);
 		}
 		super.addPages();
-		if (myPackage == null){
-			pageName = new DiagramNameWizardPage(
-					PAGE_NAME_DIAGRAM_NAME);
+		if (myPackage == null) {
+			pageName = new DiagramNameWizardPage(PAGE_NAME_DIAGRAM_NAME);
 			pageName.setSelection(getSelection().getFirstElement());
 			addPage(pageName);
-		}else{
-			pageName = new DiagramNameWizardPage(
-					PAGE_NAME_DIAGRAM_NAME, false);
+		} else {
+			pageName = new DiagramNameWizardPage(PAGE_NAME_DIAGRAM_NAME, false);
 			pageName.setSelection(myPackage);
 			addPage(pageName);
 		}
@@ -76,17 +76,18 @@ public class CreateDiagramJVoice extends BasicNewResourceWizard {
 	public boolean performFinish() {
 
 		try {
-			((AbstractWizardPage) getPage(PAGE_NAME_DIAGRAM_NAME))
-					.createResource();
+			((AbstractWizardPage) getPage(PAGE_NAME_DIAGRAM_NAME)).createResource();
 		} catch (CoreException e) {
-			e.printStackTrace();
+			Activator.getDefault().getLog()
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error al crear recurso", e));
+
 			return false;
 		}
 
 		return true;
 	}
-	
-	public Flow getReturnFlow(){
+
+	public Flow getReturnFlow() {
 		return pageName.returnFlow();
 	}
 }

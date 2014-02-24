@@ -626,6 +626,9 @@ public class DslNameWizardPage extends AbstractWizardPage {
 					MessageDialog.openError(null, "Error", "A resource \"" + dslName
 							+ "\" exists with a different case. Please check Error Log.");
 				} catch (IOException e1) {
+					Activator.getDefault().getLog()
+							.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error leyendo fichero", e1));
+
 					e1.printStackTrace();
 				}
 

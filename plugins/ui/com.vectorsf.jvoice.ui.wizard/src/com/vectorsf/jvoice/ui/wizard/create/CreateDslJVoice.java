@@ -2,6 +2,8 @@ package com.vectorsf.jvoice.ui.wizard.create;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardContainer;
@@ -10,6 +12,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.ui.wizard.Activator;
 import com.vectorsf.jvoice.ui.wizard.page.DslNameWizardPage;
 
 public class CreateDslJVoice extends BasicNewResourceWizard {
@@ -61,6 +64,9 @@ public class CreateDslJVoice extends BasicNewResourceWizard {
 			pageName.createResource();
 		} catch (CoreException e) {
 			e.printStackTrace();
+			Activator.getDefault().getLog()
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error creando recurso", e));
+
 			return false;
 		}
 

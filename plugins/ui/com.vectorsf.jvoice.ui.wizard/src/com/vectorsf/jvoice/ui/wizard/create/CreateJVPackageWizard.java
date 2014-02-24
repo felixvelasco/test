@@ -1,12 +1,15 @@
 package com.vectorsf.jvoice.ui.wizard.create;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
+import com.vectorsf.jvoice.ui.wizard.Activator;
 import com.vectorsf.jvoice.ui.wizard.page.AbstractWizardPage;
 import com.vectorsf.jvoice.ui.wizard.page.PackageNameWizardPage;
 
@@ -18,8 +21,7 @@ public class CreateJVPackageWizard extends BasicNewResourceWizard {
 	@Override
 	public void addPages() {
 		IWizardContainer container = getContainer();
-		if (container instanceof WizardDialog)
-		{
+		if (container instanceof WizardDialog) {
 			((WizardDialog) container).setHelpAvailable(false);
 		}
 		super.addPages();
@@ -40,6 +42,9 @@ public class CreateJVPackageWizard extends BasicNewResourceWizard {
 		try {
 			((AbstractWizardPage) getPage(PAGE_NAME_PROJECT_NAME)).createResource();
 		} catch (CoreException e) {
+			Activator.getDefault().getLog()
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error creando recurso", e));
+
 			e.printStackTrace();
 			return false;
 		}
