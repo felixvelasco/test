@@ -141,7 +141,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 											setNull = true;
 										}
 									} catch (JavaModelException e) {
-										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
 
@@ -193,7 +192,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 													jspBuscado.copy(destinoFinal, true, null);
 													customice.setPath(newName);
 												} catch (CoreException e) {
-													// TODO Auto-generated catch block
 													e.printStackTrace();
 													customice.setPath("");
 												}
@@ -275,7 +273,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 						ContainerShape csTarget = (ContainerShape) peTarget;
 						AddConnectionContext addContextInicial = new AddConnectionContext(csSource.getAnchors().get(0),
 								csTarget.getAnchors().get(0));
-						// addContextInicial.setNewObject(relation);
 						addContextInicial.setTargetContainer((ContainerShape) peSource);
 						Connection connection = (Connection) getFeatureProvider().addIfPossible(addContextInicial);
 						layoutPictogramElement(connection);
@@ -295,7 +292,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		IPath pathRecursos = new Path(targetFlow.getName().replace(".jvflow", ".resources"));
 		targetRes = targetFlow.getParent().getFolder(pathRecursos);
 		if (targetRes.exists()) {
-			// targetRes = (IResource) Platform.getAdapterManager().getAdapter(targetPackage, IResource.class);
 			newName = generateLocutionName((IFolder) targetRes, voiceDsl.getName() + ".voiceDsl", voiceDsl.getName()
 					+ ".voiceDsl", 1);
 			try {
@@ -481,11 +477,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 					modified = (VoiceDsl) obj;
 
 				}
-			}
-			try {
-				// emfRes.save(SaveOptions.newBuilder().noValidation().getOptions().toOptionsMap());
-			} catch (RuntimeException re) {
-				re.printStackTrace();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

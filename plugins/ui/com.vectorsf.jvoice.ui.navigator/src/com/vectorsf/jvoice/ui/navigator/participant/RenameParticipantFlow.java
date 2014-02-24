@@ -25,7 +25,6 @@ public class RenameParticipantFlow extends RenameParticipant {
 	private IPath pathRecursos;
 
 	public RenameParticipantFlow() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

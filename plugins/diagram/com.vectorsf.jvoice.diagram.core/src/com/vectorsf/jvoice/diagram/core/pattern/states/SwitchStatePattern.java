@@ -115,14 +115,4 @@ public class SwitchStatePattern extends SpecialEventStatePattern implements ISel
 
 		return super.updateNeeded(context, id);
 	}
-
-	// @Override
-	// protected boolean update(IdUpdateContext context, String id) {
-	// if (id.equals(ID_NAME_TEXT)) {
-	// State ss = (State) getBusinessObjectForPictogramElement(context.getRootPictogramElement());
-	// return false;
-	// }
-	//
-	// return false;
-	// }
 }

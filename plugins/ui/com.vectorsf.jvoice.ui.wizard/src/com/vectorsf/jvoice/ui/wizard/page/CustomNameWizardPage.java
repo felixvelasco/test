@@ -667,7 +667,6 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 					initialPackage = initialPackage + "." + pathSegments[i].toString();
 				}
 			}
-			// initialPackage = pathSegments[pathSegments.length-2];
 			String[] diagramNameSegments = diagramFolder.split("\\.");
 			initialFlow = diagramNameSegments[0];
 		}

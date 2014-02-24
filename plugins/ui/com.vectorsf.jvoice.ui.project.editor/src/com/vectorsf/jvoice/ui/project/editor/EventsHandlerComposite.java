@@ -68,7 +68,6 @@ public class EventsHandlerComposite extends Composite {
 	}
 
 	private void createScrolledForm() {
-		// toolkit.paintBordersFor(this);
 		setLayout(new GridLayout(1, false));
 
 		scrolledForm = toolkit.createScrolledForm(this);
