@@ -160,8 +160,8 @@ public class IVRDiagramDragTest {
 	}
 
 	@Test
-	public void testDragInitial() throws Exception {
-		dragState("Initial");
+	public void testDragOutput() throws Exception {
+		dragState("Output");
 	}
 
 	@Test
@@ -176,7 +176,32 @@ public class IVRDiagramDragTest {
 
 	@Test
 	public void testDragCallFlow() throws Exception {
-		dragState("empty");
+		dragState("Subflow");
+	}
+
+	@Test
+	public void testDragInput() throws Exception {
+		dragState("Input");
+	}
+
+	@Test
+	public void testDragMenu() throws Exception {
+		dragState("Menu");
+	}
+
+	@Test
+	public void testDragTransfer() throws Exception {
+		dragState("Transfer");
+	}
+
+	@Test
+	public void testDragRecord() throws Exception {
+		dragState("Record");
+	}
+
+	@Test
+	public void testDragCustom() throws Exception {
+		dragState("Custom");
 	}
 
 	public void dragState(String stateName) throws Exception {
@@ -184,8 +209,8 @@ public class IVRDiagramDragTest {
 
 		IProject project = createProject("testNavigator");
 		IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "five.jvflow"));
+				+ "/several/packages/inside/dragState.jvflow",
+				getInputStreamResource(bundle, "flows/dragState.jvflow"));
 
 		openFile(file);
 		bot.sleep(LARGE_SLEEP);
