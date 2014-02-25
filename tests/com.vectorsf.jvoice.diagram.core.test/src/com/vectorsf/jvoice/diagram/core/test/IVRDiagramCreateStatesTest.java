@@ -29,7 +29,6 @@ import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
@@ -58,7 +57,6 @@ import com.vectorsf.jvoice.base.test.SWTBotHelper;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.model.operations.InitialState;
 import com.vectorsf.jvoice.model.operations.State;
 
 /**
@@ -70,6 +68,7 @@ public class IVRDiagramCreateStatesTest {
 	private static final int SMALL_SLEEP = 200;
 	private static final int LARGE_SLEEP = 1000;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
+	private static final String COMPONENTS_PATH = "/com/isb/testNavigator/components/";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
 	private SWTBotGefEditor editor;
@@ -173,10 +172,10 @@ public class IVRDiagramCreateStatesTest {
 		try {
 			createFile(project, BaseModel.JV_PATH
 					+ "/several/packages/inside/five.jvflow",
-					getInputStreamResource(bundle, "five.jvflow"));
+					getInputStreamResource(bundle, "flows/five.jvflow"));
 			file = createFile(project, BaseModel.JV_PATH
 					+ "/several/packages/inside/empty.jvflow",
-					getInputStreamResource(bundle, "empty.jvflow"));
+					getInputStreamResource(bundle, "flows/empty.jvflow"));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -190,9 +189,10 @@ public class IVRDiagramCreateStatesTest {
 		gefViewer.activateTool("SubFlow");
 		gefViewer.drag(55, 55, 150, 100);
 
-		bot.waitUntil(Conditions.shellIsActive("Flow Selection"));
-		bot.sleep(LARGE_SLEEP);
-		SWTBotTreeItem selected = bot.tree()
+		bot.waitUntil(shellIsActive("Flow Selection"), 10000);
+		SWTBotShell shell = bot.shell("Flow Selection");
+
+		SWTBotTreeItem selected = shell.bot().tree()
 				.expandNode("testNavigator", "several.packages.inside", "five")
 				.select();
 		selected.doubleClick();
@@ -211,17 +211,66 @@ public class IVRDiagramCreateStatesTest {
 
 	@Test
 	public void testCreateCallState() throws Exception {
-		createState("Call");
+		IProject project = createProject("testNavigator");
+		final IFile file = createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/empty_Scope.jvflow",
+				getInputStreamResource(bundle, "flows/empty_Scope.jvflow"));
+
+		createFile(project, BaseModel.JAVA_SOURCES_PATH + COMPONENTS_PATH
+				+ "TestExecute.java",
+				getInputStreamResource(bundle, "components/TestExecute.java"));
+
+		bot.sleep(LARGE_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
+		assertThat(view.bot().tree().getTreeItem("testNavigator"),
+				is(not(nullValue())));
+		assertThat(
+				view.bot().tree()
+						.expandNode("testNavigator", "several.packages.inside")
+						.getItems(), is(not(nullValue())));
+		JVBean bean = ((JVModule) BaseModel.getInstance().getModel()
+				.getProject("testNavigator")).getPackage(
+				"several.packages.inside").getBean("empty_Scope");
+		assertThat(bean, is(instanceOf(Flow.class)));
+		Flow flow = (Flow) bean;
+
+		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed("test");
+		assertThat(flow.getStates(), not(hasItemWithNameStateName));
+
+		openFile(file);
+		bot.sleep(LARGE_SLEEP);
+
+		editor = getGefEditor();
+
+		SWTBotGefViewer gefViewer = editor.getSWTBotGefViewer();
+
+		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
+				.getEditor(true);
+		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
+		flow = (Flow) Graphiti.getLinkService()
+				.getBusinessObjectForLinkedPictogramElement(diagram);
+		assertThat(flow.getStates(), not(hasItemWithNameStateName));
+
+		gefViewer = editor.getSWTBotGefViewer();
+
+		gefViewer.activateTool("Execute");
+		gefViewer.drag(55, 55, 150, 100);
+		bot.sleep(SMALL_SLEEP);
+
+		bot.waitUntil(shellIsActive("Bean" + " Selection"), 10000);
+		SWTBotShell shell = bot.shell("Bean" + " Selection");
+
+		SWTBotTreeItem selected = shell.bot().tree()
+				.expandNode("TestExecute", "test()").select();
+		selected.doubleClick();
+		editor.save();
+
+		assertThat(flow.getStates(), hasItemWithNameStateName);
 	}
 
 	@Test
 	public void testCreateSwitchState() throws Exception {
 		createState("Switch");
-	}
-
-	@Test
-	public void testCreateInitialState() throws Exception {
-		createState("Initial");
 	}
 
 	@Test
@@ -233,9 +282,18 @@ public class IVRDiagramCreateStatesTest {
 		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
 		IProject project = createProject("testNavigator");
-		final IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "empty.jvflow"));
+		IFile file = null;
+		if (!stateName.equals("Final")) {
+			file = createFile(project, BaseModel.JV_PATH
+					+ "/several/packages/inside/empty.jvflow",
+					getInputStreamResource(bundle, "flows/empty.jvflow"));
+		} else {
+			file = createFile(project, BaseModel.JV_PATH
+					+ "/several/packages/inside/empty.jvflow",
+					getInputStreamResource(bundle, "flows/FinalState.jvflow"));
+		}
+
+		final IFile filefinal = file;
 
 		bot.sleep(SMALL_SLEEP);
 
@@ -246,7 +304,7 @@ public class IVRDiagramCreateStatesTest {
 				IWorkbenchPage activePage = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage();
 				try {
-					IDE.openEditor(activePage, file);
+					IDE.openEditor(activePage, filefinal);
 				} catch (PartInitException e) {
 					throw new RuntimeException(e);
 				}
@@ -271,48 +329,6 @@ public class IVRDiagramCreateStatesTest {
 		editor.save();
 		assertThat(flow.getStates(), hasItemWithNameStateName);
 
-		if (stateName.equals("Initial")) {
-			Display.getDefault().syncExec(new Runnable() {
-
-				@Override
-				public void run() {
-					IWorkbenchPage activePage = PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getActivePage();
-					try {
-						IDE.openEditor(activePage, file);
-					} catch (PartInitException e) {
-						throw new RuntimeException(e);
-					}
-				}
-			});
-			bot.sleep(LARGE_SLEEP);
-
-			editor = getGefEditor();
-			gefViewer = editor.getSWTBotGefViewer();
-
-			diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
-			diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-			flow = (Flow) Graphiti.getLinkService()
-					.getBusinessObjectForLinkedPictogramElement(diagram);
-
-			hasItemWithNameStateName = hasStateNamed(stateName);
-			assertThat(flow.getStates(), hasItemWithNameStateName);
-
-			gefViewer.activateTool(stateName);
-			gefViewer.drag(55, 55, 150, 100);
-			editor.save();
-			boolean exists = false;
-			boolean exists2Initial = false;
-			for (State state : flow.getStates()) {
-				if (state instanceof InitialState) {
-					if (exists == true) {
-						exists2Initial = true;
-					}
-				}
-			}
-			assertThat(exists2Initial, is(false));
-		}
-
 	}
 
 	@Test
@@ -331,6 +347,21 @@ public class IVRDiagramCreateStatesTest {
 	}
 
 	@Test
+	public void testCreateTransferState() throws Exception {
+		createLocutionState("Transfer");
+	}
+
+	@Test
+	public void testCreateRecordState() throws Exception {
+		createLocutionState("Record");
+	}
+
+	@Test
+	public void testCreateCustomState() throws Exception {
+		createLocutionState("Custom");
+	}
+
+	@Test
 	public void testCancelCreatePromptState() throws Exception {
 		cancelCreateLocutionState("Output");
 	}
@@ -345,16 +376,39 @@ public class IVRDiagramCreateStatesTest {
 		cancelCreateLocutionState("Menu");
 	}
 
+	@Test
+	public void testCancelCreateTransferState() throws Exception {
+		cancelCreateLocutionState("Transfer");
+	}
+
+	@Test
+	public void testCancelCreateRecordState() throws Exception {
+		cancelCreateLocutionState("Record");
+	}
+
 	public void createLocutionState(String stateName) throws Exception {
 
 		IProject project = createProject("testNavigator");
 		final IFile file = createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "five.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.resources/" + stateName
-				+ ".voiceDsl",
-				getInputStreamResource(bundle, stateName + ".voiceDsl"));
+				getInputStreamResource(bundle, "flows/five.jvflow"));
+
+		if (!stateName.equals("Custom")) {
+			createFile(
+					project,
+					BaseModel.JV_PATH
+							+ "/several/packages/inside/five.resources/"
+							+ stateName + ".voiceDsl",
+					getInputStreamResource(bundle, "voiceDsls/" + stateName
+							+ ".voiceDsl"));
+		} else {
+			createFile(
+					project,
+					BaseModel.JV_PATH
+							+ "/several/packages/inside/five.resources/"
+							+ stateName + ".jsp",
+					getInputStreamResource(bundle, "jsps/" + stateName + ".jsp"));
+		}
 
 		bot.sleep(LARGE_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
@@ -396,7 +450,11 @@ public class IVRDiagramCreateStatesTest {
 		bot.waitUntil(shellIsActive(stateName + " Selection"), 10000);
 		SWTBotShell shell = bot.shell(stateName + " Selection");
 
-		shell.bot().table().select(stateName);
+		if (stateName.equals("Custom")) {
+			shell.bot().table().select(stateName + ".jsp");
+		} else {
+			shell.bot().table().select(stateName);
+		}
 
 		shell.bot().button("OK").click();
 
@@ -411,11 +469,13 @@ public class IVRDiagramCreateStatesTest {
 		IProject project = createProject("testNavigator");
 		final IFile file = createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "five.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.resources/" + stateName
-				+ ".voiceDsl",
-				getInputStreamResource(bundle, stateName + ".voiceDsl"));
+				getInputStreamResource(bundle, "flows/five.jvflow"));
+		createFile(
+				project,
+				BaseModel.JV_PATH + "/several/packages/inside/five.resources/"
+						+ stateName + ".voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/" + stateName
+						+ ".voiceDsl"));
 
 		bot.sleep(LARGE_SLEEP);
 		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(1)));
