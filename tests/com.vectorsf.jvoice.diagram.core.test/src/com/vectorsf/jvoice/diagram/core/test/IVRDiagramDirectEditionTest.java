@@ -156,42 +156,52 @@ public class IVRDiagramDirectEditionTest {
 
 	@Test
 	public void testDirectEditionMenu() throws Exception {
-		directEdition("Menu", 305, 275);
+		directEdition("Menu", 425, 125);
 	}
 
 	@Test
 	public void testDirectEditionInput() throws Exception {
-		directEdition("Input", 265, 175);
+		directEdition("Input", 600, 125);
 	}
 
 	@Test
 	public void testDirectEditionPrompt() throws Exception {
-		directEdition("Prompt", 90, 175);
+		directEdition("Output", 600, 225);
 	}
 
 	@Test
 	public void testDirectEditionCallFlow() throws Exception {
-		directEdition("empty", 425, 65);
+		directEdition("Subflow", 175, 210);
 	}
 
 	@Test
 	public void testDirectEditionCall() throws Exception {
-		directEdition("Call", 245, 70);
-	}
-
-	@Test
-	public void testDirectEditionInitial() throws Exception {
-		directEdition("Initial", 115, 70);
+		directEdition("call", 175, 110);
 	}
 
 	@Test
 	public void testDirectEditionFinal() throws Exception {
-		directEdition("Final", 115, 300);
+		directEdition("Final", 500, 315);
 	}
 
 	@Test
 	public void testDirectEditionSwitch() throws Exception {
-		directEdition("Switch", 425, 175);
+		directEdition("Switch", 550, 40);
+	}
+
+	@Test
+	public void testDirectEditionTransfer() throws Exception {
+		directEdition("Transfer", 175, 280);
+	}
+
+	@Test
+	public void testDirectEditionRecord() throws Exception {
+		directEdition("Record", 175, 360);
+	}
+
+	@Test
+	public void testDirectEditionCustom() throws Exception {
+		directEdition("Custom", 350, 360);
 	}
 
 	public SWTBotGefEditor getGefEditor() {
@@ -207,20 +217,20 @@ public class IVRDiagramDirectEditionTest {
 
 		IProject project = createProject("testNavigator");
 		IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "six.jvflow"));
+				+ "/several/packages/inside/six.jvflow",
+				getInputStreamResource(bundle, "flows/six.jvflow"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "empty.jvflow"));
+				getInputStreamResource(bundle, "flows/empty.jvflow"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/Menu.voiceDsl",
-				getInputStreamResource(bundle, "Menu.voiceDsl"));
+				getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
 		createFile(project, BaseModel.JV_PATH
 				+ "/several/packages/inside/Input.voiceDsl",
-				getInputStreamResource(bundle, "Input.voiceDsl"));
+				getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
 		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Prompt.voiceDsl",
-				getInputStreamResource(bundle, "Prompt.voiceDsl"));
+				+ "/several/packages/inside/Output.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
 		openFile(file);
 		bot.sleep(LARGE_SLEEP);
 
