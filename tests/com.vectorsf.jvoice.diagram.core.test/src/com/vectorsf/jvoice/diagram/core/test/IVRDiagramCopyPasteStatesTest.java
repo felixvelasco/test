@@ -6,11 +6,11 @@ import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
 import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.syncExec;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -23,9 +23,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
@@ -36,6 +33,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
+import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefViewer;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
@@ -48,7 +46,6 @@ import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
@@ -65,44 +62,24 @@ import com.vectorsf.jvoice.model.operations.Transition;
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class IVRDiagramCopyPasteStatesTest {
 
-	private static final int LARGE_SLEEP = 1000;
+	private static final int SMALL_SLEEP = 200;
+	private static final int LARGE_SLEEP = 1200;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
 	private SWTBotGefEditor editor;
-	private IProject project;
-	private IFile flowFile;
+	private SWTBotGefViewer gefViewer;
+	@SuppressWarnings("unchecked")
+	private final Matcher<Object[]> arrayContainingTextOne = arrayContaining(hasProperty(
+			"text", is("one")));
+	@SuppressWarnings("unchecked")
+	private final Matcher<Object[]> arrayContainingTextTwo = arrayContaining(hasProperty(
+			"text", is("two")));
 
 	public static final Bundle bundle = Platform
 			.getBundle("com.vectorsf.jvoice.diagram.core.test");
 
-	private static final String PROJECT_NAME = "testNavigator";
-	private static final String PACKAGE_PATH = "/several/packages/inside/";
-	private static final String FLOW_NAME = "everyState.jvflow";
-	private static final String FLOW_RESOURCES_FOLDER = "everyState.resources/";
-
-	// Nombres de los estados del flujo de prueba.
-	private static final String OUTPUT_STATE_NAME = "Output";
-	private static final String INPUT_STATE_NAME = "Input";
-	private static final String MENU_STATE_NAME = "Menu";
-	private static final String RECORD_STATE_NAME = "Record";
-	private static final String TRANSFER_STATE_NAME = "Transfer";
-	private static final String CUSTOM_STATE_NAME = "Custom";
-	private static final String EXECUTE_STATE_NAME = "test";
-	private static final String SUBFLOW_STATE_NAME = "empty";
-	private static final String FINAL_STATE_NAME = "Final";
-	private static final String INITIAL_STATE_NAME = "Initial";
-	private static final String SWITCH_STATE_NAME = "Switch";
-
-	// Nombres de los resources asociados a los estados del flujo de prueba.
-	private static final String OUTPUT_RES_NAME = "Output";
-	private static final String INPUT_RES_NAME = "Input";
-	private static final String MENU_RES_NAME = "Menu";
-	private static final String RECORD_RES_NAME = "Record";
-	private static final String TRANSFER_RES_NAME = "Transfer";
-	private static final String CUSTOM_RES_NAME = "Custom";
-	private static final String EXECUTE_RES_NAME = "TestExecute";
-	private static final String SUBFLOW_RES_NAME = "empty";
+	private static final String COMPONENTS_PATH = "/com/isb/testNavigator/components/";
 
 	/**
 	 * @throws java.lang.Exception
@@ -128,17 +105,6 @@ public class IVRDiagramCopyPasteStatesTest {
 		SWTBotHelper.openView(bot, "IVR", "Navigator IVR");
 
 		view = bot.viewById(NAVIGATOR_ID);
-
-		// Comprobamos que al empezar el test no haya ningún proyecto creado.
-		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
-
-		// Creamos el proyecto de prueba
-		project = createProject(PROJECT_NAME);
-
-		// Creamos el flujo de prueba
-		flowFile = createFile(project, BaseModel.JV_PATH + PACKAGE_PATH
-				+ FLOW_NAME,
-				getInputStreamResource(bundle, "flows/" + FLOW_NAME));
 
 	}
 
@@ -197,253 +163,235 @@ public class IVRDiagramCopyPasteStatesTest {
 		});
 	}
 
+	private Matcher<Iterable<? super State>> hasStateNamed(String stateName) {
+		return Matchers.<State> hasItem(hasProperty("name", is(stateName)));
+	}
+
 	@Test
-	public void testCopyPasteSubflow() throws Exception {
+	public void testCopyPasteCallFlow() throws Exception {
+		copyPasteState(1, "empty", 390, 75);
+	}
 
-		// Creamos el recurso asociado al estado.
-		createFile(
-				project,
-				BaseModel.JV_PATH + PACKAGE_PATH + SUBFLOW_RES_NAME + ".jvflow",
-				getInputStreamResource(bundle, "flows/" + SUBFLOW_RES_NAME
-						+ ".jvflow"));
+	@Test
+	public void test2CopyPasteCall() throws Exception {
+		copyPasteState(2, "test", 80, 195);
+	}
 
-		copyPasteState(1, SUBFLOW_STATE_NAME);
+	@Test
+	public void test3CopyPasteFinal() throws Exception {
+		copyPasteState(3, "Final", 105, 300);
+	}
 
-		Flow flow = getFlow();
+	@Test
+	public void test4CopyPasteOutput() throws Exception {
+		copyPasteState(4, "Output", 390, 185);
+	}
 
-		assertThat(flow.getStates(), hasStateNamed("CopyOf"
-				+ SUBFLOW_STATE_NAME));
-		// TODO comprobar que se ha copiado el voiceDsl
+	@Test
+	public void test5CopyPasteMenu() throws Exception {
+		copyPasteState(5, "Menu", 390, 300);
+	}
 
+	@Test
+	public void test6CopyPasteInput() throws Exception {
+		copyPasteState(6, "Input", 80, 195);
+	}
+
+	@Test
+	public void test7CopyPasteCustom() throws Exception {
+		copyPasteState(7, "Custom", 105, 300);
+	}
+
+	@Test
+	public void test8CopyPasteSwitch() throws Exception {
+		copyPasteState(8, "Switch", 390, 185);
+	}
+
+	@Test
+	public void test9CopyPasteRecord() throws Exception {
+		copyPasteState(9, "Record", 105, 300);
+	}
+
+	@Test
+	public void test10CopyPasteTransfer() throws Exception {
+		copyPasteState(10, "Transfer", 105, 300);
+	}
+
+	@Test
+	public void testCopyPasteCall() throws Exception {
+		copyPasteState(1, "test", 80, 195);
 	}
 
 	@Test
 	public void testCopyPasteOutput() throws Exception {
-
-		// Creamos el recurso asociado al estado.
-		createFile(
-				project,
-				BaseModel.JV_PATH + PACKAGE_PATH + FLOW_RESOURCES_FOLDER
-						+ OUTPUT_RES_NAME + ".voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/" + OUTPUT_RES_NAME
-						+ ".voiceDsl"));
-
-		copyPasteState(1, OUTPUT_STATE_NAME);
-
-		Flow flow = getFlow();
-
-		assertThat(flow.getStates(),
-				hasStateNamed("CopyOf" + OUTPUT_STATE_NAME));
-		// TODO comprobar que se ha copiado el voiceDsl
+		copyPasteState(1, "Output", 226, 195);
 	}
 
 	@Test
 	public void testCopyPasteMenu() throws Exception {
-
-		// Creamos el recurso asociado al estado.
-		createFile(
-				project,
-				BaseModel.JV_PATH + PACKAGE_PATH + FLOW_RESOURCES_FOLDER
-						+ MENU_RES_NAME + ".voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/" + MENU_RES_NAME
-						+ ".voiceDsl"));
-
-		copyPasteState(1, MENU_STATE_NAME);
-
-		Flow flow = getFlow();
-
-		assertThat(flow.getStates(), hasStateNamed("CopyOf" + MENU_STATE_NAME));
-		// TODO comprobar que se ha copiado el voiceDsl
-
+		copyPasteState(1, "Menu", 385, 300);
 	}
 
 	@Test
 	public void testCopyPasteInput() throws Exception {
-		// Creamos el recurso (voiceDsl) asociado al estado.
-		createFile(
-				project,
-				BaseModel.JV_PATH + PACKAGE_PATH + FLOW_RESOURCES_FOLDER
-						+ INPUT_RES_NAME + ".voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/" + INPUT_RES_NAME
-						+ ".voiceDsl"));
-
-		copyPasteState(1, INPUT_STATE_NAME);
-
-		Flow flow = getFlow();
-
-		assertThat(flow.getStates(), hasStateNamed("CopyOf" + INPUT_STATE_NAME));
-		// TODO comprobar que se ha copiado el voiceDsl
-	}
-
-	@Test
-	public void testCopyPasteRecord() throws Exception {
-		// Creamos el recurso (voiceDsl) asociado al estado.
-		createFile(
-				project,
-				BaseModel.JV_PATH + PACKAGE_PATH + FLOW_RESOURCES_FOLDER
-						+ RECORD_RES_NAME + ".voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/" + RECORD_RES_NAME
-						+ ".voiceDsl"));
-
-		copyPasteState(1, RECORD_STATE_NAME);
-
-		Flow flow = getFlow();
-
-		assertThat(flow.getStates(),
-				hasStateNamed("CopyOf" + RECORD_STATE_NAME));
-		// TODO comprobar que se ha copiado el voiceDsl
-	}
-
-	@Test
-	public void testCopyPasteTransfer() throws Exception {
-		// Creamos el recurso (voiceDsl) asociado al estado.
-		createFile(
-				project,
-				BaseModel.JV_PATH + PACKAGE_PATH + FLOW_RESOURCES_FOLDER
-						+ TRANSFER_RES_NAME + ".voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/" + TRANSFER_RES_NAME
-						+ ".voiceDsl"));
-
-		copyPasteState(1, TRANSFER_STATE_NAME);
-
-		Flow flow = getFlow();
-
-		assertThat(flow.getStates(), hasStateNamed("CopyOf"
-				+ TRANSFER_STATE_NAME));
-		// TODO comprobar que se ha copiado el voiceDsl
-	}
-
-	@Test
-	public void testCopyPasteCustom() throws Exception {
-		// Creamos el recurso (jsp) asociado al estado.
-		createFile(
-				project,
-				BaseModel.JV_PATH + PACKAGE_PATH + FLOW_RESOURCES_FOLDER
-						+ CUSTOM_RES_NAME + ".jsp",
-				getInputStreamResource(bundle, "jsps/" + CUSTOM_RES_NAME
-						+ ".jsp"));
-
-		copyPasteState(1, CUSTOM_STATE_NAME);
-
-		Flow flow = getFlow();
-
-		assertThat(flow.getStates(),
-				hasStateNamed("CopyOf" + CUSTOM_STATE_NAME));
-		// TODO comprobar que se ha copiado la jsp
-	}
-
-	@Test
-	public void testCopyPasteExecute() throws Exception {
-
-		copyPasteState(1, EXECUTE_STATE_NAME);
-
-		Flow flow = getFlow();
-
-		assertThat(flow.getStates(), hasStateNamed("CopyOf"
-				+ EXECUTE_STATE_NAME));
-
+		copyPasteState(1, "Input", 75, 195);
 	}
 
 	@Test
 	public void testCopyPasteSwitch() throws Exception {
-		copyPasteState(1, SWITCH_STATE_NAME);
-
-		Flow flow = getFlow();
-
-		assertThat(flow.getStates(),
-				hasStateNamed("CopyOf" + SWITCH_STATE_NAME));
+		copyPasteState(1, "Switch", 390, 185);
 	}
 
 	@Test
 	public void testCopyPasteFinal() throws Exception {
-
-		copyPasteState(1, FINAL_STATE_NAME);
-
-		Flow flow = getFlow();
-
-		assertThat(flow.getStates(), hasStateNamed("CopyOf" + FINAL_STATE_NAME));
-
+		copyPasteState(1, "Final", 105, 300);
 	}
 
 	@Test
-	public void testCopyPasteInitial() throws Exception {
-
-		copyPasteState(1, INITIAL_STATE_NAME);
-
-		Flow flow = getFlow();
-
-		assertThat(flow.getStates(), not(hasStateNamed("CopyOf"
-				+ INITIAL_STATE_NAME)));
-
+	public void testCopyPasteCustom() throws Exception {
+		copyPasteState(1, "Custom", 105, 300);
 	}
 
-	public void copyPasteState(final int numCopies, final String stateName)
-			throws Exception {
+	@Test
+	public void testCopyPasteRecord() throws Exception {
+		copyPasteState(1, "Record", 105, 300);
+	}
 
-		openFile(flowFile);
+	@Test
+	public void testCopyPasteTransfer() throws Exception {
+		copyPasteState(1, "Transfer", 105, 300);
+	}
 
+	public void copyPasteState(final int numCopies, final String stateName,
+			final int x, final int y) throws Exception {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
+
+		IProject project = createProject("testNavigator");
+		IFile file = createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/copyState.jvflow",
+				getInputStreamResource(bundle, "flows/copyState.jvflow"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/empty.jvflow",
+				getInputStreamResource(bundle, "flows/empty.jvflow"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Menu.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Input.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Output.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Record.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Record.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Transfer.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Transfer.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Custom.jsp",
+				getInputStreamResource(bundle, "jsps/Custom.jsp"));
+		createFile(project, BaseModel.JAVA_SOURCES_PATH + COMPONENTS_PATH
+				+ "TestExecute.java",
+				getInputStreamResource(bundle, "components/TestExecute.java"));
+		openFile(file);
 		bot.sleep(LARGE_SLEEP);
 
 		editor = getGefEditor();
+		gefViewer = editor.getSWTBotGefViewer();
+
+		SWTBotGefEditPart entity = editor.getEditPart(stateName);
 
 		syncExec(new VoidResult() {
 
 			@Override
 			public void run() {
 
-				// Recuperamos la figura asociada el estado que queremos copiar
-				// para poner el ratón sobre la figura y poder seleccionarlo.
-				// Esto es necesario por la implementación de graphiti.
-				SWTBotGefEditPart entity = editor.getEditPart(stateName);
-				final IFigure figure = ((GraphicalEditPart) entity.part())
-						.getFigure();
-				final Rectangle bounds = figure.getBounds().getCopy();
-				figure.translateToAbsolute(bounds);
-
 				IDiagramContainerUI diagramEditor = (IDiagramContainerUI) editor
 						.getReference().getEditor(true);
-				diagramEditor.getDiagramBehavior().getMouseLocation().x = bounds.x;
-				diagramEditor.getDiagramBehavior().getMouseLocation().y = bounds.y;
-
+				diagramEditor.getDiagramBehavior().getMouseLocation().x = x;
+				diagramEditor.getDiagramBehavior().getMouseLocation().y = y;
 				editor.select(stateName);
 
 			}
 		});
-
 		bot.sleep(LARGE_SLEEP);
 
-		editor.clickContextMenu("Copy");
-
+		SWTBotGefEditor stateEditor = editor.select(stateName);
+		stateEditor.clickContextMenu("Copy");
 		for (int i = 0; i < numCopies; i++) {
 			editor.click(20, 20);
-			editor.clickContextMenu("Paste");
-			// TODO si se guarda los tests tardan mucho más. Faltaría comprobar
-			// que no
-			// sea necesario guardar para que la prueba sea válida.
-			// editor.save();
+			stateEditor.clickContextMenu("Paste");
+
+			editor.save();
+			DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
+					.getEditor(true);
+			Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
+			Flow flow = (Flow) Graphiti.getLinkService()
+					.getBusinessObjectForLinkedPictogramElement(diagram);
+			Matcher<Iterable<? super State>> hasItemWithNameStateName = null;
+			if (i == 0) {
+				hasItemWithNameStateName = hasStateNamed("CopyOf" + stateName);
+			} else {
+				hasItemWithNameStateName = hasStateNamed("Copy" + (i + 1)
+						+ "Of" + stateName);
+			}
+			bot.sleep(SMALL_SLEEP);
+			assertThat(flow.getStates(), hasItemWithNameStateName);
+
 		}
 	}
 
 	@Test
-	@Ignore
-	// TODO
 	public void testCopyPasteAllStates() throws Exception {
+		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
 
-		openFile(flowFile);
-
+		IProject project = createProject("testNavigator");
+		IFile file = createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/copyState.jvflow",
+				getInputStreamResource(bundle, "flows/copyState.jvflow"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/empty.jvflow",
+				getInputStreamResource(bundle, "flows/empty.jvflow"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Menu.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Input.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Output.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Record.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Record.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Transfer.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Transfer.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Custom.jsp",
+				getInputStreamResource(bundle, "jsps/Custom.jsp"));
+		createFile(project, BaseModel.JAVA_SOURCES_PATH + COMPONENTS_PATH
+				+ "TestExecute.java",
+				getInputStreamResource(bundle, "components/TestExecute.java"));
+		openFile(file);
 		bot.sleep(LARGE_SLEEP);
 
 		editor = getGefEditor();
+		gefViewer = editor.getSWTBotGefViewer();
 
 		final List<SWTBotGefEditPart> elements = new ArrayList<SWTBotGefEditPart>();
 
 		elements.add(editor.getEditPart("Final"));
-		elements.add(editor.getEditPart("Call"));
+		elements.add(editor.getEditPart("test"));
 		elements.add(editor.getEditPart("empty"));
 		elements.add(editor.getEditPart("Switch"));
 		elements.add(editor.getEditPart("Menu"));
 		elements.add(editor.getEditPart("Input"));
-		elements.add(editor.getEditPart("Prompt"));
+		elements.add(editor.getEditPart("Output"));
+		elements.add(editor.getEditPart("Record"));
+		elements.add(editor.getEditPart("Transfer"));
+		elements.add(editor.getEditPart("Custom"));
 
 		syncExec(new VoidResult() {
 			@Override
@@ -459,8 +407,9 @@ public class IVRDiagramCopyPasteStatesTest {
 		bot.sleep(LARGE_SLEEP);
 
 		editor.clickContextMenu("Copy");
-		editor.click(20, 20);
+		editor.click(10, 10);
 		editor.clickContextMenu("Paste");
+		bot.sleep(SMALL_SLEEP);
 
 		editor.save();
 		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
@@ -478,27 +427,34 @@ public class IVRDiagramCopyPasteStatesTest {
 		assertThat(flow.getStates(), hasItemWithNameStateName);
 		hasItemWithNameStateName = hasStateNamed("CopyOfMenu");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
-		hasItemWithNameStateName = hasStateNamed("CopyOfCall");
+		hasItemWithNameStateName = hasStateNamed("CopyOftest");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
-		hasItemWithNameStateName = hasStateNamed("CopyOfPrompt");
+		hasItemWithNameStateName = hasStateNamed("CopyOfOutput");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
 		hasItemWithNameStateName = hasStateNamed("CopyOfInput");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
 		Matcher<Iterable<? super Transition>> hasTransition = hasTransition(
-				"CopyOfCall", "CopyOfempty");
+				"CopyOftest", "CopyOfempty");
 		assertThat(flow.getTransitions(), hasTransition);
 		hasTransition = hasTransition("CopyOfempty", "CopyOfSwitch");
 		assertThat(flow.getTransitions(), hasTransition);
 		hasTransition = hasTransition("CopyOfSwitch", "CopyOfMenu");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfSwitch", "CopyOfPrompt");
+		hasTransition = hasTransition("CopyOfSwitch", "CopyOfOutput");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfPrompt", "CopyOfInput");
-		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfMenu", "CopyOfFinal");
+		hasTransition = hasTransition("CopyOfOutput", "CopyOfInput");
 		assertThat(flow.getTransitions(), hasTransition);
 		hasTransition = hasTransition("CopyOfInput", "CopyOfFinal");
 		assertThat(flow.getTransitions(), hasTransition);
+		hasTransition = hasTransition("CopyOfMenu", "CopyOfTransfer");
+		assertThat(flow.getTransitions(), hasTransition);
+		hasTransition = hasTransition("CopyOfMenu", "CopyOfRecord");
+		assertThat(flow.getTransitions(), hasTransition);
+		hasTransition = hasTransition("CopyOfRecord", "CopyOfCustom");
+		assertThat(flow.getTransitions(), hasTransition);
+		hasTransition = hasTransition("CopyOfCustom", "CopyOfFinal");
+		assertThat(flow.getTransitions(), hasTransition);
+
 	}
 
 	private Matcher<Iterable<? super Transition>> hasTransition(
@@ -511,26 +467,11 @@ public class IVRDiagramCopyPasteStatesTest {
 								hasProperty("name", is(targetName)))));
 	}
 
-	private Matcher<Iterable<? super State>> hasStateNamed(String stateName) {
-		return Matchers.<State> hasItem(hasProperty("name", is(stateName)));
-	}
-
 	public SWTBotGefEditor getGefEditor() {
 		SWTBotEditor activeEditor = bot.activeEditor();
 		String title = activeEditor.getTitle();
 		SWTBotGefEditor ed = bot.gefEditor(title);
 		return ed;
-	}
-
-	private Flow getFlow() {
-
-		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
-		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		Flow flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
-
-		return flow;
 	}
 
 }
