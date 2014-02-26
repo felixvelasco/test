@@ -5,13 +5,12 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 public class InitialStateSection extends StateSection {
 
+	public InitialStateSection() {
+	}
 
-	public InitialStateSection() {}
-	
 	@Override
-    public void createControls(Composite parent,
-        TabbedPropertySheetPage atabbedPropertySheetPage) 
-	{
+	public void createControls(Composite parent, TabbedPropertySheetPage atabbedPropertySheetPage) {
 		super.createControls(parent, atabbedPropertySheetPage);
+		nameText.setEditable(false);
 	}
 }

@@ -11,14 +11,14 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
-import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
-import org.eclipse.graphiti.ui.internal.parts.ConnectionEditPart;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
@@ -29,7 +29,6 @@ import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotCCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.ui.PlatformUI;
@@ -47,13 +46,14 @@ import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
-import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.syncExec;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayWithSize;
+
 import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+
 import static org.junit.Assert.fail;
 
 /**
@@ -86,8 +86,7 @@ public class PropertiesDiagramTest {
 		UIThreadRunnable.syncExec(new VoidResult() {
 			@Override
 			public void run() {
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
-						.forceActive();
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().forceActive();
 			}
 		});
 
@@ -105,16 +104,13 @@ public class PropertiesDiagramTest {
 		for (int i = 0; i < shells.length; i++) {
 			if (shells[i].isOpen()) {
 				SWTBotShell shell = shells[i];
-				if (shell.getText().contains("Container")
-						|| shell.getText().contains("New Locution")
-						|| shell.getText().contains("New Flow")
-						|| shell.getText().contains("Flow Selection")) {
+				if (shell.getText().contains("Container") || shell.getText().contains("New Locution")
+						|| shell.getText().contains("New Flow") || shell.getText().contains("Flow Selection")) {
 					shell.close();
 				}
 			}
 		}
-		for (IProject project : ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects()) {
+		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 
 			try {
 				while (true) {
@@ -147,12 +143,10 @@ public class PropertiesDiagramTest {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
 
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/subFlow.jvflow",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/subFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("subFlow.jvflow"));
 
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/five.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/five.jvflow",
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -185,12 +179,10 @@ public class PropertiesDiagramTest {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
 
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/subFlow.jvflow",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/subFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("subFlow.jvflow"));
 
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/five.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/five.jvflow",
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
 
 		SWTBotHelper.openFile(file);
@@ -202,8 +194,7 @@ public class PropertiesDiagramTest {
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.setFocus();
 
-		final DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
+		final DiagramEditor diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
 		final Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
 
 		Flow flow = findFlow(diagram);
@@ -220,14 +211,13 @@ public class PropertiesDiagramTest {
 
 			@Override
 			public void run() {
-				diaEditor.selectPictogramElements(Graphiti.getLinkService()
-						.getPictogramElements(diagram, finalInitial)
+				diaEditor.selectPictogramElements(Graphiti.getLinkService().getPictogramElements(diagram, finalInitial)
 						.toArray(new PictogramElement[0]));
 
 			}
 		});
 
-		SWTBotGefEditPart main = editor.getSWTBotGefViewer().mainEditPart();
+		SWTBotGefEditPart main = gefViewer.mainEditPart();
 		List<SWTBotGefEditPart> descendants = main.descendants(new BaseMatcher<GraphicalEditPart>() {
 
 			@Override
@@ -237,8 +227,7 @@ public class PropertiesDiagramTest {
 					Object model = part.getModel();
 					if (model instanceof PictogramElement) {
 						PictogramElement pe = (PictogramElement) model;
-						if (Graphiti.getLinkService()
-								.getBusinessObjectForLinkedPictogramElement(pe) instanceof InitialState)
+						if (Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe) instanceof InitialState)
 							return true;
 					}
 				}
@@ -252,45 +241,49 @@ public class PropertiesDiagramTest {
 
 		});
 
-		editor.click(descendants.get(0));
+		IFigure figure = ((GraphicalEditPart) descendants.get(0).part()).getFigure();
+		Rectangle bounds = figure.getBounds().getCopy();
+		figure.translateToAbsolute(bounds);
+		gefViewer.click(bounds.x + 4, bounds.y);
 
 		bot.sleep(LARGE_SLEEP);
 
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Initial"), is(not(nullValue())));
 
-		SWTBotText textName = viewProperties.bot().text("Initial");
+		final SWTBotText textName = viewProperties.bot().text("Initial");
+		final AssertionError[] aes = new AssertionError[1];
+		aes[0] = null;
 
-		textName.setFocus();
-		textName.setText("otro");
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
-				diaEditor.selectPictogramElements(Graphiti.getLinkService()
-						.getPictogramElements(diagram, finalInitial)
-						.toArray(new PictogramElement[0]));
-
+				try {
+					assertThat(textName.widget, hasProperty("editable", is(false)));
+				} catch (AssertionError ae) {
+					aes[0] = ae;
+				}
 			}
 		});
-		assertThat(viewProperties.bot().text("otro"), is(not(nullValue())));
+
+		if (aes[0] != null) {
+			throw aes[0];
+		}
 	}
 
 	private Flow findFlow(Diagram diagram) {
-		return (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
+		return (Flow) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
 	}
 
 	@Test
 	public void testPropertiesCallState() throws CoreException {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/subFlow.jvflow",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/subFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("subFlow.jvflow"));
 
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/five.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/five.jvflow",
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
 
 		SWTBotHelper.openFile(file);
@@ -328,12 +321,10 @@ public class PropertiesDiagramTest {
 	public void testPropertiesSwitchState() throws CoreException {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/subFlow.jvflow",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/subFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("subFlow.jvflow"));
 
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/five.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/five.jvflow",
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -366,15 +357,12 @@ public class PropertiesDiagramTest {
 	public void testPropertiesCallFlowState() throws CoreException {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/subFlow.jvflow",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/subFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("subFlow.jvflow"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/otroSubFlow.jvflow",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/otroSubFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("otroSubFlow.jvflow"));
 
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/five.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/five.jvflow",
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -407,32 +395,26 @@ public class PropertiesDiagramTest {
 
 		assertThat(dialogBot.tree().rowCount(), is(1));
 		assertThat(dialogBot.button("OK").isEnabled(), is(false));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator"),
-				is(not(nullValue())));
+		assertThat(dialogBot.tree().getTreeItem("testNavigator"), is(not(nullValue())));
 
 		dialogBot.tree().expandNode("testNavigator");
 
 		bot.sleep(LARGE_SLEEP);
 
-		assertThat(dialogBot.tree().getTreeItem("testNavigator").rowCount(),
-				is(1));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator")
-				.getNode("test"), is(not(nullValue())));
+		assertThat(dialogBot.tree().getTreeItem("testNavigator").rowCount(), is(1));
+		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test"), is(not(nullValue())));
 
 		dialogBot.tree().getTreeItem("testNavigator").expandNode("test");
 
 		bot.sleep(LARGE_SLEEP);
 
-		assertThat(dialogBot.tree().getTreeItem("testNavigator")
-				.getNode("test").rowCount(), is(3));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator")
-				.getNode("test").getNode("five"), is(not(nullValue())));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator")
-				.getNode("test").getNode("subFlow"), is(not(nullValue())));
-		assertThat(dialogBot.tree().getTreeItem("testNavigator")
-				.getNode("test").getNode("otroSubFlow"), is(not(nullValue())));
-		dialogBot.tree().getTreeItem("testNavigator").getNode("test")
-				.getNode("otroSubFlow").select();
+		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").rowCount(), is(3));
+		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("five"), is(not(nullValue())));
+		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("subFlow"),
+				is(not(nullValue())));
+		assertThat(dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("otroSubFlow"),
+				is(not(nullValue())));
+		dialogBot.tree().getTreeItem("testNavigator").getNode("test").getNode("otroSubFlow").select();
 
 		assertThat(dialogBot.button("OK").isEnabled(), is(true));
 
@@ -466,12 +448,10 @@ public class PropertiesDiagramTest {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
 
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/subFlow.jvflow",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/subFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("subFlow.jvflow"));
 
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/five.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/five.jvflow",
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -485,16 +465,15 @@ public class PropertiesDiagramTest {
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.setFocus();
 
-		final DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
+		final DiagramEditor diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
 		final Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
 
 		Flow flow = findFlow(diagram);
 		Transition transition = null;
 		EList<Transition> list = flow.getTransitions();
 		for (Transition transi : list) {
-			if (transi.getEventName().equals("default")){
-				transition=transi;
+			if (transi.getEventName().equals("default")) {
+				transition = transi;
 				break;
 			}
 		}
@@ -506,8 +485,7 @@ public class PropertiesDiagramTest {
 			@Override
 			public void run() {
 				diaEditor.selectPictogramElements(Graphiti.getLinkService()
-						.getPictogramElements(diagram, finaltransition)
-						.toArray(new PictogramElement[0]));
+						.getPictogramElements(diagram, finaltransition).toArray(new PictogramElement[0]));
 
 			}
 		});
@@ -522,9 +500,8 @@ public class PropertiesDiagramTest {
 					Object model = part.getModel();
 					if (model instanceof PictogramElement) {
 						PictogramElement pe = (PictogramElement) model;
-						
-						if (Graphiti.getLinkService()
-								.getBusinessObjectForLinkedPictogramElement(pe) instanceof SwitchState)
+
+						if (Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe) instanceof SwitchState)
 							return true;
 					}
 				}
@@ -539,18 +516,15 @@ public class PropertiesDiagramTest {
 		});
 
 		editor.click(descendants.get(0).children().get(0));
-		
 
 		bot.sleep(LARGE_SLEEP);
 
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("default"), is(not(nullValue())));
 
-		assertThat(viewProperties.bot().clabel("Initial State:"),
-				is(not(nullValue())));
+		assertThat(viewProperties.bot().clabel("Initial State:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Switch"), is(not(nullValue())));
-		assertThat(viewProperties.bot().clabel("Final State:"),
-				is(not(nullValue())));
+		assertThat(viewProperties.bot().clabel("Final State:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Final"), is(not(nullValue())));
 
 	}
@@ -559,14 +533,11 @@ public class PropertiesDiagramTest {
 	public void testPropertiesMenu() throws CoreException {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/dslFlow.resources/menuVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/menuVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("menuVoice.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/dslFlow.resources/otroMenuVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/otroMenuVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("otroMenuVoice.voiceDsl"));
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/dslFlow.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("dslFlow.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -588,8 +559,7 @@ public class PropertiesDiagramTest {
 		assertThat(viewProperties.bot().text("menuVoice"), is(not(nullValue())));
 		SWTBotText textName = viewProperties.bot().text("menuVoice");
 
-		assertThat(viewProperties.bot().clabel("Definition:"),
-				is(not(nullValue())));
+		assertThat(viewProperties.bot().clabel("Definition:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text(1).getText(), is("menuVoice"));
 		viewProperties.bot().button(0).click();
 
@@ -600,8 +570,7 @@ public class PropertiesDiagramTest {
 		bot.sleep(LARGE_SLEEP);
 
 		assertThat(dialogBot.table().rowCount(), is(2));
-		if (dialogBot.table().getTableItem(0).getText()
-				.contains("otroMenuVoice")) {
+		if (dialogBot.table().getTableItem(0).getText().contains("otroMenuVoice")) {
 			dialogBot.table().select(0);
 			dialogBot.table().click(0, 0);
 		} else {
@@ -638,18 +607,11 @@ public class PropertiesDiagramTest {
 	public void testPropertiesPrompt() throws CoreException {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/dslFlow.resources/outputVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/outputVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("outputVoice.voiceDsl"));
-		SWTBotHelper
-				.createFile(
-						project,
-						BaseModel.JV_PATH
-								+ "/test/dslFlow.resources/otroOutputVoice.voiceDsl",
-						SWTBotHelper
-								.getInputStreamResource("otroOutputVoice.voiceDsl"));
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/dslFlow.jvflow",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/otroOutputVoice.voiceDsl",
+				SWTBotHelper.getInputStreamResource("otroOutputVoice.voiceDsl"));
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("dslFlow.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -668,12 +630,10 @@ public class PropertiesDiagramTest {
 		bot.sleep(LARGE_SLEEP);
 
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
-		assertThat(viewProperties.bot().text("outputVoice"),
-				is(not(nullValue())));
+		assertThat(viewProperties.bot().text("outputVoice"), is(not(nullValue())));
 		SWTBotText textName = viewProperties.bot().text("outputVoice");
 
-		assertThat(viewProperties.bot().clabel("Definition:"),
-				is(not(nullValue())));
+		assertThat(viewProperties.bot().clabel("Definition:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text(1).getText(), is("outputVoice"));
 		viewProperties.bot().button(0).click();
 
@@ -684,8 +644,7 @@ public class PropertiesDiagramTest {
 		bot.sleep(LARGE_SLEEP);
 
 		assertThat(dialogBot.table().rowCount(), is(2));
-		if (dialogBot.table().getTableItem(0).getText()
-				.contains("otroOutputVoice")) {
+		if (dialogBot.table().getTableItem(0).getText().contains("otroOutputVoice")) {
 			dialogBot.table().select(0);
 			dialogBot.table().click(0, 0);
 		} else {
@@ -710,8 +669,7 @@ public class PropertiesDiagramTest {
 		}, 5 * 60 * 1000);
 		bot.sleep(LARGE_SLEEP);
 
-		assertThat(viewProperties.bot().text(1).getText(),
-				is("otroOutputVoice"));
+		assertThat(viewProperties.bot().text(1).getText(), is("otroOutputVoice"));
 
 		textName.setFocus();
 		textName.setText("otro");
@@ -723,14 +681,11 @@ public class PropertiesDiagramTest {
 	public void testPropertiesInput() throws CoreException {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/dslFlow.resources/inputVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/inputVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("inputVoice.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/dslFlow.resources/otroInputVoice.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.resources/otroInputVoice.voiceDsl",
 				SWTBotHelper.getInputStreamResource("otroInputVoice.voiceDsl"));
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/dslFlow.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/dslFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("dslFlow.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -749,12 +704,10 @@ public class PropertiesDiagramTest {
 		bot.sleep(LARGE_SLEEP);
 
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
-		assertThat(viewProperties.bot().text("inputVoice"),
-				is(not(nullValue())));
+		assertThat(viewProperties.bot().text("inputVoice"), is(not(nullValue())));
 		SWTBotText textName = viewProperties.bot().text("inputVoice");
 
-		assertThat(viewProperties.bot().clabel("Definition:"),
-				is(not(nullValue())));
+		assertThat(viewProperties.bot().clabel("Definition:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text(1).getText(), is("inputVoice"));
 		viewProperties.bot().button(0).click();
 
@@ -764,8 +717,7 @@ public class PropertiesDiagramTest {
 
 		bot.sleep(LARGE_SLEEP);
 		assertThat(dialogBot.table().rowCount(), is(2));
-		if (dialogBot.table().getTableItem(0).getText()
-				.contains("otroInputVoice")) {
+		if (dialogBot.table().getTableItem(0).getText().contains("otroInputVoice")) {
 			dialogBot.table().select(0);
 			dialogBot.table().click(0, 0);
 		} else {
@@ -800,8 +752,7 @@ public class PropertiesDiagramTest {
 
 	private void comunPropertiesSwitch() throws CoreException {
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/Switch_Flow.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/Switch_Flow.jvflow",
 				SWTBotHelper.getInputStreamResource("Switch_Flow.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -819,13 +770,10 @@ public class PropertiesDiagramTest {
 
 		bot.sleep(LARGE_SLEEP);
 
-		assertThat(viewProperties.bot().table().columns().get(0).toString(),
-				equalToIgnoringCase("Condition"));
-		assertThat(viewProperties.bot().table().columns().get(1).toString(),
-				equalToIgnoringCase("EventName"));
+		assertThat(viewProperties.bot().table().columns().get(0).toString(), equalToIgnoringCase("Condition"));
+		assertThat(viewProperties.bot().table().columns().get(1).toString(), equalToIgnoringCase("EventName"));
 		assertThat(viewProperties.bot().table().columnCount(), is(2));
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("default"));
 		viewProperties.bot().button(0).click();
 	}
 
@@ -833,24 +781,19 @@ public class PropertiesDiagramTest {
 	public void testPropertiesSwitchCaseAdd() throws CoreException {
 		comunPropertiesSwitch();
 
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
 	}
 
 	@Test
 	public void testPropertiesSwitchCaseRemove() throws CoreException {
 		comunPropertiesSwitch();
 
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
 		viewProperties.bot().table().getTableItem(0).select();
 		viewProperties.bot().button(1).click();
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("default"));
 	}
 
 	@Test
@@ -858,18 +801,13 @@ public class PropertiesDiagramTest {
 		comunPropertiesSwitch();
 		viewProperties.bot().button(0).click();
 
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("Case_2"));
-		assertThat(viewProperties.bot().table().cell(2, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_2"));
+		assertThat(viewProperties.bot().table().cell(2, 1).toString(), equalToIgnoringCase("default"));
 		viewProperties.bot().table().getTableItem(1).select();
 		viewProperties.bot().button(2).click();
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_2"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_2"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_1"));
 	}
 
 	@Test
@@ -877,180 +815,141 @@ public class PropertiesDiagramTest {
 		comunPropertiesSwitch();
 		viewProperties.bot().button(0).click();
 
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("Case_2"));
-		assertThat(viewProperties.bot().table().cell(2, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_2"));
+		assertThat(viewProperties.bot().table().cell(2, 1).toString(), equalToIgnoringCase("default"));
 		viewProperties.bot().table().getTableItem(0).select();
 		viewProperties.bot().button(3).click();
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_2"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_2"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_1"));
 	}
 
 	@Test
 	public void testPropertiesSwitchCaseNotRemove() throws CoreException {
 		comunPropertiesSwitch();
 
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
 		viewProperties.bot().table().getTableItem(1).select();
 		viewProperties.bot().button(1).click();
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
 	}
 
 	@Test
 	public void testPropertiesSwitchCaseNotUp() throws CoreException {
 		comunPropertiesSwitch();
 
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
 		viewProperties.bot().table().getTableItem(1).select();
 		viewProperties.bot().button(2).click();
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
 	}
 
 	@Test
 	public void testPropertiesSwitchCaseNotDown() throws CoreException {
 		comunPropertiesSwitch();
 
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
 		viewProperties.bot().table().getTableItem(0).select();
 		viewProperties.bot().button(3).click();
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
 	}
 
 	@Test
 	public void testPropertiesSwitchCaseRename() throws CoreException {
 		comunPropertiesSwitch();
 
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("default"));
 		viewProperties.bot().table().click(0, 0);
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.bot().text("").setText("holaaaaa");
 		viewProperties.bot().table().click(0, 1);
 		bot.sleep(LARGE_SLEEP);
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(0, 0).toString(),
-				equalToIgnoringCase("holaaaaa"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(0, 0).toString(), equalToIgnoringCase("holaaaaa"));
 
 		viewProperties.bot().table().click(0, 1);
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.bot().text("Case_1").setText("otroCase");
 		viewProperties.bot().table().click(0, 0);
 		bot.sleep(LARGE_SLEEP);
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("otroCase"));
-		assertThat(viewProperties.bot().clabel(0).getText(),
-				equalToIgnoringCase(""));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("otroCase"));
+		assertThat(viewProperties.bot().clabel(0).getText(), equalToIgnoringCase(""));
 
 		viewProperties.bot().table().click(0, 1);
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.bot().text("otroCase").setText("prueba Case");
 		viewProperties.bot().table().click(0, 0);
 		bot.sleep(LARGE_SLEEP);
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("otroCase"));
-		assertThat(viewProperties.bot().clabel(0).getText(),
-				not(equalToIgnoringCase("")));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("otroCase"));
+		assertThat(viewProperties.bot().clabel(0).getText(), not(equalToIgnoringCase("")));
 
 		viewProperties.bot().table().click(0, 1);
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.bot().text("otroCase").setText("nuevo_intento");
 		viewProperties.bot().table().click(0, 0);
 		bot.sleep(LARGE_SLEEP);
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("nuevo_intento"));
-		assertThat(viewProperties.bot().clabel(0).getText(),
-				equalToIgnoringCase(""));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("nuevo_intento"));
+		assertThat(viewProperties.bot().clabel(0).getText(), equalToIgnoringCase(""));
 
 		viewProperties.bot().table().click(0, 1);
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.bot().text("nuevo_intento").setText("nuevo_intento/");
 		viewProperties.bot().table().click(0, 0);
 		bot.sleep(LARGE_SLEEP);
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("nuevo_intento"));
-		assertThat(viewProperties.bot().clabel(0).getText(),
-				not(equalToIgnoringCase("")));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("nuevo_intento"));
+		assertThat(viewProperties.bot().clabel(0).getText(), not(equalToIgnoringCase("")));
 
 		viewProperties.bot().table().click(0, 1);
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.bot().text("nuevo_intento").setText("otraMas");
 		viewProperties.bot().table().click(0, 0);
 		bot.sleep(LARGE_SLEEP);
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("otraMas"));
-		assertThat(viewProperties.bot().clabel(0).getText(),
-				equalToIgnoringCase(""));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("otraMas"));
+		assertThat(viewProperties.bot().clabel(0).getText(), equalToIgnoringCase(""));
 
 		viewProperties.bot().table().click(0, 1);
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.bot().text("otraMas").setText("");
 		viewProperties.bot().table().click(0, 0);
 		bot.sleep(LARGE_SLEEP);
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("otraMas"));
-		assertThat(viewProperties.bot().clabel(0).getText(),
-				not(equalToIgnoringCase("")));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("otraMas"));
+		assertThat(viewProperties.bot().clabel(0).getText(), not(equalToIgnoringCase("")));
 
 		viewProperties.bot().table().click(0, 1);
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.bot().text("otraMas").setText("laUltima");
 		viewProperties.bot().table().click(0, 0);
 		bot.sleep(LARGE_SLEEP);
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("laUltima"));
-		assertThat(viewProperties.bot().clabel(0).getText(),
-				equalToIgnoringCase(""));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("laUltima"));
+		assertThat(viewProperties.bot().clabel(0).getText(), equalToIgnoringCase(""));
 
 		viewProperties.bot().button(0).click();
 		bot.sleep(LARGE_SLEEP);
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_1"));
 
 		viewProperties.bot().table().click(0, 1);
 		bot.sleep(LARGE_SLEEP);
 		viewProperties.bot().text("laUltima").setText("Case_1");
 		viewProperties.bot().table().click(0, 0);
 		bot.sleep(LARGE_SLEEP);
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("laUltima"));
-		assertThat(viewProperties.bot().clabel(0).getText(),
-				not(equalToIgnoringCase("")));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("laUltima"));
+		assertThat(viewProperties.bot().clabel(0).getText(), not(equalToIgnoringCase("")));
 	}
 
 	@Test
 	public void testRemoveWithTransition() throws CoreException {
 
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/subFlow.jvflow",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/subFlow.jvflow",
 				SWTBotHelper.getInputStreamResource("subFlow.jvflow"));
 
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/five.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/five.jvflow",
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -1068,12 +967,9 @@ public class PropertiesDiagramTest {
 
 		bot.sleep(LARGE_SLEEP);
 
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_1"));
-		assertThat(viewProperties.bot().table().cell(1, 1).toString(),
-				equalToIgnoringCase("Case_2"));
-		assertThat(viewProperties.bot().table().cell(2, 1).toString(),
-				equalToIgnoringCase("default"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_1"));
+		assertThat(viewProperties.bot().table().cell(1, 1).toString(), equalToIgnoringCase("Case_2"));
+		assertThat(viewProperties.bot().table().cell(2, 1).toString(), equalToIgnoringCase("default"));
 		viewProperties.bot().table().getTableItem(0).select();
 		viewProperties.bot().button(1).click();
 
@@ -1099,23 +995,19 @@ public class PropertiesDiagramTest {
 		}, 5 * 60 * 1000);
 		bot.sleep(LARGE_SLEEP);
 
-		assertThat(viewProperties.bot().table().cell(0, 1).toString(),
-				equalToIgnoringCase("Case_2"));
+		assertThat(viewProperties.bot().table().cell(0, 1).toString(), equalToIgnoringCase("Case_2"));
 
 	}
 
 	@Test
 	public void testPropertiesTransfer() throws CoreException {
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/newsStates.resources/otroTransfer.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/newsStates.resources/otroTransfer.voiceDsl",
 				SWTBotHelper.getInputStreamResource("otroTransfer.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/newsStates.resources/Transfer.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/newsStates.resources/Transfer.voiceDsl",
 				SWTBotHelper.getInputStreamResource("Transfer.voiceDsl"));
 
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/newsStates.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/newsStates.jvflow",
 				SWTBotHelper.getInputStreamResource("newsStates.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -1135,8 +1027,7 @@ public class PropertiesDiagramTest {
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Transfer"), is(not(nullValue())));
 
-		assertThat(viewProperties.bot().clabel("Name definition:"),
-				is(not(nullValue())));
+		assertThat(viewProperties.bot().clabel("Name definition:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text(1).getText(), is("Transfer"));
 		viewProperties.bot().button(0).click();
 
@@ -1146,8 +1037,7 @@ public class PropertiesDiagramTest {
 
 		bot.sleep(LARGE_SLEEP);
 		assertThat(dialogBot.table().rowCount(), is(2));
-		if (dialogBot.table().getTableItem(0).getText()
-				.contains("otroTransfer")) {
+		if (dialogBot.table().getTableItem(0).getText().contains("otroTransfer")) {
 			dialogBot.table().select(0);
 			dialogBot.table().click(0, 0);
 		} else {
@@ -1184,15 +1074,12 @@ public class PropertiesDiagramTest {
 	@Test
 	public void testPropertiesRecord() throws CoreException {
 		IProject project = SWTBotHelper.createProject("testNavigator");
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/newsStates.resources/otroRecord.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/newsStates.resources/otroRecord.voiceDsl",
 				SWTBotHelper.getInputStreamResource("otroRecord.voiceDsl"));
-		SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/newsStates.resources/Record.voiceDsl",
+		SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/newsStates.resources/Record.voiceDsl",
 				SWTBotHelper.getInputStreamResource("Record.voiceDsl"));
 
-		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH
-				+ "/test/newsStates.jvflow",
+		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/newsStates.jvflow",
 				SWTBotHelper.getInputStreamResource("newsStates.jvflow"));
 
 		bot.sleep(LARGE_SLEEP);
@@ -1212,8 +1099,7 @@ public class PropertiesDiagramTest {
 		assertThat(viewProperties.bot().clabel("Name:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text("Record"), is(not(nullValue())));
 
-		assertThat(viewProperties.bot().clabel("Name definition:"),
-				is(not(nullValue())));
+		assertThat(viewProperties.bot().clabel("Name definition:"), is(not(nullValue())));
 		assertThat(viewProperties.bot().text(1).getText(), is("Record"));
 		viewProperties.bot().button(0).click();
 
