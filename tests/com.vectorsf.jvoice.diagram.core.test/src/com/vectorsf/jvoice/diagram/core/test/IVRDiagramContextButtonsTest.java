@@ -5,24 +5,13 @@ import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.deleteProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.getInputStreamResource;
 import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.asyncExec;
-import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.syncExec;
-import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellIsActive;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.both;
-import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.fail;
-
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
 
 import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IFile;
@@ -31,9 +20,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
@@ -42,15 +29,12 @@ import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
 import org.eclipse.graphiti.ui.internal.contextbuttons.ContextButton;
 import org.eclipse.graphiti.ui.internal.contextbuttons.ContextButtonPad;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
-import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefViewer;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
@@ -64,6 +48,7 @@ import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
@@ -71,7 +56,6 @@ import org.osgi.framework.Bundle;
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.base.test.SWTBotHelper;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 /**
@@ -83,20 +67,13 @@ public class IVRDiagramContextButtonsTest {
 	private static final int SMALL_SLEEP = 200;
 	private static final int LARGE_SLEEP = 1000;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
-	private static final String PROJECT_NAME = "testProject";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private SWTBotView view;
 	private SWTBotGefEditor editor;
-	private SWTBotGefViewer gefViewer;
-	@SuppressWarnings("unchecked")
-	private final Matcher<Object[]> arrayContainingTextOne = arrayContaining(hasProperty(
-			"text", is("one")));
-	@SuppressWarnings("unchecked")
-	private final Matcher<Object[]> arrayContainingTextTwo = arrayContaining(hasProperty(
-			"text", is("two")));
-
 	public static final Bundle bundle = Platform
 			.getBundle("com.vectorsf.jvoice.diagram.core.test");
+
+	private static final String COMPONENTS_PATH = "/com/isb/testNavigator/components/";
 
 	/**
 	 * @throws java.lang.Exception
@@ -193,90 +170,57 @@ public class IVRDiagramContextButtonsTest {
 		});
 	}
 
-	private Matcher<Iterable<? super State>> hasStateNamed(String stateName) {
-		return Matchers.<State> hasItem(hasProperty("name", is(stateName)));
+	@Test
+	public void testCreateTransitionCallSubflow() throws Exception {
+		createTransition("test", "empty", 120, 90, 120, 170);
 	}
 
 	@Test
-	public void testCreateTransitionCallFlowFinal() throws Exception {
-		createTransition("flow2", "Final", 225, 150, 300, 150);
+	@Ignore
+	public void testCreateTransitionSubflowTransfer() throws Exception {
+		createTransition("empty", "Transfer", 80, 200, 120, 270);
 	}
 
 	@Test
-	public void testCancelDeleteFinalState() throws Exception {
-		cancelDeleteState("FinalState");
-
+	@Ignore
+	public void testCreateTransitionTransferOutput() throws Exception {
+		createTransition("Transfer", "Output", 120, 290, 310, 270);
 	}
 
 	@Test
-	public void testCancelDeleteSwitchState() throws Exception {
-		cancelDeleteState("Switch");
-	}
-
-	@Test
-	public void testCancelDeleteCallState() throws Exception {
-		cancelDeleteState("Call");
-	}
-
-	@Test
-	public void testCancelDeleteCallFlowState() throws Exception {
-		cancelDeleteState("Subflow");
-	}
-
-	@Test
-	public void testDeleteFinalState() throws Exception {
-		deleteState("FinalState");
-
-	}
-
-	@Test
-	public void testDeleteSwitchState() throws Exception {
-		deleteState("Switch");
-	}
-
-	@Test
-	public void testDeleteCallState() throws Exception {
-		cannotDeleteState("Call");
-	}
-
-	@Test
-	public void testDeleteCallFlowState() throws Exception {
-		deleteState("Subflow");
-	}
-
-	@Test
-	public void testCreateTransitionCallOutput() throws Exception {
-		createTransition("Call", "Output", 375, 79, 116, 210);
-	}
-
-	@Test
+	@Ignore
 	public void testCreateTransitionOutputMenu() throws Exception {
-		createTransition("Output", "Menu", 221, 185, 330, 310);
+		createTransition("Output", "Menu", 320, 290, 325, 170);
 	}
 
 	@Test
-	public void testCreateTransitionInputMenu() throws Exception {
-		createTransition("Input", "Menu", 450, 155, 360, 155);
+	@Ignore
+	public void testCreateTransitionMenuSwitch() throws Exception {
+		createTransition("Menu", "Switch", 240, 200, 325, 70);
 	}
 
 	@Test
-	public void testCreateTransitionEmptyOutput() throws Exception {
-		createTransition("empty", "Output", 550, 70, 116, 210);
+	@Ignore
+	public void testCreateTransitionSwitchInput() throws Exception {
+		createTransition("Switch", "Input", 240, 90, 570, 70);
 	}
 
 	@Test
-	public void testCreateTransitionSwitchFinal() throws Exception {
-		createTransition("Switch", "Final", 550, 185, 141, 336);
+	@Ignore
+	public void testCreateTransitionInputRecord() throws Exception {
+		createTransition("Input", "Record", 90, 570, 170, 570);
 	}
 
 	@Test
-	public void testCreateTransitionMenuInput() throws Exception {
-		createTransition("Menu", "Input", 425, 278, 320, 210);
+	@Ignore
+	public void testCreateTransitionRecordCustom() throws Exception {
+		createTransition("Record", "Custom", 570, 200, 370, 570);
 	}
 
 	@Test
-	public void testCreateTransitionInitialOutput() throws Exception {
-		createTransition("Initial", "Output", 181, 81, 120, 210);
+	@Ignore
+	public void testCreateTransitionCustomFinal() throws Exception {
+		createTransition("Custom", "Final", 570, 290, 400, 370);
 	}
 
 	public void createTransition(final String sourceName, String targetName,
@@ -286,89 +230,101 @@ public class IVRDiagramContextButtonsTest {
 
 		IProject project = createProject("testNavigator");
 		IFile file;
-		if (sourceName.equals("flow2")) {
-			file = createFile(project, BaseModel.JV_PATH
-					+ "/several/packages/inside/callflow.jvflow",
-					getInputStreamResource(bundle, "callflow.jvflow"));
-			createFile(project, BaseModel.JV_PATH
-					+ "/several/packages/inside/flow2.jvflow",
-					getInputStreamResource(bundle, "flow2.jvflow"));
+		file = createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/ConnectionState.jvflow",
+				getInputStreamResource(bundle, "flows/ConnectionState.jvflow"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/empty.jvflow",
+				getInputStreamResource(bundle, "flows/empty.jvflow"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Menu.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Input.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Output.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Record.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Record.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Transfer.voiceDsl",
+				getInputStreamResource(bundle, "voiceDsls/Transfer.voiceDsl"));
+		createFile(project, BaseModel.JV_PATH
+				+ "/several/packages/inside/Custom.jsp",
+				getInputStreamResource(bundle, "jsps/Custom.jsp"));
+		createFile(project, BaseModel.JAVA_SOURCES_PATH + COMPONENTS_PATH
+				+ "TestExecute.java",
+				getInputStreamResource(bundle, "components/TestExecute.java"));
 
-		} else {
-			file = createFile(project, BaseModel.JV_PATH
-					+ "/several/packages/inside/six.jvflow",
-					getInputStreamResource(bundle, "flows/six.jvflow"));
-			createFile(project, BaseModel.JV_PATH
-					+ "/several/packages/inside/empty.jvflow",
-					getInputStreamResource(bundle, "flows/empty.jvflow"));
-			createFile(project, BaseModel.JV_PATH
-					+ "/several/packages/inside/Menu.voiceDsl",
-					getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
-			createFile(project, BaseModel.JV_PATH
-					+ "/several/packages/inside/Input.voiceDsl",
-					getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
-			createFile(project, BaseModel.JV_PATH
-					+ "/several/packages/inside/Output.voiceDsl",
-					getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
-		}
 		openFile(file);
 		bot.sleep(LARGE_SLEEP);
 
 		editor = getGefEditor();
-		gefViewer = editor.getSWTBotGefViewer();
-		SWTBotGefEditPart entity = editor.getEditPart(sourceName);
-		entity.click();
-		syncExec(new VoidResult() {
+		editor.getSWTBotGefViewer();
 
-			@Override
-			public void run() {
-				IDiagramContainerUI diagramEditor = (IDiagramContainerUI) editor
-						.getReference().getEditor(true);
-				diagramEditor.getDiagramBehavior().getMouseLocation().x = initialx;
-				diagramEditor.getDiagramBehavior().getMouseLocation().y = initialy;
+		IDiagramContainerUI diagramEditor = (IDiagramContainerUI) editor
+				.getReference().getEditor(true);
+		diagramEditor.getDiagramBehavior().getMouseLocation().x = initialx;
+		diagramEditor.getDiagramBehavior().getMouseLocation().y = initialy;
 
-				GraphicalViewer graphicalViewer = (GraphicalViewer) diagramEditor
-						.getAdapter(GraphicalViewer.class);
-				final Control control = graphicalViewer.getControl();
-				assertThat(control, instanceOf(FigureCanvas.class));
-				final FigureCanvas canvas = (FigureCanvas) control;
-				try {
-					Point p = canvas.toDisplay(0, 0);
-					Robot robot = new Robot();
-					robot.mouseMove(p.x + initialx, p.y + initialy);
-
-				} catch (AWTException e) {
-				}
-			}
-		});
+		editor.drag(initialx, initialy, finalx, finaly);
+		diagramEditor.getDiagramBehavior().getMouseLocation().x = finalx;
+		diagramEditor.getDiagramBehavior().getMouseLocation().y = finaly;
+		editor.click(finalx, finaly);
 		bot.sleep(LARGE_SLEEP);
-		syncExec(new VoidResult() {
-
-			@Override
-			public void run() {
-				IDiagramContainerUI diagramEditor = (IDiagramContainerUI) editor
-						.getReference().getEditor(true);
-				diagramEditor.getDiagramBehavior().getMouseLocation().x = initialx;
-				diagramEditor.getDiagramBehavior().getMouseLocation().y = initialy;
-
-				GraphicalViewer graphicalViewer = (GraphicalViewer) diagramEditor
-						.getAdapter(GraphicalViewer.class);
-				final Control control = graphicalViewer.getControl();
-				assertThat(control, instanceOf(FigureCanvas.class));
-				final FigureCanvas canvas = (FigureCanvas) control;
-				try {
-					Point p = canvas.toDisplay(0, 0);
-					Robot robot = new Robot();
-					robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-
-					robot.mouseMove(p.x + finalx, p.y + finaly);
-					bot.sleep(SMALL_SLEEP);
-					robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-				} catch (AWTException e) {
-				}
-			}
-		});
-		editor.save();
+		//
+		// syncExec(new VoidResult() {
+		//
+		// @Override
+		// public void run() {
+		// IDiagramContainerUI diagramEditor = (IDiagramContainerUI) editor
+		// .getReference().getEditor(true);
+		// diagramEditor.getDiagramBehavior().getMouseLocation().x = initialx;
+		// diagramEditor.getDiagramBehavior().getMouseLocation().y = initialy;
+		//
+		// GraphicalViewer graphicalViewer = (GraphicalViewer) diagramEditor
+		// .getAdapter(GraphicalViewer.class);
+		// final Control control = graphicalViewer.getControl();
+		// assertThat(control, instanceOf(FigureCanvas.class));
+		// final FigureCanvas canvas = (FigureCanvas) control;
+		// try {
+		// Point p = canvas.toDisplay(0, 0);
+		// Robot robot = new Robot();
+		// robot.mouseMove(p.x + initialx, p.y + initialy);
+		//
+		// } catch (AWTException e) {
+		// }
+		// }
+		// });
+		// bot.sleep(LARGE_SLEEP);
+		// syncExec(new VoidResult() {
+		//
+		// @Override
+		// public void run() {
+		// IDiagramContainerUI diagramEditor = (IDiagramContainerUI) editor
+		// .getReference().getEditor(true);
+		// diagramEditor.getDiagramBehavior().getMouseLocation().x = initialx;
+		// diagramEditor.getDiagramBehavior().getMouseLocation().y = initialy;
+		//
+		// GraphicalViewer graphicalViewer = (GraphicalViewer) diagramEditor
+		// .getAdapter(GraphicalViewer.class);
+		// final Control control = graphicalViewer.getControl();
+		// assertThat(control, instanceOf(FigureCanvas.class));
+		// final FigureCanvas canvas = (FigureCanvas) control;
+		// try {
+		// Point p = canvas.toDisplay(0, 0);
+		// Robot robot = new Robot();
+		// robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+		//
+		// robot.mouseMove(p.x + finalx, p.y + finaly);
+		// // bot.sleep(SMALL_SLEEP);
+		// robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+		// } catch (AWTException e) {
+		// }
+		// }
+		// });
 
 		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
 				.getEditor(true);
@@ -391,166 +347,6 @@ public class IVRDiagramContextButtonsTest {
 								hasProperty("name", is(sourceName)))).and(
 						hasProperty("target",
 								hasProperty("name", is(targetName)))));
-	}
-
-	public void deleteState(String stateName) throws Exception {
-		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
-
-		// Creamos el proyecto
-		IProject project = createProject(PROJECT_NAME);
-		IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "flows/five.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "flows/empty.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Menu.voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Input.voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Output.voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
-
-		openFile(file);
-		bot.sleep(LARGE_SLEEP);
-
-		editor = getGefEditor();
-		gefViewer = editor.getSWTBotGefViewer();
-
-		SWTBotGefEditPart entity = editor.getEditPart(stateName);
-		entity.click();
-		pressEntityContextButton(entity, "Delete");
-
-		bot.waitUntil(shellIsActive("Confirm Delete"), 10000);
-		SWTBotShell shell = bot.shell("Confirm Delete");
-
-		shell.bot().button("Yes").click();
-
-		bot.sleep(SMALL_SLEEP);
-		entity = editor.getEditPart(stateName);
-
-		assertThat(entity, nullValue());
-		editor.save();
-		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
-		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		Flow flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
-
-		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed(stateName);
-		assertThat(flow.getStates(), not(hasItemWithNameStateName));
-		Matcher<Iterable<? super Transition>> hasTransitionWithState = hasTransitionWithState(stateName);
-		assertThat(flow.getTransitions(), not(hasTransitionWithState));
-
-	}
-
-	private void cannotDeleteState(String stateName) throws Exception {
-		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
-
-		IProject project = createProject("testNavigator");
-		IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "flows/five.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "flows/empty.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Menu.voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Input.voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Output.voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
-
-		openFile(file);
-		bot.sleep(LARGE_SLEEP);
-
-		editor = getGefEditor();
-		gefViewer = editor.getSWTBotGefViewer();
-
-		SWTBotGefEditPart entity = editor.getEditPart(stateName);
-		entity.click();
-		ContextButton delete = getContextButton(entity, "Delete");
-		assertThat(!delete.isEnabled(), is(true));
-	}
-
-	private Matcher<Iterable<? super Transition>> hasTransitionWithState(
-			String stateName) {
-		return Matchers.<Transition> hasItem(either(
-				hasProperty("source", hasProperty("name", is(stateName)))).or(
-				hasProperty("target", hasProperty("name", is(stateName)))));
-	}
-
-	public void cancelDeleteState(String stateName) throws Exception {
-
-		assertThat(view.bot().tree().getAllItems(), is(emptyArray()));
-
-		IProject project = createProject("testNavigator");
-		IFile file = createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/five.jvflow",
-				getInputStreamResource(bundle, "flows/five.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/empty.jvflow",
-				getInputStreamResource(bundle, "flows/empty.jvflow"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Menu.voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/Menu.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Input.voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/Input.voiceDsl"));
-		createFile(project, BaseModel.JV_PATH
-				+ "/several/packages/inside/Output.voiceDsl",
-				getInputStreamResource(bundle, "voiceDsls/Output.voiceDsl"));
-
-		openFile(file);
-		bot.sleep(LARGE_SLEEP);
-
-		editor = getGefEditor();
-		gefViewer = editor.getSWTBotGefViewer();
-
-		boolean checkTransitions = false;
-		DiagramEditor diaEditor = (DiagramEditor) editor.getReference()
-				.getEditor(true);
-		Diagram diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		Flow flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
-		for (State state : flow.getStates()) {
-			if (state.getIncomingTransitions() != null
-					|| state.getOutgoingTransitions() != null) {
-				checkTransitions = true;
-			}
-		}
-
-		SWTBotGefEditPart entity = editor.getEditPart(stateName);
-		entity.click();
-		pressEntityContextButton(entity, "Delete");
-
-		bot.waitUntil(shellIsActive("Confirm Delete"), 20000);
-		SWTBotShell shell = bot.shell("Confirm Delete");
-
-		shell.bot().button("No").click();
-
-		entity = editor.getEditPart(stateName);
-
-		assertThat(entity, notNullValue());
-
-		editor.save();
-
-		diaEditor = (DiagramEditor) editor.getReference().getEditor(true);
-		diagram = diaEditor.getDiagramTypeProvider().getDiagram();
-		flow = (Flow) Graphiti.getLinkService()
-				.getBusinessObjectForLinkedPictogramElement(diagram);
-		Matcher<Iterable<? super State>> hasItemWithNameStateName = hasStateNamed(stateName);
-		assertThat(flow.getStates(), hasItemWithNameStateName);
-		if (checkTransitions) {
-			Matcher<Iterable<? super Transition>> hasTransitionWithState = hasTransitionWithState(stateName);
-			assertThat(flow.getTransitions(), hasTransitionWithState);
-		}
 	}
 
 	public void pressEntityContextButton(SWTBotGefEditPart part,
@@ -590,23 +386,6 @@ public class IVRDiagramContextButtonsTest {
 			}
 		}
 		return contextButtonPad;
-	}
-
-	private ContextButton getContextButton(SWTBotGefEditPart part,
-			String contextButtonName) {
-		editor.click(0, 0);
-		editor.click(part);
-
-		ContextButtonPad contextButtonPad = getContextButtonPad();
-		assertThat(contextButtonPad, notNullValue());
-		for (final Object button : contextButtonPad.getChildren()) {
-			if (((ContextButton) button).getEntry().getText()
-					.equals(contextButtonName)) {
-				return (ContextButton) button;
-
-			}
-		}
-		return null;
 	}
 
 	public SWTBotGefEditor getGefEditor() {
