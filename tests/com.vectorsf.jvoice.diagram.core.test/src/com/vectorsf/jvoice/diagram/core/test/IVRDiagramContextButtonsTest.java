@@ -171,6 +171,7 @@ public class IVRDiagramContextButtonsTest {
 	}
 
 	@Test
+	@Ignore
 	public void testCreateTransitionCallSubflow() throws Exception {
 		createTransition("test", "empty", 120, 90, 120, 170);
 	}
