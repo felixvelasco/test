@@ -2,7 +2,7 @@
 <feature
       id="com.vectorsf.jvoice.feature"
       label="jVoice"
-      version="1.1.0.qualifier"
+      version="1.1.0"
       provider-name="Vector SF">
 
    <description url="http://www.example.com/description">
@@ -21,147 +21,147 @@
          id="com.vectorsf.jvoice.base.model"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.base.model.edit"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.core.operation"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.core.project"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.core.prompt"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.core.reconciliator"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.core.uri"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.diagram.core"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.operation.model"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.operation.model.edit"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.prompt.model"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.prompt.model.edit"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.ui.diagram.properties"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.ui.navigator"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.ui.wizard"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.voice.dsl"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.voice.dsl.ui"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.ui.perspective"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.m2e.builder"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.ui.project.editor"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
    <plugin
          id="com.vectorsf.jvoice.product"
          download-size="0"
          install-size="0"
-         version="1.1.0.qualifier"
+         version="1.1.0"
          unpack="false"/>
 
 </feature>

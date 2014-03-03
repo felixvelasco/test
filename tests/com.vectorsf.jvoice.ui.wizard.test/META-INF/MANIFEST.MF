@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: com.vectorsf.jvoice.ui.wizard.test
 Bundle-SymbolicName: com.vectorsf.jvoice.ui.wizard.test;singleton:=true
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.1.0
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: 
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.swtbot.go,
  org.eclipse.swtbot.eclipse.ui;bundle-version="2.1.1",
  org.eclipse.swtbot.junit4_x;bundle-version="2.1.1",
  org.eclipse.swtbot.swt.finder;bundle-version="2.1.1",
- com.vectorsf.jvoice.ui.wizard,
+ com.vectorsf.jvoice.ui.wizard;bundle-version="1.1.0",
  org.eclipse.core.resources,
- com.vectorsf.jvoice.core.project,
- com.vectorsf.jvoice.base.model
+ com.vectorsf.jvoice.core.project;bundle-version="1.1.0",
+ com.vectorsf.jvoice.base.model;bundle-version="1.1.0"

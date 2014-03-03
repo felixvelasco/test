@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.vectorsf.jvoice.core</groupId>
     <artifactId>tests</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.0</version>
   </parent>
   <groupId>com.vectorsf.jvoice.core</groupId>
   <artifactId>com.vectorsf.jvoice.ui.wizard.test</artifactId>
@@ -30,13 +30,13 @@
 							<type>eclipse-plugin</type>
 							<groupId>com.vectorsf.jvoice.core</groupId>
 							<artifactId>com.vectorsf.jvoice.core.reconciliator</artifactId>
-							<version>0.1.0</version>
+							<version>1.1.0</version>
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
 							<groupId>com.vectorsf.jvoice.core</groupId>
 							<artifactId>com.vectorsf.jvoice.feature</artifactId>
-							<version>0.1.0</version>
+							<version>1.1.0</version>
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
