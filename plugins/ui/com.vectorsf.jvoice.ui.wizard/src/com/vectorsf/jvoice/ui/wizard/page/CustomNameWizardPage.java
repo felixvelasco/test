@@ -60,8 +60,8 @@ public class CustomNameWizardPage extends AbstractWizardPage {
 	private static final String PAGE_TITLE = "Create a Custom";
 
 	private static final int SIZING_TEXT_FIELD_WIDTH = 250;
-	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] { ' ', ',', '.', '^', 'ï¿½', '(', ')', '[', ']',
-			'{', '}', ';', '-', '_', '!', 'ï¿½', '$', '%', '&', '=' };
+	private static final char[] INVALID_RESOURCE_CHARACTERS = new char[] { ' ', ',', '.', '^', '¿', '(', ')', '[', ']',
+			'{', '}', ';', '-', '_', '!', '?', '$', '%', '&', '=' };
 
 	Text textFieldCustom;
 	Text textFieldProject;
