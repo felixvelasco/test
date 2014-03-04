@@ -61,7 +61,7 @@ public class AddNumsetFolderHandler extends AbstractHandler {
     }
 
     /**
-     * Crea recursivamente la carpeta.
+     * Crea recursivamente la carpeta NUMSET_LOCATION.
      */
     private void createFolder(IProject prj) {
 	try {

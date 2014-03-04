@@ -959,6 +959,7 @@
             commandId="com.vectorsf.jvoice.ui.navigator.addNumsetFolder">
       </handler>      
    </extension>
+   
    <extension
          point="org.eclipse.ui.navigator.linkHelper">
       <linkHelper
