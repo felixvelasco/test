@@ -108,6 +108,13 @@
                 style="push"
                 tooltip="Actualizador de proyectos IVR">
           </command>
+        <command
+                commandId="Despliegue de módulos"
+                icon="icons/ivrserver.gif"
+                label="Despliegue"
+                style="push"
+                tooltip="Instala el módulo seleccionado y su aplicación">
+          </command>
          </toolbar>
        </menuContribution>
     </extension>
@@ -117,6 +124,10 @@
     <handler
           class="com.vectorsf.jvoice.diagram.core.updater.IVRUpdater"
           commandId="Actualizador de proyectos IVR">
+    </handler>
+    <handler
+          class="com.vectorsf.jvoice.diagram.core.updateModules.IVRMavenLauncher"
+          commandId="Despliegue de módulos">
     </handler>
 </extension>    
     
