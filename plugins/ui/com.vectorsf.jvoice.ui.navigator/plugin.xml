@@ -797,6 +797,25 @@
                   </with>
                </visibleWhen>
             </command>
+            
+         <command
+               commandId="com.vectorsf.jvoice.ui.navigator.addNumsetFolder"
+               label="%command.label.addNumsetFolder"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">                     
+                        <instanceof
+                           value="com.vectorsf.jvoice.model.base.JVApplication">
+                        </instanceof>                     
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -935,6 +954,10 @@
             </with>
          </activeWhen>
       </handler>
+            <handler
+            class="com.vectorsf.jvoice.ui.navigator.handler.AddNumsetFolderHandler"
+            commandId="com.vectorsf.jvoice.ui.navigator.addNumsetFolder">
+      </handler>      
    </extension>
    <extension
          point="org.eclipse.ui.navigator.linkHelper">
@@ -979,6 +1002,11 @@
             defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.RefreshBeanScopeHandler"
             id="com.vectorsf.jvoice.ui.navigator.refreshBeanScope"
             name="refreshBeanScope">
+      </command>
+      <command
+            defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.AddNumsetFolderHandler"
+            id="com.vectorsf.jvoice.ui.navigator.addNumsetFolder"
+            name="addNumsetFolder">
       </command>
    </extension>
    <extension
