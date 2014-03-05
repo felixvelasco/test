@@ -1,8 +1,15 @@
 package com.vectorsf.jvoice.ui.navigator.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -11,6 +18,8 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -38,6 +47,7 @@ import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.ui.navigator.activator.Activator;
 
 public class RenameIVRResourceWizard extends RefactoringWizard {
 
@@ -77,6 +87,7 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 	private static class RenameResourceRefactoringConfigurationPage extends
 			UserInputWizardPage {
 
+		private static final String POM_XML = "/pom.xml";
 		@SuppressWarnings("restriction")
 		private final RenameResourceProcessor fRefactoringProcessor;
 		private Text fNameField;
@@ -142,6 +153,7 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 			fNameField.selectAll();
 			setPageComplete(false);
 			setControl(composite);
+
 		}
 
 		@Override
@@ -232,7 +244,43 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 
 		protected void superPerformFinish() {
 			super.performFinish();
+			// Metodo para cambiar el Group Id y el Artifact Id
+			changeGroupAndArtifact();
 
+		}
+
+		// Metodo para cambiar el group Id y artifact del proyecto o Aplicacion
+		// con el nuevo nombre que se le introduzca.
+		private void changeGroupAndArtifact() {
+			JVProject newproject = BaseModel.getInstance().getModel()
+					.getProject(newName);
+			IProject iproject = ResourcesPlugin.getWorkspace().getRoot()
+					.getProject(newproject.getName());
+			try {
+				MavenXpp3Reader reader = new MavenXpp3Reader();
+				Model mm = null;
+				File pomFile = new File(iproject.getLocationURI().getPath(),
+						POM_XML);
+				mm = reader.read(new FileInputStream(pomFile));
+
+				if (mm.getArtifactId().equals(resource.getName())) {
+					mm.setArtifactId(newName);
+				}
+				if (mm.getGroupId().equals(resource.getName())) {
+					mm.setGroupId(newName);
+				}
+
+				MavenXpp3Writer writer = new MavenXpp3Writer();
+				writer.write(new FileOutputStream(pomFile), mm);
+			} catch (IOException | XmlPullParserException e) {
+				Activator
+						.getDefault()
+						.getLog()
+						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+								"Error leyendo fichero", e));
+
+				e.printStackTrace();
+			}
 		}
 
 		/*
@@ -284,9 +332,6 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 					}
 
 				}
-
-				List<JVProject> projects = BaseModel.getInstance().getModel()
-						.getProjects();
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
