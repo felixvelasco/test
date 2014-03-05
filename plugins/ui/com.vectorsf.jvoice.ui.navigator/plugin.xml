@@ -954,10 +954,6 @@
             </with>
          </activeWhen>
       </handler>
-            <handler
-            class="com.vectorsf.jvoice.ui.navigator.handler.AddNumsetFolderHandler"
-            commandId="com.vectorsf.jvoice.ui.navigator.addNumsetFolder">
-      </handler>      
    </extension>
    
    <extension
