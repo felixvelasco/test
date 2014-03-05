@@ -817,6 +817,33 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:com.vectorsf.jvoice.ui.navigator.popup?after=additions">
+         <menu
+               id="com.vectorsf.jvoice.ui.navigator.subMenu"
+               label="Maven">
+            <command
+                  commandId="com.vectorsf.jvoice.ui.navigator.OpenPom"
+                  label="Open Pom"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <iterate>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVProject">
+                        </instanceof>
+                     </iterate>
+                     <count
+                           value="1">
+                     </count>
+                  </with>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.core.runtime.adapters">
@@ -1004,6 +1031,11 @@
             defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.AddNumsetFolderHandler"
             id="com.vectorsf.jvoice.ui.navigator.addNumsetFolder"
             name="addNumsetFolder">
+      </command>
+      <command
+            defaultHandler="com.vectorsf.jvoice.ui.navigator.handler.OpenPomHandler"
+            id="com.vectorsf.jvoice.ui.navigator.OpenPom"
+            name="Open pom">
       </command>
    </extension>
    <extension
