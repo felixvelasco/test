@@ -244,8 +244,10 @@ public class RenameIVRResourceWizard extends RefactoringWizard {
 
 		protected void superPerformFinish() {
 			super.performFinish();
-			// Metodo para cambiar el Group Id y el Artifact Id
-			changeGroupAndArtifact();
+			if (resource instanceof IProject) {
+				// Metodo para cambiar el Group Id y el Artifact Id
+				changeGroupAndArtifact();
+			}
 
 		}
 
