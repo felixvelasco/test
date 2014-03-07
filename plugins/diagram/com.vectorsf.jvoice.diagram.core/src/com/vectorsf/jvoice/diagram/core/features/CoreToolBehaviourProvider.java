@@ -40,6 +40,7 @@ import org.eclipse.graphiti.tb.ShapeSelectionInfoImpl;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
+import com.vectorsf.jvoice.diagram.core.editor.JVoiceDiagramBehavior;
 import com.vectorsf.jvoice.diagram.core.features.editing.FinalStateHangToggleFeature;
 import com.vectorsf.jvoice.diagram.core.pattern.note.CreateRelationFromPad;
 import com.vectorsf.jvoice.diagram.core.pattern.note.RelationPattern;
@@ -172,6 +173,11 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 	@Override
 	public IContextButtonPadData getContextButtonPad(IPictogramElementContext context) {
+
+		if (((JVoiceDiagramBehavior) getFeatureProvider()).isReadOnly()) {
+			return null;
+		}
+
 		IContextButtonPadData data = super.getContextButtonPad(context);
 		PictogramElement pe = context.getPictogramElement();
 		Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
@@ -261,6 +267,11 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 
 	@Override
 	public ICustomFeature getSingleClickFeature(ISingleClickContext context) {
+
+		if (((JVoiceDiagramBehavior) getFeatureProvider()).isReadOnly()) {
+			return null;
+		}
+
 		if (context.getInnerGraphicsAlgorithm() instanceof Image) {
 			PictogramElement pe = context.getInnerPictogramElement();
 			Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
@@ -271,5 +282,10 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 		}
 
 		return super.getSingleClickFeature(context);
+	}
+
+	@Override
+	public boolean isShowFlyoutPalette() {
+		return !((JVoiceDiagramBehavior) getDiagramTypeProvider().getDiagramBehavior()).isReadOnly();
 	}
 }

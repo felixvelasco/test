@@ -21,13 +21,16 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.transaction.Transaction;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.impl.TransactionalEditingDomainImpl;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.editor.DefaultPersistencyBehavior;
-import org.eclipse.graphiti.ui.editor.DiagramBehavior;
 
 public class JVoicePersistencyBehavior extends DefaultPersistencyBehavior {
 
-	public JVoicePersistencyBehavior(DiagramBehavior diagramBehavior) {
+	private JVoiceDiagramBehavior jdiagramBehavior;
+
+	public JVoicePersistencyBehavior(JVoiceDiagramBehavior diagramBehavior) {
 		super(diagramBehavior);
+		this.jdiagramBehavior = diagramBehavior;
 	}
 
 	@Override
@@ -132,4 +135,16 @@ public class JVoicePersistencyBehavior extends DefaultPersistencyBehavior {
 		return result;
 	}
 
+	@Override
+	public Diagram loadDiagram(URI uri) {
+		Diagram diagram = super.loadDiagram(uri);
+		jdiagramBehavior.setReadOnly(uri.isArchive());
+
+		return diagram;
+	}
+
+	@Override
+	public boolean isDirty() {
+		return !jdiagramBehavior.isReadOnly() && super.isDirty();
+	}
 }

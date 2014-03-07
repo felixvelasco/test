@@ -38,6 +38,7 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 
 	private JVoiceValidationListener validator;
 	private TransactionalEditingDomain domain;
+	private boolean readOnly;
 
 	public JVoiceDiagramBehavior(IDiagramContainerUI diagramContainer, TransactionalEditingDomain domain) {
 		super(diagramContainer);
@@ -144,5 +145,18 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 	@Override
 	protected DefaultRefreshBehavior createRefreshBehavior() {
 		return new JVoiceRefreshBehavior(this);
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	@Override
+	protected boolean isDirty() {
+		return getPersistencyBehavior().isDirty();
 	}
 }
