@@ -44,6 +44,7 @@ import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.pattern.DefaultFeatureProviderWithPatterns;
 import org.eclipse.graphiti.pattern.IPattern;
+import org.eclipse.graphiti.platform.IDiagramBehavior;
 import org.osgi.service.log.LogService;
 
 import com.vectorsf.jvoice.diagram.core.Activator;
@@ -179,8 +180,12 @@ public class CoreFeatureProvider extends DefaultFeatureProviderWithPatterns {
 		return super.getCustomFeatures(context);
 	}
 
-	private boolean isReadOnly() {
-		return ((JVoiceDiagramBehavior) getDiagramTypeProvider().getDiagramBehavior()).isReadOnly();
+	boolean isReadOnly() {
+		IDiagramBehavior diagramBehavior = getDiagramTypeProvider().getDiagramBehavior();
+		if (diagramBehavior instanceof JVoiceDiagramBehavior) {
+			return ((JVoiceDiagramBehavior) diagramBehavior).isReadOnly();
+		}
+		return false;
 	}
 
 	@Override

@@ -174,7 +174,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	@Override
 	public IContextButtonPadData getContextButtonPad(IPictogramElementContext context) {
 
-		if (((JVoiceDiagramBehavior) getFeatureProvider()).isReadOnly()) {
+		if (((CoreFeatureProvider) getFeatureProvider()).isReadOnly()) {
 			return null;
 		}
 
