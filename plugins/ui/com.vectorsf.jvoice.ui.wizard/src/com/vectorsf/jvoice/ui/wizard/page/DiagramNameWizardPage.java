@@ -1,54 +1,21 @@
 package com.vectorsf.jvoice.ui.wizard.page;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.internal.runtime.CommonMessages;
-import org.eclipse.core.internal.runtime.IRuntimeConstants;
-import org.eclipse.core.internal.runtime.RuntimeLog;
-import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.command.CommandStack;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.emf.transaction.RecordingCommand;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.graphiti.features.IFeatureProvider;
-import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
-import org.eclipse.graphiti.features.context.impl.AddContext;
-import org.eclipse.graphiti.features.context.impl.LayoutContext;
-import org.eclipse.graphiti.mm.pictograms.Anchor;
-import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.mm.pictograms.PictogramLink;
-import org.eclipse.graphiti.mm.pictograms.PictogramsFactory;
-import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -58,21 +25,14 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
-import org.eclipse.ui.ide.IDE;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
-import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.model.operations.InitialState;
-import com.vectorsf.jvoice.model.operations.OperationsFactory;
-import com.vectorsf.jvoice.model.operations.Transition;
 import com.vectorsf.jvoice.ui.wizard.Activator;
 
 public class DiagramNameWizardPage extends AbstractWizardPage {
@@ -159,13 +119,13 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 			setErrorMessage("The first letter of the flow name can't be a number.");
 			return false;
 		}
-		if (!Character.isJavaLetter(initial)) {
+		if (!Character.isJavaIdentifierStart(initial)) {
 			setErrorMessage("The first letter of the application is not valid.");
 			return false;
 		}
 		for (int i = 1; i < text.length(); i++) {
 			char letter = text.charAt(i);
-			if (!Character.isJavaLetterOrDigit(letter)) {
+			if (!Character.isJavaIdentifierPart(letter)) {
 				setErrorMessage("Name contains incorrect character");
 				return false;
 			}
@@ -480,239 +440,13 @@ public class DiagramNameWizardPage extends AbstractWizardPage {
 
 	@Override
 	public void createResource() throws CoreException {
-		String diagramName = getText();
-		IProject project = null;
-		IFolder diagramFolder = null;
+		FlowCreator helper = new FlowCreator(getShell());
 
-		Object element = getSelection();
-		if (element instanceof JVProject) {
-			project = (IProject) Platform.getAdapterManager().getAdapter(element, IProject.class);
-		} else if (element instanceof JVPackage) {
-			diagramFolder = (IFolder) Platform.getAdapterManager().getAdapter(element, IFolder.class);
-			project = diagramFolder.getProject();
-		}
-
-		if (project == null || !project.isAccessible()) {
-			String error = "No Project Found";
-			IStatus status = new Status(IStatus.ERROR, "1", error);
-			ErrorDialog.openError(getShell(), error, null, status);
-			throw new CoreException(status);
-		}
-
-		Diagram diagram = Graphiti.getPeCreateService().createDiagram("jVoiceDiagram", diagramName, true);
-
-		String editorExtension = "jvflow"; //$NON-NLS-1$
-
-		IFile diagramFile = diagramFolder != null ? diagramFolder.getFile(diagramName + "." + editorExtension)
-				: project.getFile(diagramName + "." + editorExtension); //$NON-NLS-1$
-		URI uri = URI.createPlatformResourceURI(diagramFile.getFullPath().toString(), true);
-
-		createFile(uri, diagram, diagramName);
-
-		// Creamos la carpeta de recursos del flow
-		final IFolder packageFolder = project.getFolder(BaseModel.JV_PATH + "/" + toPath(getPackageFieldValue()));
-		String folderName = getFolderName(packageFolder, diagramName);
-
-		final IFolder resourcesFolder = getFolder(folderName);
-		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
-
-			@Override
-			public void run(IProgressMonitor monitor) throws CoreException {
-				createRecursively(resourcesFolder, monitor);
-			}
-		};
-
-		ResourcesPlugin.getWorkspace().run(runnable, resourcesFolder.getProject(), IWorkspace.AVOID_UPDATE, null);
-		// Reveal new flow on navigator
-		// for (Shell shell : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().getShells()) {
-		// if (shell.getText().contains("New Flow")) {
-		// shell.close();
-		// }
-		// }
-		// for (IViewPart view : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViews()) {
-		// if (view.getTitle().equals("Navigator IVR")) {
-		// CommonNavigator commmonNavigator = (CommonNavigator) view;
-		// URI flowUri = uri.appendFragment("/1");
-		// EObject eObject = BaseModel.getInstance().getResourceSet().getEObject(flowUri, false);
-		// StructuredSelection structuredSelection = new StructuredSelection(eObject);
-		// commmonNavigator.selectReveal(structuredSelection);
-		// }
-		// }
-
-		try {
-			IDE.openEditor(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage(), diagramFile);
-		} catch (PartInitException e) {
-			String error = "error open editor";
-			IStatus status = new Status(IStatus.ERROR, "0", error, e);
-			ErrorDialog.openError(getShell(), error, null, status);
-			throw new CoreException(status);
-		}
-	}
-
-	public void createFile(URI diagramResourceUri, final Diagram diagram, final String diagramName) {
-
-		// Create a resource set and EditingDomain
-		final TransactionalEditingDomain editingDomain = TransactionalEditingDomain.Factory.INSTANCE
-				.createEditingDomain();
-		ResourceSet resourceSet = editingDomain.getResourceSet();
-		// Create a resource for this file.
-		final Resource resource = resourceSet.createResource(diagramResourceUri);
-		final CommandStack commandStack = editingDomain.getCommandStack();
-
-		commandStack.execute(new RecordingCommand(editingDomain) {
-
-			@Override
-			protected void doExecute() {
-				resource.setTrackingModification(true);
-				resource.getContents().add(diagram);
-				flow = OperationsFactory.eINSTANCE.createFlow();
-				flow.setDescription(diagramName);
-				flow.setName(diagramName);
-
-				resource.getContents().add(flow);
-
-				// create new link
-				PictogramLink link = PictogramsFactory.eINSTANCE.createPictogramLink();
-				link.setPictogramElement(diagram);
-				// add new link to diagram
-				diagram.getPictogramLinks().add(link);
-				link.getBusinessObjects().add(flow);
-
-				IFeatureProvider featureProvider = GraphitiUi.getExtensionManager().createFeatureProvider(diagram);
-
-				InitialState iState = OperationsFactory.eINSTANCE.createInitialState();
-				iState.setName("Initial");
-				flow.getStates().add(iState);
-				AddContext addContext = new AddContext();
-				addContext.setTargetContainer(diagram);
-				addContext.setLocation(400, 0);
-				addContext.setNewObject(iState);
-				PictogramElement initialPe = featureProvider.addIfPossible(addContext);
-				Anchor initialAnchor = Graphiti.getPeService().getChopboxAnchor((AnchorContainer) initialPe);
-
-				FinalState fState = OperationsFactory.eINSTANCE.createFinalState();
-				fState.setName("Final");
-				flow.getStates().add(fState);
-				addContext = new AddContext();
-				addContext.setTargetContainer(diagram);
-				addContext.setLocation(400, 200);
-				addContext.setNewObject(fState);
-				PictogramElement finalPe = featureProvider.addIfPossible(addContext);
-				Anchor finalAnchor = Graphiti.getPeService().getChopboxAnchor((AnchorContainer) finalPe);
-
-				Transition transition = OperationsFactory.eINSTANCE.createTransition();
-				transition.setSource(iState);
-				transition.setTarget(fState);
-				transition.setEventName("Ok");
-				flow.getTransitions().add(transition);
-
-				AddConnectionContext addContextInicial = new AddConnectionContext(initialAnchor, finalAnchor);
-				addContextInicial.setNewObject(transition);
-
-				PictogramElement connection = featureProvider.addIfPossible(addContextInicial);
-				featureProvider.layoutIfPossible(new LayoutContext(connection));
-				featureProvider.layoutIfPossible(new LayoutContext(finalPe));
-				featureProvider.layoutIfPossible(new LayoutContext(initialPe));
-			}
-		});
-
-		IWorkspaceRunnable wsRunnable = new IWorkspaceRunnable() {
-			@Override
-			public void run(final IProgressMonitor monitor) throws CoreException {
-
-				final Runnable runnable = new Runnable() {
-					@Override
-					public void run() {
-						try {
-							resource.save(null);
-						} catch (IOException e) {
-							handleException(e);
-							MessageDialog.openError(null, "Error",
-									"A resource exists with a different case. Please check Error Log.");
-						}
-					}
-				};
-
-				try {
-					editingDomain.runExclusive(runnable);
-				} catch (final InterruptedException e) {
-					throw new RuntimeException(e);
-				}
-			}
-		};
-		try {
-			ResourcesPlugin.getWorkspace().run(wsRunnable, null);
-		} catch (final CoreException e) {
-			final Throwable cause = e.getStatus().getException();
-			if (cause instanceof RuntimeException) {
-				throw (RuntimeException) cause;
-			}
-			throw new RuntimeException(e);
-		}
-		editingDomain.dispose();
+		flow = helper.createResource(getText(), getSelection(), getProjectFieldValue(), getPackageFieldValue());
 	}
 
 	public Flow returnFlow() {
 		return flow;
 	}
 
-	private String getFolderName(IFolder packageFolder, String dslName) {
-		String folderName = packageFolder + "/" + dslName + ".resources";
-		String newFolderName = "";
-		String[] folderNameSegments = folderName.split("/");
-		for (int i = 2; i < folderNameSegments.length; i++) {
-			newFolderName = newFolderName.concat("/" + folderNameSegments[i]);
-		}
-		return newFolderName;
-	}
-
-	private void createRecursively(IFolder container, IProgressMonitor monitor) throws CoreException {
-		IContainer parent = container.getParent();
-		if (parent instanceof IFolder && !parent.exists()) {
-			createRecursively((IFolder) parent, monitor);
-		}
-
-		if (!container.exists()) {
-			container.create(true, true, monitor);
-		}
-
-	}
-
-	public IFolder getFolder(String folderName) {
-		IProject project = getProject();
-		return project.getFolder(folderName);
-	}
-
-	private IProject getProject() {
-		return ResourcesPlugin.getWorkspace().getRoot().getProject(getProjectFieldValue());
-	}
-
-	private String toPath(String packageFieldValue) {
-		return packageFieldValue.replace('.', '/');
-	}
-
-	private static void handleException(Throwable e) {
-		if (!(e instanceof OperationCanceledException)) {
-			// try to obtain the correct plug-in id for the bundle providing the safe runnable
-			Activator activator = Activator.getDefault();
-			String pluginId = null;
-			if (pluginId == null) {
-				pluginId = IRuntimeConstants.PI_COMMON;
-			}
-			String message = NLS.bind(CommonMessages.meta_pluginProblems, pluginId);
-			IStatus status;
-			if (e instanceof CoreException) {
-				status = new MultiStatus(pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
-				((MultiStatus) status).merge(((CoreException) e).getStatus());
-			} else {
-				status = new Status(IStatus.ERROR, pluginId, IRuntimeConstants.PLUGIN_ERROR, message, e);
-			}
-			// Make sure user sees the exception: if the log is empty, log the exceptions on stderr
-			if (!RuntimeLog.isEmpty()) {
-				RuntimeLog.log(status);
-			} else {
-				e.printStackTrace();
-			}
-		}
-	}
 }
