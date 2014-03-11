@@ -315,13 +315,22 @@ public interface OperationsPackage extends EPackage {
 	int FLOW__PARAMETERS = BasePackage.JV_BEAN_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Helper Class</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLOW__HELPER_CLASS = BasePackage.JV_BEAN_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Flow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FLOW_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 5;
+	int FLOW_FEATURE_COUNT = BasePackage.JV_BEAN_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>Flow</em>' class.
@@ -2169,6 +2178,17 @@ public interface OperationsPackage extends EPackage {
 	EAttribute getFlow_Parameters();
 
 	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.Flow#getHelperClass <em>Helper Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Helper Class</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.Flow#getHelperClass()
+	 * @see #getFlow()
+	 * @generated
+	 */
+	EAttribute getFlow_HelperClass();
+
+	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.InitialState <em>Initial State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2803,6 +2823,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FLOW__PARAMETERS = eINSTANCE.getFlow_Parameters();
+
+		/**
+		 * The meta object literal for the '<em><b>Helper Class</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FLOW__HELPER_CLASS = eINSTANCE.getFlow_HelperClass();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.InitialStateImpl <em>Initial State</em>}' class.

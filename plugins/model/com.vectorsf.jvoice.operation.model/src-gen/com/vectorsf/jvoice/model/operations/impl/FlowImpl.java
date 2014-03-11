@@ -13,6 +13,7 @@ import com.vectorsf.jvoice.model.operations.Transition;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -20,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -36,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getNotes <em>Notes</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getBeans <em>Beans</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.FlowImpl#getHelperClass <em>Helper Class</em>}</li>
  * </ul>
  * </p>
  *
@@ -91,6 +94,26 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 	 * @ordered
 	 */
 	protected EList<String> parameters;
+
+	/**
+	 * The default value of the '{@link #getHelperClass() <em>Helper Class</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHelperClass()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String HELPER_CLASS_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getHelperClass() <em>Helper Class</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHelperClass()
+	 * @generated
+	 * @ordered
+	 */
+	protected String helperClass = HELPER_CLASS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -176,6 +199,27 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getHelperClass() {
+		return helperClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHelperClass(String newHelperClass) {
+		String oldHelperClass = helperClass;
+		helperClass = newHelperClass;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationsPackage.FLOW__HELPER_CLASS, oldHelperClass, helperClass));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -209,6 +253,8 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 				return getBeans();
 			case OperationsPackage.FLOW__PARAMETERS:
 				return getParameters();
+			case OperationsPackage.FLOW__HELPER_CLASS:
+				return getHelperClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -242,6 +288,9 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends String>)newValue);
 				return;
+			case OperationsPackage.FLOW__HELPER_CLASS:
+				setHelperClass((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -269,6 +318,9 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 			case OperationsPackage.FLOW__PARAMETERS:
 				getParameters().clear();
 				return;
+			case OperationsPackage.FLOW__HELPER_CLASS:
+				setHelperClass(HELPER_CLASS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -291,6 +343,8 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 				return beans != null && !beans.isEmpty();
 			case OperationsPackage.FLOW__PARAMETERS:
 				return parameters != null && !parameters.isEmpty();
+			case OperationsPackage.FLOW__HELPER_CLASS:
+				return HELPER_CLASS_EDEFAULT == null ? helperClass != null : !HELPER_CLASS_EDEFAULT.equals(helperClass);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -307,6 +361,8 @@ public class FlowImpl extends JVBeanImpl implements Flow {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (parameters: ");
 		result.append(parameters);
+		result.append(", helperClass: ");
+		result.append(helperClass);
 		result.append(')');
 		return result.toString();
 	}

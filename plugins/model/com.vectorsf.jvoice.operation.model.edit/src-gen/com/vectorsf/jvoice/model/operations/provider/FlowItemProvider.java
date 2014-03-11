@@ -66,6 +66,7 @@ public class FlowItemProvider
 
 			addNotesPropertyDescriptor(object);
 			addParametersPropertyDescriptor(object);
+			addHelperClassPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -106,6 +107,28 @@ public class FlowItemProvider
 				 getString("_UI_Flow_parameters_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Flow_parameters_feature", "_UI_Flow_type"),
 				 OperationsPackage.Literals.FLOW__PARAMETERS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Helper Class feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addHelperClassPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Flow_helperClass_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Flow_helperClass_feature", "_UI_Flow_type"),
+				 OperationsPackage.Literals.FLOW__HELPER_CLASS,
 				 true,
 				 false,
 				 false,
@@ -184,6 +207,7 @@ public class FlowItemProvider
 
 		switch (notification.getFeatureID(Flow.class)) {
 			case OperationsPackage.FLOW__PARAMETERS:
+			case OperationsPackage.FLOW__HELPER_CLASS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case OperationsPackage.FLOW__STATES:

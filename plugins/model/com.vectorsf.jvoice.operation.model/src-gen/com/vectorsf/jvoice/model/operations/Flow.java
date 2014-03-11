@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getNotes <em>Notes</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getBeans <em>Beans</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.Flow#getHelperClass <em>Helper Class</em>}</li>
  * </ul>
  * </p>
  *
@@ -106,5 +107,31 @@ public interface Flow extends JVBean {
 	 * @generated
 	 */
 	EList<String> getParameters();
+
+	/**
+	 * Returns the value of the '<em><b>Helper Class</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Helper Class</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Helper Class</em>' attribute.
+	 * @see #setHelperClass(String)
+	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getFlow_HelperClass()
+	 * @model
+	 * @generated
+	 */
+	String getHelperClass();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.model.operations.Flow#getHelperClass <em>Helper Class</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Helper Class</em>' attribute.
+	 * @see #getHelperClass()
+	 * @generated
+	 */
+	void setHelperClass(String value);
 
 } // Flow

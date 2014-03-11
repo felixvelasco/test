@@ -389,6 +389,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getFlow_HelperClass() {
+		return (EAttribute)flowEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getInitialState() {
 		return initialStateEClass;
 	}
@@ -844,6 +853,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEReference(flowEClass, FLOW__NOTES);
 		createEReference(flowEClass, FLOW__BEANS);
 		createEAttribute(flowEClass, FLOW__PARAMETERS);
+		createEAttribute(flowEClass, FLOW__HELPER_CLASS);
 
 		initialStateEClass = createEClass(INITIAL_STATE);
 
@@ -979,6 +989,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEReference(getFlow_Notes(), this.getNote(), null, "notes", null, 0, -1, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFlow_Beans(), this.getComponentBean(), null, "beans", null, 0, -1, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFlow_Parameters(), ecorePackage.getEString(), "parameters", null, 0, -1, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFlow_HelperClass(), ecorePackage.getEString(), "helperClass", null, 0, 1, Flow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(initialStateEClass, InitialState.class, "InitialState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -3,14 +3,9 @@
 package com.vectorsf.jvoice.model.operations.provider;
 
 import com.vectorsf.jvoice.model.base.provider.BaseEditPlugin;
-
 import com.vectorsf.jvoice.prompt.model.voiceDsl.provider.VoiceDslEditPlugin;
-
 import org.eclipse.emf.common.EMFPlugin;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
-import org.eclipse.xtext.common.types.provider.TypesEditPlugin;
 
 /**
  * This is the central singleton for the CoreOperations edit plugin.
@@ -45,7 +40,6 @@ public final class CoreOperationsEditPlugin extends EMFPlugin {
 		super
 		  (new ResourceLocator [] {
 		     BaseEditPlugin.INSTANCE,
-		     TypesEditPlugin.INSTANCE,
 		     VoiceDslEditPlugin.INSTANCE,
 		   });
 	}
