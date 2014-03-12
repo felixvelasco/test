@@ -60,6 +60,8 @@ public class IVRMavenLauncher extends AbstractHandler {
 			action.setInitializationData(null, null, "clean install");
 			action.launch(selection, "run");
 
+			MessageDialog.openConfirm(null, "Instalar módulo", "Pulse OK cuando acabe la instalación del módulo");
+
 			for (IProject prj : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 				if (prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
 					ExecutePomAction action2 = new ExecutePomAction();
@@ -70,7 +72,8 @@ public class IVRMavenLauncher extends AbstractHandler {
 
 			// Cuando acabe Maven de instalar los módulos actualizamos la aplicación y arrancamos Tomcat
 			boolean startTomcat = MessageDialog.openConfirm(null, "Arrancar Tomcat",
-					"Pulse Ok cuando acabe la instalación de los módulos para arranxar Tomcat");
+					"Pulse OK cuando acabe la instalación de la aplicación para arrancar Tomcat");
+
 			if (startTomcat) {
 				// Actualizamos las aplicaciones
 				for (IProject prj : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
@@ -83,7 +86,6 @@ public class IVRMavenLauncher extends AbstractHandler {
 						).schedule();
 					}
 				}
-
 				startTomcat();
 			}
 		} catch (Exception e) {
