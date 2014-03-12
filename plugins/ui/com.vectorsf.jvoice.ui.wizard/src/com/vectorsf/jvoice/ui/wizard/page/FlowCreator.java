@@ -53,6 +53,7 @@ import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.operation.helper.PrototypeCreator;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
+import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
@@ -147,7 +148,17 @@ public class FlowCreator {
 				resource.getContents().add(diagram);
 				flow.setDescription(diagramName);
 				flow.setName(diagramName);
-				flow.setHelperClass(helperClassPackage.getElementName() + "." + helperClassName);
+				String helperClassFqdn = helperClassPackage.getElementName() + "." + helperClassName;
+				flow.setHelperClass(helperClassFqdn);
+
+				ComponentBean defaultBean = OperationsFactory.eINSTANCE.createComponentBean();
+				defaultBean.setFqdn(helperClassFqdn);
+				String lowerCaseHelperClassName = Character.toLowerCase(helperClassName.charAt(0))
+						+ helperClassName.substring(1);
+				defaultBean.setName(lowerCaseHelperClassName);
+				defaultBean.setNameBean(lowerCaseHelperClassName);
+				defaultBean.setPrototype(true);
+				flow.getBeans().add(defaultBean);
 
 				resource.getContents().add(flow);
 
