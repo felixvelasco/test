@@ -3,6 +3,7 @@ package com.vectorsf.jvoice.ui.project.editor;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.parsley.editors.EmfAbstractEditor;
 import org.eclipse.emf.parsley.factories.FormFactory;
 import org.eclipse.emf.parsley.factories.TableFormFactory;
@@ -16,6 +17,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 
 import com.google.inject.Inject;
+import com.vectorsf.jvoice.core.uri.VegaXMLURIHandlerImpl;
 import com.vectorsf.jvoice.model.base.JVProject;
 
 public class ProjectEditor extends EmfAbstractEditor {
@@ -29,6 +31,14 @@ public class ProjectEditor extends EmfAbstractEditor {
 	private EventsHandlerComposite eventsComposite;
 
 	@Override
+	protected void initializeEditingDomain() {
+		super.initializeEditingDomain();
+		//Resources will be loaded with vega URI handler.
+		editingDomain.getResourceSet().getLoadOptions()
+				.put(XMLResource.OPTION_URI_HANDLER, new VegaXMLURIHandlerImpl());
+	}
+
+	@Override
 	protected void createPages() {
 
 		IEditorInput editorInput = getEditorInput();
@@ -37,6 +47,9 @@ public class ProjectEditor extends EmfAbstractEditor {
 		URI resourceURI = URI.createPlatformResourceURI(file.getProject().getFile(".projectInformation").getFullPath()
 				.toString(), true);
 		LoadResourceResponse response = resourceLoader.getResource(editingDomain, resourceURI);
+		//Resources will be saved with vega URI handler.
+		((XMLResource) response.getResource()).getDefaultSaveOptions().put(XMLResource.OPTION_URI_HANDLER,
+				new VegaXMLURIHandlerImpl());
 		JVProject project = (JVProject) response.getResource().getContents().get(0);
 		EcoreUtil.resolveAll(project);
 

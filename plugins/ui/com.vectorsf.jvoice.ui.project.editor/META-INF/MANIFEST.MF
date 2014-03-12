@@ -15,7 +15,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;bundle-version="3.8.0",
  org.eclipse.emf.transaction,
  org.eclipse.swt,
- com.vectorsf.jvoice.operation.model
+ com.vectorsf.jvoice.operation.model,
+ org.eclipse.emf.ecore.xmi;bundle-version="2.9.0",
+ com.vectorsf.jvoice.core.uri;bundle-version="1.2.0"
 Import-Package: org.apache.log4j,
  org.apache.commons.logging
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

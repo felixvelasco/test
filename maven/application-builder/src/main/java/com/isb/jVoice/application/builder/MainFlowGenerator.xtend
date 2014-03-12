@@ -14,7 +14,8 @@ class MainFlowGenerator {
 	JVApplication module
 
 	val PATH = "src/main/resources/jv/"
-	val SLASH_JV = "/jv/"
+    val SLASH_JV = "/jv/"
+    val VEGA_URI_SCHEME = "vega"
 
 	new(JVApplication module) {
 		this.module = module
@@ -60,8 +61,13 @@ class MainFlowGenerator {
 		var bean = handler.handler
 		if (bean.eIsProxy) {
 			var internal = bean as InternalEObject
-			var pathURI = internal.eProxyURI.path
-			pathURI.substring(SLASH_JV.length, pathURI.lastIndexOf("."))
+			var schemeURI = internal.eProxyURI.scheme
+            var pathURI = internal.eProxyURI.path
+			if (VEGA_URI_SCHEME.equalsIgnoreCase(schemeURI)){
+                pathURI.substring(1)			    
+			} else {
+                pathURI.substring(SLASH_JV.length, pathURI.lastIndexOf("."))			    
+			}
 		} else {
 			var pathURI = bean.eResource.getURI.path
 			pathURI.substring(pathURI.indexOf(PATH) + PATH.length, pathURI.lastIndexOf("."))

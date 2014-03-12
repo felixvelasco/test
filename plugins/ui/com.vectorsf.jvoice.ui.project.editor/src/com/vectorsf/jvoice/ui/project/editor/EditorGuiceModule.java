@@ -4,6 +4,7 @@ import org.eclipse.emf.parsley.binding.FormControlFactory;
 import org.eclipse.emf.parsley.binding.ProposalCreator;
 import org.eclipse.emf.parsley.builders.TableViewerColumnBuilder;
 import org.eclipse.emf.parsley.resource.EmptyResourceInitializer;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 public class EditorGuiceModule extends EmfParsleyGuiceModuleGen {
@@ -32,4 +33,13 @@ public class EditorGuiceModule extends EmfParsleyGuiceModuleGen {
 		return ProjectEditorProposalCreator.class;
 	}
 
+	/**
+	 * ILabelProvider must be ProjectEditorLabelProvider
+	 * 
+	 * @see ProjectEditorLabelProvider
+	 */
+	@Override
+	public Class<? extends ILabelProvider> bindILabelProvider() {
+		return ProjectEditorLabelProvider.class;
+	}
 }
