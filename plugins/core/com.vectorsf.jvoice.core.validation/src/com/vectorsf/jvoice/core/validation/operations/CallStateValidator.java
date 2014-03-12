@@ -1,13 +1,18 @@
 package com.vectorsf.jvoice.core.validation.operations;
 
+import java.io.File;
+
 import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
 
 public class CallStateValidator {
-	private OperationsValidator operationsValidator;
 
-	public CallStateValidator(OperationsValidator operationsValidator) {
+	private final String PATH = "src/main/java";
+
+	private IOperationsValidator operationsValidator;
+
+	public CallStateValidator(IOperationsValidator operationsValidator) {
 		this.operationsValidator = operationsValidator;
 	}
 
@@ -24,6 +29,32 @@ public class CallStateValidator {
 			operationsValidator.error(state, "Instance Bean  " + state.getBean() + " not found");
 		}
 
+		return true;
+	}
+
+	public boolean validate_CallState_exitsBeanInExecute(CallState state) {
+		Flow flow = (Flow) state.eContainer();
+
+		File rawFile = ValidatorUtils.getFile(state);
+		System.out.println("****************** 1 rawFile " + rawFile);
+
+		File projectFile = ValidatorUtils.findProjectFile(rawFile);
+		System.out.println("****************** 2 projectFile " + projectFile);
+
+		String classbean;
+		if (state.getBean() != null) {
+			classbean = state.getBean().getFqdn();
+			System.out.println("****************** 3 classbean " + classbean);
+			File folder = new File(projectFile, PATH);
+			System.out.println("****************** 4 folder " + folder);
+			File filepack = new File(folder, classbean.replace(".", "/").concat(".java"));
+			System.out.println("****************** 5 filepack " + filepack);
+			System.out.println("****************** 6 filepack.exists() " + filepack.exists());
+			if (!filepack.exists()) {
+				operationsValidator.error(state, "No exits bean in execute state \"" + state.getName()
+						+ "\" in flow \"" + flow.getName() + "\"");
+			}
+		}
 		return true;
 	}
 

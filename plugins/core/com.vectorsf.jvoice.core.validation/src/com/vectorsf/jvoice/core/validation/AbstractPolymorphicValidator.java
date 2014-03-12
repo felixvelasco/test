@@ -21,7 +21,7 @@ import org.eclipse.emf.parsley.runtime.util.PolymorphicDispatcher.ErrorHandler;
 
 import com.google.common.base.Predicate;
 
-public abstract class AbstractPolymorphicValidator extends EObjectValidator {
+public abstract class AbstractPolymorphicValidator extends EObjectValidator implements PolymorphicValidator {
 
 	public class ValidationErrorHandler implements ErrorHandler<Boolean> {
 
@@ -49,6 +49,12 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 	private PolymorphicDispatcher.ErrorHandler<Boolean> errorValidatorHandler = new ValidatorErrorHandler();
 	private ThreadLocal<DiagnosticChain> currentDiagnostic = new ThreadLocal<>();
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.vectorsf.jvoice.core.validation.IPolymorphicValidator#validate(org.eclipse.emf.ecore.EClass,
+	 * org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 */
 	@Override
 	public final boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
@@ -133,18 +139,39 @@ public abstract class AbstractPolymorphicValidator extends EObjectValidator {
 		return new PolymorphicDispatcher.MethodNameFilter(methodName, 0, 0);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.vectorsf.jvoice.core.validation.IPolymorphicValidator#error(org.eclipse.emf.ecore.EObject,
+	 * java.lang.String)
+	 */
+	@Override
 	public void error(EObject eobject, String message) {
 		currentDiagnostic.get().add(
 				new BasicDiagnostic(Diagnostic.ERROR, EcoreUtil.getURI(eobject).toPlatformString(true), -1, message,
 						new Object[] { eobject }));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.vectorsf.jvoice.core.validation.IPolymorphicValidator#error(org.eclipse.emf.ecore.EObject,
+	 * java.lang.String, java.lang.Throwable)
+	 */
+	@Override
 	public void error(EObject eobject, String message, Throwable t) {
 		currentDiagnostic.get().add(
 				new BasicDiagnostic(Diagnostic.ERROR, EcoreUtil.getURI(eobject).toPlatformString(true), -1, message,
 						new Object[] { eobject, t }));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.vectorsf.jvoice.core.validation.IPolymorphicValidator#warning(org.eclipse.emf.ecore.EObject,
+	 * java.lang.String)
+	 */
+	@Override
 	public void warning(EObject eobject, String message) {
 		currentDiagnostic.get().add(
 				new BasicDiagnostic(Diagnostic.WARNING, EcoreUtil.getURI(eobject).toPlatformString(true), -1, message,

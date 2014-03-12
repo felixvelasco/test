@@ -3,10 +3,7 @@ package com.vectorsf.jvoice.core.validation.operations;
 import java.io.File;
 import java.util.List;
 
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.emf.common.util.URI;
-
+import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -15,10 +12,10 @@ import com.vectorsf.jvoice.model.operations.State;
 
 public class FlowValidator {
 
-	private OperationsValidator operationsValidator;
+	private IOperationsValidator operationsValidator;
 	private final String PATH = "src/main/java";
 
-	public FlowValidator(OperationsValidator operationsValidator) {
+	public FlowValidator(IOperationsValidator operationsValidator) {
 		this.operationsValidator = operationsValidator;
 	}
 
@@ -31,6 +28,28 @@ public class FlowValidator {
 
 					if (state1.equals(state2)) {
 						operationsValidator.error(flow, "Duplicate state \"" + state1 + "\" in flow " + flow.getName());
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	public boolean validate_Flow_exitsBeanInExecute(Flow flow) {
+		for (State state : flow.getStates()) {
+			if (state instanceof CallState) {
+				File rawFile = ValidatorUtils.getFile(state);
+				File projectFile = ValidatorUtils.findProjectFile(rawFile);
+
+				String classbean;
+				if (((CallState) state).getBean() != null) {
+					classbean = ((CallState) state).getBean().getFqdn();
+					File folder = new File(projectFile, PATH);
+					File filepack = new File(folder, classbean.replace(".", "/").concat(".java"));
+
+					if (!filepack.exists()) {
+						operationsValidator.error(flow, "In flow  \"" + flow.getName() + "\""
+								+ " not exits bean in state \"" + state.getName() + "\"");
 					}
 				}
 			}
@@ -84,39 +103,22 @@ public class FlowValidator {
 	public boolean validate_Flow_exitsbeans(Flow flow) {
 
 		List<ComponentBean> beans = flow.getBeans();
-		URI uri = flow.eResource().getURI();
+		// URI uri = flow.eResource().getURI();
 
-		File rawFile = null;
-		if (uri.isPlatformResource()) {
-			IPath rawPath = ResourcesPlugin.getWorkspace().getRoot().findMember(uri.toPlatformString(true))
-					.getRawLocation();
+		File rawFile = ValidatorUtils.getFile(flow);
+		File projectFile = ValidatorUtils.findProjectFile(rawFile);
 
-			rawFile = rawPath.toFile();
+		String classbean;
+		for (ComponentBean bean : beans) {
+			classbean = bean.getFqdn();
+			File folder = new File(projectFile, PATH);
+			File filepack = new File(folder, classbean.replace(".", "/").concat(".java"));
 
-			File projectFile = findProjectFile(rawFile);
-
-			String classbean;
-			for (ComponentBean bean : beans) {
-				classbean = bean.getFqdn();
-				File folder = new File(projectFile, PATH);
-				File filepack = new File(folder, classbean.replace(".", "/").concat(".java"));
-
-				if (!filepack.exists()) {
-					operationsValidator.error(flow, "Bean class" + classbean + " not found");
-				}
+			if (!filepack.exists()) {
+				operationsValidator.error(flow, "Bean class " + classbean + " not found");
 			}
 		}
 		return true;
-	}
-
-	private File findProjectFile(File file) {
-		if (file == null) {
-			return null;
-		}
-		if (new File(file, "src/main/resources").exists()) {
-			return file;
-		}
-		return findProjectFile(file.getParentFile());
 	}
 
 	public boolean validate_Flow_distintNameScopedBean(Flow flow) {
