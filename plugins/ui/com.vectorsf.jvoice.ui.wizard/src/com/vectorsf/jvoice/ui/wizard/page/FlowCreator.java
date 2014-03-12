@@ -50,6 +50,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.core.operation.helper.PrototypeCreator;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.operations.FinalState;
@@ -135,7 +136,7 @@ public class FlowCreator {
 		final Resource resource = resourceSet.createResource(diagramResourceUri);
 		final CommandStack commandStack = editingDomain.getCommandStack();
 		final Flow flow = OperationsFactory.eINSTANCE.createFlow();
-		final IPackageFragment helperClassPackage = createHelperClassPackage(packageFragment, packageName);
+		final IPackageFragment helperClassPackage = findHelperClassPackage(packageFragment, packageName);
 		final String helperClassName = toClassName(diagramName);
 
 		commandStack.execute(new RecordingCommand(editingDomain) {
@@ -218,7 +219,7 @@ public class FlowCreator {
 					createRecursively(resourcesFolder, monitor);
 
 					// Creamos el bean asociado
-					createBeanFor(helperClassName, helperClassPackage, monitor);
+					PrototypeCreator.createBeanFor(helperClassName, helperClassPackage, monitor);
 
 				} catch (final InterruptedException e) {
 					throw new RuntimeException(e);
@@ -274,13 +275,7 @@ public class FlowCreator {
 		}
 	}
 
-	private void createBeanFor(String name, IPackageFragment packageFragment, IProgressMonitor monitor)
-			throws JavaModelException {
-		String contents = PrototypeCreator.create(packageFragment.getElementName(), name).toString();
-		packageFragment.createCompilationUnit(name + ".java", contents, true, monitor);
-	}
-
-	private IPackageFragment createHelperClassPackage(IPackageFragment packageFragment, String packageName)
+	private IPackageFragment findHelperClassPackage(IPackageFragment packageFragment, String packageName)
 			throws JavaModelException {
 		IPackageFragmentRoot iPackageFragmentRoot = (IPackageFragmentRoot) packageFragment.getParent();
 		String componentsPackageName = packageFragment.getElementName();
