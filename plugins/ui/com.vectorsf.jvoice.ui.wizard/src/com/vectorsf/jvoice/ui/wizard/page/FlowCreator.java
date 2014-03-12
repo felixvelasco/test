@@ -155,7 +155,7 @@ public class FlowCreator {
 				defaultBean.setFqdn(helperClassFqdn);
 				String lowerCaseHelperClassName = Character.toLowerCase(helperClassName.charAt(0))
 						+ helperClassName.substring(1);
-				defaultBean.setName(lowerCaseHelperClassName);
+				defaultBean.setName("it");
 				defaultBean.setNameBean(lowerCaseHelperClassName);
 				defaultBean.setPrototype(true);
 				flow.getBeans().add(defaultBean);
