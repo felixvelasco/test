@@ -1,6 +1,7 @@
 package com.vectorsf.jvoice.ui.navigator.handler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -8,8 +9,10 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -20,11 +23,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.util.LocalSelectionTransfer;
@@ -32,34 +36,29 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.xtext.resource.SaveOptions;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
-import com.vectorsf.jvoice.model.base.JVApplication;
+import com.vectorsf.jvoice.core.operation.helper.PrototypeCreator;
 import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.model.operations.LocutionState;
-import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.ui.navigator.activator.Activator;
+import com.vectorsf.jvoice.ui.navigator.util.FlowCopyHelper;
 
 public class PasteHandler extends AbstractHandler {
 
 	private IPath targetPath;
 	private IPath resourcesPath;
-	private IResource targetRes;
-	private IFolder miPack;
-	private IFile miBean;
-	private IFolder recursos;
 	private boolean rename;
 
 	@Override
 	public void setEnabled(Object evaluationContext) {
 
 		Clipboard clip = new Clipboard(Display.getCurrent());
-		Object contents = clip
-				.getContents(LocalSelectionTransfer.getTransfer());
+		Object contents = clip.getContents(LocalSelectionTransfer.getTransfer());
 		clip.dispose();
 		if (contents == null) {
 			setBaseEnabled(false);
@@ -84,10 +83,8 @@ public class PasteHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		rename = false;
-		String nombreUsuario = "";
 		Clipboard clip = new Clipboard(Display.getCurrent());
-		Object contents = clip
-				.getContents(LocalSelectionTransfer.getTransfer());
+		Object contents = clip.getContents(LocalSelectionTransfer.getTransfer());
 		clip.dispose();
 		if (contents == null) {
 			return null;
@@ -98,307 +95,249 @@ public class PasteHandler extends AbstractHandler {
 		if (objtarget == null) {
 			return null;
 		}
-		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		// Distinguimos si lo que hemos seleccionado es un paquete o un
 		// proyecto.
 		if (objtarget instanceof JVPackage) {
-			JVPackage target = (JVPackage) objtarget;
+			pasteInPackage(event, contents, (JVPackage) objtarget);
 
-			List<JVBean> beans = getListFromClipboard(contents, JVBean.class);
-			if (beans == null) {
-				return null;
-			}
-			for (JVBean bean : beans) {
-
-				miBean = (IFile) Platform.getAdapterManager().getAdapter(bean,
-						IFile.class);
-
-				IPath pathRecursos = new Path(miBean.getName().replace(
-						".jvflow", ".resources"));
-				recursos = miBean.getParent().getFolder(pathRecursos);
-
-				targetRes = (IResource) Platform.getAdapterManager()
-						.getAdapter(target, IResource.class);
-				targetPath = targetRes.getFullPath().append(miBean.getName());
-				resourcesPath = targetRes.getFullPath().append(
-						recursos.getName());
-
-				// Se comprueba el nombre del fichero y en caso de existir en el
-				// destino se recupera un nombre valido para ofrecer al usuario.
-				String nombre = nombreValido(root, targetPath, target, miBean,
-						targetRes, miBean.getName());
-				// Comprobamos si el fichero existe en el destino. Si existe, se
-				// lanza un cuadro de dialogo donde el usuario podra poner el
-				// nombre que desee al fichero.
-				if (root.getFile(targetPath).exists()) {
-					rename = true;
-					// Proponemos al usuario un nombre valido para el fichero.
-					InputDialog ventana = new InputDialog(
-							HandlerUtil.getActiveShell(event),
-							"Conflicto de nombre",
-							"Ya existe un recurso llamado " + miBean.getName(),
-							nombre, new IInputValidator() {
-
-								@Override
-								public String isValid(String input) {
-
-									IStatus validateName = root
-											.getWorkspace()
-											.validateName(input, IResource.FILE);
-									if (!validateName.isOK()) {
-										return validateName.getMessage();
-									}
-
-									targetPath = targetRes.getFullPath()
-											.append(input);
-									if (root.getFile(targetPath).exists()) {
-										return "Ya existe un recurso con ese nombre";
-									}
-
-									return null;
-								}
-							});
-
-					ventana.open();
-					nombreUsuario = ventana.getValue();
-
-					// Obtenemos el nuevo target con la ruta, y el nombre del
-					// paquete seleccionado por el usuario.
-					targetPath = targetRes.getFullPath().append(nombreUsuario);
-					resourcesPath = targetRes.getFullPath().append(
-							nombreUsuario.replace(".jvflow", ".resources"));
-				} else {
-					nombreUsuario = bean.getName();
-				}
-
-				// Realizamos la copia del fichero al destino.
-				try {
-					IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
-
-						@Override
-						public void run(IProgressMonitor monitor)
-								throws CoreException {
-							miBean.copy(targetPath, true, monitor);
-							recursos.copy(resourcesPath, true, monitor);
-							actualizaFlow(targetPath, rename);
-						}
-					};
-					ResourcesPlugin.getWorkspace().run(runnable, null);
-
-				} catch (CoreException e) {
-					e.printStackTrace();
-				}
-			}
-
-		} else if (objtarget instanceof JVProject
-				&& !(objtarget instanceof JVApplication)) {
-			JVProject target = (JVProject) objtarget;
-
-			List<JVPackage> packs = getListFromClipboard(contents,
-					JVPackage.class);
-			if (packs == null) {
-				return null;
-			}
-			for (JVPackage pack : packs) {
-
-				miPack = (IFolder) Platform.getAdapterManager().getAdapter(
-						pack, IFolder.class);
-
-				targetRes = (IResource) Platform.getAdapterManager()
-						.getAdapter(target, IResource.class);
-				targetPath = targetRes.getFullPath().append(
-						miPack.getProjectRelativePath());
-
-				// Se comprueba el nombre de la carpeta y en caso de existir en
-				// el destino se recupera un nombre valido para ofrecer al
-				// usuario.
-				String nombre = nombreValido(root, targetPath, target, miPack,
-						targetRes, miPack.getName());
-				// Comprobamos si la carpeta existe en el destino. Si existe, se
-				// lanza un cuadro de dialogo donde el usuario podra poner el
-				// nombre que desee a la carpeta
-				if (root.getFolder(targetPath).exists()) {
-
-					// Proponemos al usuario un nombre valido para la carpeta.
-					InputDialog ventana = new InputDialog(
-							HandlerUtil.getActiveShell(event),
-							"Conflicto de nombre",
-							"Ya existe un recurso llamado " + miPack.getName(),
-							nombre, new IInputValidator() {
-
-								@Override
-								public String isValid(String input) {
-
-									IStatus validateName = root.getWorkspace()
-											.validateName(input,
-													IResource.FOLDER);
-									if (!validateName.isOK()) {
-										return validateName.getMessage();
-									}
-
-									targetPath = targetRes.getFullPath()
-											.append(miPack.getParent()
-													.getProjectRelativePath()
-													.append(input));
-									if (root.getFolder(targetPath).exists()) {
-										return "Ya existe un recurso con ese nombre";
-									}
-
-									return null;
-								}
-							});
-
-					ventana.open();
-					nombreUsuario = ventana.getValue();
-
-					// Obtenemos el nuevo target con la ruta, y el nombre del
-					// paquete seleccionado por el usuario.
-					nombreUsuario = nombreUsuario.replace(".", "/");
-					targetPath = targetRes.getFullPath().append(
-							new Path(BaseModel.JV_PATH).append(nombreUsuario));
-
-				}
-
-				try {
-					IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
-
-						@Override
-						public void run(IProgressMonitor monitor)
-								throws CoreException {
-
-							String path = "";
-							int size = targetPath.segmentCount() - 1;
-							for (int i = 0; i < size; i++) {
-								path += "/" + targetPath.segment(i);
-								if (i > 0) {
-									IPath ipath = new Path(path);
-									if (!root.getFolder(ipath).exists()) {
-										root.getFolder(ipath).create(true,
-												true, monitor);
-									}
-								}
-
-							}
-							miPack.copy(targetPath, true, null);
-
-							IFolder archivoCopiado = root.getFolder(targetPath);
-							for (IResource recurso : archivoCopiado.members()) {
-
-								if (recurso instanceof IFile
-										&& ((IFile) recurso).getFileExtension()
-												.equals("jvflow")) {
-									actualizaFlow(recurso.getFullPath(), false);
-								}
-							}
-						}
-					};
-					ResourcesPlugin.getWorkspace().run(runnable, null);
-
-				} catch (CoreException e) {
-					e.printStackTrace();
-				}
-			}
-
-		} else if (objtarget instanceof Flow) {
-			Flow target = (Flow) objtarget;
-
-			List<VoiceDsl> dsls = getListFromClipboard(contents, VoiceDsl.class);
-			if (dsls == null) {
-				return null;
-			}
-			for (VoiceDsl dsl : dsls) {
-
-				miBean = (IFile) Platform.getAdapterManager().getAdapter(dsl,
-						IFile.class);
-
-				targetRes = (IResource) Platform.getAdapterManager()
-						.getAdapter(target, IResource.class);
-
-				// tenemos el path del flujo de destino, necesitamos su carpeta
-				// resources
-				targetRes = targetRes.getParent().findMember(
-						targetRes.getName().replace(".jvflow", ".resources"));
-
-				if (!targetRes.exists()) {
-					return null;
-				}
-
-				targetPath = targetRes.getFullPath().append(miBean.getName());
-
-				// Se comprueba el nombre del fichero y en caso de existir en el
-				// destino se recupera un nombre valido para ofrecer al usuario.
-				String nombre = nombreValido(
-						root,
-						targetPath,
-						target,
-						miBean,
-						targetRes,
-						miBean.getName().substring(0,
-								miBean.getName().lastIndexOf(".")));
-				// Comprobamos si el fichero existe en el destino. Si existe, se
-				// lanza un cuadro de dialogo donde el usuario podra poner el
-				// nombre que desee al fichero.
-				if (root.getFile(targetPath).exists()) {
-					rename = true;
-					// Proponemos al usuario un nombre valido para el fichero.
-					InputDialog ventana = new InputDialog(
-							HandlerUtil.getActiveShell(event),
-							"Conflicto de nombre",
-							"Ya existe un recurso llamado " + miBean.getName(),
-							nombre, new IInputValidator() {
-
-								@Override
-								public String isValid(String input) {
-
-									IStatus validateName = root
-											.getWorkspace()
-											.validateName(input, IResource.FILE);
-									if (!validateName.isOK()) {
-										return validateName.getMessage();
-									}
-
-									targetPath = targetRes.getFullPath()
-											.append(input);
-									if (root.getFile(targetPath).exists()) {
-										return "Ya existe un recurso con ese nombre";
-									}
-
-									return null;
-								}
-							});
-
-					ventana.open();
-					nombreUsuario = ventana.getValue();
-
-					// Obtenemos el nuevo target con la ruta, y el nombre del
-					// paquete seleccionado por el usuario.
-					targetPath = targetRes.getFullPath().append(
-							nombreUsuario + ".voiceDsl");
-
-				}
-
-				// Realizamos la copia del fichero al destino.
-				try {
-					IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
-
-						@Override
-						public void run(IProgressMonitor monitor)
-								throws CoreException {
-							miBean.copy(targetPath, true, null);
-							if (rename) {
-								actualizaFlow(targetPath, rename);
-							}
-						}
-					};
-					ResourcesPlugin.getWorkspace().run(runnable, null);
-
-				} catch (CoreException e) {
-					e.printStackTrace();
-				}
-			}
+		} else if (objtarget instanceof JVModule) {
+			pasteInModule(event, contents, (JVModule) objtarget);
 		}
 
 		return null;
+	}
+
+	private void pasteInModule(ExecutionEvent event, Object contents, JVModule target) {
+		String nombreUsuario;
+
+		List<JVPackage> packs = getListFromClipboard(contents, JVPackage.class);
+		if (packs == null) {
+			return;
+		}
+		for (JVPackage pack : packs) {
+
+			final IFolder miPack = (IFolder) Platform.getAdapterManager().getAdapter(pack, IFolder.class);
+
+			final IProject targetRes = (IProject) Platform.getAdapterManager().getAdapter(target, IProject.class);
+			targetPath = targetRes.getFullPath().append(miPack.getProjectRelativePath());
+			final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+
+			// Se comprueba el nombre de la carpeta y en caso de existir en
+			// el destino se recupera un nombre valido para ofrecer al
+			// usuario.
+			String nombre = findValidName(root, targetPath, target, miPack, targetRes, miPack.getName());
+			// Comprobamos si la carpeta existe en el destino. Si existe, se
+			// lanza un cuadro de dialogo donde el usuario podra poner el
+			// nombre que desee a la carpeta
+			if (root.getFolder(targetPath).exists()) {
+
+				// Proponemos al usuario un nombre valido para la carpeta.
+				InputDialog ventana = new InputDialog(HandlerUtil.getActiveShell(event), "Conflicto de nombre",
+						"Ya existe un recurso llamado " + miPack.getName(), nombre, new IInputValidator() {
+
+							@Override
+							public String isValid(String input) {
+
+								IStatus validateName = root.getWorkspace().validateName(input, IResource.FOLDER);
+								if (!validateName.isOK()) {
+									return validateName.getMessage();
+								}
+
+								IResource newFolder = miPack.getParent().findMember(input);
+								if (newFolder != null && newFolder.exists()) {
+									return "Ya existe un recurso con ese nombre";
+								}
+
+								return null;
+							}
+						});
+
+				ventana.open();
+				nombreUsuario = ventana.getValue();
+
+				// Obtenemos el nuevo target con la ruta, y el nombre del
+				// paquete seleccionado por el usuario.
+				nombreUsuario = nombreUsuario.replace(".", "/");
+				targetPath = targetRes.getFullPath().append(new Path(BaseModel.JV_PATH).append(nombreUsuario));
+
+			}
+
+			try {
+				IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+
+					@Override
+					public void run(IProgressMonitor monitor) throws CoreException {
+
+						IFolder targetFolder = root.getFolder(targetPath);
+						recursivelyCreate(targetFolder.getParent());
+
+						miPack.copy(targetPath, true, null);
+
+						for (IFile flowFile : findFlows(targetFolder)) {
+							IPath fullPath = flowFile.getFullPath();
+							IPackageFragment helperPackage = FlowCopyHelper.getHelperPackage(fullPath);
+							ICompilationUnit helperOriginalClass;
+							try {
+								helperOriginalClass = FlowCopyHelper.getHelperFile(getOriginalFlow(flowFile, miPack));
+							} catch (IOException e) {
+								throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(),
+										e));
+							}
+							String beanName = fullPath.removeFileExtension().lastSegment();
+							String finalnombreUsuario = toTitleCase(beanName);
+							if (helperOriginalClass != null) {
+								helperOriginalClass.copy(helperPackage, null, finalnombreUsuario + ".java", true,
+										monitor);
+							} else {
+								PrototypeCreator.createBeanFor(finalnombreUsuario, helperPackage, monitor);
+							}
+
+							FlowCopyHelper.actualizaFlow(fullPath, helperPackage.getElementName() + "."
+									+ toTitleCase(beanName), false);
+						}
+					}
+				};
+				ResourcesPlugin.getWorkspace().run(runnable, null);
+
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected Collection<IFile> findFlows(IFolder targetFolder) throws CoreException {
+		List<IFile> ret = new ArrayList<>();
+
+		for (IResource member : targetFolder.members()) {
+			if (member instanceof IFile && ((IFile) member).getFileExtension().equals("jvflow")) {
+				ret.add((IFile) member);
+			} else if (member instanceof IFolder) {
+				ret.addAll(findFlows((IFolder) member));
+			}
+		}
+
+		return ret;
+	}
+
+	protected Flow getOriginalFlow(IFile file, IFolder folder) {
+		IFile originalFile = folder.getFile(file.getName());
+		ResourceSet rSet = new ResourceSetImpl();
+		URI uri = URI.createPlatformResourceURI(originalFile.getFullPath().toString(), true).appendFragment("/1");
+		Flow flow = (Flow) rSet.getEObject(uri, true);
+
+		return flow;
+	}
+
+	protected void recursivelyCreate(IContainer container) throws CoreException {
+		if (container.exists()) {
+			return;
+		}
+
+		IContainer parent = container.getParent();
+		if (!parent.exists()) {
+			recursivelyCreate(parent);
+		}
+
+		if (container instanceof IFolder) {
+			((IFolder) container).create(true, true, null);
+		}
+
+	}
+
+	private void pasteInPackage(ExecutionEvent event, Object contents, JVPackage target) {
+		String nombreUsuario;
+
+		List<Flow> flows = getListFromClipboard(contents, Flow.class);
+		if (flows == null) {
+			return;
+		}
+		for (Flow flow : flows) {
+
+			final IFile beanFile = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
+
+			IPath pathRecursos = new Path(beanFile.getName().replace(".jvflow", ".resources"));
+			final IFolder recursos = beanFile.getParent().getFolder(pathRecursos);
+
+			final IFolder targetRes = (IFolder) Platform.getAdapterManager().getAdapter(target, IResource.class);
+			targetPath = targetRes.getFullPath().append(beanFile.getName());
+			resourcesPath = targetRes.getFullPath().append(recursos.getName());
+			final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+
+			// Se comprueba el nombre del fichero y en caso de existir en el
+			// destino se recupera un nombre valido para ofrecer al usuario.
+			String nombre = findValidName(root, targetPath, target, beanFile, targetRes, beanFile.getName());
+			// Comprobamos si el fichero existe en el destino. Si existe, se
+			// lanza un cuadro de dialogo donde el usuario podra poner el
+			// nombre que desee al fichero.
+			String newFileName = nombre.substring(0, nombre.lastIndexOf('.'));
+			if (root.getFile(targetPath).exists()) {
+				rename = true;
+				// Proponemos al usuario un nombre valido para el fichero.
+				InputDialog ventana = new InputDialog(HandlerUtil.getActiveShell(event), "Conflicto de nombre",
+						"Ya existe un recurso llamado " + targetPath.lastSegment(), newFileName, new IInputValidator() {
+
+							@Override
+							public String isValid(String input) {
+								String fileName = input + ".jvflow";
+
+								IStatus validateName = root.getWorkspace().validateName(fileName, IResource.FILE);
+								if (!validateName.isOK()) {
+									return validateName.getMessage();
+								}
+
+								IResource newFile = targetRes.findMember(fileName);
+								if (newFile != null && newFile.exists()) {
+									return "Ya existe un recurso con ese nombre";
+								}
+
+								return null;
+							}
+						});
+
+				ventana.open();
+				nombreUsuario = ventana.getValue();
+
+				// Obtenemos el nuevo target con la ruta, y el nombre del
+				// paquete seleccionado por el usuario.
+				targetPath = targetRes.getFullPath().append(nombreUsuario + ".jvflow");
+				resourcesPath = targetRes.getFullPath().append(nombreUsuario + ".resources");
+			} else {
+				nombreUsuario = flow.getName();
+			}
+
+			// Realizamos la copia del fichero al destino.
+			try {
+				final IPackageFragment helperTargetPackage = FlowCopyHelper.getHelperPackage(targetPath);
+				final ICompilationUnit helperOriginalClass = FlowCopyHelper.getHelperFile(flow);
+				final String finalnombreUsuario = toTitleCase(nombreUsuario);
+
+				IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+
+					@Override
+					public void run(IProgressMonitor monitor) throws CoreException {
+						beanFile.copy(targetPath, true, monitor);
+						recursos.copy(resourcesPath, true, monitor);
+						if (helperOriginalClass != null) {
+							helperOriginalClass.copy(helperTargetPackage, null, finalnombreUsuario + ".java", true,
+									monitor);
+						} else {
+							PrototypeCreator.createBeanFor(finalnombreUsuario, helperTargetPackage, monitor);
+						}
+
+						FlowCopyHelper.actualizaFlow(targetPath, helperTargetPackage.getElementName() + "."
+								+ finalnombreUsuario, rename);
+					}
+				};
+				ResourcesPlugin.getWorkspace().run(runnable, null);
+
+			} catch (CoreException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private String toTitleCase(String original) {
+		return Character.toUpperCase(original.charAt(0)) + original.substring(1);
 	}
 
 	private Object getTarget(Object target) {
@@ -407,8 +346,7 @@ public class PasteHandler extends AbstractHandler {
 
 			Object o = ((Collection<?>) def).iterator().next();
 
-			if (o instanceof JVPackage || o instanceof JVProject
-					|| o instanceof JVBean) {
+			if (o instanceof JVPackage || o instanceof JVProject || o instanceof JVBean) {
 				return o;
 			} else {
 				return null;
@@ -438,155 +376,33 @@ public class PasteHandler extends AbstractHandler {
 		return null;
 	}
 
-	// Metodo para recuperar un nombre valido para el fichero o la carpeta que
-	// se quiere copiar en caso de que haya uno en el destino con el mismo
-	// nombre.
-	private String nombreValido(IWorkspaceRoot root, IPath targetPath,
-			Object targets, Object miobjeto, IResource targetRes,
-			String nameUser) {
-		if (targets instanceof JVProject) {
-			JVProject target = (JVProject) targets;
-			IFolder mipackage = (IFolder) miobjeto;
+	private String findValidName(IWorkspaceRoot root, IPath targetPath, JVProject target, IFolder folder,
+			IResource targetRes, String nameUser) {
 
-			if (root.getFolder(targetPath).exists()) {
+		if (root.getFolder(targetPath).exists()) {
+			String newName = "CopyOf" + nameUser;
+			targetPath = targetRes.getFullPath().append(folder.getParent().getProjectRelativePath().append(newName));
 
-				String newName = "CopyOf" + nameUser;
+			return findValidName(root, targetPath, target, folder, targetRes, newName);
 
-				targetPath = targetRes.getFullPath().append(
-						mipackage.getParent().getProjectRelativePath()
-								.append(newName));
-
-				return nombreValido(root, targetPath, target, mipackage,
-						targetRes, newName);
-
-			} else {
-				return nameUser;
-			}
-		} else if (targets instanceof JVPackage) {
-			JVPackage target = (JVPackage) targets;
-			IFile mipackage = (IFile) miobjeto;
-
-			if (root.getFile(targetPath).exists()) {
-
-				String newName = "CopyOf" + nameUser;
-
-				targetPath = targetRes.getFullPath().append(newName);
-
-				return nombreValido(root, targetPath, target, mipackage,
-						targetRes, newName);
-
-			} else {
-				return nameUser;
-			}
-
-		} else if (targets instanceof Flow) {
-			Flow target = (Flow) targets;
-			IFile miDsl = (IFile) miobjeto;
-
-			if (root.getFile(targetPath).exists()) {
-
-				String newName = "CopyOf" + nameUser;
-
-				targetPath = targetRes.getFullPath().append(
-						newName + ".voiceDsl");
-
-				return nombreValido(root, targetPath, target, miDsl, targetRes,
-						newName);
-
-			} else {
-				return nameUser;
-			}
 		} else {
-			return null;
+			return nameUser;
 		}
 	}
 
-	private void actualizaFlow(IPath targetPath, boolean rename) {
-		String newName = targetPath.lastSegment();
-		newName = newName.substring(0, newName.lastIndexOf('.'));
-		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
-		Resource emfRes = resourceSetImpl.createResource(URI
-				.createPlatformResourceURI(targetPath.toString(), true));
-		try {
-			emfRes.load(null);
+	private String findValidName(IWorkspaceRoot root, IPath targetPath, JVPackage target, IFile file,
+			IResource targetRes, String nameUser) {
 
-			for (EObject obj : emfRes.getContents()) {
-				if (rename) {
-					if (obj instanceof VoiceDsl) {
-						((VoiceDsl) obj).setName(newName);
+		if (root.getFile(targetPath).exists()) {
 
-					} else if (obj instanceof JVBean) {
-						((JVBean) obj).setName(newName);
-						((JVBean) obj).setDescription(newName);
-						List<EObject> listaObjetos = ((Flow) obj).eResource()
-								.getContents();
-						for (int i = 0; i < listaObjetos.size(); i++) {
-							EObject objeto = listaObjetos.get(i);
-							if (objeto instanceof Diagram) {
-								((Diagram) objeto).setName(newName);
-							}
-						}
-						if (obj instanceof Flow) {
-							actualizaRecursos((Flow) obj);
-						}
-					}
-				} else {
-					if (obj instanceof Flow) {
-						actualizaRecursos((Flow) obj);
-					}
-				}
-			}
-			try {
-				emfRes.save(SaveOptions.newBuilder().noValidation()
-						.getOptions().toOptionsMap());
-			} catch (RuntimeException re) {
-				re.printStackTrace();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+			String newName = "CopyOf" + nameUser;
+			targetPath = targetRes.getFullPath().append(newName);
 
-	private void actualizaRecursos(Flow flujo) {
-		for (State estado : flujo.getStates()) {
-			if (estado instanceof LocutionState) {
-				LocutionState locution = (LocutionState) estado;
-				VoiceDsl voiceDsl = locution.getLocution();
-				IFile targetFlow = (IFile) Platform.getAdapterManager()
-						.getAdapter(flujo, IFile.class);
+			return findValidName(root, targetPath, target, file, targetRes, newName);
 
-				IPath pathnuevosResources = new Path(flujo.getName()
-						+ ".resources");
-
-				IResource recursoResource = targetFlow.getParent().getFolder(
-						pathnuevosResources);
-				IPath pathDsl = recursoResource.getFullPath().append(
-						voiceDsl.getName() + ".voiceDsl");
-				VoiceDsl modificado = changeURI(pathDsl);
-				locution.setLocution(modificado);
-			}
+		} else {
+			return nameUser;
 		}
 
 	}
-
-	private VoiceDsl changeURI(IPath resourcesPath) {
-		VoiceDsl modificado = null;
-		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
-		Resource emfRes = resourceSetImpl.createResource(URI
-				.createPlatformResourceURI(resourcesPath.toString(), true));
-		try {
-			emfRes.load(null);
-
-			for (EObject obj : emfRes.getContents()) {
-				if (obj instanceof VoiceDsl) {
-					modificado = (VoiceDsl) obj;
-
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return modificado;
-	}
-
 }
