@@ -555,7 +555,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 		transitions.clear();
 	}
 
-	protected boolean isValidStateName(Flow flow, String name) {
+	protected static boolean isValidStateName(Flow flow, String name) {
 		for (State state : flow.getStates()) {
 			if (state.getName().equals(name)) {
 				return false;
@@ -564,7 +564,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 		return true;
 	}
 
-	protected String getValidStateName(Flow flow, String name) {
+	public static String getValidStateName(Flow flow, String name) {
 
 		String validName = name;
 		int counter = 1;

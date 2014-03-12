@@ -27,11 +27,9 @@ import org.eclipse.graphiti.features.context.IPasteContext;
 import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
 import org.eclipse.graphiti.features.context.impl.AddContext;
 import org.eclipse.graphiti.mm.pictograms.Connection;
-import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.ui.features.AbstractPasteFeature;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
@@ -42,6 +40,7 @@ import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.util.Arrays;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.diagram.core.pattern.states.SimpleStatePattern;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.JVElement;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
@@ -80,8 +79,8 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			if (copy != null) {
 				if (isState(copy)) {
 					State state = (State) copy;
-					state.setName(generateStateName(((State) copy).getName(), context));
 					Flow targetFlow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
+					state.setName(SimpleStatePattern.getValidStateName(targetFlow, state.getName()));
 					// Si es una locution hay que copiar el voiceDsl al que
 					// apunta
 					if (isLocution(copy)) {
@@ -388,58 +387,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 	private boolean isLocution(Object object) {
 		return object instanceof LocutionState;
-	}
-
-	private String generateStateName(String stateName, IPasteContext context) {
-		PictogramElement[] pes = context.getPictogramElements();
-		if (pes.length != 0) {
-			if (pes[0] instanceof Diagram) {
-				Diagram diagram = (Diagram) pes[0];
-				String name = stateName;
-				int repeated = 0;
-				for (int i = 0; i < diagram.getChildren().size(); i++) {
-					Shape shape = diagram.getChildren().get(i);
-					if (getBusinessObjectForPictogramElement(shape) instanceof State) {
-						State state = (State) getBusinessObjectForPictogramElement(shape);
-						if (state.getName().equals(name)) {
-							int k = repeated + 1;
-							name = "Copy" + k + "Of" + stateName;
-							repeated++;
-							i = 0;
-							if (repeated == 1) {
-								name = "CopyOf" + stateName;
-							}
-						}
-					}
-
-				}
-				return name;
-			} else {
-				String name = stateName;
-				int repeated = 0;
-				for (int i = 0; i < pes.length; i++) {
-					if (pes[i] instanceof Shape && !(pes[i] instanceof ConnectionDecorator)) {
-						Shape shape = (Shape) pes[i];
-						State state = (State) getBusinessObjectForPictogramElement(shape);
-						if (state != null) {
-							if (state.getName().equals(name)) {
-								int k = repeated + 1;
-								name = "Copy" + k + "Of" + stateName;
-								repeated++;
-								i = 0;
-								if (repeated == 1) {
-									name = "CopyOf" + stateName;
-								}
-							}
-						}
-					}
-
-				}
-				return name;
-
-			}
-		}
-		return "CopyOf";
 	}
 
 	private void renameBean(IPath targetPath) {
