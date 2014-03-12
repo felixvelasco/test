@@ -18,10 +18,14 @@ public class PrototypeCreator {
     _builder.append("import java.io.Serializable;");
     _builder.newLine();
     _builder.newLine();
+    _builder.append("import org.springframework.context.annotation.Scope;");
+    _builder.newLine();
     _builder.append("import org.springframework.stereotype.Component;");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("@Component(\"prototype\")");
+    _builder.append("@Component");
+    _builder.newLine();
+    _builder.append("@Scope(\"prototype\")");
     _builder.newLine();
     _builder.append("public class ");
     _builder.append(name, "");

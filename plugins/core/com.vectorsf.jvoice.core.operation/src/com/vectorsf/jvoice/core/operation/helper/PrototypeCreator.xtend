@@ -11,9 +11,11 @@ class PrototypeCreator {
 		
 		import java.io.Serializable;
 		
+		import org.springframework.context.annotation.Scope;
 		import org.springframework.stereotype.Component;
 		
-		@Component("prototype")
+		@Component
+		@Scope("prototype")
 		public class «name» implements Serializable {
 		
 			private static final long serialVersionUID = 1L;
