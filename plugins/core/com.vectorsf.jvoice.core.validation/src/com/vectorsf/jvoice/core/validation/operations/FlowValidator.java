@@ -27,7 +27,8 @@ public class FlowValidator {
 					String state2 = flow.getStates().get(j).getName();
 
 					if (state1.equals(state2)) {
-						operationsValidator.error(flow, "Duplicate state \"" + state1 + "\" in flow " + flow.getName());
+						operationsValidator.error(flow, "Duplicate state '" + state1 + "' in flow '" + flow.getName()
+								+ "'");
 					}
 				}
 			}
@@ -48,8 +49,9 @@ public class FlowValidator {
 					File filepack = new File(folder, classbean.replace(".", "/").concat(".java"));
 
 					if (!filepack.exists()) {
-						operationsValidator.error(flow, "In flow  \"" + flow.getName() + "\""
-								+ " not exits bean in state \"" + state.getName() + "\"");
+						operationsValidator.warning(flow, "Flow  '" + flow.getName()
+								+ "' references non existing bean '" + classbean + "' in state '" + state.getName()
+								+ "'");
 					}
 				}
 			}
@@ -92,7 +94,7 @@ public class FlowValidator {
 
 					if (param1.equals(param2)) {
 						operationsValidator.error(flow,
-								"Duplicate parameter \"" + param1 + "\" in flow " + flow.getName());
+								"Duplicate parameter '" + param1 + "' in flow '" + flow.getName() + "'");
 					}
 				}
 			}
@@ -115,9 +117,31 @@ public class FlowValidator {
 			File filepack = new File(folder, classbean.replace(".", "/").concat(".java"));
 
 			if (!filepack.exists()) {
-				operationsValidator.error(flow, "Bean class " + classbean + " not found");
+				operationsValidator.error(flow, "Bean class '" + classbean + "' not found in flow '" + flow.getName()
+						+ "'");
 			}
 		}
+		return true;
+	}
+
+	public boolean validate_Flow_itExists(Flow flow) {
+
+		File rawFile = ValidatorUtils.getFile(flow);
+		File projectFile = ValidatorUtils.findProjectFile(rawFile);
+
+		String classbean = flow.getHelperClass();
+		if (classbean == null) {
+			return true; // Backwards compatibility, older flows did not have helper beans
+		}
+
+		File folder = new File(projectFile, PATH);
+		File filepack = new File(folder, classbean.replace(".", "/").concat(".java"));
+
+		if (!filepack.exists()) {
+			operationsValidator.error(flow, "Helper class '" + classbean + "' for flow '" + flow.getName()
+					+ "' not found");
+		}
+
 		return true;
 	}
 
@@ -130,7 +154,7 @@ public class FlowValidator {
 
 					if (bean2.getName().equals(bean1.getName())) {
 						operationsValidator.error(flow,
-								"Duplicate bean \"" + bean1.getName() + "\" in flow " + flow.getName());
+								"Duplicate bean '" + bean1.getName() + "' in flow '" + flow.getName() + "'");
 					}
 				}
 			}
@@ -145,14 +169,15 @@ public class FlowValidator {
 
 				char initial = name.charAt(0);
 				if (!Character.isJavaIdentifierStart(initial)) {
-					operationsValidator.error(flow, "Name of parameter " + name + " starts with an invalid character.");
+					operationsValidator.error(flow, "Parameter '" + name + "' in flow '" + flow.getName()
+							+ "' starts with an invalid character.");
 				}
 
 				for (int l = 1; l < name.length(); l++) {
 					char letter = name.charAt(l);
 					if (!Character.isJavaIdentifierPart(letter)) {
-						operationsValidator.error(flow, "Name of  parameter " + name
-								+ " contains the invalid character '" + letter + "'.");
+						operationsValidator.error(flow, "Parameter '" + name + "' contains the invalid character '"
+								+ letter + "'.");
 						break;
 					}
 
