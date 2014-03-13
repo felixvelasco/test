@@ -67,7 +67,7 @@ public class MethodsBeanContentProvider extends AdapterFactoryContentProvider {
 				}
 			}
 			return lPublicMethods.toArray();
-		} catch (JavaModelException e) {
+		} catch (JavaModelException | NullPointerException e) {
 			return new Object[0];
 		}
 	}
