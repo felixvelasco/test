@@ -7,23 +7,17 @@ import org.eclipse.m2e.core.project.configurator.AbstractBuildParticipant;
 import org.eclipse.m2e.jdt.AbstractSourcesGenerationProjectConfigurator;
 
 public class JVoiceJaxWSConfigurator extends
+	AbstractSourcesGenerationProjectConfigurator {
+    @Override
+    public AbstractBuildParticipant getBuildParticipant(
+	    IMavenProjectFacade projectFacade, MojoExecution execution,
+	    IPluginExecutionMetadata executionMetadata) {
+	return new JVoiceJaxWSBuildParticipant(execution);
+    }
 
-AbstractSourcesGenerationProjectConfigurator {
-
-	@Override
-	public AbstractBuildParticipant getBuildParticipant(
-
-	IMavenProjectFacade projectFacade, MojoExecution execution,
-
-	IPluginExecutionMetadata executionMetadata) {
-
-		return new JVoiceJaxWSBuildParticipant(execution);
-
-	}
-
-	@Override
-	protected String getOutputFolderParameterName() {
-		return "sourceRoot";
-	}
+    @Override
+    protected String getOutputFolderParameterName() {
+	return "sourceRoot";
+    }
 
 }
