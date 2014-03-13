@@ -1,18 +1,10 @@
 package com.vectorsf.jvoice.diagram.core.pattern.states;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.graphiti.features.context.ICreateContext;
-import org.eclipse.jdt.core.Flags;
-import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
-import org.eclipse.jdt.core.IType;
-import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Shell;
@@ -59,12 +51,15 @@ public class CallStatePattern extends SimpleStatePattern {
 		dialog.setInput(lb);
 		dialog.open();
 		IMethod methodResult = null;
+		ComponentBean componentBean = null;
 
 		switch (dialog.getReturnCode()) {
 		case Dialog.OK:
 			Object[] results = dialog.getResult();
 
 			methodResult = (IMethod) results[0];
+			componentBean = (ComponentBean) results[1];
+
 			break;
 		case Dialog.CANCEL:
 			throw new OperationCanceledException();
@@ -85,11 +80,7 @@ public class CallStatePattern extends SimpleStatePattern {
 				e.printStackTrace();
 			}
 			cs.setMethodName(methodResult.getElementName());
-			for (ComponentBean componentBean : lb) {
-				if (containsMethod(componentBean, methodResult)) {
-					cs.setBean(componentBean);
-				}
-			}
+			cs.setBean(componentBean);
 
 			flow.getStates().add(cs);
 
@@ -124,25 +115,4 @@ public class CallStatePattern extends SimpleStatePattern {
 		return CoreImageProvider.IMG_STATE_EXECUTION;
 	}
 
-	private boolean containsMethod(ComponentBean inCompBean, IMethod inMethod) {
-		URI uri = EcoreUtil.getURI(inCompBean);
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().findMember(uri.toPlatformString(true)).getProject();
-		IJavaProject jProject = JavaCore.create(project);
-		IType type;
-		try {
-			type = jProject.findType(inCompBean.getFqdn());
-			IMethod[] methods = type.getMethods();
-			for (IMethod iMethod : methods) {
-				if (Flags.isPublic(iMethod.getFlags())) {
-					if (inMethod.equals(iMethod)) {
-						return true;
-					}
-				}
-			}
-
-		} catch (JavaModelException e) {
-
-		}
-		return false;
-	}
 }
