@@ -184,7 +184,8 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 											IPath pathJspDestino = new Path(targetFlow.getName() + ".resources");
 											IFolder folderResourcesDestino = folderDestino.getFolder(pathJspDestino);
 											if (folderResourcesDestino.exists()) {
-												String newName = getNewName(folderResourcesDestino, customice.getPath());
+												String newName = getValidCustomPath(folderResourcesDestino,
+														customice.getPath());
 
 												IPath destinoFinal = folderResourcesDestino.getFullPath().append(
 														newName);
@@ -436,13 +437,30 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		}
 	}
 
-	private String getNewName(IFolder resourcesFolder, String name) {
-		String newName = name;
-		if (resourcesFolder.getFile(name).exists()) {
-			name = "CopyOf" + name;
-			name = getNewName(resourcesFolder, name);
-			newName = name;
+	private String getValidCustomPath(IFolder resourcesFolder, String path) {
+		// Eliminamos extensión
+		String pathWithoutExt = path.substring(0, path.length() - 4);
+		String validPath = pathWithoutExt;
+		int counter = 1;
+		for (;;) {
+			if (isValidCustomPath(resourcesFolder, validPath)) {
+				// Añadimos extensión
+				return validPath + ".jsp";
+			}
+			validPath = pathWithoutExt + counter;
+			counter++;
 		}
-		return newName;
 	}
+
+	private boolean isValidCustomPath(IFolder resourcesFolder, String path) {
+
+		IFile file = resourcesFolder.getFile(path + ".jsp");
+
+		if (file.exists()) {
+			return false;
+		}
+		return true;
+
+	}
+
 }
