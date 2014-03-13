@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.vectorsf.jvoice.core</groupId>
+    <artifactId>tests</artifactId>
+    <version>1.2.0-SNAPSHOT</version>
+  </parent>
+  <groupId>com.vectorsf.jvoice.core</groupId>
+  <artifactId>com.vectorsf.jvoice.core.validation.test</artifactId>
+  <packaging>eclipse-test-plugin</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<dependencies>
+						<dependency>
+							<type>eclipse-plugin</type>
+							<artifactId>org.eclipse.graphiti.mm</artifactId>
+							<version>0.10.0</version>
+						</dependency>
+						<dependency>
+							<type>eclipse-plugin</type>
+							<groupId>com.vectorsf.jvoice.core</groupId>
+							<artifactId>com.vectorsf.jvoice.core.operation</artifactId>
+							<version>0.1.0</version>
+						</dependency>
+						<dependency>
+							<type>eclipse-plugin</type>
+							<groupId>com.vectorsf.jvoice.core</groupId>
+							<artifactId>com.vectorsf.jvoice.core.prompt</artifactId>
+							<version>0.1.0</version>
+						</dependency>
+					</dependencies>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
