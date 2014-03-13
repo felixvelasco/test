@@ -1,5 +1,6 @@
 package com.vectorsf.jvoice.ui.navigator.handler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,6 +12,8 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ltk.ui.refactoring.RefactoringWizardOpenOperation;
@@ -19,7 +22,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import com.vectorsf.jvoice.model.base.JVBean;
+import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.operations.Flow;
+import com.vectorsf.jvoice.ui.navigator.util.FlowCopyHelper;
 
 public class DeleteHandler extends AbstractHandler {
 
@@ -31,20 +37,30 @@ public class DeleteHandler extends AbstractHandler {
 			IStructuredSelection sel = (IStructuredSelection) currentSelection;
 			Collection<IResource> resources = new ArrayList<IResource>();
 			for (Object o : sel.toArray()) {
-				IResource resource = (IResource) Platform.getAdapterManager()
-						.getAdapter(o, IResource.class);
+				IResource resource = (IResource) Platform.getAdapterManager().getAdapter(o, IResource.class);
 				if (resource != null) {
 					resources.add(resource);
 					if (o instanceof Flow) {
-						IPath path = new Path(resource.getName().replace(
-								".jvflow", ".resources"));
-						IFolder relacionado = resource.getParent().getFolder(
-								path);
-						if (relacionado.exists()) {
-							IResource extras = (IResource) Platform
-									.getAdapterManager().getAdapter(
-											relacionado, IResource.class);
-							resources.add(extras);
+						IResource resourcesFolder = findResourcesFolder(resource);
+						if (resourcesFolder.exists()) {
+							resources.add(resourcesFolder);
+						}
+
+						IResource helperClass = findHelperClass((Flow) o);
+						if (helperClass != null && helperClass.exists()) {
+							resources.add(helperClass);
+						}
+					}
+					if (o instanceof JVPackage) {
+						JVPackage jvPackage = (JVPackage) o;
+
+						for (JVBean bean : jvPackage.getBeans()) {
+							if (bean instanceof Flow) {
+								IResource helperClass = findHelperClass((Flow) bean);
+								if (helperClass != null && helperClass.exists()) {
+									resources.add(helperClass);
+								}
+							}
 						}
 					}
 				}
@@ -56,15 +72,27 @@ public class DeleteHandler extends AbstractHandler {
 		return null;
 	}
 
-	private boolean delete(final IResource[] resources) {
-		DeleteResourcesWizard refactoringWizard = new DeleteResourcesWizard(
-				resources);
-		refactoringWizard.setDefaultPageTitle("Delete");
-		RefactoringWizardOpenOperation op = new RefactoringWizardOpenOperation(
-				refactoringWizard);
+	private IResource findHelperClass(Flow flow) {
 		try {
-			Shell activeShell = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getShell();
+			ICompilationUnit helperFile = FlowCopyHelper.getHelperFile(flow);
+			return helperFile.getResource();
+		} catch (JavaModelException | IOException e) {
+			return null;
+		}
+	}
+
+	private IFolder findResourcesFolder(IResource resource) {
+		IPath path = new Path(resource.getName().replace(".jvflow", ".resources"));
+		IFolder relacionado = resource.getParent().getFolder(path);
+		return relacionado;
+	}
+
+	private boolean delete(final IResource[] resources) {
+		DeleteResourcesWizard refactoringWizard = new DeleteResourcesWizard(resources);
+		refactoringWizard.setDefaultPageTitle("Delete");
+		RefactoringWizardOpenOperation op = new RefactoringWizardOpenOperation(refactoringWizard);
+		try {
+			Shell activeShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 			op.run(activeShell, "");
 
 		} catch (InterruptedException e) {
