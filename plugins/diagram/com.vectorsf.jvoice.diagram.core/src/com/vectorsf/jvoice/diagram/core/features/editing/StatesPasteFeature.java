@@ -79,6 +79,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			if (copy != null) {
 				if (isState(copy)) {
 					State state = (State) copy;
+
 					Flow targetFlow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 					state.setName(SimpleStatePattern.getValidStateName(targetFlow, state.getName()));
 					// Si es una locution hay que copiar el voiceDsl al que
@@ -291,8 +292,7 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		IPath pathRecursos = new Path(targetFlow.getName().replace(".jvflow", ".resources"));
 		targetRes = targetFlow.getParent().getFolder(pathRecursos);
 		if (targetRes.exists()) {
-			newName = generateLocutionName((IFolder) targetRes, voiceDsl.getName() + ".voiceDsl", voiceDsl.getName()
-					+ ".voiceDsl", 1);
+			newName = getValidLocutionName((IFolder) targetRes, voiceDsl.getName()) + ".voiceDsl";
 			try {
 				if (!newName.equals(voiceDsl.getName() + ".voiceDsl")) {
 					rename = true;
@@ -329,22 +329,28 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 	}
 
-	private String generateLocutionName(IFolder targetFolder, String name, String newName, int i) {
-		IFile file = targetFolder.getFile(newName);
-		if (file.exists()) {
-			rename = true;
-			if (i == 1) {
-				return generateLocutionName(targetFolder, name, "CopyOf" + name, i + 1);
-			} else {
-				return generateLocutionName(targetFolder, name, "Copy" + i + "Of" + name, i + 1);
+	private String getValidLocutionName(IFolder targetFolder, String name) {
+
+		String validName = name;
+		int counter = 1;
+		for (;;) {
+			if (isValidLocutionName(targetFolder, validName)) {
+				return validName;
 			}
-		} else {
-			if (i == 1 && targetFolder.getFile(name).exists()) {
-				return "CopyOf" + name;
-			} else {
-				return newName;
-			}
+			validName = name + counter;
+			counter++;
 		}
+	}
+
+	private boolean isValidLocutionName(IFolder targetFolder, String name) {
+
+		IFile file = targetFolder.getFile(name + ".voiceDsl");
+
+		if (file.exists()) {
+			return false;
+		}
+		return true;
+
 	}
 
 	@Override
