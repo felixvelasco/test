@@ -27,6 +27,7 @@ import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.ParameterizedState;
+import com.vectorsf.jvoice.ui.diagram.properties.section.ExecuteChooser;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.LabelAndText;
 
 public class CallStateSection extends ParametrizableStateSection {
@@ -79,9 +80,8 @@ public class CallStateSection extends ParametrizableStateSection {
 		labelTextBean = createLabelAndText("Bean", "", null, -1);
 		labelTextBean.text.setEnabled(false);
 
-		labelTextMethod = createLabelAndText("Method", "", null, -1);
-		labelTextMethod.text.setEnabled(false);
-
+		labelTextMethod = createLabelTextAndButton("Method:", "",
+				OperationsPackage.eINSTANCE.getCallState_MethodName(), new ExecuteChooser());
 	}
 
 	@Override
@@ -108,7 +108,11 @@ public class CallStateSection extends ParametrizableStateSection {
 				getSelectedPictogramElement());
 		if (state != null) {
 			if (((CallState) state).getBean() != null) {
-				labelTextBean.text.setText(((CallState) state).getBean().getNameBean());
+				/*
+				 * Se cambia el nombre que aparece ((CallState) state).getBean().getNameBean() ya que era incorrecto y
+				 * se pone el nombre del Component.
+				 */
+				labelTextBean.text.setText(((CallState) state).getBean().getName());
 				if (((CallState) state).getMethodName() != null) {
 					labelTextMethod.text.setText(((CallState) state).getMethodName());
 					// cargamos combo con los beans que se puedan relacionar

@@ -11,6 +11,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.util.EList;
@@ -38,6 +39,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.osgi.framework.Bundle;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -47,13 +49,11 @@ import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-
 import static org.junit.Assert.fail;
 
 /**
@@ -67,6 +67,9 @@ public class PropertiesDiagramTest {
 	private static SWTBotView viewProperties;
 	private SWTBotGefEditor editor;
 	private SWTBotGefViewer gefViewer;
+	private static final String COMPONENTS_PATH = "/com/isb/testNavigator/components/";
+	public static final Bundle bundle = Platform
+			.getBundle("com.vectorsf.jvoice.ui.diagram.properties.test");
 
 	/**
 	 * @throws java.lang.Exception
@@ -285,6 +288,14 @@ public class PropertiesDiagramTest {
 
 		IFile file = SWTBotHelper.createFile(project, BaseModel.JV_PATH + "/test/five.jvflow",
 				SWTBotHelper.getInputStreamResource("five.jvflow"));
+		
+		SWTBotHelper.createFile(project, BaseModel.JAVA_SOURCES_PATH + COMPONENTS_PATH
+				+ "TestExecute.java",
+				SWTBotHelper.getInputStreamResource("TestExecute.java"));
+		
+		SWTBotHelper.createFile(project,  BaseModel.JAVA_SOURCES_PATH + COMPONENTS_PATH
+				+ "nuevo.java",
+				SWTBotHelper.getInputStreamResource("nuevo.java"));
 
 		SWTBotHelper.openFile(file);
 		bot.sleep(LARGE_SLEEP);
@@ -303,18 +314,74 @@ public class PropertiesDiagramTest {
 		assertThat(viewProperties.bot().text("Call"), is(not(nullValue())));
 
 		assertThat(viewProperties.bot().label("Bean"), is(not(nullValue())));
-		assertThat(viewProperties.bot().text(1).getText(), is("prueba"));
+		assertThat(viewProperties.bot().text(1).getText(), is("nuevo"));
 
-		assertThat(viewProperties.bot().label("Method"), is(not(nullValue())));
-		assertThat(viewProperties.bot().text(2).getText(), is("prueba1"));
+		assertThat(viewProperties.bot().label("Method:"), is(not(nullValue())));
+		assertThat(viewProperties.bot().text(2).getText(), is("prueba"));
 
 		assertThat(viewProperties.bot().label("Return"), is(not(nullValue())));
+
+		viewProperties.bot().button(0).click();
+
+		bot.shell("Bean Selection").activate();
+		final SWTBotShell shellCreate = bot.shell("Bean Selection"); //$NON-NLS-1$
+		final SWTBot dialogBot = bot.shell("Bean Selection").bot();
+
+		bot.sleep(LARGE_SLEEP);
+
+		assertThat(dialogBot.tree().rowCount(), is(2));
+		assertThat(dialogBot.button("OK").isEnabled(), is(false));
+
+		dialogBot.tree().expandNode("testExecute");
+
+		bot.sleep(LARGE_SLEEP);
+
+		assertThat(dialogBot.tree().getTreeItem("testExecute").rowCount(), is(1));
+		assertThat(dialogBot.tree().getTreeItem("testExecute").getNode("test()"), is(not(nullValue())));
+		
+		dialogBot.tree().expandNode("nuevo");
+		
+		bot.sleep(LARGE_SLEEP);
+
+		assertThat(dialogBot.tree().getTreeItem("nuevo").rowCount(), is(1));
+		assertThat(dialogBot.tree().getTreeItem("nuevo").getNode("prueba()"), is(not(nullValue())));
+
+		dialogBot.tree().getTreeItem("testExecute").getNode("test()").select();
+
+		assertThat(dialogBot.button("OK").isEnabled(), is(true));
+
+		dialogBot.button("OK").click();
+		
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (!shellCreate.isOpen()) {
+					return true;
+				}
+				return false;
+			}
+
+			public String getFailureMessage() {
+				return "Was expecting the 'Create' dialog to close itself";
+			}
+		}, 5 * 60 * 1000);
+		bot.sleep(LARGE_SLEEP);
+
+		assertThat(viewProperties.bot().text(1).getText(), is("testExecute"));
+		assertThat(viewProperties.bot().text(2).getText(), is("test"));
+		
+		
 
 		SWTBotText textName = viewProperties.bot().text("Call");
 		textName.setFocus();
 		textName.setText("otro");
 		gefViewer.click("Call");
 		assertThat(viewProperties.bot().text("otro"), is(not(nullValue())));
+		
+		
+		
+		
+		
+		
 	}
 
 	@Test

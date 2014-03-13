@@ -19,6 +19,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.DialogListener;
+import com.vectorsf.jvoice.ui.diagram.properties.section.helper.ExecuteDialogListener;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.IObjectChooser;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.LabelAndText;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.UpdatingFocusListener;
@@ -76,7 +77,12 @@ public abstract class SimpleStateSection extends GFPropertySection {
 
 		Button button = factory.createButton(composite, "...", SWT.PUSH);
 		button.setLayoutData(new GridData());
-		button.addSelectionListener(new DialogListener(this, feature, chooser));
+		if (feature.getContainerClass().getName().endsWith(".CallState")) {
+			button.addSelectionListener(new ExecuteDialogListener(this, feature, chooser));
+		} else {
+
+			button.addSelectionListener(new DialogListener(this, feature, chooser));
+		}
 
 		return new LabelAndText(label, text, button);
 	}

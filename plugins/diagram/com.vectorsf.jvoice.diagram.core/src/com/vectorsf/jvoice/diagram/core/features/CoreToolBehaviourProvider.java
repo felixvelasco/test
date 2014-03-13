@@ -268,7 +268,7 @@ public class CoreToolBehaviourProvider extends DefaultToolBehaviorProvider {
 	@Override
 	public ICustomFeature getSingleClickFeature(ISingleClickContext context) {
 
-		if (((JVoiceDiagramBehavior) getFeatureProvider()).isReadOnly()) {
+		if (((CoreFeatureProvider) getFeatureProvider()).isReadOnly()) {
 			return null;
 		}
 
