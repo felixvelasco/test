@@ -25,14 +25,16 @@ import org.eclipse.xtext.resource.SaveOptions;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVModule;
+import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.LocutionState;
+import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
 public class FlowCopyHelper {
 
-	public static void actualizaFlow(IPath targetPath, String helperClassName, boolean rename)
+	public static void actualizaFlow(IPath targetPath, String helperClassFqdn, boolean rename)
 			throws JavaModelException {
 		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
 		Resource emfRes = resourceSetImpl.createResource(URI.createPlatformResourceURI(targetPath.toString(), true));
@@ -49,7 +51,9 @@ public class FlowCopyHelper {
 					} else if (obj instanceof Flow) {
 						Flow flow = (Flow) obj;
 						flow.setName(newName);
-						flow.setHelperClass(helperClassName);
+						flow.setHelperClass(helperClassFqdn);
+						addItIfNeeded(flow, helperClassFqdn);
+
 						List<EObject> listaObjetos = flow.eResource().getContents();
 						for (int i = 0; i < listaObjetos.size(); i++) {
 							EObject objeto = listaObjetos.get(i);
@@ -62,7 +66,8 @@ public class FlowCopyHelper {
 				} else {
 					if (obj instanceof Flow) {
 						Flow flow = (Flow) obj;
-						flow.setHelperClass(helperClassName);
+						flow.setHelperClass(helperClassFqdn);
+						addItIfNeeded(flow, helperClassFqdn);
 					}
 				}
 			}
@@ -74,6 +79,26 @@ public class FlowCopyHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static void addItIfNeeded(Flow flow, String helperClassFqdn) {
+		for (ComponentBean bean : flow.getBeans()) {
+			if (bean.getName().equals("it")) {
+				return;
+			}
+		}
+
+		String helperClassName = helperClassFqdn.substring(helperClassFqdn.lastIndexOf('.') + 1);
+
+		String lowerCaseHelperClassName = Character.toLowerCase(helperClassName.charAt(0))
+				+ helperClassName.substring(1);
+
+		ComponentBean defaultBean = OperationsFactory.eINSTANCE.createComponentBean();
+		defaultBean.setFqdn(helperClassFqdn);
+		defaultBean.setName("it");
+		defaultBean.setNameBean(lowerCaseHelperClassName);
+		defaultBean.setPrototype(true);
+		flow.getBeans().add(defaultBean);
 	}
 
 	public static IPackageFragment getHelperPackage(IPath targetPath) throws JavaModelException {
