@@ -82,16 +82,17 @@ public class FlowCopyHelper {
 	}
 
 	private static void addItIfNeeded(Flow flow, String helperClassFqdn) {
+		String helperClassName = helperClassFqdn.substring(helperClassFqdn.lastIndexOf('.') + 1);
+		String lowerCaseHelperClassName = Character.toLowerCase(helperClassName.charAt(0))
+				+ helperClassName.substring(1);
+
 		for (ComponentBean bean : flow.getBeans()) {
 			if (bean.getName().equals("it")) {
+				bean.setFqdn(helperClassFqdn);
+				bean.setNameBean(lowerCaseHelperClassName);
 				return;
 			}
 		}
-
-		String helperClassName = helperClassFqdn.substring(helperClassFqdn.lastIndexOf('.') + 1);
-
-		String lowerCaseHelperClassName = Character.toLowerCase(helperClassName.charAt(0))
-				+ helperClassName.substring(1);
 
 		ComponentBean defaultBean = OperationsFactory.eINSTANCE.createComponentBean();
 		defaultBean.setFqdn(helperClassFqdn);
