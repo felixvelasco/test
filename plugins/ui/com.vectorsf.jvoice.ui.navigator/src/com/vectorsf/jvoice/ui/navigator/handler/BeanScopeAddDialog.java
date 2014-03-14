@@ -103,7 +103,7 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 			type = jProject.findType(bean.getFqdn());
 			typeRoot = type.getTypeRoot();
 
-		} catch (JavaModelException e) {
+		} catch (JavaModelException | NullPointerException e) {
 			e.printStackTrace();
 			setErrorMessage(null);
 			setMessage("Error loading " + bean.getFqdn());
@@ -212,13 +212,12 @@ public class BeanScopeAddDialog extends TitleAreaDialog {
 				updateComponent(typeRoot);
 				bean.setName(originalBean.getName());
 				bean.setId(originalBean.getId());
-			} catch (JavaModelException e) {
+			} catch (JavaModelException | NullPointerException e) {
 				Activator
 						.getDefault()
 						.getLog()
 						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 								"Error buscando clase: ", e));
-				e.printStackTrace();
 			}
 		}
 
