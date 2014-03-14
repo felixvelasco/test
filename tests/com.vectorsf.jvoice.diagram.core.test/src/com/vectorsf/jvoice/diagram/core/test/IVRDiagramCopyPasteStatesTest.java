@@ -330,12 +330,9 @@ public class IVRDiagramCopyPasteStatesTest {
 			Flow flow = (Flow) Graphiti.getLinkService()
 					.getBusinessObjectForLinkedPictogramElement(diagram);
 			Matcher<Iterable<? super State>> hasItemWithNameStateName = null;
-			if (i == 0) {
-				hasItemWithNameStateName = hasStateNamed("CopyOf" + stateName);
-			} else {
-				hasItemWithNameStateName = hasStateNamed("Copy" + (i + 1)
-						+ "Of" + stateName);
-			}
+
+			hasItemWithNameStateName = hasStateNamed(stateName + (i + 1));
+
 			bot.sleep(SMALL_SLEEP);
 			assertThat(flow.getStates(), hasItemWithNameStateName);
 
@@ -419,40 +416,40 @@ public class IVRDiagramCopyPasteStatesTest {
 				.getBusinessObjectForLinkedPictogramElement(diagram);
 		Matcher<Iterable<? super State>> hasItemWithNameStateName = null;
 
-		hasItemWithNameStateName = hasStateNamed("CopyOfFinal");
+		hasItemWithNameStateName = hasStateNamed("Final1");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
-		hasItemWithNameStateName = hasStateNamed("CopyOfempty");
+		hasItemWithNameStateName = hasStateNamed("empty1");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
-		hasItemWithNameStateName = hasStateNamed("CopyOfSwitch");
+		hasItemWithNameStateName = hasStateNamed("Switch1");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
-		hasItemWithNameStateName = hasStateNamed("CopyOfMenu");
+		hasItemWithNameStateName = hasStateNamed("Menu1");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
-		hasItemWithNameStateName = hasStateNamed("CopyOftest");
+		hasItemWithNameStateName = hasStateNamed("test1");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
-		hasItemWithNameStateName = hasStateNamed("CopyOfOutput");
+		hasItemWithNameStateName = hasStateNamed("Output1");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
-		hasItemWithNameStateName = hasStateNamed("CopyOfInput");
+		hasItemWithNameStateName = hasStateNamed("Input1");
 		assertThat(flow.getStates(), hasItemWithNameStateName);
 		Matcher<Iterable<? super Transition>> hasTransition = hasTransition(
-				"CopyOftest", "CopyOfempty");
+				"test1", "empty1");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfempty", "CopyOfSwitch");
+		hasTransition = hasTransition("empty1", "Switch1");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfSwitch", "CopyOfMenu");
+		hasTransition = hasTransition("Switch1", "Menu1");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfSwitch", "CopyOfOutput");
+		hasTransition = hasTransition("Switch1", "Output1");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfOutput", "CopyOfInput");
+		hasTransition = hasTransition("Output1", "Input1");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfInput", "CopyOfFinal");
+		hasTransition = hasTransition("Input1", "Final1");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfMenu", "CopyOfTransfer");
+		hasTransition = hasTransition("Menu1", "Transfer1");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfMenu", "CopyOfRecord");
+		hasTransition = hasTransition("Menu1", "Record1");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfRecord", "CopyOfCustom");
+		hasTransition = hasTransition("Record1", "Custom1");
 		assertThat(flow.getTransitions(), hasTransition);
-		hasTransition = hasTransition("CopyOfCustom", "CopyOfFinal");
+		hasTransition = hasTransition("Custom1", "Final1");
 		assertThat(flow.getTransitions(), hasTransition);
 
 	}
