@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.vectorsf.jvoice.core</groupId>
     <artifactId>tests</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
   </parent>
   <groupId>com.vectorsf.jvoice.core</groupId>
   <artifactId>com.vectorsf.jvoice.base.model.test</artifactId>

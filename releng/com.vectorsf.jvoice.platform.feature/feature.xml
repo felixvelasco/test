@@ -2,7 +2,7 @@
 <feature
       id="com.vectorsf.jvoice.platform.feature"
       label="Feature"
-      version="1.2.0.qualifier"
+      version="1.2.0"
       provider-name="VECTORSF">
 
    <description url="http://www.example.com/description">
@@ -171,7 +171,7 @@
 
    <includes
          id="org.eclipse.m2e.feature"
-         version="0.0.0"/>
+         version="1.4.0.201402131541"/>
 
    <includes
          id="org.eclipse.m2e.wtp.feature"

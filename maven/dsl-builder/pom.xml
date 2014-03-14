@@ -4,15 +4,12 @@
 	<parent>
 		<groupId>com.vectorsf.jvoice</groupId>
 		<artifactId>maven</artifactId>
-		<version>1.2.0-SNAPSHOT</version>
+		<version>1.2.0</version>
 	</parent>
 	<artifactId>dsl-builder</artifactId>
 	<packaging>maven-plugin</packaging>
 	<name>dsl.builder Maven Mojo</name>
 	<url>http://maven.apache.org</url>
-
-	<!--<pluginRepositories> <pluginRepository> <id>xtend</id> <url>http://isbks208510504s.scisb.isban.corp/nexus/content/repositories/xtend/</url> 
-		</pluginRepository> </pluginRepositories> -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -96,17 +93,17 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.prompt.model</artifactId>
-			<version>1.2.0-SNAPSHOT</version>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.base.model</artifactId>
-			<version>1.2.0-SNAPSHOT</version>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.operation.model</artifactId>
-			<version>1.2.0-SNAPSHOT</version>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.graphiti</groupId>
@@ -116,7 +113,7 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.voice.dsl</artifactId>
-			<version>1.2.0-SNAPSHOT</version>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -126,7 +123,7 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.core.project</artifactId>
-			<version>1.2.0-SNAPSHOT</version>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.mojo</groupId>
@@ -137,7 +134,7 @@
 		<dependency>
 			<groupId>com.vectorsf.jvoice.core</groupId>
 			<artifactId>com.vectorsf.jvoice.core.validation</artifactId>
-			<version>1.2.0-SNAPSHOT</version>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
