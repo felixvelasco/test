@@ -105,7 +105,7 @@ public class IVRMavenLauncher extends AbstractHandler {
 		try {
 			for (ILaunchConfiguration conf : manager.getLaunchConfigurations()) {
 				if ("org.eclipse.jst.server.tomcat.core.launchConfigurationType".equals(conf.getType().getIdentifier())) {
-					DebugUITools.launch(conf.getWorkingCopy(), ILaunchManager.RUN_MODE);
+					DebugUITools.launch(conf.getWorkingCopy(), ILaunchManager.DEBUG_MODE);
 				}
 			}
 		} catch (Exception e) {
