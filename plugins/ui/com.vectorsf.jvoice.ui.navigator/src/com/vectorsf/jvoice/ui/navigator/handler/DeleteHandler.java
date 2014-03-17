@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.ui.navigator.handler;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -76,7 +75,7 @@ public class DeleteHandler extends AbstractHandler {
 		try {
 			ICompilationUnit helperFile = FlowCopyHelper.getHelperFile(flow);
 			return helperFile.getResource();
-		} catch (JavaModelException | IOException e) {
+		} catch (JavaModelException e) {
 			return null;
 		}
 	}

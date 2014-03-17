@@ -34,6 +34,10 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
 public class FlowCopyHelper {
 
+	public static String toTitleCase(String original) {
+		return Character.toUpperCase(original.charAt(0)) + original.substring(1);
+	}
+
 	public static void actualizaFlow(IPath targetPath, String helperClassFqdn, boolean rename)
 			throws JavaModelException {
 		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
@@ -50,10 +54,9 @@ public class FlowCopyHelper {
 
 					} else if (obj instanceof Flow) {
 						Flow flow = (Flow) obj;
-						flow.setName(newName);
-						flow.setHelperClass(helperClassFqdn);
-						addItIfNeeded(flow, helperClassFqdn);
+						updateHelperClass(flow, helperClassFqdn);
 
+						flow.setName(newName);
 						List<EObject> listaObjetos = flow.eResource().getContents();
 						for (int i = 0; i < listaObjetos.size(); i++) {
 							EObject objeto = listaObjetos.get(i);
@@ -66,8 +69,7 @@ public class FlowCopyHelper {
 				} else {
 					if (obj instanceof Flow) {
 						Flow flow = (Flow) obj;
-						flow.setHelperClass(helperClassFqdn);
-						addItIfNeeded(flow, helperClassFqdn);
+						updateHelperClass(flow, helperClassFqdn);
 					}
 				}
 			}
@@ -79,6 +81,11 @@ public class FlowCopyHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void updateHelperClass(Flow flow, String helperClassFqdn) {
+		flow.setHelperClass(helperClassFqdn);
+		addItIfNeeded(flow, helperClassFqdn);
 	}
 
 	private static void addItIfNeeded(Flow flow, String helperClassFqdn) {
@@ -126,7 +133,7 @@ public class FlowCopyHelper {
 		}
 	}
 
-	public static ICompilationUnit getHelperFile(Flow flow) throws JavaModelException, IOException {
+	public static ICompilationUnit getHelperFile(Flow flow) throws JavaModelException {
 		IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
 		IProject project = file.getProject();
 		IJavaProject jProject = JavaCore.create(project);

@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.ui.navigator.handler;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,7 +22,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -45,7 +43,6 @@ import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
-import com.vectorsf.jvoice.ui.navigator.activator.Activator;
 import com.vectorsf.jvoice.ui.navigator.util.FlowCopyHelper;
 
 public class PasteHandler extends AbstractHandler {
@@ -176,15 +173,10 @@ public class PasteHandler extends AbstractHandler {
 						for (IFile flowFile : findFlows(targetFolder)) {
 							IPath fullPath = flowFile.getFullPath();
 							IPackageFragment helperPackage = FlowCopyHelper.getHelperPackage(fullPath);
-							ICompilationUnit helperOriginalClass;
-							try {
-								helperOriginalClass = FlowCopyHelper.getHelperFile(getOriginalFlow(flowFile, miPack));
-							} catch (IOException e) {
-								throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(),
-										e));
-							}
+							ICompilationUnit helperOriginalClass = FlowCopyHelper.getHelperFile(getOriginalFlow(
+									flowFile, miPack));
 							String beanName = fullPath.removeFileExtension().lastSegment();
-							String finalnombreUsuario = toTitleCase(beanName);
+							String finalnombreUsuario = FlowCopyHelper.toTitleCase(beanName);
 							if (helperOriginalClass != null) {
 								helperOriginalClass.copy(helperPackage, null, finalnombreUsuario + ".java", true,
 										monitor);
@@ -193,7 +185,7 @@ public class PasteHandler extends AbstractHandler {
 							}
 
 							FlowCopyHelper.actualizaFlow(fullPath, helperPackage.getElementName() + "."
-									+ toTitleCase(beanName), false);
+									+ FlowCopyHelper.toTitleCase(beanName), false);
 						}
 					}
 				};
@@ -309,7 +301,7 @@ public class PasteHandler extends AbstractHandler {
 			try {
 				final IPackageFragment helperTargetPackage = FlowCopyHelper.getHelperPackage(targetPath);
 				final ICompilationUnit helperOriginalClass = FlowCopyHelper.getHelperFile(flow);
-				final String finalnombreUsuario = toTitleCase(nombreUsuario);
+				final String finalnombreUsuario = FlowCopyHelper.toTitleCase(nombreUsuario);
 
 				IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
 
@@ -330,14 +322,10 @@ public class PasteHandler extends AbstractHandler {
 				};
 				ResourcesPlugin.getWorkspace().run(runnable, null);
 
-			} catch (CoreException | IOException e) {
+			} catch (CoreException e) {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private String toTitleCase(String original) {
-		return Character.toUpperCase(original.charAt(0)) + original.substring(1);
 	}
 
 	private Object getTarget(Object target) {

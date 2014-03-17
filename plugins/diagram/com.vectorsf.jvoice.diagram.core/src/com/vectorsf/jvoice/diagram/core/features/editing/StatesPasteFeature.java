@@ -31,11 +31,15 @@ import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.AbstractPasteFeature;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.util.Arrays;
 
@@ -56,6 +60,7 @@ import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.ui.navigator.util.FlowCopyHelper;
 
 public class StatesPasteFeature extends AbstractPasteFeature {
 
@@ -75,7 +80,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		Map<JVElement, PictogramElement> hm = new HashMap<>();
 		for (Object copy : copies) {
 
-			AddContext ac = new AddContext();
 			if (copy != null) {
 				if (isState(copy)) {
 					State state = (State) copy;
@@ -84,148 +88,31 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 					state.setName(SimpleStatePattern.getValidStateName(targetFlow, state.getName()));
 					// Si es una locution hay que copiar el voiceDsl al que
 					// apunta
-					if (isLocution(copy)) {
-						state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
-						LocutionState locution = (LocutionState) state;
-						VoiceDsl voiceDsl = locution.getLocution();
+					if (state instanceof LocutionState) {
+						PictogramElement pe = pasteLocution(context, (LocutionState) state, targetFlow);
+						hm.put(state, pe);
 
-						URI uri = EcoreUtil.getURI(targetFlow);
-						Flow connectedFlow = (Flow) BaseModel.getInstance().getResourceSet().getEObject(uri, true);
+					} else if (state instanceof CallState) {
+						PictogramElement pe = pasteExecution(context, (CallState) state, targetFlow);
+						hm.put(state, pe);
 
-						pasteVoiceDsl(voiceDsl, state, connectedFlow);
+					} else if (state instanceof CustomState) {
+						PictogramElement pe = pasteCustom(context, (CustomState) state, targetFlow);
+						hm.put(state, pe);
 
-						// Redireccionamos el nuevo estado al
-						// voiceDsl que hemos copiado
-						locution.setLocution(modified);
-						state = locution;
-
+					} else {
+						AddContext ac = new AddContext();
 						targetFlow.getStates().add(state);
 						ac.setLocation(context.getX(), context.getY());
 						ac.setTargetContainer(getDiagram());
 						PictogramElement pe = addGraphicalRepresentation(ac, state);
 						hm.put(state, pe);
-
-					} else if (state instanceof CallState) {
-						// Si es un estado execution comprobamos si tiene una instancia al bean referido desde el
-						// estado execution del que procede y si se llama igual. En caso contrario se deja como null.
-						CallState callState = (CallState) state;
-						boolean setNull = false;
-						if (targetFlow.getBeans() == null || targetFlow.getBeans().size() == 0) {
-							setNull = true;
-						} else {
-							for (ComponentBean bean : targetFlow.getBeans()) {
-								if (bean.getName().equals(callState.getBean().getName())) {
-									IProject project = ResourcesPlugin.getWorkspace().getRoot()
-											.findMember(EcoreUtil.getURI(targetFlow).toPlatformString(true))
-											.getProject();
-									IJavaProject jProject = JavaCore.create(project);
-									IType type;
-									try {
-										type = jProject.findType(bean.getFqdn());
-										IMethod[] methods = type.getMethods();
-										boolean hasMethod = false;
-										for (IMethod method : methods) {
-											if (method.getElementName().equals(callState.getMethodName())) {
-												hasMethod = true;
-											}
-										}
-										if (hasMethod) {
-											state.eUnset(state.eClass().getEStructuralFeature(
-													BasePackage.JV_ELEMENT__ID));
-											targetFlow.getStates().add(state);
-											ac.setLocation(context.getX(), context.getY());
-											ac.setTargetContainer(getDiagram());
-											PictogramElement pe = addGraphicalRepresentation(ac, copy);
-											hm.put(state, pe);
-										} else {
-											setNull = true;
-										}
-									} catch (JavaModelException e) {
-										e.printStackTrace();
-									}
-
-								}
-
-							}
-
-						}
-						if (setNull) {
-							state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
-							callState.setBean(null);
-							targetFlow.getStates().add(state);
-							ac.setLocation(context.getX(), context.getY());
-							ac.setTargetContainer(getDiagram());
-							PictogramElement pe = addGraphicalRepresentation(ac, copy);
-							hm.put(state, pe);
-						}
-
-					} else if (state instanceof CustomState) {
-						CustomState customice = (CustomState) state;
-						Object[] originals = getFromClipboard();
-
-						for (Object original : originals) {
-							if (original instanceof CustomState) {
-								CustomState customOriginal = (CustomState) original;
-								if (customice.getId().equals(customOriginal.getId())) {
-									Flow flujoOriginal = (Flow) customOriginal.eContainer();
-									IFile fileFlujoOrigen = (IFile) Platform.getAdapterManager().getAdapter(
-											flujoOriginal, IFile.class);
-									IFolder folderOriginal = (IFolder) fileFlujoOrigen.getParent();
-									IPath pathJsp = new Path(flujoOriginal.getName() + ".resources");
-									IFolder folderResources = folderOriginal.getFolder(pathJsp);
-									if (folderResources.exists()) {
-										IFile jspBuscado = folderResources.getFile(customice.getPath());
-										if (jspBuscado.exists()) {
-											// encontramos el jsp asociado al custom, ahora hay que copiarlo
-											// a la carpeta resources del flujo destino
-											IFile fileFlujoDestino = (IFile) Platform.getAdapterManager().getAdapter(
-													targetFlow, IFile.class);
-											IFolder folderDestino = (IFolder) fileFlujoDestino.getParent();
-											IPath pathJspDestino = new Path(targetFlow.getName() + ".resources");
-											IFolder folderResourcesDestino = folderDestino.getFolder(pathJspDestino);
-											if (folderResourcesDestino.exists()) {
-												String newName = getValidCustomPath(folderResourcesDestino,
-														customice.getPath());
-
-												IPath destinoFinal = folderResourcesDestino.getFullPath().append(
-														newName);
-												try {
-													jspBuscado.copy(destinoFinal, true, null);
-													customice.setPath(newName);
-												} catch (CoreException e) {
-													e.printStackTrace();
-													customice.setPath("");
-												}
-
-											} else {
-												customice.setPath("");
-											}
-										} else {
-											customice.setPath("");
-										}
-									} else {
-										customice.setPath("");
-									}
-								}
-							}
-						}
-						customice.eUnset(customice.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
-						targetFlow.getStates().add(customice);
-						ac.setLocation(context.getX(), context.getY());
-						ac.setTargetContainer(getDiagram());
-						PictogramElement pe = addGraphicalRepresentation(ac, copy);
-						hm.put(state, pe);
-					} else {
-						state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
-						targetFlow.getStates().add(state);
-						ac.setLocation(context.getX(), context.getY());
-						ac.setTargetContainer(getDiagram());
-						PictogramElement pe = addGraphicalRepresentation(ac, copy);
-						hm.put(state, pe);
 					}
+					state.eUnset(state.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 
 				} else if (copy instanceof Note) {
 					Note note = (Note) copy;
+					AddContext ac = new AddContext();
 					note.eUnset(note.eClass().getEStructuralFeature(BasePackage.JV_ELEMENT__ID));
 					Flow targetFlow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 					targetFlow.getNotes().add(note);
@@ -284,7 +171,194 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 		}
 	}
 
-	protected void pasteVoiceDsl(VoiceDsl voiceDsl, State state, Flow flow) {
+	/**
+	 * Pastes a custom state into the given flow, on the coordinates defined in the context
+	 * 
+	 * @param context
+	 * @param state
+	 * @param targetFlow
+	 * @return
+	 */
+	private PictogramElement pasteCustom(IPasteContext context, CustomState custom, Flow targetFlow) {
+
+		AddContext ac = new AddContext();
+
+		CustomState customOriginal = (CustomState) findOriginalStateById(custom.getId());
+
+		Flow flujoOriginal = (Flow) customOriginal.eContainer();
+		IFile fileFlujoOrigen = (IFile) Platform.getAdapterManager().getAdapter(flujoOriginal, IFile.class);
+		IFolder folderOriginal = (IFolder) fileFlujoOrigen.getParent();
+		IPath pathJsp = new Path(flujoOriginal.getName() + ".resources");
+		IFolder folderResources = folderOriginal.getFolder(pathJsp);
+		if (folderResources.exists()) {
+			IFile jspBuscado = folderResources.getFile(custom.getPath());
+			if (jspBuscado.exists()) {
+				// encontramos el jsp asociado al custom, ahora hay que copiarlo
+				// a la carpeta resources del flujo destino
+				IFile fileFlujoDestino = (IFile) Platform.getAdapterManager().getAdapter(targetFlow, IFile.class);
+				IFolder folderDestino = (IFolder) fileFlujoDestino.getParent();
+				IPath pathJspDestino = new Path(targetFlow.getName() + ".resources");
+				IFolder folderResourcesDestino = folderDestino.getFolder(pathJspDestino);
+				if (folderResourcesDestino.exists()) {
+					String newName = getValidCustomPath(folderResourcesDestino, custom.getPath());
+
+					IPath destinoFinal = folderResourcesDestino.getFullPath().append(newName);
+					try {
+						jspBuscado.copy(destinoFinal, true, null);
+						custom.setPath(newName);
+					} catch (CoreException e) {
+						e.printStackTrace();
+						custom.setPath("");
+					}
+
+				} else {
+					custom.setPath("");
+				}
+			} else {
+				custom.setPath("");
+			}
+		} else {
+			custom.setPath("");
+		}
+		targetFlow.getStates().add(custom);
+		ac.setLocation(context.getX(), context.getY());
+		ac.setTargetContainer(getDiagram());
+		PictogramElement pe = addGraphicalRepresentation(ac, custom);
+		return pe;
+	}
+
+	private State findOriginalStateById(String id) {
+		for (Object original : getFromClipboard()) {
+			if (original instanceof State) {
+				State state = (State) original;
+				if (id.equals(state.getId())) {
+					return state;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Pastes a call state into the given flow, on the coordinates defined in the context
+	 * 
+	 * @param context
+	 * @param callState
+	 * @param targetFlow
+	 * @return
+	 */
+	private PictogramElement pasteExecution(IPasteContext context, CallState callState, Flow targetFlow) {
+		// Si es un estado execution comprobamos si tiene una instancia al bean referido desde el
+		// estado execution del que procede y si se llama igual. En caso contrario se deja como null.
+		AddContext ac = new AddContext();
+		ComponentBean originalBean = callState.getBean();
+		callState.setBean(null);
+		String currentBeanName = originalBean.getName();
+		Flow originalFlow = (Flow) findOriginalStateById(callState.getId()).eContainer();
+
+		if (originalFlow != targetFlow) {
+			// Si no copiamos dentro del mismo flujo, tenemos que ajustar el bean del método
+			if ("it".equals(currentBeanName)) {
+				try {
+
+					ICompilationUnit icUnit = FlowCopyHelper.getHelperFile(originalFlow);
+					for (IMethod method : icUnit.findPrimaryType().getMethods()) {
+						// Solo podemos matchear por nombre y número de parámetros, puesto que la inferencia de tipos no
+						// se resuelve hasta la propia ejecución
+						if (method.getElementName().equals(callState.getMethodName())
+								&& method.getNumberOfParameters() == callState.getParameters().size()) {
+
+							IResource resource = (IResource) Platform.getAdapterManager().getAdapter(targetFlow,
+									IResource.class);
+							IPackageFragment helperTargetPackage = FlowCopyHelper.getHelperPackage(resource
+									.getFullPath());
+							String helperClassName = FlowCopyHelper.toTitleCase(targetFlow.getName());
+
+							FlowCopyHelper.updateHelperClass(targetFlow, helperTargetPackage.getElementName() + "."
+									+ helperClassName);
+							IType targetType = FlowCopyHelper.getHelperFile(targetFlow).findPrimaryType();
+
+							for (ComponentBean bean : targetFlow.getBeans()) {
+								if (bean.getName().equals("it")) {
+									callState.setBean(bean);
+									break;
+								}
+							}
+
+							try {
+								method.copy(targetType, null, null, false, null);
+							} catch (JavaModelException e) {
+								MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Duplicate method",
+										"There already exists a method called '" + method.getElementName()
+												+ "' in class '" + helperClassName + "'.\nIt will not be overwritten.");
+							}
+
+						}
+					}
+				} catch (JavaModelException e) {
+				}
+			} else {
+				outer: for (ComponentBean bean : targetFlow.getBeans()) {
+					if (bean.getName().equals(currentBeanName)) {
+						IProject project = ResourcesPlugin.getWorkspace().getRoot()
+								.findMember(EcoreUtil.getURI(targetFlow).toPlatformString(true)).getProject();
+						IJavaProject jProject = JavaCore.create(project);
+						IType type;
+						try {
+							type = jProject.findType(bean.getFqdn());
+							IMethod[] methods = type.getMethods();
+							for (IMethod method : methods) {
+								if (method.getElementName().equals(callState.getMethodName())) {
+									callState.setBean(bean);
+									break outer;
+								}
+							}
+						} catch (JavaModelException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+
+		targetFlow.getStates().add(callState);
+		ac.setLocation(context.getX(), context.getY());
+		ac.setTargetContainer(getDiagram());
+		PictogramElement pe = addGraphicalRepresentation(ac, callState);
+		return pe;
+	}
+
+	/**
+	 * Pastes a locution state into the given flow, on the coordinates defined in the context. It also copies the
+	 * associated voice file
+	 * 
+	 * @param context
+	 * @param locution
+	 * @param targetFlow
+	 * @return
+	 */
+	private PictogramElement pasteLocution(IPasteContext context, LocutionState locution, Flow targetFlow) {
+		AddContext ac = new AddContext();
+		VoiceDsl voiceDsl = locution.getLocution();
+
+		URI uri = EcoreUtil.getURI(targetFlow);
+		Flow connectedFlow = (Flow) BaseModel.getInstance().getResourceSet().getEObject(uri, true);
+
+		pasteVoiceDsl(voiceDsl, connectedFlow);
+
+		// Redireccionamos el nuevo estado al
+		// voiceDsl que hemos copiado
+		locution.setLocution(modified);
+
+		targetFlow.getStates().add(locution);
+		ac.setLocation(context.getX(), context.getY());
+		ac.setTargetContainer(getDiagram());
+		PictogramElement pe = addGraphicalRepresentation(ac, locution);
+		return pe;
+	}
+
+	protected void pasteVoiceDsl(VoiceDsl voiceDsl, Flow flow) {
 		final IFile voiceDslFile = (IFile) Platform.getAdapterManager().getAdapter(voiceDsl, IFile.class);
 		modified = voiceDsl;
 
@@ -392,10 +466,6 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 				|| object instanceof CustomState;
 	}
 
-	private boolean isLocution(Object object) {
-		return object instanceof LocutionState;
-	}
-
 	private void renameBean(IPath targetPath) {
 		String newName = targetPath.lastSegment();
 		newName = newName.substring(0, newName.lastIndexOf('.'));
@@ -438,13 +508,13 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 	}
 
 	private String getValidCustomPath(IFolder resourcesFolder, String path) {
-		// Eliminamos extensi�n
+		// Eliminamos extensión
 		String pathWithoutExt = path.substring(0, path.length() - 4);
 		String validPath = pathWithoutExt;
 		int counter = 1;
 		for (;;) {
 			if (isValidCustomPath(resourcesFolder, validPath)) {
-				// A�adimos extensi�n
+				// Añadimos extensión
 				return validPath + ".jsp";
 			}
 			validPath = pathWithoutExt + counter;

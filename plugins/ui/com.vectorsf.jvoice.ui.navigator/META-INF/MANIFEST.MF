@@ -30,9 +30,11 @@ Require-Bundle: org.eclipse.ui.navigator;bundle-version="3.5.300",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
-Export-Package: com.vectorsf.jvoice.ui.edit.dialogs,com.vectorsf.jvoic
- e.ui.edit.filters,com.vectorsf.jvoice.ui.edit.provider,com.vectorsf.j
- voice.ui.edit.validators
+Export-Package: com.vectorsf.jvoice.ui.edit.dialogs,
+ com.vectorsf.jvoice.ui.edit.filters,
+ com.vectorsf.jvoice.ui.edit.provider,
+ com.vectorsf.jvoice.ui.edit.validators,
+ com.vectorsf.jvoice.ui.navigator.util
 Import-Package: org.apache.maven.model,
  org.apache.maven.model.io.xpp3,
  org.codehaus.plexus.util.xml,
