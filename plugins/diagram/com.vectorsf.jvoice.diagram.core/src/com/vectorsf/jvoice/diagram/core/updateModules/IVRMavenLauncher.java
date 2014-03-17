@@ -60,7 +60,11 @@ public class IVRMavenLauncher extends AbstractHandler {
 			action.setInitializationData(null, null, "clean install");
 			action.launch(selection, "run");
 
-			MessageDialog.openConfirm(null, "Instalar módulo", "Pulse OK cuando acabe la instalación del módulo");
+			boolean installModule = MessageDialog.openConfirm(null, "Instalar módulo",
+					"Pulse OK cuando acabe la instalación del módulo");
+			if (!installModule) {
+				return;
+			}
 
 			for (IProject prj : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 				if (prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
@@ -74,20 +78,23 @@ public class IVRMavenLauncher extends AbstractHandler {
 			boolean startTomcat = MessageDialog.openConfirm(null, "Arrancar Tomcat",
 					"Pulse OK cuando acabe la instalación de la aplicación para arrancar Tomcat");
 
-			if (startTomcat) {
-				// Actualizamos las aplicaciones
-				for (IProject prj : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-					if (prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
-						new UpdateMavenProjectJob(new IProject[] { prj }, true, // offline
-								false, // forceUpdateDependencies
-								true, // UpdateConfiguration
-								true, // cleanProjects(),
-								true // refreshFromLocal()
-						).schedule();
-					}
-				}
-				startTomcat();
+			if (!startTomcat) {
+				return;
 			}
+
+			// Actualizamos las aplicaciones
+			for (IProject prj : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
+				if (prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
+					new UpdateMavenProjectJob(new IProject[] { prj }, true, // offline
+							false, // forceUpdateDependencies
+							true, // UpdateConfiguration
+							true, // cleanProjects(),
+							true // refreshFromLocal()
+					).schedule();
+				}
+			}
+			startTomcat();
+
 		} catch (Exception e) {
 			log("IVRMavenLauncher.installModules(): " + e);
 		}
