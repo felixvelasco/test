@@ -26,7 +26,7 @@ public class CallStateValidator {
 			}
 		}
 		if (!existbean) {
-			operationsValidator.error(state, "Instance Bean  " + state.getBean() + " not found");
+			operationsValidator.error(state, "State bean '" + state.getName() + "' references an unknown bean");
 		}
 
 		return true;
