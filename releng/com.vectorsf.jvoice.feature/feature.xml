@@ -164,4 +164,11 @@
          version="1.2.0"
          unpack="false"/>
 
+   <plugin
+         id="com.vectorsf.jvoice.core.validation"
+         download-size="0"
+         install-size="0"
+         version="1.2.0"
+         unpack="false"/>
+
 </feature>
