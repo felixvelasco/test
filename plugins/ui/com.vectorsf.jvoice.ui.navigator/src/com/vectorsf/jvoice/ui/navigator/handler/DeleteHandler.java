@@ -74,7 +74,7 @@ public class DeleteHandler extends AbstractHandler {
 	private IResource findHelperClass(Flow flow) {
 		try {
 			ICompilationUnit helperFile = FlowCopyHelper.getHelperFile(flow);
-			return helperFile.getResource();
+			return helperFile == null ? null : helperFile.getResource();
 		} catch (JavaModelException e) {
 			return null;
 		}

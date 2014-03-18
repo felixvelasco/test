@@ -19,6 +19,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.xtext.resource.SaveOptions;
@@ -143,7 +144,8 @@ public class FlowCopyHelper {
 			return null;
 		}
 
-		return jProject.findType(name).getCompilationUnit();
+		IType findType = jProject.findType(name);
+		return findType == null ? null : findType.getCompilationUnit();
 	}
 
 	private static void actualizaRecursos(Flow flujo) {
