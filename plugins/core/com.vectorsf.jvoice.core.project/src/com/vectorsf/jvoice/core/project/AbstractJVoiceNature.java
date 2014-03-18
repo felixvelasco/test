@@ -22,7 +22,7 @@ public abstract class AbstractJVoiceNature implements IProjectNature {
 	public static final String PLUGIN_ID = "com.vectorsf.jvoice.core.project"; //$NON-NLS-1$
 	public static final String NATURE_ID = PLUGIN_ID + ".jVoiceApplicationNature"; //$NON-NLS-1$
 	public static final String JVOICE_FRAMEWORK_VERSION = "1.2.0";
-	public static final String JVOICE_COMPILER_VERSION = "1.2.0";
+	public static final String JVOICE_COMPILER_VERSION = "1.2.1";
 
 //	public static final String JVOICE_REPOSITORY_URL = "http://repository-felixvelasco.forge.cloudbees.com/snapshot/snapshot/";
 //	public static final String JVOICE_REPOSITORY_NAME = "Jvoice snapshot repository";
