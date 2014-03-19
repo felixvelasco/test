@@ -128,7 +128,7 @@ public class CopyMojo extends AbstractMojo {
 			flows.mkdirs();
 			generateAppEventsHandlers(application, flows);
 
-			File finalFlowFloder = new File(outputDirectory + "/jVoiceArchFlows/jVoiceArchFlows/jVoiceArch-end");
+			File finalFlowFloder = new File(flows + "/jVoiceArchFlows/jVoiceArch-end");
 			finalFlowFloder.mkdirs();
 
 			copyFile("flows/jVoiceArch-end-flow.xml", new File(finalFlowFloder, "jVoiceArch-end-flow.xml"));
