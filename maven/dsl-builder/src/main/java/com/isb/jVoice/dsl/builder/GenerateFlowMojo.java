@@ -173,7 +173,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 			JVModule modulo = getProjectInformation();
 			nameProject = modulo.getName();
 
-			generateMainModule(modulo, f);
+			generateModuleEventsHandlers(modulo, f);
 			
 			//Si el módulo no tiene flujos, sourceDirectory puede no existir.
 			//Por lo que lo comprobamos y si no existe ni intentamos procesar los flujos.
@@ -193,10 +193,16 @@ public class GenerateFlowMojo extends AbstractMojo {
 
 	}
 
-	private void generateMainModule(JVModule modulo, File mainFolder) {
-		File folder = new File(mainFolder, modulo.getName());
+	/**
+	 * Método que genera el flujo que controla los eventos globales del módulo.
+	 * Lo crea en la carpeta "_moduleNameEventsHandlers", siendo moduleName el nombre del módulo en cuestión, con el nombre eventsHandlers.xml
+	 * @param modulo Módulo para el que se genera el flujo de eventos globales.
+	 * @param mainFolder Carpeta donde se crean los flujos de webflow.
+	 */
+	private void generateModuleEventsHandlers(JVModule modulo, File mainFolder) {
+		File folder = new File(mainFolder, "_" + modulo.getName() + "EventsHandlers");
 		folder.mkdirs();
-		MainFlowGenerator.compile(new File(folder, "errorHandler.xml"), modulo);
+		MainFlowGenerator.compile(new File(folder, "eventsHandlers.xml"), modulo);
 	}
 
 	/**

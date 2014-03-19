@@ -126,7 +126,7 @@ public class CopyMojo extends AbstractMojo {
 			JVApplication application = getProjectInformation();
 			File flows = new File(outputDirectory, DESTINO);
 			flows.mkdirs();
-			generateMainModule(application, flows);
+			generateAppEventsHandlers(application, flows);
 
 			File finalFlowFloder = new File(outputDirectory + "/jVoiceArchFlows/jVoiceArchFlows/jVoiceArch-end");
 			finalFlowFloder.mkdirs();
@@ -297,10 +297,16 @@ public class CopyMojo extends AbstractMojo {
 		return project;
 	}
 
-	private void generateMainModule(JVApplication project, File mainFolder) {
-		File folder = new File(new File(mainFolder, "GlobalEventsHandlers"), "appGlobalTrans");
+	/**
+	 * Método que genera el flujo que controla los eventos globales de la aplicación.
+	 * Lo crea siempre en la carpeta "_AppEventsHandlers", con el nombre eventsHandlers-flow.xml
+	 * @param project Aplicación para la que se genera el flujo de eventos globales.
+	 * @param mainFolder Carpeta donde se crean los flujos de webflow.
+	 */
+	private void generateAppEventsHandlers(JVApplication project, File mainFolder) {
+		File folder = new File(new File(mainFolder, "_AppEventsHandlers"), "eventsHandlers");
 		folder.mkdirs();
-		MainFlowGenerator.compile(new File(folder, "appGlobalTrans-flow.xml"), project);
+		MainFlowGenerator.compile(new File(folder, "eventsHandlers-flow.xml"), project);
 	}
 
 	/**

@@ -39,7 +39,7 @@ class MainFlowGenerator {
 		xsi:schemaLocation="http://www.springframework.org/schema/webflow        				
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 		abstract="true" 
-		parent="GlobalEventsHandlers/appGlobalTrans">
+		parent="_AppEventsHandlers/eventsHandlers">
 
 	'''
 

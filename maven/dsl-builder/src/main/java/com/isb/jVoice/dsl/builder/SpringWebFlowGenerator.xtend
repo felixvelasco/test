@@ -48,7 +48,7 @@ class SpringWebFlowGenerator {
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
 		xsi:schemaLocation="http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
-		parent="«projectName»/errorHandler"
+		parent="_«projectName»EventsHandlers/eventsHandlers"
 		start-state= "_jVoiceCheckInit" >
 		«FOR param: flow.parameters»
 		<input name="«param»"/>
