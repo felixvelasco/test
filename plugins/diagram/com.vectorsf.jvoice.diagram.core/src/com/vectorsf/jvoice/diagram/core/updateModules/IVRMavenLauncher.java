@@ -105,8 +105,11 @@ public class IVRMavenLauncher extends AbstractHandler {
 		try {
 			for (ILaunchConfiguration conf : manager.getLaunchConfigurations()) {
 				if ("org.eclipse.jst.server.tomcat.core.launchConfigurationType".equals(conf.getType().getIdentifier())) {
-					DebugUITools.launch(conf.getWorkingCopy(), ILaunchManager.DEBUG_MODE);
+					DebugUITools.launch(conf.getWorkingCopy(), ILaunchManager.RUN_MODE);
+				} else {
+					log("No hay creada ninguna configuración de Tomcat. Cree una antes de usar el lanzador automático");
 				}
+
 			}
 		} catch (Exception e) {
 
