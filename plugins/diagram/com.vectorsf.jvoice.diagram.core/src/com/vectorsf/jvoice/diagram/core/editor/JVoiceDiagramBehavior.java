@@ -16,6 +16,7 @@ import org.eclipse.gef.ui.actions.ZoomInAction;
 import org.eclipse.gef.ui.actions.ZoomOutAction;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.ISaveImageFeature;
+import org.eclipse.graphiti.ui.editor.DefaultMarkerBehavior;
 import org.eclipse.graphiti.ui.editor.DefaultPersistencyBehavior;
 import org.eclipse.graphiti.ui.editor.DefaultRefreshBehavior;
 import org.eclipse.graphiti.ui.editor.DefaultUpdateBehavior;
@@ -59,6 +60,14 @@ public class JVoiceDiagramBehavior extends DiagramBehavior {
 	@Override
 	protected DefaultUpdateBehavior createUpdateBehavior() {
 		return new JVoiceUpdateBehavior(this, domain);
+	}
+
+	@Override
+	protected DefaultMarkerBehavior createMarkerBehavior() {
+		DefaultMarkerBehavior defaultMarkerBehavior = super.createMarkerBehavior();
+		defaultMarkerBehavior.disableProblemIndicationUpdate();
+
+		return defaultMarkerBehavior;
 	}
 
 	@Override
