@@ -16,6 +16,11 @@
 			<name>jVoice test repository</name>
 			<url>http://repository-felixvelasco.forge.cloudbees.com/snapshot/snapshot/</url>
 		</repository>
+		<repository>
+			<id>jvoiceSnapshotRelease</id>
+			<name>jVoice test repository</name>
+			<url>http://repository-felixvelasco.forge.cloudbees.com/snapshot/release/</url>
+		</repository>
 	</repositories>
   <modules>
     <module>application-builder</module>

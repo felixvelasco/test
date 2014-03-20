@@ -19,11 +19,8 @@
 	<profiles>
 		<profile>
 			<id>releng</id>
-			<modules>
-				<module>com.vectorsf.jvoice.feature</module>
-				<module>com.vectorsf.jvoice.product</module>
+			<modules>				
 				<module>com.vectorsf.jvoice.repository</module>
-				<module>com.vectorsf.jvoice.platform.feature</module>
 			</modules>
 		</profile>
 	</profiles>

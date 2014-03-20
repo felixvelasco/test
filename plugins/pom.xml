@@ -10,37 +10,67 @@
   <groupId>com.vectorsf.jvoice.core</groupId>
   <artifactId>plugins</artifactId>
   <packaging>pom</packaging>
-  <modules>
-    <module>model/com.vectorsf.jvoice.base.model</module>
-    <module>model/com.vectorsf.jvoice.base.model.edit</module>
-    <module>model/com.vectorsf.jvoice.operation.model</module>
-    <module>model/com.vectorsf.jvoice.operation.model.edit</module>
 
-    <module>ui/com.vectorsf.jvoice.ui.diagram.properties</module>
-    <module>ui/com.vectorsf.jvoice.ui.navigator</module>
-    <module>ui/com.vectorsf.jvoice.ui.perspective</module>
-    <module>ui/com.vectorsf.jvoice.ui.project.editor</module>
-    <module>ui/com.vectorsf.jvoice.ui.wizard</module>
-
-    <module>core/com.vectorsf.jvoice.core.operation</module>
-    <module>core/com.vectorsf.jvoice.core.project</module>
-    <module>core/com.vectorsf.jvoice.core.prompt</module>
-    <module>core/com.vectorsf.jvoice.core.reconciliator</module>
-    <module>core/com.vectorsf.jvoice.core.validation</module>
-    <module>core/com.vectorsf.jvoice.core.uri</module>
-    <module>core/com.vectorsf.jvoice.m2e.builder</module>
-
-    <module>diagram/com.vectorsf.jvoice.diagram.core</module>
-
-    <module>dsl/com.vectorsf.jvoice.prompt.model</module>
-    <module>dsl/com.vectorsf.jvoice.prompt.model.edit</module>
-    <module>dsl/com.vectorsf.jvoice.voice.dsl</module>
-    <module>dsl/com.vectorsf.jvoice.voice.dsl.ui</module>
-
-  </modules>
   <properties>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
     <sonar.jacoco.itReportPath>${project.basedir}/../../../tests/target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
+  
+ <profiles>
+     <profile>
+      <id>all</id>
+       <activation>
+      	<activeByDefault>true</activeByDefault>
+    	</activation>
+	 	  <modules>
+   			<module>model/com.vectorsf.jvoice.base.model</module>
+  			<module>model/com.vectorsf.jvoice.base.model.edit</module>
+    		<module>model/com.vectorsf.jvoice.operation.model</module>
+   			<module>model/com.vectorsf.jvoice.operation.model.edit</module>
+
+    		<module>ui/com.vectorsf.jvoice.ui.diagram.properties</module>
+    		<module>ui/com.vectorsf.jvoice.ui.navigator</module>
+    		<module>ui/com.vectorsf.jvoice.ui.perspective</module>
+    		<module>ui/com.vectorsf.jvoice.ui.project.editor</module>
+    		<module>ui/com.vectorsf.jvoice.ui.wizard</module>
+
+    		<module>core/com.vectorsf.jvoice.core.operation</module>
+    		<module>core/com.vectorsf.jvoice.core.project</module>
+    		<module>core/com.vectorsf.jvoice.core.prompt</module>
+    		<module>core/com.vectorsf.jvoice.core.reconciliator</module>
+    		<module>core/com.vectorsf.jvoice.core.validation</module>
+    		<module>core/com.vectorsf.jvoice.core.uri</module>
+    		<module>core/com.vectorsf.jvoice.m2e.builder</module>
+
+    		<module>diagram/com.vectorsf.jvoice.diagram.core</module>
+
+    		<module>dsl/com.vectorsf.jvoice.prompt.model</module>
+    		<module>dsl/com.vectorsf.jvoice.prompt.model.edit</module>
+    		<module>dsl/com.vectorsf.jvoice.voice.dsl</module>
+    		<module>dsl/com.vectorsf.jvoice.voice.dsl.ui</module>
+
+  		</modules>
+
+    </profile>
+    
+    <profile>
+      <id>zappy</id>
+	  	<modules>
+   			<module>model/com.vectorsf.jvoice.base.model</module>
+    		<module>model/com.vectorsf.jvoice.operation.model</module>
+
+    		<module>core/com.vectorsf.jvoice.core.project</module>
+    		<module>core/com.vectorsf.jvoice.core.validation</module>
+    		<module>core/com.vectorsf.jvoice.core.uri</module>
+
+    		<module>dsl/com.vectorsf.jvoice.prompt.model</module>
+    		<module>dsl/com.vectorsf.jvoice.voice.dsl</module>
+
+  		</modules>
+    </profile>
+        
+  </profiles>
+  
+  
 </project>
