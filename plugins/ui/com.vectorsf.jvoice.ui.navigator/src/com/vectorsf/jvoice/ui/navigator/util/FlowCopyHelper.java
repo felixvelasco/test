@@ -8,6 +8,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
@@ -25,6 +26,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.xtext.resource.SaveOptions;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.core.operation.helper.PrototypeCreator;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -183,5 +185,25 @@ public class FlowCopyHelper {
 			e.printStackTrace();
 		}
 		return modificado;
+	}
+
+	public static void updateFlowHelper(IFile flowFile, IProgressMonitor monitor) throws JavaModelException {
+		updateFlowHelper(flowFile, null, monitor);
+	}
+
+	public static void updateFlowHelper(IFile flowFile, ICompilationUnit helperCompilationUnit, IProgressMonitor monitor)
+			throws JavaModelException {
+		IPath fullPath = flowFile.getFullPath();
+		IPackageFragment helperPackage = FlowCopyHelper.getHelperPackage(fullPath);
+		String beanName = fullPath.removeFileExtension().lastSegment();
+		String helperClassName = FlowCopyHelper.toTitleCase(beanName);
+		if (helperCompilationUnit != null) {
+			helperCompilationUnit.copy(helperPackage, null, helperClassName + ".java", true, monitor);
+		} else {
+			PrototypeCreator.createBeanFor(helperClassName, helperPackage, monitor);
+		}
+
+		FlowCopyHelper.actualizaFlow(fullPath,
+				helperPackage.getElementName() + "." + FlowCopyHelper.toTitleCase(beanName), false);
 	}
 }

@@ -1,6 +1,5 @@
 package com.vectorsf.jvoice.ui.navigator.handler;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -22,9 +20,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -160,80 +155,13 @@ public class PasteHandler extends AbstractHandler {
 			}
 
 			try {
-				IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
-
-					@Override
-					public void run(IProgressMonitor monitor) throws CoreException {
-
-						IFolder targetFolder = root.getFolder(targetPath);
-						recursivelyCreate(targetFolder.getParent());
-
-						miPack.copy(targetPath, true, null);
-
-						for (IFile flowFile : findFlows(targetFolder)) {
-							IPath fullPath = flowFile.getFullPath();
-							IPackageFragment helperPackage = FlowCopyHelper.getHelperPackage(fullPath);
-							ICompilationUnit helperOriginalClass = FlowCopyHelper.getHelperFile(getOriginalFlow(
-									flowFile, miPack));
-							String beanName = fullPath.removeFileExtension().lastSegment();
-							String finalnombreUsuario = FlowCopyHelper.toTitleCase(beanName);
-							if (helperOriginalClass != null) {
-								helperOriginalClass.copy(helperPackage, null, finalnombreUsuario + ".java", true,
-										monitor);
-							} else {
-								PrototypeCreator.createBeanFor(finalnombreUsuario, helperPackage, monitor);
-							}
-
-							FlowCopyHelper.actualizaFlow(fullPath, helperPackage.getElementName() + "."
-									+ FlowCopyHelper.toTitleCase(beanName), false);
-						}
-					}
-				};
+				IWorkspaceRunnable runnable = new CopyFolderWksRunnable(miPack, targetPath);
 				ResourcesPlugin.getWorkspace().run(runnable, null);
 
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	protected Collection<IFile> findFlows(IFolder targetFolder) throws CoreException {
-		List<IFile> ret = new ArrayList<>();
-
-		for (IResource member : targetFolder.members()) {
-			if (member instanceof IFile && ((IFile) member).getFileExtension().equals("jvflow")) {
-				ret.add((IFile) member);
-			} else if (member instanceof IFolder) {
-				ret.addAll(findFlows((IFolder) member));
-			}
-		}
-
-		return ret;
-	}
-
-	protected Flow getOriginalFlow(IFile file, IFolder folder) {
-		IFile originalFile = folder.getFile(file.getName());
-		ResourceSet rSet = new ResourceSetImpl();
-		URI uri = URI.createPlatformResourceURI(originalFile.getFullPath().toString(), true).appendFragment("/1");
-		Flow flow = (Flow) rSet.getEObject(uri, true);
-
-		return flow;
-	}
-
-	protected void recursivelyCreate(IContainer container) throws CoreException {
-		if (container.exists()) {
-			return;
-		}
-
-		IContainer parent = container.getParent();
-		if (!parent.exists()) {
-			recursivelyCreate(parent);
-		}
-
-		if (container instanceof IFolder) {
-			((IFolder) container).create(true, true, null);
-		}
-
 	}
 
 	private void pasteInPackage(ExecutionEvent event, Object contents, JVPackage target) {
