@@ -25,12 +25,15 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.embedder.IMaven;
 import org.eclipse.m2e.core.project.configurator.MojoExecutionBuildParticipant;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.sonatype.plexus.build.incremental.BuildContext;
+
+import com.vectorsf.jvoice.core.uri.VegaXMLURIHandlerImpl;
 
 public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant {
 
@@ -55,6 +58,7 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 					try {
 						delt.accept(delete);
 					} catch (CoreException e) {
+						System.err.println("JVoiceModuleBuildParticipant.build(): " + e);
 					}
 				}
 			}
@@ -76,6 +80,21 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 				"outputDirectory", File.class, monitor);
 		if (generated != null) {
 			buildContext.refresh(generated);
+		}
+
+		// Escucha deltas para copiar el fichero de flujo en el directorio que espera Tomcat.
+		// Debe ir después de ejecutar el mojo de generación de código de Spring.
+		if (delta != null && delta.getKind() == IResourceDelta.CHANGED) {
+			for (IResourceDelta delt : delta.getAffectedChildren()) {
+				if (delt.getResource() instanceof IFolder) {
+					CopyFlowToTomcatVisitor copyFlow = new CopyFlowToTomcatVisitor();
+					try {
+						delt.accept(copyFlow);
+					} catch (CoreException e) {
+						System.err.println("build:" + e);
+					}
+				}
+			}
 		}
 
 		return result;
@@ -186,6 +205,10 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 	private Diagnostic validateEObject(IFile file) {
 		BasicDiagnostic ret = new BasicDiagnostic();
 		ResourceSet rset = new ResourceSetImpl();
+
+		// Hay que añadir esta línea para que funcione bien el ResourceSet
+		rset.getLoadOptions().put(XMLResource.OPTION_URI_HANDLER, new VegaXMLURIHandlerImpl());
+
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 		try {
 			Resource resource = rset.getResource(uri, true);
