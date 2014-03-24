@@ -5,7 +5,7 @@ import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.ui.wizard.create.DefinitionHelper;
 
 public class RecordStatePattern extends LocutionStatePattern {
 	private static final String RECORD = "Record";
@@ -54,8 +54,8 @@ public class RecordStatePattern extends LocutionStatePattern {
 	}
 
 	@Override
-	protected Class<? extends VoiceDsl> getMainType() {
-		return RecordDsl.class;
+	protected DefinitionHelper getMainType() {
+		return DefinitionHelper.RECORD;
 	}
 
 }

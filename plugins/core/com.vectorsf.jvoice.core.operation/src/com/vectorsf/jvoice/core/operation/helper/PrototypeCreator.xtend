@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.JavaModelException
 
 class PrototypeCreator {
 
-	def static create(String packageName, String name) '''
+	def static createBean(String packageName, String name) '''
 		package «packageName»;
 		
 		import java.io.Serializable;
@@ -24,8 +24,18 @@ class PrototypeCreator {
 		}
 	'''
 
+	def static createMethod(String methodName, String returnType) '''
+		public «returnType» «methodName»() {
+			return definitionsService.create«returnType»();
+		}
+	'''
+	def static createInjectedField(String fieldName, String fileType) '''
+		@Autowired
+		private «fileType» «fieldName»;
+	'''
+
 	def static createBeanFor(String name, IPackageFragment packageFragment, IProgressMonitor monitor) throws JavaModelException {
-		var contents = create(packageFragment.getElementName(), name).toString();
+		var contents = createBean(packageFragment.getElementName(), name).toString();
 		packageFragment.createCompilationUnit(name + ".java", contents, true, monitor);
 	}
 }

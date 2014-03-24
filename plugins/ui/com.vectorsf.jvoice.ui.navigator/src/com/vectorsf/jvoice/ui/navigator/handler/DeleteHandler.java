@@ -21,10 +21,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import com.vectorsf.jvoice.core.operation.helper.FlowService;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.ui.navigator.util.FlowCopyHelper;
 
 public class DeleteHandler extends AbstractHandler {
 
@@ -73,7 +73,7 @@ public class DeleteHandler extends AbstractHandler {
 
 	private IResource findHelperClass(Flow flow) {
 		try {
-			ICompilationUnit helperFile = FlowCopyHelper.getHelperFile(flow);
+			ICompilationUnit helperFile = FlowService.getHelperICU(flow);
 			return helperFile == null ? null : helperFile.getResource();
 		} catch (JavaModelException e) {
 			return null;

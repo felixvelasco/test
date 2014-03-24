@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -103,21 +104,24 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private String initialFlow = "";
 	private String initialPackage = "";
 	private String initialProject = "";
+	private Flow flow;
 
 	private static String STATIC_DSLS_LOCATION = "res/voiceDsls/";
 	private static String STATIC_DSLS_EXT = ".voiceDsl";
 
 	public DslNameWizardPage(String pageName) {
-		this(pageName, null);
+		this(pageName, null, null);
+		fromNavigator = true;
 	}
 
-	public DslNameWizardPage(String pageName, Class<? extends VoiceDsl> targetClazz) {
+	public DslNameWizardPage(String pageName, Flow flow, Class<? extends VoiceDsl> targetClazz) {
 		super(pageName);
 		setTitle(PAGE_TITLE);
 		setDescription(PAGE_DESC);
+		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_locution.png"));
 		primeraVez = true;
 		this.targetClazz = targetClazz;
-		setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "res/wizban/icon_wiz_locution.png"));
+		this.flow = flow;
 	}
 
 	@Override
@@ -162,13 +166,13 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			setErrorMessage("The first letter of the definition name cannot be a number.");
 			return false;
 		}
-		if (!Character.isJavaLetter(initial)) {
+		if (!Character.isJavaIdentifierStart(initial)) {
 			setErrorMessage("The first letter of the definition is not valid.");
 			return false;
 		}
 		for (int i = 1; i < text.length(); i++) {
 			char letter = text.charAt(i);
-			if (!Character.isJavaLetterOrDigit(letter)) {
+			if (!Character.isJavaIdentifierPart(letter)) {
 				setErrorMessage("Name contains incorrect character");
 				return false;
 			}
@@ -179,13 +183,13 @@ public class DslNameWizardPage extends AbstractWizardPage {
 			return false;
 		}
 
-		if (!Character.isJavaLetter(initial)) {
+		if (!Character.isJavaIdentifierStart(initial)) {
 			setErrorMessage("The first letter of the application is not valid.");
 			return false;
 		}
 		for (int i = 1; i < text.length(); i++) {
 			char letter = text.charAt(i);
-			if (!Character.isJavaLetterOrDigit(letter)) {
+			if (!Character.isJavaIdentifierPart(letter)) {
 				setErrorMessage("Name contains incorrect character");
 				return false;
 			}
@@ -267,17 +271,16 @@ public class DslNameWizardPage extends AbstractWizardPage {
 	private final void createProjectNameGroup(Composite parent) {
 
 		// Obtenemos el nombre del proyecto, paquete y diagrama
-		if (selection instanceof IFolder) {
-			// Si se crea desde el diagrama
-			IFolder folder = (IFolder) selection;
-			setNames(folder);
-		} else {
+		if (fromNavigator) {
 			// Si se crea desde el navegador
-			fromNavigator = true;
 			Flow flow = (Flow) selection;
 			initialProject = flow.getOwnerPackage().getOwnerModule().getName();
 			initialPackage = flow.getOwnerPackage().getName();
 			initialFlow = flow.getName();
+		} else {
+			// Si se crea desde el diagrama
+			IFolder folder = (IFolder) selection;
+			setNames(folder);
 		}
 
 		Composite projectGroup = new Composite(parent, SWT.NONE);
@@ -697,17 +700,18 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		IFolder dslFolder;
 		Object element = getSelection();
 
-		if (element instanceof IFolder) {
+		if (flow != null) {
 			// Creado desde el diagrama
-			dslFolder = (IFolder) element;
+			IResource res = (IResource) Platform.getAdapterManager().getAdapter(flow, IResource.class);
+			IFolder packageFolder = (IFolder) res.getParent();
+			dslFolder = packageFolder.getFolder(flow.getName() + ".resources");
 
 		} else {
 			// Creado desde el navegador
 			Flow flow = (Flow) element;
 			IFolder packageFolder = (IFolder) Platform.getAdapterManager().getAdapter(flow.getOwnerPackage(),
 					IFolder.class);
-			String folderName = getFolderName(packageFolder, flow.getName());
-			dslFolder = getFolder(folderName);
+			dslFolder = packageFolder.getFolder(flow.getName() + ".resources");
 		}
 		return dslFolder;
 	}
@@ -716,48 +720,22 @@ public class DslNameWizardPage extends AbstractWizardPage {
 		return miURI;
 	}
 
-	private String getFolderName(IFolder packageFolder, String dslName) {
-		String folderName = packageFolder + "/" + dslName + ".resources";
-		String newFolderName = "";
-		String[] folderNameSegments = folderName.split("/");
-		for (int i = 2; i < folderNameSegments.length; i++) {
-			newFolderName = newFolderName.concat("/" + folderNameSegments[i]);
-		}
-		return newFolderName;
-	}
-
-	private IProject getProject() {
-		return ResourcesPlugin.getWorkspace().getRoot().getProject(getProjectFieldValue());
-	}
-
-	public IFolder getFolder(String folderName) {
-		IProject project = getProject();
-		return project.getFolder(folderName);
-	}
-
 	public String getProjectName(IFolder folderName) {
 		IProject iProject = folderName.getProject();
 		return iProject.getName();
 	}
 
 	public void setNames(IFolder folder) {
-		IProject iProject = folder.getProject();
+		initialFlow = flow.getName();
+
+		IResource res = (IResource) Platform.getAdapterManager().getAdapter(flow, IResource.class);
+
+		IProject iProject = res.getProject();
 		initialProject = iProject.getName();
-		IPath iPath = folder.getFullPath();
-		String path = iPath.toString().substring(1);
-		String[] pathSegments = path.split("/");
-		String diagramFolder = pathSegments[pathSegments.length - 1];
-		if (diagramFolder.endsWith("resources")) {
-			// Obtenemos el pack
-			for (int i = 5; i < pathSegments.length - 1; i++) {
-				if (i == 5) {
-					initialPackage = pathSegments[i].toString();
-				} else {
-					initialPackage = initialPackage + "." + pathSegments[i].toString();
-				}
-			}
-			String[] diagramNameSegments = diagramFolder.split("\\.");
-			initialFlow = diagramNameSegments[0];
-		}
+
+		IPath iPath = res.getProjectRelativePath();
+		IPath relPath = iPath.makeRelativeTo(new Path(BaseModel.JV_PATH));
+		relPath = relPath.removeLastSegments(1);
+		initialPackage = relPath.toString().replace('/', '.');
 	}
 }

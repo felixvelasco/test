@@ -5,7 +5,7 @@ import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.InputDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.ui.wizard.create.DefinitionHelper;
 
 public class InputStatePattern extends LocutionStatePattern {
 
@@ -55,7 +55,7 @@ public class InputStatePattern extends LocutionStatePattern {
 	}
 
 	@Override
-	protected Class<? extends VoiceDsl> getMainType() {
-		return InputDsl.class;
+	protected DefinitionHelper getMainType() {
+		return DefinitionHelper.INPUT;
 	}
 }

@@ -36,6 +36,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.MenuDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Outputs;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.ui.wizard.create.DefinitionHelper;
 
 public class MenuStatePattern extends LocutionStatePattern {
 
@@ -89,8 +90,8 @@ public class MenuStatePattern extends LocutionStatePattern {
 	}
 
 	@Override
-	protected Class<? extends VoiceDsl> getMainType() {
-		return MenuDsl.class;
+	protected DefinitionHelper getMainType() {
+		return DefinitionHelper.MENU;
 	}
 
 	/**

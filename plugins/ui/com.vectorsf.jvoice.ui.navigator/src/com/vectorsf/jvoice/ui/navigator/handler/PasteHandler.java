@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.core.operation.helper.FlowService;
 import com.vectorsf.jvoice.core.operation.helper.PrototypeCreator;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVModule;
@@ -38,7 +39,6 @@ import com.vectorsf.jvoice.model.base.JVPackage;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
-import com.vectorsf.jvoice.ui.navigator.util.FlowCopyHelper;
 
 public class PasteHandler extends AbstractHandler {
 
@@ -227,9 +227,9 @@ public class PasteHandler extends AbstractHandler {
 
 			// Realizamos la copia del fichero al destino.
 			try {
-				final IPackageFragment helperTargetPackage = FlowCopyHelper.getHelperPackage(targetPath);
-				final ICompilationUnit helperOriginalClass = FlowCopyHelper.getHelperFile(flow);
-				final String finalnombreUsuario = FlowCopyHelper.toTitleCase(nombreUsuario);
+				final IPackageFragment helperTargetPackage = FlowService.getHelperPackage(targetPath);
+				final ICompilationUnit helperOriginalClass = FlowService.getHelperICU(flow);
+				final String finalnombreUsuario = FlowService.toTitleCase(nombreUsuario);
 
 				IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
 
@@ -244,7 +244,7 @@ public class PasteHandler extends AbstractHandler {
 							PrototypeCreator.createBeanFor(finalnombreUsuario, helperTargetPackage, monitor);
 						}
 
-						FlowCopyHelper.actualizaFlow(targetPath, helperTargetPackage.getElementName() + "."
+						FlowService.actualizaFlow(targetPath, helperTargetPackage.getElementName() + "."
 								+ finalnombreUsuario, rename);
 					}
 				};

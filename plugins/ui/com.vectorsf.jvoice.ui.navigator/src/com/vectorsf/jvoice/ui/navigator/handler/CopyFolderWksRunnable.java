@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.core.ICompilationUnit;
 
+import com.vectorsf.jvoice.core.operation.helper.FlowService;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.ui.navigator.util.FlowCopyHelper;
 
 class CopyFolderWksRunnable implements IWorkspaceRunnable {
 
@@ -41,8 +41,8 @@ class CopyFolderWksRunnable implements IWorkspaceRunnable {
 
 		for (IFile flowFile : findFlows(targetFolder)) {
 			Flow originalFlow = getOriginalFlow(flowFile, originalFolder);
-			ICompilationUnit helperCompilationUnit = FlowCopyHelper.getHelperFile(originalFlow);
-			FlowCopyHelper.updateFlowHelper(flowFile, helperCompilationUnit, monitor);
+			ICompilationUnit helperCompilationUnit = FlowService.getHelperICU(originalFlow);
+			FlowService.updateFlowHelper(flowFile, helperCompilationUnit, monitor);
 		}
 	}
 

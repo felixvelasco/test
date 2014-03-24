@@ -41,8 +41,10 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
-import com.vectorsf.jvoice.ui.wizard.create.CreateDslJVoice;
+import com.vectorsf.jvoice.ui.wizard.PicWizardDialog;
+import com.vectorsf.jvoice.ui.wizard.create.CreateDefinitionWizard;
 import com.vectorsf.jvoice.ui.wizard.create.CreateJspCustom;
+import com.vectorsf.jvoice.ui.wizard.create.DefinitionHelper;
 
 public class EditMenuStateLocution extends RecordingCommand {
 
@@ -102,7 +104,7 @@ public class EditMenuStateLocution extends RecordingCommand {
 	@Override
 	protected void doExecute() {
 
-		// Se crea el dialogo de selección de locution (definition).
+		// Se crea el dialogo de selecciï¿½n de locution (definition).
 		Shell activeShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		DialogLocution dialog = new DialogLocution(activeShell);
 
@@ -113,7 +115,7 @@ public class EditMenuStateLocution extends RecordingCommand {
 
 		List<Object> locutionResources = new ArrayList<>();
 
-		// Se obtienen los locutions a mostrar en el diálogo de selección.
+		// Se obtienen los locutions a mostrar en el diï¿½logo de selecciï¿½n.
 		try {
 			IResource[] resources = resourcesFolder.members();
 			for (IResource resource : resources) {
@@ -182,8 +184,8 @@ public class EditMenuStateLocution extends RecordingCommand {
 			Object[] results = dialog.getResult();
 			changeLocution(results);
 		} else if (dopen == IDialogConstants.PROCEED_ID) {
-			// Si se pulsa "Create" en el dialogo, se abre el wizard para la creación del locution (definitio) que
-			// pasará a ser el asociado al estado.
+			// Si se pulsa "Create" en el dialogo, se abre el wizard para la creaciï¿½n del locution (definitio) que
+			// pasarï¿½ a ser el asociado al estado.
 			createAndChangeLocution();
 		}
 
@@ -275,44 +277,44 @@ public class EditMenuStateLocution extends RecordingCommand {
 		Wizard createWizard;
 
 		if (customState != null) {
-			// Si se quiere cambiar la jsp asociada a un estado custom creamos el wizard de creación de jsp.
+			// Si se quiere cambiar la jsp asociada a un estado custom creamos el wizard de creaciï¿½n de jsp.
 			createWizard = new CreateJspCustom(folder);
 		} else {
-			// Si se quiere cambiar el locution (definition) asociado a un estado creamos el wizard de creación de
+			// Si se quiere cambiar el locution (definition) asociado a un estado creamos el wizard de creaciï¿½n de
 			// definition.
 			createWizard = createDslJVoice(folder);
 		}
 
-		WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-				createWizard);
+		WizardDialog wizardDialog = new PicWizardDialog(
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), createWizard);
 
 		if (wizardDialog.open() == Window.OK) {
 			if (customState != null) {
 				customState.setPath(((CreateJspCustom) createWizard).getFile().getName());
 			} else {
 				// Obtenemos la URI del dsl creado
-				URI locationUri = ((CreateDslJVoice) createWizard).getURI();
-				// Cambios la asociación estado-dsl. Del antiguo dsl al nuevo.
+				URI locationUri = ((CreateDefinitionWizard) createWizard).getURI();
+				// Cambios la asociaciï¿½n estado-dsl. Del antiguo dsl al nuevo.
 				setNewLocutionOnState(locationUri);
 			}
 		}
 
 	}
 
-	private CreateDslJVoice createDslJVoice(IFolder folder) {
-		CreateDslJVoice createDslWizard;
+	private CreateDefinitionWizard createDslJVoice(IFolder folder) {
+		CreateDefinitionWizard createDslWizard;
 
-		// Se crea el wizard adecuado en función del tipo de estado.
+		// Se crea el wizard adecuado en funciï¿½n del tipo de estado.
 		if (menuState != null) {
-			createDslWizard = new CreateDslJVoice(folder, MenuDsl.class);
+			createDslWizard = new CreateDefinitionWizard(obtenerFlow(), DefinitionHelper.MENU);
 		} else if (inputState != null) {
-			createDslWizard = new CreateDslJVoice(folder, InputDsl.class);
+			createDslWizard = new CreateDefinitionWizard(obtenerFlow(), DefinitionHelper.INPUT);
 		} else if (outputState != null) {
-			createDslWizard = new CreateDslJVoice(folder, PromptDsl.class);
+			createDslWizard = new CreateDefinitionWizard(obtenerFlow(), DefinitionHelper.OUTPUT);
 		} else if (recordState != null) {
-			createDslWizard = new CreateDslJVoice(folder, RecordDsl.class);
+			createDslWizard = new CreateDefinitionWizard(obtenerFlow(), DefinitionHelper.RECORD);
 		} else {
-			createDslWizard = new CreateDslJVoice(folder, TransferDsl.class);
+			createDslWizard = new CreateDefinitionWizard(obtenerFlow(), DefinitionHelper.TRANSFER);
 		}
 
 		return createDslWizard;

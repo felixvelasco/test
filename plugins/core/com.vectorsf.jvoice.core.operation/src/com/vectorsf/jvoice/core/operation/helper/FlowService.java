@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.navigator.util;
+package com.vectorsf.jvoice.core.operation.helper;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +26,6 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.xtext.resource.SaveOptions;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
-import com.vectorsf.jvoice.core.operation.helper.PrototypeCreator;
 import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -35,7 +34,7 @@ import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 
-public class FlowCopyHelper {
+public class FlowService {
 
 	public static String toTitleCase(String original) {
 		return Character.toUpperCase(original.charAt(0)) + original.substring(1);
@@ -136,7 +135,12 @@ public class FlowCopyHelper {
 		}
 	}
 
-	public static ICompilationUnit getHelperFile(Flow flow) throws JavaModelException {
+	public static ICompilationUnit getHelperICU(Flow flow) throws JavaModelException {
+		IType findType = getHelperType(flow);
+		return findType == null ? null : findType.getCompilationUnit();
+	}
+
+	public static IType getHelperType(Flow flow) throws JavaModelException {
 		IFile file = (IFile) Platform.getAdapterManager().getAdapter(flow, IFile.class);
 		IProject project = file.getProject();
 		IJavaProject jProject = JavaCore.create(project);
@@ -147,7 +151,7 @@ public class FlowCopyHelper {
 		}
 
 		IType findType = jProject.findType(name);
-		return findType == null ? null : findType.getCompilationUnit();
+		return findType;
 	}
 
 	private static void actualizaRecursos(Flow flujo) {
@@ -194,16 +198,16 @@ public class FlowCopyHelper {
 	public static void updateFlowHelper(IFile flowFile, ICompilationUnit helperCompilationUnit, IProgressMonitor monitor)
 			throws JavaModelException {
 		IPath fullPath = flowFile.getFullPath();
-		IPackageFragment helperPackage = FlowCopyHelper.getHelperPackage(fullPath);
+		IPackageFragment helperPackage = FlowService.getHelperPackage(fullPath);
 		String beanName = fullPath.removeFileExtension().lastSegment();
-		String helperClassName = FlowCopyHelper.toTitleCase(beanName);
+		String helperClassName = FlowService.toTitleCase(beanName);
 		if (helperCompilationUnit != null) {
 			helperCompilationUnit.copy(helperPackage, null, helperClassName + ".java", true, monitor);
 		} else {
 			PrototypeCreator.createBeanFor(helperClassName, helperPackage, monitor);
 		}
 
-		FlowCopyHelper.actualizaFlow(fullPath,
-				helperPackage.getElementName() + "." + FlowCopyHelper.toTitleCase(beanName), false);
+		FlowService.actualizaFlow(fullPath,
+				helperPackage.getElementName() + "." + FlowService.toTitleCase(beanName), false);
 	}
 }

@@ -49,6 +49,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.xtext.resource.SaveOptions;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.core.operation.helper.FlowService;
 import com.vectorsf.jvoice.core.operation.helper.PrototypeCreator;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVProject;
@@ -281,10 +282,10 @@ public class RenameResourceRefactoringConfigurationPage extends UserInputWizardP
 		IFolder newFolder = resource.getParent().getFolder(new Path(newName));
 		for (IFile flowFile : findFlows(newFolder)) {
 			IPath fullPath = flowFile.getFullPath();
-			IPackageFragment helperPackage = FlowCopyHelper.getHelperPackage(fullPath);
-			ICompilationUnit helperOriginalClass = FlowCopyHelper.getHelperFile(getFlow(flowFile));
+			IPackageFragment helperPackage = FlowService.getHelperPackage(fullPath);
+			ICompilationUnit helperOriginalClass = FlowService.getHelperICU(getFlow(flowFile));
 			String beanName = fullPath.removeFileExtension().lastSegment();
-			String finalnombreUsuario = FlowCopyHelper.toTitleCase(beanName);
+			String finalnombreUsuario = FlowService.toTitleCase(beanName);
 			if (helperOriginalClass != null) {
 				helperOriginalClass.copy(helperPackage, null, finalnombreUsuario + ".java", true, monitor);
 				helperOriginalClass.delete(true, monitor);
@@ -292,8 +293,8 @@ public class RenameResourceRefactoringConfigurationPage extends UserInputWizardP
 				PrototypeCreator.createBeanFor(finalnombreUsuario, helperPackage, monitor);
 			}
 
-			FlowCopyHelper.actualizaFlow(fullPath,
-					helperPackage.getElementName() + "." + FlowCopyHelper.toTitleCase(beanName), false);
+			FlowService.actualizaFlow(fullPath,
+					helperPackage.getElementName() + "." + FlowService.toTitleCase(beanName), false);
 		}
 
 		return true;

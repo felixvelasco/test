@@ -31,7 +31,6 @@ import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.AbstractPasteFeature;
-import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
@@ -44,6 +43,7 @@ import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.util.Arrays;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.core.operation.helper.FlowService;
 import com.vectorsf.jvoice.diagram.core.pattern.states.SimpleStatePattern;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.base.JVElement;
@@ -60,7 +60,6 @@ import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
-import com.vectorsf.jvoice.ui.navigator.util.FlowCopyHelper;
 
 public class StatesPasteFeature extends AbstractPasteFeature {
 
@@ -262,8 +261,8 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 			if ("it".equals(currentBeanName)) {
 				try {
 
-					ICompilationUnit icUnit = FlowCopyHelper.getHelperFile(originalFlow);
-					for (IMethod method : icUnit.findPrimaryType().getMethods()) {
+					IType originalType = FlowService.getHelperType(originalFlow);
+					for (IMethod method : originalType.getMethods()) {
 						// Solo podemos matchear por nombre y número de parámetros, puesto que la inferencia de tipos no
 						// se resuelve hasta la propia ejecución
 						if (method.getElementName().equals(callState.getMethodName())
@@ -271,13 +270,12 @@ public class StatesPasteFeature extends AbstractPasteFeature {
 
 							IResource resource = (IResource) Platform.getAdapterManager().getAdapter(targetFlow,
 									IResource.class);
-							IPackageFragment helperTargetPackage = FlowCopyHelper.getHelperPackage(resource
-									.getFullPath());
-							String helperClassName = FlowCopyHelper.toTitleCase(targetFlow.getName());
+							IPackageFragment helperTargetPackage = FlowService.getHelperPackage(resource.getFullPath());
+							String helperClassName = FlowService.toTitleCase(targetFlow.getName());
 
-							FlowCopyHelper.updateHelperClass(targetFlow, helperTargetPackage.getElementName() + "."
+							FlowService.updateHelperClass(targetFlow, helperTargetPackage.getElementName() + "."
 									+ helperClassName);
-							IType targetType = FlowCopyHelper.getHelperFile(targetFlow).findPrimaryType();
+							IType targetType = FlowService.getHelperType(targetFlow);
 
 							for (ComponentBean bean : targetFlow.getBeans()) {
 								if (bean.getName().equals("it")) {

@@ -5,7 +5,7 @@ import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.OperationsFactory;
 import com.vectorsf.jvoice.model.operations.TransferState;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
-import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
+import com.vectorsf.jvoice.ui.wizard.create.DefinitionHelper;
 
 public class TransferStatePattern extends LocutionStatePattern {
 	private static final String TRANSFER = "Transfer";
@@ -54,7 +54,8 @@ public class TransferStatePattern extends LocutionStatePattern {
 	}
 
 	@Override
-	protected Class<? extends VoiceDsl> getMainType() {
-		return TransferDsl.class;
+	protected DefinitionHelper getMainType() {
+		return DefinitionHelper.TRANSFER;
 	}
+
 }
