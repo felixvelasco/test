@@ -25,6 +25,7 @@ import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.hamcrest.Matcher;
@@ -42,7 +43,6 @@ import com.vectorsf.jvoice.model.base.JVModule;
 import com.vectorsf.jvoice.model.base.JVPackage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.hasItem;
@@ -50,8 +50,8 @@ import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
-
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.createApplicationProject;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.createFile;
 import static com.vectorsf.jvoice.base.test.ResourcesHelper.createProject;
@@ -68,6 +68,7 @@ public class NavigatorActionsTest {
 	private static final int SMALL_SLEEP = 300;
 	private static final int MEDIUM_SLEEP = 2000;
 	private static final int LARGE_SLEEP = 10000;
+	private static final int EXTRA_LARGE_SLEEP = 20000;
 	private static final String NAVIGATOR_ID = "com.vectorsf.jvoice.ui.navigator.ViewIVR";
 	protected static SWTGefBot bot = new SWTGefBot();
 	private static SWTBotView view;
@@ -319,7 +320,7 @@ public class NavigatorActionsTest {
 		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
 
 		project1Item.getNode("several.packages.inside").select().contextMenu("Copy").click();
-
+		
 		assertThat(project2Item.contextMenu("Paste"), hasProperty("enabled", is(false)));
 
 		deleteApplicationProject(project);
@@ -479,7 +480,6 @@ public class NavigatorActionsTest {
 	}
 
 	@Test
-	// @Ignore
 	public void testDeleteProject() throws Exception {
 
 		createProject("testNavigator3");
@@ -605,6 +605,56 @@ public class NavigatorActionsTest {
 		assertThat(project2.getPackages(), hasPackageNamed("other.packages.inside"));
 
 	}
+	
+	@Test
+	public void testOpenPom() throws Exception {
+		
+		bot.sleep(LARGE_SLEEP);
+		view.bot().tree().getTreeItem("testNavigator").contextMenu("Maven").menu("Open Pom").click();
+			
+		bot.sleep(EXTRA_LARGE_SLEEP);
+		SWTBotEditor activeEditor = bot.activeEditor();		
+		assertThat(activeEditor.getTitle(), is("testNavigator/pom.xml"));
+
+	}
+	
+	@Test
+	public void testRenameProject() throws Exception {
+		
+		IProject project2 = createProject("testNavigator2");
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
+		bot.sleep(EXTRA_LARGE_SLEEP);
+		view.bot().tree().getTreeItem("testNavigator2").contextMenu("Rename").click();
+			
+		bot.sleep(LARGE_SLEEP);
+		bot.shell("Rename Resource").activate();
+		final SWTBotShell shellCreate = bot.shell("Rename Resource"); //$NON-NLS-1$
+		final SWTBot dialogBot = shellCreate.bot();
+		assertThat(dialogBot.text(0).getText(), is("testNavigator2"));
+		assertThat(dialogBot.button("OK").isEnabled(), is(false));
+		SWTBotText text = dialogBot.text(0);
+		text.setText("Navigator");
+		assertThat(dialogBot.button("OK").isEnabled(), is(true));		
+		dialogBot.button("OK").click();
+		
+		bot.sleep(LARGE_SLEEP);
+		bot.waitUntil(new DefaultCondition() {
+			public boolean test() throws Exception {
+				if (view.bot().tree().getAllItems().length==2) {
+					return true;
+				}
+				return false;
+			}
+			public String getFailureMessage() {
+				return "Was expecting newJVoice to be created";
+			}
+		}, 15 * 60 * 1000);
+		
+		bot.sleep(EXTRA_LARGE_SLEEP);
+		assertThat(view.bot().tree().getAllItems(), is(arrayWithSize(2)));
+		assertThat(view.bot().tree().getTreeItem("Navigator"), is(notNullValue()));
+	
+	}
 
 	public SWTBotGefEditor getGefEditor() {
 		SWTBotEditor activeEditor = bot.activeEditor();
@@ -660,7 +710,6 @@ public class NavigatorActionsTest {
 	 * 
 	 */
 	protected void deleteWithCheck() {
-		System.err.println("Hola!!");
 		SWTBot dialogBot;
 		bot.shell("Delete").activate();
 		final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
@@ -669,14 +718,10 @@ public class NavigatorActionsTest {
 		assertThat(dialogBot.button("Cancel").isEnabled(), is(true));
 		assertThat(dialogBot.button("Preview >").isEnabled(), is(true));
 		assertThat(dialogBot.checkBox().isEnabled(), is(true));
-		System.err.println("Voy a poner el check...");
 		dialogBot.checkBox().click();
-		System.err.println("... puesto!");
 		dialogBot.button("OK").click();
-		System.err.println("Ok pulsado");
 		bot.sleep(LARGE_SLEEP);
 		deleteWindow();
-		System.err.println("Esperamos un rato");
 		bot.waitUntil(new DefaultCondition() {
 			@Override
 			public boolean test() throws Exception {
@@ -691,7 +736,6 @@ public class NavigatorActionsTest {
 				return "Was expecting the 'Create' dialog to close itself";
 			}
 		}, 5 * 60 * 1000);
-		System.err.println("Voy otra vez al deletewindow");
 		deleteWindow();
 	}
 
@@ -703,16 +747,13 @@ public class NavigatorActionsTest {
 		SWTBot dialogBot;
 		try {
 			if (bot.shells().length > 0) {
-				System.err.println("shells:" + bot.shells().length);
 				for (SWTBotShell shell : bot.shells()) {
 					System.err.println("Shell : >>" + shell.getText() + "<<");
 					if (shell.getText().equals("Delete")) {
-						System.err.println("Encontrado");
 						bot.shell("Delete");
 						bot.shell("Delete").activate();
 						final SWTBotShell shellCreate = bot.shell("Delete"); //$NON-NLS-1$
 						dialogBot = bot.shell("Delete").bot();
-						System.err.println("Ponemos el continue");
 						try {
 							for (int i = 0; i > -1; i++) {
 								SWTBotButton button = dialogBot.button(i);
@@ -726,7 +767,6 @@ public class NavigatorActionsTest {
 						}
 
 						dialogBot.button("Continue").click();
-						System.err.println("Le damos");
 						bot.waitUntil(new DefaultCondition() {
 							@Override
 							public boolean test() throws Exception {
