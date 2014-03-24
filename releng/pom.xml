@@ -15,6 +15,7 @@
 		<module>com.vectorsf.jvoice.feature</module>
 		<module>com.vectorsf.jvoice.product</module>
 		<module>com.vectorsf.jvoice.platform.feature</module>
+
 	</modules>
 	<profiles>
 		<profile>
