@@ -169,6 +169,7 @@ public class CopyMojo extends AbstractMojo {
 			// Creamos la carpeta estatica views
 			File views = new File(outputDirectory, "views");
 			views.mkdirs();
+			
 			//Copiamos las vistas que necesitan los renderers.
 			copyFile("views/renderHTML.jsp", new File(views, "renderHTML.jsp"));
 			copyFile("views/renderVXI.jsp", new File(views, "renderVXI.jsp"));
@@ -275,6 +276,17 @@ public class CopyMojo extends AbstractMojo {
 		return dependencies;
 	}
 
+	/**
+	 * Método que copia un archivo "origName" que se encuentre en la carpeta
+	 * src/main/resources/static/ de alguna de las dependencias en la ruta
+	 * "destFile" dentro del proyecto de aplicación.
+	 * 
+	 * @param origName
+	 *            nombre del archivo a copiar.
+	 * @param destFile
+	 *            destino del archivo.
+	 * @throws MojoExecutionException
+	 */
 	private void copyFile(String origName, File destFile) throws MojoExecutionException {
 		try (InputStream is = runtimeClassLoader.getResourceAsStream(STATIC + origName);
 				FileOutputStream fos = new FileOutputStream(destFile)) {
