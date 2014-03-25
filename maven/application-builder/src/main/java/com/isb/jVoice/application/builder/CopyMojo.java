@@ -143,7 +143,6 @@ public class CopyMojo extends AbstractMojo {
 			File appServlet = new File(outputDirectory, APPSERVLET);
 			appServlet.mkdirs();
 			// Copiamos el XML servlet-context.xml en la carpeta spring
-//			XMLGeneratorServlet.generate(new File(appServlet, "servlet-context.xml"));
 			copyFile("spring/servlet-context.xml", new File(appServlet, "servlet-context.xml"));
 
 			// Creamos el app-context.xml dentro de la carpeta WEB-INF
@@ -159,11 +158,9 @@ public class CopyMojo extends AbstractMojo {
 
 			XMLGeneratorJFC.generate(new File(spring, "jvoiceframework-context.xml"), application.getName(),
 					application.isLegacyLogger(), listFolderProperties);
-//			XMLGeneratorRC.generate(new File(spring, "root-context.xml"));
 			copyFile("spring/root-context.xml", new File(spring, "root-context.xml"));
 
 			// Copiamos el web.xml dentro de la carpeta WEB-INF
-//			XMLGeneratorWeb.generate(new File(outputDirectory, "web.xml"));
 			copyFile("web.xml", new File(outputDirectory, "web.xml"));
 
 			// Creamos la carpeta estatica views
