@@ -142,10 +142,11 @@ public class CopyMojo extends AbstractMojo {
 			// Creamos la carpeta estatica spring/appServlet
 			File appServlet = new File(outputDirectory, APPSERVLET);
 			appServlet.mkdirs();
-			// Generamos el XML servlet-context.xml de la carpeta spring
-			XMLGeneratorServlet.generate(new File(appServlet, "servlet-context.xml"));
+			// Copiamos el XML servlet-context.xml en la carpeta spring
+//			XMLGeneratorServlet.generate(new File(appServlet, "servlet-context.xml"));
+			copyFile("spring/servlet-context.xml", new File(appServlet, "servlet-context.xml"));
 
-			// Creamos el app-context.xml en dentro de la carpeta WEB-INF
+			// Creamos el app-context.xml dentro de la carpeta WEB-INF
 			File spring = new File(outputDirectory, "spring");
 			XMLGeneratorAPP.generate(new File(spring, "app-context.xml"), modules);
 
@@ -158,18 +159,23 @@ public class CopyMojo extends AbstractMojo {
 
 			XMLGeneratorJFC.generate(new File(spring, "jvoiceframework-context.xml"), application.getName(),
 					application.isLegacyLogger(), listFolderProperties);
-			XMLGeneratorRC.generate(new File(spring, "root-context.xml"));
+//			XMLGeneratorRC.generate(new File(spring, "root-context.xml"));
+			copyFile("spring/root-context.xml", new File(spring, "root-context.xml"));
 
-			// Creamos el web.xml en dentro de la carpeta WEB-INF
-			XMLGeneratorWeb.generate(new File(outputDirectory, "web.xml"));
+			// Copiamos el web.xml dentro de la carpeta WEB-INF
+//			XMLGeneratorWeb.generate(new File(outputDirectory, "web.xml"));
+			copyFile("web.xml", new File(outputDirectory, "web.xml"));
 
 			// Creamos la carpeta estatica views
 			File views = new File(outputDirectory, "views");
 			views.mkdirs();
-			XMLGeneratorRHTML.generate(new File(views, "renderHTML.jsp"));
-			XMLGeneratorRVXI.generate(new File(views, "renderVXI.jsp"));
+			//Copiamos las vistas que necesitan los renderers.
+			copyFile("views/renderHTML.jsp", new File(views, "renderHTML.jsp"));
+			copyFile("views/renderVXI.jsp", new File(views, "renderVXI.jsp"));
+			copyFile("views/renderMPS.jsp", new File(views, "renderMPS.jsp"));
 			copyFile("views/_initHTML.jsp", new File(views, "_initHTML.jsp"));
 			copyFile("views/_initVXI.jsp", new File(views, "_initVXI.jsp"));
+			copyFile("views/_initMPS.jsp", new File(views, "_initMPS.jsp"));
 
 			// Creamos la carpeta src/main/resources/com/vectorsf/jvoiceframework/config/logger
 			File configLogger = new File(mavenProject.getBasedir().getAbsolutePath() + SRC_MAIN_RESOURCES
