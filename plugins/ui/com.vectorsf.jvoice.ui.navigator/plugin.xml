@@ -347,6 +347,9 @@
                         <instanceof
                               value="org.eclipse.core.resources.IFile">
                         </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.Configuration">
+                        </instanceof>
                      </or>
                   </iterate>
                </and>
@@ -872,12 +875,28 @@
          <adapter
                type="org.eclipse.core.resources.IResource">
          </adapter>
+         <adapter
+               type="com.vectorsf.jvoice.model.base.Configuration">
+         </adapter>
       </factory>
       <factory
             adaptableType="com.vectorsf.jvoice.model.base.JVPackage"
             class="com.vectorsf.jvoice.ui.navigator.AdapterPackage">
          <adapter
                type="org.eclipse.core.resources.IFolder">
+         </adapter>
+         <adapter
+               type="org.eclipse.core.resources.mapping.ResourceMapping">
+         </adapter>
+         <adapter
+               type="org.eclipse.core.resources.IResource">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="com.vectorsf.jvoice.model.base.Configuration"
+            class="com.vectorsf.jvoice.ui.navigator.AdapterProperties">
+         <adapter
+               type="org.eclipse.core.resources.IFile">
          </adapter>
          <adapter
                type="org.eclipse.core.resources.mapping.ResourceMapping">
