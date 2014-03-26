@@ -104,7 +104,7 @@ class XMLGeneratorJFC {
 			</beans:property>
 		</beans:bean>
 		
-		<beans:bean id="endpointProvider" class="com.vectorsf.jvoiceframework.core.service.ws.XMLBasedEndpointProvider">
+		<beans:bean id="endpointProvider" class="com.vectorsf.jvoiceframework.core.service.ws.XMLBasedEndpointProvider" init-method="initialize">
 		   <beans:property name="resource" value="/com/vectorsf/«projectName»/ws/ws-endpoints.xml" /> 
 		</beans:bean>
 		
