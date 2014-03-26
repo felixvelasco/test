@@ -639,6 +639,9 @@
                         <instanceof
                               value="org.eclipse.core.resources.IFile">
                         </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.Configuration">
+                        </instanceof>
                      </or>
                   </iterate>
                </with>
@@ -928,6 +931,9 @@
                      </instanceof>
                      <instanceof
                            value="org.eclipse.core.resources.IFile">
+                     </instanceof>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.Configuration">
                      </instanceof>
                   </or>
                </iterate>
