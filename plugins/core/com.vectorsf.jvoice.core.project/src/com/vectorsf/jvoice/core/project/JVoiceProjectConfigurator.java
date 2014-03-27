@@ -53,7 +53,7 @@ public final class JVoiceProjectConfigurator {
 				configuration.getResolverConfiguration().setResolveWorkspaceProjects(false);
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
 						getModel(groupId, artifactId, projectName, descriptionProject),
-						new String[] { "src/main/java", "src/main/resources/jv", "src/main/resources/properties" }, configuration, monitor);
+						new String[] { "src/main/java", "src/main/resources/jv"}, configuration, monitor);
 
 				result[0] = project;
 			}
