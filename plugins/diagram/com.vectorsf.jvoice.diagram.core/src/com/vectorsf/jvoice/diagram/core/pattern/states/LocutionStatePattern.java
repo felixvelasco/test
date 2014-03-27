@@ -15,13 +15,16 @@ import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.context.impl.AddContext;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.PlatformUI;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
+import com.vectorsf.jvoice.diagram.core.features.CoreImageProvider;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.LocutionState;
+import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.wizard.PicWizardDialog;
 import com.vectorsf.jvoice.ui.wizard.create.CreateDefinitionWizard;
@@ -29,7 +32,9 @@ import com.vectorsf.jvoice.ui.wizard.create.DefinitionHelper;
 
 public abstract class LocutionStatePattern extends SimpleStatePattern {
 
-	private URI result;
+	private boolean textual;
+	private URI resultURI;
+	private IMethod resultMethod;
 
 	public LocutionStatePattern() {
 		super();
@@ -39,34 +44,45 @@ public abstract class LocutionStatePattern extends SimpleStatePattern {
 	public final Object[] create(ICreateContext context) {
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
 
-		int dialogResult = createLocution(flow);
-
-		if (dialogResult == Dialog.OK) {
+		if (createLocution(flow)) {
 			LocutionState state = createMainState();
-			URI locutionUri = getDialogResult();
+			state.setTextual(textual);
 
-			if (locutionUri != null) {
-				IResource resourceFile = getResourceFile(flow, locutionUri);
+			if (textual) {
+				IResource resourceFile = getResourceFile(flow, resultURI);
 				ResourceSet resourceSet = BaseModel.getInstance().getResourceSet();
-				Resource resource = resourceSet.getResource(locutionUri, false);
+				Resource resource = resourceSet.getResource(resultURI, false);
 				if (resource == null) {
-					resource = resourceSet.getResource(locutionUri, true);
-				} else if (resourceFile != null & resource.getTimeStamp() < resourceFile.getLocalTimeStamp()) {
+					resource = resourceSet.getResource(resultURI, true);
+				} else if (resourceFile != null && resource.getTimeStamp() < resourceFile.getLocalTimeStamp()) {
 					resource.unload();
-					resource = resourceSet.getResource(locutionUri, true);
+					resource = resourceSet.getResource(resultURI, true);
 				}
 
 				VoiceDsl result = (VoiceDsl) resource.getContents().get(0);
 
 				state.setName(getValidStateName(flow, result.getName()));
 				state.setLocution(result);
-				flow.getStates().add(state);
+			} else {
+				state.getFireableEvents().add("ok");
 
-				addGraphicalRepresentation(context, state);
-
-				return new Object[] { state };
+				try {
+					int length = resultMethod.getParameters().length;
+					for (int i = 0; i < length; i++) {
+						state.getParameters().add("");
+					}
+				} catch (JavaModelException e) {
+					e.printStackTrace();
+				}
+				state.setName(getValidStateName(flow, resultMethod.getElementName()));
+				state.setMethodName(resultMethod.getElementName());
 			}
-			return null;
+
+			flow.getStates().add(state);
+
+			addGraphicalRepresentation(context, state);
+
+			return new Object[] { state };
 		} else {
 			throw new OperationCanceledException();
 		}
@@ -120,6 +136,16 @@ public abstract class LocutionStatePattern extends SimpleStatePattern {
 		}
 	}
 
+	@Override
+	protected boolean hasSubImageDecorator(State state) {
+		return !((LocutionState) state).isTextual();
+	}
+
+	@Override
+	protected String getSubStateImageId(State state) {
+		return CoreImageProvider.IMG_STATE_PROGRAMMABLE_DECORATOR;
+	}
+
 	protected boolean isDslFromTargetFlow(VoiceDsl dsl) {
 		// Obtenemos el flujo al que se ha arrastrado el dsl.
 		Flow flow = (Flow) getBusinessObjectForPictogramElement(getDiagram());
@@ -132,20 +158,21 @@ public abstract class LocutionStatePattern extends SimpleStatePattern {
 		return dslFlow.equals(flow.getName());
 	}
 
-	private URI getDialogResult() {
-		return result;
-	}
-
-	private int createLocution(Flow flow) {
+	private boolean createLocution(Flow flow) {
 		CreateDefinitionWizard newWizard = new CreateDefinitionWizard(flow, getMainType());
 		PicWizardDialog wizardDialog = new PicWizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 				.getShell(), newWizard);
 
 		if (wizardDialog.open() == Window.OK) {
-			result = newWizard.getURI();
-			return Window.OK;
+			textual = newWizard.isTextual();
+			if (textual) {
+				resultURI = newWizard.getURI();
+			} else {
+				resultMethod = newWizard.getMethod();
+			}
+			return true;
 		} else {
-			return Window.CANCEL;
+			return false;
 		}
 
 	}

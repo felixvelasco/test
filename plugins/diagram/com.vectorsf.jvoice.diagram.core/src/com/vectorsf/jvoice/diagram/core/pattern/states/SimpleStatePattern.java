@@ -71,6 +71,7 @@ public abstract class SimpleStatePattern extends IdPattern {
 	protected static final String ID_TOP_RECTANGLE = "topRectangle";
 	protected static final String ID_EVENT_IMAGE = "eventImage";
 	protected static final String ID_STATE_IMAGE = "stateImage";
+	protected static final String ID_STATE_SUB_IMAGE = "stateSubImage";
 
 	protected static final int CELL_WIDTH = 45;
 	protected static final int TOP_RECTANGLE_HEIGHT = 28;
@@ -138,6 +139,14 @@ public abstract class SimpleStatePattern extends IdPattern {
 					gaService.setLocationAndSize(image, (CELL_WIDTH - IMAGE_SIZE) / 2,
 							(TOP_RECTANGLE_HEIGHT - IMAGE_SIZE) / 2, IMAGE_SIZE, IMAGE_SIZE);
 					setId(image, ID_STATE_IMAGE);
+
+					if (hasSubImageDecorator(addedDomainObject)) {
+						Image subImage = gaService.createImage(image, getSubStateImageId(addedDomainObject));
+						gaService.setLocationAndSize(subImage, IMAGE_SIZE / 2, IMAGE_SIZE / 2, IMAGE_SIZE / 2,
+								IMAGE_SIZE / 2);
+						setId(image, ID_STATE_SUB_IMAGE);
+
+					}
 				}
 
 				Text text = gaService.createPlainText(topRectangle, addedDomainObject.getName());
@@ -163,13 +172,21 @@ public abstract class SimpleStatePattern extends IdPattern {
 
 	}
 
+	protected boolean hasSubImageDecorator(State state) {
+		return false;
+	}
+
+	protected abstract String getStateImageId();
+
+	protected String getSubStateImageId(State state) {
+		return "";
+	}
+
 	protected void createVerticalLine(Rectangle mainRectangle, int index) {
 		Polyline poli = gaService.createPlainPolyline(mainRectangle, new int[] { CELL_WIDTH * index, 0,
 				CELL_WIDTH * index, MAIN_RECTANGLE_HEIGHT });
 		poli.setStyle(getVerticalLineStyle());
 	}
-
-	protected abstract String getStateImageId();
 
 	protected Style getVerticalLineStyle() {
 		Style style = gaService.findStyle(getDiagram(), VERTICAL_LINE_STYLE);

@@ -6,127 +6,76 @@ public class CoreImageProvider extends AbstractImageProvider {
 
 	// States
 	public static final String IMG_TRANSACTION_PAD = "transition_pad"; //$NON-NLS-1$
-
 	public static final String IMG_RELATION_PAD = "relation_pad"; //$NON-NLS-1$
 
 	public static final String SET_FINAL_PAD = "set_final_pad"; //$NON-NLS-1$
-
 	public static final String UNSET_FINAL_PAD = "unset_final_pad"; //$NON-NLS-1$
 
 	public static final String IMG_DROPDOWN = "icon_deco_dropdown";
 
 	public static final String IMG_PALETTE_CUSTOM = "icon_est_custom";
-
 	public static final String IMG_PALETTE_EXECUTION = "icon_est_execution";
-
 	public static final String IMG_PALETTE_FINAL = "icon_est_final";
-
 	public static final String IMG_PALETTE_INPUT = "icon_est_input";
-
 	public static final String IMG_PALETTE_MENU = "icon_est_menu";
-
 	public static final String IMG_PALETTE_PROMPT = "icon_est_prompt";
-
 	public static final String IMG_PALETTE_RECORD = "icon_est_record";
-
 	public static final String IMG_PALETTE_SUBFLOW = "icon_est_subflow";
-
 	public static final String IMG_PALETTE_SWITCH = "icon_est_switch";
-
 	public static final String IMG_PALETTE_TRANSFER = "icon_est_transfer";
-
 	public static final String IMG_PALETTE_NOTE = "icon_notes";
+
+	public static final String IMG_LARGE_PALETTE_CUSTOM = "large_icon_est_custom";
+	public static final String IMG_LARGE_PALETTE_EXECUTION = "large_icon_est_execution";
+	public static final String IMG_LARGE_PALETTE_FINAL = "large_icon_est_final";
+	public static final String IMG_LARGE_PALETTE_INPUT = "large_icon_est_input";
+	public static final String IMG_LARGE_PALETTE_MENU = "large_icon_est_menu";
+	public static final String IMG_LARGE_PALETTE_PROMPT = "large_icon_est_prompt";
+	public static final String IMG_LARGE_PALETTE_RECORD = "large_icon_est_record";
+	public static final String IMG_LARGE_PALETTE_SUBFLOW = "large_icon_est_subflow";
+	public static final String IMG_LARGE_PALETTE_SWITCH = "large_icon_est_switch";
+	public static final String IMG_LARGE_PALETTE_TRANSFER = "large_icon_est_transfer";
+	public static final String IMG_LARGE_PALETTE_NOTE = "large_icon_notes";
 
 	public static final String IMG_MORE_EVENTS_DIALOG = "icon_more_events_dialog";
 
-	public static final String IMG_LARGE_PALETTE_CUSTOM = "large_icon_est_custom";
-
-	public static final String IMG_LARGE_PALETTE_EXECUTION = "large_icon_est_execution";
-
-	public static final String IMG_LARGE_PALETTE_FINAL = "large_icon_est_final";
-
-	public static final String IMG_LARGE_PALETTE_INPUT = "large_icon_est_input";
-
-	public static final String IMG_LARGE_PALETTE_MENU = "large_icon_est_menu";
-
-	public static final String IMG_LARGE_PALETTE_PROMPT = "large_icon_est_prompt";
-
-	public static final String IMG_LARGE_PALETTE_RECORD = "large_icon_est_record";
-
-	public static final String IMG_LARGE_PALETTE_SUBFLOW = "large_icon_est_subflow";
-
-	public static final String IMG_LARGE_PALETTE_SWITCH = "large_icon_est_switch";
-
-	public static final String IMG_LARGE_PALETTE_TRANSFER = "large_icon_est_transfer";
-
-	public static final String IMG_LARGE_PALETTE_NOTE = "large_icon_notes";
-
 	public static final String IMG_STATE_CUSTOM = "icon_comp_custom";
-
 	public static final String IMG_STATE_EXECUTION = "icon_comp_execution";
-
 	public static final String IMG_STATE_FINAL = "icon_comp_final";
-
 	public static final String IMG_STATE_HANGUP = "icon_comp_hangup";
-
-	public static final String IMG_STATE_INPUT = "icon_comp_input";
-
-	public static final String IMG_STATE_MENU = "icon_comp_menu";
-
-	public static final String IMG_STATE_PROMPT = "icon_comp_prompt";
-
-	public static final String IMG_STATE_RECORD = "icon_comp_record";
-
 	public static final String IMG_STATE_SUBFLOW = "icon_comp_subflow";
-
 	public static final String IMG_STATE_SWITCH = "icon_comp_switch";
-
+	public static final String IMG_STATE_INPUT = "icon_comp_input";
+	public static final String IMG_STATE_MENU = "icon_comp_menu";
+	public static final String IMG_STATE_PROMPT = "icon_comp_prompt";
+	public static final String IMG_STATE_RECORD = "icon_comp_record";
 	public static final String IMG_STATE_TRANSFER = "icon_comp_transfer";
 
+	public static final String IMG_STATE_PROGRAMMABLE_DECORATOR = "icon_comp_programmable";
+
 	public static final String IMG_EVENT_BUSY = "busy";
-
 	public static final String IMG_EVENT_CONNECTIONERROR = "connectionerror";
-
 	public static final String IMG_EVENT_ERROR = "error";
-
 	public static final String IMG_EVENT_FAR_END_DISCONNECT = "far_end_disconnect";
-
 	public static final String IMG_EVENT_HANGUP = "hangup";
-
 	public static final String IMG_EVENT_MATCH = "match";
-
 	public static final String IMG_EVENT_MAXATTEMPTS = "maxattempts";
-
 	public static final String IMG_EVENT_MAXTIME_DISCONNECT = "maxtime_disconnect";
-
 	public static final String IMG_EVENT_NEAR_END_DISCONNECT = "near_end_disconnect";
-
 	public static final String IMG_EVENT_NETWORK_BUSY = "network_busy";
-
 	public static final String IMG_EVENT_NETWORK_DISCONNECT = "network_disconnect";
-
 	public static final String IMG_EVENT_NOANSWER = "noanswer";
-
 	public static final String IMG_EVENT_MAXNOINPUT = "maxnoinput";
-
 	public static final String IMG_EVENT_MAXNOMATCH = "maxnomatch";
-
 	public static final String IMG_EVENT_NORESOURCE = "noresource";
-
 	public static final String IMG_EVENT_RECORDED = "recorded";
-
 	public static final String IMG_EVENT_RECORDUNSUPPORTED = "recordunsupported";
-
 	public static final String IMG_EVENT_SUCCESS = "success";
-
 	public static final String IMG_EVENT_TRANSFERRED = "transferred";
-
 	public static final String IMG_EVENT_UNKNOWN = "unknown";
-
 	public static final String IMG_EVENT_OK = "ok";
 
 	public static final String IMG_EVENT_ON_EXT = "_on";
-
 	public static final String IMG_EVENT_OFF_EXT = "_off";
 
 	@Override
@@ -167,13 +116,16 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath(IMG_STATE_EXECUTION, "icons/states/icon_comp_execution.png");
 		addImageFilePath(IMG_STATE_FINAL, "icons/states/icon_comp_final.png");
 		addImageFilePath(IMG_STATE_HANGUP, "icons/states/icon_comp_hangup.png");
+		addImageFilePath(IMG_STATE_SUBFLOW, "icons/states/icon_comp_subflow.png");
+		addImageFilePath(IMG_STATE_SWITCH, "icons/states/icon_comp_switch.png");
+
 		addImageFilePath(IMG_STATE_INPUT, "icons/states/icon_comp_input.png");
 		addImageFilePath(IMG_STATE_MENU, "icons/states/icon_comp_menu.png");
 		addImageFilePath(IMG_STATE_PROMPT, "icons/states/icon_comp_prompt.png");
 		addImageFilePath(IMG_STATE_RECORD, "icons/states/icon_comp_record.png");
-		addImageFilePath(IMG_STATE_SUBFLOW, "icons/states/icon_comp_subflow.png");
-		addImageFilePath(IMG_STATE_SWITCH, "icons/states/icon_comp_switch.png");
 		addImageFilePath(IMG_STATE_TRANSFER, "icons/states/icon_comp_transfer.png");
+
+		addImageFilePath(IMG_STATE_PROGRAMMABLE_DECORATOR, "icons/states/icon_comp_programmable.png");
 
 		addImageFilePath(IMG_DROPDOWN, "icons/states/dropdown.png"); //$NON-NLS-1$
 
@@ -235,7 +187,7 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath(IMG_EVENT_UNKNOWN + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_unknown_off.png");
 		addImageFilePath(IMG_EVENT_OK + IMG_EVENT_OFF_EXT, "icons/events/off/icon_event_success_off.png");
 
-		// Iconos para las opciones de men� m�s usuales en caso de estar seleccionadas.
+		// Iconos para las opciones de menú más usuales en caso de estar seleccionadas.
 		addImageFilePath("account" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_account_on.png");
 		addImageFilePath("create" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_alta_on.png");
 		addImageFilePath("delete" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_baja_on.png");
@@ -248,7 +200,7 @@ public class CoreImageProvider extends AbstractImageProvider {
 		addImageFilePath("payments" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_payments_on.png");
 		addImageFilePath("pinManagement" + IMG_EVENT_ON_EXT, "icons/events/on/icon_event_pinManagement_on.png");
 
-		// Iconos para las opciones de men� m�s usuales en caso de NO estar seleccionadas.
+		// Iconos para las opciones de menú más usuales en caso de NO estar seleccionadas.
 		addImageFilePath("account" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_account_on.png");
 		addImageFilePath("create" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_alta_on.png");
 		addImageFilePath("delete" + IMG_EVENT_OFF_EXT, "icons/events/on/icon_event_baja_on.png");
