@@ -1,9 +1,14 @@
 package com.vectorsf.jvoice.diagram.core.updater;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -33,12 +38,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.vectorsf.jvoice.core.project.AbstractJVoiceNature;
+import com.vectorsf.jvoice.core.project.JVoiceApplicationConfigurator;
 import com.vectorsf.jvoice.core.project.JVoiceApplicationNature;
 import com.vectorsf.jvoice.core.project.JVoiceModuleNature;
 import com.vectorsf.jvoice.diagram.core.Activator;
 
 /**
- * Actualiza el pom de los proyectos que no tienen la última versión del producto.
+ * Actualiza los proyectos que no tienen la última versión del producto.
  */
 public class IVRUpdater extends AbstractHandler {
 	private static final String XPATH_FRAMEWORK_VERSION = "//dependency[groupId/text() = 'com.vectorsf' and artifactId/text() = 'jvoiceframework-flow']/version/text()";
@@ -46,8 +52,13 @@ public class IVRUpdater extends AbstractHandler {
 	private static final String XPATH_APPLICATION_COMPILER_VERSION = "//plugin[groupId/text() = 'com.vectorsf.jvoice' and artifactId/text() = 'application-builder']/version/text()";
 	private static final String XPATH_LOGGER_VERSION = "//dependency[groupId/text() = 'com.vectorsf' and artifactId/text() = 'jvoiceframework-isban-logger']/version/text()";
 
+	private static final String IVR_PLATFORM_TEXT = "# Target IVR Platform. Possible values are: VXI, MPS and HTML.\nivrPlatform = MPS\n";
+	private static final String TTS_ENGINE_TEXT = "# Target TTS engine.\nttsEngine = Nuance\n";
+	private static final String ASR_ENGINE_TEXT = "# Target ASR engine.\nasrEngine = Nuance\n";
+
 	private String frameworkVersion = AbstractJVoiceNature.JVOICE_FRAMEWORK_VERSION;
 	private String compilerVersion = AbstractJVoiceNature.JVOICE_COMPILER_VERSION;
+	private StringBuffer changedProjectsText;
 
 	public DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 
@@ -68,17 +79,29 @@ public class IVRUpdater extends AbstractHandler {
 		dialog.setTitle("Actualizador de proyectos");
 
 		if (dialog.open() == Dialog.OK) {
-			updatePomFile(dialog.getResult());
+			updateProjects(dialog.getResult());
 		}
 
 		return null;
+	}
+
+	private void updateProjects(Object[] selectedProjects) {
+		changedProjectsText = new StringBuffer();
+
+		updatePomFile(selectedProjects);
+		updateJvoicePropsFile(selectedProjects);
+
+		if (changedProjectsText.length() > 0) {
+			MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+					"Proyectos actualizados", changedProjectsText.toString());
+		}
+
 	}
 
 	/**
 	 * Actualizamos el nodo dependency/version del pom de los proyectos pasados.
 	 */
 	private void updatePomFile(Object[] selectedProjects) {
-		StringBuffer changedProjectsText = new StringBuffer();
 
 		try {
 			for (Object project : selectedProjects) {
@@ -100,23 +123,23 @@ public class IVRUpdater extends AbstractHandler {
 
 				// Actualizamos el nodo de la versión del framework de los módulos
 				Node node = getNode(doc, prjName, XPATH_FRAMEWORK_VERSION, 0);
-				updateNode(node, prjName, frameworkVersion, changedProjectsText);
+				updateNode(node, prjName, frameworkVersion);
 
 				// Actualizamos el primer nodo de la versión del compilador de los módulos
 				node = getNode(doc, prjName, XPATH_COMPILER_VERSION, 0);
-				updateNode(node, prjName, compilerVersion, changedProjectsText);
+				updateNode(node, prjName, compilerVersion);
 
 				// Actualizamos el segundo nodo de la versión del compilador de los módulos
 				node = getNode(doc, prjName, XPATH_COMPILER_VERSION, 1);
-				updateNode(node, prjName, compilerVersion, changedProjectsText);
+				updateNode(node, prjName, compilerVersion);
 
 				// Actualizamos el nodo de la versión del logger de los módulos
 				node = getNode(doc, prjName, XPATH_LOGGER_VERSION, 0);
-				updateNode(node, prjName, frameworkVersion, changedProjectsText);
+				updateNode(node, prjName, frameworkVersion);
 
 				// Actualizamos el nodo de la versión del compilador de las aplicaciones
 				node = getNode(doc, prjName, XPATH_APPLICATION_COMPILER_VERSION, 0);
-				updateNode(node, prjName, compilerVersion, changedProjectsText);
+				updateNode(node, prjName, compilerVersion);
 
 				// Grabamos el fichero
 				Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -127,10 +150,77 @@ public class IVRUpdater extends AbstractHandler {
 			return;
 		}
 
-		if (changedProjectsText.length() > 0) {
-			MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-					"Proyectos actualizados", changedProjectsText.toString());
+	}
+
+	/**
+	 * Actualizamos el fichero jvoiceframework.properties con nuevas claves.
+	 */
+	private void updateJvoicePropsFile(Object[] selectedProjects) {
+
+		try {
+			for (Object project : selectedProjects) {
+				// Quitamos la versión (viene en formato "nombreProyecto (version)")
+				String prjName = project.toString().split(" ")[0];
+
+				IProject prj = ResourcesPlugin.getWorkspace().getRoot().getProject(prjName);
+
+				// Solo las aplicaciones tienen el fichero que queremos actualizar.
+				if (!prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
+					continue;
+				}
+
+				File file = new File(prj
+						.getFile(
+								JVoiceApplicationConfigurator.PROPERTIES_FOLDER + "/"
+										+ JVoiceApplicationConfigurator.PROPERTIES_FILENAME).getLocation().toOSString());
+				if (!file.exists()) {
+					log("No existe el fichero " + JVoiceApplicationConfigurator.PROPERTIES_FILENAME
+							+ " en la aplicación " + prjName);
+					return;
+				}
+
+				// Cargamos el archivo como un properties
+				Properties prop = new Properties();
+				prop.load(new FileInputStream(file));
+
+				// Por cada nueva propiedad, comprobamos si existe y si no la incluimos en el fichero.
+				if (!prop.containsKey("ivrPlatform")) {
+					addKey(file, prjName, "ivrPlatform", IVR_PLATFORM_TEXT);
+				}
+
+				if (!prop.containsKey("ttsEngine")) {
+					addKey(file, prjName, "ttsEngine", TTS_ENGINE_TEXT);
+				}
+
+				if (!prop.containsKey("asrEngine")) {
+					addKey(file, prjName, "asrEngine", ASR_ENGINE_TEXT);
+				}
+
+			}
+		} catch (Exception e) {
+			log("IVRUpdater.updateJvoicePropsFile(): " + e);
+			return;
 		}
+
+	}
+
+	/**
+	 * Añade al fichero la nueva clave.
+	 */
+	private void addKey(File file, String prjName, String key, String text) {
+		try {
+			// Escribimos el texto en el fichero.
+			FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(text);
+			bw.close();
+		} catch (IOException e) {
+			log("IVRUpdater.addKey(): " + e);
+			return;
+		}
+		changedProjectsText.append(prjName + ": Añadida clave '" + key + "' al fichero "
+				+ JVoiceApplicationConfigurator.PROPERTIES_FILENAME + ".\n");
+		return;
 	}
 
 	/**
@@ -200,7 +290,7 @@ public class IVRUpdater extends AbstractHandler {
 		return null;
 	}
 
-	private void updateNode(Node node, String prjName, String newVersion, StringBuffer changedProjects) {
+	private void updateNode(Node node, String prjName, String newVersion) {
 		if (node == null) {
 			System.err.println("No se ha encontrado el nodo versión del framework en '" + prjName + "'");
 			return;
@@ -212,13 +302,13 @@ public class IVRUpdater extends AbstractHandler {
 					.item(0);
 
 			if (!oldVersion.equals(newVersion)) {
-				changedProjects.append(prjName + ": Versión actualizada de '"
+				changedProjectsText.append(prjName + ": Versión actualizada de '"
 						+ artifactIdNode.getFirstChild().getNodeValue() + "' de '" + oldVersion + "'  a  '"
 						+ newVersion + "'\n");
 				node.setNodeValue(newVersion);
 			}
 		} catch (Exception e) {
-			changedProjects.append(prjName + " actualizado a " + newVersion);
+			changedProjectsText.append(prjName + " actualizado a " + newVersion);
 			System.err.println("IVRUpdater.updateNode(): " + e);
 		}
 	}

@@ -28,8 +28,8 @@ public final class JVoiceApplicationConfigurator {
 	private static final String WS_ENDPOINTS_XML = "ws-endpoints.xml";
 	private static final String ENDPOINTS_DIR = "src/main/resources/com/vectorsf/";
 	private static final String WS = "/ws";
-	protected static final String PROPERTIES_FOLDER = "src/main/resources/properties";
-	protected static final String PROPERTIES_FILENAME = "jvoiceframework.properties";
+	public static final String PROPERTIES_FOLDER = "src/main/resources/properties";
+	public static final String PROPERTIES_FILENAME = "jvoiceframework.properties";
 
 	private JVoiceApplicationConfigurator() {
 	}
