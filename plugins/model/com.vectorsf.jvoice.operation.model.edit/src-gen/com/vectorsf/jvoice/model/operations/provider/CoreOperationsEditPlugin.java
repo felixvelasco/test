@@ -3,8 +3,11 @@
 package com.vectorsf.jvoice.model.operations.provider;
 
 import com.vectorsf.jvoice.model.base.provider.BaseEditPlugin;
+
 import com.vectorsf.jvoice.prompt.model.voiceDsl.provider.VoiceDslEditPlugin;
+
 import org.eclipse.emf.common.EMFPlugin;
+
 import org.eclipse.emf.common.util.ResourceLocator;
 
 /**

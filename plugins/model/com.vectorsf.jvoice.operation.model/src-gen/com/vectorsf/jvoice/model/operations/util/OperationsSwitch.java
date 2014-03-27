@@ -130,6 +130,7 @@ public class OperationsSwitch<T> extends Switch<T> {
 			case OperationsPackage.CALL_STATE: {
 				CallState callState = (CallState)theEObject;
 				T result = caseCallState(callState);
+				if (result == null) result = caseExecutableState(callState);
 				if (result == null) result = caseParameterizedState(callState);
 				if (result == null) result = caseState(callState);
 				if (result == null) result = caseNamedElement(callState);
@@ -151,8 +152,10 @@ public class OperationsSwitch<T> extends Switch<T> {
 				PromptState promptState = (PromptState)theEObject;
 				T result = casePromptState(promptState);
 				if (result == null) result = caseLocutionState(promptState);
-				if (result == null) result = caseState(promptState);
+				if (result == null) result = caseExecutableState(promptState);
 				if (result == null) result = caseNamedElement(promptState);
+				if (result == null) result = caseParameterizedState(promptState);
+				if (result == null) result = caseState(promptState);
 				if (result == null) result = caseJVElement(promptState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -161,8 +164,10 @@ public class OperationsSwitch<T> extends Switch<T> {
 				InputState inputState = (InputState)theEObject;
 				T result = caseInputState(inputState);
 				if (result == null) result = caseLocutionState(inputState);
-				if (result == null) result = caseState(inputState);
+				if (result == null) result = caseExecutableState(inputState);
 				if (result == null) result = caseNamedElement(inputState);
+				if (result == null) result = caseParameterizedState(inputState);
+				if (result == null) result = caseState(inputState);
 				if (result == null) result = caseJVElement(inputState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -171,8 +176,10 @@ public class OperationsSwitch<T> extends Switch<T> {
 				MenuState menuState = (MenuState)theEObject;
 				T result = caseMenuState(menuState);
 				if (result == null) result = caseLocutionState(menuState);
-				if (result == null) result = caseState(menuState);
+				if (result == null) result = caseExecutableState(menuState);
 				if (result == null) result = caseNamedElement(menuState);
+				if (result == null) result = caseParameterizedState(menuState);
+				if (result == null) result = caseState(menuState);
 				if (result == null) result = caseJVElement(menuState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -180,8 +187,10 @@ public class OperationsSwitch<T> extends Switch<T> {
 			case OperationsPackage.LOCUTION_STATE: {
 				LocutionState locutionState = (LocutionState)theEObject;
 				T result = caseLocutionState(locutionState);
-				if (result == null) result = caseState(locutionState);
+				if (result == null) result = caseExecutableState(locutionState);
 				if (result == null) result = caseNamedElement(locutionState);
+				if (result == null) result = caseParameterizedState(locutionState);
+				if (result == null) result = caseState(locutionState);
 				if (result == null) result = caseJVElement(locutionState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -190,8 +199,10 @@ public class OperationsSwitch<T> extends Switch<T> {
 				TransferState transferState = (TransferState)theEObject;
 				T result = caseTransferState(transferState);
 				if (result == null) result = caseLocutionState(transferState);
-				if (result == null) result = caseState(transferState);
+				if (result == null) result = caseExecutableState(transferState);
 				if (result == null) result = caseNamedElement(transferState);
+				if (result == null) result = caseParameterizedState(transferState);
+				if (result == null) result = caseState(transferState);
 				if (result == null) result = caseJVElement(transferState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -200,8 +211,10 @@ public class OperationsSwitch<T> extends Switch<T> {
 				RecordState recordState = (RecordState)theEObject;
 				T result = caseRecordState(recordState);
 				if (result == null) result = caseLocutionState(recordState);
-				if (result == null) result = caseState(recordState);
+				if (result == null) result = caseExecutableState(recordState);
 				if (result == null) result = caseNamedElement(recordState);
+				if (result == null) result = caseParameterizedState(recordState);
+				if (result == null) result = caseState(recordState);
 				if (result == null) result = caseJVElement(recordState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -236,6 +249,16 @@ public class OperationsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseState(parameterizedState);
 				if (result == null) result = caseNamedElement(parameterizedState);
 				if (result == null) result = caseJVElement(parameterizedState);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case OperationsPackage.EXECUTABLE_STATE: {
+				ExecutableState executableState = (ExecutableState)theEObject;
+				T result = caseExecutableState(executableState);
+				if (result == null) result = caseParameterizedState(executableState);
+				if (result == null) result = caseState(executableState);
+				if (result == null) result = caseNamedElement(executableState);
+				if (result == null) result = caseJVElement(executableState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -525,6 +548,21 @@ public class OperationsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseParameterizedState(ParameterizedState object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Executable State</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Executable State</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseExecutableState(ExecutableState object) {
 		return null;
 	}
 

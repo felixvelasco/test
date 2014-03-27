@@ -9,6 +9,8 @@ import com.vectorsf.jvoice.model.operations.State;
 
 import java.lang.reflect.InvocationTargetException;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -19,6 +21,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Call State</b></em>'.
@@ -26,6 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl#getMethodName <em>Method Name</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl#getBean <em>Bean</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl#getReferencedBean <em>Referenced Bean</em>}</li>
@@ -34,7 +39,17 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class CallStateImpl extends ParameterizedStateImpl implements CallState {
+public class CallStateImpl extends StateImpl implements CallState {
+	/**
+	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParameters()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> parameters;
+
 	/**
 	 * The default value of the '{@link #getMethodName() <em>Method Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -92,6 +107,18 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	@Override
 	protected EClass eStaticClass() {
 		return OperationsPackage.Literals.CALL_STATE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getParameters() {
+		if (parameters == null) {
+			parameters = new EDataTypeEList<String>(String.class, this, OperationsPackage.CALL_STATE__PARAMETERS);
+		}
+		return parameters;
 	}
 
 	/**
@@ -214,6 +241,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case OperationsPackage.CALL_STATE__PARAMETERS:
+				return getParameters();
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				return getMethodName();
 			case OperationsPackage.CALL_STATE__BEAN:
@@ -231,9 +260,14 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case OperationsPackage.CALL_STATE__PARAMETERS:
+				getParameters().clear();
+				getParameters().addAll((Collection<? extends String>)newValue);
+				return;
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				setMethodName((String)newValue);
 				return;
@@ -255,6 +289,9 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case OperationsPackage.CALL_STATE__PARAMETERS:
+				getParameters().clear();
+				return;
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				setMethodName(METHOD_NAME_EDEFAULT);
 				return;
@@ -276,6 +313,8 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case OperationsPackage.CALL_STATE__PARAMETERS:
+				return parameters != null && !parameters.isEmpty();
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				return METHOD_NAME_EDEFAULT == null ? methodName != null : !METHOD_NAME_EDEFAULT.equals(methodName);
 			case OperationsPackage.CALL_STATE__BEAN:
@@ -326,7 +365,9 @@ public class CallStateImpl extends ParameterizedStateImpl implements CallState {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (methodName: ");
+		result.append(" (parameters: ");
+		result.append(parameters);
+		result.append(", methodName: ");
 		result.append(methodName);
 		result.append(')');
 		return result.toString();

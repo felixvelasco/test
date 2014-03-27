@@ -148,6 +148,10 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 				return createParameterizedStateAdapter();
 			}
 			@Override
+			public Adapter caseExecutableState(ExecutableState object) {
+				return createExecutableStateAdapter();
+			}
+			@Override
 			public Adapter caseJVElement(JVElement object) {
 				return createJVElementAdapter();
 			}
@@ -442,6 +446,20 @@ public class OperationsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createParameterizedStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link com.vectorsf.jvoice.model.operations.ExecutableState <em>Executable State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see com.vectorsf.jvoice.model.operations.ExecutableState
+	 * @generated
+	 */
+	public Adapter createExecutableStateAdapter() {
 		return null;
 	}
 

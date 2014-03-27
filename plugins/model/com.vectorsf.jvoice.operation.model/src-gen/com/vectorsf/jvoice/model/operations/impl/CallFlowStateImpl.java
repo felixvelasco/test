@@ -10,6 +10,8 @@ import com.vectorsf.jvoice.model.operations.State;
 
 import java.lang.reflect.InvocationTargetException;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -20,6 +22,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Call Flow State</b></em>'.
@@ -27,13 +31,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl#getSubflow <em>Subflow</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlowState {
+public class CallFlowStateImpl extends StateImpl implements CallFlowState {
+	/**
+	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParameters()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> parameters;
+
 	/**
 	 * The cached value of the '{@link #getSubflow() <em>Subflow</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -61,6 +76,18 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	@Override
 	protected EClass eStaticClass() {
 		return OperationsPackage.Literals.CALL_FLOW_STATE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getParameters() {
+		if (parameters == null) {
+			parameters = new EDataTypeEList<String>(String.class, this, OperationsPackage.CALL_FLOW_STATE__PARAMETERS);
+		}
+		return parameters;
 	}
 
 	/**
@@ -127,6 +154,8 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case OperationsPackage.CALL_FLOW_STATE__PARAMETERS:
+				return getParameters();
 			case OperationsPackage.CALL_FLOW_STATE__SUBFLOW:
 				if (resolve) return getSubflow();
 				return basicGetSubflow();
@@ -139,9 +168,14 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case OperationsPackage.CALL_FLOW_STATE__PARAMETERS:
+				getParameters().clear();
+				getParameters().addAll((Collection<? extends String>)newValue);
+				return;
 			case OperationsPackage.CALL_FLOW_STATE__SUBFLOW:
 				setSubflow((Flow)newValue);
 				return;
@@ -157,6 +191,9 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case OperationsPackage.CALL_FLOW_STATE__PARAMETERS:
+				getParameters().clear();
+				return;
 			case OperationsPackage.CALL_FLOW_STATE__SUBFLOW:
 				setSubflow((Flow)null);
 				return;
@@ -172,6 +209,8 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case OperationsPackage.CALL_FLOW_STATE__PARAMETERS:
+				return parameters != null && !parameters.isEmpty();
 			case OperationsPackage.CALL_FLOW_STATE__SUBFLOW:
 				return subflow != null;
 		}
@@ -206,6 +245,22 @@ public class CallFlowStateImpl extends ParameterizedStateImpl implements CallFlo
 				return getEvents();
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (parameters: ");
+		result.append(parameters);
+		result.append(')');
+		return result.toString();
 	}
 
 } //CallFlowStateImpl

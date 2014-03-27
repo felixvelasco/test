@@ -4,8 +4,8 @@ package com.vectorsf.jvoice.model.operations.provider;
 
 
 import com.vectorsf.jvoice.model.operations.CallState;
-
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -29,7 +29,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class CallStateItemProvider
-	extends ParameterizedStateItemProvider
+	extends StateItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -57,11 +57,34 @@ public class CallStateItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addParametersPropertyDescriptor(object);
 			addMethodNamePropertyDescriptor(object);
 			addBeanPropertyDescriptor(object);
 			addReferencedBeanPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Parameters feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addParametersPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ParameterizedState_parameters_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ParameterizedState_parameters_feature", "_UI_ParameterizedState_type"),
+				 OperationsPackage.Literals.PARAMETERIZED_STATE__PARAMETERS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -75,9 +98,9 @@ public class CallStateItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CallState_methodName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CallState_methodName_feature", "_UI_CallState_type"),
-				 OperationsPackage.Literals.CALL_STATE__METHOD_NAME,
+				 getString("_UI_ExecutableState_methodName_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExecutableState_methodName_feature", "_UI_ExecutableState_type"),
+				 OperationsPackage.Literals.EXECUTABLE_STATE__METHOD_NAME,
 				 true,
 				 false,
 				 false,
@@ -167,6 +190,7 @@ public class CallStateItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(CallState.class)) {
+			case OperationsPackage.CALL_STATE__PARAMETERS:
 			case OperationsPackage.CALL_STATE__METHOD_NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;

@@ -724,10 +724,10 @@ public interface OperationsPackage extends EPackage {
 	int CASE_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl <em>Parameterized State</em>}' class.
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.ParameterizedState <em>Parameterized State</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl
+	 * @see com.vectorsf.jvoice.model.operations.ParameterizedState
 	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getParameterizedState()
 	 * @generated
 	 */
@@ -833,6 +833,124 @@ public interface OperationsPackage extends EPackage {
 	int PARAMETERIZED_STATE_OPERATION_COUNT = STATE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.ExecutableState <em>Executable State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.vectorsf.jvoice.model.operations.ExecutableState
+	 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getExecutableState()
+	 * @generated
+	 */
+	int EXECUTABLE_STATE = 19;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE__ID = PARAMETERIZED_STATE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE__NAME = PARAMETERIZED_STATE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE__DESCRIPTION = PARAMETERIZED_STATE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE__INCOMING_TRANSITIONS = PARAMETERIZED_STATE__INCOMING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE__OUTGOING_TRANSITIONS = PARAMETERIZED_STATE__OUTGOING_TRANSITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Notes</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE__NOTES = PARAMETERIZED_STATE__NOTES;
+
+	/**
+	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE__FIREABLE_EVENTS = PARAMETERIZED_STATE__FIREABLE_EVENTS;
+
+	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE__PARAMETERS = PARAMETERIZED_STATE__PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE__METHOD_NAME = PARAMETERIZED_STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Executable State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE_FEATURE_COUNT = PARAMETERIZED_STATE_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE___GET_EVENTS = PARAMETERIZED_STATE___GET_EVENTS;
+
+	/**
+	 * The number of operations of the '<em>Executable State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTABLE_STATE_OPERATION_COUNT = PARAMETERIZED_STATE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CallStateImpl <em>Call State</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -849,7 +967,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__ID = PARAMETERIZED_STATE__ID;
+	int CALL_STATE__ID = EXECUTABLE_STATE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -858,7 +976,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__NAME = PARAMETERIZED_STATE__NAME;
+	int CALL_STATE__NAME = EXECUTABLE_STATE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -867,7 +985,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__DESCRIPTION = PARAMETERIZED_STATE__DESCRIPTION;
+	int CALL_STATE__DESCRIPTION = EXECUTABLE_STATE__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
@@ -876,7 +994,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__INCOMING_TRANSITIONS = PARAMETERIZED_STATE__INCOMING_TRANSITIONS;
+	int CALL_STATE__INCOMING_TRANSITIONS = EXECUTABLE_STATE__INCOMING_TRANSITIONS;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' reference list.
@@ -885,7 +1003,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__OUTGOING_TRANSITIONS = PARAMETERIZED_STATE__OUTGOING_TRANSITIONS;
+	int CALL_STATE__OUTGOING_TRANSITIONS = EXECUTABLE_STATE__OUTGOING_TRANSITIONS;
 
 	/**
 	 * The feature id for the '<em><b>Notes</b></em>' reference.
@@ -894,7 +1012,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__NOTES = PARAMETERIZED_STATE__NOTES;
+	int CALL_STATE__NOTES = EXECUTABLE_STATE__NOTES;
 
 	/**
 	 * The feature id for the '<em><b>Fireable Events</b></em>' attribute list.
@@ -903,7 +1021,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__FIREABLE_EVENTS = PARAMETERIZED_STATE__FIREABLE_EVENTS;
+	int CALL_STATE__FIREABLE_EVENTS = EXECUTABLE_STATE__FIREABLE_EVENTS;
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
@@ -912,7 +1030,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__PARAMETERS = PARAMETERIZED_STATE__PARAMETERS;
+	int CALL_STATE__PARAMETERS = EXECUTABLE_STATE__PARAMETERS;
 
 	/**
 	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
@@ -921,7 +1039,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__METHOD_NAME = PARAMETERIZED_STATE_FEATURE_COUNT + 0;
+	int CALL_STATE__METHOD_NAME = EXECUTABLE_STATE__METHOD_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Bean</b></em>' reference.
@@ -930,7 +1048,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__BEAN = PARAMETERIZED_STATE_FEATURE_COUNT + 1;
+	int CALL_STATE__BEAN = EXECUTABLE_STATE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Referenced Bean</b></em>' reference.
@@ -939,7 +1057,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE__REFERENCED_BEAN = PARAMETERIZED_STATE_FEATURE_COUNT + 2;
+	int CALL_STATE__REFERENCED_BEAN = EXECUTABLE_STATE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Call State</em>' class.
@@ -948,7 +1066,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE_FEATURE_COUNT = PARAMETERIZED_STATE_FEATURE_COUNT + 3;
+	int CALL_STATE_FEATURE_COUNT = EXECUTABLE_STATE_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
@@ -957,7 +1075,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE___GET_EVENTS = PARAMETERIZED_STATE_OPERATION_COUNT + 0;
+	int CALL_STATE___GET_EVENTS = EXECUTABLE_STATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Call State</em>' class.
@@ -966,7 +1084,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CALL_STATE_OPERATION_COUNT = PARAMETERIZED_STATE_OPERATION_COUNT + 1;
+	int CALL_STATE_OPERATION_COUNT = EXECUTABLE_STATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link com.vectorsf.jvoice.model.operations.impl.CallFlowStateImpl <em>Call Flow State</em>}' class.
@@ -1160,13 +1278,40 @@ public interface OperationsPackage extends EPackage {
 	int LOCUTION_STATE__FIREABLE_EVENTS = STATE__FIREABLE_EVENTS;
 
 	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCUTION_STATE__PARAMETERS = STATE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCUTION_STATE__METHOD_NAME = STATE_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOCUTION_STATE__LOCUTION = STATE_FEATURE_COUNT + 0;
+	int LOCUTION_STATE__LOCUTION = STATE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Textual</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCUTION_STATE__TEXTUAL = STATE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Locution State</em>' class.
@@ -1175,7 +1320,7 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LOCUTION_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 1;
+	int LOCUTION_STATE_FEATURE_COUNT = STATE_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
@@ -1269,6 +1414,24 @@ public interface OperationsPackage extends EPackage {
 	int PROMPT_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
 
 	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE__PARAMETERS = LOCUTION_STATE__PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE__METHOD_NAME = LOCUTION_STATE__METHOD_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1276,6 +1439,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROMPT_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
+
+	/**
+	 * The feature id for the '<em><b>Textual</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROMPT_STATE__TEXTUAL = LOCUTION_STATE__TEXTUAL;
 
 	/**
 	 * The number of structural features of the '<em>Prompt State</em>' class.
@@ -1378,6 +1550,24 @@ public interface OperationsPackage extends EPackage {
 	int INPUT_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
 
 	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE__PARAMETERS = LOCUTION_STATE__PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE__METHOD_NAME = LOCUTION_STATE__METHOD_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1385,6 +1575,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int INPUT_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
+
+	/**
+	 * The feature id for the '<em><b>Textual</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_STATE__TEXTUAL = LOCUTION_STATE__TEXTUAL;
 
 	/**
 	 * The number of structural features of the '<em>Input State</em>' class.
@@ -1487,6 +1686,24 @@ public interface OperationsPackage extends EPackage {
 	int MENU_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
 
 	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__PARAMETERS = LOCUTION_STATE__PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__METHOD_NAME = LOCUTION_STATE__METHOD_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1494,6 +1711,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int MENU_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
+
+	/**
+	 * The feature id for the '<em><b>Textual</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__TEXTUAL = LOCUTION_STATE__TEXTUAL;
 
 	/**
 	 * The number of structural features of the '<em>Menu State</em>' class.
@@ -1596,6 +1822,24 @@ public interface OperationsPackage extends EPackage {
 	int TRANSFER_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
 
 	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE__PARAMETERS = LOCUTION_STATE__PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE__METHOD_NAME = LOCUTION_STATE__METHOD_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1603,6 +1847,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRANSFER_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
+
+	/**
+	 * The feature id for the '<em><b>Textual</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSFER_STATE__TEXTUAL = LOCUTION_STATE__TEXTUAL;
 
 	/**
 	 * The number of structural features of the '<em>Transfer State</em>' class.
@@ -1705,6 +1958,24 @@ public interface OperationsPackage extends EPackage {
 	int RECORD_STATE__FIREABLE_EVENTS = LOCUTION_STATE__FIREABLE_EVENTS;
 
 	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE__PARAMETERS = LOCUTION_STATE__PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Method Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE__METHOD_NAME = LOCUTION_STATE__METHOD_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1712,6 +1983,15 @@ public interface OperationsPackage extends EPackage {
 	 * @ordered
 	 */
 	int RECORD_STATE__LOCUTION = LOCUTION_STATE__LOCUTION;
+
+	/**
+	 * The feature id for the '<em><b>Textual</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RECORD_STATE__TEXTUAL = LOCUTION_STATE__TEXTUAL;
 
 	/**
 	 * The number of structural features of the '<em>Record State</em>' class.
@@ -2324,17 +2604,6 @@ public interface OperationsPackage extends EPackage {
 	EClass getCallState();
 
 	/**
-	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.CallState#getMethodName <em>Method Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Method Name</em>'.
-	 * @see com.vectorsf.jvoice.model.operations.CallState#getMethodName()
-	 * @see #getCallState()
-	 * @generated
-	 */
-	EAttribute getCallState_MethodName();
-
-	/**
 	 * Returns the meta object for the reference '{@link com.vectorsf.jvoice.model.operations.CallState#getBean <em>Bean</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2477,6 +2746,17 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getLocutionState_Locution();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.LocutionState#isTextual <em>Textual</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Textual</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.LocutionState#isTextual()
+	 * @see #getLocutionState()
+	 * @generated
+	 */
+	EAttribute getLocutionState_Textual();
 
 	/**
 	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.TransferState <em>Transfer State</em>}'.
@@ -2666,6 +2946,27 @@ public interface OperationsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getParameterizedState_Parameters();
+
+	/**
+	 * Returns the meta object for class '{@link com.vectorsf.jvoice.model.operations.ExecutableState <em>Executable State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Executable State</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.ExecutableState
+	 * @generated
+	 */
+	EClass getExecutableState();
+
+	/**
+	 * Returns the meta object for the attribute '{@link com.vectorsf.jvoice.model.operations.ExecutableState#getMethodName <em>Method Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Method Name</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.ExecutableState#getMethodName()
+	 * @see #getExecutableState()
+	 * @generated
+	 */
+	EAttribute getExecutableState_MethodName();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2947,14 +3248,6 @@ public interface OperationsPackage extends EPackage {
 		EClass CALL_STATE = eINSTANCE.getCallState();
 
 		/**
-		 * The meta object literal for the '<em><b>Method Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CALL_STATE__METHOD_NAME = eINSTANCE.getCallState_MethodName();
-
-		/**
 		 * The meta object literal for the '<em><b>Bean</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3075,6 +3368,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference LOCUTION_STATE__LOCUTION = eINSTANCE.getLocutionState_Locution();
+
+		/**
+		 * The meta object literal for the '<em><b>Textual</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LOCUTION_STATE__TEXTUAL = eINSTANCE.getLocutionState_Textual();
 
 		/**
 		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.TransferStateImpl <em>Transfer State</em>}' class.
@@ -3215,10 +3516,10 @@ public interface OperationsPackage extends EPackage {
 		EAttribute COMPONENT_BEAN__PROTOTYPE = eINSTANCE.getComponentBean_Prototype();
 
 		/**
-		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl <em>Parameterized State</em>}' class.
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.ParameterizedState <em>Parameterized State</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see com.vectorsf.jvoice.model.operations.impl.ParameterizedStateImpl
+		 * @see com.vectorsf.jvoice.model.operations.ParameterizedState
 		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getParameterizedState()
 		 * @generated
 		 */
@@ -3231,6 +3532,24 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETERIZED_STATE__PARAMETERS = eINSTANCE.getParameterizedState_Parameters();
+
+		/**
+		 * The meta object literal for the '{@link com.vectorsf.jvoice.model.operations.ExecutableState <em>Executable State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.vectorsf.jvoice.model.operations.ExecutableState
+		 * @see com.vectorsf.jvoice.model.operations.impl.OperationsPackageImpl#getExecutableState()
+		 * @generated
+		 */
+		EClass EXECUTABLE_STATE = eINSTANCE.getExecutableState();
+
+		/**
+		 * The meta object literal for the '<em><b>Method Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EXECUTABLE_STATE__METHOD_NAME = eINSTANCE.getExecutableState_MethodName();
 
 	}
 

@@ -9,6 +9,7 @@ import com.vectorsf.jvoice.model.operations.CallState;
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.CustomState;
+import com.vectorsf.jvoice.model.operations.ExecutableState;
 import com.vectorsf.jvoice.model.operations.FinalState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InitialState;
@@ -175,6 +176,13 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * @generated
 	 */
 	private EClass parameterizedStateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass executableStateEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -515,17 +523,8 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getCallState_MethodName() {
-		return (EAttribute)callStateEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getCallState_Bean() {
-		return (EReference)callStateEClass.getEStructuralFeatures().get(1);
+		return (EReference)callStateEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -534,7 +533,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * @generated
 	 */
 	public EReference getCallState_ReferencedBean() {
-		return (EReference)callStateEClass.getEStructuralFeatures().get(2);
+		return (EReference)callStateEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -643,6 +642,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 */
 	public EReference getLocutionState_Locution() {
 		return (EReference)locutionStateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLocutionState_Textual() {
+		return (EAttribute)locutionStateEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -812,6 +820,24 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getExecutableState() {
+		return executableStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getExecutableState_MethodName() {
+		return (EAttribute)executableStateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public OperationsFactory getOperationsFactory() {
 		return (OperationsFactory)getEFactoryInstance();
 	}
@@ -872,7 +898,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEAttribute(caseEClass, CASE__EVENT_NAME);
 
 		callStateEClass = createEClass(CALL_STATE);
-		createEAttribute(callStateEClass, CALL_STATE__METHOD_NAME);
 		createEReference(callStateEClass, CALL_STATE__BEAN);
 		createEReference(callStateEClass, CALL_STATE__REFERENCED_BEAN);
 		createEOperation(callStateEClass, CALL_STATE___GET_EVENTS);
@@ -892,6 +917,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		locutionStateEClass = createEClass(LOCUTION_STATE);
 		createEReference(locutionStateEClass, LOCUTION_STATE__LOCUTION);
+		createEAttribute(locutionStateEClass, LOCUTION_STATE__TEXTUAL);
 
 		transferStateEClass = createEClass(TRANSFER_STATE);
 		createEOperation(transferStateEClass, TRANSFER_STATE___GET_EVENTS);
@@ -916,6 +942,9 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		parameterizedStateEClass = createEClass(PARAMETERIZED_STATE);
 		createEAttribute(parameterizedStateEClass, PARAMETERIZED_STATE__PARAMETERS);
+
+		executableStateEClass = createEClass(EXECUTABLE_STATE);
+		createEAttribute(executableStateEClass, EXECUTABLE_STATE__METHOD_NAME);
 	}
 
 	/**
@@ -956,18 +985,20 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initialStateEClass.getESuperTypes().add(this.getState());
 		finalStateEClass.getESuperTypes().add(this.getState());
 		switchStateEClass.getESuperTypes().add(this.getState());
-		callStateEClass.getESuperTypes().add(this.getParameterizedState());
+		callStateEClass.getESuperTypes().add(this.getExecutableState());
 		callFlowStateEClass.getESuperTypes().add(this.getParameterizedState());
 		promptStateEClass.getESuperTypes().add(this.getLocutionState());
 		inputStateEClass.getESuperTypes().add(this.getLocutionState());
 		menuStateEClass.getESuperTypes().add(this.getLocutionState());
 		locutionStateEClass.getESuperTypes().add(this.getState());
+		locutionStateEClass.getESuperTypes().add(this.getExecutableState());
 		transferStateEClass.getESuperTypes().add(this.getLocutionState());
 		recordStateEClass.getESuperTypes().add(this.getLocutionState());
 		noteEClass.getESuperTypes().add(theBasePackage.getJVElement());
 		customStateEClass.getESuperTypes().add(this.getState());
 		componentBeanEClass.getESuperTypes().add(theBasePackage.getNamedElement());
 		parameterizedStateEClass.getESuperTypes().add(this.getState());
+		executableStateEClass.getESuperTypes().add(this.getParameterizedState());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(stateEClass, State.class, "State", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1012,7 +1043,6 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEAttribute(getCase_EventName(), ecorePackage.getEString(), "eventName", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(callStateEClass, CallState.class, "CallState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCallState_MethodName(), ecorePackage.getEString(), "methodName", null, 0, 1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCallState_Bean(), this.getComponentBean(), null, "bean", null, 0, 1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCallState_ReferencedBean(), this.getComponentBean(), null, "referencedBean", null, 0, 1, CallState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1037,6 +1067,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 
 		initEClass(locutionStateEClass, LocutionState.class, "LocutionState", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getLocutionState_Locution(), theVoiceDslPackage.getVoiceDsl(), null, "locution", null, 0, 1, LocutionState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLocutionState_Textual(), ecorePackage.getEBoolean(), "textual", "true", 0, 1, LocutionState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(transferStateEClass, TransferState.class, "TransferState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1062,8 +1093,11 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEAttribute(getComponentBean_NameBean(), ecorePackage.getEString(), "nameBean", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponentBean_Prototype(), ecorePackage.getEBoolean(), "prototype", null, 0, 1, ComponentBean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(parameterizedStateEClass, ParameterizedState.class, "ParameterizedState", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(parameterizedStateEClass, ParameterizedState.class, "ParameterizedState", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameterizedState_Parameters(), ecorePackage.getEString(), "parameters", null, 0, -1, ParameterizedState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(executableStateEClass, ExecutableState.class, "ExecutableState", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getExecutableState_MethodName(), ecorePackage.getEString(), "methodName", null, 0, 1, ExecutableState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

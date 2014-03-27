@@ -23,20 +23,23 @@ public class LocutionStateValidator {
 	}
 
 	public boolean validate_LocutionState_checkDslsLocutionState(LocutionState lstate) {
-		if (lstate.getLocution() == null) {
-			operationsValidator.error(lstate, "Definition State " + lstate.getName() + " has not a dsl associated.");
-		} else {
-			File rawFile = ValidatorUtils.getFile(lstate);
-			if (rawFile != null) {
-				String name = rawFile.getName().substring(0, rawFile.getName().indexOf("."));
-				File file = new File(rawFile.getParent(), name + ".resources/" + lstate.getLocution().getName()
-						+ ".voiceDsl");
+		if (lstate.isTextual()) {
+			if (lstate.getLocution() == null) {
+				operationsValidator
+						.error(lstate, "Definition State " + lstate.getName() + " has not a dsl associated.");
+			} else {
+				File rawFile = ValidatorUtils.getFile(lstate);
+				if (rawFile != null) {
+					String name = rawFile.getName().substring(0, rawFile.getName().indexOf("."));
+					File file = new File(rawFile.getParent(), name + ".resources/" + lstate.getLocution().getName()
+							+ ".voiceDsl");
 
-				if (!file.exists()) {
-					operationsValidator.error(lstate, "Locution " + lstate.getLocution() + " does not exist.");
+					if (!file.exists()) {
+						operationsValidator.error(lstate, "Locution " + lstate.getLocution() + " does not exist.");
+					}
 				}
-			}
 
+			}
 		}
 
 		return true;

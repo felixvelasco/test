@@ -13,6 +13,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
  * The following features are supported:
  * <ul>
  *   <li>{@link com.vectorsf.jvoice.model.operations.LocutionState#getLocution <em>Locution</em>}</li>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.LocutionState#isTextual <em>Textual</em>}</li>
  * </ul>
  * </p>
  *
@@ -20,7 +21,7 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
  * @model abstract="true"
  * @generated
  */
-public interface LocutionState extends State {
+public interface LocutionState extends State, ExecutableState {
 	/**
 	 * Returns the value of the '<em><b>Locution</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -46,5 +47,32 @@ public interface LocutionState extends State {
 	 * @generated
 	 */
 	void setLocution(VoiceDsl value);
+
+	/**
+	 * Returns the value of the '<em><b>Textual</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Textual</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Textual</em>' attribute.
+	 * @see #setTextual(boolean)
+	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getLocutionState_Textual()
+	 * @model default="true"
+	 * @generated
+	 */
+	boolean isTextual();
+
+	/**
+	 * Sets the value of the '{@link com.vectorsf.jvoice.model.operations.LocutionState#isTextual <em>Textual</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Textual</em>' attribute.
+	 * @see #isTextual()
+	 * @generated
+	 */
+	void setTextual(boolean value);
 
 } // LocutionState

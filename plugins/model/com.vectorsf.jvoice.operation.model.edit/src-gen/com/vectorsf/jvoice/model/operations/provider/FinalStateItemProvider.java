@@ -4,8 +4,8 @@ package com.vectorsf.jvoice.model.operations.provider;
 
 
 import com.vectorsf.jvoice.model.operations.FinalState;
-
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
+
 import java.util.Collection;
 import java.util.List;
 

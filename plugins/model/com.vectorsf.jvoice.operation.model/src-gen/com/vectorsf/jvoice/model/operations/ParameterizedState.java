@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getParameterizedState()
- * @model abstract="true"
+ * @model interface="true" abstract="true"
  * @generated
  */
 public interface ParameterizedState extends State {

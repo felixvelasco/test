@@ -81,7 +81,7 @@ public class CallStateSection extends ParametrizableStateSection {
 		labelTextBean.text.setEnabled(false);
 
 		labelTextMethod = createLabelTextAndButton("Method:", "",
-				OperationsPackage.eINSTANCE.getCallState_MethodName(), new ExecuteChooser());
+				OperationsPackage.eINSTANCE.getExecutableState_MethodName(), new ExecuteChooser());
 	}
 
 	@Override
