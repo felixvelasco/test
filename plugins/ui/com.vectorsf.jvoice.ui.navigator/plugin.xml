@@ -315,6 +315,27 @@
                class="com.vectorsf.jvoice.ui.navigator.sort.SimpleSorter"
                id="com.vectorsf.jvoice.ui.navigator.Sorter">
          </commonSorter>
+         <commonWizard
+               menuGroupId="ActionsIVR"
+               type="new"
+               wizardId="com.vectorsf.jvoice.ui.wizard.Properties">
+            <enablement>
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="true"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVModule">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </with></enablement>
+         </commonWizard>
       </navigatorContent>
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.edit.provider.MavenContentProvider"
