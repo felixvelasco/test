@@ -131,6 +131,6 @@ public class IVRMavenLauncher extends AbstractHandler {
 
 	private void log(String text) {
 		System.err.println(text);
-		Activator.getLogger().log(IStatus.WARNING, "Actualizador de versiones: " + text);
+		Activator.getLogger().log(IStatus.WARNING, "IVRMavenLauncher: " + text);
 	}
 }
