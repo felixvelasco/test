@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -150,7 +151,17 @@ public class CreateDefinitionWizard extends BasicNewResourceWizard {
 
 		String methodBody = PrototypeCreator.createMethod(createPage.getDefinitionName(), returnType).toString();
 
-		return helperType.createMethod(methodBody, null, false, null);
+		IMethod createMethod = helperType.createMethod(methodBody, null, false, null);
+		try {
+			JavaUI.openInEditor(createMethod);
+		} catch (PartInitException e) {
+			String error = "error open editor";
+			IStatus status = new Status(IStatus.ERROR, "0", error, e);
+			ErrorDialog.openError(getShell(), error, null, status);
+			throw new JavaModelException(new CoreException(status));
+		}
+
+		return createMethod;
 	}
 
 	private String getReturnType() {
