@@ -14,10 +14,13 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -49,7 +52,11 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 			eObject = callFlowState.getSubflow();
 		} else if (businessObject instanceof LocutionState) {
 			LocutionState locutionState = (LocutionState) businessObject;
-			eObject = locutionState.getLocution();
+			if (locutionState.isTextual()) {
+				eObject = locutionState.getLocution();
+			} else {
+				eObject = locutionState;
+			}
 		} else if (businessObject instanceof CustomState) {
 			CustomState customState = (CustomState) businessObject;
 			eObject = customState;
@@ -75,10 +82,29 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 		}
 
 		try {
-			if (eObject instanceof CallState) {
-				CallState callstate = (CallState) eObject;
-				ComponentBean componente = callstate.getBean();
-				Flow flujo = (Flow) componente.eContainer();
+			if (eObject instanceof CallState || eObject instanceof LocutionState
+					&& !((LocutionState) eObject).isTextual()) {
+				ComponentBean componente = null;
+				String methodName = null;
+				if (eObject instanceof CallState) {
+
+					CallState callstate = (CallState) eObject;
+					componente = callstate.getBean();
+					methodName = callstate.getMethodName();
+				} else {
+					LocutionState locution = (LocutionState) eObject;
+					Flow flujo = (Flow) locution.eContainer();
+					for (ComponentBean bean : flujo.getBeans()) {
+						if (bean.getName().equals("it")) {
+							componente = bean;
+							break;
+						}
+					}
+
+					methodName = locution.getMethodName();
+				}
+
+				Flow flujo = (Flow) eObject.eContainer();
 				IFile fileFlow = (IFile) Platform.getAdapterManager().getAdapter(flujo, IFile.class);
 
 				IProject project = fileFlow.getProject();
@@ -88,30 +114,39 @@ public class OpenEditorFeature extends AbstractCustomFeature {
 				if (type != null) {
 					fileString = type.getResource().getFullPath().toString();
 				}
-			}
-
-			if (fileString != null) {
-				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileString));
-
-				IWorkspace workspace = ResourcesPlugin.getWorkspace();
-				IWorkspaceRoot root = workspace.getRoot();
-				if (root.getFile(file.getFullPath()).exists()) {
-					IDE.openEditor(page, file);
+				IJavaElement target = type;
+				for (IMethod method : type.getMethods()) {
+					if (method.getElementName().equals(methodName)) {
+						target = method;
+						break;
+					}
 				}
+				JavaUI.openInEditor(target);
 			} else {
-				URIEditorInput input = new URIEditorInput(locutionUri);
-				if (eObject instanceof Flow) {
-					IDE.openEditor(page, input, "org.eclipse.graphiti.ui.editor.DiagramEditorJVoice");
-				} else if (eObject instanceof LocutionState) { // Locution
-					IURIEditorOpener instance = VoiceDslActivator.getInstance()
-							.getInjector(VoiceDslActivator.COM_ISB_BKS_IVR_VOICE_DSL_VOICEDSL)
-							.getInstance(IURIEditorOpener.class);
-					instance.open(locutionUri, false);
-				} else if (eObject instanceof CustomState) {
-					String uri = locutionUri.path().substring(9).replace(".jvflow", ".resources").concat("/")
-							.concat(((CustomState) eObject).getPath());
-					IFile filecustom = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri));
-					IDE.openEditor(page, filecustom);
+
+				if (fileString != null) {
+					IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileString));
+
+					IWorkspace workspace = ResourcesPlugin.getWorkspace();
+					IWorkspaceRoot root = workspace.getRoot();
+					if (root.getFile(file.getFullPath()).exists()) {
+						IDE.openEditor(page, file);
+					}
+				} else {
+					URIEditorInput input = new URIEditorInput(locutionUri);
+					if (eObject instanceof Flow) {
+						IDE.openEditor(page, input, "org.eclipse.graphiti.ui.editor.DiagramEditorJVoice");
+					} else if (eObject instanceof LocutionState) { // Locution
+						IURIEditorOpener instance = VoiceDslActivator.getInstance()
+								.getInjector(VoiceDslActivator.COM_ISB_BKS_IVR_VOICE_DSL_VOICEDSL)
+								.getInstance(IURIEditorOpener.class);
+						instance.open(locutionUri, false);
+					} else if (eObject instanceof CustomState) {
+						String uri = locutionUri.path().substring(9).replace(".jvflow", ".resources").concat("/")
+								.concat(((CustomState) eObject).getPath());
+						IFile filecustom = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri));
+						IDE.openEditor(page, filecustom);
+					}
 				}
 			}
 		} catch (PartInitException | JavaModelException e) {
