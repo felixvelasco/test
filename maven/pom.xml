@@ -5,21 +5,16 @@
   <parent>
     <groupId>com.vectorsf.jvoice.core</groupId>
     <artifactId>jvoice</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.0</version>
   </parent>
   <groupId>com.vectorsf.jvoice</groupId>
   <artifactId>maven</artifactId>
   <packaging>pom</packaging>
   	<repositories>
 		<repository>
-			<id>jvoiceSnapshot</id>
+			<id>jvoice</id>
 			<name>jVoice test repository</name>
-			<url>http://repository-felixvelasco.forge.cloudbees.com/snapshot/snapshot/</url>
-		</repository>
-		<repository>
-			<id>jvoiceSnapshotRelease</id>
-			<name>jVoice test repository</name>
-			<url>http://repository-felixvelasco.forge.cloudbees.com/snapshot/release/</url>
+			<url>http://repository-felixvelasco.forge.cloudbees.com/release/</url>
 		</repository>
 	</repositories>
   <modules>

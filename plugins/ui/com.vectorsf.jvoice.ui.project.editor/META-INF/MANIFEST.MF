@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: com.vectorsf.jvoice.ui.project.editor
 Bundle-Vendor: My Company
-Bundle-Version: 1.3.0.qualifier
+Bundle-Version: 1.3.0
 Bundle-SymbolicName: com.vectorsf.jvoice.ui.project.editor;singleton:=true
 Bundle-Activator: com.vectorsf.jvoice.ui.project.editor.EditorActivator
 Bundle-ActivationPolicy: lazy
