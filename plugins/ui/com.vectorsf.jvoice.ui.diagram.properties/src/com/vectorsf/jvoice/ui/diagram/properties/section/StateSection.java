@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.diagram.properties.filters;
+package com.vectorsf.jvoice.ui.diagram.properties.section;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +36,8 @@ import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.TransferState;
 import com.vectorsf.jvoice.ui.diagram.properties.Activator;
-import com.vectorsf.jvoice.ui.diagram.properties.editting.ConditionEditingSupport;
-import com.vectorsf.jvoice.ui.diagram.properties.editting.EventNameEditingSupport;
+import com.vectorsf.jvoice.ui.diagram.properties.editing.ConditionEditingSupport;
+import com.vectorsf.jvoice.ui.diagram.properties.editing.EventNameEditingSupport;
 import com.vectorsf.jvoice.ui.diagram.properties.listeners.ListenerIntentionName;
 import com.vectorsf.jvoice.ui.diagram.properties.listeners.PropertiesListener;
 import com.vectorsf.jvoice.ui.diagram.properties.provider.CaseContentProvider;

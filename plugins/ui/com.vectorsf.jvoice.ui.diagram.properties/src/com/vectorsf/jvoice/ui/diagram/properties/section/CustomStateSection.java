@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.diagram.properties.filters;
+package com.vectorsf.jvoice.ui.diagram.properties.section;
 
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.swt.widgets.Composite;
@@ -6,8 +6,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
-import com.vectorsf.jvoice.ui.diagram.properties.section.CustomPageChooser;
-import com.vectorsf.jvoice.ui.diagram.properties.section.SimpleStateSection;
+import com.vectorsf.jvoice.ui.diagram.properties.section.helper.CustomPageChooser;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.LabelAndText;
 
 public class CustomStateSection extends SimpleStateSection {

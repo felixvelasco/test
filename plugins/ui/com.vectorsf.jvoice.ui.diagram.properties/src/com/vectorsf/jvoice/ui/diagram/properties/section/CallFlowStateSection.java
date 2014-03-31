@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.diagram.properties.filters;
+package com.vectorsf.jvoice.ui.diagram.properties.section;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -6,8 +6,8 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.ParameterizedState;
-import com.vectorsf.jvoice.ui.diagram.properties.section.SubFlowChooser;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.LabelAndText;
+import com.vectorsf.jvoice.ui.diagram.properties.section.helper.SubFlowChooser;
 
 public class CallFlowStateSection extends ParametrizableStateSection {
 

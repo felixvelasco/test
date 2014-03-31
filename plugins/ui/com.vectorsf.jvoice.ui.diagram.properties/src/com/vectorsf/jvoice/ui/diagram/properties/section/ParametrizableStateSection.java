@@ -1,11 +1,10 @@
-package com.vectorsf.jvoice.ui.diagram.properties.filters;
+package com.vectorsf.jvoice.ui.diagram.properties.section;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.ParameterizedState;
-import com.vectorsf.jvoice.ui.diagram.properties.section.SimpleStateSection;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.LabelAndText;
 
 public abstract class ParametrizableStateSection extends SimpleStateSection {

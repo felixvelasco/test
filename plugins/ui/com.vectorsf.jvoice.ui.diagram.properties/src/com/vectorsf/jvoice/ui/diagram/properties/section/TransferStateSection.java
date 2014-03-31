@@ -1,14 +1,14 @@
-package com.vectorsf.jvoice.ui.diagram.properties.filters;
+package com.vectorsf.jvoice.ui.diagram.properties.section;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
-public class RecordStateSection extends StateSection {
+public class TransferStateSection extends StateSection {
 
 	private TabbedPropertySheetPage tabbedPropertySheetPage;
 
-	public RecordStateSection() {
+	public TransferStateSection() {
 	}
 
 	@Override
@@ -19,4 +19,5 @@ public class RecordStateSection extends StateSection {
 		super.nombre_path(factory, composite);
 		super.subFlowPath(factory, composite, "Name definition:");
 	}
+
 }

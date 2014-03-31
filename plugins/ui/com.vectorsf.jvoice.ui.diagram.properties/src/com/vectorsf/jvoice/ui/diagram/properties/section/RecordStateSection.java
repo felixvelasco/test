@@ -1,14 +1,14 @@
-package com.vectorsf.jvoice.ui.diagram.properties.filters;
+package com.vectorsf.jvoice.ui.diagram.properties.section;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
-public class PromptStateSection extends StateSection {
+public class RecordStateSection extends StateSection {
 
 	private TabbedPropertySheetPage tabbedPropertySheetPage;
 
-	public PromptStateSection() {
+	public RecordStateSection() {
 	}
 
 	@Override
@@ -17,6 +17,6 @@ public class PromptStateSection extends StateSection {
 		TabbedPropertySheetWidgetFactory factory = tabbedPropertySheetPage.getWidgetFactory();
 		Composite composite = factory.createFlatFormComposite(parent);
 		super.nombre_path(factory, composite);
-		super.subFlowPath(factory, composite, "Definition:");
+		super.subFlowPath(factory, composite, "Name definition:");
 	}
 }

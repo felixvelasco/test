@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.diagram.properties.editting;
+package com.vectorsf.jvoice.ui.diagram.properties.editing;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.Transition;
-import com.vectorsf.jvoice.ui.diagram.properties.filters.StateSection;
+import com.vectorsf.jvoice.ui.diagram.properties.section.StateSection;
 
 class RenameTransitionCommand extends RecordingCommand {
 	private final SwitchState switchState;

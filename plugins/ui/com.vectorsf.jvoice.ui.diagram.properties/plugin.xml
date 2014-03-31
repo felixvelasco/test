@@ -15,73 +15,73 @@
       <propertySections
             contributorId="jVoiceDiagram.PropertyContributor">
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.CallStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.CallStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.CallStateFilter"
                id="graphiti.main.tab.emfclass.callState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.CallFlowStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.CallFlowStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.CallFlowStateFilter"
                id="graphiti.main.tab.emfclass.callFlowState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.PromptStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.PromptStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.PromptStateFilter"
                id="graphiti.main.tab.emfclass.prompState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.InputStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.InputStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.InputStateFilter"
                id="graphiti.main.tab.emfclass.inputState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.MenuStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.MenuStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.MenuStateFilter"
                id="graphiti.main.tab.emfclass.menuState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.InitialStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.InitialStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.InitialStateFilter"
                id="graphiti.main.tab.emfclass.initialState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.FinalStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.FinalStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.FinalStateFilter"
                id="graphiti.main.tab.emfclass.finalState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.SwitchStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.SwitchStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.SwitchStateFilter"
                id="graphiti.main.tab.emfclass.switchState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.TransitionSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.TransitionSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.TransitionFilter"
                id="graphiti.main.tab.emfclass.transition"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.TransferStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.TransferStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.TransferStateFilter"
                id="graphiti.main.tab.emfclass.transferState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.RecordStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.RecordStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.RecordStateFilter"
                id="graphiti.main.tab.emfclass.recordState"
                tab="graphiti.main.tab.jvoice.operation.state.main">
          </propertySection>
          <propertySection
-               class="com.vectorsf.jvoice.ui.diagram.properties.filters.CustomStateSection"
+               class="com.vectorsf.jvoice.ui.diagram.properties.section.CustomStateSection"
                filter="com.vectorsf.jvoice.ui.diagram.properties.filters.CustomStateFilter"
                id="graphiti.main.tab.emfclass.customState"
                tab="graphiti.main.tab.jvoice.operation.state.main">

@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.diagram.properties.section;
+package com.vectorsf.jvoice.ui.diagram.properties.section.helper;
 
 import java.util.List;
 
@@ -14,7 +14,6 @@ import org.eclipse.ui.PlatformUI;
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.ui.diagram.properties.section.helper.IObjectChooser;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogSubFlow;
 import com.vectorsf.jvoice.ui.edit.filters.FilterDialogSubFlow;
 import com.vectorsf.jvoice.ui.edit.provider.JVBeanContentProvider;

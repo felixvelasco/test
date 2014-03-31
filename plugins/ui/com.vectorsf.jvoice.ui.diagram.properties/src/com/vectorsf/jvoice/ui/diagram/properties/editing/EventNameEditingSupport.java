@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.diagram.properties.editting;
+package com.vectorsf.jvoice.ui.diagram.properties.editing;
 
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
@@ -10,7 +10,7 @@ import org.eclipse.swt.custom.CLabel;
 
 import com.vectorsf.jvoice.model.operations.Case;
 import com.vectorsf.jvoice.model.operations.SwitchState;
-import com.vectorsf.jvoice.ui.diagram.properties.filters.StateSection;
+import com.vectorsf.jvoice.ui.diagram.properties.section.StateSection;
 
 public class EventNameEditingSupport extends EditingSupport {
 

@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.diagram.properties.filters;
+package com.vectorsf.jvoice.ui.diagram.properties.section;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -27,7 +27,7 @@ import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.ParameterizedState;
-import com.vectorsf.jvoice.ui.diagram.properties.section.ExecuteChooser;
+import com.vectorsf.jvoice.ui.diagram.properties.section.helper.ExecuteChooser;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.LabelAndText;
 
 public class CallStateSection extends ParametrizableStateSection {

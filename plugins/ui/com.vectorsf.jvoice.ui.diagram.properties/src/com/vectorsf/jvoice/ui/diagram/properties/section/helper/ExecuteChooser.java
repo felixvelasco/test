@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.diagram.properties.section;
+package com.vectorsf.jvoice.ui.diagram.properties.section.helper;
 
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.common.util.EList;
@@ -11,7 +11,6 @@ import org.eclipse.ui.PlatformUI;
 
 import com.vectorsf.jvoice.model.operations.ComponentBean;
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.ui.diagram.properties.section.helper.IObjectChooser;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogExecuteBean;
 import com.vectorsf.jvoice.ui.edit.filters.FilterDialogExecuteBean;
 import com.vectorsf.jvoice.ui.edit.provider.MethodsBeanContentProvider;

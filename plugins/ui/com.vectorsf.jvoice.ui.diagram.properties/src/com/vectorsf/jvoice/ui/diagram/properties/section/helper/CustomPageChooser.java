@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.diagram.properties.section;
+package com.vectorsf.jvoice.ui.diagram.properties.section.helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 
 import com.vectorsf.jvoice.model.operations.Flow;
-import com.vectorsf.jvoice.ui.diagram.properties.section.helper.IObjectChooser;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
 import com.vectorsf.jvoice.ui.wizard.create.CreateJspCustom;
 

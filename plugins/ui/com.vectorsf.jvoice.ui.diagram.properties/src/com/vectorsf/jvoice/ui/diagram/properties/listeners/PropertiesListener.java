@@ -19,7 +19,7 @@ import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.SwitchState;
 import com.vectorsf.jvoice.model.operations.TransferState;
-import com.vectorsf.jvoice.ui.diagram.properties.filters.StateSection;
+import com.vectorsf.jvoice.ui.diagram.properties.section.StateSection;
 import com.vectorsf.jvoice.ui.diagram.properties.util.AddCaseSwitch;
 import com.vectorsf.jvoice.ui.diagram.properties.util.DownCaseSwitch;
 import com.vectorsf.jvoice.ui.diagram.properties.util.EditMenuStateLocution;

@@ -10,7 +10,7 @@ import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Text;
 
 import com.vectorsf.jvoice.model.operations.State;
-import com.vectorsf.jvoice.ui.diagram.properties.filters.StateSection;
+import com.vectorsf.jvoice.ui.diagram.properties.section.StateSection;
 import com.vectorsf.jvoice.ui.diagram.properties.util.RenameCommand;
 
 public class ListenerIntentionName implements FocusListener {

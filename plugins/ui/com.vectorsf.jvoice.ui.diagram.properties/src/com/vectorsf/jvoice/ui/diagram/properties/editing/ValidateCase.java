@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.diagram.properties.editting;
+package com.vectorsf.jvoice.ui.diagram.properties.editing;
 
 import org.eclipse.core.internal.resources.OS;
 import org.eclipse.core.internal.utils.Messages;
