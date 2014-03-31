@@ -3,6 +3,7 @@ package com.vectorsf.jvoice.diagram.core.updater;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +20,10 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.maven.model.Model;
+import org.apache.maven.model.Plugin;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -113,43 +118,105 @@ public class IVRUpdater extends AbstractHandler {
 					continue;
 				}
 
-				File file = new File(prj.getFile("pom.xml").getLocation().toOSString());
-				if (!file.exists()) {
+				File pom = new File(prj.getFile("pom.xml").getLocation().toOSString());
+				if (!pom.exists()) {
 					log("No existe el fichero pom.xml en el proyecto " + prjName);
 					return;
 				}
 
-				Document doc = domFactory.newDocumentBuilder().parse(file);
+				if (prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
+					addMavenCleanPlugin(pom, prjName);
+				}
 
-				// Actualizamos el nodo de la versión del framework de los módulos
-				Node node = getNode(doc, prjName, XPATH_FRAMEWORK_VERSION, 0);
-				updateNode(node, prjName, frameworkVersion);
-
-				// Actualizamos el primer nodo de la versión del compilador de los módulos
-				node = getNode(doc, prjName, XPATH_COMPILER_VERSION, 0);
-				updateNode(node, prjName, compilerVersion);
-
-				// Actualizamos el segundo nodo de la versión del compilador de los módulos
-				node = getNode(doc, prjName, XPATH_COMPILER_VERSION, 1);
-				updateNode(node, prjName, compilerVersion);
-
-				// Actualizamos el nodo de la versión del logger de los módulos
-				node = getNode(doc, prjName, XPATH_LOGGER_VERSION, 0);
-				updateNode(node, prjName, frameworkVersion);
-
-				// Actualizamos el nodo de la versión del compilador de las aplicaciones
-				node = getNode(doc, prjName, XPATH_APPLICATION_COMPILER_VERSION, 0);
-				updateNode(node, prjName, compilerVersion);
-
-				// Grabamos el fichero
-				Transformer transformer = TransformerFactory.newInstance().newTransformer();
-				transformer.transform(new DOMSource(doc), new StreamResult(file));
+				updateDependencyVersion(pom, prjName);
 			}
 		} catch (Exception e) {
 			log("IVRUpdater.updatePomFile(): " + e);
 			return;
 		}
 
+	}
+
+	/**
+	 * 
+	 * Añade al pom del proyecto de aplicación el maven-clean-plugin si no lo tiene.
+	 * 
+	 */
+	private void addMavenCleanPlugin(File pom, String prjName) {
+		try {
+			// Creamos el modelo de Maven a partir del pom.xml
+			MavenXpp3Reader reader = new MavenXpp3Reader();
+			Model model = reader.read(new FileInputStream(pom));
+
+			// Si no tiene el maven-clean-plugin lo añadimos al modelo y escribimos el pom.xml a partir de este.
+			if (!hasMavenCleanPlugin(model)) {
+				model.getBuild().addPlugin(JVoiceApplicationConfigurator.getMavenCleanPlugin());
+
+				changedProjectsText.append(prjName + ": Añadido maven-clean-plugin al pom.xml.\n");
+
+				MavenXpp3Writer writer = new MavenXpp3Writer();
+				writer.write(new FileOutputStream(pom), model);
+			}
+
+		} catch (Exception e) {
+			log("IVRUpdater.addMavenCleanPlugin(): " + e);
+			return;
+		}
+
+	}
+
+	/**
+	 * Actualizamos el nodo dependency/version del pom del proyecto pasado.
+	 */
+	private void updateDependencyVersion(File pom, String prjName) {
+
+		try {
+			Document doc = domFactory.newDocumentBuilder().parse(pom);
+
+			// Actualizamos el nodo de la versión del framework de los módulos
+			Node node = getNode(doc, prjName, XPATH_FRAMEWORK_VERSION, 0);
+			updateNode(node, prjName, frameworkVersion);
+
+			// Actualizamos el primer nodo de la versión del compilador de los módulos
+			node = getNode(doc, prjName, XPATH_COMPILER_VERSION, 0);
+			updateNode(node, prjName, compilerVersion);
+
+			// Actualizamos el segundo nodo de la versión del compilador de los módulos
+			node = getNode(doc, prjName, XPATH_COMPILER_VERSION, 1);
+			updateNode(node, prjName, compilerVersion);
+
+			// Actualizamos el nodo de la versión del logger de los módulos
+			node = getNode(doc, prjName, XPATH_LOGGER_VERSION, 0);
+			updateNode(node, prjName, frameworkVersion);
+
+			// Actualizamos el nodo de la versión del compilador de las aplicaciones
+			node = getNode(doc, prjName, XPATH_APPLICATION_COMPILER_VERSION, 0);
+			updateNode(node, prjName, compilerVersion);
+
+			// Grabamos el fichero
+			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			transformer.transform(new DOMSource(doc), new StreamResult(pom));
+
+		} catch (Exception e) {
+			log("IVRUpdater.updateDependencyVersion(): " + e);
+			return;
+		}
+
+	}
+
+	private boolean hasMavenCleanPlugin(Model model) {
+
+		List<Plugin> plugins = model.getBuild().getPlugins();
+
+		int plugsSize = plugins.size();
+		// Comprobamos si ya existe el maven-clean-plugin
+		for (int i = 0; i < plugsSize; i++) {
+			if ("maven-clean-plugin".equals(plugins.get(i).getArtifactId())) {
+				// Ya existe el maven-clean-plugin
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

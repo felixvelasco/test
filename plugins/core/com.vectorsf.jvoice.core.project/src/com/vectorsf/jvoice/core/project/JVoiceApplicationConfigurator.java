@@ -137,6 +137,7 @@ public final class JVoiceApplicationConfigurator {
 		Build build = new Build();
 		build.addPlugin(dsl_builder);
 		build.addPlugin(dsl_builder2);
+		build.addPlugin(getMavenCleanPlugin());
 
 		model.setBuild(build);
 
@@ -149,6 +150,103 @@ public final class JVoiceApplicationConfigurator {
 		model.addRepository(repository);
 
 		return model;
+	}
+
+	public static Plugin getMavenCleanPlugin() {
+
+		Plugin cleanPlugin = new Plugin();
+		
+		cleanPlugin.setArtifactId("maven-clean-plugin");
+		cleanPlugin.setVersion("2.5");
+		
+		Xpp3Dom configuration = new Xpp3Dom("configuration");
+
+		Xpp3Dom filesets = new Xpp3Dom("filesets");
+		
+		Xpp3Dom filesetWebInf = new Xpp3Dom("fileset");
+		Xpp3Dom directoryWebInf = new Xpp3Dom("directory");
+		directoryWebInf.setValue("src/main/webapp/WEB-INF");
+		Xpp3Dom includesWebInf = new Xpp3Dom("includes");
+		
+		Xpp3Dom include1 = new Xpp3Dom("include");
+		include1.setValue("web.xml");
+		includesWebInf.addChild(include1);
+
+		Xpp3Dom include2 = new Xpp3Dom("include");
+		include2.setValue("flows/**/*");
+		includesWebInf.addChild(include2);
+
+		Xpp3Dom include3 = new Xpp3Dom("include");
+		include3.setValue("spring/app-context.xml");		
+		includesWebInf.addChild(include3);
+
+		Xpp3Dom include4 = new Xpp3Dom("include");
+		include4.setValue("spring/root-context.xml");		
+		includesWebInf.addChild(include4);
+
+		Xpp3Dom include5 = new Xpp3Dom("include");
+		include5.setValue("spring/jvoiceframework-context.xml");		
+		includesWebInf.addChild(include5);
+
+		Xpp3Dom include6 = new Xpp3Dom("include");
+		include6.setValue("spring/appServlet/servlet-context.xml");		
+		includesWebInf.addChild(include6);
+
+		Xpp3Dom include7 = new Xpp3Dom("include");
+		include7.setValue("views/**/*");		
+		includesWebInf.addChild(include7);
+
+		Xpp3Dom include8 = new Xpp3Dom("include");
+		include8.setValue("jVoiceArchFlows/**");		
+		includesWebInf.addChild(include8);
+
+		Xpp3Dom include9 = new Xpp3Dom("include");
+		include9.setValue("jVoiceArchFlows");		
+		includesWebInf.addChild(include9);
+
+		Xpp3Dom filesetWebRes = new Xpp3Dom("fileset");
+		Xpp3Dom directoryWebRes = new Xpp3Dom("directory");
+		directoryWebRes.setValue("src/main/webapp/resources");
+		Xpp3Dom includesWebRes = new Xpp3Dom("includes");
+
+		Xpp3Dom incWebRes1 = new Xpp3Dom("include");
+		incWebRes1.setValue("js/isban-logger.js");
+		includesWebRes.addChild(incWebRes1);
+
+		Xpp3Dom incWebRes2 = new Xpp3Dom("include");
+		incWebRes2.setValue("audios/**/*");
+		includesWebRes.addChild(incWebRes2);
+
+		Xpp3Dom incWebRes3 = new Xpp3Dom("include");
+		incWebRes3.setValue("grammars/**/*");
+		includesWebRes.addChild(incWebRes3);
+
+		Xpp3Dom filesetMainRes = new Xpp3Dom("fileset");
+		Xpp3Dom directoryMainRes = new Xpp3Dom("directory");
+		directoryMainRes.setValue("src/main/resources");
+		Xpp3Dom includesMainRes = new Xpp3Dom("includes");
+
+		Xpp3Dom incMainRes1 = new Xpp3Dom("include");
+		incMainRes1.setValue("logback.xml");
+		includesMainRes.addChild(incMainRes1);
+
+		filesetWebInf.addChild(directoryWebInf);
+		filesetWebInf.addChild(includesWebInf);
+
+		filesetWebRes.addChild(directoryWebRes);
+		filesetWebRes.addChild(includesWebRes);
+
+		filesetMainRes.addChild(directoryMainRes);
+		filesetMainRes.addChild(includesMainRes);
+
+		filesets.addChild(filesetWebInf);
+		filesets.addChild(filesetWebRes);
+		filesets.addChild(filesetMainRes);
+		configuration.addChild(filesets);
+
+		cleanPlugin.setConfiguration(configuration);
+		
+		return cleanPlugin;
 	}
 
 	private static final class AddJVoiceNatureRunnable implements IWorkspaceRunnable {
