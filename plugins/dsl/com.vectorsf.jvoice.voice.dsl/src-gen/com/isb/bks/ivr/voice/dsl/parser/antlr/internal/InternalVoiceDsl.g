@@ -877,19 +877,19 @@ ruleTransferDsl returns [EObject current=null]
     }
 (
 (
-		lv_maxTime_10_0=RULE_STRING
-		{
-			newLeafNode(lv_maxTime_10_0, grammarAccess.getTransferDslAccess().getMaxTimeSTRINGTerminalRuleCall_4_2_1_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getMaxTimeConfigValueValueParserRuleCall_4_2_1_0()); 
+	    }
+		lv_maxTime_10_0=ruleConfigValueValue		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTransferDslRule());
+	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"maxTime",
         		lv_maxTime_10_0, 
-        		"STRING");
+        		"ConfigValueValue");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -911,19 +911,19 @@ ruleTransferDsl returns [EObject current=null]
     }
 (
 (
-		lv_timeout_12_0=RULE_STRING
-		{
-			newLeafNode(lv_timeout_12_0, grammarAccess.getTransferDslAccess().getTimeoutSTRINGTerminalRuleCall_4_3_1_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getTimeoutConfigValueValueParserRuleCall_4_3_1_0()); 
+	    }
+		lv_timeout_12_0=ruleConfigValueValue		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTransferDslRule());
+	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"timeout",
         		lv_timeout_12_0, 
-        		"STRING");
+        		"ConfigValueValue");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
