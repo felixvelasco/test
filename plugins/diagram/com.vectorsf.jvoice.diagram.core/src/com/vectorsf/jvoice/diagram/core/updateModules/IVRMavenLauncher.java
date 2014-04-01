@@ -101,24 +101,39 @@ public class IVRMavenLauncher extends AbstractHandler {
 	}
 
 	private void startTomcat() {
-		ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
 		try {
-			for (ILaunchConfiguration conf : manager.getLaunchConfigurations()) {
+			ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
+			ILaunchConfiguration[] launchConfigurations = manager.getLaunchConfigurations();
+			if (launchConfigurations.length == 0) {
+				return;
+			}
+
+			boolean existsTomcat = false;
+			for (ILaunchConfiguration conf : launchConfigurations) {
 				if ("org.eclipse.jst.server.tomcat.core.launchConfigurationType".equals(conf.getType().getIdentifier())) {
 					DebugUITools.launch(conf.getWorkingCopy(), ILaunchManager.RUN_MODE);
-				} else {
-					log("No hay creada ninguna configuración de Tomcat. Cree una antes de usar el lanzador automático");
+					existsTomcat = true;
 				}
-
 			}
-		} catch (Exception e) {
 
+			if (!existsTomcat) {
+				Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+				MessageDialog.openWarning(shell, "Tomcat",
+						"No hay creada ninguna configuración de Tomcat. Cree una antes de usar el lanzador automático");
+			}
+
+		} catch (Exception e) {
 			log("IVRMavenLauncher.startTomcat(): " + e);
 		}
 	}
 
 	private void stopTomcat() {
-		for (ILaunch launch : DebugPlugin.getDefault().getLaunchManager().getLaunches()) {
+		ILaunch[] launches = DebugPlugin.getDefault().getLaunchManager().getLaunches();
+		if (launches == null) {
+			return;
+		}
+
+		for (ILaunch launch : launches) {
 			try {
 				if (launch.getLaunchConfiguration().getName().contains("Tomcat")) {
 					launch.terminate();
