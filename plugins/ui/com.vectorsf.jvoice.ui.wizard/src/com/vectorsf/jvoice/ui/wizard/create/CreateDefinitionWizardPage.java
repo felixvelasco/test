@@ -115,9 +115,9 @@ public class CreateDefinitionWizardPage extends WizardPage {
 		String text = nameText.getText();
 		boolean valid = isValidName(text);
 		if (isTextual()) {
-			valid |= isValidTextualName(text);
+			valid &= isValidTextualName(text);
 		} else {
-			valid |= isValidMethodName(text);
+			valid &= isValidMethodName(text);
 		}
 		setPageComplete(valid);
 	}
@@ -176,7 +176,7 @@ public class CreateDefinitionWizardPage extends WizardPage {
 			setErrorMessage("Definition already exists");
 			return false;
 		}
-		setErrorMessage(null);
+		// setErrorMessage(null);
 		setMessage(null);
 		return true;
 	}
