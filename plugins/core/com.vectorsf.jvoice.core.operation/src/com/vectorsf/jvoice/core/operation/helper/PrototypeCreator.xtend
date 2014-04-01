@@ -26,7 +26,7 @@ class PrototypeCreator {
 
 	def static createMethod(String methodName, String returnType) '''
 		public «returnType» «methodName»() {
-			return definitionsService.create«returnType»();
+			return jvoiceBeanService.get«returnType»();
 		}
 	'''
 	def static createInjectedField(String fieldName, String fileType) '''

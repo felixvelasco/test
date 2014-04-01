@@ -140,14 +140,14 @@ public class CreateDefinitionWizard extends BasicNewResourceWizard {
 	private IMethod createMethod() throws JavaModelException {
 		IType helperType = FlowService.getHelperType(flow);
 		String returnType = getReturnType();
-		helperType.getCompilationUnit().createImport("com.vectorsf.placeholder." + returnType, null, null);
-		helperType.getCompilationUnit()
-				.createImport("com.vectorsf.services.placeholder.DefinitionsService", null, null);
+		helperType.getCompilationUnit().createImport("com.vectorsf.jvoiceframework.core." + returnType, null, null);
+		helperType.getCompilationUnit().createImport(
+				"com.vectorsf.jvoiceframework.core.bean.factory.JvoiceBeanService", null, null);
 		helperType.getCompilationUnit().createImport("org.springframework.beans.factory.annotation.Autowired", null,
 				null);
 
-		if (!helperType.getField("definitionsService").exists()) {
-			helperType.createField(PrototypeCreator.createInjectedField("definitionsService", "DefinitionsService")
+		if (!helperType.getField("jvoiceBeanService").exists()) {
+			helperType.createField(PrototypeCreator.createInjectedField("jvoiceBeanService", "JvoiceBeanService")
 					.toString(), null, false, null);
 		}
 
@@ -169,15 +169,15 @@ public class CreateDefinitionWizard extends BasicNewResourceWizard {
 	private String getReturnType() {
 		switch (definition) {
 		case INPUT:
-			return "IInput";
+			return "Input";
 		case MENU:
-			return "IMenu";
+			return "Menu";
 		case RECORD:
-			return "IRecord";
+			return "Record";
 		case OUTPUT:
-			return "IOutput";
+			return "Output";
 		case TRANSFER:
-			return "ITransfer";
+			return "Transfer";
 		}
 		return null;
 	}

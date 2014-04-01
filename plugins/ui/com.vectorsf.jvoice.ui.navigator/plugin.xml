@@ -195,23 +195,6 @@
          <commonWizard
                menuGroupId="ActionsIVR"
                type="new"
-               wizardId="com.vectorsf.jvoice.ui.wizard.wizardDSL">
-            <enablement>
-               <with
-                     variable="selection">
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVBean">
-                     </instanceof>
-                  </iterate>
-               </with>
-            </enablement>
-         </commonWizard>
-         <commonWizard
-               menuGroupId="ActionsIVR"
-               type="new"
                wizardId="com.vectorsf.jvoice.ui.application.wizard">
             <enablement>
                <with

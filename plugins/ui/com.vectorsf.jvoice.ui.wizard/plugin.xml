@@ -29,14 +29,6 @@
       </wizard>
       <wizard
             category="com.vectorsf.jvoice.ui.wizards.category"
-            class="com.vectorsf.jvoice.ui.wizard.create.CreateDefinitionWizard"
-            icon="res/obj16/icon_nav_locution.png"
-            id="com.vectorsf.jvoice.ui.wizard.wizardDSL"
-            name="%wizard.locution.name"
-            project="false">
-      </wizard>
-      <wizard
-            category="com.vectorsf.jvoice.ui.wizards.category"
             class="com.vectorsf.jvoice.ui.wizard.create.CreateJVoiceApplicationWizard"
             icon="res/obj16/icon_nav_app.png"
             id="com.vectorsf.jvoice.ui.application.wizard"
