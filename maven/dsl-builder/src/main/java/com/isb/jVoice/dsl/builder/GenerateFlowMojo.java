@@ -137,8 +137,8 @@ public class GenerateFlowMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
-		
-		File f = new File(outputDirectory, "jVoice");
+		// Para que funcione el hotdeploy generamos los flujos en la carpeta "target/classes"
+		File f = new File(outputDirectory+"/classes", "jVoice");
 		if (!f.exists()) {
 			f.mkdirs();
 		}
@@ -200,9 +200,12 @@ public class GenerateFlowMojo extends AbstractMojo {
 	 * @param mainFolder Carpeta donde se crean los flujos de webflow.
 	 */
 	private void generateModuleEventsHandlers(JVModule modulo, File mainFolder) {
-		File folder = new File(mainFolder, "_" + modulo.getName() + "EventsHandlers");
+		File folder = new File(mainFolder, "_" + modulo.getName() + "EventsHandlers\\eventsHandlers");
 		folder.mkdirs();
-		MainFlowGenerator.compile(new File(folder, "eventsHandlers.xml"), modulo);
+		
+		// Añadimos "-flow" al nombre del fichero para que no haya que renombrarlo 
+		// al copiarlo a la aplicación y funcione el hotdeploy de m2e-wtp.
+		MainFlowGenerator.compile(new File(folder, "eventsHandlers-flow.xml"), modulo);
 	}
 
 	/**
@@ -220,7 +223,9 @@ public class GenerateFlowMojo extends AbstractMojo {
 	private String getTargetFlowName(String name) {
 		String basename = name.substring(0, name.lastIndexOf('.'));
 
-		return basename + ".xml";
+		// Añadimos "-flow" al nombre del flujo para que no haya que renombrarlo 
+		// al copiarlo a la aplicación y funcione el hotdeploy de m2e-wtp.
+		return basename + "-flow.xml";
 	}
 
 	private Set<String> getFlowIncludesPatterns() {
@@ -321,8 +326,14 @@ public class GenerateFlowMojo extends AbstractMojo {
 	private boolean processFlowFile(ResourceSet resourceSet, File origFile, File targetFolder) throws IOException, MojoExecutionException {
 		// Obtenemos los paquetes en los que se encuentra el archivo.
 		String rutafile = origFile.getAbsolutePath().toString().replace(sourceDirectory.toString(), "").trim();
-		// Copiamos la estrucutra de paquetes.
-		targetFolder = new File(targetFolder, rutafile.replace(origFile.getName(), "").trim());
+		
+		// Copiamos la estrucutra de paquetes.		
+		String flowName = origFile.getName();
+		flowName = flowName.substring(0, flowName.lastIndexOf("."));
+
+		// Añadimos el nombre del flujo a la carpeta para que se copie 
+		// correctamente a la aplicación y funcione el hotdeploy de m2e-wtp.
+		targetFolder = new File(targetFolder, rutafile.replace(origFile.getName(), "").trim()+"\\"+flowName);
 		if (!targetFolder.exists()) {
 			targetFolder.mkdirs();
 		}

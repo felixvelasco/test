@@ -50,10 +50,13 @@ public final class JVoiceProjectConfigurator {
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 				ProjectImportConfiguration configuration = new ProjectImportConfiguration();
-				configuration.getResolverConfiguration().setResolveWorkspaceProjects(false);
+				
+				// Activamos la resolución de workspace de m2e-wtp
+				configuration.getResolverConfiguration().setResolveWorkspaceProjects(true);
+				
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
 						getModel(groupId, artifactId, projectName, descriptionProject),
-						new String[] { "src/main/java", "src/main/resources/jv", "src/main/resources/properties" }, configuration, monitor);
+						new String[] { "src/main/java", "src/main/resources/jv"}, configuration, monitor);
 
 				result[0] = project;
 			}

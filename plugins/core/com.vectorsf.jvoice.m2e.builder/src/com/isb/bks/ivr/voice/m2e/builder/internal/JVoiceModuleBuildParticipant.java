@@ -1,8 +1,10 @@
 package com.isb.bks.ivr.voice.m2e.builder.internal;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.MojoExecution;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -12,6 +14,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IResourceVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -84,20 +87,30 @@ public class JVoiceModuleBuildParticipant extends MojoExecutionBuildParticipant 
 
 		// Escucha deltas para copiar el fichero de flujo en el directorio que espera Tomcat.
 		// Debe ir después de ejecutar el mojo de generación de código de Spring.
-		if (delta != null && delta.getKind() == IResourceDelta.CHANGED) {
-			for (IResourceDelta delt : delta.getAffectedChildren()) {
-				if (delt.getResource() instanceof IFolder) {
-					CopyFlowToTomcatVisitor copyFlow = new CopyFlowToTomcatVisitor();
-					try {
-						delt.accept(copyFlow);
-					} catch (CoreException e) {
-						System.err.println("build:" + e);
-					}
-				}
+		// if (delta != null && delta.getKind() == IResourceDelta.CHANGED) {
+		// for (IResourceDelta delt : delta.getAffectedChildren()) {
+		// if (delt.getResource() instanceof IFolder) {
+		// CopyFlowToTomcatVisitor copyFlow = new CopyFlowToTomcatVisitor();
+		// try {
+		// delt.accept(copyFlow);
+		// } catch (CoreException e) {
+		// System.err.println("build:" + e);
+		// }
+		// }
+		// }
+		// }
+
+		// Devuelvo los módulos de los que depende el módulo para
+		// que funcione bien el hotdeploy de m2e-wtp.
+		Set<IProject> dependentProjects = new HashSet<IProject>();
+		for (Dependency dependency : getSession().getCurrentProject().getDependencies()) {
+			IProject prj = ResourcesPlugin.getWorkspace().getRoot().getProject(dependency.getArtifactId());
+			if (prj.exists()) {
+				dependentProjects.add(prj);
 			}
 		}
 
-		return result;
+		return dependentProjects;
 	}
 
 	private boolean validate(IResourceDelta delta) throws CoreException {

@@ -28,8 +28,8 @@ public final class JVoiceApplicationConfigurator {
 	private static final String WS_ENDPOINTS_XML = "ws-endpoints.xml";
 	private static final String ENDPOINTS_DIR = "src/main/resources/com/vectorsf/";
 	private static final String WS = "/ws";
-	protected static final String PROPERTIES_FOLDER = "src/main/resources/properties";
-	protected static final String PROPERTIES_FILENAME = "jvoiceframework.properties";
+	public static final String PROPERTIES_FOLDER = "src/main/resources/properties";
+	public static final String PROPERTIES_FILENAME = "jvoiceframework.properties";
 
 	private JVoiceApplicationConfigurator() {
 	}
@@ -52,7 +52,10 @@ public final class JVoiceApplicationConfigurator {
 			public void run(IProgressMonitor monitor) throws CoreException {
 				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 				ProjectImportConfiguration configuration = new ProjectImportConfiguration();
-				configuration.getResolverConfiguration().setResolveWorkspaceProjects(false);
+				
+				// Activamos la resolución de workspace de m2e-wtp
+				configuration.getResolverConfiguration().setResolveWorkspaceProjects(true);
+				
 				String wsFolderName = ENDPOINTS_DIR + projectName + WS;
 				MavenPlugin.getProjectConfigurationManager().createSimpleProject(project, null,
 						getModel(groupId, artifactId, projectName, descProject),

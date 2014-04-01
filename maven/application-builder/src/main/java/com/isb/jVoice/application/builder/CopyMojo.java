@@ -23,6 +23,7 @@ import java.util.zip.ZipInputStream;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.util.FileUtils;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -166,8 +167,8 @@ public class CopyMojo extends AbstractMojo {
 			// Creamos la carpeta estatica views
 			File views = new File(outputDirectory, "views");
 			views.mkdirs();
-			
-			//Copiamos las vistas que necesitan los renderers.
+
+			// Copiamos las vistas que necesitan los renderers.
 			copyFile("views/renderHTML.jsp", new File(views, "renderHTML.jsp"));
 			copyFile("views/renderVXI.jsp", new File(views, "renderVXI.jsp"));
 			copyFile("views/renderMPS.jsp", new File(views, "renderMPS.jsp"));
@@ -267,6 +268,10 @@ public class CopyMojo extends AbstractMojo {
 				} catch (IOException e1) {
 					throw new MojoExecutionException("Error in CopyMojo:getProjectDependencies()", e1);
 				}
+			} else {
+				// Procesamos la carpeta target/process del módulo cuando está activa la resolución de
+				// dependencias de m2e-wtp
+				processTargetClassFolder(resource);
 			}
 		}
 		Collections.sort(dependencies);
@@ -274,9 +279,69 @@ public class CopyMojo extends AbstractMojo {
 	}
 
 	/**
-	 * Método que copia un archivo "origName" que se encuentre en la carpeta
-	 * src/main/resources/static/ de alguna de las dependencias en la ruta
-	 * "destFile" dentro del proyecto de aplicación.
+	 * Entra aquí si la resolución de workspaces está activada.
+	 */
+	private void processTargetClassFolder(String resource) {
+		try {
+			String wksDir = mavenProject.getBasedir().getParentFile().toString();
+			String applicationName = mavenProject.getName();
+
+			// Si llega el directorio /target/classes de la aplicación no lo procesamos
+			if (resource.contains("\\" + applicationName + "\\")) {
+				return;
+			}
+
+			File prjInformation = new File(new File(resource).getParentFile().getParentFile(), PROJECT_INFORMATION_EXT);
+			JVModule module = getProject(prjInformation);
+			if (module == null) {
+				log("CopyMojo.processTargetClassFolder(): module=null: prjInformation='" + prjInformation + "'");
+				return;
+			}
+			
+			String moduleName = module.getName();
+			System.out.println("CopyMojo.processTargetClassFolder(): "+applicationName + ": " + wksDir + ": " + moduleName + ": @@@@@@@@@@=" + resource);
+
+			// Combinamos los ficheros de propiedades que estén en la carpeta "properties"
+			File[] propertiesFiles = new File(resource, "properties").listFiles();
+			if(propertiesFiles != null) {
+				for (File propfile : propertiesFiles) {
+					manageProperties(new FileInputStream(propfile), propfile.getName());
+				}
+			}
+			
+			// Añadimos el módulo para el fichero app-context.xml
+			modules.add(module);
+
+			// Copiamos el directorio /target/classes/jVoice del módulo al directorio
+			// /src/main/webapp/WEB-INF/flows de la aplicación.
+			FileUtils.copyDirectoryStructure(new File(wksDir + "/" + moduleName + "/target/classes/jVoice"),
+					new File(wksDir + "/" + applicationName + "/src/main/webapp/WEB-INF/flows"));
+
+			// Copiamos la carpeta audios
+			File audiosFolder = new File(wksDir + "/" + moduleName + "/target/classes/audios");
+			if(audiosFolder.exists()) {
+				FileUtils.copyDirectoryStructure(audiosFolder,
+						new File(wksDir + "/" + applicationName + "/src/main/webapp/resources/audios/" + moduleName));
+			}
+
+			// Copiamos la carpeta grammars
+			File grammarsFolder = new File(wksDir + "/" + moduleName + "/target/classes/grammars");
+			if(grammarsFolder.exists()) {
+				FileUtils.copyDirectoryStructure(grammarsFolder,
+						new File(wksDir + "/" + applicationName + "/src/main/webapp/resources/grammars/" + moduleName));
+			}
+		} catch (Exception e) {
+			log("CopyMojo.processTargetClassFolder(): " + e);
+		}
+	}
+
+	private void log(String text) {
+		System.err.println("CopyMojo: " + text);
+	}
+
+	/**
+	 * Método que copia un archivo "origName" que se encuentre en la carpeta src/main/resources/static/
+	 * de alguna de las dependencias en la ruta "destFile" dentro del proyecto de aplicación.
 	 * 
 	 * @param origName
 	 *            nombre del archivo a copiar.
@@ -313,10 +378,13 @@ public class CopyMojo extends AbstractMojo {
 	}
 
 	/**
-	 * Método que genera el flujo que controla los eventos globales de la aplicación.
-	 * Lo crea siempre en la carpeta "_AppEventsHandlers", con el nombre eventsHandlers-flow.xml
-	 * @param project Aplicación para la que se genera el flujo de eventos globales.
-	 * @param mainFolder Carpeta donde se crean los flujos de webflow.
+	 * Método que genera el flujo que controla los eventos globales de la aplicación. Lo crea siempre en
+	 * la carpeta "_AppEventsHandlers", con el nombre eventsHandlers-flow.xml
+	 * 
+	 * @param project
+	 *            Aplicación para la que se genera el flujo de eventos globales.
+	 * @param mainFolder
+	 *            Carpeta donde se crean los flujos de webflow.
 	 */
 	private void generateAppEventsHandlers(JVApplication project, File mainFolder) {
 		File folder = new File(new File(mainFolder, "_AppEventsHandlers"), "eventsHandlers");
@@ -332,26 +400,35 @@ public class CopyMojo extends AbstractMojo {
 
 		File destino = null;
 		// Se crea en rutas diferentes dependiendo de si se trata de un audio
-		// o un flujo (xml)
+		// o un flujo (xml).
+		
 		if (name.endsWith(XML_EXT)) {
 			String newName = name.substring(name.indexOf(SEPARATOR) + 1, name.length());
 			File ruta = new File(newName);
-			File pathname = new File(outputDirectory, DESTINO + SEPARATOR + newName.replace(ruta.getName(), "").trim()
-					+ ruta.getName().substring(0, ruta.getName().indexOf(DOT)).trim());
+			
+			String rutaName = ruta.getName();
+			
+			File pathname = new File(outputDirectory, DESTINO + SEPARATOR + newName.replace(rutaName, "").trim());
 			/*
-			 * Comprobamos que exista el directorio base donde vamos a crear los XML. Si no existe, se crea.
+			 * Comprobamos que exista el directorio base donde vamos a crear los XML. Si no existe, se
+			 * crea.
 			 */
 			pathname.mkdirs();
 
-			destino = new File(pathname, ruta.getName().substring(0, ruta.getName().indexOf(DOT)) + FLOW
-					+ ruta.getName().substring(ruta.getName().indexOf(DOT)));
+//			destino = new File(pathname, rutaName.substring(0, rutaName.indexOf(DOT)) /*+ FLOW*/
+//					+ rutaName.substring(rutaName.indexOf(DOT)));
+
+			destino = new File(pathname, rutaName);
+			
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:::destino="+destino);
 
 		} else {
 			File ruta = new File(name);
 			File pathname = new File(outputDirectory.getParentFile(), DESTINOWAV + SEPARATOR
 					+ name.replace(ruta.getName(), "").trim() + SEPARATOR + projectName);
 			/*
-			 * Comprobamos que exista el directorio base donde vamos a crear los grxml. Si no existe, se crea.
+			 * Comprobamos que exista el directorio base donde vamos a crear los grxml. Si no existe, se
+			 * crea.
 			 */
 			pathname.mkdirs();
 
@@ -408,14 +485,14 @@ public class CopyMojo extends AbstractMojo {
 					manageProperties(zip.getInputStream(ze), entryName.substring(entryName.lastIndexOf(SEPARATOR)));
 				} else {
 					/*
-					 * Recorremos la lista para comprobar la extension del fichero. En el caso de que coincida, se trata
-					 * de un tipo de fichero que necesitamos copiar del jar.
+					 * Recorremos la lista para comprobar la extension del fichero. En el caso de que
+					 * coincida, se trata de un tipo de fichero que necesitamos copiar del jar.
 					 */
-					for (String element : EXTENSIONS) {
+					for (String extension : EXTENSIONS) {
 						// Comprobamos si el archivo es xml o jVoices
 						// para proceder a su copia. El resto no se
 						// copia en la aplicacion.
-						if (entryNameDots.endsWith(element)
+						if (entryNameDots.endsWith(extension)
 								&& (entryNameDots.contains(JVOICES + DOT) || entryNameDots.contains(AUDIOS + DOT) || entryNameDots
 										.contains(GRAMMARS + DOT))) {
 							InputStream inputStream = zip.getInputStream(ze);
@@ -429,7 +506,7 @@ public class CopyMojo extends AbstractMojo {
 	}
 
 	private void manageProperties(InputStream inputStream, String sFileName) throws IOException {
-		String pathDisProp = mavenProject.getBasedir().getAbsolutePath() + SEPARATOR + PROPERTIES_RESOURCES;
+		String pathDisProp = mavenProject.getBasedir().getAbsolutePath() + SEPARATOR + PROPERTIES_RESOURCES + SEPARATOR;
 		File dDirProperties = new File(pathDisProp);
 		if (!dDirProperties.exists()) {
 			dDirProperties.mkdirs();
@@ -464,7 +541,6 @@ public class CopyMojo extends AbstractMojo {
 	 * @param entryName
 	 */
 	protected JVModule getProject(String entryName, File file) {
-
 		String ruta = ARCHIVE_FILE + file.getAbsolutePath().replace(SEPARATOR2, SEPARATOR) + "!/" + entryName;
 		ResourceSet resSet = new ResourceSetImpl();
 		URI uri = URI.createURI(ruta);
@@ -472,6 +548,15 @@ public class CopyMojo extends AbstractMojo {
 		Resource res = resSet.getResource(uri, true);
 		return (JVModule) res.getContents().get(0);
 
+	}
+
+	/**
+	 * Debe llegar un fichero ".projectInformation"
+	 */
+	protected JVModule getProject(File file) {
+		URI uri = URI.createFileURI(file.getAbsolutePath());
+		Resource res = new ResourceSetImpl().getResource(uri, true);
+		return (JVModule) res.getContents().get(0);
 	}
 
 }
