@@ -50,7 +50,7 @@ TransferDsl:
 	'{'
 	   (('destination' destination = STRING )&
 		('transferaudio' audioTransfer = STRING )?& 
-		('maxtime' maxTime = ConfigValueValue )?&
+		('transferMaxtime' maxTime = ConfigValueValue )?&
 		('transferTimeout' timeout = ConfigValueValue )?&
 		(configuration = TransferConfiguration)?)
 	'}'

@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalVoiceDslParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_ID", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'true'", "'false'", "'ms'", "'s'", "'voice'", "'dtmf'", "'voicedtmf'", "'number'", "'boolean'", "'currency'", "'date'", "'digits'", "'phone'", "'time'", "'blindTransfer'", "'consultationTransfer'", "'bridgeTransfer'", "'output'", "'menu'", "'input'", "'record'", "'{'", "'}'", "'filename'", "'destination'", "'transferaudio'", "'maxtime'", "'transferTimeout'", "'grammars'", "'audios'", "'main'", "':'", "'match'", "'nomatch'", "'noinput'", "'condition'", "'options'", "','", "'say'", "'src'", "'wording'", "'as'", "'('", "')'", "'when'", "'.'", "'expr'", "'*'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_ID", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'true'", "'false'", "'ms'", "'s'", "'voice'", "'dtmf'", "'voicedtmf'", "'number'", "'boolean'", "'currency'", "'date'", "'digits'", "'phone'", "'time'", "'blindTransfer'", "'consultationTransfer'", "'bridgeTransfer'", "'output'", "'menu'", "'input'", "'record'", "'{'", "'}'", "'filename'", "'destination'", "'transferaudio'", "'transferMaxtime'", "'transferTimeout'", "'grammars'", "'audios'", "'main'", "':'", "'match'", "'nomatch'", "'noinput'", "'condition'", "'options'", "','", "'say'", "'src'", "'wording'", "'as'", "'('", "')'", "'when'", "'.'", "'expr'", "'*'"
     };
     public static final int RULE_ID=5;
     public static final int T__29=29;
@@ -6885,24 +6885,24 @@ public class InternalVoiceDslParser extends AbstractInternalContentAssistParser 
 
 
     // $ANTLR start "rule__TransferDsl__Group_4_2__0__Impl"
-    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:2293:1: rule__TransferDsl__Group_4_2__0__Impl : ( 'maxtime' ) ;
+    // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:2293:1: rule__TransferDsl__Group_4_2__0__Impl : ( 'transferMaxtime' ) ;
     public final void rule__TransferDsl__Group_4_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:2297:1: ( ( 'maxtime' ) )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:2298:1: ( 'maxtime' )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:2297:1: ( ( 'transferMaxtime' ) )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:2298:1: ( 'transferMaxtime' )
             {
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:2298:1: ( 'maxtime' )
-            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:2299:1: 'maxtime'
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:2298:1: ( 'transferMaxtime' )
+            // ../com.vectorsf.jvoice.voice.dsl.ui/src-gen/com/isb/bks/ivr/voice/dsl/ui/contentassist/antlr/internal/InternalVoiceDsl.g:2299:1: 'transferMaxtime'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTransferDslAccess().getMaxtimeKeyword_4_2_0()); 
+               before(grammarAccess.getTransferDslAccess().getTransferMaxtimeKeyword_4_2_0()); 
             }
             match(input,37,FollowSets000.FOLLOW_37_in_rule__TransferDsl__Group_4_2__0__Impl4730); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTransferDslAccess().getMaxtimeKeyword_4_2_0()); 
+               after(grammarAccess.getTransferDslAccess().getTransferMaxtimeKeyword_4_2_0()); 
             }
 
             }

@@ -2296,11 +2296,11 @@ rule__TransferDsl__Group_4_2__0__Impl
     }
 :
 (
-{ before(grammarAccess.getTransferDslAccess().getMaxtimeKeyword_4_2_0()); }
+{ before(grammarAccess.getTransferDslAccess().getTransferMaxtimeKeyword_4_2_0()); }
 
-	'maxtime' 
+	'transferMaxtime' 
 
-{ after(grammarAccess.getTransferDslAccess().getMaxtimeKeyword_4_2_0()); }
+{ after(grammarAccess.getTransferDslAccess().getTransferMaxtimeKeyword_4_2_0()); }
 )
 
 ;

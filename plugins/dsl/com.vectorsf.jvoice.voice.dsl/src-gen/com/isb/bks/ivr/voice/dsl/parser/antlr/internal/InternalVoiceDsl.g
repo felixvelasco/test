@@ -871,9 +871,9 @@ ruleTransferDsl returns [EObject current=null]
 					{ 
 	 				  getUnorderedGroupHelper().select(grammarAccess.getTransferDslAccess().getUnorderedGroup_4(), 2);
 	 				}
-					({true}?=>(	otherlv_9='maxtime' 
+					({true}?=>(	otherlv_9='transferMaxtime' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getTransferDslAccess().getMaxtimeKeyword_4_2_0());
+    	newLeafNode(otherlv_9, grammarAccess.getTransferDslAccess().getTransferMaxtimeKeyword_4_2_0());
     }
 (
 (
