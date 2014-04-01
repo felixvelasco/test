@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.wizard.create;
+package com.vectorsf.jvoice.ui.wizard.page;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +40,8 @@ import com.vectorsf.jvoice.core.operation.helper.FlowService;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.wizard.Activator;
+import com.vectorsf.jvoice.ui.wizard.create.CreateDefinitionWizard;
+import com.vectorsf.jvoice.ui.wizard.create.DefinitionHelper;
 
 public class SelectDefinitionWizardPage extends WizardPage {
 

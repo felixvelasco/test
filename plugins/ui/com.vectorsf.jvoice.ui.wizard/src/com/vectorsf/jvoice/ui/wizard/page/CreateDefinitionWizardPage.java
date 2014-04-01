@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.wizard.create;
+package com.vectorsf.jvoice.ui.wizard.page;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Text;
 import com.vectorsf.jvoice.core.operation.helper.FlowService;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.ui.wizard.Activator;
+import com.vectorsf.jvoice.ui.wizard.create.CreateDefinitionWizard;
 
 public class CreateDefinitionWizardPage extends WizardPage {
 

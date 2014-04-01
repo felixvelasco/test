@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import com.vectorsf.jvoice.ui.wizard.create.SelectDefinitionWizardPage;
+import com.vectorsf.jvoice.ui.wizard.page.SelectDefinitionWizardPage;
 
 public class PicWizardDialog extends WizardDialog {
 

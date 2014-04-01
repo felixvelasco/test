@@ -1,4 +1,4 @@
-package com.vectorsf.jvoice.ui.wizard.create;
+package com.vectorsf.jvoice.ui.wizard.page;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;

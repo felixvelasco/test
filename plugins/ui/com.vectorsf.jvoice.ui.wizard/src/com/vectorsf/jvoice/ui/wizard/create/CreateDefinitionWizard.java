@@ -34,6 +34,8 @@ import com.vectorsf.jvoice.core.operation.helper.FlowService;
 import com.vectorsf.jvoice.core.operation.helper.PrototypeCreator;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.ui.wizard.Activator;
+import com.vectorsf.jvoice.ui.wizard.page.CreateDefinitionWizardPage;
+import com.vectorsf.jvoice.ui.wizard.page.SelectDefinitionWizardPage;
 
 public class CreateDefinitionWizard extends BasicNewResourceWizard {
 
