@@ -17,9 +17,7 @@ public class CallFlowStateSection extends ParametrizableStateSection {
 	}
 
 	@Override
-	public void createControls(Composite parent, TabbedPropertySheetPage atabbedPropertySheetPage) {
-		super.createControls(parent, atabbedPropertySheetPage);
-
+	public void doCreateControls(Composite parent, TabbedPropertySheetPage atabbedPropertySheetPage) {
 		subFlow = createLabelTextAndButton("Subflow:", "", OperationsPackage.eINSTANCE.getCallFlowState_Subflow(),
 				new SubFlowChooser());
 		subFlow.text.setEnabled(false);

@@ -7,6 +7,7 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.platform.GFPropertySection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -19,7 +20,6 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import com.vectorsf.jvoice.model.base.BasePackage;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.DialogListener;
-import com.vectorsf.jvoice.ui.diagram.properties.section.helper.ExecuteDialogListener;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.IObjectChooser;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.LabelAndText;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.UpdatingFocusListener;
@@ -42,7 +42,7 @@ public abstract class SimpleStateSection extends GFPropertySection {
 		GridLayout layout = new GridLayout(3, false);
 		layout.marginTop = 10;
 		layout.marginBottom = 10;
-		layout.verticalSpacing = 15;
+		layout.verticalSpacing = 10;
 		layout.horizontalSpacing = 10;
 		composite.setLayout(layout);
 
@@ -52,10 +52,15 @@ public abstract class SimpleStateSection extends GFPropertySection {
 
 	protected LabelAndText createLabelAndText(String labelText, String value, final EStructuralFeature feature,
 			final int index) {
-		Label label = factory.createLabel(composite, labelText);
+		return createLabelAndText(composite, labelText, value, feature, index);
+	}
+
+	protected LabelAndText createLabelAndText(Composite parent, String labelText, String value,
+			final EStructuralFeature feature, final int index) {
+		Label label = factory.createLabel(parent, labelText);
 		label.setLayoutData(new GridData());
 
-		Text text = factory.createText(composite, value);
+		Text text = factory.createText(parent, value);
 		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
 		layoutData.horizontalSpan = 2;
 		text.setLayoutData(layoutData);
@@ -77,14 +82,13 @@ public abstract class SimpleStateSection extends GFPropertySection {
 
 		Button button = factory.createButton(composite, "...", SWT.PUSH);
 		button.setLayoutData(new GridData());
-		if (feature.getContainerClass().getName().endsWith(".CallState")) {
-			button.addSelectionListener(new ExecuteDialogListener(this, feature, chooser));
-		} else {
-
-			button.addSelectionListener(new DialogListener(this, feature, chooser));
-		}
+		button.addSelectionListener(createListener(feature, chooser));
 
 		return new LabelAndText(label, text, button);
+	}
+
+	protected SelectionListener createListener(EStructuralFeature feature, IObjectChooser chooser) {
+		return new DialogListener(this, feature, chooser);
 	}
 
 	@Override

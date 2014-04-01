@@ -4,11 +4,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
-public class MenuStateSection extends StateSection {
+public class TextualLocutionStateSection extends StateSection {
 
 	private TabbedPropertySheetPage tabbedPropertySheetPage;
 
-	public MenuStateSection() {
+	public TextualLocutionStateSection() {
 	}
 
 	@Override

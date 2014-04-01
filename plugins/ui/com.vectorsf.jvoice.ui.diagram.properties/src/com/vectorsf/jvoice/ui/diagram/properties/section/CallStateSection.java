@@ -3,6 +3,7 @@ package com.vectorsf.jvoice.ui.diagram.properties.section;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -28,6 +29,8 @@ import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.OperationsPackage;
 import com.vectorsf.jvoice.model.operations.ParameterizedState;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.ExecuteChooser;
+import com.vectorsf.jvoice.ui.diagram.properties.section.helper.ExecuteDialogListener;
+import com.vectorsf.jvoice.ui.diagram.properties.section.helper.IObjectChooser;
 import com.vectorsf.jvoice.ui.diagram.properties.section.helper.LabelAndText;
 
 public class CallStateSection extends ParametrizableStateSection {
@@ -74,9 +77,7 @@ public class CallStateSection extends ParametrizableStateSection {
 	}
 
 	@Override
-	public void createControls(Composite parent, TabbedPropertySheetPage atabbedPropertySheetPage) {
-		super.createControls(parent, atabbedPropertySheetPage);
-
+	public void doCreateControls(Composite parent, TabbedPropertySheetPage atabbedPropertySheetPage) {
 		labelTextBean = createLabelAndText("Bean", "", null, -1);
 		labelTextBean.text.setEnabled(false);
 
@@ -99,6 +100,7 @@ public class CallStateSection extends ParametrizableStateSection {
 		// Nombre del elemento
 		combo = factory.createCCombo(composite);
 		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
+		layoutData.horizontalSpan = 2;
 		combo.setLayoutData(layoutData);
 		combo.addSelectionListener(new ChangeComboListener(this, combo));
 
@@ -205,6 +207,15 @@ public class CallStateSection extends ParametrizableStateSection {
 			}
 		}
 		return parameterNames;
+	}
+
+	@Override
+	protected SelectionListener createListener(EStructuralFeature feature, IObjectChooser chooser) {
+		if (feature == OperationsPackage.eINSTANCE.getExecutableState_MethodName()) {
+			return new ExecuteDialogListener(this, feature, chooser);
+		} else {
+			return super.createListener(feature, chooser);
+		}
 	}
 
 	public IFeatureProvider obtenerFeatureProvider() {
