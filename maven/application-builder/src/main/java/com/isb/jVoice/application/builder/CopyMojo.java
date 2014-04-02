@@ -556,7 +556,13 @@ public class CopyMojo extends AbstractMojo {
 	protected JVModule getProject(File file) {
 		URI uri = URI.createFileURI(file.getAbsolutePath());
 		Resource res = new ResourceSetImpl().getResource(uri, true);
-		return (JVModule) res.getContents().get(0);
+		
+		if(res.getContents().get(0) instanceof JVModule) {
+			return (JVModule) res.getContents().get(0);
+		} else {
+			log("CopyMojo.getProject(): res.getContents().get(0) no es un JVModule");
+			return null;
+		}
 	}
 
 }
