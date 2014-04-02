@@ -292,6 +292,11 @@ public class CopyMojo extends AbstractMojo {
 			}
 
 			File prjInformation = new File(new File(resource).getParentFile().getParentFile(), PROJECT_INFORMATION_EXT);
+			if(!prjInformation.exists()) {
+				log("CopyMojo.processTargetClassFolder(): .projectInformation no existe: resource='" + resource + "'");
+				return;
+			}
+			
 			JVModule module = getProject(prjInformation);
 			if (module == null) {
 				log("CopyMojo.processTargetClassFolder(): module=null: prjInformation='" + prjInformation + "'");
