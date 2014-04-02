@@ -5,12 +5,10 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -18,10 +16,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
@@ -41,9 +36,6 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.RecordDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.TransferDsl;
 import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
-import com.vectorsf.jvoice.ui.wizard.PicWizardDialog;
-import com.vectorsf.jvoice.ui.wizard.create.CreateDefinitionWizard;
-import com.vectorsf.jvoice.ui.wizard.create.DefinitionHelper;
 
 public class EditMenuStateLocution extends RecordingCommand {
 
@@ -73,7 +65,7 @@ public class EditMenuStateLocution extends RecordingCommand {
 
 		List<Object> locutionResources = new ArrayList<>();
 
-		// Se obtienen los locutions a mostrar en el di�logo de selecci�n.
+		// Se obtienen los locutions a mostrar en el diálogo de selección.
 		try {
 			IResource[] resources = resourcesFolder.members();
 			for (IResource resource : resources) {
@@ -106,7 +98,7 @@ public class EditMenuStateLocution extends RecordingCommand {
 		dialog.setResources(locutionResources);
 
 		dialog.setHelpAvailable(false);
-		dialog.setButtonCreateAvailable(true);
+		dialog.setButtonCreateAvailable(false);
 		dialog.setListLabelProvider(new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
 		dialog.setInitialPattern("?", FilteredItemsSelectionDialog.FULL_SELECTION);
@@ -119,10 +111,8 @@ public class EditMenuStateLocution extends RecordingCommand {
 			// Si se pulsa OK en el dialogo, cambiamos el locution (definition) asociado al estado por el seleccionado.
 			Object[] results = dialog.getResult();
 			changeLocution(results);
-		} else if (dopen == IDialogConstants.PROCEED_ID) {
-			// Si se pulsa "Create" en el dialogo, se abre el wizard para la creaci�n del locution (definitio) que
-			// pasar� a ser el asociado al estado.
-			createAndChangeLocution();
+		} else {
+			throw new OperationCanceledException();
 		}
 
 	}
@@ -157,60 +147,6 @@ public class EditMenuStateLocution extends RecordingCommand {
 				nameSubFlow.setText(result.getName());
 			}
 		}
-	}
-
-	private void createAndChangeLocution() {
-
-		// Obtenemos la carpeta de recursos asociado al flujo
-		IFile file = (IFile) Platform.getAdapterManager().getAdapter(flujo, IFile.class);
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		URI res = flujo.eResource().getURI();
-		String projectName = res.segment(1);
-		IProject projectRoot = root.getProject(projectName);
-		IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath() + "/" + flujo.getName()
-				+ ".resources");
-
-		// Si se quiere cambiar el locution (definition) asociado a un estado creamos el wizard de creaci�n de
-		// definition.
-		Wizard createWizard = createDslJVoice(folder);
-
-		WizardDialog wizardDialog = new PicWizardDialog(
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), createWizard);
-
-		if (wizardDialog.open() == Window.OK) {
-			// Obtenemos la URI del dsl creado
-			URI locationUri = ((CreateDefinitionWizard) createWizard).getURI();
-			// Cambios la asociaci�n estado-dsl. Del antiguo dsl al nuevo.
-			setNewLocutionOnState(locationUri);
-		}
-
-	}
-
-	private CreateDefinitionWizard createDslJVoice(IFolder folder) {
-		DefinitionHelper helper;
-
-		// Se crea el wizard adecuado en funci�n del tipo de estado.
-		if (locutionState instanceof MenuState) {
-			helper = DefinitionHelper.MENU;
-		} else if (locutionState instanceof InputState) {
-			helper = DefinitionHelper.INPUT;
-		} else if (locutionState instanceof PromptState) {
-			helper = DefinitionHelper.OUTPUT;
-		} else if (locutionState instanceof RecordState) {
-			helper = DefinitionHelper.RECORD;
-		} else { // locutionState instanceof TransferState
-			helper = DefinitionHelper.TRANSFER;
-		}
-
-		return new CreateDefinitionWizard(obtenerFlow(), helper);
-	}
-
-	private void setNewLocutionOnState(URI locationUri) {
-
-		VoiceDsl voiceDsl = (VoiceDsl) flujo.eResource().getResourceSet().getEObject(locationUri, true);
-
-		// Se setea el locution (definition) en el estado.
-		locutionState.setLocution(voiceDsl);
 	}
 
 	private String getFolderPath(Flow flujo) {
