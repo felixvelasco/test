@@ -96,8 +96,13 @@ public class VegaXMLURIHandlerMavenImpl implements URIHandler {
 
 	private List<Artifact> getProjectArtifacts() {
 		@SuppressWarnings("unchecked")
+		
+		// Hay que llamar a getArtifacts() en vez de a getDependencyArtifacts() 
+		// para que busque artefactos recursivamente y no sólo los directos.
+		// Esto resuelve que al llamar a un subflujo que está indirectamente referenciado 
+		// (un módulo que tiene una dependencia Maven con otro) el pom del primer módulo no de error. 
 		Set<Artifact> dependencyArtifacts = mavenProject
-				.getDependencyArtifacts();
+				.getArtifacts();
 		Set<Artifact> unorderedArtifacts = dependencyArtifacts;
 
 		unorderedArtifacts.add(mavenProject.getArtifact());
