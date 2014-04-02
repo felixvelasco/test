@@ -27,9 +27,9 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 
-import com.vectorsf.jvoice.model.operations.CustomState;
 import com.vectorsf.jvoice.model.operations.Flow;
 import com.vectorsf.jvoice.model.operations.InputState;
+import com.vectorsf.jvoice.model.operations.LocutionState;
 import com.vectorsf.jvoice.model.operations.MenuState;
 import com.vectorsf.jvoice.model.operations.PromptState;
 import com.vectorsf.jvoice.model.operations.RecordState;
@@ -43,62 +43,20 @@ import com.vectorsf.jvoice.prompt.model.voiceDsl.VoiceDsl;
 import com.vectorsf.jvoice.ui.edit.dialogs.DialogLocution;
 import com.vectorsf.jvoice.ui.wizard.PicWizardDialog;
 import com.vectorsf.jvoice.ui.wizard.create.CreateDefinitionWizard;
-import com.vectorsf.jvoice.ui.wizard.create.CreateJspCustom;
 import com.vectorsf.jvoice.ui.wizard.create.DefinitionHelper;
 
 public class EditMenuStateLocution extends RecordingCommand {
 
-	private MenuState menuState;
-	private InputState inputState;
-	private PromptState outputState;
-	private RecordState recordState;
+	private LocutionState locutionState;
 	private Text nameSubFlow;
-	private CustomState customState;
 	private Flow flujo;
 	private String flowFolderPath;
 	private IFolder resourcesFolder;
-	private TransferState transferState;
 
-	public EditMenuStateLocution(TransactionalEditingDomain domain, CustomState customState, Text nameSubFlow) {
+	public EditMenuStateLocution(TransactionalEditingDomain domain, LocutionState locutionState, Text nameSubFlow) {
 		super(domain);
-		this.customState = customState;
+		this.locutionState = locutionState;
 		this.nameSubFlow = nameSubFlow;
-
-	}
-
-	public EditMenuStateLocution(TransactionalEditingDomain domain, MenuState menuState, Text nameSubFlow) {
-		super(domain);
-		this.menuState = menuState;
-		this.nameSubFlow = nameSubFlow;
-
-	}
-
-	public EditMenuStateLocution(TransactionalEditingDomain domain, InputState inputState, Text nameSubFlow) {
-		super(domain);
-		this.inputState = inputState;
-		this.nameSubFlow = nameSubFlow;
-
-	}
-
-	public EditMenuStateLocution(TransactionalEditingDomain domain, PromptState outputState, Text nameSubFlow) {
-		super(domain);
-		this.outputState = outputState;
-		this.nameSubFlow = nameSubFlow;
-
-	}
-
-	public EditMenuStateLocution(TransactionalEditingDomain domain, RecordState recordState, Text nameSubFlow) {
-		super(domain);
-		this.recordState = recordState;
-		this.nameSubFlow = nameSubFlow;
-
-	}
-
-	public EditMenuStateLocution(TransactionalEditingDomain domain, TransferState transferState, Text nameSubFlow) {
-		super(domain);
-		this.transferState = transferState;
-		this.nameSubFlow = nameSubFlow;
-
 	}
 
 	@Override
@@ -125,43 +83,21 @@ public class EditMenuStateLocution extends RecordingCommand {
 					if (!resource.getName().contains(".jsp")) {
 						eObject = flujo.eResource().getResourceSet().getResource(uri, true).getContents().get(0);
 					}
-					if (menuState != null) {
-						if (eObject instanceof MenuDsl) {
-							locutionResources.add(eObject);
-						}
+					if (locutionState instanceof MenuState && eObject instanceof MenuDsl) {
+						locutionResources.add(eObject);
+					} else if (locutionState instanceof InputState && eObject instanceof InputDsl) {
+						locutionResources.add(eObject);
+					} else if (locutionState instanceof PromptState && eObject instanceof PromptDsl) {
+						locutionResources.add(eObject);
+					} else if (locutionState instanceof RecordState && eObject instanceof RecordDsl) {
+						locutionResources.add(eObject);
+					} else if (locutionState instanceof TransferState && eObject instanceof TransferDsl) {
+						locutionResources.add(eObject);
 					}
-					if (inputState != null) {
-						if (eObject instanceof InputDsl) {
-							locutionResources.add(eObject);
-						}
-					}
-					if (outputState != null) {
-						if (eObject instanceof PromptDsl) {
-							locutionResources.add(eObject);
-						}
-					}
-					if (recordState != null) {
-						if (eObject instanceof RecordDsl) {
-							locutionResources.add(eObject);
-						}
-					}
-					if (transferState != null) {
-						if (eObject instanceof TransferDsl) {
-							locutionResources.add(eObject);
-						}
-					}
-					if (customState != null) {
-						if (resource.getName().contains(".jsp")) {
-							locutionResources.add(resource.getName());
-						}
-
-					}
-
 				}
 
 			}
 		} catch (CoreException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -192,73 +128,33 @@ public class EditMenuStateLocution extends RecordingCommand {
 	}
 
 	private void titleAndMessage(DialogLocution dialog) {
-		if (menuState != null) {
+		if (locutionState instanceof MenuState) {
 			dialog.setTitle("Menu Selection");
 			dialog.setMessage("Select a menu:");
-		} else if (inputState != null) {
+		} else if (locutionState instanceof InputState) {
 			dialog.setTitle("Input Selection");
 			dialog.setMessage("Select an input:");
-		} else if (outputState != null) {
+		} else if (locutionState instanceof PromptState) {
 			dialog.setTitle("Output Selection");
 			dialog.setMessage("Select an output:");
-		} else if (recordState != null) {
+		} else if (locutionState instanceof RecordState) {
 			dialog.setTitle("Record Selection");
 			dialog.setMessage("Select a record:");
-		} else if (transferState != null) {
+		} else if (locutionState instanceof TransferState) {
 			dialog.setTitle("Transfer Selection");
 			dialog.setMessage("Select a transfer:");
-		} else if (customState != null) {
-			dialog.setTitle("Custom Selection");
-			dialog.setMessage("Select a custom:");
 		}
 	}
 
 	private void changeLocution(Object[] results) {
 		if (results != null) {
-			if (results[0] instanceof MenuDsl) {
-				MenuDsl result = (MenuDsl) results[0];
+			if (results[0] instanceof VoiceDsl) {
+				VoiceDsl result = (VoiceDsl) results[0];
 				URI menuURI = EcoreUtil.getURI(result);
-				result = (MenuDsl) menuState.eResource().getResourceSet().getEObject(menuURI, true);
+				result = (MenuDsl) locutionState.eResource().getResourceSet().getEObject(menuURI, true);
 
-				menuState.setLocution(result);
-				nameSubFlow.setText(menuState.getLocution().getName());
-
-			} else if (results[0] instanceof InputDsl) {
-				InputDsl result = (InputDsl) results[0];
-				URI inputURI = EcoreUtil.getURI(result);
-				result = (InputDsl) inputState.eResource().getResourceSet().getEObject(inputURI, true);
-
-				inputState.setLocution(result);
-				nameSubFlow.setText(inputState.getLocution().getName());
-
-			} else if (results[0] instanceof PromptDsl) {
-				PromptDsl result = (PromptDsl) results[0];
-
-				URI outputURI = EcoreUtil.getURI(result);
-				result = (PromptDsl) outputState.eResource().getResourceSet().getEObject(outputURI, true);
-
-				outputState.setLocution(result);
-				nameSubFlow.setText(outputState.getLocution().getName());
-			} else if (results[0] instanceof RecordDsl) {
-				RecordDsl result = (RecordDsl) results[0];
-				URI inputURI = EcoreUtil.getURI(result);
-				result = (RecordDsl) recordState.eResource().getResourceSet().getEObject(inputURI, true);
-
-				recordState.setLocution(result);
-				nameSubFlow.setText(recordState.getLocution().getName());
-
-			} else if (results[0] instanceof TransferDsl) {
-				TransferDsl result = (TransferDsl) results[0];
-
-				URI transferURI = EcoreUtil.getURI(result);
-				result = (TransferDsl) transferState.eResource().getResourceSet().getEObject(transferURI, true);
-
-				transferState.setLocution(result);
-				nameSubFlow.setText(transferState.getLocution().getName());
-			} else if (results[0].toString().contains(".jsp")) {
-				IFile resultcustom = resourcesFolder.getFile(results[0].toString());
-				nameSubFlow.setText(customState.getName());
-				customState.setPath(resultcustom.getName());
+				locutionState.setLocution(result);
+				nameSubFlow.setText(result.getName());
 			}
 		}
 	}
@@ -274,50 +170,39 @@ public class EditMenuStateLocution extends RecordingCommand {
 		IFolder folder = projectRoot.getFolder(file.getParent().getProjectRelativePath() + "/" + flujo.getName()
 				+ ".resources");
 
-		Wizard createWizard;
-
-		if (customState != null) {
-			// Si se quiere cambiar la jsp asociada a un estado custom creamos el wizard de creaci�n de jsp.
-			createWizard = new CreateJspCustom(folder);
-		} else {
-			// Si se quiere cambiar el locution (definition) asociado a un estado creamos el wizard de creaci�n de
-			// definition.
-			createWizard = createDslJVoice(folder);
-		}
+		// Si se quiere cambiar el locution (definition) asociado a un estado creamos el wizard de creaci�n de
+		// definition.
+		Wizard createWizard = createDslJVoice(folder);
 
 		WizardDialog wizardDialog = new PicWizardDialog(
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), createWizard);
 
 		if (wizardDialog.open() == Window.OK) {
-			if (customState != null) {
-				customState.setPath(((CreateJspCustom) createWizard).getFile().getName());
-			} else {
-				// Obtenemos la URI del dsl creado
-				URI locationUri = ((CreateDefinitionWizard) createWizard).getURI();
-				// Cambios la asociaci�n estado-dsl. Del antiguo dsl al nuevo.
-				setNewLocutionOnState(locationUri);
-			}
+			// Obtenemos la URI del dsl creado
+			URI locationUri = ((CreateDefinitionWizard) createWizard).getURI();
+			// Cambios la asociaci�n estado-dsl. Del antiguo dsl al nuevo.
+			setNewLocutionOnState(locationUri);
 		}
 
 	}
 
 	private CreateDefinitionWizard createDslJVoice(IFolder folder) {
-		CreateDefinitionWizard createDslWizard;
+		DefinitionHelper helper;
 
 		// Se crea el wizard adecuado en funci�n del tipo de estado.
-		if (menuState != null) {
-			createDslWizard = new CreateDefinitionWizard(obtenerFlow(), DefinitionHelper.MENU);
-		} else if (inputState != null) {
-			createDslWizard = new CreateDefinitionWizard(obtenerFlow(), DefinitionHelper.INPUT);
-		} else if (outputState != null) {
-			createDslWizard = new CreateDefinitionWizard(obtenerFlow(), DefinitionHelper.OUTPUT);
-		} else if (recordState != null) {
-			createDslWizard = new CreateDefinitionWizard(obtenerFlow(), DefinitionHelper.RECORD);
-		} else {
-			createDslWizard = new CreateDefinitionWizard(obtenerFlow(), DefinitionHelper.TRANSFER);
+		if (locutionState instanceof MenuState) {
+			helper = DefinitionHelper.MENU;
+		} else if (locutionState instanceof InputState) {
+			helper = DefinitionHelper.INPUT;
+		} else if (locutionState instanceof PromptState) {
+			helper = DefinitionHelper.OUTPUT;
+		} else if (locutionState instanceof RecordState) {
+			helper = DefinitionHelper.RECORD;
+		} else { // locutionState instanceof TransferState
+			helper = DefinitionHelper.TRANSFER;
 		}
 
-		return createDslWizard;
+		return new CreateDefinitionWizard(obtenerFlow(), helper);
 	}
 
 	private void setNewLocutionOnState(URI locationUri) {
@@ -325,18 +210,7 @@ public class EditMenuStateLocution extends RecordingCommand {
 		VoiceDsl voiceDsl = (VoiceDsl) flujo.eResource().getResourceSet().getEObject(locationUri, true);
 
 		// Se setea el locution (definition) en el estado.
-		if (menuState != null) {
-			menuState.setLocution(voiceDsl);
-		} else if (inputState != null) {
-			inputState.setLocution(voiceDsl);
-		} else if (outputState != null) {
-			outputState.setLocution(voiceDsl);
-		} else if (recordState != null) {
-			recordState.setLocution(voiceDsl);
-		} else {
-			transferState.setLocution(voiceDsl);
-		}
-
+		locutionState.setLocution(voiceDsl);
 	}
 
 	private String getFolderPath(Flow flujo) {
@@ -353,24 +227,6 @@ public class EditMenuStateLocution extends RecordingCommand {
 	}
 
 	private Flow obtenerFlow() {
-		if (menuState != null) {
-			return (Flow) menuState.eContainer();
-		}
-		if (inputState != null) {
-			return (Flow) inputState.eContainer();
-		}
-		if (outputState != null) {
-			return (Flow) outputState.eContainer();
-		}
-		if (recordState != null) {
-			return (Flow) recordState.eContainer();
-		}
-		if (transferState != null) {
-			return (Flow) transferState.eContainer();
-		}
-		if (customState != null) {
-			return (Flow) customState.eContainer();
-		}
-		return null;
+		return (Flow) locutionState.eContainer();
 	}
 }

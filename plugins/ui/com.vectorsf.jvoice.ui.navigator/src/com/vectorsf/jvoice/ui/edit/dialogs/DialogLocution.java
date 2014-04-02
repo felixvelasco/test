@@ -21,7 +21,7 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 
 	private static final String DIALOG_SETTINGS = "FilteredResourcesSelectionDialogExampleSettings";
 	private List<?> resources;
-	private static boolean createAvailable;
+	private boolean createAvailable;
 
 	public DialogLocution(Shell shell) {
 		super(shell);
@@ -51,11 +51,9 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 
 	@Override
 	protected IDialogSettings getDialogSettings() {
-		IDialogSettings settings = Activator.getDefault().getDialogSettings()
-				.getSection(DIALOG_SETTINGS);
+		IDialogSettings settings = Activator.getDefault().getDialogSettings().getSection(DIALOG_SETTINGS);
 		if (settings == null) {
-			settings = Activator.getDefault().getDialogSettings()
-					.addNewSection(DIALOG_SETTINGS);
+			settings = Activator.getDefault().getDialogSettings().addNewSection(DIALOG_SETTINGS);
 		}
 		return settings;
 	}
@@ -96,9 +94,8 @@ public class DialogLocution extends FilteredItemsSelectionDialog {
 	}
 
 	@Override
-	protected void fillContentProvider(AbstractContentProvider contentProvider,
-			ItemsFilter itemsFilter, IProgressMonitor progressMonitor)
-			throws CoreException {
+	protected void fillContentProvider(AbstractContentProvider contentProvider, ItemsFilter itemsFilter,
+			IProgressMonitor progressMonitor) throws CoreException {
 		progressMonitor.beginTask("Searching", resources.size()); //$NON-NLS-1$
 		for (Iterator<?> iter = resources.iterator(); iter.hasNext();) {
 			contentProvider.add(iter.next(), itemsFilter);

@@ -24,17 +24,10 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 
-import com.vectorsf.jvoice.model.operations.CallFlowState;
 import com.vectorsf.jvoice.model.operations.Case;
-import com.vectorsf.jvoice.model.operations.CustomState;
-import com.vectorsf.jvoice.model.operations.InputState;
 import com.vectorsf.jvoice.model.operations.LocutionState;
-import com.vectorsf.jvoice.model.operations.MenuState;
-import com.vectorsf.jvoice.model.operations.PromptState;
-import com.vectorsf.jvoice.model.operations.RecordState;
 import com.vectorsf.jvoice.model.operations.State;
 import com.vectorsf.jvoice.model.operations.SwitchState;
-import com.vectorsf.jvoice.model.operations.TransferState;
 import com.vectorsf.jvoice.ui.diagram.properties.Activator;
 import com.vectorsf.jvoice.ui.diagram.properties.editing.ConditionEditingSupport;
 import com.vectorsf.jvoice.ui.diagram.properties.editing.EventNameEditingSupport;
@@ -45,8 +38,12 @@ import com.vectorsf.jvoice.ui.diagram.properties.provider.CaseLabelProvider;
 
 public class StateSection extends GFPropertySection implements ITabbedPropertyConstants {
 
+	private static final String CONDITION = "Condition";
+	private static final String NAME = "EventName";
+	private static final String[] PROPS = { CONDITION, NAME };
+
 	protected Text nameText;
-	private Text nameSubFlow;
+	private Text locutionText;
 	private Button btEditFlow;
 	private Button btAdd;
 	private Button btRemove;
@@ -56,10 +53,6 @@ public class StateSection extends GFPropertySection implements ITabbedPropertyCo
 	private Table table;
 	private TableViewer tableViewer;
 	private List<Case> casos = new ArrayList<Case>();
-	private static final String CONDITION = "Condition";
-	private static final String NAME = "EventName";
-	private static final String[] PROPS = { CONDITION, NAME };
-	private static SwitchState estadoSelection;
 	private CLabel error;
 	private static IFeatureProvider fp;
 	private PictogramElement pe;
@@ -188,95 +181,33 @@ public class StateSection extends GFPropertySection implements ITabbedPropertyCo
 
 	}
 
-	/**
-	 * @param factory
-	 * @param composite
-	 */
-	protected void drawName(TabbedPropertySheetWidgetFactory factory, Composite composite) {
-		error = factory.createCLabel(composite, "", SWT.CENTER);
-		data = new FormData();
-		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(100, 0);
-		error.setLayoutData(data);
-
-		// Nombre del elemento
-		nameText = factory.createText(composite, "");
-		data = new FormData();
-		data.left = new FormAttachment(0, STANDARD_LABEL_WIDTH + 50);
-		data.right = new FormAttachment(error, 0, SWT.RIGHT);
-		data.top = new FormAttachment(error, 10);
-		nameText.setLayoutData(data);
-
-		nameStateListener = new ListenerIntentionName(this, nameText);
-
-		nameText.addFocusListener(nameStateListener);
-
-		CLabel LabelName = factory.createCLabel(composite, "Name:");
-		data = new FormData();
-		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(nameText, -HSPACE);
-		data.top = new FormAttachment(nameText, 0, SWT.CENTER);
-		LabelName.setLayoutData(data);
-
-	}
-
 	protected void subFlowPath(TabbedPropertySheetWidgetFactory factory, Composite composite, String nameLabel) {
 		// Nombre del elemento
 
-		nameSubFlow = factory.createText(composite, "");
+		locutionText = factory.createText(composite, "");
 		data = new FormData();
 		data.left = new FormAttachment(nameText, 0, SWT.LEFT);
 		data.right = new FormAttachment(nameText, -120, SWT.RIGHT);
 		data.top = new FormAttachment(nameText, 10);
-		nameSubFlow.setLayoutData(data);
-		nameSubFlow.setEditable(false);
-		nameSubFlow.setEnabled(false);
+		locutionText.setLayoutData(data);
+		locutionText.setEditable(false);
+		locutionText.setEnabled(false);
 
 		CLabel LabelName = factory.createCLabel(composite, nameLabel);
 		data = new FormData();
 		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(nameSubFlow, -HSPACE);
-		data.top = new FormAttachment(nameSubFlow, 0, SWT.CENTER);
+		data.right = new FormAttachment(locutionText, -HSPACE);
+		data.top = new FormAttachment(locutionText, 0, SWT.CENTER);
 		LabelName.setLayoutData(data);
 
 		btEditFlow = factory.createButton(composite, "", SWT.PUSH);
 		btEditFlow.setImage(Activator.getDefault().getImageRegistry().get("imageModify"));
 		data = new FormData();
-		data.left = new FormAttachment(nameSubFlow, 5);
-		data.top = new FormAttachment(nameSubFlow, 0, SWT.CENTER);
+		data.left = new FormAttachment(locutionText, 5);
+		data.top = new FormAttachment(locutionText, 0, SWT.CENTER);
 		btEditFlow.setLayoutData(data);
 
-		propertielistener = new PropertiesListener(this, nameSubFlow);
-
-		btEditFlow.addListener(SWT.Selection, propertielistener);
-	}
-
-	protected void drawCustomStatePath(TabbedPropertySheetWidgetFactory factory, Composite composite, String nameLabel) {
-
-		nameSubFlow = factory.createText(composite, "");
-		data = new FormData();
-		data.left = new FormAttachment(nameText, 0, SWT.LEFT);
-		data.right = new FormAttachment(nameText, -120, SWT.RIGHT);
-		data.top = new FormAttachment(nameText, 10);
-		nameSubFlow.setLayoutData(data);
-		nameSubFlow.setEditable(false);
-		nameSubFlow.setEnabled(false);
-
-		CLabel LabelName = factory.createCLabel(composite, nameLabel);
-		data = new FormData();
-		data.left = new FormAttachment(0, 0);
-		data.right = new FormAttachment(nameSubFlow, -HSPACE);
-		data.top = new FormAttachment(nameSubFlow, 0, SWT.CENTER);
-		LabelName.setLayoutData(data);
-
-		btEditFlow = factory.createButton(composite, "", SWT.PUSH);
-		btEditFlow.setText("...");
-		data = new FormData();
-		data.left = new FormAttachment(nameSubFlow, 5);
-		data.top = new FormAttachment(nameSubFlow, 0, SWT.CENTER);
-		btEditFlow.setLayoutData(data);
-
-		propertielistener = new PropertiesListener(this, nameSubFlow);
+		propertielistener = new PropertiesListener(this, locutionText);
 
 		btEditFlow.addListener(SWT.Selection, propertielistener);
 	}
@@ -297,65 +228,17 @@ public class StateSection extends GFPropertySection implements ITabbedPropertyCo
 			refreshName(bo);
 
 			if (bo instanceof SwitchState) {
-				estadoSelection = (SwitchState) bo;
-				casos = estadoSelection.getCase();
+				SwitchState switchState = (SwitchState) bo;
+				casos = switchState.getCase();
 				tableViewer.setInput(casos);
 				addListenerSwtich();
 
-			} else if (bo instanceof CallFlowState) {
-				CallFlowState subFlow = (CallFlowState) bo;
-				if (subFlow.getSubflow().getName() != null) {
-					nameSubFlow.setText(subFlow.getSubflow().getName());
+			} else if (bo instanceof LocutionState) {
+				LocutionState locutionState = (LocutionState) bo;
+				if (locutionState.getLocution().getName() != null) {
+					locutionText.setText(locutionState.getLocution().getName());
 				} else {
-					nameSubFlow.setText("");
-				}
-				addListenerSubflujos();
-			} else if (bo instanceof MenuState) {
-				MenuState menuLocution = (MenuState) bo;
-				if (menuLocution.getLocution().getName() != null) {
-					nameSubFlow.setText(menuLocution.getLocution().getName());
-				} else {
-					nameSubFlow.setText("");
-				}
-				addListenerSubflujos();
-			} else if (bo instanceof InputState) {
-				InputState inputLocution = (InputState) bo;
-				if (inputLocution.getLocution().getName() != null) {
-					nameSubFlow.setText(inputLocution.getLocution().getName());
-				} else {
-					nameSubFlow.setText("");
-				}
-				addListenerSubflujos();
-			} else if (bo instanceof PromptState) {
-				PromptState outputLocution = (PromptState) bo;
-				if (outputLocution.getLocution().getName() != null) {
-					nameSubFlow.setText(outputLocution.getLocution().getName());
-				} else {
-					nameSubFlow.setText("");
-				}
-				addListenerSubflujos();
-			} else if (bo instanceof RecordState) {
-				RecordState recordLocution = (RecordState) bo;
-				if (recordLocution.getLocution().getName() != null) {
-					nameSubFlow.setText(recordLocution.getLocution().getName());
-				} else {
-					nameSubFlow.setText("");
-				}
-				addListenerSubflujos();
-			} else if (bo instanceof CustomState) {
-				CustomState custom = (CustomState) bo;
-				if (custom.getPath() != null) {
-					nameSubFlow.setText(custom.getPath());
-				} else {
-					nameSubFlow.setText("");
-				}
-				addListenerSubflujos();
-			} else if (bo instanceof TransferState) {
-				TransferState transfer = (TransferState) bo;
-				if (transfer.getLocution().getName() != null) {
-					nameSubFlow.setText(transfer.getLocution().getName());
-				} else {
-					nameSubFlow.setText("");
+					locutionText.setText("");
 				}
 				addListenerSubflujos();
 			}
@@ -363,7 +246,7 @@ public class StateSection extends GFPropertySection implements ITabbedPropertyCo
 	}
 
 	private void addListenerSubflujos() {
-		propertielistener = new PropertiesListener(this, nameSubFlow);
+		propertielistener = new PropertiesListener(this, locutionText);
 		btEditFlow.addListener(SWT.Selection, propertielistener);
 	}
 
@@ -384,7 +267,7 @@ public class StateSection extends GFPropertySection implements ITabbedPropertyCo
 	 */
 	protected void removelistener(Object bo) {
 		nameText.removeFocusListener(nameStateListener);
-		if (bo instanceof LocutionState || bo instanceof CallFlowState || bo instanceof CustomState) {
+		if (bo instanceof LocutionState) {
 
 			btEditFlow.removeListener(SWT.Selection, propertielistener);
 		} else if (bo instanceof SwitchState) {
@@ -417,10 +300,6 @@ public class StateSection extends GFPropertySection implements ITabbedPropertyCo
 
 	public IFeatureProvider obtenerFeatureProvider() {
 		return fp;
-	}
-
-	public SwitchState obtenerSwitch() {
-		return estadoSelection;
 	}
 
 	public List<Case> obtenerCases() {
