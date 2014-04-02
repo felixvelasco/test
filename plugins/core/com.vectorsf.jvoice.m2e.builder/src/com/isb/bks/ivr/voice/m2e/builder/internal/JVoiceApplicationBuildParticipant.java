@@ -31,8 +31,7 @@ public class JVoiceApplicationBuildParticipant extends MojoExecutionBuildPartici
 
 		// tell m2e builder to refresh generated files
 		MavenProject currentProject = getSession().getCurrentProject();
-		File generated = maven.getMojoParameterValue(currentProject, getMojoExecution(), "outputDirectory", File.class,
-				monitor);
+		File generated = maven.getMojoParameterValue(currentProject, getMojoExecution(), "outputDirectory", File.class, monitor);
 
 		if (generated != null) {
 			buildContext.refresh(generated);
@@ -69,14 +68,17 @@ public class JVoiceApplicationBuildParticipant extends MojoExecutionBuildPartici
 			IProject prj = ResourcesPlugin.getWorkspace().getRoot().getProject(dependency.getArtifactId());
 
 			if (prj.exists()) {
-				dependentProjects.add(prj);
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@Añado: " + prj.getName());
+				System.out.println("@@@@@ JVoiceApplicationBuildParticipant.getDependentProjects(): Añado: " + prj.getName());
 
 				currentProject = MavenPlugin.getMavenProjectRegistry().getProject(prj).getMavenProject();
 				if (currentProject != null) {
-					getDependentProjects(currentProject, dependentProjects);
+					// Si hay un ciclo entre módulos hay que evitar que de un StackOverflowError
+					if (!dependentProjects.contains(prj)) {
+						dependentProjects.add(prj);
+						getDependentProjects(currentProject, dependentProjects);
+					}
 				} else {
-					System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ null: " + prj.getName());
+					System.out.println("@@@@@ JVoiceApplicationBuildParticipant.getDependentProjects(): currentProject=null: " + prj.getName());
 				}
 			}
 		}
