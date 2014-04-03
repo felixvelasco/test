@@ -287,7 +287,7 @@ public class CopyMojo extends AbstractMojo {
 			String applicationName = mavenProject.getName();
 
 			// Si llega el directorio /target/classes de la aplicación no lo procesamos
-			if (resource.contains("\\" + applicationName + "\\")) {
+			if (resource.contains(File.separator + applicationName + File.separator)) {
 				return;
 			}
 
@@ -402,39 +402,29 @@ public class CopyMojo extends AbstractMojo {
 	 * 
 	 */
 	protected void copyFile(InputStream in, String name, String projectName) {
-
 		File destino = null;
-		// Se crea en rutas diferentes dependiendo de si se trata de un audio
-		// o un flujo (xml).
-		
+
+		// Se crea en rutas diferentes dependiendo de si se trata de un audio o un flujo (xml).
 		if (name.endsWith(XML_EXT)) {
 			String newName = name.substring(name.indexOf(SEPARATOR) + 1, name.length());
 			File ruta = new File(newName);
 			
-			String rutaName = ruta.getName();
-			
+			String rutaName = ruta.getName();			
 			File pathname = new File(outputDirectory, DESTINO + SEPARATOR + newName.replace(rutaName, "").trim());
-			/*
-			 * Comprobamos que exista el directorio base donde vamos a crear los XML. Si no existe, se
-			 * crea.
-			 */
+						
+			//Comprobamos que exista el directorio base donde vamos a crear los XML. Si no existe, se crea.
 			pathname.mkdirs();
 
-//			destino = new File(pathname, rutaName.substring(0, rutaName.indexOf(DOT)) /*+ FLOW*/
-//					+ rutaName.substring(rutaName.indexOf(DOT)));
-
+//			destino = new File(pathname, rutaName.substring(0, rutaName.indexOf(DOT)) /*+ FLOW*/ rutaName.substring(rutaName.indexOf(DOT)));
 			destino = new File(pathname, rutaName);
 			
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:::destino="+destino);
-
+			System.out.println("@@@@@@@ CopyMojo.copyFile() destino: "+destino);
 		} else {
 			File ruta = new File(name);
 			File pathname = new File(outputDirectory.getParentFile(), DESTINOWAV + SEPARATOR
 					+ name.replace(ruta.getName(), "").trim() + SEPARATOR + projectName);
-			/*
-			 * Comprobamos que exista el directorio base donde vamos a crear los grxml. Si no existe, se
-			 * crea.
-			 */
+			
+			//Comprobamos que exista el directorio base donde vamos a crear los grxml. Si no existe, se crea.
 			pathname.mkdirs();
 
 			destino = new File(pathname, ruta.getName());
