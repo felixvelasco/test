@@ -22,8 +22,6 @@ public class SimpleSorter extends ViewerSorter {
 	@Override
 	public int category(Object element) {
 		if (element instanceof EObject) {
-			// System.out.println(((EObject) element).eClass().getName() + ": "
-			// + ((EObject) element).eClass().getClassifierID());
 			return ((EObject) element).eClass().getClassifierID();
 		}
 		return 0;
