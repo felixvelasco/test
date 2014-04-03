@@ -12,6 +12,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.embedder.IMaven;
+import org.eclipse.m2e.core.project.IMavenProjectFacade;
 import org.eclipse.m2e.core.project.configurator.MojoExecutionBuildParticipant;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
@@ -68,9 +69,16 @@ public class JVoiceApplicationBuildParticipant extends MojoExecutionBuildPartici
 			IProject prj = ResourcesPlugin.getWorkspace().getRoot().getProject(dependency.getArtifactId());
 
 			if (prj.exists()) {
-				System.out.println("@@@@@ JVoiceApplicationBuildParticipant.getDependentProjects(): Añado: " + prj.getName());
+				// System.out.println("@@@@@ JVoiceApplicationBuildParticipant.getDependentProjects(): Añado: "
+				// + prj.getName());
 
-				currentProject = MavenPlugin.getMavenProjectRegistry().getProject(prj).getMavenProject();
+				IMavenProjectFacade mavenProject = MavenPlugin.getMavenProjectRegistry().getProject(prj);
+				if (mavenProject == null) {
+					System.err.println("JVoiceApplicationBuildParticipant.getDependentProjects(): Proyecto no encontrado o cerrado: " + prj);
+					continue;
+				}
+
+				currentProject = mavenProject.getMavenProject();
 				if (currentProject != null) {
 					// Si hay un ciclo entre módulos hay que evitar que de un StackOverflowError
 					if (!dependentProjects.contains(prj)) {
