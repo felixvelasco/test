@@ -12,21 +12,24 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.Transfer;
 
+import com.vectorsf.jvoice.model.base.Configuration;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVPackage;
 
 public class CopyHandler extends AbstractHandler {
 
+	private enum KnownElements {
+		PACKAGE, BEAN, CONFIGURATION
+	}
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		Object o = ((IEvaluationContext) event.getApplicationContext())
-				.getDefaultVariable();
+		Object o = ((IEvaluationContext) event.getApplicationContext()).getDefaultVariable();
 
 		if (o instanceof List<?>) {
 			Object[] selection = ((List<?>) o).toArray();
-			LocalSelectionTransfer.getTransfer().setSelection(
-					new StructuredSelection(selection));
+			LocalSelectionTransfer.getTransfer().setSelection(new StructuredSelection(selection));
 			Clipboard clipboard = new Clipboard(null);
 			clipboard.setContents(new Object[] { new Object() },
 					new Transfer[] { LocalSelectionTransfer.getTransfer() });
@@ -38,30 +41,33 @@ public class CopyHandler extends AbstractHandler {
 
 	@Override
 	public void setEnabled(Object evaluationContext) {
-		setBaseEnabled(getValidTarget(evaluationContext));
+		setBaseEnabled(isValid(evaluationContext));
 	}
 
-	@SuppressWarnings("unchecked")
-	private boolean getValidTarget(Object target) {
+	private boolean isValid(Object target) {
 		Object def = ((IEvaluationContext) target).getDefaultVariable();
 		if (def instanceof Collection<?>) {
-			boolean paquete = false;
-			boolean bean = false;
-			Collection<Object> colection = (Collection<Object>) def;
+			Collection<?> colection = (Collection<?>) def;
+			KnownElements current = null;
 
-			for (int i = 0; i < colection.toArray().length; i++) {
-				Object o = colection.toArray()[i];
+			for (Object o : colection) {
 				if (o instanceof JVPackage) {
-					if (bean) {
+					if (current != null && current != KnownElements.PACKAGE) {
 						return false;
 					} else {
-						paquete = true;
+						current = KnownElements.PACKAGE;
 					}
 				} else if (o instanceof JVBean) {
-					if (paquete) {
+					if (current != null && current != KnownElements.BEAN) {
 						return false;
 					} else {
-						bean = true;
+						current = KnownElements.BEAN;
+					}
+				} else if (o instanceof Configuration) {
+					if (current != null && current != KnownElements.CONFIGURATION) {
+						return false;
+					} else {
+						current = KnownElements.CONFIGURATION;
 					}
 				} else {
 					return false;
