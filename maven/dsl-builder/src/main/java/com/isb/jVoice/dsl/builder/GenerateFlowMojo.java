@@ -200,7 +200,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 	 * @param mainFolder Carpeta donde se crean los flujos de webflow.
 	 */
 	private void generateModuleEventsHandlers(JVModule modulo, File mainFolder) {
-		File folder = new File(mainFolder, "_" + modulo.getName() + "EventsHandlers\\eventsHandlers");
+		File folder = new File(mainFolder, "_" + modulo.getName() + "EventsHandlers/eventsHandlers");
 		folder.mkdirs();
 		
 		// Añadimos "-flow" al nombre del fichero para que no haya que renombrarlo 
@@ -333,7 +333,7 @@ public class GenerateFlowMojo extends AbstractMojo {
 
 		// Añadimos el nombre del flujo a la carpeta para que se copie 
 		// correctamente a la aplicación y funcione el hotdeploy de m2e-wtp.
-		targetFolder = new File(targetFolder, rutafile.replace(origFile.getName(), "").trim()+"\\"+flowName);
+		targetFolder = new File(targetFolder, rutafile.replace(origFile.getName(), "").trim()+ SEPARATOR +flowName);
 		if (!targetFolder.exists()) {
 			targetFolder.mkdirs();
 		}
