@@ -315,6 +315,27 @@
                class="com.vectorsf.jvoice.ui.navigator.sort.SimpleSorter"
                id="com.vectorsf.jvoice.ui.navigator.Sorter">
          </commonSorter>
+         <commonWizard
+               menuGroupId="ActionsIVR"
+               type="new"
+               wizardId="com.vectorsf.jvoice.ui.wizard.Properties">
+            <enablement>
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="true"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVModule">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.JVPackage">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </with></enablement>
+         </commonWizard>
       </navigatorContent>
       <navigatorContent
             contentProvider="com.vectorsf.jvoice.ui.edit.provider.MavenContentProvider"
@@ -584,6 +605,9 @@
                         <instanceof
                               value="com.vectorsf.jvoice.model.base.JVProject">
                         </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.Configuration">
+                        </instanceof>
                      </or>
                   </iterate>
                </with>
@@ -638,6 +662,9 @@
                         </instanceof>
                         <instanceof
                               value="org.eclipse.core.resources.IFile">
+                        </instanceof>
+                        <instanceof
+                              value="com.vectorsf.jvoice.model.base.Configuration">
                         </instanceof>
                      </or>
                   </iterate>
@@ -929,6 +956,9 @@
                      <instanceof
                            value="org.eclipse.core.resources.IFile">
                      </instanceof>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.Configuration">
+                     </instanceof>
                   </or>
                </iterate>
             </with>
@@ -938,23 +968,31 @@
             class="com.vectorsf.jvoice.ui.navigator.handler.PasteHandler"
             commandId="org.eclipse.ui.edit.paste">
          <activeWhen>
-            <with
-                  variable="selection">
-               <iterate
-                     operator="and">
-                  <or>
-                     <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVPackage">
-                     </instanceof>
-                     <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVModule">
-                     </instanceof>
-                     <instanceof
-                           value="com.vectorsf.jvoice.model.base.JVBean">
-                     </instanceof>
-                  </or>
-               </iterate>
-            </with>
+         	<and>
+	            <with
+	                  variable="selection">
+	               <iterate
+	                     operator="and">
+	                  <or>
+	                     <instanceof
+	                           value="com.vectorsf.jvoice.model.base.JVModule">
+	                     </instanceof>
+	                     <instanceof
+	                           value="com.vectorsf.jvoice.model.base.JVBean">
+	                     </instanceof>
+	                     <instanceof
+	                           value="com.vectorsf.jvoice.model.base.JVPackage">
+	                     </instanceof>
+	                  </or>
+	               </iterate>
+	            </with>
+             <not>
+                <test
+                      property="com.vectorsf.jvoice.ui.navigator.PasteConfi"
+                      value="com.vectorsf.jvoice.model.base.Configuration">
+                </test>
+             </not>
+	         </and>
          </activeWhen>
       </handler>
       <handler
@@ -971,6 +1009,9 @@
                      </instanceof>
                      <instanceof
                            value="com.vectorsf.jvoice.model.base.JVBean">
+                     </instanceof>
+                     <instanceof
+                           value="com.vectorsf.jvoice.model.base.Configuration">
                      </instanceof>
                   </or>
                </iterate>
@@ -998,6 +1039,26 @@
                   </or>
                </iterate>
             </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="com.vectorsf.jvoice.ui.navigator.handler.PasteConfigurationHandler"
+            commandId="org.eclipse.ui.edit.paste">
+         <activeWhen>
+         	<and>
+	            <with variable="selection">
+    	           <iterate
+        	             operator="and">
+            	         <instanceof
+                	           value="com.vectorsf.jvoice.model.base.JVProject">
+                    	 </instanceof>
+	               </iterate>
+    	        </with>
+        	    <test
+                   property="com.vectorsf.jvoice.ui.navigator.ClipboardType"
+                   value="com.vectorsf.jvoice.model.base.Configuration">
+	            </test>
+            </and>
          </activeWhen>
       </handler>
    </extension>
@@ -1137,6 +1198,16 @@
                id="com.vectorsf.jvoice.ui.navigator.util.DebugContextualLaunchAction">
          </action>
       </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="com.vectorsf.jvoice.ui.navigator.PropertyTesterPaste"
+            id="com.vectorsf.jvoice.ui.navigator.PropertyTesterPaste"
+            namespace="com.vectorsf.jvoice.ui.navigator"
+            properties="ClipboardType"
+            type="java.lang.Object">
+      </propertyTester>
    </extension>
 
 </plugin>

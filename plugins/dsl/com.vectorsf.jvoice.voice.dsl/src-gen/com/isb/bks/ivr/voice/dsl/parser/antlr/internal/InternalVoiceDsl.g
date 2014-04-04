@@ -871,25 +871,25 @@ ruleTransferDsl returns [EObject current=null]
 					{ 
 	 				  getUnorderedGroupHelper().select(grammarAccess.getTransferDslAccess().getUnorderedGroup_4(), 2);
 	 				}
-					({true}?=>(	otherlv_9='maxtime' 
+					({true}?=>(	otherlv_9='transferMaxtime' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getTransferDslAccess().getMaxtimeKeyword_4_2_0());
+    	newLeafNode(otherlv_9, grammarAccess.getTransferDslAccess().getTransferMaxtimeKeyword_4_2_0());
     }
 (
 (
-		lv_maxTime_10_0=RULE_STRING
-		{
-			newLeafNode(lv_maxTime_10_0, grammarAccess.getTransferDslAccess().getMaxTimeSTRINGTerminalRuleCall_4_2_1_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getMaxTimeConfigValueValueParserRuleCall_4_2_1_0()); 
+	    }
+		lv_maxTime_10_0=ruleConfigValueValue		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTransferDslRule());
+	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"maxTime",
         		lv_maxTime_10_0, 
-        		"STRING");
+        		"ConfigValueValue");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -911,19 +911,19 @@ ruleTransferDsl returns [EObject current=null]
     }
 (
 (
-		lv_timeout_12_0=RULE_STRING
-		{
-			newLeafNode(lv_timeout_12_0, grammarAccess.getTransferDslAccess().getTimeoutSTRINGTerminalRuleCall_4_3_1_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getTransferDslAccess().getTimeoutConfigValueValueParserRuleCall_4_3_1_0()); 
+	    }
+		lv_timeout_12_0=ruleConfigValueValue		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTransferDslRule());
+	            $current = createModelElementForParent(grammarAccess.getTransferDslRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"timeout",
         		lv_timeout_12_0, 
-        		"STRING");
+        		"ConfigValueValue");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )

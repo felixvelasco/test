@@ -357,8 +357,8 @@ public abstract class AbstractVoiceDslSemanticSequencer extends AbstractDelegati
 	 *         name=ID 
 	 *         destination=STRING 
 	 *         audioTransfer=STRING? 
-	 *         maxTime=STRING? 
-	 *         timeout=STRING? 
+	 *         maxTime=ConfigValueValue? 
+	 *         timeout=ConfigValueValue? 
 	 *         configuration=TransferConfiguration? 
 	 *         conditions+=Condition? 
 	 *         audios=Audios

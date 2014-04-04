@@ -189,7 +189,12 @@ public class CopyMojo extends AbstractMojo {
 			// Copiamos el archivo de configuración general del logger
 			// (logback-core.xml) en la carpeta
 			// src/main/resources/com/vectorsf/jvoiceframework/config/logger
-			copyFile("logback-core.xml", new File(configLogger, "logback-core.xml"));
+			// Solo lo copiamos si no existe para no sobrescribir los cambios
+			// de config que haya hecho el desarrolador.
+			File logbackCore = new File(configLogger, "logback-core.xml");
+			if (!logbackCore.exists()){
+				copyFile("logback-core.xml", logbackCore);				
+			}
 
 			// Copiamos/borramos los archivos que necesita el legacy logger en
 			// función de si se usa o no
@@ -216,8 +221,14 @@ public class CopyMojo extends AbstractMojo {
 			// Si se usa el isban logger:
 			// Copiamos los archivos de configuración necesarios en la carpeta
 			// src/main/resources/com/vectorsf/jvoiceframework/config/logger
-			copyFile("isban-logger-config.xml", isbanLoggerConfig);
-			copyFile("logback-isban-logger.xml", logbackIsbanLogger);
+			// Solo los copiamos si no existen para no sobrescribir los cambios
+			// de config que haya hecho el desarrolador.
+			if (!isbanLoggerConfig.exists()){
+				copyFile("isban-logger-config.xml", isbanLoggerConfig);				
+			}
+			if (!logbackIsbanLogger.exists()){
+				copyFile("logback-isban-logger.xml", logbackIsbanLogger);				
+			}
 			// Creamos la carpeta js dentro de src/main/webapp/resources
 			js.mkdirs();
 			// Copiamos el archivo isban-logger.js en ella

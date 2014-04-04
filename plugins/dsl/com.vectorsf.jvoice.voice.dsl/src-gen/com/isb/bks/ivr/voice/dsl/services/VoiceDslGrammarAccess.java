@@ -329,13 +329,13 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAudioTransferAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
 		private final RuleCall cAudioTransferSTRINGTerminalRuleCall_4_1_1_0 = (RuleCall)cAudioTransferAssignment_4_1_1.eContents().get(0);
 		private final Group cGroup_4_2 = (Group)cUnorderedGroup_4.eContents().get(2);
-		private final Keyword cMaxtimeKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
+		private final Keyword cTransferMaxtimeKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
 		private final Assignment cMaxTimeAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
-		private final RuleCall cMaxTimeSTRINGTerminalRuleCall_4_2_1_0 = (RuleCall)cMaxTimeAssignment_4_2_1.eContents().get(0);
+		private final RuleCall cMaxTimeConfigValueValueParserRuleCall_4_2_1_0 = (RuleCall)cMaxTimeAssignment_4_2_1.eContents().get(0);
 		private final Group cGroup_4_3 = (Group)cUnorderedGroup_4.eContents().get(3);
 		private final Keyword cTransferTimeoutKeyword_4_3_0 = (Keyword)cGroup_4_3.eContents().get(0);
 		private final Assignment cTimeoutAssignment_4_3_1 = (Assignment)cGroup_4_3.eContents().get(1);
-		private final RuleCall cTimeoutSTRINGTerminalRuleCall_4_3_1_0 = (RuleCall)cTimeoutAssignment_4_3_1.eContents().get(0);
+		private final RuleCall cTimeoutConfigValueValueParserRuleCall_4_3_1_0 = (RuleCall)cTimeoutAssignment_4_3_1.eContents().get(0);
 		private final Assignment cConfigurationAssignment_4_4 = (Assignment)cUnorderedGroup_4.eContents().get(4);
 		private final RuleCall cConfigurationTransferConfigurationParserRuleCall_4_4_0 = (RuleCall)cConfigurationAssignment_4_4.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
@@ -346,13 +346,13 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TransferDsl:
 		//	{TransferDsl} typeTransfer=TypeTransfer name=ID "{" ("destination" destination=STRING & ("transferaudio"
-		//	audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? & ("transferTimeout" timeout=STRING)? &
-		//	configuration=TransferConfiguration?) "}" conditions+=Condition? audios=Audios;
+		//	audioTransfer=STRING)? & ("transferMaxtime" maxTime=ConfigValueValue)? & ("transferTimeout" timeout=ConfigValueValue)?
+		//	& configuration=TransferConfiguration?) "}" conditions+=Condition? audios=Audios;
 		public ParserRule getRule() { return rule; }
 
 		//{TransferDsl} typeTransfer=TypeTransfer name=ID "{" ("destination" destination=STRING & ("transferaudio"
-		//audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? & ("transferTimeout" timeout=STRING)? &
-		//configuration=TransferConfiguration?) "}" conditions+=Condition? audios=Audios
+		//audioTransfer=STRING)? & ("transferMaxtime" maxTime=ConfigValueValue)? & ("transferTimeout" timeout=ConfigValueValue)?
+		//& configuration=TransferConfiguration?) "}" conditions+=Condition? audios=Audios
 		public Group getGroup() { return cGroup; }
 
 		//{TransferDsl}
@@ -373,8 +373,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 
-		//"destination" destination=STRING & ("transferaudio" audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? &
-		//("transferTimeout" timeout=STRING)? & configuration=TransferConfiguration?
+		//"destination" destination=STRING & ("transferaudio" audioTransfer=STRING)? & ("transferMaxtime"
+		//maxTime=ConfigValueValue)? & ("transferTimeout" timeout=ConfigValueValue)? & configuration=TransferConfiguration?
 		public UnorderedGroup getUnorderedGroup_4() { return cUnorderedGroup_4; }
 
 		//"destination" destination=STRING
@@ -401,29 +401,29 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getAudioTransferSTRINGTerminalRuleCall_4_1_1_0() { return cAudioTransferSTRINGTerminalRuleCall_4_1_1_0; }
 
-		//("maxtime" maxTime=STRING)?
+		//("transferMaxtime" maxTime=ConfigValueValue)?
 		public Group getGroup_4_2() { return cGroup_4_2; }
 
-		//"maxtime"
-		public Keyword getMaxtimeKeyword_4_2_0() { return cMaxtimeKeyword_4_2_0; }
+		//"transferMaxtime"
+		public Keyword getTransferMaxtimeKeyword_4_2_0() { return cTransferMaxtimeKeyword_4_2_0; }
 
-		//maxTime=STRING
+		//maxTime=ConfigValueValue
 		public Assignment getMaxTimeAssignment_4_2_1() { return cMaxTimeAssignment_4_2_1; }
 
-		//STRING
-		public RuleCall getMaxTimeSTRINGTerminalRuleCall_4_2_1_0() { return cMaxTimeSTRINGTerminalRuleCall_4_2_1_0; }
+		//ConfigValueValue
+		public RuleCall getMaxTimeConfigValueValueParserRuleCall_4_2_1_0() { return cMaxTimeConfigValueValueParserRuleCall_4_2_1_0; }
 
-		//("transferTimeout" timeout=STRING)?
+		//("transferTimeout" timeout=ConfigValueValue)?
 		public Group getGroup_4_3() { return cGroup_4_3; }
 
 		//"transferTimeout"
 		public Keyword getTransferTimeoutKeyword_4_3_0() { return cTransferTimeoutKeyword_4_3_0; }
 
-		//timeout=STRING
+		//timeout=ConfigValueValue
 		public Assignment getTimeoutAssignment_4_3_1() { return cTimeoutAssignment_4_3_1; }
 
-		//STRING
-		public RuleCall getTimeoutSTRINGTerminalRuleCall_4_3_1_0() { return cTimeoutSTRINGTerminalRuleCall_4_3_1_0; }
+		//ConfigValueValue
+		public RuleCall getTimeoutConfigValueValueParserRuleCall_4_3_1_0() { return cTimeoutConfigValueValueParserRuleCall_4_3_1_0; }
 
 		//configuration=TransferConfiguration?
 		public Assignment getConfigurationAssignment_4_4() { return cConfigurationAssignment_4_4; }
@@ -1476,8 +1476,8 @@ public class VoiceDslGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TransferDsl:
 	//	{TransferDsl} typeTransfer=TypeTransfer name=ID "{" ("destination" destination=STRING & ("transferaudio"
-	//	audioTransfer=STRING)? & ("maxtime" maxTime=STRING)? & ("transferTimeout" timeout=STRING)? &
-	//	configuration=TransferConfiguration?) "}" conditions+=Condition? audios=Audios;
+	//	audioTransfer=STRING)? & ("transferMaxtime" maxTime=ConfigValueValue)? & ("transferTimeout" timeout=ConfigValueValue)?
+	//	& configuration=TransferConfiguration?) "}" conditions+=Condition? audios=Audios;
 	public TransferDslElements getTransferDslAccess() {
 		return (pTransferDsl != null) ? pTransferDsl : (pTransferDsl = new TransferDslElements());
 	}

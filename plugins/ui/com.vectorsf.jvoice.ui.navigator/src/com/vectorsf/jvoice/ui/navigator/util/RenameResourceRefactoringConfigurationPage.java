@@ -50,6 +50,8 @@ import org.eclipse.xtext.resource.SaveOptions;
 
 import com.vectorsf.jvoice.base.model.service.BaseModel;
 import com.vectorsf.jvoice.core.operation.helper.PrototypeCreator;
+import com.vectorsf.jvoice.core.project.JVoiceApplicationConfigurator;
+import com.vectorsf.jvoice.model.base.JVApplication;
 import com.vectorsf.jvoice.model.base.JVBean;
 import com.vectorsf.jvoice.model.base.JVProject;
 import com.vectorsf.jvoice.model.operations.Flow;
@@ -184,7 +186,7 @@ public class RenameResourceRefactoringConfigurationPage extends UserInputWizardP
 					if (resource instanceof IFile) {
 						renameBean(monitor);
 					} else if (resource instanceof IProject) {
-						renameProject(monitor);
+						renameProject((IProject) resource, monitor);
 					}
 
 					superPerformFinish();
@@ -261,8 +263,8 @@ public class RenameResourceRefactoringConfigurationPage extends UserInputWizardP
 
 	}
 
-	private boolean renameProject(IProgressMonitor monitor) throws CoreException {
-		JVProject project = BaseModel.getInstance().getModel().getProject(resource.getName());
+	private boolean renameProject(IProject iProject, IProgressMonitor monitor) throws CoreException {
+		JVProject project = BaseModel.getInstance().getModel().getProject(iProject.getName());
 		ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
 		JVProject workingcopy = (JVProject) resourceSetImpl.getEObject(EcoreUtil.getURI(project), true);
 
@@ -272,6 +274,16 @@ public class RenameResourceRefactoringConfigurationPage extends UserInputWizardP
 
 		} catch (IOException e) {
 			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+		}
+
+		if (project instanceof JVApplication) // En las aplicaciones, movemos el ws-endpoints.xml
+		{
+			String folderName = JVoiceApplicationConfigurator.ENDPOINTS_DIR;
+			IFolder parentfolder = iProject.getFolder(folderName);
+			IFolder oldFolder = parentfolder.getFolder(iProject.getName());
+
+			IPath destinationFolder = parentfolder.getFolder(newName).getFullPath();
+			oldFolder.move(destinationFolder, true, null);
 		}
 
 		return true;

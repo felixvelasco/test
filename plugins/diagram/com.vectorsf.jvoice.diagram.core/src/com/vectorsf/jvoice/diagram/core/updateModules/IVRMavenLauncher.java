@@ -67,7 +67,7 @@ public class IVRMavenLauncher extends AbstractHandler {
 			}
 
 			for (IProject prj : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-				if (prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
+				if (prj.isAccessible() && prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
 					ExecutePomAction action2 = new ExecutePomAction();
 					action2.setInitializationData(null, null, "clean install");
 					action2.launch(new StructuredSelection(prj), "run");
@@ -84,7 +84,7 @@ public class IVRMavenLauncher extends AbstractHandler {
 
 			// Actualizamos las aplicaciones
 			for (IProject prj : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-				if (prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
+				if (prj.isAccessible() && prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
 					new UpdateMavenProjectJob(new IProject[] { prj }, true, // offline
 							false, // forceUpdateDependencies
 							true, // UpdateConfiguration
@@ -97,6 +97,7 @@ public class IVRMavenLauncher extends AbstractHandler {
 
 		} catch (Exception e) {
 			log("IVRMavenLauncher.installModules(): " + e);
+			e.printStackTrace();
 		}
 	}
 
@@ -146,6 +147,6 @@ public class IVRMavenLauncher extends AbstractHandler {
 
 	private void log(String text) {
 		System.err.println(text);
-		Activator.getLogger().log(IStatus.WARNING, "Actualizador de versiones: " + text);
+		Activator.getLogger().log(IStatus.WARNING, "IVRMavenLauncher: " + text);
 	}
 }

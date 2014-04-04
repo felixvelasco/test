@@ -2296,11 +2296,11 @@ rule__TransferDsl__Group_4_2__0__Impl
     }
 :
 (
-{ before(grammarAccess.getTransferDslAccess().getMaxtimeKeyword_4_2_0()); }
+{ before(grammarAccess.getTransferDslAccess().getTransferMaxtimeKeyword_4_2_0()); }
 
-	'maxtime' 
+	'transferMaxtime' 
 
-{ after(grammarAccess.getTransferDslAccess().getMaxtimeKeyword_4_2_0()); }
+{ after(grammarAccess.getTransferDslAccess().getTransferMaxtimeKeyword_4_2_0()); }
 )
 
 ;
@@ -6260,8 +6260,8 @@ rule__TransferDsl__MaxTimeAssignment_4_2_1
     }
 :
 (
-{ before(grammarAccess.getTransferDslAccess().getMaxTimeSTRINGTerminalRuleCall_4_2_1_0()); }
-	RULE_STRING{ after(grammarAccess.getTransferDslAccess().getMaxTimeSTRINGTerminalRuleCall_4_2_1_0()); }
+{ before(grammarAccess.getTransferDslAccess().getMaxTimeConfigValueValueParserRuleCall_4_2_1_0()); }
+	ruleConfigValueValue{ after(grammarAccess.getTransferDslAccess().getMaxTimeConfigValueValueParserRuleCall_4_2_1_0()); }
 )
 
 ;
@@ -6275,8 +6275,8 @@ rule__TransferDsl__TimeoutAssignment_4_3_1
     }
 :
 (
-{ before(grammarAccess.getTransferDslAccess().getTimeoutSTRINGTerminalRuleCall_4_3_1_0()); }
-	RULE_STRING{ after(grammarAccess.getTransferDslAccess().getTimeoutSTRINGTerminalRuleCall_4_3_1_0()); }
+{ before(grammarAccess.getTransferDslAccess().getTimeoutConfigValueValueParserRuleCall_4_3_1_0()); }
+	ruleConfigValueValue{ after(grammarAccess.getTransferDslAccess().getTimeoutConfigValueValueParserRuleCall_4_3_1_0()); }
 )
 
 ;

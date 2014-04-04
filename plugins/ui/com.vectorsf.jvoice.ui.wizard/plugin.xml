@@ -47,6 +47,13 @@
             id="com.vectorsf.jvoice.ui.wizards.category"
             name="%wizard.category.name">
       </category>
+      <wizard
+            category="com.vectorsf.jvoice.ui.wizards.category"
+            class="com.vectorsf.jvoice.ui.wizard.create.CreatePropertiesFile"
+            id="com.vectorsf.jvoice.ui.wizard.Properties"
+            name="Properties File"
+            project="false">
+      </wizard>
 
    </extension>
 </plugin>
