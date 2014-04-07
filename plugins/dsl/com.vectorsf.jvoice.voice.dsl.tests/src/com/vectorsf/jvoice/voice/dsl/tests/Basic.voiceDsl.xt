@@ -1,0 +1,10 @@
+// XPECT_SETUP com.vectorsf.jvoice.voice.dsl.tests.MyXtextTest END_SETUP
+
+output Basic
+
+audios{
+	main:
+		say wording "TTS text"
+		// XPECT errors --> "extraneous input '%' expecting '}'" at "%"
+		%
+}

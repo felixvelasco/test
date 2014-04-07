@@ -1,0 +1,17 @@
+// XPECT_SETUP com.vectorsf.jvoice.voice.dsl.tests.MyXtextTest END_SETUP
+
+menu MenuOptions
+
+grammars {
+	dtmf "builtin:digits"
+}
+audios{
+	main:
+		say wording "TTS text"
+}
+
+options {
+	option1: "1"
+	// XPECT errors --> "Duplicate Menu output name "option1"." at "option1: "2""
+	option1: "2"
+}

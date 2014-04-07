@@ -1,0 +1,12 @@
+// XPECT_SETUP com.vectorsf.jvoice.voice.dsl.tests.MyXtextTest END_SETUP
+input GrammarExistence
+
+// XPECT errors --> "At least one grammar is needed." at "grammars {  }"
+grammars {
+
+}
+
+audios{
+	main:
+		say wording "Hello"
+}

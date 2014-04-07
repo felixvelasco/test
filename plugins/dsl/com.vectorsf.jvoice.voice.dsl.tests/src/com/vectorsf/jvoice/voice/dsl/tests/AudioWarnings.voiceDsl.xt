@@ -1,0 +1,10 @@
+// XPECT_SETUP com.vectorsf.jvoice.voice.dsl.tests.MyXtextTest END_SETUP
+output AudioWarnings
+
+audios{
+	main:
+		// XPECT warnings --> "Audio file not found" at ""NonExisting""
+		say src "NonExisting"
+		// XPECT warnings --> 
+		say src "test"
+}

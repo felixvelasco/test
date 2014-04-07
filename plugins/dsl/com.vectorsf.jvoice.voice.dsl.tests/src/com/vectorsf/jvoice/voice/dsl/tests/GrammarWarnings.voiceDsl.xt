@@ -1,0 +1,24 @@
+// XPECT_SETUP com.vectorsf.jvoice.voice.dsl.tests.MyXtextTest END_SETUP
+input GrammarWarnings
+
+grammars {
+	// XPECT errors --> "Grammar file not found" at ""fake""
+	dtmf "fake"
+
+	// XPECT errors --> 
+	voice "builtin:digits"
+
+	// XPECT errors --> 
+	voice "testGrxml"
+
+	// XPECT errors --> 
+	voice "testBnf"
+
+	// XPECT errors --> 
+	voice "testGsl"
+}
+
+audios{
+	main:
+		say wording "Hello"
+}
