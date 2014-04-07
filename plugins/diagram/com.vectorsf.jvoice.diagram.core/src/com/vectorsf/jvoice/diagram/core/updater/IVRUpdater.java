@@ -34,6 +34,8 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.m2e.core.MavenPlugin;
+import org.eclipse.m2e.core.project.IMavenProjectFacade;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
@@ -71,7 +73,20 @@ public class IVRUpdater extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		domFactory.setNamespaceAware(false);
 
-		String[] projects = getProjectsToUpdate();
+		// Activamos la resolución de workspaces
+		String[] projects = getProjectsToUpdateWorkspaceResolution();
+		if (projects.length > 0) {
+			ListSelectionDialog dialog = new ListSelectionDialog(new Shell(), projects, new ArrayContentProvider(),
+					new LabelProvider(), "Proyectos que no tienen la resolución de workspace activada");
+			dialog.setTitle("Activar Resolución de Workspace");
+
+			if (dialog.open() == Dialog.OK) {
+				activateWorkspaceResolution(dialog.getResult());
+			}
+		}
+
+		// Actualizamos la versión del framework y los poms de los proyectos que no tengan el plugin de "clean"
+		projects = getProjectsToUpdate();
 		if (projects.length == 0) {
 			MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 					"Actualizador", "Todos los proyectos están actualizados\n\nVersión del framework: "
@@ -100,7 +115,6 @@ public class IVRUpdater extends AbstractHandler {
 			MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 					"Proyectos actualizados", changedProjectsText.toString());
 		}
-
 	}
 
 	/**
@@ -152,7 +166,7 @@ public class IVRUpdater extends AbstractHandler {
 			if (!hasMavenCleanPlugin(model)) {
 				model.getBuild().addPlugin(JVoiceApplicationConfigurator.getMavenCleanPlugin());
 
-				changedProjectsText.append(prjName + ": Añadido maven-clean-plugin al pom.xml.\n");
+				changedProjectsText.append(prjName + ": Añadido maven-clean-plugin al pom.xml.\n\n");
 
 				MavenXpp3Writer writer = new MavenXpp3Writer();
 				writer.write(new FileOutputStream(pom), model);
@@ -286,7 +300,7 @@ public class IVRUpdater extends AbstractHandler {
 			return;
 		}
 		changedProjectsText.append(prjName + ": Añadida clave '" + key + "' al fichero "
-				+ JVoiceApplicationConfigurator.PROPERTIES_FILENAME + ".\n");
+				+ JVoiceApplicationConfigurator.PROPERTIES_FILENAME + ".\n\n");
 		return;
 	}
 
@@ -371,7 +385,7 @@ public class IVRUpdater extends AbstractHandler {
 			if (!oldVersion.equals(newVersion)) {
 				changedProjectsText.append(prjName + ": Versión actualizada de '"
 						+ artifactIdNode.getFirstChild().getNodeValue() + "' de '" + oldVersion + "'  a  '"
-						+ newVersion + "'\n");
+						+ newVersion + "'\n\n");
 				node.setNodeValue(newVersion);
 			}
 		} catch (Exception e) {
@@ -383,5 +397,57 @@ public class IVRUpdater extends AbstractHandler {
 	private void log(String text) {
 		System.err.println(text);
 		Activator.getLogger().log(IStatus.WARNING, "Actualizador de versiones: " + text);
+	}
+
+	private String[] getProjectsToUpdateWorkspaceResolution() {
+		List<String> projects = new ArrayList<String>();
+
+		try {
+			for (IProject prj : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
+				if (!prj.isAccessible() || !prj.hasNature(JVoiceModuleNature.NATURE_ID)
+						&& !prj.hasNature(JVoiceApplicationNature.NATURE_ID)) {
+					continue;
+				}
+
+				IMavenProjectFacade mavenProject = MavenPlugin.getMavenProjectRegistry().getProject(prj);
+				if (!mavenProject.getResolverConfiguration().shouldResolveWorkspaceProjects()) {
+					projects.add(prj.getName());
+				}
+
+			}
+		} catch (Exception e) {
+			log("IVRUpdater.getProjectsToUpdateWorkspaceResolution(): " + e);
+		}
+
+		return projects.toArray(new String[0]);
+	}
+
+	private void activateWorkspaceResolution(Object[] projects) {
+		changedProjectsText = new StringBuffer();
+
+		for (Object prj : projects) {
+			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("" + prj);
+			if (project == null) {
+				log("IVRUpdater.updateWorkspaceResolution(): projecto no encontrado " + prj);
+				continue;
+			}
+
+			IMavenProjectFacade mavenProject = MavenPlugin.getMavenProjectRegistry().getProject(project);
+			if (mavenProject != null) {
+				try {
+					ChangeWorkspaceResolutionAction action = new ChangeWorkspaceResolutionAction(project, 1);
+					action.run(null);
+				} catch (Exception e) {
+					log("IVRUpdater.updateWorkspaceResolution(): " + e);
+					e.printStackTrace();
+				}
+			}
+		}
+
+		if (changedProjectsText.length() > 0) {
+			MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+					"Proyectos actualizados", changedProjectsText.toString());
+		}
+
 	}
 }
