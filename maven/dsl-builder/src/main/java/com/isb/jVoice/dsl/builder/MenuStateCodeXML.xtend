@@ -1,9 +1,8 @@
 package com.isb.jVoice.dsl.builder
 
-import com.vectorsf.jvoice.model.operations.State
-import com.vectorsf.jvoice.model.operations.MenuState
 import com.vectorsf.jvoice.model.operations.CustomState
-import org.eclipse.emf.common.util.EList
+import com.vectorsf.jvoice.model.operations.MenuState
+import com.vectorsf.jvoice.model.operations.State
 import com.vectorsf.jvoice.prompt.model.voiceDsl.Output
 import java.util.List
 
@@ -12,24 +11,27 @@ class MenuStateCodeXML {
 	def static doGenerateMenuState(State state, String nameProject){
 			
 		var tranSalidaS =state.getOutgoingTransitions()
-		var MenuState audioIn = state as MenuState
+		var MenuState menu = state as MenuState
 		
-		var grammars = audioIn.locution.grammars
-		var configuration = audioIn.locution.configuration
+		var grammars = menu.locution.grammars
+		var configuration = menu.locution.configuration
 		
-		var audios = audioIn.locution.audios
+		var audios = menu.locution.audios
 
-		var outputs = audioIn.locution.outputs
-		var outputsList = audioIn.locution.outputs.output
+		var outputs = menu.locution.outputs
+		var outputsList = menu.locution.outputs.output
 		
 		var i=0
+		
+		var String prefix = '''jVoiceArch''' + state.name
 		
 		
 '''
 		<action-state id="«state.name»">
+		«IF menu.textual»
 			<on-entry>
-				<evaluate expression="jVoiceArchInput" result="flashScope.«state.name»"/>
-				<set name="flashScope.«state.name».name" value="'«audioIn.name»'" />
+				<evaluate expression="jVoiceArchMenu" result="flashScope.«state.name»"/>
+				<set name="flashScope.«state.name».name" value="'«menu.name»'" />
 				«IF configuration != null»
 					«FOR configValue : configuration.configValue»
 						«IF configValue.name != null && configValue.name.equals("bargein")»
@@ -73,7 +75,7 @@ class MenuStateCodeXML {
 				«ENDIF»		
 				«/*Obtenemos las gramaticas del menu */»
 				«IF grammars != null»
-					«var grammatics = audioIn.locution.grammars.grammatics»
+					«var grammatics = menu.locution.grammars.grammatics»
 					«IF grammatics != null && grammatics.size>0» 				
 						«FOR grammatic : grammatics »
 							<evaluate expression="jVoiceArchGrammar" result="flashScope.grammar«i=i+1»" />
@@ -84,11 +86,22 @@ class MenuStateCodeXML {
 						«ENDFOR»
 	        		«ENDIF»
         		«ENDIF»
+        		«IF outputs != null && tranSalidaS != null && outputsList !=null && outputsList.size>0 && tranSalidaS.size>0»
+				   		«FOR out : outputsList»
+				   			«FOR tranSalida : tranSalidaS»
+				   				«IF out.name.equals(tranSalida.eventName)»	
+				   					«FOR outputValue : out.outputValue»
+				   						<evaluate expression="flashScope.«state.name».addValueOption(«tranSalida.target.name»,«outputValue.value»)" />
+				   					«ENDFOR»
+				   				«ENDIF»
+				   			«ENDFOR»
+				   		«ENDFOR»
+				«ENDIF»
         		«IF audios != null» 
-        			«var mainAudios = audioIn.locution.audios.mainAudios»
-	        		«var noMatchAudios = audioIn.locution.audios.noMatchAudios»
-	        		«var noInputAudios = audioIn.locution.audios.noInputAudios»
-	        		«var matchAudios = audioIn.locution.audios.matchAudios»
+        			«var mainAudios = menu.locution.audios.mainAudios»
+	        		«var noMatchAudios = menu.locution.audios.noMatchAudios»
+	        		«var noInputAudios = menu.locution.audios.noInputAudios»
+	        		«var matchAudios = menu.locution.audios.matchAudios»
 			        «GeneralStateCodeXML.doGenerateGeneralState(state, mainAudios, "mainAudios", nameProject)»
 			       	«GeneralStateCodeXML.doGenerateGeneralState(state, noMatchAudios, "noMatchAudios", nameProject)»
 			      	«GeneralStateCodeXML.doGenerateGeneralState(state, noInputAudios, "noInputAudios", nameProject)»
@@ -96,6 +109,12 @@ class MenuStateCodeXML {
 		      	«ENDIF»
 			</on-entry>
 			<evaluate expression="flowProcessor.process(flashScope.«state.name»)"/>
+		«ELSE»	
+			<on-entry>
+				<evaluate expression="jVoiceArchMenu" result="flowScope.«state.name»"/>
+			</on-entry>
+			<evaluate expression="flowProcessor.process(flowScope.«state.name».«menu.methodName»())"/>
+		«ENDIF»
 			<transition to="render_«state.name»"></transition>
 		</action-state>
 		
@@ -114,23 +133,41 @@ class MenuStateCodeXML {
 			«ENDIF»			
 		</view-state>
 			
-		<action-state id="render_decision_«state.name»">
-			<evaluate expression="lastInputResult.interpretation"></evaluate>
-			«IF outputs != null && tranSalidaS != null && outputsList !=null && outputsList.size>0 && tranSalidaS.size>0»
-			   		«FOR out : outputsList»
-			   			«FOR tranSalida : tranSalidaS»
-			   				«IF out.name.equals(tranSalida.eventName)»	
-			   					«FOR outputValue : out.outputValue»
-			   						«IF tranSalida.target instanceof CustomState» 
-			   							<transition on="«outputValue.value»" to="render_«tranSalida.target.name»"/>
+		«IF menu.textual»
+			<action-state id="render_decision_«state.name»">
+				<evaluate expression="lastInputResult.interpretation"></evaluate>
+				«IF outputs != null && tranSalidaS != null && outputsList !=null && outputsList.size>0 && tranSalidaS.size>0»
+				   		«FOR out : outputsList»
+				   			«FOR tranSalida : tranSalidaS»
+				   				«IF out.name.equals(tranSalida.eventName)»	
+				   					«FOR outputValue : out.outputValue»
+				   						«IF tranSalida.target instanceof CustomState» 
+				   							<transition on="«outputValue.value»" to="render_«tranSalida.target.name»"/>
+				   						«ELSE»
+				   							<transition on="«outputValue.value»" to="«tranSalida.target.name»"/>
+				   						«ENDIF»
+				   					«ENDFOR»
+				   				«ENDIF»
+				   			«ENDFOR»
+				   		«ENDFOR»
+				«ENDIF»
+		«ELSE»	
+			<action-state id="render_decision_«state.name»">
+				<evaluate expression="lastInputResult.interpretation"></evaluate>
+				«IF menu.options != null && menu.options.size>0 »
+			   			«FOR option : menu.options»	
+			   			    «FOR tranSalida : tranSalidaS»
+		   						«IF tranSalida.target.name.equals(option)»
+		   							«IF tranSalida.target instanceof CustomState»
+		   								<transition on="flowScope.«state.name».getValueOption(«option»)" to="render_«tranSalida.target.name»"/>
 			   						«ELSE»
-			   							<transition on="«outputValue.value»" to="«tranSalida.target.name»"/>
+			   							<transition on="flowScope.«state.name».getValueOption(«option»)" to="«tranSalida.target.name»"/>
 			   						«ENDIF»
-			   					«ENDFOR»
-			   				«ENDIF»
+		   						«ENDIF»
+	   						«ENDFOR»
 			   			«ENDFOR»
-			   		«ENDFOR»
-			«ENDIF»
+				«ENDIF»
+		«ENDIF»
 		</action-state>
 '''
 	}

@@ -20,44 +20,48 @@ class TransferStateCodeXML {
 
 '''
 		<action-state id="«transfer.name»">
-		<on-entry>
-			«IF dsl.typeTransfer.value == 0»
-				<evaluate expression="jVoiceArchBlindTransfer" result = "flashScope.«transfer.name»"/>
-				<set name="flashScope.«transfer.name».dest" value="'«dsl.destination»'"/>
-				«IF dsl.audioTransfer!=null && !dsl.audioTransfer.trim.empty»
-					<set name="flashScope.«transfer.name».transferaudio" value="'«dsl.audioTransfer»'"/>
-				«ENDIF»
-			«ELSEIF dsl.typeTransfer.value == 1»
-				<evaluate expression="jVoiceArchConsultationTransfer" result = "flashScope.«transfer.name»"/>
-				<set name="flashScope.«transfer.name».dest" value="'«dsl.destination»'"/>
-				«IF dsl.audioTransfer!=null && !dsl.audioTransfer.trim.empty»
-					<set name="flashScope.«transfer.name».transferaudio" value="'«dsl.audioTransfer»'"/>
-				«ENDIF»
-				<set name="flashScope.«transfer.name».timeout" value="'«dsl.timeout»'"/>
-			«ELSEIF dsl.typeTransfer.value == 2»
-				<evaluate expression="jVoiceArchBridgeTransfer" result = "flashScope.«transfer.name»"/>
-				<set name="flashScope.«transfer.name».dest" value="'«dsl.destination»'"/>
-				«IF dsl.audioTransfer!=null && !dsl.audioTransfer.trim.empty»
-					<set name="flashScope.«transfer.name».transferaudio" value="'«dsl.audioTransfer»'"/>
-				«ENDIF»
-				<set name="flashScope.«transfer.name».timeout" value="'«dsl.timeout»'"/>
-				<set name="flashScope.«transfer.name».maxtime" value="'«dsl.maxTime»'"/>
-			«ENDIF»	
-			«IF audio != null» 
-					«var audios = transfer.locution.audios.mainAudios»
-					«GeneralStateCodeXML.doGenerateGeneralState(state, audios,"audioItems", nameProject)»
-					«IF configurations != null» 
-						«FOR configValue : configurations.configValue »
-							«IF configValue.name != null && !configValue.name.empty»
-								«IF configValue.value != null && !configValue.value.empty»
-									<evaluate expression="flashScope.«state.name».properties.put('«configValue.name»','«configValue.value»')" />
+		«IF transfer.textual»
+			<on-entry>
+				«IF dsl.typeTransfer.value == 0»
+					<evaluate expression="jVoiceArchBlindTransfer" result = "flashScope.«transfer.name»"/>
+					<set name="flashScope.«transfer.name».dest" value="'«dsl.destination»'"/>
+					«IF dsl.audioTransfer!=null && !dsl.audioTransfer.trim.empty»
+						<set name="flashScope.«transfer.name».transferaudio" value="'«dsl.audioTransfer»'"/>
+					«ENDIF»
+				«ELSEIF dsl.typeTransfer.value == 1»
+					<evaluate expression="jVoiceArchConsultationTransfer" result = "flashScope.«transfer.name»"/>
+					<set name="flashScope.«transfer.name».dest" value="'«dsl.destination»'"/>
+					«IF dsl.audioTransfer!=null && !dsl.audioTransfer.trim.empty»
+						<set name="flashScope.«transfer.name».transferaudio" value="'«dsl.audioTransfer»'"/>
+					«ENDIF»
+					<set name="flashScope.«transfer.name».timeout" value="'«dsl.timeout»'"/>
+				«ELSEIF dsl.typeTransfer.value == 2»
+					<evaluate expression="jVoiceArchBridgeTransfer" result = "flashScope.«transfer.name»"/>
+					<set name="flashScope.«transfer.name».dest" value="'«dsl.destination»'"/>
+					«IF dsl.audioTransfer!=null && !dsl.audioTransfer.trim.empty»
+						<set name="flashScope.«transfer.name».transferaudio" value="'«dsl.audioTransfer»'"/>
+					«ENDIF»
+					<set name="flashScope.«transfer.name».timeout" value="'«dsl.timeout»'"/>
+					<set name="flashScope.«transfer.name».maxtime" value="'«dsl.maxTime»'"/>
+				«ENDIF»	
+				«IF audio != null» 
+						«var audios = transfer.locution.audios.mainAudios»
+						«GeneralStateCodeXML.doGenerateGeneralState(state, audios,"audioItems", nameProject)»
+						«IF configurations != null» 
+							«FOR configValue : configurations.configValue »
+								«IF configValue.name != null && !configValue.name.empty»
+									«IF configValue.value != null && !configValue.value.empty»
+										<evaluate expression="flashScope.«state.name».properties.put('«configValue.name»','«configValue.value»')" />
+									«ENDIF»
 								«ENDIF»
-							«ENDIF»
-						«ENDFOR»
+							«ENDFOR»
+		        		«ENDIF» 
 	        		«ENDIF» 
-        		«ENDIF» 
-		</on-entry>
-		<evaluate expression="flowProcessor.process(flashScope.«transfer.name»)"/>	
+			</on-entry>
+			<evaluate expression="flowProcessor.process(flashScope.«transfer.name»)"/>	
+		«ELSE»	
+			<evaluate expression="flowProcessor.process(flashScope.«state.name».«transfer.methodName»())"/>
+		«ENDIF»
 		<transition to="render_«transfer.name»" />
 		
 		</action-state>
