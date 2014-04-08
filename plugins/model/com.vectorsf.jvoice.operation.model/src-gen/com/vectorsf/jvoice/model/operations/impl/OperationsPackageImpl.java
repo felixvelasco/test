@@ -622,6 +622,15 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getMenuState_Options() {
+		return (EAttribute)menuStateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getMenuState__GetEvents() {
 		return menuStateEClass.getEOperations().get(0);
 	}
@@ -913,6 +922,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		createEOperation(inputStateEClass, INPUT_STATE___GET_EVENTS);
 
 		menuStateEClass = createEClass(MENU_STATE);
+		createEAttribute(menuStateEClass, MENU_STATE__OPTIONS);
 		createEOperation(menuStateEClass, MENU_STATE___GET_EVENTS);
 
 		locutionStateEClass = createEClass(LOCUTION_STATE);
@@ -1062,6 +1072,7 @@ public class OperationsPackageImpl extends EPackageImpl implements OperationsPac
 		initEOperation(getInputState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(menuStateEClass, MenuState.class, "MenuState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getMenuState_Options(), ecorePackage.getEString(), "options", null, 0, -1, MenuState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getMenuState__GetEvents(), ecorePackage.getEString(), "getEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
 

@@ -1722,13 +1722,22 @@ public interface OperationsPackage extends EPackage {
 	int MENU_STATE__TEXTUAL = LOCUTION_STATE__TEXTUAL;
 
 	/**
+	 * The feature id for the '<em><b>Options</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MENU_STATE__OPTIONS = LOCUTION_STATE_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Menu State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MENU_STATE_FEATURE_COUNT = LOCUTION_STATE_FEATURE_COUNT + 0;
+	int MENU_STATE_FEATURE_COUNT = LOCUTION_STATE_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Events</em>' operation.
@@ -2717,6 +2726,17 @@ public interface OperationsPackage extends EPackage {
 	EClass getMenuState();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link com.vectorsf.jvoice.model.operations.MenuState#getOptions <em>Options</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Options</em>'.
+	 * @see com.vectorsf.jvoice.model.operations.MenuState#getOptions()
+	 * @see #getMenuState()
+	 * @generated
+	 */
+	EAttribute getMenuState_Options();
+
+	/**
 	 * Returns the meta object for the '{@link com.vectorsf.jvoice.model.operations.MenuState#getEvents() <em>Get Events</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3342,6 +3362,14 @@ public interface OperationsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MENU_STATE = eINSTANCE.getMenuState();
+
+		/**
+		 * The meta object literal for the '<em><b>Options</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MENU_STATE__OPTIONS = eINSTANCE.getMenuState_Options();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Events</b></em>' operation.

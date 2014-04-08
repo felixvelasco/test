@@ -9,12 +9,34 @@ import org.eclipse.emf.common.util.EList;
  * A representation of the model object '<em><b>Menu State</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link com.vectorsf.jvoice.model.operations.MenuState#getOptions <em>Options</em>}</li>
+ * </ul>
+ * </p>
  *
  * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getMenuState()
  * @model
  * @generated
  */
 public interface MenuState extends LocutionState {
+	/**
+	 * Returns the value of the '<em><b>Options</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Options</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Options</em>' attribute list.
+	 * @see com.vectorsf.jvoice.model.operations.OperationsPackage#getMenuState_Options()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getOptions();
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
